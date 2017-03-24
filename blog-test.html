@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-03-24 Fri 22:00 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Blog的搭建及其特性</title>
+<meta name="generator" content="Org mode" />
+<meta name="keywords" content="hello" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="css/worg2.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Blog的搭建及其特性</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org6694bc8">为什么要写博客</a></li>
+<li><a href="#orgf063afd">如何搭建这个博客</a></li>
+<li><a href="#org1608d89">Org mode</a></li>
+<li><a href="#org8a8cf36">Latex</a></li>
+<li><a href="#orgbe3b487">代码高亮</a></li>
+<li><a href="#orga911d1f">表格</a></li>
+<li><a href="#org6b089b1">图像</a></li>
+<li><a href="#orgb4197e0">脚注</a></li>
+<li><a href="#orgbacfc03">画图</a>
+<ul>
+<li><a href="#org6db74fc">ditaa</a></li>
+<li><a href="#orgdb6e05d">R</a></li>
+<li><a href="#org25d2dba">Shell</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org6694bc8" class="outline-2">
+<h2 id="org6694bc8">为什么要写博客</h2>
+<div class="outline-text-2" id="text-org6694bc8">
+<p>
+我们都知道 <code>刘未鹏</code> 的<a href="http://mindhacks.cn/2009/02/15/why-you-should-start-blogging-now/">为什么你应该（从现在开始就）写博客</a> 流传很广，我们都知道写博客是百利而无一害的，所以我也开始写我自己的东西。
+</p>
+<ul class="org-ul">
+<li>强迫自己去深入思考</li>
+<li>记录自己的想法</li>
+<li>能够交到和你有相同兴趣的人</li>
+</ul>
+
+<p>
+我这里使用的<a href="http://orgmode.org/">Org mode</a>而不是用markdown来写的文章，原因很简单：
+</p>
+<ul class="org-ul">
+<li>喜欢Emacs</li>
+<li>因为记笔记现在都用Org，当然写博客也要用</li>
+<li>Org mode更加的强大</li>
+<li>写Latex更加的方便</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf063afd" class="outline-2">
+<h2 id="orgf063afd">如何搭建这个博客</h2>
+<div class="outline-text-2" id="text-orgf063afd">
+<p>
+关于如何去使用，可以参考<a href="http://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html">Publishing Org-mode files to HTML</a>。
+其中我也参考了很多人的博客：
+</p>
+<ul class="org-ul">
+<li><a href="https://ogbe.net/blog/blogging_with_org.html">Dennis Ogbe</a></li>
+<li><a href="http://blog.csdn.net/pfanaya/article/details/7713743">Emacs Org-mode 生成 HTML CSS 配置</a></li>
+<li><a href="http://dale.io/blog/automated-org-publishing.html?utm_source=tuicool&amp;utm_medium=referral">Automated Publishing Pipeline with Org Mode</a></li>
+<li><a href="http://dayigu.github.io/WhyUseOrgModeToWriteBlog.html">为什么用 org-mode 写 blog</a></li>
+<li><a href="http://bastibe.de/2013-11-13-blogging-with-emacs.html">Blogging with Emacs</a></li>
+<li><a href="http://nicolas.petton.fr/blog/blogging-with-org-mode.html">Nicolas Petton</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1608d89" class="outline-2">
+<h2 id="org1608d89">Org mode</h2>
+<div class="outline-text-2" id="text-org1608d89">
+<ul class="org-ul">
+<li><code>*粗体*</code> <b>粗体</b></li>
+<li><code>/斜体/</code> <i>斜体</i></li>
+<li><code>+删除线+</code> <del>删除线</del></li>
+<li><code>_下划线_</code> <span class="underline">下划线</span></li>
+<li><code>H_2</code> 下标： H<sub>2</sub></li>
+<li><code>E=mc^2</code> 上标： E=mc<sup>2</sup></li>
+<li>等宽字：  <code>git</code>  或者 ～git～</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8a8cf36" class="outline-2">
+<h2 id="org8a8cf36">Latex</h2>
+<div class="outline-text-2" id="text-org8a8cf36">
+<p>
+数学公式主要使用的是<a href="http://docs.mathjax.org/en/latest/start.html">MathJax</a>, 我们可以在<a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/">这里</a> 了解小使用的方法。下面举几个例子：
+</p>
+<ul class="org-ul">
+<li>&alpha;, &beta; and &gamma;.</li>
+<li>When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are</li>
+</ul>
+<p>
+\[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]
+</p>
+<ul class="org-ul">
+<li>\[\sum\limits_{i=1}^n(单项评分_i * 权重)\]</li>
+<li>\[ \frac{1^p+2^p+\cdot\cdot\cdot+n^p}{n^{1+p}} \]</li>
+<li>I am \(op_1\stackrel{abc}{\longrightarrow}op_2\)</li>
+<li>\[Y=\left\{ \begin{aligned} +1 & , & if & & X \geq \theta \\ -1 & , & if & & X < \theta \end{aligned} \right.\]</li>
+<li>a<sub>1</sub></li>
+<li>&hearts;</li>
+</ul>
+
+
+<ul class="org-ul">
+<li>\[ \begin{matrix} 1 & x & x^2 \\ 1 & y & y^2 \\ 1 & z & z^2 \\ \end{matrix}\]</li>
+<li>\[ \left[      \begin{array}{cc|c}        1&2&3\\        4&5&6      \end{array} \right] \]</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbe3b487" class="outline-2">
+<h2 id="orgbe3b487">代码高亮</h2>
+<div class="outline-text-2" id="text-orgbe3b487">
+<p>
+这个博客完全是使用的Org，其中的配置如下：
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">-n &#21487;&#20197;&#26174;&#31034;&#34892;&#21495;</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">require</span> '<span class="org-constant">org-publish</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>setq org-publish-project-alist
+      '<span class="org-rainbow-delimiters-depth-2">(</span>
+        <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"blog-notes"</span>
+         <span class="org-builtin">:base-directory</span> <span class="org-string">"~/org/blog/"</span>
+         <span class="org-builtin">:base-extension</span> <span class="org-string">"org"</span>
+         <span class="org-builtin">:publishing-directory</span> <span class="org-string">"~/org/dayigu.github.com/"</span>
+         <span class="org-builtin">:recursive</span> t
+         <span class="org-builtin">:publishing-function</span> org-publish-org-to-html
+         <span class="org-builtin">:headline-levels</span> <span class="org-highlight-numbers-number">4</span>
+         <span class="org-builtin">:section-numbers</span> nil
+         <span class="org-builtin">:auto-preamble</span> t
+         <span class="org-builtin">:auto-sitemap</span> t                <span class="org-comment">; Generate sitemap.org automagically...</span>
+         <span class="org-builtin">:sitemap-filename</span> <span class="org-string">"sitemap.org"</span>  <span class="org-comment">; ... call it sitemap.org (it's the default)...</span>
+         <span class="org-builtin">:sitemap-title</span> <span class="org-string">"Sitemap"</span>         <span class="org-comment">; ... with title 'Sitemap'.</span>
+         <span class="org-builtin">:author</span> <span class="org-string">"dayigu"</span>
+         <span class="org-builtin">:email</span> <span class="org-string">"dayigu at gmail dot com"</span>
+         <span class="org-builtin">:style</span>    <span class="org-string">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/&gt;"</span> 
+         <span class="org-rainbow-delimiters-depth-3">)</span>
+        <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"blog-static"</span>
+         <span class="org-builtin">:base-directory</span> <span class="org-string">"~/org/blog/"</span>
+         <span class="org-builtin">:base-extension</span> <span class="org-string">"css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"</span>
+         <span class="org-builtin">:publishing-directory</span> <span class="org-string">"~/org/dayigu.github.com/"</span>
+         <span class="org-builtin">:recursive</span> t
+         <span class="org-builtin">:publishing-function</span> org-publish-attachment
+         <span class="org-rainbow-delimiters-depth-3">)</span>
+        <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"blog"</span> <span class="org-builtin">:components</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-string">"blog-notes"</span> <span class="org-string">"blog-static"</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+        <span class="org-comment-delimiter">;;</span>
+        <span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga911d1f" class="outline-2">
+<h2 id="orga911d1f">表格</h2>
+<div class="outline-text-2" id="text-orga911d1f">
+<table id="org929814b" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Books</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">书名</th>
+<th scope="col" class="org-left">类型</th>
+<th scope="col" class="org-right">价格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">你好啊</td>
+<td class="org-left">文学</td>
+<td class="org-right">12.33</td>
+</tr>
+
+<tr>
+<td class="org-left">Python</td>
+<td class="org-left">IT</td>
+<td class="org-right">44</td>
+</tr>
+
+<tr>
+<td class="org-left">Java</td>
+<td class="org-left">IT</td>
+<td class="org-right">55</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-org6b089b1" class="outline-2">
+<h2 id="org6b089b1">图像</h2>
+<div class="outline-text-2" id="text-org6b089b1">
+<p>
+This is a test for image
+</p>
+
+<div class="figure">
+<p><img src="./img/org-mode-unicorn.png" alt="org-mode-unicorn.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>test</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb4197e0" class="outline-2">
+<h2 id="orgb4197e0">脚注</h2>
+<div class="outline-text-2" id="text-orgb4197e0">
+<p>
+在 org mode 中，你可以为你的文章添加注脚（footnote）。注脚的格式有两种，一是
+方括号+数字，二是方括号+fn+名字, 例如 <code>[fn:3]</code> 。比如下面有两个例子：在 org mode 的正文中写下
+这两句话：
+</p>
+
+<p>
+The Org homepage<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>,now looks a lot better than it used to.  
+Tom is a boy<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.   
+</p>
+
+<p>
+写好以后，使用 <code>C-c C-x f</code> 来生成 Footnotes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbacfc03" class="outline-2">
+<h2 id="orgbacfc03">画图</h2>
+<div class="outline-text-2" id="text-orgbacfc03">
+</div><div id="outline-container-org6db74fc" class="outline-3">
+<h3 id="org6db74fc">ditaa</h3>
+<div class="outline-text-3" id="text-org6db74fc">
+<p>
+Ditaa is a small command-line utility written in Java, that can convert diagrams drawn using ascii art.
+</p>
+
+<pre class="example">
+#+BEGIN_SRC ditaa :file ~/workspace/blog/org/img/ditaa.png 
+
++--------+   +-------+    +-------+
+|        | --+ ditaa +--&gt; |       |
+|  Text  |   +-------+    |diagram|
+|Document|   |!magic!|    |       |
+|     {d}|   |       |    |       |
++---+----+   +-------+    +-------+
+    :                         ^
+    |       Lots of work      |
+    +-------------------------+
+#+END_SRC
+</pre>
+<p>
+结果：
+</p>
+
+
+<div class="figure">
+<p><img src="file:///Users/yingdai/workspace/blog/org/img/ditaa.png" alt="ditaa.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdb6e05d" class="outline-3">
+<h3 id="orgdb6e05d">R</h3>
+<div class="outline-text-3" id="text-orgdb6e05d">
+<pre class="example">
+#+name: simpledrift(N=1000, X1=600, ngens=100)
+#+begin_src R :file ~/workspace/blog/org/img/orgmode-babel-R1.png :var ngens=100 X1=600 N=1000 :results graphics
+  p &lt;- numeric(ngens)
+  p[1] &lt;- X1/N
+  for(g in 2:ngens)
+      p[g] &lt;- rbinom(1, size=N, prob=p[g-1]) / N
+  plot(p, type="l", ylim=c(0,1), xlab="Generation", ylab="Proportion red")
+#+end_src
+</pre>
+
+<p>
+结果：
+<img src="file:///Users/yingdai/workspace/blog/org/img/orgmode-babel-R1.png" alt="orgmode-babel-R1.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org25d2dba" class="outline-3">
+<h3 id="org25d2dba">Shell</h3>
+<div class="outline-text-3" id="text-org25d2dba">
+<pre class="example">
+#+name: directories
+#+begin_src sh :results replace
+  cd ~ &amp;&amp; du -sc * |grep -v total
+#+end_src
+</pre>
+
+<p>
+结果：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">888</td>
+<td class="org-left">Applications</td>
+</tr>
+
+<tr>
+<td class="org-right">212608</td>
+<td class="org-left">Desktop</td>
+</tr>
+
+<tr>
+<td class="org-right">200</td>
+<td class="org-left">Documents</td>
+</tr>
+
+<tr>
+<td class="org-right">7476688</td>
+<td class="org-left">Downloads</td>
+</tr>
+
+<tr>
+<td class="org-right">112</td>
+<td class="org-left">IdeaProjects</td>
+</tr>
+
+<tr>
+<td class="org-right">29996728</td>
+<td class="org-left">Library</td>
+</tr>
+
+<tr>
+<td class="org-right">0</td>
+<td class="org-left">Movies</td>
+</tr>
+
+<tr>
+<td class="org-right">144</td>
+<td class="org-left">Music</td>
+</tr>
+
+<tr>
+<td class="org-right">0</td>
+<td class="org-left">News</td>
+</tr>
+
+<tr>
+<td class="org-right">1313344</td>
+<td class="org-left">Pictures</td>
+</tr>
+
+<tr>
+<td class="org-right">0</td>
+<td class="org-left">Public</td>
+</tr>
+
+<tr>
+<td class="org-right">16</td>
+<td class="org-left">ditaa.png</td>
+</tr>
+
+<tr>
+<td class="org-right">8</td>
+<td class="org-left">header.html</td>
+</tr>
+
+<tr>
+<td class="org-right">8</td>
+<td class="org-left">notes.org</td>
+</tr>
+
+<tr>
+<td class="org-right">8</td>
+<td class="org-left">org</td>
+</tr>
+
+<tr>
+<td class="org-right">45744</td>
+<td class="org-left">workspace</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+test1
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+test2
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-03-24 Fri 22:00</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

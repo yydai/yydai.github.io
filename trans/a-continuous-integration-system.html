@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-03-26 Sun 23:04 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>持续集成系统</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/worg2.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">持续集成系统</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org02f3d82">什么是持续集成系统</a></li>
+<li><a href="#org338cd61">项目的限制和一些说明</a></li>
+<li><a href="#org23b03dd">系统简介</a>
+<ul>
+<li><a href="#org0fa699a">项目文件</a></li>
+<li><a href="#org0e2c28f">项目的建立</a></li>
+</ul>
+</li>
+<li><a href="#orgc124417">系统组件</a>
+<ul>
+<li><a href="#org549640a">代码仓库观察者(repo<sub>observer.py</sub>)</a></li>
+<li><a href="#org002a5ee">调度器 (dispatcher.py)</a></li>
+<li><a href="#org83832f9">测试组件(test<sub>runner.py</sub>)</a></li>
+<li><a href="#org9e56802">控制流程图</a></li>
+<li><a href="#org175bfe5">运行代码</a></li>
+</ul>
+</li>
+<li><a href="#org8cb5c9c">错误处理</a></li>
+<li><a href="#org09b01e7">结论</a>
+<ul>
+<li><a href="#orgda6a063">测试每个提交</a></li>
+<li><a href="#org7d6468e">智能测试</a></li>
+<li><a href="#org5777a68">真实报告</a></li>
+<li><a href="#org9968616">测试组件管理器</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+作者简介：Malini Das 是一个软件工程师，对于快速且安全的开发以及跨职能
+(cross-functional)的问题情有独钟。她曾经作为基础工具工程师(tool engineer)
+工作在Mozilla , 现在供职于Twitch。你可以在<a href="https://twitter.com/malinidas">Twitter</a> 或者她的<a href="http://malinidas.com/">blog</a> 关注她。
+</p>
+
+
+<div id="outline-container-org02f3d82" class="outline-2">
+<h2 id="org02f3d82">什么是持续集成系统</h2>
+<div class="outline-text-2" id="text-org02f3d82">
+<p>
+在软件开发工程中，我们需要确保开发的新功能以及修复的Bugs能够如我们所愿的去做。
+如何确保这些东西？那就是做测试。有时候，开发人员会在本地测试一下自己的改动是否安
+全正确，但是他们或许没有时间去测试所有用到这些改动代码的系统。进一步来说，即使是在
+本地做这项工作也是不可行的，因为这会消耗大量的时间。正因如此，所以有了
+持续集成系统。
+</p>
+
+<p>
+持续集成(CI)系统是用于测试新代码的专用系统。一个新的代码一旦提交(commit)到代码仓库，
+它的职责是要确保这次的提交不会中断其他的测试。为了做到这一点，这个系统要能做到如下的几点：
+</p>
+<ul class="org-ul">
+<li>获取新的代码提交</li>
+<li>跑相应的测试</li>
+<li>报告结果</li>
+</ul>
+<p>
+另外一点和其他的系统类似，它应该具有容错性(failure resistant). 这意味着任何一部分出现了问题，
+它都应能够从失败的位置恢复并继续测试。
+</p>
+
+<p>
+同样的，这种测试系统应当能够解决负载，所以我们能够在较短的时间拿到测试的结果。我
+们处理的方式是通过分布式和并行化来达到快速测试的目的。这个项目我们会演示一个小巧，
+基础的，并且考虑了可扩展性的分布式持续集成系统。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org338cd61" class="outline-2">
+<h2 id="org338cd61">项目的限制和一些说明</h2>
+<div class="outline-text-2" id="text-org338cd61">
+<p>
+这个项目使用Git来作为测试使用的代码仓库。这里只会使用到一些标准的管理命令，所
+以如果你对Git不熟悉，但是对其他的版本控制系统(VCS)比较熟悉同样也可以使用这个教程。
+例如： <b>SVN</b> 或者 <b>Mercurial</b> 。
+</p>
+
+<p>
+由于代码长度和单元测试的限制，我简化了测试的发现部分。我们只会在代码仓库中一个叫
+<b>tests</b> 的目录中跑测试。
+</p>
+
+<p>
+持续集成系统会检测主代码仓库(master repository), 它经常会被部署在网站主机上，而不是
+本地的CI文件系统中。
+</p>
+
+<p>
+持续集成系统不需要固定的时间，定期的进度安排，你可以在每次提交或每几次提交
+做一次持续集成。对于这个项目，我们会周期的以5秒的间隔来做持续集成，也就是
+每5秒检查一下代码的更新，但是最终只会对周期内的最新代码做一次持续集成。
+</p>
+
+<p>
+设计的这个持续集成系统被用来周期性的检查代码仓库的更新。然而，在现实的情况中，我们还可以
+通过代码提交来触发我们的持续集成。以Github为例，它会通过=pos-commit=的钩子来像一个URL地址
+发送通知。这个URL指向的服务就会响应这个通知，然后去做持续集成。这里我们使用
+观察者模型，仓库的观察者会定期检查，而不是通过被通知的方式。
+</p>
+
+<p>
+CI系统中需要有报告者，其中测试组件将测试的结果发送给响应的系统，用来使人们看到结果的内容，例如一个
+网页。为了简单起见，这个项目收集测试的结果并将它存储在一个文件中作为分发系统的一部分。
+</p>
+
+<p>
+这个CI系统的架构只是使用了众多可能中的一个。使用这个的原因是它能把我们的代码简化
+为三个主要的部分。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org23b03dd" class="outline-2">
+<h2 id="org23b03dd">系统简介</h2>
+<div class="outline-text-2" id="text-org23b03dd">
+</div><div id="outline-container-org0fa699a" class="outline-3">
+<h3 id="org0fa699a">项目文件</h3>
+</div>
+
+<div id="outline-container-org0e2c28f" class="outline-3">
+<h3 id="org0e2c28f">项目的建立</h3>
+</div>
+</div>
+
+<div id="outline-container-orgc124417" class="outline-2">
+<h2 id="orgc124417">系统组件</h2>
+<div class="outline-text-2" id="text-orgc124417">
+</div><div id="outline-container-org549640a" class="outline-3">
+<h3 id="org549640a">代码仓库观察者(repo<sub>observer.py</sub>)</h3>
+</div>
+
+<div id="outline-container-org002a5ee" class="outline-3">
+<h3 id="org002a5ee">调度器 (dispatcher.py)</h3>
+</div>
+
+<div id="outline-container-org83832f9" class="outline-3">
+<h3 id="org83832f9">测试组件(test<sub>runner.py</sub>)</h3>
+<div class="outline-text-3" id="text-org83832f9">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">ThreadingTCPServer</span><span class="org-rainbow-delimiters-depth-1">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span class="org-rainbow-delimiters-depth-1">)</span>:
+    <span class="org-variable-name">dispatcher_server</span> = <span class="org-constant">None</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Holds the dispatcher server host/port information</span>
+    <span class="org-variable-name">last_communication</span> = <span class="org-constant">None</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Keeps track of last communication from dispatcher</span>
+    <span class="org-variable-name">busy</span> = <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Status flag</span>
+    <span class="org-variable-name">dead</span> = <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Status flag</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9e56802" class="outline-3">
+<h3 id="org9e56802">控制流程图</h3>
+<div class="outline-text-3" id="text-org9e56802">
+<p>
+&lt;学习一下如何交叉引用&gt;
+</p>
+
+<p>
+    Figure 1描述了这个系统运行流程。这个流程图假定了所有这个三个文件(
+<code>repo_observer.py</code> , <code>dispatcher.py</code> 以及 <code>test_runner.py</code>)已经正在运行。并且说
+明了每个进程在有新提交时需要执行的操作。
+</p>
+
+<div class="figure">
+<p><img src="../img/control-flow.png" alt="control-flow.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 1: </span>控制流程图</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org175bfe5" class="outline-3">
+<h3 id="org175bfe5">运行代码</h3>
+<div class="outline-text-3" id="text-org175bfe5">
+<div class="org-src-container">
+<pre class="src src-sh">$ python dispatcher.py
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ cd /path/to/test_repo
+$ touch new_file
+$ git add new_file
+$ git commit -m<span class="org-string">"new file"</span> new_file
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org8cb5c9c" class="outline-2">
+<h2 id="org8cb5c9c">错误处理</h2>
+<div class="outline-text-2" id="text-org8cb5c9c">
+<p>
+该CI系统包括一些简单的错误处理。如果你杀死了 <code>test_runner.py</code> 那么
+<code>dispatcher.py</code> 将会知道这个运行程序不再可用，并且将它从池中删除。你也可以强制杀
+死测试组件，用来模拟机器的崩溃或者网络连接的失败。如果你这样做了调度器会发现一个
+不可用的测试组件，并且将池中可用的测试组件代替之前的那个。如果池中没有可用的，它
+会等待一个新的组件在池中注册。
+</p>
+
+<p>
+如果你把调度器杀死，仓库的观察者就会发现这个问题，并且会抛出一个异常。测试组件同
+样也会发现这个问题，并且会关闭自己。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org09b01e7" class="outline-2">
+<h2 id="org09b01e7">结论</h2>
+<div class="outline-text-2" id="text-org09b01e7">
+<p>
+通过将问题分解为几个不同的过程，我们得以建立一个基础的分布式持续构建系统。每个
+进程之间通过socket请求来互相通信，这使得我们可以分布式的进行构建，同时会使得我们的
+系统更加的可靠以及增加了扩展性。
+</p>
+
+<p>
+因为这里的CI系统相当的简单，你可以自己扩展使得它更加的实用。这里提供几条改进的
+建议：
+</p>
+</div>
+
+<div id="outline-container-orgda6a063" class="outline-3">
+<h3 id="orgda6a063">测试每个提交</h3>
+<div class="outline-text-3" id="text-orgda6a063">
+<p>
+    当前的系统会周期性的检查最新的几次提交，并对最新的一次做自动构建。这里应该改
+进为每次提交都进行一次测试。为了做到这一点，我们可以改进周期检查器，对于每个最后
+一次测试的和最新一次之间的提交都分配一个测试组件。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7d6468e" class="outline-3">
+<h3 id="org7d6468e">智能测试</h3>
+<div class="outline-text-3" id="text-org7d6468e">
+<p>
+    如果测试组件发现调度器没有响应，它就会停止运行，即使一个测试进行到了一半！如
+果让测试组件等待调度器一个周期性的时间（or indefinitely, 如果你对资源管理不关心
+的话）会更加的好。在这个例子中，如果一个测试组件在测试过程中，调度器失去了响应，
+相比于停止测试组件，我们可以让其完成这个测试，等待调度器恢复，并且向测试组件报告
+结果。这样做就不会是使测试组件的工作浪费，同时对于每一次的提交只会运行一次测试。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5777a68" class="outline-3">
+<h3 id="org5777a68">真实报告</h3>
+<div class="outline-text-3" id="text-org5777a68">
+<p>
+在真实的CI系统中，我们会提供一个测试结果的报告到报告服务，这个报告服务有以下
+几点的功能：
+</p>
+<ul class="org-ul">
+<li>收集测试结果</li>
+<li>展示结果，方便去浏览检查</li>
+<li>当失败或者值得注意的事情发生时，通知相应的人员</li>
+</ul>
+<p>
+    你可以通过创建一个新的进程，用来代替调度器获取测试结果来扩展这个简单的CI系统。
+这个新的进程可以是一个web服务（或者能够连接到web服务器)。它能够在线提交结果，同时能
+通过邮件来告知订阅者失败的测试。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9968616" class="outline-3">
+<h3 id="org9968616">测试组件管理器</h3>
+<div class="outline-text-3" id="text-org9968616">
+<p>
+当前，你需要手动的运行 <code>test_runner.py</code> 文件来启动一个测试组件。相反，你可以通过创建一个
+测试组件管理器。它能够评估调度器发送的测试请求的负载，并且相应的调整测试
+组件的数量。
+</p>
+
+<p>
+通过这些建议，你可以使得这个简单的CI系统更加的鲁棒，以及具有容错性。同时，你
+可以将这个系统与其他的系统相集成，例如基于web的测试报告系统。
+</p>
+
+<p>
+如果你想看到一个持续集成系统的灵活性所能达到的水平，我建议你去看下 <code>Jenkins</code> 。
+它是一个非常鲁棒的，用Java语言写的开源CI系统。它提供了一个基本的CI系统，而这个
+可以通过插件进行扩展。你可以在Github上找到它的源码。另外， <code>Travis CI</code> 也是一个值得推荐的项目，使用的
+ruby语言。同样的，也可以在GitHub上找到源码。
+</p>
+
+<p>
+这是一个练习用来帮助你理解一个CI系统是如何工作的，以及如何自己去构建一个这样的
+系统。现在，你应该对如何构建一个可靠的分布式系统有很深的理解，并且能够使用
+这种知识去做出更加复杂的解决方案。
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

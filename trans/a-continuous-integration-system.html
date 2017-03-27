@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-03-26 Sun 23:08 -->
+<!-- 2017-03-27 Mon 22:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>持续集成系统</title>
@@ -244,9 +244,9 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orgc124417">系统组件</a>
 <ul>
-<li><a href="#org549640a">代码仓库观察者(repo<sub>observer.py</sub>)</a></li>
-<li><a href="#org002a5ee">调度器 (dispatcher.py)</a></li>
-<li><a href="#org83832f9">测试组件(test<sub>runner.py</sub>)</a></li>
+<li><a href="#org0880fdb">代码仓库观察者( <code>repo_observer.py</code>)</a></li>
+<li><a href="#orga80adc8">调度器 ( <code>dispatcher.py</code>)</a></li>
+<li><a href="#orgbf1a8ca">测试组件( <code>test_runner.py</code>)</a></li>
 <li><a href="#org9e56802">控制流程图</a></li>
 <li><a href="#org175bfe5">运行代码</a></li>
 </ul>
@@ -337,7 +337,7 @@ for the JavaScript code in this tag.
 
 <p>
 设计的这个持续集成系统被用来周期性的检查代码仓库的更新。然而，在现实的情况中，我们还可以
-通过代码提交来触发我们的持续集成。以Github为例，它会通过=pos-commit=的钩子来像一个URL地址
+通过代码提交来触发我们的持续集成。以Github为例，它会通过 <code>pos-commit</code> 的钩子来像一个URL地址
 发送通知。这个URL指向的服务就会响应这个通知，然后去做持续集成。这里我们使用
 观察者模型，仓库的观察者会定期检查，而不是通过被通知的方式。
 </p>
@@ -369,17 +369,17 @@ CI系统中需要有报告者，其中测试组件将测试的结果发送给响
 <div id="outline-container-orgc124417" class="outline-2">
 <h2 id="orgc124417">系统组件</h2>
 <div class="outline-text-2" id="text-orgc124417">
-</div><div id="outline-container-org549640a" class="outline-3">
-<h3 id="org549640a">代码仓库观察者(repo<sub>observer.py</sub>)</h3>
+</div><div id="outline-container-org0880fdb" class="outline-3">
+<h3 id="org0880fdb">代码仓库观察者( <code>repo_observer.py</code>)</h3>
 </div>
 
-<div id="outline-container-org002a5ee" class="outline-3">
-<h3 id="org002a5ee">调度器 (dispatcher.py)</h3>
+<div id="outline-container-orga80adc8" class="outline-3">
+<h3 id="orga80adc8">调度器 ( <code>dispatcher.py</code>)</h3>
 </div>
 
-<div id="outline-container-org83832f9" class="outline-3">
-<h3 id="org83832f9">测试组件(test<sub>runner.py</sub>)</h3>
-<div class="outline-text-3" id="text-org83832f9">
+<div id="outline-container-orgbf1a8ca" class="outline-3">
+<h3 id="orgbf1a8ca">测试组件( <code>test_runner.py</code>)</h3>
+<div class="outline-text-3" id="text-orgbf1a8ca">
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">ThreadingTCPServer</span><span class="org-rainbow-delimiters-depth-1">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span class="org-rainbow-delimiters-depth-1">)</span>:
     <span class="org-variable-name">dispatcher_server</span> = <span class="org-constant">None</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Holds the dispatcher server host/port information</span>
@@ -395,16 +395,12 @@ CI系统中需要有报告者，其中测试组件将测试的结果发送给响
 <h3 id="org9e56802">控制流程图</h3>
 <div class="outline-text-3" id="text-org9e56802">
 <p>
-&lt;学习一下如何交叉引用&gt;
-</p>
-
-<p>
-    Figure 1描述了这个系统运行流程。这个流程图假定了所有这个三个文件(
+    <a href="#org0b50072">Figure 1</a>描述了这个系统运行流程。这个流程图假定了所有这个三个文件(
 <code>repo_observer.py</code> , <code>dispatcher.py</code> 以及 <code>test_runner.py</code>)已经正在运行。并且说
 明了每个进程在有新提交时需要执行的操作。
 </p>
 
-<div class="figure">
+<div id="org0b50072" class="figure">
 <p><img src="../img/control-flow.png" alt="control-flow.png" width="100%" />
 </p>
 <p><span class="figure-number">Figure 1: </span>控制流程图</p>
@@ -535,6 +531,13 @@ ruby语言。同样的，也可以在GitHub上找到源码。
 这是一个练习用来帮助你理解一个CI系统是如何工作的，以及如何自己去构建一个这样的
 系统。现在，你应该对如何构建一个可靠的分布式系统有很深的理解，并且能够使用
 这种知识去做出更加复杂的解决方案。
+</p>
+
+
+
+<hr />
+<p>
+<a href="../index.html">Blogs</a> | <a href="../contact.html">Contact</a>
 </p>
 </div>
 </div>

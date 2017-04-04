@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-03-27 Mon 22:42 -->
+<!-- 2017-04-03 Mon 19:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Argparse 教程</title>
@@ -234,10 +234,10 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9ec2928">概念</a></li>
-<li><a href="#org981f296">基本的认识</a></li>
-<li><a href="#org7266aa9">位置参数</a></li>
-<li><a href="#orgee2f3f8">可选参数</a></li>
+<li><a href="#org551d301">概念</a></li>
+<li><a href="#org3cc13d7">基本的认识</a></li>
+<li><a href="#org5ea422a">位置参数</a></li>
+<li><a href="#org3cad3be">可选参数</a></li>
 </ul>
 </div>
 </div>
@@ -262,43 +262,49 @@ for the JavaScript code in this tag.
 </p>
 <hr />
 
-<div id="outline-container-org9ec2928" class="outline-2">
-<h2 id="org9ec2928">概念</h2>
-<div class="outline-text-2" id="text-org9ec2928">
+<div id="outline-container-org551d301" class="outline-2">
+<h2 id="org551d301">概念</h2>
+<div class="outline-text-2" id="text-org551d301">
+<p>
+我们首先通过 <code>ls</code> 命令来说明一下我们将要在这个教程中所讲的东西：
+</p>
 <div class="org-src-container">
 <pre class="src src-shell">$ ls
 cpython  devguide  prog.py  pypy  rm-unused-function.patch
 $ ls pypy
 ctypes_configure  demo  dotviewer  include  lib_pypy  lib-python ...
 $ ls -l
-total <span class="org-highlight-numbers-number">20</span>
-drwxr-xr-x <span class="org-highlight-numbers-number">19</span> wena wena <span class="org-highlight-numbers-number">4096</span> Feb <span class="org-highlight-numbers-number">18</span> <span class="org-highlight-numbers-number">18:51</span> cpython
-drwxr-xr-x  <span class="org-highlight-numbers-number">4</span> wena wena <span class="org-highlight-numbers-number">4096</span> Feb  <span class="org-highlight-numbers-number">8</span> <span class="org-highlight-numbers-number">12:04</span> devguide
--rwxr-xr-x  <span class="org-highlight-numbers-number">1</span> wena wena  <span class="org-highlight-numbers-number">535</span> Feb <span class="org-highlight-numbers-number">19</span> <span class="org-highlight-numbers-number">00:05</span> prog.py
-drwxr-xr-x <span class="org-highlight-numbers-number">14</span> wena wena <span class="org-highlight-numbers-number">4096</span> Feb  <span class="org-highlight-numbers-number">7</span> <span class="org-highlight-numbers-number">00:59</span> pypy
--rw-r--r--  <span class="org-highlight-numbers-number">1</span> wena wena  <span class="org-highlight-numbers-number">741</span> Feb <span class="org-highlight-numbers-number">18</span> <span class="org-highlight-numbers-number">01:01</span> rm-unused-function.patch
+total 20
+drwxr-xr-x 19 wena wena 4096 Feb 18 18:51 cpython
+drwxr-xr-x  4 wena wena 4096 Feb  8 12:04 devguide
+-rwxr-xr-x  1 wena wena  535 Feb 19 00:05 prog.py
+drwxr-xr-x 14 wena wena 4096 Feb  7 00:59 pypy
+-rw-r--r--  1 wena wena  741 Feb 18 01:01 rm-unused-function.patch
 $ ls --help
-Usage: ls <span class="org-rainbow-delimiters-depth-1">[</span>OPTION<span class="org-rainbow-delimiters-depth-1">]</span>... <span class="org-rainbow-delimiters-depth-1">[</span>FILE<span class="org-rainbow-delimiters-depth-1">]</span>...
-List information about the FILEs <span class="org-rainbow-delimiters-depth-1">(</span>the current directory by default<span class="org-rainbow-delimiters-depth-1">)</span>.
+Usage: ls <span style="color: #657b83;">[</span>OPTION<span style="color: #657b83;">]</span>... <span style="color: #657b83;">[</span>FILE<span style="color: #657b83;">]</span>...
+List information about the FILEs <span style="color: #657b83;">(</span>the current directory by default<span style="color: #657b83;">)</span>.
 Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
 ...
 </pre>
 </div>
 
 <p>
-Here is what is happening:
+我们从这4个命令中可以学到如下几点：
 </p>
+<ul class="org-ul">
+<li><code>ls</code> 不带任何参数的时候非常有用，它会默认返回当前目录的内容哦。</li>
+</ul>
 </div>
 </div>
 
 
-<div id="outline-container-org981f296" class="outline-2">
-<h2 id="org981f296">基本的认识</h2>
-<div class="outline-text-2" id="text-org981f296">
+<div id="outline-container-org3cc13d7" class="outline-2">
+<h2 id="org3cc13d7">基本的认识</h2>
+<div class="outline-text-2" id="text-org3cc13d7">
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">import</span> argparse
-<span class="org-variable-name">parser</span> = argparse.ArgumentParser<span class="org-rainbow-delimiters-depth-1">()</span>
-parser.parse_args<span class="org-rainbow-delimiters-depth-1">()</span>
+<pre class="src src-python"><span style="color: #859900;">import</span> argparse
+<span style="color: #6c71c4;">parser</span> = argparse.ArgumentParser<span style="color: #657b83;">()</span>
+parser.parse_args<span style="color: #657b83;">()</span>
 </pre>
 </div>
 
@@ -309,33 +315,33 @@ parser.parse_args<span class="org-rainbow-delimiters-depth-1">()</span>
 <div class="org-src-container">
 <pre class="src src-shell">$ python3 prog.py
 $ python3 prog.py --help
-usage: prog.py <span class="org-rainbow-delimiters-depth-1">[</span>-h<span class="org-rainbow-delimiters-depth-1">]</span>
+usage: prog.py <span style="color: #657b83;">[</span>-h<span style="color: #657b83;">]</span>
 
 optional arguments:
   -h, --help  show this help message and exit
 $ python3 prog.py --verbose
-usage: prog.py <span class="org-rainbow-delimiters-depth-1">[</span>-h<span class="org-rainbow-delimiters-depth-1">]</span>
+usage: prog.py <span style="color: #657b83;">[</span>-h<span style="color: #657b83;">]</span>
 prog.py: error: unrecognized arguments: --verbose
 $ python3 prog.py foo
-usage: prog.py <span class="org-rainbow-delimiters-depth-1">[</span>-h<span class="org-rainbow-delimiters-depth-1">]</span>
+usage: prog.py <span style="color: #657b83;">[</span>-h<span style="color: #657b83;">]</span>
 prog.py: error: unrecognized arguments: foo
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7266aa9" class="outline-2">
-<h2 id="org7266aa9">位置参数</h2>
-<div class="outline-text-2" id="text-org7266aa9">
+<div id="outline-container-org5ea422a" class="outline-2">
+<h2 id="org5ea422a">位置参数</h2>
+<div class="outline-text-2" id="text-org5ea422a">
 <p>
 一个例子：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">import</span> argparse
-<span class="org-variable-name">parser</span> = argparse.ArgumentParser<span class="org-rainbow-delimiters-depth-1">()</span>
-parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"echo"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">args</span> = parser.parse_args<span class="org-rainbow-delimiters-depth-1">()</span>
-<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>args.echo<span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-python"><span style="color: #859900;">import</span> argparse
+<span style="color: #6c71c4;">parser</span> = argparse.ArgumentParser<span style="color: #657b83;">()</span>
+parser.add_argument<span style="color: #657b83;">(</span><span style="color: #2aa198;">"echo"</span><span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">args</span> = parser.parse_args<span style="color: #657b83;">()</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>args.echo<span style="color: #657b83;">)</span>
 </pre>
 </div>
 
@@ -345,13 +351,13 @@ parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span cl
 
 <div class="org-src-container">
 <pre class="src src-shell">$ python3 prog.py
-usage: prog.py <span class="org-rainbow-delimiters-depth-1">[</span>-h<span class="org-rainbow-delimiters-depth-1">]</span> echo
+usage: prog.py <span style="color: #657b83;">[</span>-h<span style="color: #657b83;">]</span> echo
 prog.py: error: the following arguments are required: echo
 $ python3 prog.py --help
-usage: prog.py <span class="org-rainbow-delimiters-depth-1">[</span>-h<span class="org-rainbow-delimiters-depth-1">]</span> echo
+usage: prog.py <span style="color: #657b83;">[</span>-h<span style="color: #657b83;">]</span> echo
 
 positional arguments:
-  <span class="org-builtin">echo</span>
+  <span style="color: #6c71c4;">echo</span>
 
 optional arguments:
   -h, --help  show this help message and exit
@@ -368,11 +374,11 @@ the source code. So, let’s make it a bit more useful:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">import</span> argparse
-<span class="org-variable-name">parser</span> = argparse.ArgumentParser<span class="org-rainbow-delimiters-depth-1">()</span>
-parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"echo"</span>, <span class="org-builtin">help</span>=<span class="org-string">"echo the string you use here"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">args</span> = parser.parse_args<span class="org-rainbow-delimiters-depth-1">()</span>
-<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>args.echo<span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-python"><span style="color: #859900;">import</span> argparse
+<span style="color: #6c71c4;">parser</span> = argparse.ArgumentParser<span style="color: #657b83;">()</span>
+parser.add_argument<span style="color: #657b83;">(</span><span style="color: #2aa198;">"echo"</span>, <span style="color: #6c71c4;">help</span>=<span style="color: #2aa198;">"echo the string you use here"</span><span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">args</span> = parser.parse_args<span style="color: #657b83;">()</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>args.echo<span style="color: #657b83;">)</span>
 </pre>
 </div>
 
@@ -382,10 +388,10 @@ parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span cl
 
 <div class="org-src-container">
 <pre class="src src-shell">$ python3 prog.py -h
-usage: prog.py <span class="org-rainbow-delimiters-depth-1">[</span>-h<span class="org-rainbow-delimiters-depth-1">]</span> echo
+usage: prog.py <span style="color: #657b83;">[</span>-h<span style="color: #657b83;">]</span> echo
 
 positional arguments:
-  <span class="org-builtin">echo</span>        echo the string you use here
+  <span style="color: #6c71c4;">echo</span>        echo the string you use here
 
 optional arguments:
   -h, --help  show this help message and exit
@@ -397,11 +403,11 @@ optional arguments:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">import</span> argparse
-<span class="org-variable-name">parser</span> = argparse.ArgumentParser<span class="org-rainbow-delimiters-depth-1">()</span>
-parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"square"</span>, <span class="org-builtin">help</span>=<span class="org-string">"display a square of a given number"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">args</span> = parser.parse_args<span class="org-rainbow-delimiters-depth-1">()</span>
-<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>args.square**<span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-python"><span style="color: #859900;">import</span> argparse
+<span style="color: #6c71c4;">parser</span> = argparse.ArgumentParser<span style="color: #657b83;">()</span>
+parser.add_argument<span style="color: #657b83;">(</span><span style="color: #2aa198;">"square"</span>, <span style="color: #6c71c4;">help</span>=<span style="color: #2aa198;">"display a square of a given number"</span><span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">args</span> = parser.parse_args<span style="color: #657b83;">()</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>args.square**2<span style="color: #657b83;">)</span>
 </pre>
 </div>
 
@@ -410,11 +416,11 @@ parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span cl
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">$ python3 prog.py <span class="org-highlight-numbers-number">4</span>
-<span class="org-function-name">Traceback</span> <span class="org-rainbow-delimiters-depth-1">(</span>most recent call last<span class="org-rainbow-delimiters-depth-1">)</span>:
-  File <span class="org-string">"prog.py"</span>, line <span class="org-highlight-numbers-number">5,</span><span class="org-keyword"> in</span> &lt;module&gt;
-    <span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span>args.square**2<span class="org-rainbow-delimiters-depth-1">)</span>
-TypeError: unsupported operand type<span class="org-rainbow-delimiters-depth-1">(</span>s<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-keyword">for</span> ** or pow<span class="org-rainbow-delimiters-depth-1">()</span>: <span class="org-string">'str'</span> and <span class="org-string">'int'</span>
+<pre class="src src-shell">$ python3 prog.py 4
+<span style="color: #b58900;">Traceback</span> <span style="color: #657b83;">(</span>most recent call last<span style="color: #657b83;">)</span>:
+  File <span style="color: #2aa198;">"prog.py"</span>, line 5,<span style="color: #859900;"> in</span> &lt;module&gt;
+    <span style="color: #6c71c4;">print</span><span style="color: #657b83;">(</span>args.square**2<span style="color: #657b83;">)</span>
+TypeError: unsupported operand type<span style="color: #657b83;">(</span>s<span style="color: #657b83;">)</span> <span style="color: #859900;">for</span> ** or pow<span style="color: #657b83;">()</span>: <span style="color: #2aa198;">'str'</span> and <span style="color: #2aa198;">'int'</span>
 </pre>
 </div>
 
@@ -423,12 +429,12 @@ need set type of argument
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">import</span> argparse
-<span class="org-variable-name">parser</span> = argparse.ArgumentParser<span class="org-rainbow-delimiters-depth-1">()</span>
-parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"square"</span>, <span class="org-builtin">help</span>=<span class="org-string">"display a square of a given number"</span>,
-                    <span class="org-builtin">type</span>=<span class="org-builtin">int</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">args</span> = parser.parse_args<span class="org-rainbow-delimiters-depth-1">()</span>
-<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>args.square**<span class="org-highlight-numbers-number">2</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-python"><span style="color: #859900;">import</span> argparse
+<span style="color: #6c71c4;">parser</span> = argparse.ArgumentParser<span style="color: #657b83;">()</span>
+parser.add_argument<span style="color: #657b83;">(</span><span style="color: #2aa198;">"square"</span>, <span style="color: #6c71c4;">help</span>=<span style="color: #2aa198;">"display a square of a given number"</span>,
+                    <span style="color: #6c71c4;">type</span>=<span style="color: #6c71c4;">int</span><span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">args</span> = parser.parse_args<span style="color: #657b83;">()</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>args.square**2<span style="color: #657b83;">)</span>
 </pre>
 </div>
 
@@ -436,31 +442,31 @@ parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span cl
 下面是运行的结果：
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">$ python3 prog.py <span class="org-highlight-numbers-number">4</span>
-<span class="org-highlight-numbers-number">16</span>
+<pre class="src src-shell">$ python3 prog.py 4
+16
 $ python3 prog.py four
-usage: prog.py <span class="org-rainbow-delimiters-depth-1">[</span>-h<span class="org-rainbow-delimiters-depth-1">]</span> square
-prog.py: error: argument square: invalid int value: <span class="org-string">'four'</span>
+usage: prog.py <span style="color: #657b83;">[</span>-h<span style="color: #657b83;">]</span> square
+prog.py: error: argument square: invalid int value: <span style="color: #2aa198;">'four'</span>
 </pre>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-orgee2f3f8" class="outline-2">
-<h2 id="orgee2f3f8">可选参数</h2>
-<div class="outline-text-2" id="text-orgee2f3f8">
+<div id="outline-container-org3cad3be" class="outline-2">
+<h2 id="org3cad3be">可选参数</h2>
+<div class="outline-text-2" id="text-org3cad3be">
 <p>
 我们已经学会如何添加位置参数，下面我们看下如何添加可选参数：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">import</span> argparse
-<span class="org-variable-name">parser</span> = argparse.ArgumentParser<span class="org-rainbow-delimiters-depth-1">()</span>
-parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"--verbosity"</span>, <span class="org-builtin">help</span>=<span class="org-string">"increase output verbosity"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">args</span> = parser.parse_args<span class="org-rainbow-delimiters-depth-1">()</span>
-<span class="org-keyword">if</span> args.verbosity:
-    <span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"verbosity turned on"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-python"><span style="color: #859900;">import</span> argparse
+<span style="color: #6c71c4;">parser</span> = argparse.ArgumentParser<span style="color: #657b83;">()</span>
+parser.add_argument<span style="color: #657b83;">(</span><span style="color: #2aa198;">"--verbosity"</span>, <span style="color: #6c71c4;">help</span>=<span style="color: #2aa198;">"increase output verbosity"</span><span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">args</span> = parser.parse_args<span style="color: #657b83;">()</span>
+<span style="color: #859900;">if</span> args.verbosity:
+    <span style="color: #859900;">print</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">"verbosity turned on"</span><span style="color: #657b83;">)</span>
 </pre>
 </div>
 
@@ -469,18 +475,18 @@ parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span cl
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">$ python3 prog.py --verbosity <span class="org-highlight-numbers-number">1</span>
+<pre class="src src-shell">$ python3 prog.py --verbosity 1
 verbosity turned on
 $ python3 prog.py
 $ python3 prog.py --help
-usage: prog.py <span class="org-rainbow-delimiters-depth-1">[</span>-h<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-rainbow-delimiters-depth-1">[</span>--verbosity VERBOSITY<span class="org-rainbow-delimiters-depth-1">]</span>
+usage: prog.py <span style="color: #657b83;">[</span>-h<span style="color: #657b83;">]</span> <span style="color: #657b83;">[</span>--verbosity VERBOSITY<span style="color: #657b83;">]</span>
 
 optional arguments:
   -h, --help            show this help message and exit
   --verbosity VERBOSITY
                         increase output verbosity
 $ python3 prog.py --verbosity
-usage: prog.py <span class="org-rainbow-delimiters-depth-1">[</span>-h<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-rainbow-delimiters-depth-1">[</span>--verbosity VERBOSITY<span class="org-rainbow-delimiters-depth-1">]</span>
+usage: prog.py <span style="color: #657b83;">[</span>-h<span style="color: #657b83;">]</span> <span style="color: #657b83;">[</span>--verbosity VERBOSITY<span style="color: #657b83;">]</span>
 prog.py: error: argument --verbosity: expected one argument
 </pre>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-03-27 Mon 22:42 -->
+<!-- 2017-04-03 Mon 19:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>持续集成系统</title>
@@ -234,30 +234,30 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org02f3d82">什么是持续集成系统</a></li>
-<li><a href="#org338cd61">项目的限制和一些说明</a></li>
-<li><a href="#org23b03dd">系统简介</a>
+<li><a href="#org9c14206">什么是持续集成系统</a></li>
+<li><a href="#orgbbae6cd">项目的限制和一些说明</a></li>
+<li><a href="#orgc0e4303">系统简介</a>
 <ul>
-<li><a href="#org0fa699a">项目文件</a></li>
-<li><a href="#org0e2c28f">项目的建立</a></li>
+<li><a href="#orge6ebe48">项目文件</a></li>
+<li><a href="#org5d2c24b">项目的建立</a></li>
 </ul>
 </li>
-<li><a href="#orgc124417">系统组件</a>
+<li><a href="#org5f1b278">系统组件</a>
 <ul>
-<li><a href="#org0880fdb">代码仓库观察者( <code>repo_observer.py</code>)</a></li>
-<li><a href="#orga80adc8">调度器 ( <code>dispatcher.py</code>)</a></li>
-<li><a href="#orgbf1a8ca">测试组件( <code>test_runner.py</code>)</a></li>
-<li><a href="#org9e56802">控制流程图</a></li>
-<li><a href="#org175bfe5">运行代码</a></li>
+<li><a href="#orgb500681">代码仓库观察者( <code>repo_observer.py</code>)</a></li>
+<li><a href="#org7661116">调度器 ( <code>dispatcher.py</code>)</a></li>
+<li><a href="#org9534992">测试组件( <code>test_runner.py</code>)</a></li>
+<li><a href="#org622d117">控制流程图</a></li>
+<li><a href="#orgb45fa18">运行代码</a></li>
 </ul>
 </li>
-<li><a href="#org8cb5c9c">错误处理</a></li>
-<li><a href="#org09b01e7">结论</a>
+<li><a href="#orga1e5c84">错误处理</a></li>
+<li><a href="#org5b6c8d8">结论</a>
 <ul>
-<li><a href="#orgda6a063">测试每个提交</a></li>
-<li><a href="#org7d6468e">智能测试</a></li>
-<li><a href="#org5777a68">真实报告</a></li>
-<li><a href="#org9968616">测试组件管理器</a></li>
+<li><a href="#org2c68452">测试每个提交</a></li>
+<li><a href="#orgd4ddadc">智能测试</a></li>
+<li><a href="#orge3c3f4e">真实报告</a></li>
+<li><a href="#orgabf5789">测试组件管理器</a></li>
 </ul>
 </li>
 </ul>
@@ -277,9 +277,9 @@ for the JavaScript code in this tag.
 </p>
 <hr />
 
-<div id="outline-container-org02f3d82" class="outline-2">
-<h2 id="org02f3d82">什么是持续集成系统</h2>
-<div class="outline-text-2" id="text-org02f3d82">
+<div id="outline-container-org9c14206" class="outline-2">
+<h2 id="org9c14206">什么是持续集成系统</h2>
+<div class="outline-text-2" id="text-org9c14206">
 <p>
 在软件开发工程中，我们需要确保开发的新功能以及修复的Bugs能够如我们所愿的去做。
 如何确保这些东西？那就是做测试。有时候，开发人员会在本地测试一下自己的改动是否安
@@ -310,9 +310,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org338cd61" class="outline-2">
-<h2 id="org338cd61">项目的限制和一些说明</h2>
-<div class="outline-text-2" id="text-org338cd61">
+<div id="outline-container-orgbbae6cd" class="outline-2">
+<h2 id="orgbbae6cd">项目的限制和一些说明</h2>
+<div class="outline-text-2" id="text-orgbbae6cd">
 <p>
 这个项目使用Git来作为测试使用的代码仓库。这里只会使用到一些标准的管理命令，所
 以如果你对Git不熟悉，但是对其他的版本控制系统(VCS)比较熟悉同样也可以使用这个教程。
@@ -354,53 +354,53 @@ CI系统中需要有报告者，其中测试组件将测试的结果发送给响
 </div>
 </div>
 
-<div id="outline-container-org23b03dd" class="outline-2">
-<h2 id="org23b03dd">系统简介</h2>
-<div class="outline-text-2" id="text-org23b03dd">
-</div><div id="outline-container-org0fa699a" class="outline-3">
-<h3 id="org0fa699a">项目文件</h3>
+<div id="outline-container-orgc0e4303" class="outline-2">
+<h2 id="orgc0e4303">系统简介</h2>
+<div class="outline-text-2" id="text-orgc0e4303">
+</div><div id="outline-container-orge6ebe48" class="outline-3">
+<h3 id="orge6ebe48">项目文件</h3>
 </div>
 
-<div id="outline-container-org0e2c28f" class="outline-3">
-<h3 id="org0e2c28f">项目的建立</h3>
+<div id="outline-container-org5d2c24b" class="outline-3">
+<h3 id="org5d2c24b">项目的建立</h3>
 </div>
 </div>
 
-<div id="outline-container-orgc124417" class="outline-2">
-<h2 id="orgc124417">系统组件</h2>
-<div class="outline-text-2" id="text-orgc124417">
-</div><div id="outline-container-org0880fdb" class="outline-3">
-<h3 id="org0880fdb">代码仓库观察者( <code>repo_observer.py</code>)</h3>
+<div id="outline-container-org5f1b278" class="outline-2">
+<h2 id="org5f1b278">系统组件</h2>
+<div class="outline-text-2" id="text-org5f1b278">
+</div><div id="outline-container-orgb500681" class="outline-3">
+<h3 id="orgb500681">代码仓库观察者( <code>repo_observer.py</code>)</h3>
 </div>
 
-<div id="outline-container-orga80adc8" class="outline-3">
-<h3 id="orga80adc8">调度器 ( <code>dispatcher.py</code>)</h3>
+<div id="outline-container-org7661116" class="outline-3">
+<h3 id="org7661116">调度器 ( <code>dispatcher.py</code>)</h3>
 </div>
 
-<div id="outline-container-orgbf1a8ca" class="outline-3">
-<h3 id="orgbf1a8ca">测试组件( <code>test_runner.py</code>)</h3>
-<div class="outline-text-3" id="text-orgbf1a8ca">
+<div id="outline-container-org9534992" class="outline-3">
+<h3 id="org9534992">测试组件( <code>test_runner.py</code>)</h3>
+<div class="outline-text-3" id="text-org9534992">
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">ThreadingTCPServer</span><span class="org-rainbow-delimiters-depth-1">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span class="org-rainbow-delimiters-depth-1">)</span>:
-    <span class="org-variable-name">dispatcher_server</span> = <span class="org-constant">None</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Holds the dispatcher server host/port information</span>
-    <span class="org-variable-name">last_communication</span> = <span class="org-constant">None</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Keeps track of last communication from dispatcher</span>
-    <span class="org-variable-name">busy</span> = <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Status flag</span>
-    <span class="org-variable-name">dead</span> = <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Status flag</span>
+<pre class="src src-python"><span style="color: #859900;">class</span> <span style="color: #268bd2;">ThreadingTCPServer</span><span style="color: #657b83;">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span style="color: #657b83;">)</span>:
+    <span style="color: #6c71c4;">dispatcher_server</span> = <span style="color: #268bd2;">None</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Holds the dispatcher server host/port information</span>
+    <span style="color: #6c71c4;">last_communication</span> = <span style="color: #268bd2;">None</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Keeps track of last communication from dispatcher</span>
+    <span style="color: #6c71c4;">busy</span> = <span style="color: #268bd2;">False</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Status flag</span>
+    <span style="color: #6c71c4;">dead</span> = <span style="color: #268bd2;">False</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Status flag</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9e56802" class="outline-3">
-<h3 id="org9e56802">控制流程图</h3>
-<div class="outline-text-3" id="text-org9e56802">
+<div id="outline-container-org622d117" class="outline-3">
+<h3 id="org622d117">控制流程图</h3>
+<div class="outline-text-3" id="text-org622d117">
 <p>
-    <a href="#org0b50072">Figure 1</a>描述了这个系统运行流程。这个流程图假定了所有这个三个文件(
+    <a href="#orgc34fb32">Figure 1</a>描述了这个系统运行流程。这个流程图假定了所有这个三个文件(
 <code>repo_observer.py</code> , <code>dispatcher.py</code> 以及 <code>test_runner.py</code>)已经正在运行。并且说
 明了每个进程在有新提交时需要执行的操作。
 </p>
 
-<div id="org0b50072" class="figure">
+<div id="orgc34fb32" class="figure">
 <p><img src="../img/control-flow.png" alt="control-flow.png" width="100%" />
 </p>
 <p><span class="figure-number">Figure 1: </span>控制流程图</p>
@@ -408,9 +408,9 @@ CI系统中需要有报告者，其中测试组件将测试的结果发送给响
 </div>
 </div>
 
-<div id="outline-container-org175bfe5" class="outline-3">
-<h3 id="org175bfe5">运行代码</h3>
-<div class="outline-text-3" id="text-org175bfe5">
+<div id="outline-container-orgb45fa18" class="outline-3">
+<h3 id="orgb45fa18">运行代码</h3>
+<div class="outline-text-3" id="text-orgb45fa18">
 <div class="org-src-container">
 <pre class="src src-sh">$ python dispatcher.py
 </pre>
@@ -420,7 +420,7 @@ CI系统中需要有报告者，其中测试组件将测试的结果发送给响
 <pre class="src src-sh">$ cd /path/to/test_repo
 $ touch new_file
 $ git add new_file
-$ git commit -m<span class="org-string">"new file"</span> new_file
+$ git commit -m<span style="color: #2aa198;">"new file"</span> new_file
 </pre>
 </div>
 </div>
@@ -429,9 +429,9 @@ $ git commit -m<span class="org-string">"new file"</span> new_file
 
 
 
-<div id="outline-container-org8cb5c9c" class="outline-2">
-<h2 id="org8cb5c9c">错误处理</h2>
-<div class="outline-text-2" id="text-org8cb5c9c">
+<div id="outline-container-orga1e5c84" class="outline-2">
+<h2 id="orga1e5c84">错误处理</h2>
+<div class="outline-text-2" id="text-orga1e5c84">
 <p>
 该CI系统包括一些简单的错误处理。如果你杀死了 <code>test_runner.py</code> 那么
 <code>dispatcher.py</code> 将会知道这个运行程序不再可用，并且将它从池中删除。你也可以强制杀
@@ -447,9 +447,9 @@ $ git commit -m<span class="org-string">"new file"</span> new_file
 </div>
 </div>
 
-<div id="outline-container-org09b01e7" class="outline-2">
-<h2 id="org09b01e7">结论</h2>
-<div class="outline-text-2" id="text-org09b01e7">
+<div id="outline-container-org5b6c8d8" class="outline-2">
+<h2 id="org5b6c8d8">结论</h2>
+<div class="outline-text-2" id="text-org5b6c8d8">
 <p>
 通过将问题分解为几个不同的过程，我们得以建立一个基础的分布式持续构建系统。每个
 进程之间通过socket请求来互相通信，这使得我们可以分布式的进行构建，同时会使得我们的
@@ -462,9 +462,9 @@ $ git commit -m<span class="org-string">"new file"</span> new_file
 </p>
 </div>
 
-<div id="outline-container-orgda6a063" class="outline-3">
-<h3 id="orgda6a063">测试每个提交</h3>
-<div class="outline-text-3" id="text-orgda6a063">
+<div id="outline-container-org2c68452" class="outline-3">
+<h3 id="org2c68452">测试每个提交</h3>
+<div class="outline-text-3" id="text-org2c68452">
 <p>
     当前的系统会周期性的检查最新的几次提交，并对最新的一次做自动构建。这里应该改
 进为每次提交都进行一次测试。为了做到这一点，我们可以改进周期检查器，对于每个最后
@@ -473,9 +473,9 @@ $ git commit -m<span class="org-string">"new file"</span> new_file
 </div>
 </div>
 
-<div id="outline-container-org7d6468e" class="outline-3">
-<h3 id="org7d6468e">智能测试</h3>
-<div class="outline-text-3" id="text-org7d6468e">
+<div id="outline-container-orgd4ddadc" class="outline-3">
+<h3 id="orgd4ddadc">智能测试</h3>
+<div class="outline-text-3" id="text-orgd4ddadc">
 <p>
     如果测试组件发现调度器没有响应，它就会停止运行，即使一个测试进行到了一半！如
 果让测试组件等待调度器一个周期性的时间（or indefinitely, 如果你对资源管理不关心
@@ -486,9 +486,9 @@ $ git commit -m<span class="org-string">"new file"</span> new_file
 </div>
 </div>
 
-<div id="outline-container-org5777a68" class="outline-3">
-<h3 id="org5777a68">真实报告</h3>
-<div class="outline-text-3" id="text-org5777a68">
+<div id="outline-container-orge3c3f4e" class="outline-3">
+<h3 id="orge3c3f4e">真实报告</h3>
+<div class="outline-text-3" id="text-orge3c3f4e">
 <p>
 在真实的CI系统中，我们会提供一个测试结果的报告到报告服务，这个报告服务有以下
 几点的功能：
@@ -506,9 +506,9 @@ $ git commit -m<span class="org-string">"new file"</span> new_file
 </div>
 </div>
 
-<div id="outline-container-org9968616" class="outline-3">
-<h3 id="org9968616">测试组件管理器</h3>
-<div class="outline-text-3" id="text-org9968616">
+<div id="outline-container-orgabf5789" class="outline-3">
+<h3 id="orgabf5789">测试组件管理器</h3>
+<div class="outline-text-3" id="text-orgabf5789">
 <p>
 当前，你需要手动的运行 <code>test_runner.py</code> 文件来启动一个测试组件。相反，你可以通过创建一个
 测试组件管理器。它能够评估调度器发送的测试请求的负载，并且相应的调整测试

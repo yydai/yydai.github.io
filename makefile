@@ -10,3 +10,4 @@ publish:
 	@git commit -m $(messages)
 	@git pull
 	@git push origin
+	@echo "===============Success================"

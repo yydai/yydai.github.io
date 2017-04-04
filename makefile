@@ -3,8 +3,10 @@ messages	= "Auto published by yydai at $(pub_data)"
 
 
 publish:
-	echo "Begin publish the site, please wait..."
-	git add .
-	git commit -m $(messages)
-	git pull
-	git push origin
+	@echo "======================================"
+	@echo "Begin publish the site, please wait..."
+	@echo "======================================"
+	@git add .
+	@git commit -m $(messages)
+	@git pull
+	@git push origin

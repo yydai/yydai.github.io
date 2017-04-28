@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-04-03 Mon 19:04 -->
+<!-- 2017-04-28 Fri 23:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog的搭建及其特性</title>
@@ -303,6 +303,26 @@ for the JavaScript code in this tag.
 </ul>
 
 <p>
+需要编译生成html文件时，运行 <code>M-x org-publish-all</code>, 如果要发布到github, 运行 =M-x compile=，会调用public<sub>html下的makefile文件</sub>，
+这一步会将项目自动commit, 然后push到github。 下面是makefile, 非常简单。
+</p>
+<div class="org-src-container">
+<pre class="src src-makefile"><span style="color: #6c71c4;">pub_data</span>        = <span style="color: #2aa198;">`date +'%y.%m.%d %H:%M:%S'`</span>
+<span style="color: #6c71c4;">messages</span>        = <span style="color: #2aa198;">"Auto published by yydai at $(</span><span style="color: #6c71c4;">pub_data</span><span style="color: #2aa198;">)"</span>
+
+<span style="color: #b58900;">publish</span>:
+     @echo <span style="color: #2aa198;">"======================================"</span>
+     @echo <span style="color: #2aa198;">"Begin publish the site, please wait..."</span>
+     @echo <span style="color: #2aa198;">"======================================"</span>
+     @git add .
+     @git commit -m $<span style="color: #839496;">(</span><span style="color: #6c71c4;">messages</span><span style="color: #839496;">)</span>
+     @git pull
+     @git push origin
+     @echo <span style="color: #2aa198;">"===============Success================"</span>
+</pre>
+</div>
+
+<p>
 需要改进的地方：
 </p>
 <ul class="org-ul">
@@ -367,36 +387,36 @@ for the JavaScript code in this tag.
 这个博客完全是使用的Org，其中的配置如下：
 </p>
 <div class="org-src-container">
-<pre class="src src-lisp">;; -n &#21487;&#20197;&#26174;&#31034;&#34892;&#21495;
-(require 'org-publish)
-(setq org-publish-project-alist
-      '(
-        (<span style="color: #2aa198;">"blog-notes"</span>
-         :base-directory <span style="color: #2aa198;">"~/org/blog/"</span>
-         :base-extension <span style="color: #2aa198;">"org"</span>
-         :publishing-directory <span style="color: #2aa198;">"~/org/dayigu.github.com/"</span>
-         :recursive t
-         :publishing-function org-publish-org-to-html
-         :headline-levels 4
-         :section-numbers nil
-         :auto-preamble t
-         :auto-sitemap t                ; Generate sitemap.org automagically...
-         :sitemap-filename <span style="color: #2aa198;">"sitemap.org"</span>  ; ... call it sitemap.org (it's the default)...
-         :sitemap-title <span style="color: #2aa198;">"Sitemap"</span>         ; ... with title 'Sitemap'.
-         :author <span style="color: #2aa198;">"dayigu"</span>
-         :email <span style="color: #2aa198;">"dayigu at gmail dot com"</span>
-         :style    <span style="color: #2aa198;">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/&gt;"</span>
-         )
-        (<span style="color: #2aa198;">"blog-static"</span>
-         :base-directory <span style="color: #2aa198;">"~/org/blog/"</span>
-         :base-extension <span style="color: #2aa198;">"css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"</span>
-         :publishing-directory <span style="color: #2aa198;">"~/org/dayigu.github.com/"</span>
-         :recursive t
-         :publishing-function org-publish-attachment
-         )
-        (<span style="color: #2aa198;">"blog"</span> :components (<span style="color: #2aa198;">"blog-notes"</span> <span style="color: #2aa198;">"blog-static"</span>))
-        ;;
-        ))
+<pre class="src src-lisp"><span style="color: #586e75; font-style: italic;">;; </span><span style="color: #586e75; font-style: italic;">-n &#21487;&#20197;&#26174;&#31034;&#34892;&#21495;</span>
+<span style="color: #839496;">(</span><span style="color: #859900;">require</span> '<span style="color: #268bd2;">org-publish</span><span style="color: #839496;">)</span>
+<span style="color: #839496;">(</span>setq org-publish-project-alist
+      '<span style="color: #2aa198;">(</span>
+        <span style="color: #b58900;">(</span><span style="color: #2aa198;">"blog-notes"</span>
+         <span style="color: #6c71c4;">:base-directory</span> <span style="color: #2aa198;">"~/org/blog/"</span>
+         <span style="color: #6c71c4;">:base-extension</span> <span style="color: #2aa198;">"org"</span>
+         <span style="color: #6c71c4;">:publishing-directory</span> <span style="color: #2aa198;">"~/org/dayigu.github.com/"</span>
+         <span style="color: #6c71c4;">:recursive</span> t
+         <span style="color: #6c71c4;">:publishing-function</span> org-publish-org-to-html
+         <span style="color: #6c71c4;">:headline-levels</span> 4
+         <span style="color: #6c71c4;">:section-numbers</span> nil
+         <span style="color: #6c71c4;">:auto-preamble</span> t
+         <span style="color: #6c71c4;">:auto-sitemap</span> t                <span style="color: #586e75; font-style: italic;">; Generate sitemap.org automagically...</span>
+         <span style="color: #6c71c4;">:sitemap-filename</span> <span style="color: #2aa198;">"sitemap.org"</span>  <span style="color: #586e75; font-style: italic;">; ... call it sitemap.org (it's the default)...</span>
+         <span style="color: #6c71c4;">:sitemap-title</span> <span style="color: #2aa198;">"Sitemap"</span>         <span style="color: #586e75; font-style: italic;">; ... with title 'Sitemap'.</span>
+         <span style="color: #6c71c4;">:author</span> <span style="color: #2aa198;">"dayigu"</span>
+         <span style="color: #6c71c4;">:email</span> <span style="color: #2aa198;">"dayigu at gmail dot com"</span>
+         <span style="color: #6c71c4;">:style</span>    <span style="color: #2aa198;">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/&gt;"</span>
+         <span style="color: #b58900;">)</span>
+        <span style="color: #b58900;">(</span><span style="color: #2aa198;">"blog-static"</span>
+         <span style="color: #6c71c4;">:base-directory</span> <span style="color: #2aa198;">"~/org/blog/"</span>
+         <span style="color: #6c71c4;">:base-extension</span> <span style="color: #2aa198;">"css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"</span>
+         <span style="color: #6c71c4;">:publishing-directory</span> <span style="color: #2aa198;">"~/org/dayigu.github.com/"</span>
+         <span style="color: #6c71c4;">:recursive</span> t
+         <span style="color: #6c71c4;">:publishing-function</span> org-publish-attachment
+         <span style="color: #b58900;">)</span>
+        <span style="color: #b58900;">(</span><span style="color: #2aa198;">"blog"</span> <span style="color: #6c71c4;">:components</span> <span style="color: #859900;">(</span><span style="color: #2aa198;">"blog-notes"</span> <span style="color: #2aa198;">"blog-static"</span><span style="color: #859900;">)</span><span style="color: #b58900;">)</span>
+        <span style="color: #586e75; font-style: italic;">;;</span>
+        <span style="color: #2aa198;">)</span><span style="color: #839496;">)</span>
 </pre>
 </div>
 </div>

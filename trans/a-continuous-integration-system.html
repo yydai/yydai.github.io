@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-04-03 Mon 19:04 -->
+<!-- 2017-04-04 Tue 20:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>持续集成系统</title>
@@ -246,18 +246,18 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgb500681">代码仓库观察者( <code>repo_observer.py</code>)</a></li>
 <li><a href="#org7661116">调度器 ( <code>dispatcher.py</code>)</a></li>
-<li><a href="#org9534992">测试组件( <code>test_runner.py</code>)</a></li>
-<li><a href="#org622d117">控制流程图</a></li>
-<li><a href="#orgb45fa18">运行代码</a></li>
+<li><a href="#org61b3dc5">测试组件( <code>test_runner.py</code>)</a></li>
+<li><a href="#org078ed62">控制流程图</a></li>
+<li><a href="#orgbc204ac">运行代码</a></li>
 </ul>
 </li>
-<li><a href="#orga1e5c84">错误处理</a></li>
-<li><a href="#org5b6c8d8">结论</a>
+<li><a href="#org9dd50cd">错误处理</a></li>
+<li><a href="#orgf33dddd">结论</a>
 <ul>
-<li><a href="#org2c68452">测试每个提交</a></li>
-<li><a href="#orgd4ddadc">智能测试</a></li>
-<li><a href="#orge3c3f4e">真实报告</a></li>
-<li><a href="#orgabf5789">测试组件管理器</a></li>
+<li><a href="#orge7692a8">测试每个提交</a></li>
+<li><a href="#orgf0d97d2">智能测试</a></li>
+<li><a href="#org9445ba8">真实报告</a></li>
+<li><a href="#org5131e00">测试组件管理器</a></li>
 </ul>
 </li>
 </ul>
@@ -357,29 +357,396 @@ CI系统中需要有报告者，其中测试组件将测试的结果发送给响
 <div id="outline-container-orgc0e4303" class="outline-2">
 <h2 id="orgc0e4303">系统简介</h2>
 <div class="outline-text-2" id="text-orgc0e4303">
-</div><div id="outline-container-orge6ebe48" class="outline-3">
+<p>
+这个持续集成系统包含3个部分：
+</p>
+<ul class="org-ul">
+<li>观察者(an observer)</li>
+<li>测试任务调度器(a test job dispatcher)</li>
+<li>测试执行器(a test runner)</li>
+</ul>
+<p>
+其中观察者会监控代码仓库的变化，一旦它监测到了代码的提交，它就会通知
+测试任务调度器来进行调到。测试任务调度器会把提交代码的 <code>commit id</code>
+告诉测试执行器，然后进行测试。
+</p>
+
+<p>
+设计一个 <code>CI</code> 系统的架构有很多种的方式，我们可以将 <code>观察者、</code> <code>调度器</code> 以及
+<code>测试执行器</code> 在一个进程中执行。 但是这种方式不是很好，因为没有了负载处理，
+如果有很多的提交需要去处理，这个 <code>CI</code> 系统是不能负担的起的，从而导致大量
+的任务积压。另一个缺点是，这样的系统不具有容错鲁棒性。例如，如果执行测试
+失败或者突然断电，因为没有后备系统(fallback systems), 后面的测试就不会
+执行。一个理想的系统应该具有以下的两个特点：一是，能处理足够多的任务；二是，
+在系统崩溃后能做一些补偿处理。
+</p>
+
+<p>
+为了使我们的 <code>CI</code> 系统更加的鲁棒，以及承受更多的负载，我们对每一个模块分配一个
+独立的进程，对每个进程我们可以有多个的实例。当有多个的测试任务需要同时去做的
+时候，这是非常有用的。
+</p>
+
+<p>
+在这个项目中，每个模块不仅运行在独立的进程中，而且他们通过 <code>sockets</code> 来
+进行通信，这样我们就可以使他们分别运行在独立的主机上。每个模块会分配一个
+唯一的 <code>host/port</code> 地址，同时每个进程通过分配给它们的地址来发送消息。
+</p>
+
+<p>
+这种设计使我们快速部署到一个分布式系统上，用来应对硬件故障。我们可以让
+<code>observer</code> ， <code>dispatcher</code> ， <code>test runner</code> ，分别运行在不同的机器上，它们之间可以通过网络进行通信。如果任何
+一个机器不能工作，我们可以马上启用一个新的机器代替失败的机器。这样系统就具有了
+一定的容错性(fail-safe)。
+</p>
+
+<p>
+该项目不包括自动恢复代码，因为这取决于分布式系统的架构，但在现实世界中，
+CI系统在这样的分布式环境中运行，因此可以进行故障转移冗余。（例如：如果
+一个进程所在的机器不能工作，我们可以替换到备用机器上）
+</p>
+
+<p>
+为了达到这个项目的目的，我们会在本地手动的启动每个进程，并且分配不同的
+本地端口。
+</p>
+</div>
+
+<div id="outline-container-orge6ebe48" class="outline-3">
 <h3 id="orge6ebe48">项目文件</h3>
+<div class="outline-text-3" id="text-orge6ebe48">
+<p>
+项目中每一个模块包含的Python文件如下：
+</p>
+<ul class="org-ul">
+<li>仓库观察者: <code>repo_observer.py</code></li>
+<li>测试调度器: <code>dispatcher.py</code></li>
+<li>测试执行器: <code>test_runner.py</code></li>
+</ul>
+<p>
+系统中的每个进程通过 <code>sockets</code> 来进行通信，因为这个项目各模块之间传递的
+信息需要共享，所以这里会有一个 <code>helpers.py</code> 包含这些信息。有了
+=helpers.py=就不需要在每个文件中都去重复包含一些相同功能的代码了。
+</p>
+
+<p>
+同时，我们还会创建一个供这些进程使用的脚本文件。相比于使用Python中的
+<code>os</code> 或者 <code>subprocess</code> 来执行 <code>shell</code> 或 <code>git</code> 命令，使用脚本文件要更加的方
+便。
+</p>
+
+<p>
+最后，会有一个测试文件，其中包含两个例子来测试这个 <code>CI</code> 系统是否能正常工作。
+如果正常的话，一个测试会通过，另一个会故意让其失败。
+</p>
+</div>
 </div>
 
 <div id="outline-container-org5d2c24b" class="outline-3">
 <h3 id="org5d2c24b">项目的建立</h3>
+<div class="outline-text-3" id="text-org5d2c24b">
+<p>
+虽然这个CI系统准备在分布式系统中工作，但让我们首先在一台本地计算机上本地运
+行这一切，这样我们可以掌握CI系统的工作原理，而不会增加运行到网络相关问题
+的风险。如果希望在分布式环境中运行，可以在自己的机器上运行每个组件。
+</p>
+
+<p>
+持续集成系统通过监测代码仓库的变化来运行测试，我们需要建立一个 <code>CI</code> 系统监测的仓库。
+</p>
+
+<p>
+我们就创建一个 <code>test_repo</code> 的仓库：
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">$ mkdir test_repo
+$ cd test_repo
+$ git init
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-shell">$ cp -r /this/directory/tests /path/to/test_repo/
+$ cd /path/to/test<span style="color: #2aa198;">\_</span>repo
+$ git add tests/
+$ git commit -m <span style="color: #2aa198;">"add tests"</span>
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-shell">$ git clone /path/to/test_repo test_repo_clone_obs
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-shell">$ git clone /path/to/test_repo test_repo_clone_runner
+</pre>
 </div>
 </div>
+</div>
+</div>
+
 
 <div id="outline-container-org5f1b278" class="outline-2">
 <h2 id="org5f1b278">系统组件</h2>
 <div class="outline-text-2" id="text-org5f1b278">
 </div><div id="outline-container-orgb500681" class="outline-3">
 <h3 id="orgb500681">代码仓库观察者( <code>repo_observer.py</code>)</h3>
+<div class="outline-text-3" id="text-orgb500681">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">poll</span><span style="color: #657b83;">()</span>:
+    <span style="color: #6c71c4;">parser</span> = argparse.ArgumentParser<span style="color: #657b83;">()</span>
+    parser.add_argument<span style="color: #657b83;">(</span><span style="color: #2aa198;">"--dispatcher-server"</span>,
+                        <span style="color: #6c71c4;">help</span>=<span style="color: #2aa198;">"dispatcher host:port, "</span> \
+                        <span style="color: #2aa198;">"by default it uses localhost:8888"</span>,
+                        default=<span style="color: #2aa198;">"localhost:8888"</span>,
+                        action=<span style="color: #2aa198;">"store"</span><span style="color: #657b83;">)</span>
+    parser.add_argument<span style="color: #657b83;">(</span><span style="color: #2aa198;">"repo"</span>, metavar=<span style="color: #2aa198;">"REPO"</span>, <span style="color: #6c71c4;">type</span>=<span style="color: #6c71c4;">str</span>,
+                        <span style="color: #6c71c4;">help</span>=<span style="color: #2aa198;">"path to the repository this will observe"</span><span style="color: #657b83;">)</span>
+    <span style="color: #6c71c4;">args</span> = parser.parse_args<span style="color: #657b83;">()</span>
+    <span style="color: #6c71c4;">dispatcher_host</span>, <span style="color: #6c71c4;">dispatcher_port</span> = args.dispatcher_server.split<span style="color: #657b83;">(</span><span style="color: #2aa198;">":"</span><span style="color: #657b83;">)</span>
+</pre>
 </div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">while</span> <span style="color: #268bd2;">True</span>:
+    <span style="color: #859900;">try</span>:
+        <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">call the bash script that will update the repo and check</span>
+        <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for changes. If there's a change, it will drop a .commit_id file</span>
+        <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">with the latest commit in the current working directory</span>
+        subprocess.check_output<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #2aa198;">"./update_repo.sh"</span>, args.repo<span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+    <span style="color: #859900;">except</span> subprocess.CalledProcessError <span style="color: #859900;">as</span> e:
+        <span style="color: #859900;">raise</span> <span style="color: #268bd2;">Exception</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">"Could not update and check repository. "</span> +
+                        <span style="color: #2aa198;">"Reason: %s"</span> % e.output<span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">!/bin/</span><span style="color: #859900;">bash</span>
+<span style="color: #6c71c4;">source</span> run_or_fail.sh
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-shell">bash rm -f .commit_id
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-shell">run_or_fail <span style="color: #2aa198;">"Repository folder not found!"</span> pushd $<span style="color: #6c71c4;">1</span> 1&gt; /dev/null
+run_or_fail <span style="color: #2aa198;">"Could not reset git"</span> git reset --hard HEAD
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #6c71c4;">COMMIT</span>=$<span style="color: #657b83;">(</span>run_or_fail <span style="color: #2aa198;">"Could not call 'git log' on repository"</span> git log -n1<span style="color: #657b83;">)</span>
+<span style="color: #859900;">if</span> <span style="color: #657b83;">[</span> $<span style="color: #6c71c4;">?</span> != 0 <span style="color: #657b83;">]</span>; <span style="color: #859900;">then</span>
+  <span style="color: #6c71c4;">echo</span> <span style="color: #2aa198;">"Could not call 'git log' on repository"</span>
+  <span style="color: #859900;">exit</span> 1
+<span style="color: #859900;">fi</span>
+<span style="color: #6c71c4;">COMMIT_ID</span>=<span style="color: #d33682;">`echo $COMMIT | awk '{ print $2 }'`</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-shell">run_or_fail <span style="color: #2aa198;">"Could not pull from repository"</span> git pull
+<span style="color: #6c71c4;">COMMIT</span>=$<span style="color: #657b83;">(</span>run_or_fail <span style="color: #2aa198;">"Could not call 'git log' on repository"</span> git log -n1<span style="color: #657b83;">)</span>
+<span style="color: #859900;">if</span> <span style="color: #657b83;">[</span> $<span style="color: #6c71c4;">?</span> != 0 <span style="color: #657b83;">]</span>; <span style="color: #859900;">then</span>
+  <span style="color: #6c71c4;">echo</span> <span style="color: #2aa198;">"Could not call 'git log' on repository"</span>
+  <span style="color: #859900;">exit</span> 1
+<span style="color: #859900;">fi</span>
+<span style="color: #6c71c4;">NEW_COMMIT_ID</span>=<span style="color: #d33682;">`echo $COMMIT | awk '{ print $2 }'`</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">if the id changed, then write it to a file</span>
+<span style="color: #859900;">if</span> <span style="color: #657b83;">[</span> $<span style="color: #6c71c4;">NEW_COMMIT_ID</span> != $<span style="color: #6c71c4;">COMMIT_ID</span> <span style="color: #657b83;">]</span>; <span style="color: #859900;">then</span>
+  <span style="color: #6c71c4;">popd</span> 1&gt; /dev/null
+  <span style="color: #6c71c4;">echo</span> $<span style="color: #6c71c4;">NEW_COMMIT_ID</span> &gt; .commit_id
+<span style="color: #859900;">fi</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">if</span> os.path.isfile<span style="color: #657b83;">(</span><span style="color: #2aa198;">".commit_id"</span><span style="color: #657b83;">)</span>:
+    <span style="color: #859900;">try</span>:
+        <span style="color: #6c71c4;">response</span> = helpers.communicate<span style="color: #657b83;">(</span>dispatcher_host,
+                                       <span style="color: #6c71c4;">int</span><span style="color: #2aa198;">(</span>dispatcher_port<span style="color: #2aa198;">)</span>,
+                                       <span style="color: #2aa198;">"status"</span><span style="color: #657b83;">)</span>
+    <span style="color: #859900;">except</span> socket.error <span style="color: #859900;">as</span> e:
+        <span style="color: #859900;">raise</span> <span style="color: #268bd2;">Exception</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">"Could not communicate with dispatcher server: %s"</span> % e<span style="color: #657b83;">)</span>
+<span style="color: #859900;">if</span> response == <span style="color: #2aa198;">"OK"</span>:
+        <span style="color: #6c71c4;">commit</span> = <span style="color: #2aa198;">""</span>
+        <span style="color: #859900;">with</span> <span style="color: #6c71c4;">open</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">".commit_id"</span>, <span style="color: #2aa198;">"r"</span><span style="color: #657b83;">)</span> <span style="color: #859900;">as</span> f:
+            <span style="color: #6c71c4;">commit</span> = f.readline<span style="color: #657b83;">()</span>
+        <span style="color: #6c71c4;">response</span> = helpers.communicate<span style="color: #657b83;">(</span>dispatcher_host,
+                                       <span style="color: #6c71c4;">int</span><span style="color: #2aa198;">(</span>dispatcher_port<span style="color: #2aa198;">)</span>,
+                                       <span style="color: #2aa198;">"dispatch:%s"</span> % commit<span style="color: #657b83;">)</span>
+        <span style="color: #859900;">if</span> response != <span style="color: #2aa198;">"OK"</span>:
+            <span style="color: #859900;">raise</span> <span style="color: #268bd2;">Exception</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">"Could not dispatch the test: %s"</span> %
+            response<span style="color: #657b83;">)</span>
+        <span style="color: #859900;">print</span> <span style="color: #2aa198;">"dispatched!"</span>
+    <span style="color: #859900;">else</span>:
+        <span style="color: #859900;">raise</span> <span style="color: #268bd2;">Exception</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">"Could not dispatch the test: %s"</span> %
+        response<span style="color: #657b83;">)</span>
+time.sleep<span style="color: #657b83;">(</span>5<span style="color: #657b83;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
 
 <div id="outline-container-org7661116" class="outline-3">
 <h3 id="org7661116">调度器 ( <code>dispatcher.py</code>)</h3>
+<div class="outline-text-3" id="text-org7661116">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">serve</span><span style="color: #657b83;">()</span>:
+    <span style="color: #6c71c4;">parser</span> = argparse.ArgumentParser<span style="color: #657b83;">()</span>
+    parser.add_argument<span style="color: #657b83;">(</span><span style="color: #2aa198;">"--host"</span>,
+                        <span style="color: #6c71c4;">help</span>=<span style="color: #2aa198;">"dispatcher's host, by default it uses localhost"</span>,
+                        default=<span style="color: #2aa198;">"localhost"</span>,
+                        action=<span style="color: #2aa198;">"store"</span><span style="color: #657b83;">)</span>
+    parser.add_argument<span style="color: #657b83;">(</span><span style="color: #2aa198;">"--port"</span>,
+                        <span style="color: #6c71c4;">help</span>=<span style="color: #2aa198;">"dispatcher's port, by default it uses 8888"</span>,
+                        default=8888,
+                        action=<span style="color: #2aa198;">"store"</span><span style="color: #657b83;">)</span>
+    <span style="color: #6c71c4;">args</span> = parser.parse_args<span style="color: #657b83;">()</span>
+</pre>
 </div>
 
-<div id="outline-container-org9534992" class="outline-3">
-<h3 id="org9534992">测试组件( <code>test_runner.py</code>)</h3>
-<div class="outline-text-3" id="text-org9534992">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #6c71c4;">server</span> = ThreadingTCPServer<span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>args.host, <span style="color: #6c71c4;">int</span><span style="color: #b58900;">(</span>args.port<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>, DispatcherHandler<span style="color: #657b83;">)</span>
+    <span style="color: #859900;">print</span> `serving on %s:%s` % <span style="color: #657b83;">(</span>args.host, <span style="color: #6c71c4;">int</span><span style="color: #2aa198;">(</span>args.port<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+
+    ...
+
+    <span style="color: #6c71c4;">runner_heartbeat</span> = threading.Thread<span style="color: #657b83;">(</span>target=runner_checker, args=<span style="color: #2aa198;">(</span>server,<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+    <span style="color: #6c71c4;">redistributor</span> = threading.Thread<span style="color: #657b83;">(</span>target=redistribute, args=<span style="color: #2aa198;">(</span>server,<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+    <span style="color: #859900;">try</span>:
+        runner_heartbeat.start<span style="color: #657b83;">()</span>
+        redistributor.start<span style="color: #657b83;">()</span>
+        <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Activate the server; this will keep running until you</span>
+        <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">interrupt the program with Ctrl+C or Cmd+C</span>
+        server.serve_forever<span style="color: #657b83;">()</span>
+    <span style="color: #859900;">except</span> <span style="color: #657b83;">(</span><span style="color: #268bd2;">KeyboardInterrupt</span>, <span style="color: #268bd2;">Exception</span><span style="color: #657b83;">)</span>:
+        <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">if any exception occurs, kill the thread</span>
+        <span style="color: #6c71c4;">server.dead</span> = <span style="color: #268bd2;">True</span>
+        runner_heartbeat.join<span style="color: #657b83;">()</span>
+        redistributor.join<span style="color: #657b83;">()</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">runner_checker</span><span style="color: #657b83;">(</span>server<span style="color: #657b83;">)</span>:
+        <span style="color: #859900;">def</span> <span style="color: #b58900;">manage_commit_lists</span><span style="color: #657b83;">(</span>runner<span style="color: #657b83;">)</span>:
+            <span style="color: #859900;">for</span> commit, assigned_runner <span style="color: #859900;">in</span> server.dispatched_commits.iteritems<span style="color: #657b83;">()</span>:
+                <span style="color: #859900;">if</span> assigned_runner == runner:
+                    <span style="color: #859900;">del</span> server.dispatched_commits<span style="color: #657b83;">[</span>commit<span style="color: #657b83;">]</span>
+                    server.pending_commits.append<span style="color: #657b83;">(</span>commit<span style="color: #657b83;">)</span>
+                    <span style="color: #859900;">break</span>
+            server.runners.remove<span style="color: #657b83;">(</span>runner<span style="color: #657b83;">)</span>
+        <span style="color: #859900;">while</span> <span style="color: #859900;">not</span> server.dead:
+            time.sleep<span style="color: #657b83;">(</span>1<span style="color: #657b83;">)</span>
+            <span style="color: #859900;">for</span> runner <span style="color: #859900;">in</span> server.runners:
+                <span style="color: #6c71c4;">s</span> = socket.socket<span style="color: #657b83;">(</span>socket.AF_INET, socket.SOCK_STREAM<span style="color: #657b83;">)</span>
+                <span style="color: #859900;">try</span>:
+                    <span style="color: #6c71c4;">response</span> = helpers.communicate<span style="color: #657b83;">(</span>runner<span style="color: #2aa198;">[</span><span style="color: #2aa198;">"host"</span><span style="color: #2aa198;">]</span>,
+                                                   <span style="color: #6c71c4;">int</span><span style="color: #2aa198;">(</span>runner<span style="color: #b58900;">[</span><span style="color: #2aa198;">"port"</span><span style="color: #b58900;">]</span><span style="color: #2aa198;">)</span>,
+                                                   <span style="color: #2aa198;">"ping"</span><span style="color: #657b83;">)</span>
+                    <span style="color: #859900;">if</span> response != <span style="color: #2aa198;">"pong"</span>:
+                        <span style="color: #859900;">print</span> <span style="color: #2aa198;">"removing runner %s"</span> % runner
+                        manage_commit_lists<span style="color: #657b83;">(</span>runner<span style="color: #657b83;">)</span>
+                <span style="color: #859900;">except</span> socket.error <span style="color: #859900;">as</span> e:
+                    manage_commit_lists<span style="color: #657b83;">(</span>runner<span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">redistribute</span><span style="color: #657b83;">(</span>server<span style="color: #657b83;">)</span>:
+    <span style="color: #859900;">while</span> <span style="color: #859900;">not</span> server.dead:
+        <span style="color: #859900;">for</span> commit <span style="color: #859900;">in</span> server.pending_commits:
+            <span style="color: #859900;">print</span> <span style="color: #2aa198;">"running redistribute"</span>
+            <span style="color: #859900;">print</span> server.pending_commits
+            dispatch_tests<span style="color: #657b83;">(</span>server, commit<span style="color: #657b83;">)</span>
+            time.sleep<span style="color: #657b83;">(</span>5<span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">dispatch_tests</span><span style="color: #657b83;">(</span>server, commit_id<span style="color: #657b83;">)</span>:
+    <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">NOTE: usually we don't run this forever</span>
+    <span style="color: #859900;">while</span> <span style="color: #268bd2;">True</span>:
+        <span style="color: #859900;">print</span> <span style="color: #2aa198;">"trying to dispatch to runners"</span>
+        <span style="color: #859900;">for</span> runner <span style="color: #859900;">in</span> server.runners:
+            <span style="color: #6c71c4;">response</span> = helpers.communicate<span style="color: #657b83;">(</span>runner<span style="color: #2aa198;">[</span><span style="color: #2aa198;">"host"</span><span style="color: #2aa198;">]</span>,
+                                           <span style="color: #6c71c4;">int</span><span style="color: #2aa198;">(</span>runner<span style="color: #b58900;">[</span><span style="color: #2aa198;">"port"</span><span style="color: #b58900;">]</span><span style="color: #2aa198;">)</span>,
+                                           <span style="color: #2aa198;">"runtest:%s"</span> % commit_id<span style="color: #657b83;">)</span>
+            <span style="color: #859900;">if</span> response == <span style="color: #2aa198;">"OK"</span>:
+                <span style="color: #859900;">print</span> <span style="color: #2aa198;">"adding id %s"</span> % commit_id
+                <span style="color: #6c71c4;">server.dispatched_commits</span><span style="color: #657b83;">[</span>commit_id<span style="color: #657b83;">]</span> = runner
+                <span style="color: #859900;">if</span> commit_id <span style="color: #859900;">in</span> server.pending_commits:
+                    server.pending_commits.remove<span style="color: #657b83;">(</span>commit_id<span style="color: #657b83;">)</span>
+                <span style="color: #859900;">return</span>
+        time.sleep<span style="color: #657b83;">(</span>2<span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">class</span> <span style="color: #268bd2;">ThreadingTCPServer</span><span style="color: #657b83;">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span style="color: #657b83;">)</span>:
+    <span style="color: #6c71c4;">runners</span> = <span style="color: #657b83;">[]</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Keeps track of test runner pool</span>
+    <span style="color: #6c71c4;">dead</span> = <span style="color: #268bd2;">False</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Indicate to other threads that we are no longer running</span>
+    <span style="color: #6c71c4;">dispatched_commits</span> = <span style="color: #657b83;">{}</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Keeps track of commits we dispatched</span>
+    <span style="color: #6c71c4;">pending_commits</span> = <span style="color: #657b83;">[]</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Keeps track of commits we have yet to dispatch</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">class</span> <span style="color: #268bd2;">DispatcherHandler</span><span style="color: #657b83;">(</span>SocketServer.BaseRequestHandler<span style="color: #657b83;">)</span>:
+    <span style="color: #d33682;">"""</span>
+<span style="color: #d33682;">    The RequestHandler class for our dispatcher.</span>
+<span style="color: #d33682;">    This will dispatch test runners against the incoming commit</span>
+<span style="color: #d33682;">    and handle their requests and test results</span>
+<span style="color: #d33682;">    """</span>
+    <span style="color: #6c71c4;">command_re</span> = re.<span style="color: #6c71c4;">compile</span><span style="color: #657b83;">(</span>r<span style="color: #2aa198;">"(\w+)(:.+)*"</span><span style="color: #657b83;">)</span>
+    <span style="color: #6c71c4;">BUF_SIZE</span> = 1024
+    <span style="color: #859900;">def</span> <span style="color: #b58900;">handle</span><span style="color: #657b83;">(</span><span style="color: #859900;">self</span><span style="color: #657b83;">)</span>:
+        <span style="color: #859900;">self</span>.data = <span style="color: #859900;">self</span>.request.recv<span style="color: #657b83;">(</span><span style="color: #859900;">self</span>.BUF_SIZE<span style="color: #657b83;">)</span>.strip<span style="color: #657b83;">()</span>
+        <span style="color: #6c71c4;">command_groups</span> = <span style="color: #859900;">self</span>.command_re.match<span style="color: #657b83;">(</span><span style="color: #859900;">self</span>.data<span style="color: #657b83;">)</span>
+        <span style="color: #859900;">if</span> <span style="color: #859900;">not</span> command_groups:
+            <span style="color: #859900;">self</span>.request.sendall<span style="color: #657b83;">(</span><span style="color: #2aa198;">"Invalid command"</span><span style="color: #657b83;">)</span>
+            <span style="color: #859900;">return</span>
+        <span style="color: #6c71c4;">command</span> = command_groups.group<span style="color: #657b83;">(</span>1<span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">if</span> command == <span style="color: #2aa198;">"status"</span>:
+    <span style="color: #859900;">print</span> <span style="color: #2aa198;">"in status"</span>
+    <span style="color: #859900;">self</span>.request.sendall<span style="color: #657b83;">(</span><span style="color: #2aa198;">"OK"</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">elif</span> command == <span style="color: #2aa198;">"register"</span>:
+            <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Add this test runner to our pool</span>
+            <span style="color: #859900;">print</span> <span style="color: #2aa198;">"register"</span>
+            <span style="color: #6c71c4;">address</span> = command_groups.group<span style="color: #657b83;">(</span>2<span style="color: #657b83;">)</span>
+            <span style="color: #6c71c4;">host</span>, <span style="color: #6c71c4;">port</span> = re.findall<span style="color: #657b83;">(</span>r<span style="color: #2aa198;">":(\w*)"</span>, address<span style="color: #657b83;">)</span>
+            <span style="color: #6c71c4;">runner</span> = <span style="color: #657b83;">{</span><span style="color: #2aa198;">"host"</span>: host, <span style="color: #2aa198;">"port"</span>:port<span style="color: #657b83;">}</span>
+            <span style="color: #859900;">self</span>.server.runners.append<span style="color: #657b83;">(</span>runner<span style="color: #657b83;">)</span>
+            <span style="color: #859900;">self</span>.request.sendall<span style="color: #657b83;">(</span><span style="color: #2aa198;">"OK"</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org61b3dc5" class="outline-3">
+<h3 id="org61b3dc5">测试组件( <code>test_runner.py</code>)</h3>
+<div class="outline-text-3" id="text-org61b3dc5">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #859900;">class</span> <span style="color: #268bd2;">ThreadingTCPServer</span><span style="color: #657b83;">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span style="color: #657b83;">)</span>:
     <span style="color: #6c71c4;">dispatcher_server</span> = <span style="color: #268bd2;">None</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Holds the dispatcher server host/port information</span>
@@ -391,16 +758,16 @@ CI系统中需要有报告者，其中测试组件将测试的结果发送给响
 </div>
 </div>
 
-<div id="outline-container-org622d117" class="outline-3">
-<h3 id="org622d117">控制流程图</h3>
-<div class="outline-text-3" id="text-org622d117">
+<div id="outline-container-org078ed62" class="outline-3">
+<h3 id="org078ed62">控制流程图</h3>
+<div class="outline-text-3" id="text-org078ed62">
 <p>
-    <a href="#orgc34fb32">Figure 1</a>描述了这个系统运行流程。这个流程图假定了所有这个三个文件(
+    <a href="#orgb85076c">Figure 1</a>描述了这个系统运行流程。这个流程图假定了所有这个三个文件(
 <code>repo_observer.py</code> , <code>dispatcher.py</code> 以及 <code>test_runner.py</code>)已经正在运行。并且说
 明了每个进程在有新提交时需要执行的操作。
 </p>
 
-<div id="orgc34fb32" class="figure">
+<div id="orgb85076c" class="figure">
 <p><img src="../img/control-flow.png" alt="control-flow.png" width="100%" />
 </p>
 <p><span class="figure-number">Figure 1: </span>控制流程图</p>
@@ -408,9 +775,9 @@ CI系统中需要有报告者，其中测试组件将测试的结果发送给响
 </div>
 </div>
 
-<div id="outline-container-orgb45fa18" class="outline-3">
-<h3 id="orgb45fa18">运行代码</h3>
-<div class="outline-text-3" id="text-orgb45fa18">
+<div id="outline-container-orgbc204ac" class="outline-3">
+<h3 id="orgbc204ac">运行代码</h3>
+<div class="outline-text-3" id="text-orgbc204ac">
 <div class="org-src-container">
 <pre class="src src-sh">$ python dispatcher.py
 </pre>
@@ -427,11 +794,9 @@ $ git commit -m<span style="color: #2aa198;">"new file"</span> new_file
 </div>
 </div>
 
-
-
-<div id="outline-container-orga1e5c84" class="outline-2">
-<h2 id="orga1e5c84">错误处理</h2>
-<div class="outline-text-2" id="text-orga1e5c84">
+<div id="outline-container-org9dd50cd" class="outline-2">
+<h2 id="org9dd50cd">错误处理</h2>
+<div class="outline-text-2" id="text-org9dd50cd">
 <p>
 该CI系统包括一些简单的错误处理。如果你杀死了 <code>test_runner.py</code> 那么
 <code>dispatcher.py</code> 将会知道这个运行程序不再可用，并且将它从池中删除。你也可以强制杀
@@ -447,9 +812,9 @@ $ git commit -m<span style="color: #2aa198;">"new file"</span> new_file
 </div>
 </div>
 
-<div id="outline-container-org5b6c8d8" class="outline-2">
-<h2 id="org5b6c8d8">结论</h2>
-<div class="outline-text-2" id="text-org5b6c8d8">
+<div id="outline-container-orgf33dddd" class="outline-2">
+<h2 id="orgf33dddd">结论</h2>
+<div class="outline-text-2" id="text-orgf33dddd">
 <p>
 通过将问题分解为几个不同的过程，我们得以建立一个基础的分布式持续构建系统。每个
 进程之间通过socket请求来互相通信，这使得我们可以分布式的进行构建，同时会使得我们的
@@ -462,9 +827,9 @@ $ git commit -m<span style="color: #2aa198;">"new file"</span> new_file
 </p>
 </div>
 
-<div id="outline-container-org2c68452" class="outline-3">
-<h3 id="org2c68452">测试每个提交</h3>
-<div class="outline-text-3" id="text-org2c68452">
+<div id="outline-container-orge7692a8" class="outline-3">
+<h3 id="orge7692a8">测试每个提交</h3>
+<div class="outline-text-3" id="text-orge7692a8">
 <p>
     当前的系统会周期性的检查最新的几次提交，并对最新的一次做自动构建。这里应该改
 进为每次提交都进行一次测试。为了做到这一点，我们可以改进周期检查器，对于每个最后
@@ -473,9 +838,9 @@ $ git commit -m<span style="color: #2aa198;">"new file"</span> new_file
 </div>
 </div>
 
-<div id="outline-container-orgd4ddadc" class="outline-3">
-<h3 id="orgd4ddadc">智能测试</h3>
-<div class="outline-text-3" id="text-orgd4ddadc">
+<div id="outline-container-orgf0d97d2" class="outline-3">
+<h3 id="orgf0d97d2">智能测试</h3>
+<div class="outline-text-3" id="text-orgf0d97d2">
 <p>
     如果测试组件发现调度器没有响应，它就会停止运行，即使一个测试进行到了一半！如
 果让测试组件等待调度器一个周期性的时间（or indefinitely, 如果你对资源管理不关心
@@ -486,9 +851,9 @@ $ git commit -m<span style="color: #2aa198;">"new file"</span> new_file
 </div>
 </div>
 
-<div id="outline-container-orge3c3f4e" class="outline-3">
-<h3 id="orge3c3f4e">真实报告</h3>
-<div class="outline-text-3" id="text-orge3c3f4e">
+<div id="outline-container-org9445ba8" class="outline-3">
+<h3 id="org9445ba8">真实报告</h3>
+<div class="outline-text-3" id="text-org9445ba8">
 <p>
 在真实的CI系统中，我们会提供一个测试结果的报告到报告服务，这个报告服务有以下
 几点的功能：
@@ -506,9 +871,9 @@ $ git commit -m<span style="color: #2aa198;">"new file"</span> new_file
 </div>
 </div>
 
-<div id="outline-container-orgabf5789" class="outline-3">
-<h3 id="orgabf5789">测试组件管理器</h3>
-<div class="outline-text-3" id="text-orgabf5789">
+<div id="outline-container-org5131e00" class="outline-3">
+<h3 id="org5131e00">测试组件管理器</h3>
+<div class="outline-text-3" id="text-org5131e00">
 <p>
 当前，你需要手动的运行 <code>test_runner.py</code> 文件来启动一个测试组件。相反，你可以通过创建一个
 测试组件管理器。它能够评估调度器发送的测试请求的负载，并且相应的调整测试

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-04 Thu 22:21 -->
+<!-- 2017-05-09 Tue 03:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Some configs of my emacs</title>
@@ -179,7 +179,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/worg2.css"/>
+<link rel='stylesheet' href='../css/worg2.css' type='text/css'/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -228,6 +228,13 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
+<div id="preamble" class="status">
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='index.html'> Home </a> | <a href='contact.html'> Contact </a>
+</div>
+</div>
+</div>
 <div id="content">
 <h1 class="title">Some configs of my emacs</h1>
 <hr />
@@ -236,38 +243,25 @@ for the JavaScript code in this tag.
 set the <code>cursor</code> to a bar
 </p>
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #839496;">(</span>setq-default cursor-type 'bar<span style="color: #839496;">)</span>
+<pre class="src src-lisp"><span style="color: #707183;">(</span>setq-default cursor-type 'bar<span style="color: #707183;">)</span>
 </pre>
 </div></li>
-<li>Half scrolling
-<a href="https://www.emacswiki.org/emacs/HalfScrolling">https://www.emacswiki.org/emacs/HalfScrolling</a></li>
 
 <li><p>
-Compile and run current file(c++)
-C-c C-c
+Half scrolling
 </p>
 
 <p>
-另一种解决方法是使用一个makefile模板：
-</p>
-<div class="org-src-container">
-<pre class="src src-makefile"><span style="color: #6c71c4;">f</span> = * <span style="color: #586e75; font-style: italic;"># </span><span style="color: #586e75; font-style: italic;">default is *</span>
-<span style="color: #b58900;">py</span>:
-    python $<span style="color: #839496;">(</span><span style="color: #6c71c4;">f</span><span style="color: #839496;">)</span>.py
-<span style="color: #b58900;">cpp</span>:
-    @echo <span style="color: #2aa198;">"========Results========"</span>
-    @g++ -o test $<span style="color: #839496;">(</span><span style="color: #6c71c4;">f</span><span style="color: #839496;">)</span>.cpp &amp;&amp; ./test
-    @rm test
-    @echo <span style="color: #2aa198;">"========End============"</span>
-<span style="color: #b58900;">mt</span>:
-    @octave $<span style="color: #839496;">(</span><span style="color: #6c71c4;">f</span><span style="color: #839496;">)</span>.m
-</pre>
-</div>
-
-<p>
-我们最后运行 <code>make [f=&lt;filename&gt; default is *] py(or cpp)</code>, 我们可以写一个函数做这项工作，并且绑定到 C-c C-c
+<a href="https://www.emacswiki.org/emacs/HalfScrolling">https://www.emacswiki.org/emacs/HalfScrolling</a>
 </p></li>
 </ol>
+</div>
+<div id="postamble" class="status">
+<div class='footer'>
+Copyright 2013 ying dai ( HTML).<br>
+Last updated 2017-05-09 Tue 02:54. <br>
+Built with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.2.1 (<a href="http://orgmode.org">Org</a> mode 9.0.5).
+</div>
 </div>
 </body>
 </html>

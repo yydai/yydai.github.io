@@ -1,5 +1,5 @@
-pub_data	= `date +'%y.%m.%d %H:%M:%S'`
-messages	= "Auto published by yydai at $(pub_data)"
+pub_date	= `date +'%y.%m.%d %H:%M:%S'`
+messages	= "Auto published by yydai at $(pub_date)"
 
 
 publish:

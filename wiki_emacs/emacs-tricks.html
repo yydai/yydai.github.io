@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-22 Mon 13:52 -->
+<!-- 2017-05-25 Thu 11:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs的一些技巧</title>
@@ -247,6 +247,11 @@ for the JavaScript code in this tag.
 <li><a href="#org1e07250">align</a></li>
 <li><a href="#org81ffdcc">Apropos(!important)</a></li>
 <li><a href="#org2470bb1">Tips</a></li>
+<li><a href="#orga4fc66d">跳到本行第一个非空格字符上</a></li>
+<li><a href="#org39c7fc6">特殊字符与数字键交换</a></li>
+<li><a href="#org65138e6">在Emacs中禁用鼠标</a></li>
+<li><a href="#org8f609af">交换 C-w 和 M-w 的命令绑定</a></li>
+<li><a href="#org2eb6c59">截图</a></li>
 </ul>
 </div>
 </div>
@@ -291,7 +296,7 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #707183;">(</span>setq org-publish-use-timestamps-flag nil<span style="color: #707183;">)</span>
+<pre class="src src-lisp"><span style="color: #657b83;">(</span>setq org-publish-use-timestamps-flag nil<span style="color: #657b83;">)</span>
 </pre>
 </div>
 </div>
@@ -334,6 +339,176 @@ also be a regular expression.
 <p>
 <a href="http://archive.is/yggqV">http://archive.is/yggqV</a>
 </p>
+</div>
+</div>
+
+<div id="outline-container-orga4fc66d" class="outline-2">
+<h2 id="orga4fc66d">跳到本行第一个非空格字符上</h2>
+<div class="outline-text-2" id="text-orga4fc66d">
+<p>
+对应的命令是 <code>back-to-indentation</code> ，默认绑定的快捷键是 <code>M-m</code> 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org39c7fc6" class="outline-2">
+<h2 id="org39c7fc6">特殊字符与数字键交换</h2>
+<div class="outline-text-2" id="text-org39c7fc6">
+<p>
+在几乎所有的语言中，我们要输入很多的特殊字符，例如
+</p>
+<pre class="example">
+! @ # $ % ^ &amp; * ( )
+</pre>
+
+<p>
+但是这种字符的输入有些麻烦，需要按住 shift 键才行，下面我们就优化一下这种操作。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">defvar</span> <span style="color: #6c71c4;">*unshifted-special-chars-layout*</span>
+  <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #2aa198;">"1"</span> <span style="color: #2aa198;">"!"</span><span style="color: #b58900;">)</span> <span style="color: #93a1a1; font-style: italic;">; </span><span style="color: #93a1a1; font-style: italic;">from -&gt; to</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"2"</span> <span style="color: #2aa198;">"@"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"3"</span> <span style="color: #2aa198;">"#"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"4"</span> <span style="color: #2aa198;">"$"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"5"</span> <span style="color: #2aa198;">"%"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"6"</span> <span style="color: #2aa198;">"^"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"7"</span> <span style="color: #2aa198;">"&amp;"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"8"</span> <span style="color: #2aa198;">"*"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"9"</span> <span style="color: #2aa198;">"("</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"0"</span> <span style="color: #2aa198;">")"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"!"</span> <span style="color: #2aa198;">"1"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"@"</span> <span style="color: #2aa198;">"2"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"#"</span> <span style="color: #2aa198;">"3"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"$"</span> <span style="color: #2aa198;">"4"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"%"</span> <span style="color: #2aa198;">"5"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"^"</span> <span style="color: #2aa198;">"6"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"&amp;"</span> <span style="color: #2aa198;">"7"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"*"</span> <span style="color: #2aa198;">"8"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"("</span> <span style="color: #2aa198;">"9"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">")"</span> <span style="color: #2aa198;">"0"</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+
+<span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">mb-str-to-unibyte-char</span> <span style="color: #2aa198;">(</span>s<span style="color: #2aa198;">)</span>
+  <span style="color: #d33682;">"Translate first multibyte char in s to internal unibyte representation."</span>
+  <span style="color: #2aa198;">(</span>multibyte-char-to-unibyte <span style="color: #b58900;">(</span>string-to-char s<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+
+<span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">remap-keyboard</span> <span style="color: #2aa198;">(</span>mapping<span style="color: #2aa198;">)</span>
+  <span style="color: #d33682;">"Setup keyboard translate table using a list of pairwise key-mappings."</span>
+  <span style="color: #2aa198;">(</span>mapcar
+   <span style="color: #b58900;">(</span><span style="color: #859900;">lambda</span> <span style="color: #859900;">(</span>mb-string-pair<span style="color: #859900;">)</span>
+     <span style="color: #859900;">(</span>apply <span style="color: #859900;">#'</span><span style="color: #268bd2;">keyboard-translate</span>
+        <span style="color: #268bd2;">(</span>mapcar <span style="color: #859900;">#'</span><span style="color: #268bd2;">mb-str-to-unibyte-char</span> mb-string-pair<span style="color: #268bd2;">)</span><span style="color: #859900;">)</span><span style="color: #b58900;">)</span>
+   mapping<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+
+<span style="color: #657b83;">(</span>remap-keyboard *unshifted-special-chars-layout*<span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+这里的按键映射不一定按照这个来配置，你可以选择几个比较常用的设置一下。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org65138e6" class="outline-2">
+<h2 id="org65138e6">在Emacs中禁用鼠标</h2>
+<div class="outline-text-2" id="text-org65138e6">
+<p>
+为什么要在Emacs中禁用鼠标？我想对于Macbook用户来说，这是很有意义的。
+就我来说，我在编辑的时候经常会不经意的碰到触摸板，这就导致我的光标
+经常会跑到其他地方，然而我要找到我刚才编辑的地方就会很麻烦。虽然这种事情发生的频率不高，但是非常的烦人。
+</p>
+
+<p>
+另外一点，不用鼠标也有其他的好处。这会强迫我们使用键盘去操作所有的
+事情，通常这样会更加的快。如果我们习惯了使用键盘操作所有的事情，我
+相信效率上会提高一大截。
+</p>
+
+<p>
+设置的代码，我是直接copy的<a href="http://endlessparentheses.com/disable-mouse-only-inside-emacs.html">这里</a>。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">define-minor-mode</span> <span style="color: #b58900;">disable-mouse-mode</span>
+  <span style="color: #d33682;">"A minor-mode that disables all mouse keybinds."</span>
+  <span style="color: #6c71c4;">:global</span> t
+  <span style="color: #6c71c4;">:lighter</span> <span style="color: #2aa198;">"Mouse&#128045;"</span>
+  <span style="color: #6c71c4;">:keymap</span> <span style="color: #2aa198;">(</span>make-sparse-keymap<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+
+<span style="color: #657b83;">(</span><span style="color: #859900;">dolist</span> <span style="color: #2aa198;">(</span>type <span style="color: #859900;">'</span><span style="color: #b58900;">(</span>mouse down-mouse drag-mouse
+                      double-mouse triple-mouse<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">dolist</span> <span style="color: #b58900;">(</span>prefix <span style="color: #859900;">'</span><span style="color: #859900;">(</span><span style="color: #2aa198;">""</span> C- M- S- M-S- C-M- C-S- C-M-S-<span style="color: #859900;">)</span><span style="color: #b58900;">)</span>
+    <span style="color: #93a1a1; font-style: italic;">;; </span><span style="color: #93a1a1; font-style: italic;">Yes, I actually HAD to go up to 7 here.</span>
+    <span style="color: #b58900;">(</span><span style="color: #859900;">dotimes</span> <span style="color: #859900;">(</span>n 7<span style="color: #859900;">)</span>
+      <span style="color: #859900;">(</span><span style="color: #859900;">let</span> <span style="color: #268bd2;">(</span><span style="color: #657b83;">(</span>k <span style="color: #2aa198;">(</span>format <span style="color: #2aa198;">"%s%s-%s"</span> prefix type n<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span><span style="color: #268bd2;">)</span>
+        <span style="color: #268bd2;">(</span>define-key disable-mouse-mode-map
+          <span style="color: #657b83;">(</span>vector <span style="color: #2aa198;">(</span>intern k<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span> <span style="color: #859900;">#'</span><span style="color: #268bd2;">ignore</span><span style="color: #268bd2;">)</span><span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8f609af" class="outline-2">
+<h2 id="org8f609af">交换 C-w 和 M-w 的命令绑定</h2>
+<div class="outline-text-2" id="text-org8f609af">
+<p>
+在编辑的过程中我发现，复制一块区域的次数要多于使用剪切操作。所以交换了这两个按键。
+因为C-w 绑定到了 <code>whole-line-or-region-kill-region</code> 上，而 M-w 到了 <code>whole-line-or-region-kill-ring-save</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #657b83;">(</span>global-set-key <span style="color: #2aa198;">(</span>kbd <span style="color: #2aa198;">"C-w"</span><span style="color: #2aa198;">)</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">whole-line-or-region-kill-ring-save</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83;">(</span>global-set-key <span style="color: #2aa198;">(</span>kbd <span style="color: #2aa198;">"M-w"</span><span style="color: #2aa198;">)</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">whole-line-or-region-kill-region</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2eb6c59" class="outline-2">
+<h2 id="org2eb6c59">截图</h2>
+<div class="outline-text-2" id="text-org2eb6c59">
+<p>
+最近在上公开课的时候，经常需要停下来记录一些重点，这就导致效率有些低，所以我想能不能先截图。这样是快了很多，但是对我来说也不方便。
+因为我是使用的Org来记录的笔记，所以要找到刚才截的图然后插入到Org笔记中就不是很方便了，而且图片存放的文件需要手动的建立。所以这些能自动化就好了。
+</p>
+
+<p>
+我在网上找了一个截图的函数，稍加修改了一下。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #93a1a1; font-style: italic;">;;; </span><span style="color: #93a1a1; font-style: italic;">https://emacs-china.org/t/org-mode/79</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">my-org-screenshot</span> <span style="color: #2aa198;">()</span>
+  <span style="color: #d33682;">"Take a screenshot into a time stamped unique-named file in the</span>
+<span style="color: #d33682;">same directory as the org-buffer and insert a link to this file."</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">interactive</span><span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span>org-display-inline-images<span style="color: #2aa198;">)</span>
+
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">setq</span> filename
+        <span style="color: #b58900;">(</span>concat
+         <span style="color: #859900;">(</span>make-temp-name
+          <span style="color: #268bd2;">(</span>concat <span style="color: #657b83;">(</span>file-name-directory <span style="color: #2aa198;">(</span>buffer-file-name<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+                  <span style="color: #2aa198;">"/imgs/"</span>
+                  <span style="color: #657b83;">(</span>format-time-string <span style="color: #2aa198;">"%Y%m%d_%H%M%S_"</span><span style="color: #657b83;">)</span><span style="color: #268bd2;">)</span> <span style="color: #859900;">)</span> <span style="color: #2aa198;">".png"</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">unless</span> <span style="color: #b58900;">(</span>file-exists-p <span style="color: #859900;">(</span>file-name-directory filename<span style="color: #859900;">)</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span>make-directory <span style="color: #859900;">(</span>file-name-directory filename<span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+                                        <span style="color: #93a1a1; font-style: italic;">; </span><span style="color: #93a1a1; font-style: italic;">take screenshot</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">if</span> <span style="color: #b58900;">(</span>eq system-type <span style="color: #859900;">'</span><span style="color: #268bd2;">darwin</span><span style="color: #b58900;">)</span>
+      <span style="color: #b58900;">(</span><span style="color: #859900;">progn</span>
+        <span style="color: #859900;">(</span>call-process-shell-command <span style="color: #2aa198;">"screencapture"</span> nil nil nil nil <span style="color: #2aa198;">" -s "</span> <span style="color: #268bd2;">(</span>concat
+                                                                            <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> filename <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> <span style="color: #268bd2;">)</span><span style="color: #859900;">)</span>
+        <span style="color: #859900;">(</span>call-process-shell-command <span style="color: #2aa198;">"convert"</span> nil nil nil nil <span style="color: #268bd2;">(</span>concat <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> filename <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;"> -resize  </span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">50%</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> <span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span>concat <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> filename <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> <span style="color: #268bd2;">)</span><span style="color: #859900;">)</span>
+        <span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">setq</span> relative-dir <span style="color: #b58900;">(</span>concat <span style="color: #2aa198;">"./imgs/"</span> <span style="color: #859900;">(</span>file-name-nondirectory filename<span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">if</span> <span style="color: #b58900;">(</span>file-exists-p filename<span style="color: #b58900;">)</span>
+      <span style="color: #b58900;">(</span>insert <span style="color: #859900;">(</span>concat <span style="color: #2aa198;">"[[file:"</span> relative-dir <span style="color: #2aa198;">"]]"</span><span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span>org-display-inline-images<span style="color: #2aa198;">)</span>
+  <span style="color: #657b83;">)</span>
+</pre>
+</div>
 </div>
 </div>
 </div>

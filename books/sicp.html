@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-30 Tue 13:55 -->
+<!-- 2017-05-30 Tue 13:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Exporting to PDF in org mode</title>
+<title>SICP</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -237,112 +237,41 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Exporting to PDF in org mode</h1>
+<h1 class="title">SICP</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org91c2400">简介</a></li>
-<li><a href="#org2baa867">使用的环境</a></li>
-<li><a href="#orgb9be3ae">如何配置</a></li>
-<li><a href="#org1f8ab59">参考：</a></li>
+<li><a href="#org0e0ce93">环境的选择</a></li>
+<li><a href="#org26f0dba">相关资源</a></li>
+<li><a href="#org7dd25bb">读书笔记和代码</a></li>
 </ul>
 </div>
 </div>
 <hr />
-<blockquote>
-<p>
-<i>清明时节雨纷纷，路上行人欲断魂。借问酒家何处有，牧童遥指杏花村。</i>
-                                        &#x2013; 杜牧《清明》<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
-</p>
-</blockquote>
-<hr />
-<div id="outline-container-org91c2400" class="outline-2">
-<h2 id="org91c2400">简介</h2>
-<div class="outline-text-2" id="text-org91c2400">
-<p>
-这篇文章介绍如何配置一下Emacs使其能输出PDF文件。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org2baa867" class="outline-2">
-<h2 id="org2baa867">使用的环境</h2>
-<div class="outline-text-2" id="text-org2baa867">
-<p>
-使用的环境是OSX 10.12版本，Emacs的版本为25.1.1, org mode 的版本为
-9.0.3,需要安装 <a href="https://pan.baidu.com/s/1o8CrPl4">MacTex</a> 其他环境没有测试。
-</p>
-</div>
-</div>
-<div id="outline-container-orgb9be3ae" class="outline-2">
-<h2 id="orgb9be3ae">如何配置</h2>
-<div class="outline-text-2" id="text-orgb9be3ae">
-<ul class="org-ul">
-<li>在你的 .emacs 或 .emacs.d/init.el 上添加对xelatex 的支持，上面装的MacTex会装这个。添加代码如下</li>
-</ul>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>setenv <span style="color: #8b2252;">"PATH"</span> <span style="color: #7388d6;">(</span>concat <span style="color: #909183;">(</span>getenv <span style="color: #8b2252;">"PATH"</span><span style="color: #909183;">)</span> <span style="color: #8b2252;">":/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> exec-path <span style="color: #7388d6;">(</span>append exec-path <span style="color: #a020f0;">'</span><span style="color: #909183;">(</span><span style="color: #8b2252;">"/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
-</div>
-
-<ul class="org-ul">
-<li>同样在配置文件上应该配置使用xelatex, 输出中文pdf。org-mode默认调用的是pdflatex, 因此需要重新设置编译引擎为xelatex</li>
-</ul>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> org-latex-pdf-process <span style="color: #a020f0;">'</span><span style="color: #7388d6;">(</span><span style="color: #8b2252;">"xelatex -interaction nonstopmode %f"</span> <span style="color: #8b2252;">"xelatex -interaction nonstopmode %f"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
-</div>
 
 <p>
-注意：如果你使用的是 <code>spacemacs</code> 你需要将上面的配置加到 <code>user config</code>
-里面，同时还要将上面的代码放到：
-</p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">after-load</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">org</span> <span style="color: #707183;">)</span>
-</pre>
-</div>
-<p>
-里面，否则上面的代码不会生效。
+这个主要介SICP这本书环境搭建，相关的资源以及读书笔记和代码。
 </p>
 
-<ul class="org-ul">
-<li>输出中文，需要在开头添加如下的</li>
-</ul>
-
-<pre class="example">
-#+LATEX_HEADER: \usepackage{fontspec}
-#+LATEX_HEADER: \setmainfont{XXX}
-</pre>
+<div id="outline-container-org0e0ce93" class="outline-2">
+<h2 id="org0e0ce93">环境的选择</h2>
+<div class="outline-text-2" id="text-org0e0ce93">
 <p>
-其中 <code>XXX</code> 可以替换成你想使用的字体，例如 <code>Songti SC</code>
+学习SICP这本书，我们要先搭建一个scheme环境，可以使用Emacs，但是比较的麻烦。另外，下载<a href="http://download.racket-lang.org/">DrRacket</a>。
+这里有个链接：<a href="http://docs.racket-lang.org/sicp-manual/index.html">http://docs.racket-lang.org/sicp-manual/index.html</a>
 </p>
 </div>
 </div>
 
+<div id="outline-container-org26f0dba" class="outline-2">
+<h2 id="org26f0dba">相关资源</h2>
+</div>
 
-<div id="outline-container-org1f8ab59" class="outline-2">
-<h2 id="org1f8ab59">参考：</h2>
-<div class="outline-text-2" id="text-org1f8ab59">
-<ol class="org-ol">
-<li><a href="http://blog.csdn.net/cheneywh/article/details/35568027">http://blog.csdn.net/cheneywh/article/details/35568027</a></li>
-</ol>
+<div id="outline-container-org7dd25bb" class="outline-2">
+<h2 id="org7dd25bb">读书笔记和代码</h2>
 </div>
 </div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-写于2017清明，碰巧今天也细雨蒙蒙，故引用此诗纪念。
-</p></div></div>
-
-
-</div>
-</div></div>
 <div id="postamble" class="status">
 <div class='.utterances'><script src='https://utteranc.es/client.js'
         repo='yydai/yydai.github.io'

@@ -6,7 +6,7 @@
 <!-- 2017-05-31 Wed 11:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sitemap</title>
+<title>一个静态评论系统的实现</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -238,55 +238,238 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Sitemap</h1>
-<ul class="org-ul">
-<li>books
-<ul class="org-ul">
-<li><a href="books/sicp.html">SICP</a></li>
-</ul></li>
-<li>guitar
-<ul class="org-ul">
-<li><a href="guitar/奇跡の山.html">奇跡の山</a></li>
-</ul></li>
-<li>mac
-<ul class="org-ul">
-<li><a href="mac/software.html">MAC好用软件</a></li>
-<li><a href="mac/develpment-resources.html">MacOS开发资源</a></li>
-<li><a href="mac/git-help.html">git 自救</a></li>
-</ul></li>
-<li>ml
-<ul class="org-ul">
-<li><a href="ml/coursera-machine-learning-course.html">机器学习相关的课程总结</a></li>
-</ul></li>
-<li>others
-<ul class="org-ul">
-<li><a href="others/static-comments-on-my-blog.html">一个静态评论系统的实现</a></li>
-</ul></li>
-<li>trans
-<ul class="org-ul">
-<li><a href="trans/temp.html">temp</a></li>
-<li><a href="trans/a-continuous-integration-system.html">持续集成系统</a></li>
-</ul></li>
-<li>wiki<sub>emacs</sub>
-<ul class="org-ul">
-<li><a href="wiki_emacs/blog-test.html">Blog的搭建及其特性</a></li>
-<li><a href="wiki_emacs/interactive.html">Elisp 中 interactive 总结</a></li>
-<li><a href="wiki_emacs/emacs-tricks.html">Emacs的一些技巧</a></li>
-<li><a href="wiki_emacs/mac-org-mode-output-pdf.html">Exporting to PDF in org mode</a></li>
-<li><a href="wiki_emacs/emacs-settings.html">Some configs of my emacs</a></li>
-<li><a href="wiki_emacs/how-to-install-emacs-package-manually.html">how-to-install-emacs-package-manually</a></li>
-</ul></li>
-<li>wiki<sub>ml</sub><sub>dl</sub>
-<ul class="org-ul">
-<li><a href="wiki_ml_dl/machine_learning.html">machine<sub>learning</sub></a></li>
-</ul></li>
-<li>wiki<sub>python</sub>
-<ul class="org-ul">
-<li><a href="wiki_python/argparse.html">Argparse 教程</a></li>
-</ul></li>
-<li><a href="contact.html">Contact</a></li>
-<li><a href="index.html">Zen Mind, Beginner's Mind</a></li>
+<h1 class="title">一个静态评论系统的实现</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9e2c5c5">我的使用场景</a></li>
+<li><a href="#org792e03e">为什么要自己实现</a></li>
+<li><a href="#org030b055">原理和技术</a>
+<ul>
+<li><a href="#org511209c">原理</a></li>
+<li><a href="#org515e17f">使用的技术</a></li>
 </ul>
+</li>
+<li><a href="#orgb87cd12">问题</a>
+<ul>
+<li><a href="#orgea93feb">elisp</a></li>
+<li><a href="#org612cdd9"><span class="todo TODO">TODO</span> 跨域请求（CORS）</a></li>
+<li><a href="#org3a955b8">UI 上的问题</a></li>
+</ul>
+</li>
+<li><a href="#org622c7a9">具体的做法</a></li>
+<li><a href="#orgac8c95a">几个网站</a></li>
+<li><a href="#org328f5d3">Continue</a></li>
+</ul>
+</div>
+</div>
+<hr />
+<p>
+这个文章会介绍一下的几方面：
+</p>
+
+<ul class="org-ul">
+<li>我的使用场景</li>
+<li>为什么要自己实现</li>
+<li>实现的原理和用到的技术</li>
+<li>遇到的问题</li>
+<li>改进的地方</li>
+<li>具体是如何做的</li>
+</ul>
+
+
+
+<div id="outline-container-org9e2c5c5" class="outline-2">
+<h2 id="org9e2c5c5">我的使用场景</h2>
+<div class="outline-text-2" id="text-org9e2c5c5">
+<p>
+我的blog使用的 <code>github pages</code> 搭建，没有使用现有的框架。静态页面使用的
+<code>org mode</code> 生成。但是没有关系，这里用到的东西只需要嵌入到生成的html页面
+中就可以使用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org792e03e" class="outline-2">
+<h2 id="org792e03e">为什么要自己实现</h2>
+<div class="outline-text-2" id="text-org792e03e">
+<p>
+现在有很多成熟的实现方案，比如说在国内的 <code>多说</code>, 还有国外的 <code>disqus</code> 。都
+有很多的限制，比如 <code>多说</code> ，马上就要停止服务 。 <code>disqus</code> 在国外需要翻墙，
+而且非常的卡。说是自己实现，其实是参考了很多的文章，下面我会列出。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org030b055" class="outline-2">
+<h2 id="org030b055">原理和技术</h2>
+<div class="outline-text-2" id="text-org030b055">
+<p>
+这一部分主要说一下原理，以及用到的技术。
+</p>
+</div>
+<div id="outline-container-org511209c" class="outline-3">
+<h3 id="org511209c">原理</h3>
+<div class="outline-text-3" id="text-org511209c">
+<p>
+因为我是用的github pages来部署的个人博客，所以这里就利用了它的
+<code>issues</code> 。我期望的操作流程是这样的：
+</p>
+<ul class="org-ul">
+<li>打开一个文章，显示对应的评论。</li>
+<li>如果想评论，点击 <code>button</code>, 进行github授权。</li>
+<li>如果还没有对应的 issue, 我就创建一个。</li>
+<li>将评论添加到 issue 下。</li>
+<li>在 blog 中获取最新的评论。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org515e17f" class="outline-3">
+<h3 id="org515e17f">使用的技术</h3>
+<div class="outline-text-3" id="text-org515e17f">
+<p>
+由于对前端技术不了解，现学习了下 jQuery。这里主要用了 ajax 发送请求，然后将结果显示在页面上。
+比如说用 ajax 发送 GET 请求：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #a020f0;">function</span> <span style="color: #0000ff;">test</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+  jQuery.ajax<span style="color: #7388d6;">(</span><span style="color: #909183;">{</span>
+      type: <span style="color: #8b2252;">'GET'</span>,
+      async: <span style="color: #008b8b;">false</span>,
+      dataType:<span style="color: #8b2252;">'json'</span>,
+      url: search_issues,
+      <span style="color: #0000ff;">success</span>:<span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">data</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
+         result = data;
+      <span style="color: #709870;">}</span>
+  <span style="color: #909183;">}</span><span style="color: #7388d6;">)</span>;
+  <span style="color: #a020f0;">return</span> result;
+<span style="color: #707183;">}</span>
+</pre>
+</div>
+
+<p>
+以及发送 POST 请求：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #a020f0;">function</span> <span style="color: #0000ff;">create</span><span style="color: #707183;">(</span><span style="color: #a0522d;">title</span><span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
+     <span style="color: #a020f0;">var</span> <span style="color: #a0522d;">creare</span> = base_url + <span style="color: #8b2252;">'/repos/'</span> + owner + <span style="color: #8b2252;">'/'</span> + repo + <span style="color: #8b2252;">'/issues'</span>;
+     <span style="color: #a020f0;">var</span> <span style="color: #a0522d;">payload</span> = <span style="color: #7388d6;">{</span>
+          <span style="color: #8b2252;">'title'</span>: title,
+          <span style="color: #8b2252;">'body'</span>: <span style="color: #8b2252;">'You can write comments in this issues.'</span>,
+          <span style="color: #8b2252;">'labels'</span>: <span style="color: #909183;">[</span><span style="color: #8b2252;">'blog'</span><span style="color: #909183;">]</span>,
+      <span style="color: #7388d6;">}</span>
+      $.ajax<span style="color: #7388d6;">(</span><span style="color: #909183;">{</span>
+        type: <span style="color: #8b2252;">'POST'</span>,
+        url: create,
+        crossDomain: <span style="color: #008b8b;">true</span>,
+              data: JSON.stringify<span style="color: #709870;">(</span>payload<span style="color: #709870;">)</span>,
+        headers: <span style="color: #709870;">{</span>
+          <span style="color: #8b2252;">'Authorization'</span>: <span style="color: #8b2252;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #b22222;">// </span><span style="color: #b22222;">auth2.0</span>
+          <span style="color: #8b2252;">'Access-Control-Allow-Origin'</span> : <span style="color: #8b2252;">'*'</span>
+        <span style="color: #709870;">}</span>,
+        contentType: <span style="color: #8b2252;">'application/json; charset=utf-8'</span>,
+        dataType: <span style="color: #8b2252;">'json'</span>,
+        <span style="color: #0000ff;">success</span>: <span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">data</span><span style="color: #709870;">){</span>alert<span style="color: #907373;">(</span><span style="color: #8b2252;">'create issue success'</span><span style="color: #907373;">)</span>;<span style="color: #709870;">}</span>,
+        <span style="color: #0000ff;">failure</span>: <span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">errMsg</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
+            alert<span style="color: #907373;">(</span>errMsg<span style="color: #907373;">)</span>;
+        <span style="color: #709870;">}</span>
+    <span style="color: #909183;">}</span><span style="color: #7388d6;">)</span>;<span style="color: #707183;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb87cd12" class="outline-2">
+<h2 id="orgb87cd12">问题</h2>
+<div class="outline-text-2" id="text-orgb87cd12">
+</div><div id="outline-container-orgea93feb" class="outline-3">
+<h3 id="orgea93feb">elisp</h3>
+<div class="outline-text-3" id="text-orgea93feb">
+<p>
+由于是使用的 <code>elisp</code> 进行的相关设置，在 string 中的所有 双引号 都要使用 '\' 进行escaping。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org612cdd9" class="outline-3">
+<h3 id="org612cdd9"><span class="todo TODO">TODO</span> 跨域请求（CORS）</h3>
+<div class="outline-text-3" id="text-org612cdd9">
+<p>
+如果打开一个 blog 没有对应的 issue, 我会发送一个 ajax 请求去创建一
+个。在本地测试没有问题，但是在生产环境就出现了 <code>405（method not
+	allowed）</code> 的错误。后来发现是github pages 好像不支持CORS。这其实就打断了这种 pipline了，所有的操作不能连接起来。
+</p>
+
+<p>
+如何解决这个问题，有一个思路，还没有做。大体就是搭建一个 web api server, 然后通过这个 server 来去请求 github。
+具体的实现应该是用 flask + heroku 来做。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3a955b8" class="outline-3">
+<h3 id="org3a955b8">UI 上的问题</h3>
+<div class="outline-text-3" id="text-org3a955b8">
+<p>
+	现在评论只能是进到 github 中去写评论。将来看能否直接集成到 blog 中来。这个要涉及到前端的东西，对我来说还是很费劲的。
+类似于 <a href="https://utteranc.es">这个</a>。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org622c7a9" class="outline-2">
+<h2 id="org622c7a9">具体的做法</h2>
+<div class="outline-text-2" id="text-org622c7a9">
+<p>
+代码在这里可以看到 <a href="https://gist.github.com/yydai/367903c1d456fe7d11d36c981a580ed0">static comment</a>。对应的 css(<a href="https://github.com/izuzak/izuzak.github.com/blob/master/css/screen.css#L228-L395">css file</a>) 文件，我直接 copy 的 <a href="http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html#par29">GitHub hosted comments for GitHub hosted blogs</a> 。
+</p>
+
+<p>
+这里会用到3个github 的 API（<a href="https://developer.github.com/v3/search/#search-issues">Github api</a>） 分别如下:
+</p>
+
+<pre class="example">
+这个用来模糊查询 issue：
+{{base_api}}/search/issues?q=A Continuous Integration System+user:yydai+labels:blog
+
+这个用来获取该 issue 下的 comments
+{{base_api}}/repos/yydai/yydai.github.io/issues/1/comments
+
+这个用来创建 issue
+{{base_api}}/repos/yydai/yydai.github.io/issues
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-orgac8c95a" class="outline-2">
+<h2 id="orgac8c95a">几个网站</h2>
+<div class="outline-text-2" id="text-orgac8c95a">
+<p>
+在用js时做了几个demo测试，主要是在如下几个上面
+</p>
+<ul class="org-ul">
+<li><a href="https://jsfiddle.net">js online 1</a></li>
+<li><a href="https://js.do">js online 2</a></li>
+<li><a href="http://jshint.com">check js</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org328f5d3" class="outline-2">
+<h2 id="org328f5d3">Continue</h2>
+<div class="outline-text-2" id="text-org328f5d3">
+<p>
+一些具体的细节以后再补充完善。
+</p>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

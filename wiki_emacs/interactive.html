@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-31 Wed 08:45 -->
+<!-- 2017-05-31 Wed 13:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中 interactive 总结</title>
@@ -488,8 +488,9 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner;
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog';
 
+console.log("search_issues = "+ search_issues);
 
 function test() {
   jQuery.ajax({
@@ -527,11 +528,11 @@ function create(title) {
     crossDomain: true,
     // The key needs to match your method's input parameter (case-sensitive).
     data: JSON.stringify(payload),
-    headers: {
-      'Authorization': 'Basic eXlkYWk6ZGVpc3Q5MjgxNw==',
-      'Access-Control-Allow-Origin' : '*'
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader('Authorization', 'Basic eXlkYWk6ZGVpc3Q5MjgxNw==');
+        xhr.setRequestHeader('Access-Control-Allow-Origin' , '*');
+        xhr.setRequestHeader('contentType', 'application/json; charset=utf-8');
     },
-    contentType: 'application/json; charset=utf-8',
     dataType: 'json',
     success: function(data){alert('create issue success');},
     failure: function(errMsg) {
@@ -540,11 +541,12 @@ function create(title) {
 });
 }
 
+console.log("total_count = " + result.total_count);
 if(result.total_count == 1) {
     var comments_url = result.items[0].comments_url;
 } else if (result.total_count == 0) {
         // create a new issue
-    create(title);
+    //create(title);
 } else {
         // result not only
         alert('Cannot load the comments.');
@@ -566,7 +568,8 @@ function loadComments(data) {
   }
 
 
-  var comments_api = comments_url + '?per_page=100';
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
 $.ajax(comments_api, {
     headers: {Accept: 'application/vnd.github.full+json'},
     dataType: 'json',

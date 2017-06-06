@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-31 Wed 13:25 -->
+<!-- 2017-06-06 Tue 15:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SICP</title>
@@ -244,8 +244,24 @@ for the JavaScript code in this tag.
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#org0e0ce93">环境的选择</a></li>
-<li><a href="#org26f0dba">相关资源</a></li>
-<li><a href="#org7dd25bb">读书笔记和代码</a></li>
+<li><a href="#org26f0dba">相关资源</a>
+<ul>
+<li><a href="#org5524284">SICP</a></li>
+</ul>
+</li>
+<li><a href="#org7dd25bb">读书笔记和代码</a>
+<ul>
+<li><a href="#orgbeb89c8">Chapter 1 Building Abstractions with Procedures</a>
+<ul>
+<li><a href="#org298c106">The Elements of Programming</a>
+<ul>
+<li><a href="#org09bab18">Expressions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -267,10 +283,162 @@ for the JavaScript code in this tag.
 
 <div id="outline-container-org26f0dba" class="outline-2">
 <h2 id="org26f0dba">相关资源</h2>
+<div class="outline-text-2" id="text-org26f0dba">
+</div><div id="outline-container-org5524284" class="outline-3">
+<h3 id="org5524284">SICP</h3>
+<div class="outline-text-3" id="text-org5524284">
+<ul class="org-ul">
+<li><a href="https://mitpress.mit.edu/sicp/">MIT Sicp site</a></li>
+<li><a href="https://mitpress.mit.edu/sicp/full-text/book/book.html">html 版本</a></li>
+<li><a href="https://mitpress.mit.edu/sicp/psets/index.html">Sample Programming Assignments</a></li>
+<li><a href="https://www.gitbook.com/book/evarga/solutions-guide-for-instructor-s-manual-of-sicp/details">Solutions Guide for Instructor's Manual of SICP</a></li>
+</ul>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org7dd25bb" class="outline-2">
 <h2 id="org7dd25bb">读书笔记和代码</h2>
+<div class="outline-text-2" id="text-org7dd25bb">
+</div><div id="outline-container-orgbeb89c8" class="outline-3">
+<h3 id="orgbeb89c8">Chapter 1 Building Abstractions with Procedures</h3>
+<div class="outline-text-3" id="text-orgbeb89c8">
+<blockquote>
+<p>
+The acts of the mind, wherein it exerts its power over simple
+ideas, are chiefly these three: 1. Combining several simple ideas
+into one compound one, and thus all complex ideas are made. 2. The
+second is bringing two ideas, whether simple or complex,
+together, and seting them by one another so as to take a view of
+them at once, without uniting them into one, by which it gets all
+its ideas of relations. 3. The third is separating them from all
+other ideas that accompany them in their real existence: this is
+called abstraction, and thus all its general ideas are made.
+</p>
+
+<p>
+—John Locke, An Essay Concerning Human Understanding (1690)
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-org298c106" class="outline-4">
+<h4 id="org298c106">The Elements of Programming</h4>
+<div class="outline-text-4" id="text-org298c106">
+<p>
+A powerful programming language is
+more than just a means for
+instructing a computer to perform
+tasks. The language also serves as a
+framework within which we organize
+our idea about processes.
+</p>
+
+<p>
+Every powerful language has three
+mechanisms for accomplishing this:
+</p>
+<ul class="org-ul">
+<li><code>primitive expressions</code>, which
+represent the simplest entities
+the language is concerned with.</li>
+<li><code>means of combination</code>, by which
+compound elements are build from
+simpler ones, and</li>
+<li><code>means of abstraction</code>, by which
+compound elements can be named and
+manipulated as units.</li>
+</ul>
+
+<p>
+In programming, we deal with two kinds of elements:
+procedures and data.
+</p>
+</div>
+
+<div id="outline-container-org09bab18" class="outline-5">
+<h5 id="org09bab18">Expressions</h5>
+<div class="outline-text-5" id="text-org09bab18">
+<p>
+Expressions representing numbers
+maybe combined with an expression
+representing a primitive
+procedures(such as + or *) to form a
+compound expression of the procedure
+to those numbers.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>+ 137 349<span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>/ 5 99<span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>+ 2.2 19<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+The convention of placing the operator to the left of
+the operands is known as <code>prefix notation</code> , and it may be somewhat
+confusing at first because it departs significantly from the
+customary mathematical convention. Prefix notation has serveral
+advantages. One of the is that it can accommodate
+procedures that may take an arbitrary number of arguments, as the
+following examples:
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>+ 12 23 43 4<span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>* 33  85 2<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+A second advantage of prefix
+notation is that it extends in a
+straightforward way to allow
+combinations to be nested, that is,
+to have combinations whose
+elements are themselves
+combinations:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>+ <span style="color: #7388d6;">(</span>* 3 5<span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span>- 10 6<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+There is no limit to the depth of such nesting.
+</p>
+
+<p>
+Instead to write the code like in one line:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>+ <span style="color: #7388d6;">(</span>* 3 <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>* 2 4<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>+ 3 5<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span>+ <span style="color: #909183;">(</span>- 10 7<span style="color: #909183;">)</span> 6<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+We can write it to the following form as pretty-printing:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>+ <span style="color: #7388d6;">(</span>* 3
+      <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>* 2 4<span style="color: #709870;">)</span>
+         <span style="color: #709870;">(</span>+ 3 5<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+   <span style="color: #7388d6;">(</span>+ <span style="color: #909183;">(</span>- 10 7<span style="color: #909183;">)</span>
+      6<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">

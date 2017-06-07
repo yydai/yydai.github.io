@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-06 Tue 15:07 -->
+<!-- 2017-06-06 Tue 23:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog的搭建及其特性</title>
@@ -249,7 +249,13 @@ for the JavaScript code in this tag.
 <li><a href="#orgb9e340d">Org mode</a></li>
 <li><a href="#orga52413d">Latex</a></li>
 <li><a href="#org4ef302d">代码高亮</a></li>
-<li><a href="#orgd473605">表格</a></li>
+<li><a href="#orgd473605">表格</a>
+<ul>
+<li><a href="#org65d62cb">将一块区域中文本转化为表格</a></li>
+<li><a href="#org4998213">移动行和列</a></li>
+<li><a href="#org7e4b93d">增加新的行和列</a></li>
+</ul>
+</li>
 <li><a href="#orge5f0306">图像</a></li>
 <li><a href="#orgfd5da0d">脚注</a></li>
 <li><a href="#org839a0ac">画图</a>
@@ -316,7 +322,7 @@ for the JavaScript code in this tag.
 这一步会将项目自动commit, 然后push到github。 下面是makefile, 非常简单。
 </p>
 <div class="org-src-container">
-<pre class="src src-makefile"><span style="color: #a0522d;">pub_data</span>    = <span style="color: #8b2252;">`date +'%y.%m.%d %H:%M:%S'`</span>
+<pre class="src src-makefile"><span style="color: #a0522d;">pub_data</span>    = <span style="color: #8b2252;">`data +'%y.%m.%d %H:%M:%S'`</span>
 <span style="color: #a0522d;">messages</span>    = <span style="color: #8b2252;">"Auto published by yydai at $(</span><span style="color: #a0522d;">pub_data</span><span style="color: #8b2252;">)"</span>
 
 <span style="color: #0000ff;">publish</span>:
@@ -332,13 +338,19 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
+这里我后来有写了几个函数(<a href="https://github.com/yydai/emacs.d/blob/master/lisp/init-blog.el">代码</a>)，包括：
+</p>
+<ul class="org-ul">
+<li>blog preview 会自动publish当前或者所有的blog，并且在浏览器打开当前的blog。</li>
+<li>publish site 会自动commit，push当前的改动到github。然后打开个人blog网站。</li>
+<li>create new blog 创建一个新的blog，并插入模板。</li>
+</ul>
+
+<p>
 需要改进的地方：
 </p>
 <ul class="org-ul">
-<li>增加导航栏，分类</li>
 <li>增加访问统计</li>
-<li>增加评论功能</li>
-<li>增加个人信息简介</li>
 </ul>
 </div>
 </div>
@@ -434,6 +446,17 @@ for the JavaScript code in this tag.
 <div id="outline-container-orgd473605" class="outline-2">
 <h2 id="orgd473605">表格</h2>
 <div class="outline-text-2" id="text-orgd473605">
+<pre class="example">
+#+CAPTION: Books
+#+LABEL: tbl:table1
+| 书名   | 类型 |  价格 |
+|--------+------+-------|
+| 你好啊 | 文学 | 12.33 |
+| Python | IT   |    44 |
+| Java   | IT   |    55 |
+</pre>
+
+
 <table id="org3abc45a" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 1:</span> Books</caption>
 
@@ -471,8 +494,164 @@ for the JavaScript code in this tag.
 </tr>
 </tbody>
 </table>
+
+<pre class="example">
+| Start Date |   End Date | Duration |
+|------------+------------+----------|
+| 2004.08.07 | 2005.07.08 |      335 |
+#+TBLFM: $3=(date(&lt;$2&gt;)-date(&lt;$1&gt;))
+</pre>
+
+
+<p>
+来计算平均数
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Student</th>
+<th scope="col" class="org-right">Maths</th>
+<th scope="col" class="org-right">Physics</th>
+<th scope="col" class="org-right">Mean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Bertrand</td>
+<td class="org-right">13</td>
+<td class="org-right">09</td>
+<td class="org-right">11</td>
+</tr>
+
+<tr>
+<td class="org-left">Henri</td>
+<td class="org-right">15</td>
+<td class="org-right">14</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Arnold</td>
+<td class="org-right">17</td>
+<td class="org-right">13</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>
+这里我们在11这个位置，输入 :=vmean($2..$3), 回车。下面出现一个公式
+<code>#+TBLFM: @2$4=vmean($2..$3)</code> 。这里的@2代表第二行，$4 代表第二列。
+</p>
+
+<p>
+这里我们可以按 <code>C-c }</code> 来确定表格的行和列位置。
+</p>
+
+<p>
+例子：
+这里我们可以自动生成 Email 而不用手动输入, 按 C-c C-c就可以执行。
+</p>
+<pre class="example">
+| First Name | Last Name | Email              |
+|------------+-----------+--------------------|
+| Jone       | Doe       | Jone.Doe@emacs.edu |
+| Ying       | Dai       | Ying.Dai@emacs.edu |
+#+TBLFM: $3='(concat $1 "." $2 "@emacs.edu")
+</pre>
+
+<p>
+更多的用法，我们可以看这里：
+<a href="http://orgmode.org/manual/The-spreadsheet.html">The spreadsheet</a>
+</p>
+</div>
+
+
+<div id="outline-container-org65d62cb" class="outline-3">
+<h3 id="org65d62cb">将一块区域中文本转化为表格</h3>
+<div class="outline-text-3" id="text-org65d62cb">
+<p>
+例如下面的，选中一个区域，然后按下 <code>C-c |</code>,
+</p>
+<pre class="example">
+some, comma, separated, values
+</pre>
+
+<p>
+就会变成
+</p>
+<pre class="example">
+| some | comma | separated | values |
+</pre>
 </div>
 </div>
+
+<div id="outline-container-org4998213" class="outline-3">
+<h3 id="org4998213">移动行和列</h3>
+<div class="outline-text-3" id="text-org4998213">
+<p>
+例如下面的表格
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">1</td>
+<td class="org-left">2</td>
+<td class="org-left">3</td>
+</tr>
+
+<tr>
+<td class="org-left">A</td>
+<td class="org-left">B</td>
+<td class="org-left">C</td>
+</tr>
+
+<tr>
+<td class="org-left">a</td>
+<td class="org-left">b</td>
+<td class="org-left">c</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+我们可以按住 M-(up dowm left right)， 来进行移动。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7e4b93d" class="outline-3">
+<h3 id="org7e4b93d">增加新的行和列</h3>
+<div class="outline-text-3" id="text-org7e4b93d">
+<p>
+我们可以通过 S-M-(down right)，来操作。
+</p>
+</div>
+</div>
+</div>
+
 
 <div id="outline-container-orge5f0306" class="outline-2">
 <h2 id="orge5f0306">图像</h2>

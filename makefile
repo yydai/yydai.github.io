@@ -7,7 +7,7 @@ publish:
 	@echo "Begin publish the site, please wait..."
 	@echo "======================================"
 	@git add .
-	@git commit -m $(messages)
-	@git pull
+	@-git commit -m $(messages)
+	@-git pull
 	@git push origin
 	@echo "===============Success================"

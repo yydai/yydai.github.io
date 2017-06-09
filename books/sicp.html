@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-07 Wed 13:37 -->
+<!-- 2017-06-08 Thu 15:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SICP sicp</title>
+<title>SICP</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,7 +239,7 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">SICP sicp</h1>
+<h1 class="title">SICP</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -268,7 +268,14 @@ for the JavaScript code in this tag.
 <li><a href="#org99e9fcd">Procedures as Black-Box Abstractions</a></li>
 </ul>
 </li>
-<li><a href="#orgfc145ec">Procedures and the Processes They Generate</a></li>
+<li><a href="#orgfc145ec">Procedures and the Processes They Generate</a>
+<ul>
+<li><a href="#org67b0b8e">Linear Recursion and Iteration</a></li>
+<li><a href="#org8890bda">Tree Recusion</a></li>
+<li><a href="#orgba747f2">Example: Counting change</a></li>
+<li><a href="#org661710b">Orders of Growth</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -314,16 +321,19 @@ for the JavaScript code in this tag.
 <ul class="org-ul">
 <li><a href="https://mitpress.mit.edu/sicp/">MIT Sicp site</a></li>
 <li><a href="https://mitpress.mit.edu/sicp/full-text/book/book.html">html 版本</a></li>
+<li><a href="https://pan.baidu.com/s/1geG13H5">Pdf 版本</a></li>
 <li><a href="https://mitpress.mit.edu/sicp/psets/index.html">Sample Programming Assignments</a></li>
 <li><a href="https://www.gitbook.com/book/evarga/solutions-guide-for-instructor-s-manual-of-sicp/details">Solutions Guide for Instructor's Manual of SICP</a></li>
 </ul>
 </div>
 </div>
 </div>
-
 <div id="outline-container-org7dd25bb" class="outline-2">
 <h2 id="org7dd25bb">读书笔记和代码</h2>
 <div class="outline-text-2" id="text-org7dd25bb">
+<p>
+.#+TITLE: sicp
+</p>
 </div>
 
 <div id="outline-container-orgbeb89c8" class="outline-3">
@@ -347,6 +357,7 @@ called abstraction, and thus all its general ideas are made.
 </p>
 </blockquote>
 </div>
+
 
 <div id="outline-container-org298c106" class="outline-4">
 <h4 id="org298c106">The Elements of Programming</h4>
@@ -560,10 +571,12 @@ For example, \(x^2 + y^2\) can be expressed as
 <pre class="src src-scheme"><span style="color: #707183;">(</span>+ <span style="color: #7388d6;">(</span>square x<span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span>square y<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
+
+<p>
+<a id="orgb19e2ae"></a>
+</p>
 </div>
 </div>
-
-
 <div id="outline-container-orgd5b2025" class="outline-5">
 <h5 id="orgd5b2025">The Substitution Model for Procedure Application</h5>
 <div class="outline-text-5" id="text-orgd5b2025">
@@ -851,7 +864,7 @@ example, in the square root problem we can write.
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">sqrt</span> x<span style="color: #7388d6;">)</span>
     <span style="color: #7388d6;">(</span><span style="color: #a020f0;">define</span> <span style="color: #909183;">(</span><span style="color: #0000ff;">square</span> x<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>* x x<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">define</span> <span style="color: #909183;">(</span><span style="color: #0000ff;">average</span> x y<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>/ <span style="color: #709870;">(</span>+ x y<span style="color: #709870;">)</span> 2<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>  
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">define</span> <span style="color: #909183;">(</span><span style="color: #0000ff;">average</span> x y<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>/ <span style="color: #709870;">(</span>+ x y<span style="color: #709870;">)</span> 2<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
     <span style="color: #7388d6;">(</span><span style="color: #a020f0;">define</span> <span style="color: #909183;">(</span><span style="color: #0000ff;">good-enough?</span> guess x<span style="color: #909183;">)</span>
     <span style="color: #909183;">(</span>&lt; <span style="color: #709870;">(</span>abs <span style="color: #907373;">(</span>- <span style="color: #6276ba;">(</span>square guess<span style="color: #6276ba;">)</span> x<span style="color: #907373;">)</span><span style="color: #709870;">)</span> 0.001<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
     <span style="color: #7388d6;">(</span><span style="color: #a020f0;">define</span> <span style="color: #909183;">(</span><span style="color: #0000ff;">improve</span> guess x<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>average guess <span style="color: #709870;">(</span>/ x guess<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span><span style="color: #a020f0;">define</span> <span style="color: #909183;">(</span><span style="color: #0000ff;">sqrt-iter</span> guess x<span style="color: #909183;">)</span>
@@ -870,6 +883,227 @@ Such nesting of definitions, called block structure.
 
 <div id="outline-container-orgfc145ec" class="outline-4">
 <h4 id="orgfc145ec">Procedures and the Processes They Generate</h4>
+<div class="outline-text-4" id="text-orgfc145ec">
+<p>
+To become experts, we must learn to visualize the
+processes generated by various types of procedures.
+Only after we have developed such a skill can we learn to
+reliably construct programs that exhibit the desired
+behavior.
+</p>
+</div>
+
+<div id="outline-container-org67b0b8e" class="outline-5">
+<h5 id="org67b0b8e">Linear Recursion and Iteration</h5>
+<div class="outline-text-5" id="text-org67b0b8e">
+<p>
+We begin by considering the factorial function, defined by
+\[
+	n! = n \cdot (n-1) \cdot (n-2) \cdots 3 \cdot 2 \cdot 1
+    \]
+</p>
+
+<p>
+Thus, we can compute \(n!\) by computing \((n-1)!\) and
+multiplying the result by \(n\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">factorial</span> n<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>= n 1<span style="color: #909183;">)</span>
+        1
+        <span style="color: #909183;">(</span>* n <span style="color: #709870;">(</span>factorial <span style="color: #907373;">(</span>- n 1<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+
+<p>
+We can use the substitution model of <a href="#orgb19e2ae">This section</a> to watch this procedure
+in action computing \(6!\), as show in <a href="#org13b5548">Figure 4</a>.
+</p>
+
+
+<div id="org13b5548" class="figure">
+<p><img src="./imgs/20170607_204838_5319Ukb.png" alt="20170607_204838_5319Ukb.png" />
+</p>
+<p><span class="figure-number">Figure 4: </span>A linear recursive process for computing 6!</p>
+</div>
+
+<p>
+Now let's take a different perspective on computing factorial.
+We could describe a rule for computing \(n!\).
+</p>
+
+\begin{align}
+product & \Leftarrow counter * product\\
+counter & \Leftarrow counter + 1
+\end{align}
+
+<p>
+Once again, we can recast our description as a procedure
+for computing factorials.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">factorial</span> n<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>fact-iter 1 1 n<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">fact-iter</span> product counter max-count<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>&gt; counter max-count<span style="color: #909183;">)</span>
+        product
+        <span style="color: #909183;">(</span>fact-iter <span style="color: #709870;">(</span>* product counter<span style="color: #709870;">)</span>
+                    <span style="color: #709870;">(</span>+ counter 1<span style="color: #709870;">)</span>
+                    max-count<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+As before, we can use the substitution mode to visualize
+the process of computing \(6!\), as shown in <a href="#org851b660">Figure</a>
+</p>
+
+
+<div id="org851b660" class="figure">
+<p><img src="./imgs/20170608_102359_5319_pO.png" alt="20170608_102359_5319_pO.png" />
+</p>
+<p><span class="figure-number">Figure 5: </span>A linear iterative process for computing 6!</p>
+</div>
+
+
+<p>
+Compare the two process. We can find the "shapes" of the two processs
+are quite differently.
+</p>
+
+<p>
+In the next, we'll talk about the difference between
+<i>linear recursive process</i> and <i>linear iterative process</i>.
+</p>
+
+<p>
+Consider the first process. The expansion occurs as the
+process builds up a chain of <i>deferred operations</i>. This
+python of process, characterized by a chain of deferred
+operations, is called a <i>recursive process</i>. Carrying out the
+process requires that the iterpreter keep track of the
+operations to be performed later on.
+</p>
+
+<p>
+By contrast, the second process does not grow and shrink.  At each
+step, all we need to keep track of, for any n, are the current
+values of the variables product, counter, and maxcount.  We call
+this an <i>iterative process</i>. In general, an iterative process is one
+whose state can be summarized by a fixed number of state
+variables, together with a fixed rule that describes how the state
+variables should be updated as the process moves from state to
+state and an (optional) end test that specifies conditions under
+which the process should terminate.
+</p>
+
+<p>
+Understand the difference between <i>recursive process</i> and <i>recursive
+procedure</i>. It may seem disturbing that we refer to a recursive
+procedure such as factiter as generating an iterative
+process. However, the process really is iterative. In the
+page of <b>45</b> , there has more detail about this. <b>Must read this part once again</b>.
+</p>
+
+<p>
+It will execute an iterative process in constant space, even if
+the iterative process is described by a recursive procedure. An
+implementation with this property is called tail-recursive.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8890bda" class="outline-5">
+<h5 id="org8890bda">Tree Recusion</h5>
+<div class="outline-text-5" id="text-org8890bda">
+<p>
+As an example, consider computing the sequence of
+<b>Fibonacci</b> numbers, in which each number is the sum of the preceding two:
+\[0, 1, 1, 2, 3, 5, 8, 13, 21, \cdots\]
+</p>
+
+<p>
+In general, the Fibonacci numbers can be defined by the rule
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170608_113451_5319M0U.png" alt="20170608_113451_5319M0U.png" />
+</p>
+</div>
+
+<p>
+So, we can immediately translate this definition into
+a recursive procedure.
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">fib</span> n<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">cond</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>= n 0<span style="color: #709870;">)</span> 0<span style="color: #909183;">)</span>
+          <span style="color: #909183;">(</span><span style="color: #709870;">(</span>= n 1<span style="color: #709870;">)</span> 1<span style="color: #909183;">)</span>
+          <span style="color: #909183;">(</span><span style="color: #a020f0;">else</span> <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span>fib <span style="color: #6276ba;">(</span>- n 1<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+                   <span style="color: #907373;">(</span>fib <span style="color: #6276ba;">(</span>- n 2<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+
+<div id="org6b3459a" class="figure">
+<p><img src="./imgs/20170608_113927_5319Z-a.png" alt="20170608_113927_5319Z-a.png" />
+</p>
+<p><span class="figure-number">Figure 7: </span>The tree-recursive process generated in computing (fib 5)</p>
+</div>
+
+
+<p>
+Notice in <a href="#org6b3459a">Figure</a> that the process of (fib 5) like a tree.
+And the entrire computation of (fib 3) is duplicated.
+Thus, the process uses a number of steps that grows exponentially with
+the input. On the other hand, the space required grows only linearly with the input.
+</p>
+
+<p>
+We can compute Fibonacci numbers iteratively using the procedure.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">fib</span> n<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>fib-iter 1 0 n<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">fib-iter</span> a b count<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>= count 0<span style="color: #909183;">)</span>
+        b
+        <span style="color: #909183;">(</span>fib-iter <span style="color: #709870;">(</span>+ a b<span style="color: #709870;">)</span> a <span style="color: #709870;">(</span>- count 1<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgba747f2" class="outline-5">
+<h5 id="orgba747f2">Example: Counting change</h5>
+<div class="outline-text-5" id="text-orgba747f2">
+<p>
+This part is more difficult to understand. And it is mainly about
+how to change amount of money with n kinds of coins.
+<b>Read this part later</b>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org661710b" class="outline-5">
+<h5 id="org661710b">Orders of Growth</h5>
+<div class="outline-text-5" id="text-org661710b">
+<p>
+Order of growth provides a useful indication of how we may
+expect the behavior of the process to change as we change the size of
+the problem. We represent the orders with the symbol of \(\Theta\)
+</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -907,7 +1141,7 @@ nothing
 <div class="outline-text-4" id="text-orgc00ae39">
 <p>
 I don't sure how to handle \(4/5\), need decimal?
-The answer will be 0, if 4 and 5 is an integer.
+The answer will be 0, if 4 or 5 is an integer.
 </p>
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span>/ <span style="color: #7388d6;">(</span>+ 5 4 <span style="color: #909183;">(</span>- 2 <span style="color: #709870;">(</span>- 3 <span style="color: #907373;">(</span>+ 6 <span style="color: #6276ba;">(</span>/ 4 5<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span>* 3 <span style="color: #909183;">(</span>- 6 2<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>- 2 7<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
@@ -969,7 +1203,7 @@ So, the interpreter use the first one.
 </p>
 
 <p>
-(Need refer to some others answer, I don't really understand this)
+(Need reference to others answer, I don't really understand this)
 </p>
 </div>
 </div>

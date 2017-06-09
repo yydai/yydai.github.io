@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-09 Fri 10:14 -->
+<!-- 2017-06-10 Sat 00:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>sicp</title>
@@ -257,12 +257,9 @@ for the JavaScript code in this tag.
 <li><a href="#org42f2ba7">Conditional Expressions and Predicates</a></li>
 <li><a href="#org5674ffa">Example: Square Roots by Newton's Method</a></li>
 <li><a href="#org7e5104a">Supplement of Newton's Method:</a></li>
-<li><a href="#org94c47ff">Procedures as Black-Box Abstractions</a>
-<ul>
+<li><a href="#org94c47ff">Procedures as Black-Box Abstractions</a></li>
 <li><a href="#org549e4f4">Local names</a></li>
 <li><a href="#org98ca863">Internal definitions and block structure</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a href="#orged7acb5">Procedures and the Processes They Generate</a>
@@ -283,11 +280,23 @@ for the JavaScript code in this tag.
 <li><a href="#org749ae03">Procedures as Arguments \heart</a></li>
 <li><a href="#org1f98ff1">Constructing Procedures Using lambda</a></li>
 <li><a href="#org545a8a9">using <b>let</b> to create local variables</a></li>
-<li><a href="#org6e15012">Procedures as General Methods</a></li>
+<li><a href="#org6e15012">Procedures as General Methods</a>
+<ul>
+<li><a href="#orgd1bce4e">Finding roots of equations by the half-interval method.</a></li>
+<li><a href="#orgef6f579">Finding fixed points of functions</a></li>
+</ul>
+</li>
+<li><a href="#orgb812463">Procedures as Returned Values</a></li>
+<li><a href="#org84f50a9">Newton's method</a>
+<ul>
+<li><a href="#orgf741fe5">Abstractions and first-class procedures</a></li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#orge62ca3d">Chapter 2 Building Abstractions with Data</a></li>
 </ul>
 </div>
 </div>
@@ -797,10 +806,11 @@ another programmer as a black box. A user should not need
 to know how the procedure is implemented in order to use it.
 </p>
 </div>
+</div>
 
-<div id="outline-container-org549e4f4" class="outline-5">
-<h5 id="org549e4f4">Local names</h5>
-<div class="outline-text-5" id="text-org549e4f4">
+<div id="outline-container-org549e4f4" class="outline-4">
+<h4 id="org549e4f4">Local names</h4>
+<div class="outline-text-4" id="text-org549e4f4">
 <p>
 The simplest consequence is that the parameter of a procedure
 must be local to the body of the procedure.
@@ -808,10 +818,9 @@ must be local to the body of the procedure.
 </div>
 </div>
 
-
-<div id="outline-container-org98ca863" class="outline-5">
-<h5 id="org98ca863">Internal definitions and block structure</h5>
-<div class="outline-text-5" id="text-org98ca863">
+<div id="outline-container-org98ca863" class="outline-4">
+<h4 id="org98ca863">Internal definitions and block structure</h4>
+<div class="outline-text-4" id="text-org98ca863">
 <p>
 We would like to localize the subprocedures, hiding them inside
 sqrt so that sqrt could coexist with other successive
@@ -838,7 +847,6 @@ example, in the square root problem we can write.
 <p>
 Such nesting of definitions, called block structure.
 </p>
-</div>
 </div>
 </div>
 </div>
@@ -1530,8 +1538,85 @@ underlying <b>lambda</b> application.
 
 <div id="outline-container-org6e15012" class="outline-4">
 <h4 id="org6e15012">Procedures as General Methods</h4>
+<div class="outline-text-4" id="text-org6e15012">
+<p>
+In this section, we'll discuss two more elaborate examples.
+One is general methods for finding zeros, and another is fixed points of functions.
+</p>
+</div>
+
+
+<div id="outline-container-orgd1bce4e" class="outline-5">
+<h5 id="orgd1bce4e">Finding roots of equations by the half-interval method.</h5>
+</div>
+
+<div id="outline-container-orgef6f579" class="outline-5">
+<h5 id="orgef6f579">Finding fixed points of functions</h5>
+<div class="outline-text-5" id="text-orgef6f579">
+<p>
+A number \(x\) is called a fixed point of a function f if \(x\) satisfies the equation \(f (x) = x\).
+</p>
+
+<p>
+For some functions f we can locate a fixed point by beginning with an initial guess and applying f repeatedly,
+</p>
+\begin{align}
+f(x), f(f(x)), f(f(f(x))), \cdots,
+\end{align}
+
+<p>
+(If you want learn more about fixed point, please visit <a href="https://en.wikipedia.org/wiki/Fixed_point_(mathematics)">here</a>.)
+</p>
+
+<p>
+We can use this to compute \sqrt, but I can't understand this. <a href="https://briangordon.github.io/2014/06/sqrts-and-fixed-points.html">here</a>
+</p>
+
+<p>
+\(\sqrt x\) is a fixed-point of the function \(y = x / y\).
+</p>
 </div>
 </div>
+</div>
+<div id="outline-container-orgb812463" class="outline-4">
+<h4 id="orgb812463">Procedures as Returned Values</h4>
+<div class="outline-text-4" id="text-orgb812463">
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">average-damp</span> f<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #909183;">(</span>x<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>average x <span style="color: #709870;">(</span>f x<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>average-damp square<span style="color: #7388d6;">)</span> 10<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org84f50a9" class="outline-4">
+<h4 id="org84f50a9">Newton's method</h4>
+<div class="outline-text-4" id="text-org84f50a9">
+<p>
+Read later. This part is very interesting.
+</p>
+</div>
+<div id="outline-container-orgf741fe5" class="outline-5">
+<h5 id="orgf741fe5">Abstractions and first-class procedures</h5>
+<div class="outline-text-5" id="text-orgf741fe5">
+<p>
+Some of the “rights and privileges” of first-class elements are:
+</p>
+<ul class="org-ul">
+<li>They may be named by variables.</li>
+<li>They may be passed as arguments to procedures.</li>
+<li>They may be returned as the results of procedures.</li>
+<li>They may be included in data structures.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge62ca3d" class="outline-2">
+<h2 id="orge62ca3d">Chapter 2 Building Abstractions with Data</h2>
 </div>
 </div>
 <div id="postamble" class="status">

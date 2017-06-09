@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-08 Thu 15:26 -->
+<!-- 2017-06-10 Sat 00:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SICP</title>
+<title>SICP sicp</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,7 +239,7 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">SICP</h1>
+<h1 class="title">SICP sicp</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -266,6 +266,8 @@ for the JavaScript code in this tag.
 <li><a href="#org1a986c5">Example: Square Roots by Newton's Method</a></li>
 <li><a href="#org9420f11">Supplement of Newton's Method:</a></li>
 <li><a href="#org99e9fcd">Procedures as Black-Box Abstractions</a></li>
+<li><a href="#org40daf28">Local names</a></li>
+<li><a href="#org19de04d">Internal definitions and block structure</a></li>
 </ul>
 </li>
 <li><a href="#orgfc145ec">Procedures and the Processes They Generate</a>
@@ -274,10 +276,26 @@ for the JavaScript code in this tag.
 <li><a href="#org8890bda">Tree Recusion</a></li>
 <li><a href="#orgba747f2">Example: Counting change</a></li>
 <li><a href="#org661710b">Orders of Growth</a></li>
+<li><a href="#orgb0746c8">Exponentiation</a></li>
+<li><a href="#org588cf30">Greatest Common Divisors</a></li>
+<li><a href="#org0935e9e">Example: Testing for primality</a></li>
+<li><a href="#orge00c611">The Fermat test</a></li>
+<li><a href="#org5f242ee">Probabilistic methods</a></li>
+</ul>
+</li>
+<li><a href="#org5f2cf7d">Formulating Abstractions with Higher-Order Procedures</a>
+<ul>
+<li><a href="#orgbf1c944">Procedures as Arguments \heart</a></li>
+<li><a href="#org6018cfa">Constructing Procedures Using lambda</a></li>
+<li><a href="#orgd4b6654">using <b>let</b> to create local variables</a></li>
+<li><a href="#org5773aca">Procedures as General Methods</a></li>
+<li><a href="#orgd3e6323">Procedures as Returned Values</a></li>
+<li><a href="#org1a0509c">Newton's method</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#orgb96bbc7">Chapter 2 Building Abstractions with Data</a></li>
 </ul>
 </li>
 <li><a href="#org42e00c6">练习答案</a>
@@ -331,9 +349,6 @@ for the JavaScript code in this tag.
 <div id="outline-container-org7dd25bb" class="outline-2">
 <h2 id="org7dd25bb">读书笔记和代码</h2>
 <div class="outline-text-2" id="text-org7dd25bb">
-<p>
-.#+TITLE: sicp
-</p>
 </div>
 
 <div id="outline-container-orgbeb89c8" class="outline-3">
@@ -841,16 +856,21 @@ another programmer as a black box. A user should not need
 to know how the procedure is implemented in order to use it.
 </p>
 </div>
+</div>
 
-<ul class="org-ul"><li><a id="org40daf28"></a>Local names<br /><div class="outline-text-6" id="text-org40daf28">
+<div id="outline-container-org40daf28" class="outline-5">
+<h5 id="org40daf28">Local names</h5>
+<div class="outline-text-5" id="text-org40daf28">
 <p>
 The simplest consequence is that the parameter of a procedure
 must be local to the body of the procedure.
 </p>
-</div></li>
+</div>
+</div>
 
-
-<li><a id="org19de04d"></a>Internal definitions and block structure<br /><div class="outline-text-6" id="text-org19de04d">
+<div id="outline-container-org19de04d" class="outline-5">
+<h5 id="org19de04d">Internal definitions and block structure</h5>
+<div class="outline-text-5" id="text-org19de04d">
 <p>
 We would like to localize the subprocedures, hiding them inside
 sqrt so that sqrt could coexist with other successive
@@ -877,7 +897,7 @@ example, in the square root problem we can write.
 <p>
 Such nesting of definitions, called block structure.
 </p>
-</div></li></ul>
+</div>
 </div>
 </div>
 
@@ -1100,11 +1120,545 @@ how to change amount of money with n kinds of coins.
 <p>
 Order of growth provides a useful indication of how we may
 expect the behavior of the process to change as we change the size of
-the problem. We represent the orders with the symbol of \(\Theta\)
+the problem. We represent the orders with the symbol of \(\Theta\),
+like \(\Theta(n) \; \Theta(n^2) \cdots\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb0746c8" class="outline-5">
+<h5 id="orgb0746c8">Exponentiation</h5>
+<div class="outline-text-5" id="text-orgb0746c8">
+<p>
+Consider the problem of computing the exponential of a
+given number. One way to do this is via the recursive definition.
+</p>
+
+\begin{align}
+b^n & = b \cdot b^{n-1},\\ b^0 & = 1,
+\end{align}
+
+<p>
+which translates readily into the procedure
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">expt</span> b n<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>= n 0<span style="color: #909183;">)</span>
+        1
+        <span style="color: #909183;">(</span>* b <span style="color: #709870;">(</span>expt b <span style="color: #907373;">(</span>- n 1<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+This is a linear recursive process, which requires \(\Theta(n)\)
+steps and \(\Theta(n)\) space. Just as with factorial, we can
+readily formulate an equivalent linear iteration:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">exp</span> b n<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>expt-iter b n 1<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">expt-iter</span> b counter product<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>= counter 0<span style="color: #909183;">)</span>
+        product
+        <span style="color: #909183;">(</span>expt-iter b <span style="color: #709870;">(</span>- counter 1<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>* b product<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+This version requires \(\Theta(n)\) steps and \(\Theta(1)\) space.
+</p>
+
+<p>
+We can compute exponentials in fewer steps by using successive
+squaring. For instance, rather than computing \(b^8\) as
+</p>
+
+<p>
+\[b \cdot (b \cdot (b \cdot (b \cdot (b \cdot (b \cdot b)))))\]
+</p>
+
+<p>
+we can compute it using three multiplication:
+</p>
+
+\begin{align}
+b^2 & = b \cdot b, \\
+b^4 & = b^2 \cdot b^2 \\
+b^8 & = b^4 \cdot b^4 \\
+\end{align}
+
+<p>
+So, we can use the rule:
+</p>
+
+\begin{align}
+b^n & = (b^{n/2})^2 & \text{if $n$ is even}\\
+b^n & = b \cdot b^{n-1} & \text{if $n$ is odd}
+\end{align}
+
+<p>
+We can express this method as a procedure
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">fast-expt</span> b n<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">cond</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>= n 0<span style="color: #709870;">)</span> 1<span style="color: #909183;">)</span>
+          <span style="color: #909183;">(</span><span style="color: #709870;">(</span>even? n<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>square <span style="color: #907373;">(</span>fast-expt b <span style="color: #6276ba;">(</span>/ n 2<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+          <span style="color: #909183;">(</span><span style="color: #a020f0;">else</span> <span style="color: #709870;">(</span>* b <span style="color: #907373;">(</span>fast-expt b <span style="color: #6276ba;">(</span>- n 1<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">even?</span> n<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>= <span style="color: #909183;">(</span>remainder n 2<span style="color: #909183;">)</span> 0<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+The process has \(\Theta(\log n)\) growth. The difference
+between \(\Theta(\log n)\) growth and \(\Theta(n)\) growth becomes striking as \(n\)
+becomes large. For example, <i>fast-expt</i> for \(n = 1000\) requireds only 14 multiplication.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org588cf30" class="outline-5">
+<h5 id="org588cf30">Greatest Common Divisors</h5>
+<div class="outline-text-5" id="text-org588cf30">
+<p>
+The greatest common divisor(GCD) of two integers \(a\)
+and \(b\) is defined to be the largest integer that divides both
+\(a\) and \(b\) with no remainder.
+</p>
+
+<p>
+The idea of the algorithm is based on the observation that, if \(r\) is the
+reminder when \(a\) is divided by \(b\), then the common
+divisors of \(a\) and \(b\) are precisely the same as the
+common divisors of \(b\) and \(r\). Thus, we can use the
+equation
+\[GCD(a,b) = GCD(b,r)\]
+</p>
+
+<p>
+For example,
+</p>
+
+\begin{align}GCD(206,40) & = GCD(40,6) \\ & = GCD(6,4) \\ & = GCD(4,2) \\ & = GCD(2,0) \\ & = 2\end{align}
+
+
+<p>
+This method for computing the \(GCD\) is known as <b>Euclid's Algorithm</b>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">gcd</span> a b<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>= b 0<span style="color: #909183;">)</span>
+        a
+        <span style="color: #909183;">(</span>gcd b <span style="color: #709870;">(</span>remainder a b<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+And the order of growth is \(\Theta(\log n)\). You can get the proof in the page of 64.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0935e9e" class="outline-5">
+<h5 id="org0935e9e">Example: Testing for primality</h5>
+<div class="outline-text-5" id="text-org0935e9e">
+<blockquote>
+<p>
+A primality test is an algorithm for determining whether an input
+number is prime. -From Wikipedia
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">smallest-divisor</span> n<span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span>find-divisor n 2<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">find-divisor</span> n test-divisor<span style="color: #7388d6;">)</span>
+        <span style="color: #7388d6;">(</span><span style="color: #a020f0;">cond</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>&gt; <span style="color: #907373;">(</span>square test-divisor<span style="color: #907373;">)</span> n<span style="color: #709870;">)</span> n<span style="color: #909183;">)</span>
+              <span style="color: #909183;">(</span><span style="color: #709870;">(</span>divides? test-divisor n<span style="color: #709870;">)</span> test-divisor<span style="color: #909183;">)</span>
+              <span style="color: #909183;">(</span><span style="color: #a020f0;">else</span> <span style="color: #709870;">(</span>find-divisor n <span style="color: #907373;">(</span>+ test-divisor 1<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">divides?</span> a b<span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span>= <span style="color: #909183;">(</span>remainder b a<span style="color: #909183;">)</span> 0<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">prime?</span> n<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>= n <span style="color: #909183;">(</span>smallest-divisor n<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+We can test whether a number is prime as follows: \(n\) is
+prime if and only if \(n\) is its own smallest divisor.
+</p>
+
+<p>
+The end test for <i>find-divisor</i> is based on the fact that if \(n\)
+is not prime it must have a divisor less than or equal
+to \(\sqrt n\). This means that the algorithm need only
+test divisors between \(1\) and \(\sqrt n\). So the order of growth
+is \(\Theta(\sqrt n)\).
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orge00c611" class="outline-5">
+<h5 id="orge00c611">The <a href="https://en.wikipedia.org/wiki/Pierre_de_Fermat">Fermat</a> test</h5>
+<div class="outline-text-5" id="text-orge00c611">
+<p>
+The \(\Theta(\log n)\) primality test is based on a result
+from number theory known as <b>Fermat's Little Theorem</b>.
+</p>
+
+<blockquote>
+<p>
+<b>Fermat’s Little Theorem</b>: If \(n\) is a prime number and \(a\) is any
+positive integer less than \(n\), then \(a\) raised to the \(n^{th}\) power is
+congruent to \(a\) modulo \(n\).
+</p>
+</blockquote>
+
+<p>
+Given a number \(n\), pick a random number \(a < n\) and compute the
+remainder of an modulo \(n\). If the result is not equal to \(a\), then \(n\)
+is certainly not prime. If it is \(a\), then chances are good that \(n\)
+is prime. Now pick another random number \(a\) and test it with the
+same method. If it also satisfies the equation, then we can be
+even more confident that \(n\) is prime. By trying more and more
+values of \(a\), we can increase our confidence in the result. This
+algorithm is known as the <b>Fermat test</b>.
+</p>
+
+<p>
+The implement of the Fermat test, please see the page of 67.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org5f242ee" class="outline-5">
+<h5 id="org5f242ee">Probabilistic methods</h5>
+<div class="outline-text-5" id="text-org5f242ee">
+<p>
+The Fermat test differs in character from most familiar algorithms,
+in which one computes an answer that is guaranteed to be correct.
+</p>
+
+<p>
+If you want see more detail about this section, you can look at the page of 69.
 </p>
 </div>
 </div>
 </div>
+
+<div id="outline-container-org5f2cf7d" class="outline-4">
+<h4 id="org5f2cf7d">Formulating Abstractions with Higher-Order Procedures</h4>
+<div class="outline-text-4" id="text-org5f2cf7d">
+<p>
+Procedures that manipulate procedures are called higher-order procedures.
+</p>
+
+<p>
+This section shows how higher-order procedures can serve as
+powerful abstraction mechanisms, vastly increasing the expressive
+power of our language.
+</p>
+</div>
+
+<div id="outline-container-orgbf1c944" class="outline-5">
+<h5 id="orgbf1c944">Procedures as Arguments \heart</h5>
+<div class="outline-text-5" id="text-orgbf1c944">
+<p>
+This part list three procedures and you will find they have the same pattern.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">sum-integer</span> a b<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>&gt; a b<span style="color: #909183;">)</span>
+        0
+        <span style="color: #909183;">(</span>+ a <span style="color: #709870;">(</span>sum-integer <span style="color: #907373;">(</span>+ a 1<span style="color: #907373;">)</span> b<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+<p>
+And the second computes the sum of the cubes of the
+integers in the given range.
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">cube</span> x<span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span>* x x x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">sum-cubes</span> a b<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>&gt; a b<span style="color: #909183;">)</span>
+        0
+        <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>cube a<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>sum-cubes <span style="color: #907373;">(</span>+ a 1<span style="color: #907373;">)</span> b<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+The third computes the sum of a sequence of terms in the series.
+</p>
+
+\begin{align}
+\frac{1}{1 \cdot 3} + \frac{1}{5 \cdot 7} + \frac{1}{9 \cdot 11} + \cdots,
+\end{align}
+
+<p>
+which converges to \(\pi/8\):
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">pi-sum</span> a b<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>&gt; a b<span style="color: #909183;">)</span>
+        0
+        <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>/ 1.0 <span style="color: #907373;">(</span>* a <span style="color: #6276ba;">(</span>+ a 2<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span>pi-sum <span style="color: #907373;">(</span>+ a 4<span style="color: #907373;">)</span> b<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+
+<p>
+Now, we could generate each of the procedures by filling in slots int the same template:
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">&lt;name&gt;</span> a b<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>&gt; a b<span style="color: #909183;">)</span>
+        0
+        <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span><span style="color: #228b22;">&lt;term&gt;</span> a<span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span><span style="color: #228b22;">&lt;name&gt;</span> <span style="color: #907373;">(</span><span style="color: #228b22;">&lt;next&gt;</span> a<span style="color: #907373;">)</span> b<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">sum</span> term a next b<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>&gt; a b<span style="color: #909183;">)</span>
+        0
+        <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>term a<span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span>sum term <span style="color: #907373;">(</span>next a<span style="color: #907373;">)</span> next b<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+So, we can define the third one like this
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">pi-sum</span> a b<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">define</span> <span style="color: #909183;">(</span><span style="color: #0000ff;">pi-term</span> x<span style="color: #909183;">)</span>
+        <span style="color: #909183;">(</span>/ 1.0 <span style="color: #709870;">(</span>* x <span style="color: #907373;">(</span>+ x 2<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">define</span> <span style="color: #909183;">(</span><span style="color: #0000ff;">pi-next</span> x<span style="color: #909183;">)</span>
+        <span style="color: #909183;">(</span>+ x 4<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>sum pi-term a pi-next b<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+Using these procedures, we can compute &pi;.
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span>* 8 <span style="color: #7388d6;">(</span>pi-sum 1 1000<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+We can computer this with the procedure blow:
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170609_094130_5319mIh.png" alt="20170609_094130_5319mIh.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">integral</span> f a b dx<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">define</span> <span style="color: #909183;">(</span><span style="color: #0000ff;">add-dx</span> x<span style="color: #909183;">)</span>
+        <span style="color: #909183;">(</span>+ x dx<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>* <span style="color: #909183;">(</span>sum f <span style="color: #709870;">(</span>+ a <span style="color: #907373;">(</span>/ dx 2.0<span style="color: #907373;">)</span><span style="color: #709870;">)</span> add-dx b<span style="color: #909183;">)</span>
+       dx<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>integral cube 0 1 0.01<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>integral cube 0 1 0.001<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6018cfa" class="outline-5">
+<h5 id="org6018cfa">Constructing Procedures Using lambda</h5>
+<div class="outline-text-5" id="text-org6018cfa">
+<p>
+We can define a procedure without name. This is the
+special form of <b>lambda</b>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span>+ x 4<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">using in pi sum</span>
+<span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">pi-sum</span> a b<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>sum <span style="color: #909183;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #709870;">(</span>x<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>/ 1.0 <span style="color: #907373;">(</span>* x <span style="color: #6276ba;">(</span>+ x 2<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+         a
+         <span style="color: #909183;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #709870;">(</span>x<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>+ x 4<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+         b<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+<b>lambda</b> is used to create procedures in the same
+way as define, except that no name is specified for the procedure:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #7388d6;">(</span><span style="color: #228b22;">&lt;formal-parameters&gt;</span><span style="color: #7388d6;">)</span> <span style="color: #228b22;">&lt;body&gt;</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #909183;">(</span>x y z<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>+ x y <span style="color: #709870;">(</span>square z<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+ 1 2 3<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd4b6654" class="outline-5">
+<h5 id="orgd4b6654">using <b>let</b> to create local variables</h5>
+<div class="outline-text-5" id="text-orgd4b6654">
+<p>
+Suppose we wish to compute the function:
+</p>
+
+\begin{align}
+f(x,y)=x(1+xy)^2 +y(1−y)+(1+xy)(1−y),
+\end{align}
+
+<p>
+which we could also express as
+</p>
+\begin{align}
+a & = 1 + xy,\\
+b & = 1 - y,\\
+f(x,y) & = xa^2 + yb + ab.
+\end{align}
+
+<p>
+The version one procedure is:
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">f</span> x y<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">define</span> <span style="color: #909183;">(</span><span style="color: #0000ff;">f-helper</span> a b<span style="color: #909183;">)</span>
+        <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>* x <span style="color: #907373;">(</span>square a<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span>* y b<span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span>* a b<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+      <span style="color: #7388d6;">(</span>f-helper <span style="color: #909183;">(</span>+ 1 <span style="color: #709870;">(</span>* x y<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>- 1 y<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+The verson two procedure with lambda is:
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">f</span> x y<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #909183;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #709870;">(</span>a b<span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span>* x <span style="color: #6276ba;">(</span>square a<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+           <span style="color: #907373;">(</span>* y b<span style="color: #907373;">)</span>
+           <span style="color: #907373;">(</span>* a b<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+     <span style="color: #909183;">(</span>+ 1 <span style="color: #709870;">(</span>* x y<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+     <span style="color: #909183;">(</span>- 1 y<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+And the version three using <b>let</b> is:
+</p>
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">f</span> x y<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">let</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>a <span style="color: #907373;">(</span>+ 1 <span style="color: #6276ba;">(</span>* x y<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+            <span style="color: #709870;">(</span>b <span style="color: #907373;">(</span>- 1 y<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+        <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>* x <span style="color: #907373;">(</span>square a<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span>* y b<span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span>* a b<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+A <b>let</b> expression is simply syntactic sugar for the
+underlying <b>lambda</b> application.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org5773aca" class="outline-5">
+<h5 id="org5773aca">Procedures as General Methods</h5>
+<div class="outline-text-5" id="text-org5773aca">
+<p>
+In this section, we'll discuss two more elaborate examples.
+One is general methods for finding zeros, and another is fixed points of functions.
+</p>
+</div>
+
+
+<ul class="org-ul"><li><a id="orgaab95db"></a>Finding roots of equations by the half-interval method.<br /></li>
+
+<li><a id="orgb65e616"></a>Finding fixed points of functions<br /><div class="outline-text-6" id="text-orgb65e616">
+<p>
+A number \(x\) is called a fixed point of a function f if \(x\) satisfies the equation \(f (x) = x\).
+</p>
+
+<p>
+For some functions f we can locate a fixed point by beginning with an initial guess and applying f repeatedly,
+</p>
+\begin{align}
+f(x), f(f(x)), f(f(f(x))), \cdots,
+\end{align}
+
+<p>
+(If you want learn more about fixed point, please visit <a href="https://en.wikipedia.org/wiki/Fixed_point_(mathematics)">here</a>.)
+</p>
+
+<p>
+We can use this to compute \sqrt, but I can't understand this. <a href="https://briangordon.github.io/2014/06/sqrts-and-fixed-points.html">here</a>
+</p>
+
+<p>
+\(\sqrt x\) is a fixed-point of the function \(y = x / y\).
+</p>
+</div></li></ul>
+</div>
+<div id="outline-container-orgd3e6323" class="outline-5">
+<h5 id="orgd3e6323">Procedures as Returned Values</h5>
+<div class="outline-text-5" id="text-orgd3e6323">
+<div class="org-src-container">
+<pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">average-damp</span> f<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #909183;">(</span>x<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>average x <span style="color: #709870;">(</span>f x<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>average-damp square<span style="color: #7388d6;">)</span> 10<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1a0509c" class="outline-5">
+<h5 id="org1a0509c">Newton's method</h5>
+<div class="outline-text-5" id="text-org1a0509c">
+<p>
+Read later. This part is very interesting.
+</p>
+</div>
+<ul class="org-ul"><li><a id="org669daa2"></a>Abstractions and first-class procedures<br /><div class="outline-text-6" id="text-org669daa2">
+<p>
+Some of the “rights and privileges” of first-class elements are:
+</p>
+<ul class="org-ul">
+<li>They may be named by variables.</li>
+<li>They may be passed as arguments to procedures.</li>
+<li>They may be returned as the results of procedures.</li>
+<li>They may be included in data structures.</li>
+</ul>
+</div></li></ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb96bbc7" class="outline-3">
+<h3 id="orgb96bbc7">Chapter 2 Building Abstractions with Data</h3>
 </div>
 </div>
 

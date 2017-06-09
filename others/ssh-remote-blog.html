@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-10 Sat 00:17 -->
+<!-- 2017-06-10 Sat 00:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sitemap</title>
+<title>远程主机登录</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -238,59 +238,172 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Sitemap</h1>
-<ul class="org-ul">
-<li>books
-<ul class="org-ul">
-<li><a href="books/sicp.html">SICP</a></li>
-<li><a href="books/sicp-exercise.html">sicp-exercise</a></li>
-<li><a href="books/sicp-notes.html">sicp</a></li>
-<li><a href="books/readings.html">读过的书</a></li>
-</ul></li>
-<li>guitar
-<ul class="org-ul">
-<li><a href="guitar/奇跡の山.html">奇跡の山</a></li>
-</ul></li>
-<li>mac
-<ul class="org-ul">
-<li><a href="mac/software.html">MAC好用软件</a></li>
-<li><a href="mac/develpment-resources.html">MacOS开发资源</a></li>
-<li><a href="mac/git-help.html">git 自救</a></li>
-</ul></li>
-<li>ml
-<ul class="org-ul">
-<li><a href="ml/coursera-machine-learning-course.html">机器学习相关的课程总结</a></li>
-</ul></li>
-<li>others
-<ul class="org-ul">
-<li><a href="others/static-comments-on-my-blog.html">一个静态评论系统的实现</a></li>
-<li><a href="others/ssh-remote-host.html">远程主机登录</a></li>
-</ul></li>
-<li>trans
-<ul class="org-ul">
-<li><a href="trans/temp.html">temp</a></li>
-<li><a href="trans/a-continuous-integration-system.html">持续集成系统</a></li>
-</ul></li>
-<li>wiki<sub>emacs</sub>
-<ul class="org-ul">
-<li><a href="wiki_emacs/blog-test.html">Blog的搭建及其特性</a></li>
-<li><a href="wiki_emacs/interactive.html">Elisp 中 interactive 总结</a></li>
-<li><a href="wiki_emacs/emacs-tricks.html">Emacs的一些技巧</a></li>
-<li><a href="wiki_emacs/mac-org-mode-output-pdf.html">Exporting to PDF in org mode</a></li>
-<li><a href="wiki_emacs/emacs-settings.html">Some configs of my emacs</a></li>
-<li><a href="wiki_emacs/how-to-install-emacs-package-manually.html">how-to-install-emacs-package-manually</a></li>
-</ul></li>
-<li>wiki<sub>ml</sub><sub>dl</sub>
-<ul class="org-ul">
-<li><a href="wiki_ml_dl/machine_learning.html">machine<sub>learning</sub></a></li>
-</ul></li>
-<li>wiki<sub>python</sub>
-<ul class="org-ul">
-<li><a href="wiki_python/argparse.html">Argparse 教程</a></li>
-</ul></li>
-<li><a href="contact.html">Contact</a></li>
-<li><a href="index.html">Zen Mind, Beginner's Mind</a></li>
+<h1 class="title">远程主机登录</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org35af975">最普通的方法</a></li>
+<li><a href="#orgeee808b">使用 SSH key 来登录</a></li>
+<li><a href="#org9477495">配置 ssh config</a></li>
+<li><a href="#orgc1afe46">还可以更简化？</a></li>
+<li><a href="#orgad5ea6f">尾声</a></li>
 </ul>
+</div>
+</div>
+<hr />
+
+<p>
+这里记录一下，如何登录远程主机，以及如何更方便登录。
+</p>
+
+<div id="outline-container-org35af975" class="outline-2">
+<h2 id="org35af975">最普通的方法</h2>
+<div class="outline-text-2" id="text-org35af975">
+<p>
+例如我们有一个远程的主机，IP 地址为 <b>52.10.199.62</b> ，username 为 ubuntu。
+</p>
+
+<p>
+我们就可以通过 ssh：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ssh ubuntu@52.10.199.62
+</pre>
+</div>
+
+<p>
+然后提示输入 用户名和密码。有时候密码很长的话，这一步就很不方便了。
+我们就想能不能简化这种操作。确实是可以的。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgeee808b" class="outline-2">
+<h2 id="orgeee808b">使用 SSH key 来登录</h2>
+<div class="outline-text-2" id="text-orgeee808b">
+<p>
+首先生成一个 ssh key，如果你想用 ~/.ssh 目录下的 key 也可以。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ssh-keygen -t rsa
+</pre>
+</div>
+
+<p>
+然后会提示你选择一个文件去存储这个key，默认是覆盖 <b>~/.ssh/id_rsa</b> 这个文件。
+一直按回车就好。
+</p>
+
+<p>
+然后把生成的 public key 注册到服务器上。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ssh-copy-id -i ~/.ssh/id_rsa.pub user@server
+</pre>
+</div>
+
+<p>
+这一步完成了，我们就可以直接使用这个来登录
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ssh ubuntu@52.10.199.62
+</pre>
+</div>
+
+
+
+<p>
+有个地方需要注意，如果你不是使用默认的 .ssh/id_rsa 这个 ssh key，而是新起的一个名字。
+</p>
+
+<p>
+这时你要这样来登录
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ssh -i &lt;private key&gt; ubuntu@52.10.199.62
+</pre>
+</div>
+
+<p>
+是不是还很麻烦？确实是的。
+我们还可以简化操作。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9477495" class="outline-2">
+<h2 id="org9477495">配置 ssh config</h2>
+<div class="outline-text-2" id="text-org9477495">
+<p>
+在上面的例子中，我们需要记住很多的东西。尤其是 ssh private key 还有 ip 地址这种东西。
+这里 ssh 的 config 就非常有用了。
+</p>
+
+<p>
+在 ~/.ssh/config 配置中，我们添加如下
+</p>
+<pre class="example">
+Host test
+    HostName 106.75.57.80
+    IdentityFile ~/.ssh/test.key
+    User ubuntu
+</pre>
+
+<p>
+下面我们就可以这样登录了
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ssh test
+</pre>
+</div>
+
+<p>
+是不是简化了很多？这样就非常好了。
+如果当你需要登录很多主机的时候，这种方式就非常有用了。因为你从特定的ip中解脱出来了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc1afe46" class="outline-2">
+<h2 id="orgc1afe46">还可以更简化？</h2>
+<div class="outline-text-2" id="text-orgc1afe46">
+<p>
+到上面其实已经足够简单了，但是我还是太懒了，一个单词都不想多输。
+</p>
+
+<p>
+于是，我打开了 .zshrc (因为我使用的是 zsh，如果你使用的是bash，应该是 .bashrc 文件），添加了下面一句
+</p>
+
+<pre class="example">
+alias lg='ssh test'
+</pre>
+
+<p>
+下次，我们直接输入 lg 就登录了。哈哈，大功告成。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgad5ea6f" class="outline-2">
+<h2 id="orgad5ea6f">尾声</h2>
+<div class="outline-text-2" id="text-orgad5ea6f">
+<p>
+很早之前，因为有很多台机器需要登录，而且ip更换很频繁，而且我们根据不同的区使用了几
+种不同的 ssh key。这导致很混乱，于是我简单的写了写 <a href="https://github.com/dai92817/linux_settings/blob/master/bashrc">shell</a> 脚本，这对于
+当时的使用场景是够用了。现在这个用处不大，仅仅当个参考吧。
+</p>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

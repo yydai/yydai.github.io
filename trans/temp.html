@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-06 Tue 15:07 -->
+<!-- 2017-06-16 Fri 19:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -181,6 +181,7 @@
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='favicon.ico'>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -303,7 +304,7 @@ extensibility.
 </p>
 
 <p>
-Project Limitations and Notes 
+Project Limitations and Notes
 </p>
 
 <p>
@@ -458,8 +459,8 @@ Let's call this test<sub>repo</sub>:
 </p>
 
 <p>
-$ mkdir test<sub>repo</sub> 
-$ cd test<sub>repo</sub> 
+$ mkdir test<sub>repo</sub>
+$ cd test<sub>repo</sub>
 $ git init
 This will be our master repository. This is where developers check in their code, so our CI should pull this repository and check for commits, then run tests. The thing that checks for new commits is the repository observer.
 </p>
@@ -473,9 +474,9 @@ Copy the tests folder from this code base to test<sub>repo</sub> and commit it:
 </p>
 
 <p>
-$ cp -r <i>this/directory/tests /path/to/test<sub>repo</sub></i> 
-$ cd <i>path/to/test\<sub>repo</sub> 
-$ git add tests</i> 
+$ cp -r <i>this/directory/tests /path/to/test<sub>repo</sub></i>
+$ cd <i>path/to/test\<sub>repo</sub>
+$ git add tests</i>
 $ git commit -m ”add tests”
 Now you have a commit in the master repository.
 </p>
@@ -545,12 +546,12 @@ A step-by-step breakdown of update<sub>repo.sh</sub> is as follows. First, the s
 </p>
 
 <p>
-source run<sub>or</sub><sub>fail.sh</sub> 
+source run<sub>or</sub><sub>fail.sh</sub>
 Next, the script tries to remove a file named .commit<sub>id</sub>. Since updaterepo.sh is called infinitely by the repo<sub>observer.py</sub> file, if we previously had a new commit, then .commit<sub>id</sub> was created, but holds a commit we already tested. Therefore, we want to remove that file, and create a new one only if a new commit is found.
 </p>
 
 <p>
-bash rm -f .commit<sub>id</sub> 
+bash rm -f .commit<sub>id</sub>
 After it removes the file (if it existed), it verifies that the repository we are observing exists, and then resets it to the most recent commit, in case anything caused it to get out of sync.
 </p>
 
@@ -944,7 +945,7 @@ In order to run test<sub>runner.py</sub>, you must point it to a clone of the re
 </p>
 
 <p>
-Control Flow Diagram 
+Control Flow Diagram
 </p>
 
 <p>
@@ -953,7 +954,7 @@ This diagram assumes that all three files
 (repo<sub>observer.py</sub>, dispatcher.py and
 test<sub>runner.py</sub>) are already running, and describes
 the actions each process takes when a new commit
-is made. 
+is made.
 </p>
 
 <p>
@@ -1027,7 +1028,7 @@ are a few suggestions for improvements:
 </p>
 
 <p>
-Per-Commit Test Runs 
+Per-Commit Test Runs
 </p>
 
 <p>
@@ -1041,7 +1042,7 @@ latest commit.
 </p>
 
 <p>
-Smarter Test Runners 
+Smarter Test Runners
 </p>
 
 <p>
@@ -1062,7 +1063,7 @@ we will only run tests once per commit.
 </p>
 
 <p>
-Real Reporting 
+Real Reporting
 </p>
 
 <p>
@@ -1081,7 +1082,7 @@ server to alert subscribers to any test failures.
 </p>
 
 <p>
-Test Runner Manager 
+Test Runner Manager
 Right now, you have to
 manually launch the test<sub>runner.py</sub> file to start a
 test runner. Instead, you could create a test

@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-16 Fri 19:16 -->
+<!-- 2017-06-15 Thu 07:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sitemap</title>
+<title>Emacs 的键盘宏</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -238,67 +238,69 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Sitemap</h1>
-<ul class="org-ul">
-<li>books
-<ul class="org-ul">
-<li><a href="books/sicp.html">SICP</a></li>
-<li><a href="books/sicp-notes.html">sicp</a></li>
-<li><a href="books/sicp-exercise.html">sicp-exercise</a></li>
-<li><a href="books/plan.html">技术学习</a></li>
-<li><a href="books/readings.html">读过的书</a></li>
-</ul></li>
-<li>food
-<ul class="org-ul">
-<li><a href="food/如何煮鸡蛋.html">如何煮鸡蛋</a></li>
-<li><a href="food/炒面.html">炒面</a></li>
-<li><a href="food/food.html">美食</a></li>
-</ul></li>
-<li>guitar
-<ul class="org-ul">
-<li><a href="guitar/奇跡の山.html">奇跡の山</a></li>
-</ul></li>
-<li>mac
-<ul class="org-ul">
-<li><a href="mac/software.html">MAC好用软件</a></li>
-<li><a href="mac/develpment-resources.html">MacOS开发资源</a></li>
-<li><a href="mac/git-help.html">git 自救</a></li>
-</ul></li>
-<li>ml
-<ul class="org-ul">
-<li><a href="ml/coursera-machine-learning-course.html">机器学习相关的课程总结</a></li>
-</ul></li>
-<li>others
-<ul class="org-ul">
-<li><a href="others/static-comments-on-my-blog.html">一个静态评论系统的实现</a></li>
-<li><a href="others/ssh-remote-host.html">远程主机登录</a></li>
-</ul></li>
-<li>trans
-<ul class="org-ul">
-<li><a href="trans/temp.html">temp</a></li>
-<li><a href="trans/a-continuous-integration-system.html">持续集成系统</a></li>
-</ul></li>
-<li>wiki<sub>emacs</sub>
-<ul class="org-ul">
-<li><a href="wiki_emacs/blog-test.html">Blog的搭建及其特性</a></li>
-<li><a href="wiki_emacs/interactive.html">Elisp 中 interactive 总结</a></li>
-<li><a href="wiki_emacs/emacs-macro.html">Emacs 的键盘宏</a></li>
-<li><a href="wiki_emacs/emacs-tricks.html">Emacs的一些技巧</a></li>
-<li><a href="wiki_emacs/mac-org-mode-output-pdf.html">Exporting to PDF in org mode</a></li>
-<li><a href="wiki_emacs/emacs-settings.html">Some configs of my emacs</a></li>
-<li><a href="wiki_emacs/how-to-install-emacs-package-manually.html">how-to-install-emacs-package-manually</a></li>
-</ul></li>
-<li>wiki<sub>ml</sub><sub>dl</sub>
-<ul class="org-ul">
-<li><a href="wiki_ml_dl/machine_learning.html">machine<sub>learning</sub></a></li>
-</ul></li>
-<li>wiki<sub>python</sub>
-<ul class="org-ul">
-<li><a href="wiki_python/argparse.html">Argparse 教程</a></li>
-</ul></li>
-<li><a href="contact.html">Contact</a></li>
-<li><a href="index.html">Zen Mind, Beginner's Mind</a></li>
+<h1 class="title">Emacs 的键盘宏</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgcea74de">如何使用键盘宏</a></li>
+<li><a href="#org26dd926">将键盘宏保存</a></li>
+<li><a href="#org739af0c">设置快捷键</a></li>
 </ul>
+</div>
+</div>
+<hr />
+
+<div id="outline-container-orgcea74de" class="outline-2">
+<h2 id="orgcea74de">如何使用键盘宏</h2>
+<div class="outline-text-2" id="text-orgcea74de">
+<p>
+一般来说，我们按下 &lt;F3&gt; 开始录制键盘宏，然后进行相应的操作，按下 &lt;F4&gt; 录制结束。
+例如，我有个需求是处理下面的几个文本：
+</p>
+<pre class="example">
+aa bb cc dd ==&gt; "aa", "b", "cc", "dd"
+</pre>
+<p>
+类似这种有相同模式的操作，使用键盘宏处理起来非常的简单。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org26dd926" class="outline-2">
+<h2 id="org26dd926">将键盘宏保存</h2>
+<div class="outline-text-2" id="text-org26dd926">
+<p>
+有时候，我们需要经常做某个操作，希望下次能复用这个键盘宏，我们就可以把定义的宏进行保存。
+在上面的操作完成以后，我们就可以调用 <b>M-x name-last-kbd-macro</b> 这个命令了。在命名完以后，你其实就可以当成命令来
+调用这个宏名了。当然如果长期使用需要保存到配置文件中。 例如，这里我起个名叫 <b>test-marco</b> 。
+</p>
+
+<p>
+然后打开你的Emacs的配置文件，可以使 init.el 或者其他的位置。然后执行
+<b>M-x insert-kbd-macro</b> 。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org739af0c" class="outline-2">
+<h2 id="org739af0c">设置快捷键</h2>
+<div class="outline-text-2" id="text-org739af0c">
+<p>
+在使用命令方式调用的时候如果嫌麻烦，可以为这个宏设置一个快捷键。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"C-cm"</span><span style="color: #7388d6;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">test-marco</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+下次，我们直接按 <b>C-c m</b> 就可以了。
+</p>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

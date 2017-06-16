@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-06 Tue 15:07 -->
+<!-- 2017-06-16 Fri 19:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs的一些技巧</title>
@@ -254,6 +254,8 @@ for the JavaScript code in this tag.
 <li><a href="#org65138e6">在Emacs中禁用鼠标</a></li>
 <li><a href="#org8f609af">交换 C-w 和 M-w 的命令绑定</a></li>
 <li><a href="#org2eb6c59">截图</a></li>
+<li><a href="#org3498cee">Emacs 的键盘宏</a></li>
+<li><a href="#org1fc0cc9">new-line-and-indent</a></li>
 </ul>
 </div>
 </div>
@@ -264,6 +266,10 @@ for the JavaScript code in this tag.
 <p>
 命令是 <code>set-mark-command</code>, 绑定的快捷键为C-@, C-., C-SPC，推荐使用 <code>C-.</code> 。 因为 C-SPC与输入法有冲突，C-@比较难按。
 再次按下 <code>C-.</code> 会取消标记。
+</p>
+
+<p>
+设置矩形区域标记，使用 C-x &lt;spc&gt;, visit <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Rectangles.html">here</a>.
 </p>
 </div>
 </div>
@@ -509,6 +515,29 @@ also be a regular expression.
       <span style="color: #909183;">(</span>insert <span style="color: #709870;">(</span>concat <span style="color: #8b2252;">"[[file:"</span> relative-dir <span style="color: #8b2252;">"]]"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
   <span style="color: #7388d6;">(</span>org-display-inline-images<span style="color: #7388d6;">)</span>
   <span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3498cee" class="outline-2">
+<h2 id="org3498cee">Emacs 的键盘宏</h2>
+<div class="outline-text-2" id="text-org3498cee">
+<p>
+使用键盘宏可以极大的提高我们的效率。我感觉需要单独写一个文章来介绍这个技巧。
+这里介绍了如何使用，保存，以及绑定快捷键。具体看<a href="./emacs-macro.html">这里</a>。
+</p>
+</div>
+</div>
+<div id="outline-container-org1fc0cc9" class="outline-2">
+<h2 id="org1fc0cc9">new-line-and-indent</h2>
+<div class="outline-text-2" id="text-org1fc0cc9">
+<p>
+在写代码的时候，我们经常需要自动缩进，而不是回到下一行的开头。这时我们就需要这个函数了，
+<b>new-line-and-indent</b> 。我们可以直接使用快捷键 <b>C-j</b> 。也可以绑定到 RETURN 键上。
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>add-hook <span style="color: #a020f0;">'</span><span style="color: #008b8b;">lisp-mode-hook</span> <span style="color: #a020f0;">'</span><span style="color: #7388d6;">(</span>lambda <span style="color: #909183;">()</span>
+  <span style="color: #909183;">(</span>local-set-key <span style="color: #709870;">(</span>kbd <span style="color: #8b2252;">"RET"</span><span style="color: #709870;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">newline-and-indent</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-16 Fri 19:34 -->
+<!-- 2017-06-17 Sat 11:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs的一些技巧</title>
@@ -257,6 +257,8 @@ for the JavaScript code in this tag.
 <li><a href="#org2eb6c59">截图</a></li>
 <li><a href="#org3498cee">Emacs 的键盘宏</a></li>
 <li><a href="#org1fc0cc9">new-line-and-indent</a></li>
+<li><a href="#org202b303">Butterfly</a></li>
+<li><a href="#orgcc89135">快速生成有序序列</a></li>
 </ul>
 </div>
 </div>
@@ -305,7 +307,7 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #707183;">(</span>setq org-publish-use-timestamps-flag nil<span style="color: #707183;">)</span>
+<pre class="src src-lisp"><span style="color: #657b83;">(</span>setq org-publish-use-timestamps-flag nil<span style="color: #657b83;">)</span>
 </pre>
 </div>
 </div>
@@ -375,41 +377,41 @@ also be a regular expression.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defvar</span> <span style="color: #a0522d;">*unshifted-special-chars-layout*</span>
-  <span style="color: #a020f0;">'</span><span style="color: #7388d6;">(</span><span style="color: #909183;">(</span><span style="color: #8b2252;">"1"</span> <span style="color: #8b2252;">"!"</span><span style="color: #909183;">)</span> <span style="color: #b22222;">; </span><span style="color: #b22222;">from -&gt; to</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"2"</span> <span style="color: #8b2252;">"@"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"3"</span> <span style="color: #8b2252;">"#"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"4"</span> <span style="color: #8b2252;">"$"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"5"</span> <span style="color: #8b2252;">"%"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"6"</span> <span style="color: #8b2252;">"^"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"7"</span> <span style="color: #8b2252;">"&amp;"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"8"</span> <span style="color: #8b2252;">"*"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"9"</span> <span style="color: #8b2252;">"("</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"0"</span> <span style="color: #8b2252;">")"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"!"</span> <span style="color: #8b2252;">"1"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"@"</span> <span style="color: #8b2252;">"2"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"#"</span> <span style="color: #8b2252;">"3"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"$"</span> <span style="color: #8b2252;">"4"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"%"</span> <span style="color: #8b2252;">"5"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"^"</span> <span style="color: #8b2252;">"6"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"&amp;"</span> <span style="color: #8b2252;">"7"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"*"</span> <span style="color: #8b2252;">"8"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"("</span> <span style="color: #8b2252;">"9"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">")"</span> <span style="color: #8b2252;">"0"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">defvar</span> <span style="color: #6c71c4;">*unshifted-special-chars-layout*</span>
+  <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #2aa198;">"1"</span> <span style="color: #2aa198;">"!"</span><span style="color: #b58900;">)</span> <span style="color: #93a1a1; font-style: italic;">; </span><span style="color: #93a1a1; font-style: italic;">from -&gt; to</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"2"</span> <span style="color: #2aa198;">"@"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"3"</span> <span style="color: #2aa198;">"#"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"4"</span> <span style="color: #2aa198;">"$"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"5"</span> <span style="color: #2aa198;">"%"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"6"</span> <span style="color: #2aa198;">"^"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"7"</span> <span style="color: #2aa198;">"&amp;"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"8"</span> <span style="color: #2aa198;">"*"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"9"</span> <span style="color: #2aa198;">"("</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"0"</span> <span style="color: #2aa198;">")"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"!"</span> <span style="color: #2aa198;">"1"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"@"</span> <span style="color: #2aa198;">"2"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"#"</span> <span style="color: #2aa198;">"3"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"$"</span> <span style="color: #2aa198;">"4"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"%"</span> <span style="color: #2aa198;">"5"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"^"</span> <span style="color: #2aa198;">"6"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"&amp;"</span> <span style="color: #2aa198;">"7"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"*"</span> <span style="color: #2aa198;">"8"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">"("</span> <span style="color: #2aa198;">"9"</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span><span style="color: #2aa198;">")"</span> <span style="color: #2aa198;">"0"</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
 
-<span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">mb-str-to-unibyte-char</span> <span style="color: #7388d6;">(</span>s<span style="color: #7388d6;">)</span>
-  <span style="color: #8b2252;">"Translate first multibyte char in s to internal unibyte representation."</span>
-  <span style="color: #7388d6;">(</span>multibyte-char-to-unibyte <span style="color: #909183;">(</span>string-to-char s<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">mb-str-to-unibyte-char</span> <span style="color: #2aa198;">(</span>s<span style="color: #2aa198;">)</span>
+  <span style="color: #d33682;">"Translate first multibyte char in s to internal unibyte representation."</span>
+  <span style="color: #2aa198;">(</span>multibyte-char-to-unibyte <span style="color: #b58900;">(</span>string-to-char s<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
 
-<span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">remap-keyboard</span> <span style="color: #7388d6;">(</span>mapping<span style="color: #7388d6;">)</span>
-  <span style="color: #8b2252;">"Setup keyboard translate table using a list of pairwise key-mappings."</span>
-  <span style="color: #7388d6;">(</span>mapcar
-   <span style="color: #909183;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #709870;">(</span>mb-string-pair<span style="color: #709870;">)</span>
-     <span style="color: #709870;">(</span>apply <span style="color: #a020f0;">#'</span><span style="color: #008b8b;">keyboard-translate</span>
-        <span style="color: #907373;">(</span>mapcar <span style="color: #a020f0;">#'</span><span style="color: #008b8b;">mb-str-to-unibyte-char</span> mb-string-pair<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-   mapping<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">remap-keyboard</span> <span style="color: #2aa198;">(</span>mapping<span style="color: #2aa198;">)</span>
+  <span style="color: #d33682;">"Setup keyboard translate table using a list of pairwise key-mappings."</span>
+  <span style="color: #2aa198;">(</span>mapcar
+   <span style="color: #b58900;">(</span><span style="color: #859900;">lambda</span> <span style="color: #859900;">(</span>mb-string-pair<span style="color: #859900;">)</span>
+     <span style="color: #859900;">(</span>apply <span style="color: #859900;">#'</span><span style="color: #268bd2;">keyboard-translate</span>
+        <span style="color: #268bd2;">(</span>mapcar <span style="color: #859900;">#'</span><span style="color: #268bd2;">mb-str-to-unibyte-char</span> mb-string-pair<span style="color: #268bd2;">)</span><span style="color: #859900;">)</span><span style="color: #b58900;">)</span>
+   mapping<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
 
-<span style="color: #707183;">(</span>remap-keyboard *unshifted-special-chars-layout*<span style="color: #707183;">)</span>
+<span style="color: #657b83;">(</span>remap-keyboard *unshifted-special-chars-layout*<span style="color: #657b83;">)</span>
 </pre>
 </div>
 
@@ -440,20 +442,20 @@ also be a regular expression.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">define-minor-mode</span> <span style="color: #0000ff;">disable-mouse-mode</span>
-  <span style="color: #8b2252;">"A minor-mode that disables all mouse keybinds."</span>
-  <span style="color: #483d8b;">:global</span> t
-  <span style="color: #483d8b;">:lighter</span> <span style="color: #8b2252;">"Mouse&#128045;"</span>
-  <span style="color: #483d8b;">:keymap</span> <span style="color: #7388d6;">(</span>make-sparse-keymap<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">define-minor-mode</span> <span style="color: #b58900;">disable-mouse-mode</span>
+  <span style="color: #d33682;">"A minor-mode that disables all mouse keybinds."</span>
+  <span style="color: #6c71c4;">:global</span> t
+  <span style="color: #6c71c4;">:lighter</span> <span style="color: #2aa198;">"Mouse&#128045;"</span>
+  <span style="color: #6c71c4;">:keymap</span> <span style="color: #2aa198;">(</span>make-sparse-keymap<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
 
-<span style="color: #707183;">(</span><span style="color: #a020f0;">dolist</span> <span style="color: #7388d6;">(</span>type <span style="color: #a020f0;">'</span><span style="color: #909183;">(</span>mouse down-mouse drag-mouse
-                      double-mouse triple-mouse<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">dolist</span> <span style="color: #909183;">(</span>prefix <span style="color: #a020f0;">'</span><span style="color: #709870;">(</span><span style="color: #8b2252;">""</span> C- M- S- M-S- C-M- C-S- C-M-S-<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-    <span style="color: #b22222;">;; </span><span style="color: #b22222;">Yes, I actually HAD to go up to 7 here.</span>
-    <span style="color: #909183;">(</span><span style="color: #a020f0;">dotimes</span> <span style="color: #709870;">(</span>n 7<span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span><span style="color: #a020f0;">let</span> <span style="color: #907373;">(</span><span style="color: #6276ba;">(</span>k <span style="color: #858580;">(</span>format <span style="color: #8b2252;">"%s%s-%s"</span> prefix type n<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
-        <span style="color: #907373;">(</span>define-key disable-mouse-mode-map
-          <span style="color: #6276ba;">(</span>vector <span style="color: #858580;">(</span>intern k<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span> <span style="color: #a020f0;">#'</span><span style="color: #008b8b;">ignore</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">dolist</span> <span style="color: #2aa198;">(</span>type <span style="color: #859900;">'</span><span style="color: #b58900;">(</span>mouse down-mouse drag-mouse
+                      double-mouse triple-mouse<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">dolist</span> <span style="color: #b58900;">(</span>prefix <span style="color: #859900;">'</span><span style="color: #859900;">(</span><span style="color: #2aa198;">""</span> C- M- S- M-S- C-M- C-S- C-M-S-<span style="color: #859900;">)</span><span style="color: #b58900;">)</span>
+    <span style="color: #93a1a1; font-style: italic;">;; </span><span style="color: #93a1a1; font-style: italic;">Yes, I actually HAD to go up to 7 here.</span>
+    <span style="color: #b58900;">(</span><span style="color: #859900;">dotimes</span> <span style="color: #859900;">(</span>n 7<span style="color: #859900;">)</span>
+      <span style="color: #859900;">(</span><span style="color: #859900;">let</span> <span style="color: #268bd2;">(</span><span style="color: #657b83;">(</span>k <span style="color: #2aa198;">(</span>format <span style="color: #2aa198;">"%s%s-%s"</span> prefix type n<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span><span style="color: #268bd2;">)</span>
+        <span style="color: #268bd2;">(</span>define-key disable-mouse-mode-map
+          <span style="color: #657b83;">(</span>vector <span style="color: #2aa198;">(</span>intern k<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span> <span style="color: #859900;">#'</span><span style="color: #268bd2;">ignore</span><span style="color: #268bd2;">)</span><span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
 </pre>
 </div>
 </div>
@@ -468,8 +470,8 @@ also be a regular expression.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"C-w"</span><span style="color: #7388d6;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">whole-line-or-region-kill-ring-save</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"M-w"</span><span style="color: #7388d6;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">whole-line-or-region-kill-region</span><span style="color: #707183;">)</span>
+<pre class="src src-elisp"><span style="color: #657b83;">(</span>global-set-key <span style="color: #2aa198;">(</span>kbd <span style="color: #2aa198;">"C-w"</span><span style="color: #2aa198;">)</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">whole-line-or-region-kill-ring-save</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83;">(</span>global-set-key <span style="color: #2aa198;">(</span>kbd <span style="color: #2aa198;">"M-w"</span><span style="color: #2aa198;">)</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">whole-line-or-region-kill-region</span><span style="color: #657b83;">)</span>
 </pre>
 </div>
 </div>
@@ -488,34 +490,34 @@ also be a regular expression.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #b22222;">;;; </span><span style="color: #b22222;">https://emacs-china.org/t/org-mode/79</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">my-org-screenshot</span> <span style="color: #7388d6;">()</span>
-  <span style="color: #8b2252;">"Take a screenshot into a time stamped unique-named file in the</span>
-<span style="color: #8b2252;">same directory as the org-buffer and insert a link to this file."</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>org-display-inline-images<span style="color: #7388d6;">)</span>
+<pre class="src src-elisp"><span style="color: #93a1a1; font-style: italic;">;;; </span><span style="color: #93a1a1; font-style: italic;">https://emacs-china.org/t/org-mode/79</span>
+<span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">my-org-screenshot</span> <span style="color: #2aa198;">()</span>
+  <span style="color: #d33682;">"Take a screenshot into a time stamped unique-named file in the</span>
+<span style="color: #d33682;">same directory as the org-buffer and insert a link to this file."</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">interactive</span><span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span>org-display-inline-images<span style="color: #2aa198;">)</span>
 
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">setq</span> filename
-        <span style="color: #909183;">(</span>concat
-         <span style="color: #709870;">(</span>make-temp-name
-          <span style="color: #907373;">(</span>concat <span style="color: #6276ba;">(</span>file-name-directory <span style="color: #858580;">(</span>buffer-file-name<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span>
-                  <span style="color: #8b2252;">"/imgs/"</span>
-                  <span style="color: #6276ba;">(</span>format-time-string <span style="color: #8b2252;">"%Y%m%d_%H%M%S_"</span><span style="color: #6276ba;">)</span><span style="color: #907373;">)</span> <span style="color: #709870;">)</span> <span style="color: #8b2252;">".png"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">unless</span> <span style="color: #909183;">(</span>file-exists-p <span style="color: #709870;">(</span>file-name-directory filename<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span>make-directory <span style="color: #709870;">(</span>file-name-directory filename<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-                                        <span style="color: #b22222;">; </span><span style="color: #b22222;">take screenshot</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>eq system-type <span style="color: #a020f0;">'</span><span style="color: #008b8b;">darwin</span><span style="color: #909183;">)</span>
-      <span style="color: #909183;">(</span><span style="color: #a020f0;">progn</span>
-        <span style="color: #709870;">(</span>call-process-shell-command <span style="color: #8b2252;">"screencapture"</span> nil nil nil nil <span style="color: #8b2252;">" -s "</span> <span style="color: #907373;">(</span>concat
-                                                                            <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> filename <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> <span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-        <span style="color: #709870;">(</span>call-process-shell-command <span style="color: #8b2252;">"convert"</span> nil nil nil nil <span style="color: #907373;">(</span>concat <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> filename <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;"> -resize  </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">50%</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> <span style="color: #907373;">)</span> <span style="color: #907373;">(</span>concat <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> filename <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> <span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-        <span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">setq</span> filename
+        <span style="color: #b58900;">(</span>concat
+         <span style="color: #859900;">(</span>make-temp-name
+          <span style="color: #268bd2;">(</span>concat <span style="color: #657b83;">(</span>file-name-directory <span style="color: #2aa198;">(</span>buffer-file-name<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+                  <span style="color: #2aa198;">"/imgs/"</span>
+                  <span style="color: #657b83;">(</span>format-time-string <span style="color: #2aa198;">"%Y%m%d_%H%M%S_"</span><span style="color: #657b83;">)</span><span style="color: #268bd2;">)</span> <span style="color: #859900;">)</span> <span style="color: #2aa198;">".png"</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">unless</span> <span style="color: #b58900;">(</span>file-exists-p <span style="color: #859900;">(</span>file-name-directory filename<span style="color: #859900;">)</span><span style="color: #b58900;">)</span>
+    <span style="color: #b58900;">(</span>make-directory <span style="color: #859900;">(</span>file-name-directory filename<span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+                                        <span style="color: #93a1a1; font-style: italic;">; </span><span style="color: #93a1a1; font-style: italic;">take screenshot</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">if</span> <span style="color: #b58900;">(</span>eq system-type <span style="color: #859900;">'</span><span style="color: #268bd2;">darwin</span><span style="color: #b58900;">)</span>
+      <span style="color: #b58900;">(</span><span style="color: #859900;">progn</span>
+        <span style="color: #859900;">(</span>call-process-shell-command <span style="color: #2aa198;">"screencapture"</span> nil nil nil nil <span style="color: #2aa198;">" -s "</span> <span style="color: #268bd2;">(</span>concat
+                                                                            <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> filename <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> <span style="color: #268bd2;">)</span><span style="color: #859900;">)</span>
+        <span style="color: #859900;">(</span>call-process-shell-command <span style="color: #2aa198;">"convert"</span> nil nil nil nil <span style="color: #268bd2;">(</span>concat <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> filename <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;"> -resize  </span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">50%</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> <span style="color: #268bd2;">)</span> <span style="color: #268bd2;">(</span>concat <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> filename <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">"</span><span style="color: #2aa198;">"</span> <span style="color: #268bd2;">)</span><span style="color: #859900;">)</span>
+        <span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
 
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">setq</span> relative-dir <span style="color: #909183;">(</span>concat <span style="color: #8b2252;">"./imgs/"</span> <span style="color: #709870;">(</span>file-name-nondirectory filename<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>file-exists-p filename<span style="color: #909183;">)</span>
-      <span style="color: #909183;">(</span>insert <span style="color: #709870;">(</span>concat <span style="color: #8b2252;">"[[file:"</span> relative-dir <span style="color: #8b2252;">"]]"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>org-display-inline-images<span style="color: #7388d6;">)</span>
-  <span style="color: #707183;">)</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">setq</span> relative-dir <span style="color: #b58900;">(</span>concat <span style="color: #2aa198;">"./imgs/"</span> <span style="color: #859900;">(</span>file-name-nondirectory filename<span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span><span style="color: #859900;">if</span> <span style="color: #b58900;">(</span>file-exists-p filename<span style="color: #b58900;">)</span>
+      <span style="color: #b58900;">(</span>insert <span style="color: #859900;">(</span>concat <span style="color: #2aa198;">"[[file:"</span> relative-dir <span style="color: #2aa198;">"]]"</span><span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+  <span style="color: #2aa198;">(</span>org-display-inline-images<span style="color: #2aa198;">)</span>
+  <span style="color: #657b83;">)</span>
 </pre>
 </div>
 </div>
@@ -537,10 +539,33 @@ also be a regular expression.
 <b>new-line-and-indent</b> 。我们可以直接使用快捷键 <b>C-j</b> 。也可以绑定到 RETURN 键上。
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>add-hook <span style="color: #a020f0;">'</span><span style="color: #008b8b;">lisp-mode-hook</span> <span style="color: #a020f0;">'</span><span style="color: #7388d6;">(</span>lambda <span style="color: #909183;">()</span>
-  <span style="color: #909183;">(</span>local-set-key <span style="color: #709870;">(</span>kbd <span style="color: #8b2252;">"RET"</span><span style="color: #709870;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">newline-and-indent</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #657b83;">(</span>add-hook <span style="color: #859900;">'</span><span style="color: #268bd2;">lisp-mode-hook</span> <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span>lambda <span style="color: #b58900;">()</span>
+  <span style="color: #b58900;">(</span>local-set-key <span style="color: #859900;">(</span>kbd <span style="color: #2aa198;">"RET"</span><span style="color: #859900;">)</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">newline-and-indent</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
 </pre>
 </div>
+</div>
+</div>
+<div id="outline-container-org202b303" class="outline-2">
+<h2 id="org202b303">Butterfly</h2>
+<div class="outline-text-2" id="text-org202b303">
+<p>
+M-x butterfly
+</p>
+
+<p>
+(animate-string "Hello world"
+    (/ (window-height) 2) (- (/ (window-width) 2) 12))
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcc89135" class="outline-2">
+<h2 id="orgcc89135">快速生成有序序列</h2>
+<div class="outline-text-2" id="text-orgcc89135">
+<ul class="org-ul">
+<li><a href="https://github.com/abo-abo/tiny">tiny</a></li>
+<li><a href="https://emacs.stackexchange.com/questions/5632/how-to-input-number-series-with-appointed-amount-in-emacs">very gooood</a></li>
+</ul>
 </div>
 </div>
 </div>

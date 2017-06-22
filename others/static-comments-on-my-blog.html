@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-16 Fri 19:34 -->
+<!-- 2017-06-22 Thu 21:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>一个静态评论系统的实现</title>
@@ -181,7 +181,7 @@
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
-<link rel='shortcut icon' type='image/x-icon' href='favicon.ico'>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -335,18 +335,18 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #a020f0;">function</span> <span style="color: #0000ff;">test</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
-  jQuery.ajax<span style="color: #7388d6;">(</span><span style="color: #909183;">{</span>
-      type: <span style="color: #8b2252;">'GET'</span>,
-      async: <span style="color: #008b8b;">false</span>,
-      dataType:<span style="color: #8b2252;">'json'</span>,
+<pre class="src src-javascript"><span style="color: #859900;">function</span> <span style="color: #b58900;">test</span><span style="color: #657b83;">()</span> <span style="color: #657b83;">{</span>
+  jQuery.ajax<span style="color: #2aa198;">(</span><span style="color: #b58900;">{</span>
+      type: <span style="color: #2aa198;">'GET'</span>,
+      async: <span style="color: #268bd2;">false</span>,
+      dataType:<span style="color: #2aa198;">'json'</span>,
       url: search_issues,
-      <span style="color: #0000ff;">success</span>:<span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">data</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
+      <span style="color: #b58900;">success</span>:<span style="color: #859900;">function</span><span style="color: #859900;">(</span><span style="color: #6c71c4;">data</span><span style="color: #859900;">)</span> <span style="color: #859900;">{</span>
          result = data;
-      <span style="color: #709870;">}</span>
-  <span style="color: #909183;">}</span><span style="color: #7388d6;">)</span>;
-  <span style="color: #a020f0;">return</span> result;
-<span style="color: #707183;">}</span>
+      <span style="color: #859900;">}</span>
+  <span style="color: #b58900;">}</span><span style="color: #2aa198;">)</span>;
+  <span style="color: #859900;">return</span> result;
+<span style="color: #657b83;">}</span>
 </pre>
 </div>
 
@@ -355,29 +355,29 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #a020f0;">function</span> <span style="color: #0000ff;">create</span><span style="color: #707183;">(</span><span style="color: #a0522d;">title</span><span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
-     <span style="color: #a020f0;">var</span> <span style="color: #a0522d;">creare</span> = base_url + <span style="color: #8b2252;">'/repos/'</span> + owner + <span style="color: #8b2252;">'/'</span> + repo + <span style="color: #8b2252;">'/issues'</span>;
-     <span style="color: #a020f0;">var</span> <span style="color: #a0522d;">payload</span> = <span style="color: #7388d6;">{</span>
-          <span style="color: #8b2252;">'title'</span>: title,
-          <span style="color: #8b2252;">'body'</span>: <span style="color: #8b2252;">'You can write comments in this issues.'</span>,
-          <span style="color: #8b2252;">'labels'</span>: <span style="color: #909183;">[</span><span style="color: #8b2252;">'blog'</span><span style="color: #909183;">]</span>,
-      <span style="color: #7388d6;">}</span>
-      $.ajax<span style="color: #7388d6;">(</span><span style="color: #909183;">{</span>
-        type: <span style="color: #8b2252;">'POST'</span>,
+<pre class="src src-javascript"><span style="color: #859900;">function</span> <span style="color: #b58900;">create</span><span style="color: #657b83;">(</span><span style="color: #6c71c4;">title</span><span style="color: #657b83;">)</span> <span style="color: #657b83;">{</span>
+     <span style="color: #859900;">var</span> <span style="color: #6c71c4;">creare</span> = base_url + <span style="color: #2aa198;">'/repos/'</span> + owner + <span style="color: #2aa198;">'/'</span> + repo + <span style="color: #2aa198;">'/issues'</span>;
+     <span style="color: #859900;">var</span> <span style="color: #6c71c4;">payload</span> = <span style="color: #2aa198;">{</span>
+          <span style="color: #2aa198;">'title'</span>: title,
+          <span style="color: #2aa198;">'body'</span>: <span style="color: #2aa198;">'You can write comments in this issues.'</span>,
+          <span style="color: #2aa198;">'labels'</span>: <span style="color: #b58900;">[</span><span style="color: #2aa198;">'blog'</span><span style="color: #b58900;">]</span>,
+      <span style="color: #2aa198;">}</span>
+      $.ajax<span style="color: #2aa198;">(</span><span style="color: #b58900;">{</span>
+        type: <span style="color: #2aa198;">'POST'</span>,
         url: create,
-        crossDomain: <span style="color: #008b8b;">true</span>,
-              data: JSON.stringify<span style="color: #709870;">(</span>payload<span style="color: #709870;">)</span>,
-        headers: <span style="color: #709870;">{</span>
-          <span style="color: #8b2252;">'Authorization'</span>: <span style="color: #8b2252;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #b22222;">// </span><span style="color: #b22222;">auth2.0</span>
-          <span style="color: #8b2252;">'Access-Control-Allow-Origin'</span> : <span style="color: #8b2252;">'*'</span>
-        <span style="color: #709870;">}</span>,
-        contentType: <span style="color: #8b2252;">'application/json; charset=utf-8'</span>,
-        dataType: <span style="color: #8b2252;">'json'</span>,
-        <span style="color: #0000ff;">success</span>: <span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">data</span><span style="color: #709870;">){</span>alert<span style="color: #907373;">(</span><span style="color: #8b2252;">'create issue success'</span><span style="color: #907373;">)</span>;<span style="color: #709870;">}</span>,
-        <span style="color: #0000ff;">failure</span>: <span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">errMsg</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
-            alert<span style="color: #907373;">(</span>errMsg<span style="color: #907373;">)</span>;
-        <span style="color: #709870;">}</span>
-    <span style="color: #909183;">}</span><span style="color: #7388d6;">)</span>;<span style="color: #707183;">}</span>
+        crossDomain: <span style="color: #268bd2;">true</span>,
+              data: JSON.stringify<span style="color: #859900;">(</span>payload<span style="color: #859900;">)</span>,
+        headers: <span style="color: #859900;">{</span>
+          <span style="color: #2aa198;">'Authorization'</span>: <span style="color: #2aa198;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">auth2.0</span>
+          <span style="color: #2aa198;">'Access-Control-Allow-Origin'</span> : <span style="color: #2aa198;">'*'</span>
+        <span style="color: #859900;">}</span>,
+        contentType: <span style="color: #2aa198;">'application/json; charset=utf-8'</span>,
+        dataType: <span style="color: #2aa198;">'json'</span>,
+        <span style="color: #b58900;">success</span>: <span style="color: #859900;">function</span><span style="color: #859900;">(</span><span style="color: #6c71c4;">data</span><span style="color: #859900;">){</span>alert<span style="color: #268bd2;">(</span><span style="color: #2aa198;">'create issue success'</span><span style="color: #268bd2;">)</span>;<span style="color: #859900;">}</span>,
+        <span style="color: #b58900;">failure</span>: <span style="color: #859900;">function</span><span style="color: #859900;">(</span><span style="color: #6c71c4;">errMsg</span><span style="color: #859900;">)</span> <span style="color: #859900;">{</span>
+            alert<span style="color: #268bd2;">(</span>errMsg<span style="color: #268bd2;">)</span>;
+        <span style="color: #859900;">}</span>
+    <span style="color: #b58900;">}</span><span style="color: #2aa198;">)</span>;<span style="color: #657b83;">}</span>
 </pre>
 </div>
 </div>

@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-23 Fri 22:43 -->
+<!-- 2017-06-23 Fri 22:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>git 自救</title>
+<title>虚拟环境（virtualenv）</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,35 +239,155 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">git 自救</h1>
+<h1 class="title">虚拟环境（virtualenv）</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb90d0d3">在本地删除一些文件，但是还没有push到远端，如何恢复文件</a></li>
-<li><a href="#orgf3495be">如何从commit恢复到commit之前</a></li>
-<li><a href="#org04690dd">如何查看操作历史</a></li>
+<li><a href="#org15b9c0d">安装</a></li>
+<li><a href="#org752ead9">如何使用</a>
+<ul>
+<li><a href="#orgbd92ea5">创建虚拟环境</a></li>
+<li><a href="#orgf4c97f7">开始使用</a></li>
+<li><a href="#org2256688">其他</a></li>
+<li><a href="#orgc28808c">最后</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <hr />
 
 <p>
-这里列举一些常见的问题，以及解决方案。
+虚拟环境是一个将不同项目所需求的依赖分别放在独立的地方的一个工具，它给
+这些工程创建虚拟的Python环境。它解决了“项目X依赖于版本1.x，而项目Y需要
+项目4.x”的两难问题，而且使你的全局site-packages目录保持干净和可管理。
 </p>
 
-<div id="outline-container-orgb90d0d3" class="outline-2">
-<h2 id="orgb90d0d3">在本地删除一些文件，但是还没有push到远端，如何恢复文件</h2>
-</div>
-<div id="outline-container-orgf3495be" class="outline-2">
-<h2 id="orgf3495be">如何从commit恢复到commit之前</h2>
-</div>
-<div id="outline-container-org04690dd" class="outline-2">
-<h2 id="org04690dd">如何查看操作历史</h2>
-<div class="outline-text-2" id="text-org04690dd">
+
+<div id="outline-container-org15b9c0d" class="outline-2">
+<h2 id="org15b9c0d">安装</h2>
+<div class="outline-text-2" id="text-org15b9c0d">
 <p>
-n
+我们通过 pip 来安装
 </p>
+<div class="org-src-container">
+<pre class="src src-shell">pip install virtualenv
+</pre>
+</div>
+
+<p>
+如果你使用的是 python3， 你要使用 pip3.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org752ead9" class="outline-2">
+<h2 id="org752ead9">如何使用</h2>
+<div class="outline-text-2" id="text-org752ead9">
+</div><div id="outline-container-orgbd92ea5" class="outline-3">
+<h3 id="orgbd92ea5">创建虚拟环境</h3>
+<div class="outline-text-3" id="text-orgbd92ea5">
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #6c71c4;">cd</span> my_project_folder
+virtualenv venv
+</pre>
+</div>
+
+<p>
+virtualenv venv 将会在当前的目录中创建一个文件夹，包含了Python可执
+行文件，以及 pip 库的一份拷贝，这样就能安装其他包了。
+</p>
+
+<p>
+虚拟环境的名字（此例中是 venv ）可以是任意的；若省略名字将会把文件均放在当前目录。
+</p>
+
+<p>
+你可以选择使用一个Python解释器：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">virtualenv -p /usr/bin/python2.7 venv
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf4c97f7" class="outline-3">
+<h3 id="orgf4c97f7">开始使用</h3>
+<div class="outline-text-3" id="text-orgf4c97f7">
+<p>
+首先需要激活
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #6c71c4;">source</span> venv/bin/activate
+</pre>
+</div>
+
+<p>
+当 (venv) 显示在 terminal 的左侧是，就可以正常使用了。
+</p>
+
+<p>
+我们可以像平时一样安装包, 例如：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">pip install requests
+</pre>
+</div>
+
+<p>
+如果你暂时停止工作，使用
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">deactivate
+</pre>
+</div>
+
+
+<p>
+如果要删除一个虚拟环境，只需要删除文件夹，例如这里的 venv。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2256688" class="outline-3">
+<h3 id="org2256688">其他</h3>
+<div class="outline-text-3" id="text-org2256688">
+<p>
+为了保证环境的一致性，“冷冻住（freeze）”环境包当前的状态是个好主意。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">pip freeze &gt; requirements.txt
+</pre>
+</div>
+
+<p>
+这将会创建一个 requirements.txt 文件，其中包含了当前环境中所有包及各自的版本的简单列表
+</p>
+
+<p>
+使用这个命令，能确保安装、部署和开发者之间的一致性。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">pip install -r requirements.txt
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc28808c" class="outline-3">
+<h3 id="orgc28808c">最后</h3>
+<div class="outline-text-3" id="text-orgc28808c">
+<p>
+如果想简化这种操作也可以，可以参考<a href="http://pythonguidecn.readthedocs.io/zh/latest/dev/virtualenvs.html#virtualenvwrapper">这里</a>。
+</p>
+</div>
 </div>
 </div>
 </div>

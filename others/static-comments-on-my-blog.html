@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-23 Fri 22:43 -->
+<!-- 2017-06-23 Fri 23:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>一个静态评论系统的实现</title>
@@ -509,30 +509,19 @@ if(jQuery.isEmptyObject(items)) {
 
 
 function create(title) {
-    var creare = base_url + '/repos/' + owner + '/' + repo + '/issues';
-  var payload = {
-          'title': title,
-      'body': 'You can write comments in this issues.',
-      'labels': ['blog'],
-  }
-  $.ajax({
-    type: 'POST',
-    url: create,
-    crossDomain: true,
-    // The key needs to match your method's input parameter (case-sensitive).
-    data: JSON.stringify(payload),
-    beforeSend: function(xhr) {
-        xhr.setRequestHeader('Authorization', 'Basic eXlkYWk6ZGVpc3Q5MjgxNw==');
-        xhr.setRequestHeader('Access-Control-Allow-Origin' , '*');
-        xhr.setRequestHeader('contentType', 'application/json; charset=utf-8');
-    },
-    dataType: 'json',
-    success: function(data){alert('create issue success');},
-    failure: function(errMsg) {
-        alert('create issue failed');
-    }
-});
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io'
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
 }
+
 
 console.log("total_count = " + result.total_count);
 if(result.total_count == 1) {

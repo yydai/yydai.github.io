@@ -6,7 +6,7 @@
 <!-- 2017-06-24 Sat 23:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MacOS开发资源</title>
+<title></title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,33 +239,50 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">MacOS开发资源</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org2924b30">swift</a></li>
-<li><a href="#org7b31fab">Xcode</a>
-<ul>
-<li><a href="#orgb173738"></a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org2924b30" class="outline-2">
-<h2 id="org2924b30">swift</h2>
-</div>
+<p>
+看这个教程 <a href="http://tuhdo.github.io/c-ide.html#orgheadline1">http://tuhdo.github.io/c-ide.html#orgheadline1</a>
+</p>
 
 
-<div id="outline-container-org7b31fab" class="outline-2">
-<h2 id="org7b31fab">Xcode</h2>
-<div class="outline-text-2" id="text-org7b31fab">
-</div><div id="outline-container-orgb173738" class="outline-3">
-<h3 id="orgb173738"><a href="https://www.raywenderlich.com/category/macos">https://www.raywenderlich.com/category/macos</a></h3>
-</div>
-</div>
+
+<p>
+遇到的问题：
+</p>
+
+<p>
+Seach for program: no such file or directory, global
+</p>
+
+<p>
+这种问题一般 说明 xxx 不在 exec-path 中
+</p>
+
+<p>
+这里要说一下 emacs 中 "PATH" 和 exec-path 的区别。
+如果你想在emacs的SHELL中调用某个程序，要把它的路径加入 "PATH" 中。
+如果你想在 elisp 中调用某个程序，要把它的路径加入 exec-path.
+</p>
+
+<p>
+Emacs启动时，会根据系统环境变量PATH的值初始化exec-path。
+如果你后面通过 setenv 向 PATH 中加入了某个路径，
+exec-path并不会自动包含这个路径。
+</p>
+
+
+<p>
+比如，刚才我们通过
+</p>
+
+<p>
+(setenv "PATH" (concat "/path/to/global/bin;" (getenv "PATH")))
+向PATH中加入了global的执行路径，exec-path 中并不包含该路径，所以会报错。
+我们要向 exec-path 中加入该路径。
+</p>
+
+<p>
+(setq exec-path (append exec-path '("/path/to/global/bin")))
+</p>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

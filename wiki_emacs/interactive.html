@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-24 Sat 23:29 -->
+<!-- 2017-06-25 Sun 12:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中 interactive 总结</title>
@@ -280,8 +280,7 @@ for the JavaScript code in this tag.
 
 <p>
 我们 <code>C-x C-e</code> 执行一下这个代码，然后 <code>M-x say-hello</code>,
-是不是提示没有找到这个命令，这就对了。我们再看看下
-面的例子。
+是不是提示没有找到这个命令，这就对了。我们再看看下面的例子。
 </p>
 
 <div class="org-src-container">
@@ -298,9 +297,7 @@ name:</code> ,你输入一个名称，minibuffer 就会打印出一条消息。
 </p>
 
 <p>
-通过interactive我们就可以把一个函数变成一个可交互
-的命令。这样的命令我们可以通过 <code>M-x</code> 来执行。另一方面来说，如果一个函数没有
-使用 <code>interactive</code>, 它就不能通过M-x来调用，也不能通过 <code>key binding</code> 来使用，只能通过代码来调用。
+通过interactive我们就可以把一个函数变成一个可交互的命令。这样的命令我们可以通过 <code>M-x</code> 来执行。另一方面来说，如果一个函数没有使用 <code>interactive</code>, 它就不能通过M-x来调用，也不能通过 <code>key binding</code> 来使用，只能通过代码来调用。
 </p>
 </div>
 </div>
@@ -360,13 +357,11 @@ interactive的使用主要是：
 
 <p>
 其中字母 <code>P</code> 会把命令的第一个参数设置为 <code>raw
-	command perfix</code> (<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Prefix-Command-Arguments.html#Prefix-Command-Arguments">this</a>), 'bFrobnicate buffer: '提示用户输入
-一个buffer的名字。
+	command perfix</code> (<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Prefix-Command-Arguments.html#Prefix-Command-Arguments">this</a>), 'bFrobnicate buffer: '提示用户输入一个buffer的名字。
 </p>
 
 <p>
-这个提示的字符串可以使用 '%' 来包含前一个参数
-值。例如下面是你读入已经存在的 buffer 名称，然后跟着一个新的名字。
+这个提示的字符串可以使用 '%' 来包含前一个参数值。例如下面是你读入已经存在的 buffer 名称，然后跟着一个新的名字。
 </p>
 
 <div class="org-src-container">

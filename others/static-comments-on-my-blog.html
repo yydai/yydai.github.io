@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-24 Sat 23:29 -->
+<!-- 2017-06-25 Sun 12:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>一个静态评论系统的实现</title>
@@ -286,8 +286,7 @@ for the JavaScript code in this tag.
 <div class="outline-text-2" id="text-org9e2c5c5">
 <p>
 我的blog使用的 <code>github pages</code> 搭建，没有使用现有的框架。静态页面使用的
-<code>org mode</code> 生成。但是没有关系，这里用到的东西只需要嵌入到生成的html页面
-中就可以使用。
+<code>org mode</code> 生成。但是没有关系，这里用到的东西只需要嵌入到生成的html页面中就可以使用。
 </p>
 </div>
 </div>
@@ -296,8 +295,7 @@ for the JavaScript code in this tag.
 <h2 id="org792e03e">为什么要自己实现</h2>
 <div class="outline-text-2" id="text-org792e03e">
 <p>
-现在有很多成熟的实现方案，比如说在国内的 <code>多说</code>, 还有国外的 <code>disqus</code> 。都
-有很多的限制，比如 <code>多说</code> ，马上就要停止服务 。 <code>disqus</code> 在国外需要翻墙，
+现在有很多成熟的实现方案，比如说在国内的 <code>多说</code>, 还有国外的 <code>disqus</code> 。都有很多的限制，比如 <code>多说</code> ，马上就要停止服务 。 <code>disqus</code> 在国外需要翻墙，
 而且非常的卡。说是自己实现，其实是参考了很多的文章，下面我会列出。
 </p>
 </div>
@@ -400,8 +398,7 @@ for the JavaScript code in this tag.
 <h3 id="org612cdd9">跨域请求（CORS）</h3>
 <div class="outline-text-3" id="text-org612cdd9">
 <p>
-如果打开一个 blog 没有对应的 issue, 我会发送一个 ajax 请求去创建一
-个。在本地测试没有问题，但是在生产环境就出现了 <code>405（method not
+如果打开一个 blog 没有对应的 issue, 我会发送一个 ajax 请求去创建一个。在本地测试没有问题，但是在生产环境就出现了 <code>405（method not
 	allowed）</code> 的错误。后来发现是github pages 好像不支持CORS。这其实就打断了这种 pipeline了，所有的操作不能连接起来。
 </p>
 

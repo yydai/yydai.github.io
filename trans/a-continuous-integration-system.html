@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-25 Sun 12:19 -->
+<!-- 2017-06-26 Mon 14:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>持续集成系统</title>
@@ -339,7 +339,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-CI系统中需要有报告者，其中测试组件将测试的结果发送给响应的系统，用来使人们看到结果的内容，例如一个网页。为了简单起见，这个项目收集测试的结果并将它存储在一个文件中作为分发系统的一部分。
+CI系统中需要生成测试报告，其中测试组件将测试的结果发送给响应的系统，用来使人们看到结果的内容，例如一个网页。为了简单起见，这个项目收集测试的结果并将它存储在一个文件中作为分发系统的一部分。
 </p>
 
 <p>
@@ -398,6 +398,10 @@ CI系统在这样的分布式环境中运行，因此可以进行故障转移冗
 <h3 id="orge6ebe48">项目文件</h3>
 <div class="outline-text-3" id="text-orge6ebe48">
 <p>
+注：这个 tests 目录以及相应的代码在<a href="http://aosabook.org/en/500L/a-continuous-integration-system.html#figure-2.1">这里</a>。
+</p>
+
+<p>
 项目中每一个模块包含的Python文件如下：
 </p>
 <ul class="org-ul">
@@ -443,6 +447,18 @@ $ git init
 </pre>
 </div>
 
+<p>
+我们的代码会 clone 到这个仓库里面，所以我们的 CI 系统会 git pull 并且检查相应的 commits 信息，然后进行测试。
+检查新的 commits 的工作是由仓库观察者（repository observer）来做的。
+</p>
+
+<p>
+这个仓库观察者通过检查 commit id 来判断是否有新的 commit，所以我们的 master 仓库至少需要有一个提交记录。
+</p>
+
+<p>
+复制这个 tests 目录到 test<sub>repo</sub> 文件夹下，然后 commit.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-shell">$ cp -r /this/directory/tests /path/to/test_repo/
@@ -452,12 +468,19 @@ $ git commit -m <span style="color: #2aa198;">"add tests"</span>
 </pre>
 </div>
 
+<p>
+现在你有了一个 commit 在 master 仓库。仓库的观察者需要一个这个代码仓库的 clone，以便于能够发现新的 commit。现在我们 clone 一个 master 仓库到
+<b>test<sub>repo</sub><sub>clone</sub><sub>obs</sub></b> 中。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-shell">$ git clone /path/to/test_repo test_repo_clone_obs
 </pre>
 </div>
 
+<p>
+代码测试组件同样也需要一个 master 仓库的拷贝，用来 checkout 到给定的 commit id, 然后运行测试。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-shell">$ git clone /path/to/test_repo test_repo_clone_runner
@@ -474,6 +497,41 @@ $ git commit -m <span style="color: #2aa198;">"add tests"</span>
 </div><div id="outline-container-orgb500681" class="outline-3">
 <h3 id="orgb500681">代码仓库观察者( <code>repo_observer.py</code>)</h3>
 <div class="outline-text-3" id="text-orgb500681">
+<p>
+仓库的观察者不断的检查仓库的变化，当有一个新的 commit 发现， 它会通知调度器。为了使这个系统能够更好的适应不同的版本控制系统（因为每个 VCS 系统都有一个内置的通知系统），这个仓库观察者会定期的检查仓库的变化，而不是使用 VCS 中当有变化就会通知的功能。
+</p>
+
+<p>
+<a id="org2a37d74"></a>
+观察者周期的去 pull 仓库的代码，当发现了新的 commit id，它会将最新的 commit id 告诉调度器，然后让测试器去运行相应的测试。
+</p>
+
+<p>
+它会做如下的几件事：
+</p>
+<ul class="org-ul">
+<li>检查当前仓库的的最新 commit id， 设为A</li>
+<li>pull 远程仓库的代码</li>
+<li>得到现在的最新 commit id，设为 B</li>
+<li>比较 A 和 B 的异同</li>
+<li>如果相同，不做处理，否则将最新的 commit id 告诉调度器。</li>
+</ul>
+
+<p>
+另外一点，如果在一个测试周期内有两个或以上的提交，它只会处理最新的一个，其他的不会处理。通常，一个标准的 CI 系统会对上次测试后的每个 commit 提交都进行测试，但是为了简单起见，这个例子中没有这么做。
+</p>
+
+<p>
+观察者必须要知道观察的仓库是什么。在这个例子中，我们会周期的 clone 最新的代码到 <b>test<sub>repo</sub><sub>clone</sub><sub>obs</sub></b> 中。
+这个观察者会使用这个仓库来发现是否变化。
+</p>
+
+<p>
+我们还需要提供调度器的地址，用来观察者和调度器进行通信。你可以使用参数
+&#x2013;dispatcher-server 来设置。或者使用默认的 localhost:8888。
+</p>
+
+
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">poll</span><span style="color: #657b83;">()</span>:
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">parser</span> = argparse.ArgumentParser<span style="color: #657b83;">()</span>
@@ -489,6 +547,11 @@ $ git commit -m <span style="color: #2aa198;">"add tests"</span>
 </pre>
 </div>
 
+<p>
+一旦 repo<sub>observer</sub> 开始运行，它就会不断的循环检查仓库的变化。它做的第一件事就是调用
+update<sub>repo.sh</sub> 这个脚本文件。
+</p>
+
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #859900;">while</span> <span style="color: #268bd2;">True</span>:
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">try</span>:
@@ -502,16 +565,40 @@ $ git commit -m <span style="color: #2aa198;">"add tests"</span>
 </pre>
 </div>
 
+
+<p>
+update<sub>repo.sh</sub> 这个文件用来检查任何新的 commits，并且告诉仓库观察者。这个原理<a href="#org2a37d74">这里</a>已经介绍过了。
+需要补充的是，如果发现有新的 commit id, 这个脚本会将最新的 commid id 保存到 .commit<sub>id</sub> 中。
+</p>
+
+<p>
+下面，我们一步步说明这是如何做的。
+</p>
+
+<p>
+首先，执行下面这个。run<sub>or</sub><sub>fail.sh</sub> 会被其他的脚本调用，用来执行一个命令，如果命令执行失败，会输出我们预先提供的错误信息。
+</p>
+
 <div class="org-src-container">
 <pre class="src src-shell"><span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">!/bin/</span><span style="color: #859900;">bash</span>
 <span style="color: #6c71c4;">source</span> run_or_fail.sh
 </pre>
 </div>
 
+<p>
+下一步，脚本会尝试删除 .commit<sub>id</sub> 文件。因为之前创建的文件中保存的是一个旧的 commit id, 如果我们发现了一个新的 commit id, 我们会重新创建一个新的文件。
+</p>
+
 <div class="org-src-container">
 <pre class="src src-shell">bash rm -f .commit_id
 </pre>
 </div>
+
+<p>
+在删除文件以后（如果存在），它首先确认一下我们观察的这个仓库是存在的，然后将仓库切换到最新的提交，也就是 <b>HEAD</b> 。
+做这一步是为了防止在同步代码的时候失败。
+</p>
+
 
 <div class="org-src-container">
 <pre class="src src-shell">run_or_fail <span style="color: #2aa198;">"Repository folder not found!"</span> pushd $<span style="color: #6c71c4;">1</span> 1&gt; /dev/null
@@ -519,6 +606,10 @@ run_or_fail <span style="color: #2aa198;">"Could not reset git"</span> git reset
 </pre>
 </div>
 
+
+<p>
+下一步，执行 git log, 然后得到当前仓库最新的 commit id。
+</p>
 <div class="org-src-container">
 <pre class="src src-shell"><span style="color: #6c71c4;">COMMIT</span>=$<span style="color: #657b83;">(</span>run_or_fail <span style="color: #2aa198;">"Could not call 'git log' on repository"</span> git log -n1<span style="color: #657b83;">)</span>
 <span style="color: #859900;">if</span> <span style="color: #657b83;">[</span> $<span style="color: #6c71c4;">?</span> != 0 <span style="color: #657b83;">]</span>; <span style="color: #859900;">then</span>
@@ -528,6 +619,10 @@ run_or_fail <span style="color: #2aa198;">"Could not reset git"</span> git reset
 <span style="color: #6c71c4;">COMMIT_ID</span>=<span style="color: #d33682;">`echo $COMMIT | awk '{ print $2 }'`</span>
 </pre>
 </div>
+
+<p>
+这一步会执行 git pull 来更新代码，然后再次查询最新的 commit id。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-shell">run_or_fail <span style="color: #2aa198;">"Could not pull from repository"</span> git pull
@@ -540,6 +635,10 @@ run_or_fail <span style="color: #2aa198;">"Could not reset git"</span> git reset
 </pre>
 </div>
 
+<p>
+最后，如果这个 commit id 和之前的不同，我们就知道有新的代码提交了，所以这个脚本就会将最新的 commit id 保存到 .commit<sub>id</sub> 文件中。
+</p>
+
 <div class="org-src-container">
 <pre class="src src-shell"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">if the id changed, then write it to a file</span>
 <span style="color: #859900;">if</span> <span style="color: #657b83;">[</span> $<span style="color: #6c71c4;">NEW_COMMIT_ID</span> != $<span style="color: #6c71c4;">COMMIT_ID</span> <span style="color: #657b83;">]</span>; <span style="color: #859900;">then</span>
@@ -549,6 +648,11 @@ run_or_fail <span style="color: #2aa198;">"Could not reset git"</span> git reset
 </pre>
 </div>
 
+<p>
+当 update<sub>repo.sh</sub> 执行完成后，仓库的观察者会检查 .commit<sub>id</sub> 文件是否存在。如果这个文件存在，证明我们有新的代码更新。观察者服务通过连接检查调度器的状态，并且发送
+'status' 请求，用来确保调度器可以正常工作。
+</p>
+
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #859900;">if</span> os.path.isfile<span style="color: #657b83;">(</span><span style="color: #2aa198;">".commit_id"</span><span style="color: #657b83;">)</span>:
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">try</span>:
@@ -557,7 +661,17 @@ run_or_fail <span style="color: #2aa198;">"Could not reset git"</span> git reset
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>  <span style="color: #2aa198;">"status"</span><span style="color: #657b83;">)</span>
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">except</span> socket.error <span style="color: #859900;">as</span> e:
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">raise</span> <span style="color: #268bd2;">Exception</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">"Could not communicate with dispatcher server: %s"</span> % e<span style="color: #657b83;">)</span>
-<span style="color: #859900;">if</span> response == <span style="color: #2aa198;">"OK"</span>:
+</pre>
+</div>
+
+
+<p>
+如果response 是 ‘OK’, 我们打开 .commit<sub>id</sub> 文件，并且将它发给调度器。我们这个系统会 sleep 5 秒，然后重复执行这个过程。
+如果有任何地方失败了，我们同样也会重复执行。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">if</span> response == <span style="color: #2aa198;">"OK"</span>:
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">commit</span> = <span style="color: #2aa198;">""</span>
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">with</span> <span style="color: #6c71c4;">open</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">".commit_id"</span>, <span style="color: #2aa198;">"r"</span><span style="color: #657b83;">)</span> <span style="color: #859900;">as</span> f:
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">commit</span> = f.readline<span style="color: #657b83;">()</span>
@@ -574,9 +688,12 @@ run_or_fail <span style="color: #2aa198;">"Could not reset git"</span> git reset
 time.sleep<span style="color: #657b83;">(</span>5<span style="color: #657b83;">)</span>
 </pre>
 </div>
-</div>
-</div>
 
+<p>
+这个观察者会一直执行下去，直到它收到一个 KeyboardInterrupt (也就是 Ctrl+c) 或者发送一个终止命令。
+</p>
+</div>
+</div>
 
 <div id="outline-container-org7661116" class="outline-3">
 <h3 id="org7661116">调度器 ( <code>dispatcher.py</code>)</h3>

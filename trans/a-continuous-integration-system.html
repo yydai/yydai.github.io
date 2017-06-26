@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-26 Mon 14:06 -->
+<!-- 2017-06-26 Mon 15:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>持续集成系统</title>
@@ -457,7 +457,7 @@ $ git init
 </p>
 
 <p>
-复制这个 tests 目录到 test<sub>repo</sub> 文件夹下，然后 commit.
+复制这个 tests 目录到 test_repo 文件夹下，然后 commit.
 </p>
 
 <div class="org-src-container">
@@ -470,7 +470,7 @@ $ git commit -m <span style="color: #2aa198;">"add tests"</span>
 
 <p>
 现在你有了一个 commit 在 master 仓库。仓库的观察者需要一个这个代码仓库的 clone，以便于能够发现新的 commit。现在我们 clone 一个 master 仓库到
-<b>test<sub>repo</sub><sub>clone</sub><sub>obs</sub></b> 中。
+<b>test_repo_clone_obs</b> 中。
 </p>
 
 <div class="org-src-container">
@@ -522,7 +522,7 @@ $ git commit -m <span style="color: #2aa198;">"add tests"</span>
 </p>
 
 <p>
-观察者必须要知道观察的仓库是什么。在这个例子中，我们会周期的 clone 最新的代码到 <b>test<sub>repo</sub><sub>clone</sub><sub>obs</sub></b> 中。
+观察者必须要知道观察的仓库是什么。在这个例子中，我们会周期的 clone 最新的代码到 <b>test_repo_clone_obs</b> 中。
 这个观察者会使用这个仓库来发现是否变化。
 </p>
 
@@ -548,8 +548,8 @@ $ git commit -m <span style="color: #2aa198;">"add tests"</span>
 </div>
 
 <p>
-一旦 repo<sub>observer</sub> 开始运行，它就会不断的循环检查仓库的变化。它做的第一件事就是调用
-update<sub>repo.sh</sub> 这个脚本文件。
+一旦 repo_observer 开始运行，它就会不断的循环检查仓库的变化。它做的第一件事就是调用
+update_repo.sh 这个脚本文件。
 </p>
 
 <div class="org-src-container">
@@ -567,8 +567,8 @@ update<sub>repo.sh</sub> 这个脚本文件。
 
 
 <p>
-update<sub>repo.sh</sub> 这个文件用来检查任何新的 commits，并且告诉仓库观察者。这个原理<a href="#org2a37d74">这里</a>已经介绍过了。
-需要补充的是，如果发现有新的 commit id, 这个脚本会将最新的 commid id 保存到 .commit<sub>id</sub> 中。
+update_repo.sh 这个文件用来检查任何新的 commits，并且告诉仓库观察者。这个原理<a href="#org2a37d74">这里</a>已经介绍过了。
+需要补充的是，如果发现有新的 commit id, 这个脚本会将最新的 commid id 保存到 .commit_id 中。
 </p>
 
 <p>
@@ -576,7 +576,7 @@ update<sub>repo.sh</sub> 这个文件用来检查任何新的 commits，并且�
 </p>
 
 <p>
-首先，执行下面这个。run<sub>or</sub><sub>fail.sh</sub> 会被其他的脚本调用，用来执行一个命令，如果命令执行失败，会输出我们预先提供的错误信息。
+首先，执行下面这个。run_or_fail.sh 会被其他的脚本调用，用来执行一个命令，如果命令执行失败，会输出我们预先提供的错误信息。
 </p>
 
 <div class="org-src-container">
@@ -586,7 +586,7 @@ update<sub>repo.sh</sub> 这个文件用来检查任何新的 commits，并且�
 </div>
 
 <p>
-下一步，脚本会尝试删除 .commit<sub>id</sub> 文件。因为之前创建的文件中保存的是一个旧的 commit id, 如果我们发现了一个新的 commit id, 我们会重新创建一个新的文件。
+下一步，脚本会尝试删除 .commit_id 文件。因为之前创建的文件中保存的是一个旧的 commit id, 如果我们发现了一个新的 commit id, 我们会重新创建一个新的文件。
 </p>
 
 <div class="org-src-container">
@@ -636,7 +636,7 @@ run_or_fail <span style="color: #2aa198;">"Could not reset git"</span> git reset
 </div>
 
 <p>
-最后，如果这个 commit id 和之前的不同，我们就知道有新的代码提交了，所以这个脚本就会将最新的 commit id 保存到 .commit<sub>id</sub> 文件中。
+最后，如果这个 commit id 和之前的不同，我们就知道有新的代码提交了，所以这个脚本就会将最新的 commit id 保存到 .commit_id 文件中。
 </p>
 
 <div class="org-src-container">
@@ -649,7 +649,7 @@ run_or_fail <span style="color: #2aa198;">"Could not reset git"</span> git reset
 </div>
 
 <p>
-当 update<sub>repo.sh</sub> 执行完成后，仓库的观察者会检查 .commit<sub>id</sub> 文件是否存在。如果这个文件存在，证明我们有新的代码更新。观察者服务通过连接检查调度器的状态，并且发送
+当 update_repo.sh 执行完成后，仓库的观察者会检查 .commit_id 文件是否存在。如果这个文件存在，证明我们有新的代码更新。观察者服务通过连接检查调度器的状态，并且发送
 'status' 请求，用来确保调度器可以正常工作。
 </p>
 
@@ -666,7 +666,7 @@ run_or_fail <span style="color: #2aa198;">"Could not reset git"</span> git reset
 
 
 <p>
-如果response 是 ‘OK’, 我们打开 .commit<sub>id</sub> 文件，并且将它发给调度器。我们这个系统会 sleep 5 秒，然后重复执行这个过程。
+如果response 是 ‘OK’, 我们打开 .commit_id 文件，并且将它发给调度器。我们这个系统会 sleep 5 秒，然后重复执行这个过程。
 如果有任何地方失败了，我们同样也会重复执行。
 </p>
 
@@ -698,6 +698,15 @@ time.sleep<span style="color: #657b83;">(</span>5<span style="color: #657b83;">)
 <div id="outline-container-org7661116" class="outline-3">
 <h3 id="org7661116">调度器 ( <code>dispatcher.py</code>)</h3>
 <div class="outline-text-3" id="text-org7661116">
+<p>
+调度器是一个独立的服务用来给测设器分发任务。它会监听来自于测试器和观察者请求的端口，它允许测试器来注册它们自身。当有收到一个新的 commit id，它会给测试器这个 commit id，然后执行任务。
+同样，如果一个测试器出现了问题，它还可以将这个任务重新分发到新的测试器。
+</p>
+
+
+<p>
+当 dispatch.py 开始执行时，会先执行 serve 函数。首先，它允许你指定调度器的主机地址和端口：
+</p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">serve</span><span style="color: #657b83;">()</span>:
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">parser</span> = argparse.ArgumentParser<span style="color: #657b83;">()</span>
@@ -712,6 +721,12 @@ time.sleep<span style="color: #657b83;">(</span>5<span style="color: #657b83;">)
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">args</span> = parser.parse_args<span style="color: #657b83;">()</span>
 </pre>
 </div>
+
+<p>
+下面， 开始起一个调度器，然后还有两个其他的线程。其中一个执行 runner_checker 函数，另一个执行
+redistribute 函数。
+</p>
+
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #6c71c4;">server</span> = ThreadingTCPServer<span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>args.host, <span style="color: #6c71c4;">int</span><span style="color: #b58900;">(</span>args.port<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>, DispatcherHandler<span style="color: #657b83;">)</span>
@@ -734,6 +749,11 @@ time.sleep<span style="color: #657b83;">(</span>5<span style="color: #657b83;">)
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   redistributor.join<span style="color: #657b83;">()</span>
 </pre>
 </div>
+
+<p>
+下面的 runner_checker 函数周期性的 ping 每一个注册的测试器来确保它们是可以工作的。如果某一个测试器无法工作，它会从测试器池中移除，然后将它正在执行的 commit id 任务分发给其他的测试器。
+这个函数会将 commit id 保存到 pending_commits 中。
+</p>
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">runner_checker</span><span style="color: #657b83;">(</span>server<span style="color: #657b83;">)</span>:
@@ -759,6 +779,7 @@ time.sleep<span style="color: #657b83;">(</span>5<span style="color: #657b83;">)
 <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   manage_commit_lists<span style="color: #657b83;">(</span>runner<span style="color: #657b83;">)</span>
 </pre>
 </div>
+
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">redistribute</span><span style="color: #657b83;">(</span>server<span style="color: #657b83;">)</span>:

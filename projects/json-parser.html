@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-27 Tue 14:18 -->
+<!-- 2017-06-27 Tue 13:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sitemap</title>
+<title>JSON Parser</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,86 +239,280 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Sitemap</h1>
-<ul class="org-ul">
-<li>books
-<ul class="org-ul">
-<li><a href="books/sicp.html">SICP</a></li>
-<li><a href="books/sicp-notes.html">sicp</a></li>
-<li><a href="books/sicp-exercise.html">sicp-exercise</a></li>
-<li><a href="books/plan.html">学习打卡</a></li>
-<li><a href="books/readings.html">读过的书</a></li>
-</ul></li>
-<li>food
-<ul class="org-ul">
-<li><a href="food/如何煮鸡蛋.html">如何煮鸡蛋</a></li>
-<li><a href="food/炒面.html">炒面</a></li>
-<li><a href="food/food.html">美食</a></li>
-</ul></li>
-<li>git
-<ul class="org-ul">
-<li><a href="git/git.html">git</a></li>
-</ul></li>
-<li>guitar
-<ul class="org-ul">
-<li><a href="guitar/吉他学习笔记.html">吉他学习笔记</a></li>
-<li><a href="guitar/奇跡の山.html">奇跡の山</a></li>
-</ul></li>
-<li>mac
-<ul class="org-ul">
-<li><a href="mac/software.html">MAC好用软件</a></li>
-<li><a href="mac/develpment-resources.html">MacOS开发资源</a></li>
-<li><a href="mac/git-help.html">git 自救</a></li>
-</ul></li>
-<li>ml
-<ul class="org-ul">
-<li><a href="ml/coursera-machine-learning-course.html">机器学习相关的课程总结</a></li>
-</ul></li>
-<li>others
-<ul class="org-ul">
-<li><a href="others/setup-c++.html">setup-c++</a></li>
-<li><a href="others/static-comments-on-my-blog.html">一个静态评论系统的实现</a></li>
-<li><a href="others/ssh-remote-host.html">远程主机登录</a></li>
-</ul></li>
-<li>pipeline
-<ul class="org-ul">
-<li><a href="pipeline/resourses.html">resourses</a></li>
-</ul></li>
-<li>projects
-<ul class="org-ul">
-<li><a href="projects/antlr-example.html">ANTLR 应用实例</a></li>
-<li><a href="projects/json-parser.html">JSON Parser</a></li>
-<li><a href="projects/xml-parser.html">XML parser</a></li>
-<li><a href="projects/dsl01.html">设计一个 DSL 语言</a></li>
-</ul></li>
-<li>trans
-<ul class="org-ul">
-<li><a href="trans/temp.html">temp</a></li>
-<li><a href="trans/a-continuous-integration-system.html">持续集成系统</a></li>
-</ul></li>
-<li>wiki<sub>emacs</sub>
-<ul class="org-ul">
-<li><a href="wiki_emacs/blog-test.html">Blog的搭建及其特性</a></li>
-<li><a href="wiki_emacs/interactive.html">Elisp 中 interactive 总结</a></li>
-<li><a href="wiki_emacs/emacs-resourses.html">Emacs 学习资源</a></li>
-<li><a href="wiki_emacs/emacs-macro.html">Emacs 的键盘宏</a></li>
-<li><a href="wiki_emacs/emacs-tricks.html">Emacs的一些技巧</a></li>
-<li><a href="wiki_emacs/mac-org-mode-output-pdf.html">Exporting to PDF in org mode</a></li>
-<li><a href="wiki_emacs/emacs-settings.html">Some configs of my emacs</a></li>
-<li><a href="wiki_emacs/how-to-install-emacs-package-manually.html">how-to-install-emacs-package-manually</a></li>
-</ul></li>
-<li>wiki<sub>ml</sub><sub>dl</sub>
-<ul class="org-ul">
-<li><a href="wiki_ml_dl/machine_learning.html">machine<sub>learning</sub></a></li>
-</ul></li>
-<li>wiki<sub>python</sub>
-<ul class="org-ul">
-<li><a href="wiki_python/argparse.html">Argparse 教程</a></li>
-<li><a href="wiki_python/virtualenv.html">虚拟环境（virtualenv）</a></li>
-</ul></li>
-<li><a href="contact.html">Contact</a></li>
-<li><a href="index.html">Zen Mind, Beginner's Mind</a></li>
+<h1 class="title">JSON Parser</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3ad1612">需求</a></li>
+<li><a href="#org8af5dff">什么是 JSON？</a>
+<ul>
+<li><a href="#org1952bfc">JSON 的形式</a></li>
 </ul>
+</li>
+<li><a href="#org39bd6ca">如何做</a></li>
+</ul>
+</div>
+</div>
+<hr />
+
+<div id="outline-container-org3ad1612" class="outline-2">
+<h2 id="org3ad1612">需求</h2>
+<div class="outline-text-2" id="text-org3ad1612">
+<p>
+实现一个JSON 解析的工具。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org8af5dff" class="outline-2">
+<h2 id="org8af5dff">什么是 <a href="http://www.json.org/">JSON</a>？</h2>
+<div class="outline-text-2" id="text-org8af5dff">
+<p>
+JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。
+</p>
+</div>
+
+<div id="outline-container-org1952bfc" class="outline-3">
+<h3 id="org1952bfc">JSON 的形式</h3>
+<div class="outline-text-3" id="text-org1952bfc">
+<p>
+<b>对象</b> 是一个无序的“‘名称/值’对”集合。一个对象以“{”（左括号）开始，
+“}”（右括号）结束。每个“名称”后跟一个“:”（冒号）；“‘名称/值’ 对”之间使用“,”（逗号）分隔。
+</p>
+
+
+<div id="orgc1bc23c" class="figure">
+<p><img src="./imgs/20170627_095123_373180Dm.png" alt="20170627_095123_373180Dm.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>object</p>
+</div>
+
+
+<p>
+<b>数组</b> 是值（value）的有序集合。一个数组以“[”（左中括号）开始，“]”（右中括号）结束。值之间使用“,”（逗号）分隔。
+</p>
+
+
+
+<div id="orge6c0b8f" class="figure">
+<p><img src="./imgs/20170627_095153_37318BOs.png" alt="20170627_095153_37318BOs.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>array</p>
+</div>
+
+<p>
+<b>值</b> （value）可以是双引号括起来的字符串（string）、数值(number)、true、false、 null、对象（object）或者数组（array）。这些结构可以嵌套。
+</p>
+
+
+<div id="org28898bc" class="figure">
+<p><img src="./imgs/20170627_095226_37318OYy.png" alt="20170627_095226_37318OYy.png" />
+</p>
+<p><span class="figure-number">Figure 3: </span>value</p>
+</div>
+
+<p>
+字符串（string）是由双引号包围的任意数量Unicode字符的集合，使用反斜线转义。一个字符（character）即一个单独的字符串（character string）。
+</p>
+
+<p>
+字符串（string）与C或者Java的字符串非常相似。
+</p>
+
+
+<div id="orgb15c59c" class="figure">
+<p><img src="./imgs/20170627_095650_37318AiB.png" alt="20170627_095650_37318AiB.png" />
+</p>
+<p><span class="figure-number">Figure 4: </span>string</p>
+</div>
+
+<p>
+<b>数值</b> （number）也与C或者Java的数值非常相似。除去未曾使用的八进制与十六进制格式。除去一些编码细节。
+</p>
+
+
+<div id="org5cdae6b" class="figure">
+<p><img src="./imgs/20170627_095728_37318NsH.png" alt="20170627_095728_37318NsH.png" />
+</p>
+<p><span class="figure-number">Figure 5: </span>number</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org39bd6ca" class="outline-2">
+<h2 id="org39bd6ca">如何做</h2>
+<div class="outline-text-2" id="text-org39bd6ca">
+<p>
+上面我们说了什么是 JSON。下面我们先用一种简单的方式来实现 JSON 的解析，ANTLR。
+</p>
+
+<p>
+使用 ANTLR 我们只需要写一下相应的语法规则就可以了，
+</p>
+
+<p>
+关于如何安装只说下 OS X 系统下的，其他参考<a href="http://www.antlr.org/index.html">这里</a>。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #6c71c4;">cd</span> /usr/local/lib
+sudo curl -O http://www.antlr.org/download/antlr-4.7-complete.jar
+<span style="color: #6c71c4;">export</span> <span style="color: #6c71c4;">CLASSPATH</span>=<span style="color: #2aa198;">".:/usr/local/lib/antlr-4.7-complete.jar:$CLASSPATH"</span>
+<span style="color: #6c71c4;">alias</span> <span style="color: #6c71c4;">antlr4</span>=<span style="color: #2aa198;">'java -jar /usr/local/lib/antlr-4.7-complete.jar'</span>
+<span style="color: #6c71c4;">alias</span> <span style="color: #6c71c4;">grun</span>=<span style="color: #2aa198;">'java org.antlr.v4.gui.TestRig'</span>
+</pre>
+</div>
+
+
+<p>
+下面是定义的规则 JSON.g4：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-antlr4">/** Taken from "The Definitive ANTLR 4 Reference" by Terence Parr */
+
+// Derived from http://json.org
+grammar JSON;
+
+json
+   : value
+   ;
+
+obj
+   : '{' pair (',' pair)* '}'
+   | '{' '}'
+   ;
+
+pair
+   : STRING ':' value
+   ;
+
+array
+   : '[' value (',' value)* ']'
+   | '[' ']'
+   ;
+
+value
+   : STRING
+   | NUMBER
+   | obj
+   | array
+   | 'true'
+   | 'false'
+   | 'null'
+   ;
+
+
+STRING
+   : '"' (ESC | ~ ["\\])* '"'
+   ;
+fragment ESC
+   : '\\' (["\\/bfnrt] | UNICODE)
+   ;
+fragment UNICODE
+   : 'u' HEX HEX HEX HEX
+   ;
+fragment HEX
+   : [0-9a-fA-F]
+   ;
+NUMBER
+   : '-'? INT '.' [0-9] + EXP? | '-'? INT EXP | '-'? INT
+   ;
+fragment INT
+   : '0' | [1-9] [0-9]*
+   ;
+// no leading zeros
+fragment EXP
+   : [Ee] [+\-]? INT
+   ;
+// \- since - means "range" inside [...]
+WS
+   : [ \t\n\r] + -&gt; skip
+   ;
+</pre>
+</div>
+
+
+<p>
+我们再写一个测试文件：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #859900;">import</span> <span style="color: #268bd2;">java</span>.<span style="color: #268bd2;">io</span>.<span style="color: #268bd2;">File</span>;
+<span style="color: #859900;">import</span> <span style="color: #268bd2;">java</span>.<span style="color: #268bd2;">util</span>.<span style="color: #268bd2;">Scanner</span>;
+
+<span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.<span style="color: #268bd2;">ANTLRInputStream</span>;
+<span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.<span style="color: #268bd2;">CommonTokenStream</span>;
+<span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.<span style="color: #268bd2;">tree</span>.<span style="color: #268bd2;">ParseTree</span>;
+
+<span style="color: #859900;">public</span> <span style="color: #859900;">class</span> <span style="color: #268bd2;">JSONParserTest</span>
+<span style="color: #657b83;">{</span>
+
+    <span style="color: #859900;">public</span> <span style="color: #859900;">static</span> <span style="color: #268bd2;">void</span> <span style="color: #b58900;">main</span><span style="color: #2aa198;">(</span><span style="color: #268bd2;">String</span><span style="color: #b58900;">[]</span> <span style="color: #6c71c4;">args</span><span style="color: #2aa198;">)</span> <span style="color: #859900;">throws</span> <span style="color: #268bd2;">Exception</span>
+    <span style="color: #2aa198;">{</span>
+        <span style="color: #268bd2;">String</span> <span style="color: #6c71c4;">content</span> = <span style="color: #859900;">new</span> <span style="color: #268bd2;">Scanner</span><span style="color: #b58900;">(</span><span style="color: #859900;">new</span> <span style="color: #268bd2;">File</span><span style="color: #859900;">(</span><span style="color: #2aa198;">"jsonExample.txt"</span><span style="color: #859900;">)</span><span style="color: #b58900;">)</span>.useDelimiter<span style="color: #b58900;">(</span><span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">\</span><span style="color: #2aa198;">Z"</span><span style="color: #b58900;">)</span>.next<span style="color: #b58900;">()</span>;
+        System.out.println<span style="color: #b58900;">(</span> <span style="color: #2aa198;">"JSON File:</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">n</span><span style="color: #2aa198;">"</span> + content + <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">n</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">n</span><span style="color: #2aa198;">"</span><span style="color: #b58900;">)</span>;
+
+        <span style="color: #268bd2;">ANTLRInputStream</span> <span style="color: #6c71c4;">input</span> = <span style="color: #859900;">new</span> <span style="color: #268bd2;">ANTLRInputStream</span><span style="color: #b58900;">(</span> content <span style="color: #b58900;">)</span>;
+
+        <span style="color: #268bd2;">JSONLexer</span> <span style="color: #6c71c4;">lexer</span> = <span style="color: #859900;">new</span> <span style="color: #268bd2;">JSONLexer</span><span style="color: #b58900;">(</span>input<span style="color: #b58900;">)</span>;
+
+        <span style="color: #268bd2;">CommonTokenStream</span> <span style="color: #6c71c4;">tokens</span> = <span style="color: #859900;">new</span> <span style="color: #268bd2;">CommonTokenStream</span><span style="color: #b58900;">(</span>lexer<span style="color: #b58900;">)</span>;
+
+        <span style="color: #268bd2;">JSONParser</span> <span style="color: #6c71c4;">parser</span> = <span style="color: #859900;">new</span> <span style="color: #268bd2;">JSONParser</span><span style="color: #b58900;">(</span>tokens<span style="color: #b58900;">)</span>;
+
+        <span style="color: #268bd2;">ParseTree</span> <span style="color: #6c71c4;">tree</span> = parser.json<span style="color: #b58900;">()</span>;
+
+        System.out.println<span style="color: #b58900;">(</span> <span style="color: #2aa198;">"ParseTree:</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">n</span><span style="color: #2aa198;">"</span> + tree.toStringTree<span style="color: #859900;">(</span> parser <span style="color: #859900;">)</span> + <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">n</span><span style="color: #2aa198;">"</span><span style="color: #b58900;">)</span>;
+    <span style="color: #2aa198;">}</span>
+<span style="color: #657b83;">}</span>
+</pre>
+</div>
+
+<p>
+另外 jsonExample.txt
+</p>
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #657b83;">{</span>
+  <span style="color: #859900;">"student"</span>:
+  <span style="color: #2aa198;">{</span>
+    <span style="color: #859900;">"id"</span> : <span style="color: #2aa198;">"12345678"</span>,
+    <span style="color: #859900;">"prename"</span> : <span style="color: #2aa198;">"John"</span>,
+    <span style="color: #859900;">"surname"</span> : <span style="color: #2aa198;">"Doe"</span>,
+    <span style="color: #859900;">"address"</span> :
+    <span style="color: #b58900;">{</span>
+      <span style="color: #859900;">"street"</span> : <span style="color: #2aa198;">"Johndoestreet"</span>,
+      <span style="color: #859900;">"postcode"</span> : <span style="color: #2aa198;">"99999"</span>
+    <span style="color: #b58900;">}</span>,
+    <span style="color: #859900;">"email"</span>   : <span style="color: #2aa198;">"johndoe@doe.com"</span>
+  <span style="color: #2aa198;">}</span>
+<span style="color: #657b83;">}</span>
+</pre>
+</div>
+
+<p>
+首先
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">antlr4 JSON.g4
+javac JSON*.java JSONParserTest.java
+java JSONParserTest
+</pre>
+</div>
+
+<p>
+就会打印出解析树：
+</p>
+
+<pre class="example">
+(json (value (obj { (pair "student" : (value (obj { (pair "id" : (value "12345678")) , (pair "prename" : (value "John")) , (pair "surname" : (value "Doe")) , (pair "address" : (value (obj { (pair "street" : (value "Johndoestreet")) , (pair "postcode" : (value "99999")) }))) , (pair "email" : (value "johndoe@doe.com")) }))) })))
+</pre>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

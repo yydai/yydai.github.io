@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-27 Tue 18:33 -->
+<!-- 2017-06-28 Wed 07:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ANTLR 应用实例</title>
@@ -251,6 +251,7 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orgfdd59ed">例2：实现一个计算器</a></li>
 <li><a href="#org4ccb6b9">例3：实现翻译器</a></li>
+<li><a href="#orgdf43ccd">例4：提取某列数据</a></li>
 </ul>
 </div>
 </div>
@@ -274,24 +275,24 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-antlr4">/** Grammars always start with a grammar header. This grammar is called
-  *  ArrayInit and must match the filename: ArrayInit.g4
-  */
-grammar ArrayInit;
+<pre class="src src-antlr"><span style="color: #93a1a1; font-style: italic;">/** </span><span style="color: #93a1a1; font-style: italic;">Grammars always start with a grammar header. This grammar is called</span>
+<span style="color: #93a1a1; font-style: italic;">  *  ArrayInit and must match the filename: ArrayInit.g4</span>
+<span style="color: #93a1a1; font-style: italic;">  */</span>
+<span style="color: #0000ff; font-weight: bold;">grammar</span> <span style="color: #8b5a00;">Array</span><span style="color: #000000; font-weight: bold;">;</span>
 
-/** A rule called init that matches comma-separated values between {...}. */
+<span style="color: #93a1a1; font-style: italic;">/** </span><span style="color: #93a1a1; font-style: italic;">A rule called init that matches comma-separated values between {...}. */</span>
 
-init : '{' value (',' value)* '}' ; // must match at least one value
+<span style="color: #0000ff; font-weight: bold;">init</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #2aa198;">'{'</span> <span style="color: #00008b;">value</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #2aa198;">','</span> <span style="color: #00008b;">value</span><span style="color: #000000; font-weight: bold;">)*</span> <span style="color: #2aa198;">'}'</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">must match at least one value</span>
 
-/** A value can be either a nested array/struct or a simple integer (INT) */
+<span style="color: #93a1a1; font-style: italic;">/** </span><span style="color: #93a1a1; font-style: italic;">A value can be either a nested array/struct or a simple integer (INT) */</span>
 
-value : init
-      | INT
-      ;
-// parser rules start with lowercase letters, lexer rules with uppercase
+<span style="color: #0000ff; font-weight: bold;">value</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #00008b;">init</span>
+      <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #8b5a00;">INT</span>
+      <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">parser rules start with lowercase letters, lexer rules with uppercase</span>
 
-INT : [0-9]+ ; // Define token INT as one or more digits
-WS : [ \t\r\n]+ -&gt; skip ; // Define whitespace rule, toss it out
+<span style="color: #0000ff; font-weight: bold;">INT</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #657b83;">[</span>0-9<span style="color: #657b83;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">Define token INT as one or more digits</span>
+<span style="color: #0000ff; font-weight: bold;">WS</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #657b83;">[</span> \t\r\n<span style="color: #657b83;">]</span>+ -&gt; <span style="color: #00008b;">skip</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">Define whitespace rule, toss it out</span>
 </pre>
 </div>
 
@@ -309,15 +310,7 @@ javac *.java
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="color: #d33682;">/***</span>
-<span style="color: #d33682;"> * Excerpted from "The Definitive ANTLR 4 Reference",</span>
-<span style="color: #d33682;"> * published by The Pragmatic Bookshelf.</span>
-<span style="color: #d33682;"> * Copyrights apply to this code. It may not be used to create training material,</span>
-<span style="color: #d33682;"> * courses, books, articles, and the like. Contact us if you are in doubt.</span>
-<span style="color: #d33682;"> * We make no guarantees that this code is fit for any purpose.</span>
-<span style="color: #d33682;"> * Visit http://www.pragmaticprogrammer.com/titles/tpantlr2 for more book information.</span>
-<span style="color: #d33682;">***/</span>
-<span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">import ANTLR's runtime libraries</span>
+<pre class="src src-java"><span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">import ANTLR's runtime libraries</span>
 <span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.*;
 <span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.<span style="color: #268bd2;">tree</span>.*;
 
@@ -384,16 +377,7 @@ EOF
 下面实现一个 Listener 来做这件事, ShortToUnicodeString.java：
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="color: #d33682;">/***</span>
-<span style="color: #d33682;"> * Excerpted from "The Definitive ANTLR 4 Reference",</span>
-<span style="color: #d33682;"> * published by The Pragmatic Bookshelf.</span>
-<span style="color: #d33682;"> * Copyrights apply to this code. It may not be used to create training material,</span>
-<span style="color: #d33682;"> * courses, books, articles, and the like. Contact us if you are in doubt.</span>
-<span style="color: #d33682;"> * We make no guarantees that this code is fit for any purpose.</span>
-<span style="color: #d33682;"> * Visit http://www.pragmaticprogrammer.com/titles/tpantlr2 for more book information.</span>
-<span style="color: #d33682;">***/</span>
-<span style="color: #d33682;">/** Convert short array inits like {1,2,3} to "\u0001\u0002\u0003" */</span>
-<span style="color: #859900;">public</span> <span style="color: #859900;">class</span> <span style="color: #268bd2;">ShortToUnicodeString</span> <span style="color: #859900;">extends</span> <span style="color: #268bd2;">ArrayInitBaseListener</span> <span style="color: #657b83;">{</span>
+<pre class="src src-java"><span style="color: #859900;">public</span> <span style="color: #859900;">class</span> <span style="color: #268bd2;">ShortToUnicodeString</span> <span style="color: #859900;">extends</span> <span style="color: #268bd2;">ArrayInitBaseListener</span> <span style="color: #657b83;">{</span>
     <span style="color: #d33682;">/** Translate { to " */</span>
     <span style="color: #268bd2;">@Override</span>
     <span style="color: #859900;">public</span> <span style="color: #268bd2;">void</span> <span style="color: #b58900;">enterInit</span><span style="color: #2aa198;">(</span><span style="color: #268bd2;">ArrayInitParser</span>.<span style="color: #268bd2;">InitContext</span> <span style="color: #6c71c4;">ctx</span><span style="color: #2aa198;">)</span> <span style="color: #2aa198;">{</span>
@@ -427,15 +411,7 @@ EOF
 下面的是 Translate.java
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="color: #d33682;">/***</span>
-<span style="color: #d33682;"> * Excerpted from "The Definitive ANTLR 4 Reference",</span>
-<span style="color: #d33682;"> * published by The Pragmatic Bookshelf.</span>
-<span style="color: #d33682;"> * Copyrights apply to this code. It may not be used to create training material,</span>
-<span style="color: #d33682;"> * courses, books, articles, and the like. Contact us if you are in doubt.</span>
-<span style="color: #d33682;"> * We make no guarantees that this code is fit for any purpose.</span>
-<span style="color: #d33682;"> * Visit http://www.pragmaticprogrammer.com/titles/tpantlr2 for more book information.</span>
-<span style="color: #d33682;">***/</span>
-<span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">import ANTLR's runtime libraries</span>
+<pre class="src src-java"><span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">import ANTLR's runtime libraries</span>
 <span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.*;
 <span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.<span style="color: #268bd2;">tree</span>.*;
 
@@ -490,31 +466,31 @@ Ctrl-d
 </p>
 
 <div class="org-src-container">
-<pre class="src src-antlr4">grammar Expr;
+<pre class="src src-antlr"><span style="color: #0000ff; font-weight: bold;">grammar</span> <span style="color: #8b5a00;">Expr</span><span style="color: #000000; font-weight: bold;">;</span>
 
-/** The start rule; begin parsing here. */
-prog:   stat+ ;
+<span style="color: #93a1a1; font-style: italic;">/** </span><span style="color: #93a1a1; font-style: italic;">The start rule; begin parsing here. */</span>
+<span style="color: #0000ff; font-weight: bold;">prog</span><span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #00008b;">stat</span>+ <span style="color: #000000; font-weight: bold;">;</span>
 
-stat:   expr NEWLINE
-    |   ID '=' expr NEWLINE
-    |   NEWLINE
-    ;
+<span style="color: #0000ff; font-weight: bold;">stat</span><span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #00008b;">expr</span> <span style="color: #8b5a00;">NEWLINE</span>
+    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #8b5a00;">ID</span> <span style="color: #2aa198;">'='</span> <span style="color: #00008b;">expr</span> <span style="color: #8b5a00;">NEWLINE</span>
+    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #8b5a00;">NEWLINE</span>
+    <span style="color: #000000; font-weight: bold;">;</span>
 
-expr:   expr ('*'|'/') expr
-    |   expr ('+'|'-') expr
-    |   INT
-    |   ID
-    |   '(' expr ')'
-    ;
+<span style="color: #0000ff; font-weight: bold;">expr</span><span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #00008b;">expr</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #2aa198;">'*'</span><span style="color: #000000; font-weight: bold;">|</span><span style="color: #2aa198;">'/'</span><span style="color: #000000; font-weight: bold;">)</span> <span style="color: #00008b;">expr</span>
+    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #00008b;">expr</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #2aa198;">'+'</span><span style="color: #000000; font-weight: bold;">|</span><span style="color: #2aa198;">'-'</span><span style="color: #000000; font-weight: bold;">)</span> <span style="color: #00008b;">expr</span>
+    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #8b5a00;">INT</span>
+    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #8b5a00;">ID</span>
+    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #2aa198;">'('</span> <span style="color: #00008b;">expr</span> <span style="color: #2aa198;">')'</span>
+    <span style="color: #000000; font-weight: bold;">;</span>
 
-MUL :   '*' ; // assigns token name to '*' used above in grammar
-DIV :   '/' ;
-ADD :   '+' ;
-SUB :   '-' ;
-ID  :   [a-zA-Z]+ ;      // match identifiers
-INT :   [0-9]+ ;         // match integers
-NEWLINE:'\r'? '\n' ;     // return newlines to parser (is end-statement signal)
-WS  :   [ \t]+ -&gt; skip ; // toss out whitespace
+<span style="color: #0000ff; font-weight: bold;">MUL</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #2aa198;">'*'</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">assigns token name to '*' used above in grammar</span>
+<span style="color: #0000ff; font-weight: bold;">DIV</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #2aa198;">'/'</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">ADD</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #2aa198;">'+'</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">SUB</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #2aa198;">'-'</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">ID</span>  <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #657b83;">[</span>a-zA-Z<span style="color: #657b83;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span>      <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">match identifiers</span>
+<span style="color: #0000ff; font-weight: bold;">INT</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #657b83;">[</span>0-9<span style="color: #657b83;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span>         <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">match integers</span>
+<span style="color: #0000ff; font-weight: bold;">NEWLINE</span><span style="color: #000000; font-weight: bold;">:</span><span style="color: #2aa198;">'\r'</span>? <span style="color: #2aa198;">'\n'</span> <span style="color: #000000; font-weight: bold;">;</span>     <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">return newlines to parser (is end-statement signal)</span>
+<span style="color: #0000ff; font-weight: bold;">WS</span>  <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #657b83;">[</span> \t<span style="color: #657b83;">]</span>+ -&gt; <span style="color: #00008b;">skip</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">toss out whitespace</span>
 </pre>
 </div>
 
@@ -526,15 +502,7 @@ WS  :   [ \t]+ -&gt; skip ; // toss out whitespace
 下面是 Calc.java:
 </p>
 <div class="org-src-container">
-<pre class="src src-java"><span style="color: #d33682;">/***</span>
-<span style="color: #d33682;"> * Excerpted from "The Definitive ANTLR 4 Reference",</span>
-<span style="color: #d33682;"> * published by The Pragmatic Bookshelf.</span>
-<span style="color: #d33682;"> * Copyrights apply to this code. It may not be used to create training material,</span>
-<span style="color: #d33682;"> * courses, books, articles, and the like. Contact us if you are in doubt.</span>
-<span style="color: #d33682;"> * We make no guarantees that this code is fit for any purpose.</span>
-<span style="color: #d33682;"> * Visit http://www.pragmaticprogrammer.com/titles/tpantlr2 for more book information.</span>
-<span style="color: #d33682;">***/</span>
-<span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.*;
+<pre class="src src-java"><span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.*;
 <span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.<span style="color: #268bd2;">tree</span>.<span style="color: #268bd2;">ParseTree</span>;
 
 <span style="color: #859900;">import</span> <span style="color: #268bd2;">java</span>.<span style="color: #268bd2;">io</span>.<span style="color: #268bd2;">FileInputStream</span>;
@@ -573,15 +541,7 @@ WS  :   [ \t]+ -&gt; skip ; // toss out whitespace
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span style="color: #d33682;">/***</span>
-<span style="color: #d33682;"> * Excerpted from "The Definitive ANTLR 4 Reference",</span>
-<span style="color: #d33682;"> * published by The Pragmatic Bookshelf.</span>
-<span style="color: #d33682;"> * Copyrights apply to this code. It may not be used to create training material,</span>
-<span style="color: #d33682;"> * courses, books, articles, and the like. Contact us if you are in doubt.</span>
-<span style="color: #d33682;"> * We make no guarantees that this code is fit for any purpose.</span>
-<span style="color: #d33682;"> * Visit http://www.pragmaticprogrammer.com/titles/tpantlr2 for more book information.</span>
-<span style="color: #d33682;">***/</span>
-<span style="color: #859900;">import</span> <span style="color: #268bd2;">java</span>.<span style="color: #268bd2;">util</span>.<span style="color: #268bd2;">HashMap</span>;
+<pre class="src src-java"><span style="color: #859900;">import</span> <span style="color: #268bd2;">java</span>.<span style="color: #268bd2;">util</span>.<span style="color: #268bd2;">HashMap</span>;
 <span style="color: #859900;">import</span> <span style="color: #268bd2;">java</span>.<span style="color: #268bd2;">util</span>.<span style="color: #268bd2;">Map</span>;
 
 <span style="color: #859900;">public</span> <span style="color: #859900;">class</span> <span style="color: #268bd2;">EvalVisitor</span> <span style="color: #859900;">extends</span> <span style="color: #268bd2;">LabeledExprBaseVisitor</span><span style="color: #657b83;">&lt;</span><span style="color: #268bd2;">Integer</span><span style="color: #657b83;">&gt;</span> <span style="color: #657b83;">{</span>
@@ -820,6 +780,92 @@ subtrees don’t get visited.
 <pre class="src src-shell">antlr4 Java.g4
 javac Java*.java Extract*.java
 java ExtractInterfaceTool Demo.java
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdf43ccd" class="outline-2">
+<h2 id="orgdf43ccd">例4：提取某列数据</h2>
+<div class="outline-text-2" id="text-orgdf43ccd">
+<p>
+t.rows
+</p>
+<pre class="example">
+parrt	Terence Parr	101
+tombu	Tom Burns	020
+bke	Kevin Edgar	008
+</pre>
+
+<p>
+定义的 Rows.g4
+</p>
+
+<div class="org-src-container">
+<pre class="src src-antlr"><span style="color: #0000ff; font-weight: bold;">grammar</span> <span style="color: #8b5a00;">Rows</span><span style="color: #000000; font-weight: bold;">;</span>
+
+@<span style="color: #6c71c4;">parser</span>:<span style="color: #000000; font-weight: bold;">:</span><span style="color: #00008b;">members</span> <span style="color: #657b83;">{</span> <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">add members to generated RowsParser</span>
+    <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">col</span>;
+    <span style="color: #859900;">public</span> <span style="color: #268bd2;">RowsParser</span>(<span style="color: #268bd2;">TokenStream</span> <span style="color: #6c71c4;">input</span>, <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">col</span>) <span style="color: #2aa198;">{</span> <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">custom constructor</span>
+        <span style="color: #859900;">this</span>(<span style="color: #268bd2;">input</span>);
+        <span style="color: #859900;">this</span>.col = col;
+    <span style="color: #2aa198;">}</span>
+<span style="color: #657b83;">}</span>
+
+<span style="color: #0000ff; font-weight: bold;">file</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #00008b;">row</span> <span style="color: #8b5a00;">NL</span><span style="color: #000000; font-weight: bold;">)+</span> <span style="color: #000000; font-weight: bold;">;</span>
+
+<span style="color: #0000ff; font-weight: bold;">row</span>
+<span style="color: #0000ff; font-weight: bold;">locals</span> <span style="color: #657b83;">[</span><span style="color: #268bd2;">int</span> i=0<span style="color: #657b83;">]</span>
+    <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #000000; font-weight: bold;">(</span>   <span style="color: #8b5a00;">STUFF</span>
+          <span style="color: #657b83;">{</span>
+          <span style="color: #000000; font-weight: bold;">$i</span>++;
+          <span style="color: #859900;">if</span> ( <span style="color: #000000; font-weight: bold;">$i</span> == col ) System.out.println(<span style="color: #000000; font-weight: bold;">$STUFF</span>.text);
+          <span style="color: #657b83;">}</span>
+      <span style="color: #000000; font-weight: bold;">)+</span>
+    <span style="color: #000000; font-weight: bold;">;</span>
+
+<span style="color: #0000ff; font-weight: bold;">TAB</span>  <span style="color: #000000; font-weight: bold;">:</span>  <span style="color: #2aa198;">'\t'</span> -&gt; <span style="color: #00008b;">skip</span> <span style="color: #000000; font-weight: bold;">;</span>   <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">match but don't pass to the parser</span>
+<span style="color: #0000ff; font-weight: bold;">NL</span>   <span style="color: #000000; font-weight: bold;">:</span>  <span style="color: #2aa198;">'\r'</span>? <span style="color: #2aa198;">'\n'</span> <span style="color: #000000; font-weight: bold;">;</span>     <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">match and pass to the parser</span>
+<span style="color: #0000ff; font-weight: bold;">STUFF</span><span style="color: #000000; font-weight: bold;">:</span>  <span style="color: #000000; font-weight: bold;">~</span><span style="color: #657b83;">[</span>\t\r\n<span style="color: #657b83;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span>     <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">match any chars except tab, newline</span>
+</pre>
+</div>
+
+
+<p>
+然后 main 函数：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.<span style="color: #268bd2;">ANTLRInputStream</span>;
+<span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.<span style="color: #268bd2;">CommonTokenStream</span>;
+<span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.<span style="color: #268bd2;">ParserRuleContext</span>;
+<span style="color: #859900;">import</span> <span style="color: #268bd2;">org</span>.<span style="color: #268bd2;">antlr</span>.<span style="color: #268bd2;">v4</span>.<span style="color: #268bd2;">runtime</span>.<span style="color: #268bd2;">Token</span>;
+
+<span style="color: #859900;">import</span> <span style="color: #268bd2;">java</span>.<span style="color: #268bd2;">io</span>.<span style="color: #268bd2;">FileInputStream</span>;
+<span style="color: #859900;">import</span> <span style="color: #268bd2;">java</span>.<span style="color: #268bd2;">io</span>.<span style="color: #268bd2;">InputStream</span>;
+
+<span style="color: #859900;">public</span> <span style="color: #859900;">class</span> <span style="color: #268bd2;">Col</span> <span style="color: #657b83;">{</span>
+    <span style="color: #859900;">public</span> <span style="color: #859900;">static</span> <span style="color: #268bd2;">void</span> <span style="color: #b58900;">main</span><span style="color: #2aa198;">(</span><span style="color: #268bd2;">String</span><span style="color: #b58900;">[]</span> <span style="color: #6c71c4;">args</span><span style="color: #2aa198;">)</span> <span style="color: #859900;">throws</span> <span style="color: #268bd2;">Exception</span> <span style="color: #2aa198;">{</span>
+        <span style="color: #268bd2;">ANTLRInputStream</span> <span style="color: #6c71c4;">input</span> = <span style="color: #859900;">new</span> <span style="color: #268bd2;">ANTLRInputStream</span><span style="color: #b58900;">(</span>System.in<span style="color: #b58900;">)</span>;
+        <span style="color: #268bd2;">RowsLexer</span> <span style="color: #6c71c4;">lexer</span> = <span style="color: #859900;">new</span> <span style="color: #268bd2;">RowsLexer</span><span style="color: #b58900;">(</span>input<span style="color: #b58900;">)</span>;
+        <span style="color: #268bd2;">CommonTokenStream</span> <span style="color: #6c71c4;">tokens</span> = <span style="color: #859900;">new</span> <span style="color: #268bd2;">CommonTokenStream</span><span style="color: #b58900;">(</span>lexer<span style="color: #b58900;">)</span>;
+        <span style="color: #268bd2;">int</span> <span style="color: #6c71c4;">col</span> = Integer.valueOf<span style="color: #b58900;">(</span>args<span style="color: #859900;">[</span>0<span style="color: #859900;">]</span><span style="color: #b58900;">)</span>;
+        <span style="color: #268bd2;">RowsParser</span> <span style="color: #6c71c4;">parser</span> = <span style="color: #859900;">new</span> <span style="color: #268bd2;">RowsParser</span><span style="color: #b58900;">(</span>tokens, col<span style="color: #b58900;">)</span>; <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">pass column number!</span>
+        parser.setBuildParseTree<span style="color: #b58900;">(</span><span style="color: #268bd2;">false</span><span style="color: #b58900;">)</span>; <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">don't waste time bulding a tree</span>
+        parser.file<span style="color: #b58900;">()</span>; <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">parse</span>
+    <span style="color: #2aa198;">}</span>
+<span style="color: #657b83;">}</span>
+</pre>
+</div>
+
+<p>
+所以执行：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">antlr4 -no-listener Rows.g4
+javac Rows*.java Col.java
+java Col 1 &lt; t.rows <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">will print first column</span>
 </pre>
 </div>
 </div>

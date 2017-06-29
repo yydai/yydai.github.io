@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-06-27 Tue 13:17 -->
+<!-- 2017-06-29 Thu 11:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>JSON Parser</title>
@@ -251,6 +251,7 @@ for the JavaScript code in this tag.
 </ul>
 </li>
 <li><a href="#org39bd6ca">如何做</a></li>
+<li><a href="#orgdd1df40">另一种实现方式</a></li>
 </ul>
 </div>
 </div>
@@ -511,6 +512,20 @@ java JSONParserTest
 <pre class="example">
 (json (value (obj { (pair "student" : (value (obj { (pair "id" : (value "12345678")) , (pair "prename" : (value "John")) , (pair "surname" : (value "Doe")) , (pair "address" : (value (obj { (pair "street" : (value "Johndoestreet")) , (pair "postcode" : (value "99999")) }))) , (pair "email" : (value "johndoe@doe.com")) }))) })))
 </pre>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgdd1df40" class="outline-2">
+<h2 id="orgdd1df40">另一种实现方式</h2>
+<div class="outline-text-2" id="text-orgdd1df40">
+<p>
+这里介绍一种 Python 的实现方式。这两个版本只是一个 Demo, 很多小的情况没有覆盖到。
+大部分常见的 JSON 结构应该都能解析。
+代码部分在 <a href="https://github.com/yydai/yson">GitHub</a> 上。主要是 scanner 和 decoder 这两个文件。
+参考上面 JSON 的几种状态，我们根据状态机很容易就能写出 JSON parser。
+</p>
 </div>
 </div>
 </div>

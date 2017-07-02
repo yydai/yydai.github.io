@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-02 Sun 08:08 -->
+<!-- 2017-07-02 Sun 08:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>学习打卡</title>
+<title>Mac OS X trics</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,55 +239,58 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">学习打卡</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org90c3d68">技术</a></li>
-<li><a href="#org4b8b588">吉他</a></li>
-<li><a href="#orgabc7da8">项目</a></li>
-</ul>
-</div>
-</div>
+<h1 class="title">Mac OS X trics</h1>
 <hr />
+<ol class="org-ol">
+<li><p>
+How can I make auto-hide/show for the dock faster? (from <a href="https://apple.stackexchange.com/questions/33600/how-can-i-make-auto-hide-show-for-the-dock-faster">here</a>)
+</p>
 
-<div id="outline-container-org90c3d68" class="outline-2">
-<h2 id="org90c3d68">技术</h2>
-<div class="outline-text-2" id="text-org90c3d68">
-<ul class="org-ul">
-<li>Leetcode 每天至少1道题</li>
-</ul>
-</div>
-</div>
+<pre class="example">
+defaults write com.apple.dock autohide-time-modifier -int 0;killall Dock
+</pre></li>
 
-<div id="outline-container-org4b8b588" class="outline-2">
-<h2 id="org4b8b588">吉他</h2>
-<div class="outline-text-2" id="text-org4b8b588">
-<ul class="org-ul">
-<li>练习一小时</li>
-</ul>
-</div>
-</div>
+<li><p>
+<b>open</b> command can let you open file and url in terminal
+</p>
 
-<div id="outline-container-orgabc7da8" class="outline-2">
-<h2 id="orgabc7da8">项目</h2>
-<div class="outline-text-2" id="text-orgabc7da8">
-<ul class="org-ul">
-<li>Linter for Dockerfile <a href="https://github.com/mre/awesome-static-analysis#python">this</a> and <a href="https://github.com/jeromepin/whale-linter/tree/master/whalelinter">this</a></li>
-<li>CI/CD tool</li>
-<li>OAuth server tool</li>
-<li>AST</li>
-<li>OS <a href="https://github.com/tuhdo/os01">here</a></li>
-<li>学习静态分析 pysonar2 <a href="http://www.yinwang.org/resources/pysonar-slides.pdf">slide</a></li>
-<li>设计一个 DSL</li>
-<li>模板引擎</li>
-<li>代码生成器 autopep8 DOT language</li>
-<li>learn the source code of Lua</li>
-<li>Game scripting master -&#x2014;use Antlr4 and LLVM</li>
-</ul>
-</div>
-</div>
+<div class="org-src-container">
+<pre class="src src-shell">open . <span style="color: #b22222;"># </span><span style="color: #b22222;">will open the current folder in finder</span>
+open ./XXX.md <span style="color: #b22222;"># </span><span style="color: #b22222;">will open the markdown file with the default editor</span>
+open http://www.baidu.com
+open -a dash <span style="color: #b22222;"># </span><span style="color: #b22222;">open a application of dash</span>
+oepn *.png <span style="color: #b22222;"># </span><span style="color: #b22222;">open all the png images</span>
+</pre>
+</div></li>
+
+<li><p>
+<b>say</b> command
+</p>
+
+<p>
+You can let your Mac speaking,
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">say <span style="color: #8b2252;">"Hello world"</span>
+say -f &lt;file&gt;
+</pre>
+</div></li>
+
+<li><p>
+Setting iterm2
+</p>
+
+<p>
+This setting will let you use the Emacs keybindings.
+</p>
+
+<p>
+Change the keyboard behavior:
+</p>
+<pre class="example">
+left option ⇒ +ESC
+</pre></li>
+</ol>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

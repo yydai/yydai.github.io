@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-01 Sat 10:22 -->
+<!-- 2017-07-02 Sun 22:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MAC好用软件</title>
@@ -246,6 +246,22 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org9b0fd89">Emacs</a></li>
 <li><a href="#org2a6739a">Dash</a></li>
+<li><a href="#org800a2b7">iTerm2</a>
+<ul>
+<li><a href="#org46f8f0e">Profiles 选项卡设置</a></li>
+<li><a href="#org15301e0">更改 option 键</a></li>
+<li><a href="#org4107d3b">Broadcast 功能</a></li>
+<li><a href="#orga702bb2">其他有用的快捷键</a>
+<ul>
+<li><a href="#orgfe9f30a">一键调出命令行</a></li>
+<li><a href="#org00d71a2">快照返回</a></li>
+<li><a href="#orgc476733">标签排列切换</a></li>
+<li><a href="#org4cf2307">和 Pane 有关</a></li>
+<li><a href="#orgd30d5ad">命令补全</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -310,6 +326,312 @@ SimpleHTTPServer 8000</code> 去创建一个http server，因为这个很固定�
 这个软件是付费的还是比较贵的，但是不付费也是可以使用，只是比较蛋疼，经常要等10秒才能出结果。
 如果是上班族，建议购买正版；学生狗的话，你懂得。
 </p>
+</div>
+</div>
+
+<div id="outline-container-org800a2b7" class="outline-2">
+<h2 id="org800a2b7">iTerm2</h2>
+<div class="outline-text-2" id="text-org800a2b7">
+<p>
+简单来说 iTerm2 是 macOS 下终端工具，相比于原生的更加好用。用的好的话，可以极大的提高工作效率。
+</p>
+
+<p>
+下面我就说一下它的技巧。一是，为了自己查阅方便；二是，希望对别人有些用。
+</p>
+</div>
+
+<div id="outline-container-org46f8f0e" class="outline-3">
+<h3 id="org46f8f0e">Profiles 选项卡设置</h3>
+<div class="outline-text-3" id="text-org46f8f0e">
+<p>
+首先，要注意到我们可以添加很多个 Profile Name, 每个 Profile Name
+可以设置不同的快捷键以及其他的自定义的配置，这个是很有用的。在
+Colors 选项卡下有一个 Color Presets, 下拉可选择不同的主题，也可以从网上自行的下载。例如，我对不同的配置设置了不同的主题。晚上的切换到 Solarized Dark theme, 白天切换到 Solarized Light theme。而且在
+window 选项卡下，我们可以设置 terminal 的背景。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170702_193335_26714yyS.png" alt="20170702_193335_26714yyS.png" />
+</p>
+</div>
+
+<p>
+这个是 Light 的主题加背景
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170702_193843_26714_8Y.png" alt="20170702_193843_26714_8Y.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org15301e0" class="outline-3">
+<h3 id="org15301e0">更改 option 键</h3>
+<div class="outline-text-3" id="text-org15301e0">
+<p>
+为什么要改这个呢？不知道你是否有对单词移动、删除这种操作有需求？如果有，那设置这个将会非常好用。
+先说下更改后的效果：
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">快捷键</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">M-f</td>
+<td class="org-left">向前移动单词</td>
+</tr>
+
+<tr>
+<td class="org-left">M-b</td>
+<td class="org-left">向后移动单词</td>
+</tr>
+
+<tr>
+<td class="org-left">M-d</td>
+<td class="org-left">向后删除单词</td>
+</tr>
+
+<tr>
+<td class="org-left">M-delete</td>
+<td class="org-left">向前删除单词</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+说明，这里的 M-f 是指按住 M 键再按 f。
+</p>
+
+<p>
+首先找到 Profiles 下的 keys 选项卡，最下面有一个 keyboard behavior。
+在 Left <code>option</code> key acts as 下，选择 <code>+ESC</code> 就可以了。
+我们上面的 M 键就是现在的 option 。
+</p>
+
+<p>
+这里顺便列举一下，其他关于移动的快捷键：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">快捷键</td>
+<td class="org-left">说明</td>
+</tr>
+
+<tr>
+<td class="org-left">Ctrl-a</td>
+<td class="org-left">移动到开头</td>
+</tr>
+
+<tr>
+<td class="org-left">Ctrl-e</td>
+<td class="org-left">移动到结尾</td>
+</tr>
+
+<tr>
+<td class="org-left">Ctrl-f</td>
+<td class="org-left">向前移动一个字母</td>
+</tr>
+
+<tr>
+<td class="org-left">Ctrl-b</td>
+<td class="org-left">向后移动一个字母</td>
+</tr>
+
+<tr>
+<td class="org-left">Ctrl-k</td>
+<td class="org-left">删除光标后的所有字符</td>
+</tr>
+
+<tr>
+<td class="org-left">Ctrl-p</td>
+<td class="org-left">上一条命名</td>
+</tr>
+
+<tr>
+<td class="org-left">Ctrl-n</td>
+<td class="org-left">下一条命令</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+如果你是 Emacs 用户的话，你会对这些命令感到很亲切，因为这些都是 Emacs 下的命令。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4107d3b" class="outline-3">
+<h3 id="org4107d3b">Broadcast 功能</h3>
+<div class="outline-text-3" id="text-org4107d3b">
+<p>
+我们可以使用这个功能来同步 tab, pane。
+举个例子，我们要在登录几台 remote server。
+我们就可以先输入：
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">ssh ubuntu@
+</pre>
+</div>
+<p>
+然后在不同的 pane 中输入不同 server ip。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga702bb2" class="outline-3">
+<h3 id="orga702bb2">其他有用的快捷键</h3>
+<div class="outline-text-3" id="text-orga702bb2">
+</div><div id="outline-container-orgfe9f30a" class="outline-4">
+<h4 id="orgfe9f30a">一键调出命令行</h4>
+<div class="outline-text-4" id="text-orgfe9f30a">
+<p>
+我们进入设置界面，进入 Keys 选项卡，找到 Hotkey 选项，选中如下的选项
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170702_221714_26714MHf.png" alt="20170702_221714_26714MHf.png" />
+</p>
+</div>
+
+<p>
+选择你喜欢的快捷键，下次我们就可以直接用这个快捷键呼出一个半透明的
+tab。你点击其他地方这个 tab 就会自动消失。同时我们在 Profiles 下会多出一个 Hotkey Window 的Profile Name。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org00d71a2" class="outline-4">
+<h4 id="org00d71a2">快照返回</h4>
+<div class="outline-text-4" id="text-org00d71a2">
+<p>
+按下 Cmd + Option + B 就会在界面上显示一个时间轴：
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170702_222429_26714mbr.png" alt="20170702_222429_26714mbr.png" />
+</p>
+</div>
+
+<p>
+然后按方向键，我们就可以访问某个时间的操作了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc476733" class="outline-4">
+<h4 id="orgc476733">标签排列切换</h4>
+<div class="outline-text-4" id="text-orgc476733">
+<p>
+按下 Cmd + Option + E 后，我们看到所有的标签都整齐的排列在屏幕上，并且屏幕左上角为我们展现了一个搜索框，输入我们想要查找的就可以了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4cf2307" class="outline-4">
+<h4 id="org4cf2307">和 Pane 有关</h4>
+<div class="outline-text-4" id="text-org4cf2307">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">命令</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Command + t</td>
+<td class="org-left">新建 tab</td>
+</tr>
+
+<tr>
+<td class="org-left">Command + &lt;number&gt;</td>
+<td class="org-left">切换 tab</td>
+</tr>
+
+<tr>
+<td class="org-left">Command + d</td>
+<td class="org-left">水平分割 Pane</td>
+</tr>
+
+<tr>
+<td class="org-left">Command + Shift + d</td>
+<td class="org-left">垂直分割 Pane</td>
+</tr>
+
+<tr>
+<td class="org-left">Command + [ or ]</td>
+<td class="org-left">顺序切换 Pane</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-orgd30d5ad" class="outline-4">
+<h4 id="orgd30d5ad">命令补全</h4>
+<div class="outline-text-4" id="text-orgd30d5ad">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">命令</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Command + ;</td>
+<td class="org-left">弹出补全窗口</td>
+</tr>
+
+<tr>
+<td class="org-left">Command + Shift + H</td>
+<td class="org-left">弹出历史记录</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>

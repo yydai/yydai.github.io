@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-01 Sat 10:22 -->
+<!-- 2017-07-05 Wed 20:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中 interactive 总结</title>
@@ -249,7 +249,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orge4bed3f">语法规则</a></li>
 <li><a href="#org561dea2">缺省或 <code>nil</code></a></li>
-<li><a href="#org11972d1">带string类型参数</a>
+<li><a href="#org11972d1">带 string 类型参数</a>
 <ul>
 <li><a href="#orge6d3d4b">P and b</a></li>
 <li><a href="#org6e724c3">n</a></li>
@@ -258,7 +258,7 @@ for the JavaScript code in this tag.
 <li><a href="#org51b0f52">s</a></li>
 </ul>
 </li>
-<li><a href="#org0627e23">传递一个List</a></li>
+<li><a href="#org0627e23">传递一个 List</a></li>
 </ul>
 </li>
 </ul>
@@ -273,8 +273,8 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">say-hello</span><span style="color: #2aa198;">(</span>name<span style="color: #2aa198;">)</span>
-    <span style="color: #2aa198;">(</span>message <span style="color: #2aa198;">"Hello %s"</span> name<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">say-hello</span><span style="color: #7388d6;">(</span>name<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Hello %s"</span> name<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -284,9 +284,9 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">say-hello</span><span style="color: #2aa198;">(</span>name<span style="color: #2aa198;">)</span>
-    <span style="color: #2aa198;">(</span><span style="color: #859900;">interactive</span> <span style="color: #2aa198;">"sEnter your name: "</span><span style="color: #2aa198;">)</span>
-    <span style="color: #2aa198;">(</span>message <span style="color: #2aa198;">"Hello %s"</span> name<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">say-hello</span><span style="color: #7388d6;">(</span>name<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"sEnter your name: "</span><span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Hello %s"</span> name<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -297,7 +297,7 @@ name:</code> ,你输入一个名称，minibuffer 就会打印出一条消息。
 </p>
 
 <p>
-通过interactive我们就可以把一个函数变成一个可交互的命令。这样的命令我们可以通过 <code>M-x</code> 来执行。另一方面来说，如果一个函数没有使用 <code>interactive</code>, 它就不能通过M-x来调用，也不能通过 <code>key binding</code> 来使用，只能通过代码来调用。
+通过 interactive 我们就可以把一个函数变成一个可交互的命令。这样的命令我们可以通过 <code>M-x</code> 来执行。另一方面来说，如果一个函数没有使用 <code>interactive</code>, 它就不能通过 M-x 来调用，也不能通过 <code>key binding</code> 来使用，只能通过代码来调用。
 </p>
 </div>
 </div>
@@ -309,11 +309,11 @@ name:</code> ,你输入一个名称，minibuffer 就会打印出一条消息。
 <h3 id="orge4bed3f">语法规则</h3>
 <div class="outline-text-3" id="text-orge4bed3f">
 <p>
-interactive的使用主要是：
+interactive 的使用主要是：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">interactive</span> arg-descriptor<span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span> arg-descriptor<span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -331,19 +331,19 @@ interactive的使用主要是：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">interactive</span><span style="color: #657b83;">)</span>
-<span style="color: #657b83;">(</span><span style="color: #859900;">interactive</span> nil<span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span> nil<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
 <div id="outline-container-org11972d1" class="outline-3">
-<h3 id="org11972d1">带string类型参数</h3>
+<h3 id="org11972d1">带 string 类型参数</h3>
 <div class="outline-text-3" id="text-org11972d1">
 <p>
-	类似(interactive "…"), 然后emacs会根据第一个字符来解释用户的输入。 大约有
-30个的这个解释来做这种处理。但是常用的不是太多，<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html">这里</a> 可以了解更多。
+	类似(interactive "…"), 然后 emacs 会根据第一个字符来解释用户的输入。 大约有
+30 个的这个解释来做这种处理。但是常用的不是太多，<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html">这里</a> 可以了解更多。
 </p>
 </div>
 
@@ -351,13 +351,13 @@ interactive的使用主要是：
 <h4 id="orge6d3d4b">P and b</h4>
 <div class="outline-text-4" id="text-orge6d3d4b">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">interactive</span> <span style="color: #2aa198;">"P</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">n</span><span style="color: #2aa198;">bFrobnicate buffer: "</span><span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"P</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">bFrobnicate buffer: "</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 <p>
 其中字母 <code>P</code> 会把命令的第一个参数设置为 <code>raw
-	command perfix</code> (<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Prefix-Command-Arguments.html#Prefix-Command-Arguments">this</a>), 'bFrobnicate buffer: '提示用户输入一个buffer的名字。
+	command perfix</code> (<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Prefix-Command-Arguments.html#Prefix-Command-Arguments">this</a>), 'bFrobnicate buffer: '提示用户输入一个 buffer 的名字。
 </p>
 
 <p>
@@ -365,7 +365,7 @@ interactive的使用主要是：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">interactive</span> <span style="color: #2aa198;">"bBuffer to rename: </span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">n</span><span style="color: #2aa198;">sRename buffer %s to: "</span><span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"bBuffer to rename: </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">sRename buffer %s to: "</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -386,10 +386,10 @@ interactive的使用主要是：
 以一个数字作为参数
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">ask-age</span> <span style="color: #2aa198;">(</span>x<span style="color: #2aa198;">)</span>
-  <span style="color: #d33682;">"Ask age."</span>
-  <span style="color: #2aa198;">(</span><span style="color: #859900;">interactive</span> <span style="color: #2aa198;">"nEnter your age: "</span><span style="color: #2aa198;">)</span>
-  <span style="color: #2aa198;">(</span>message <span style="color: #2aa198;">"Name: %d"</span> x<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ask-age</span> <span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span>
+  <span style="color: #8b2252;">"Ask age."</span>
+  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"nEnter your age: "</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Name: %d"</span> x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -403,13 +403,13 @@ interactive的使用主要是：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">myMark-elisp-region</span> <span style="color: #2aa198;">(</span>rStart rEnd<span style="color: #2aa198;">)</span>
-  <span style="color: #d33682;">"Mark region as Elisp source code for org mode export."</span>
-  <span style="color: #2aa198;">(</span><span style="color: #859900;">interactive</span> <span style="color: #2aa198;">"r"</span><span style="color: #2aa198;">)</span>
-  <span style="color: #2aa198;">(</span>message <span style="color: #2aa198;">"Region begin at: %d, end at: %d"</span> rStart rEnd<span style="color: #2aa198;">)</span>
-  <span style="color: #2aa198;">(</span><span style="color: #859900;">save-excursion</span>
-    <span style="color: #b58900;">(</span>goto-char rEnd<span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span>insert <span style="color: #2aa198;">"</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">n</span><span style="color: #2aa198;">#+END_SRC</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">n</span><span style="color: #2aa198;">"</span><span style="color: #b58900;">)</span>
-    <span style="color: #b58900;">(</span>goto-char rStart<span style="color: #b58900;">)</span> <span style="color: #b58900;">(</span>insert <span style="color: #2aa198;">"#+BEGIN_SRC emacs-lisp -n</span><span style="color: #6c71c4;">\</span><span style="color: #d33682;">n</span><span style="color: #2aa198;">"</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">myMark-elisp-region</span> <span style="color: #7388d6;">(</span>rStart rEnd<span style="color: #7388d6;">)</span>
+  <span style="color: #8b2252;">"Mark region as Elisp source code for org mode export."</span>
+  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"r"</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Region begin at: %d, end at: %d"</span> rStart rEnd<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">save-excursion</span>
+    <span style="color: #909183;">(</span>goto-char rEnd<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>insert <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">#+END_SRC</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">"</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>goto-char rStart<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>insert <span style="color: #8b2252;">"#+BEGIN_SRC emacs-lisp -n</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -423,9 +423,9 @@ interactive的使用主要是：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">call-a-func</span> <span style="color: #2aa198;">(</span>x<span style="color: #2aa198;">)</span>
-  <span style="color: #2aa198;">(</span><span style="color: #859900;">interactive</span> <span style="color: #2aa198;">"aEnter a function:"</span><span style="color: #2aa198;">)</span>
-  <span style="color: #2aa198;">(</span>funcall x<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">call-a-func</span> <span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"aEnter a function:"</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>funcall x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -439,8 +439,8 @@ interactive的使用主要是：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">say-hello</span><span style="color: #2aa198;">(</span>name<span style="color: #2aa198;">)</span>
-    <span style="color: #2aa198;">(</span>message <span style="color: #2aa198;">"Hello %s"</span> name<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">say-hello</span><span style="color: #7388d6;">(</span>name<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Hello %s"</span> name<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -448,27 +448,27 @@ interactive的使用主要是：
 </div>
 
 <div id="outline-container-org0627e23" class="outline-3">
-<h3 id="org0627e23">传递一个List</h3>
+<h3 id="org0627e23">传递一个 List</h3>
 <div class="outline-text-3" id="text-org0627e23">
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">do-something</span> <span style="color: #2aa198;">(</span>x y<span style="color: #2aa198;">)</span>
-  <span style="color: #d33682;">"Ask name and age"</span>
-  <span style="color: #2aa198;">(</span><span style="color: #859900;">interactive</span>
-   <span style="color: #93a1a1; font-style: italic;">;; </span><span style="color: #93a1a1; font-style: italic;">complex code here that returns a list</span>
-   <span style="color: #b58900;">(</span>list <span style="color: #2aa198;">"Mary"</span> 22<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
-  <span style="color: #2aa198;">(</span>message <span style="color: #2aa198;">"Name is: %s, Age is: %d"</span> x y<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">do-something</span> <span style="color: #7388d6;">(</span>x y<span style="color: #7388d6;">)</span>
+  <span style="color: #8b2252;">"Ask name and age"</span>
+  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span>
+   <span style="color: #b22222;">;; </span><span style="color: #b22222;">complex code here that returns a list</span>
+   <span style="color: #909183;">(</span>list <span style="color: #8b2252;">"Mary"</span> 22<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Name is: %s, Age is: %d"</span> x y<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #657b83;">(</span><span style="color: #859900;">defun</span> <span style="color: #b58900;">ff</span> <span style="color: #2aa198;">(</span>name age<span style="color: #2aa198;">)</span>
-  <span style="color: #d33682;">"Prompt user to enter a string, with input history support."</span>
-  <span style="color: #2aa198;">(</span><span style="color: #859900;">interactive</span>
-   <span style="color: #b58900;">(</span>list
-    <span style="color: #859900;">(</span>read-string <span style="color: #2aa198;">"Enter your name:"</span><span style="color: #859900;">)</span>
-    <span style="color: #859900;">(</span>read-string <span style="color: #2aa198;">"Enter your age:"</span><span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
-  <span style="color: #2aa198;">(</span>message <span style="color: #2aa198;">"Name is %s."</span> name<span style="color: #2aa198;">)</span>
-  <span style="color: #2aa198;">(</span>message <span style="color: #2aa198;">"Age is: %s"</span> age<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ff</span> <span style="color: #7388d6;">(</span>name age<span style="color: #7388d6;">)</span>
+  <span style="color: #8b2252;">"Prompt user to enter a string, with input history support."</span>
+  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span>
+   <span style="color: #909183;">(</span>list
+    <span style="color: #709870;">(</span>read-string <span style="color: #8b2252;">"Enter your name:"</span><span style="color: #709870;">)</span>
+    <span style="color: #709870;">(</span>read-string <span style="color: #8b2252;">"Enter your age:"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Name is %s."</span> name<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Age is: %s"</span> age<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>

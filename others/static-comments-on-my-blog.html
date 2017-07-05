@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-01 Sat 10:22 -->
+<!-- 2017-07-05 Wed 20:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>一个静态评论系统的实现</title>
@@ -285,8 +285,8 @@ for the JavaScript code in this tag.
 <h2 id="org9e2c5c5">我的使用场景</h2>
 <div class="outline-text-2" id="text-org9e2c5c5">
 <p>
-我的blog使用的 <code>github pages</code> 搭建，没有使用现有的框架。静态页面使用的
-<code>org mode</code> 生成。但是没有关系，这里用到的东西只需要嵌入到生成的html页面中就可以使用。
+我的 blog 使用的 <code>github pages</code> 搭建，没有使用现有的框架。静态页面使用的
+<code>org mode</code> 生成。但是没有关系，这里用到的东西只需要嵌入到生成的 html 页面中就可以使用。
 </p>
 </div>
 </div>
@@ -312,12 +312,12 @@ for the JavaScript code in this tag.
 <h3 id="org511209c">原理</h3>
 <div class="outline-text-3" id="text-org511209c">
 <p>
-因为我是用的github pages来部署的个人博客，所以这里就利用了它的
+因为我是用的 github pages 来部署的个人博客，所以这里就利用了它的
 <code>issues</code> 。我期望的操作流程是这样的：
 </p>
 <ul class="org-ul">
 <li>打开一个文章，显示对应的评论。</li>
-<li>如果想评论，点击 <code>button</code>, 进行github授权。</li>
+<li>如果想评论，点击 <code>button</code>, 进行 github 授权。</li>
 <li>如果还没有对应的 issue, 我就创建一个。</li>
 <li>将评论添加到 issue 下。</li>
 <li>在 blog 中获取最新的评论。</li>
@@ -333,18 +333,18 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #859900;">function</span> <span style="color: #b58900;">test</span><span style="color: #657b83;">()</span> <span style="color: #657b83;">{</span>
-  jQuery.ajax<span style="color: #2aa198;">(</span><span style="color: #b58900;">{</span>
-      type: <span style="color: #2aa198;">'GET'</span>,
-      async: <span style="color: #268bd2;">false</span>,
-      dataType:<span style="color: #2aa198;">'json'</span>,
+<pre class="src src-javascript"><span style="color: #a020f0;">function</span> <span style="color: #0000ff;">test</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+  jQuery.ajax<span style="color: #7388d6;">(</span><span style="color: #909183;">{</span>
+      type: <span style="color: #8b2252;">'GET'</span>,
+      async: <span style="color: #008b8b;">false</span>,
+      dataType:<span style="color: #8b2252;">'json'</span>,
       url: search_issues,
-      <span style="color: #b58900;">success</span>:<span style="color: #859900;">function</span><span style="color: #859900;">(</span><span style="color: #6c71c4;">data</span><span style="color: #859900;">)</span> <span style="color: #859900;">{</span>
+      <span style="color: #0000ff;">success</span>:<span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">data</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
          result = data;
-      <span style="color: #859900;">}</span>
-  <span style="color: #b58900;">}</span><span style="color: #2aa198;">)</span>;
-  <span style="color: #859900;">return</span> result;
-<span style="color: #657b83;">}</span>
+      <span style="color: #709870;">}</span>
+  <span style="color: #909183;">}</span><span style="color: #7388d6;">)</span>;
+  <span style="color: #a020f0;">return</span> result;
+<span style="color: #707183;">}</span>
 </pre>
 </div>
 
@@ -353,29 +353,29 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #859900;">function</span> <span style="color: #b58900;">create</span><span style="color: #657b83;">(</span><span style="color: #6c71c4;">title</span><span style="color: #657b83;">)</span> <span style="color: #657b83;">{</span>
-     <span style="color: #859900;">var</span> <span style="color: #6c71c4;">creare</span> = base_url + <span style="color: #2aa198;">'/repos/'</span> + owner + <span style="color: #2aa198;">'/'</span> + repo + <span style="color: #2aa198;">'/issues'</span>;
-     <span style="color: #859900;">var</span> <span style="color: #6c71c4;">payload</span> = <span style="color: #2aa198;">{</span>
-          <span style="color: #2aa198;">'title'</span>: title,
-          <span style="color: #2aa198;">'body'</span>: <span style="color: #2aa198;">'You can write comments in this issues.'</span>,
-          <span style="color: #2aa198;">'labels'</span>: <span style="color: #b58900;">[</span><span style="color: #2aa198;">'blog'</span><span style="color: #b58900;">]</span>,
-      <span style="color: #2aa198;">}</span>
-      $.ajax<span style="color: #2aa198;">(</span><span style="color: #b58900;">{</span>
-        type: <span style="color: #2aa198;">'POST'</span>,
+<pre class="src src-javascript"><span style="color: #a020f0;">function</span> <span style="color: #0000ff;">create</span><span style="color: #707183;">(</span><span style="color: #a0522d;">title</span><span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
+     <span style="color: #a020f0;">var</span> <span style="color: #a0522d;">creare</span> = base_url + <span style="color: #8b2252;">'/repos/'</span> + owner + <span style="color: #8b2252;">'/'</span> + repo + <span style="color: #8b2252;">'/issues'</span>;
+     <span style="color: #a020f0;">var</span> <span style="color: #a0522d;">payload</span> = <span style="color: #7388d6;">{</span>
+          <span style="color: #8b2252;">'title'</span>: title,
+          <span style="color: #8b2252;">'body'</span>: <span style="color: #8b2252;">'You can write comments in this issues.'</span>,
+          <span style="color: #8b2252;">'labels'</span>: <span style="color: #909183;">[</span><span style="color: #8b2252;">'blog'</span><span style="color: #909183;">]</span>,
+      <span style="color: #7388d6;">}</span>
+      $.ajax<span style="color: #7388d6;">(</span><span style="color: #909183;">{</span>
+        type: <span style="color: #8b2252;">'POST'</span>,
         url: create,
-        crossDomain: <span style="color: #268bd2;">true</span>,
-              data: JSON.stringify<span style="color: #859900;">(</span>payload<span style="color: #859900;">)</span>,
-        headers: <span style="color: #859900;">{</span>
-          <span style="color: #2aa198;">'Authorization'</span>: <span style="color: #2aa198;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">auth2.0</span>
-          <span style="color: #2aa198;">'Access-Control-Allow-Origin'</span> : <span style="color: #2aa198;">'*'</span>
-        <span style="color: #859900;">}</span>,
-        contentType: <span style="color: #2aa198;">'application/json; charset=utf-8'</span>,
-        dataType: <span style="color: #2aa198;">'json'</span>,
-        <span style="color: #b58900;">success</span>: <span style="color: #859900;">function</span><span style="color: #859900;">(</span><span style="color: #6c71c4;">data</span><span style="color: #859900;">){</span>alert<span style="color: #268bd2;">(</span><span style="color: #2aa198;">'create issue success'</span><span style="color: #268bd2;">)</span>;<span style="color: #859900;">}</span>,
-        <span style="color: #b58900;">failure</span>: <span style="color: #859900;">function</span><span style="color: #859900;">(</span><span style="color: #6c71c4;">errMsg</span><span style="color: #859900;">)</span> <span style="color: #859900;">{</span>
-            alert<span style="color: #268bd2;">(</span>errMsg<span style="color: #268bd2;">)</span>;
-        <span style="color: #859900;">}</span>
-    <span style="color: #b58900;">}</span><span style="color: #2aa198;">)</span>;<span style="color: #657b83;">}</span>
+        crossDomain: <span style="color: #008b8b;">true</span>,
+              data: JSON.stringify<span style="color: #709870;">(</span>payload<span style="color: #709870;">)</span>,
+        headers: <span style="color: #709870;">{</span>
+          <span style="color: #8b2252;">'Authorization'</span>: <span style="color: #8b2252;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #b22222;">// </span><span style="color: #b22222;">auth2.0</span>
+          <span style="color: #8b2252;">'Access-Control-Allow-Origin'</span> : <span style="color: #8b2252;">'*'</span>
+        <span style="color: #709870;">}</span>,
+        contentType: <span style="color: #8b2252;">'application/json; charset=utf-8'</span>,
+        dataType: <span style="color: #8b2252;">'json'</span>,
+        <span style="color: #0000ff;">success</span>: <span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">data</span><span style="color: #709870;">){</span>alert<span style="color: #907373;">(</span><span style="color: #8b2252;">'create issue success'</span><span style="color: #907373;">)</span>;<span style="color: #709870;">}</span>,
+        <span style="color: #0000ff;">failure</span>: <span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">errMsg</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
+            alert<span style="color: #907373;">(</span>errMsg<span style="color: #907373;">)</span>;
+        <span style="color: #709870;">}</span>
+    <span style="color: #909183;">}</span><span style="color: #7388d6;">)</span>;<span style="color: #707183;">}</span>
 </pre>
 </div>
 </div>
@@ -389,7 +389,7 @@ for the JavaScript code in this tag.
 <h3 id="orgea93feb">elisp</h3>
 <div class="outline-text-3" id="text-orgea93feb">
 <p>
-由于是使用的 <code>elisp</code> 进行的相关设置，在 string 中的所有 双引号 都要使用 '\' 进行escaping。
+由于是使用的 <code>elisp</code> 进行的相关设置，在 string 中的所有 双引号 都要使用 '\' 进行 escaping。
 </p>
 </div>
 </div>
@@ -399,7 +399,7 @@ for the JavaScript code in this tag.
 <div class="outline-text-3" id="text-org612cdd9">
 <p>
 如果打开一个 blog 没有对应的 issue, 我会发送一个 ajax 请求去创建一个。在本地测试没有问题，但是在生产环境就出现了 <code>405（method not
-	allowed）</code> 的错误。后来发现是github pages 好像不支持CORS。这其实就打断了这种 pipeline了，所有的操作不能连接起来。
+	allowed）</code> 的错误。后来发现是 github pages 好像不支持 CORS。这其实就打断了这种 pipeline 了，所有的操作不能连接起来。
 </p>
 
 <p>
@@ -429,7 +429,7 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-这里会用到3个github 的 API（<a href="https://developer.github.com/v3/search/#search-issues">Github api</a>） 分别如下:
+这里会用到 3 个 github 的 API（<a href="https://developer.github.com/v3/search/#search-issues">Github api</a>） 分别如下:
 </p>
 
 <pre class="example">
@@ -450,7 +450,7 @@ for the JavaScript code in this tag.
 <h2 id="orgac8c95a">几个网站</h2>
 <div class="outline-text-2" id="text-orgac8c95a">
 <p>
-在用js时做了几个demo测试，主要是在如下几个上面
+在用 js 时做了几个 demo 测试，主要是在如下几个上面
 </p>
 <ul class="org-ul">
 <li><a href="https://jsfiddle.net">js online 1</a></li>

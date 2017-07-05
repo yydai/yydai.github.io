@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-01 Sat 10:22 -->
+<!-- 2017-07-05 Wed 20:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>虚拟环境（virtualenv）</title>
@@ -259,7 +259,7 @@ for the JavaScript code in this tag.
 <hr />
 
 <p>
-虚拟环境是一个将不同项目所需求的依赖分别放在独立的地方的一个工具，它给这些工程创建虚拟的Python环境。它解决了“项目X依赖于版本1.x，而项目Y需要项目4.x”的两难问题，而且使你的全局site-packages目录保持干净和可管理。
+虚拟环境是一个将不同项目所需求的依赖分别放在独立的地方的一个工具，它给这些工程创建虚拟的 Python 环境。它解决了“项目 X 依赖于版本 1.x，而项目 Y 需要项目 4.x”的两难问题，而且使你的全局 site-packages 目录保持干净和可管理。
 </p>
 
 
@@ -287,25 +287,33 @@ for the JavaScript code in this tag.
 <h3 id="orgbd92ea5">创建虚拟环境</h3>
 <div class="outline-text-3" id="text-orgbd92ea5">
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #6c71c4;">cd</span> my_project_folder
+<pre class="src src-shell"><span style="color: #483d8b;">cd</span> my_project_folder
 virtualenv venv
 </pre>
 </div>
 
 <p>
-virtualenv venv 将会在当前的目录中创建一个文件夹，包含了Python可执行文件，以及 pip 库的一份拷贝，这样就能安装其他包了。
+virtualenv venv 将会在当前的目录中创建一个文件夹，包含了 Python 可执行文件，以及 pip 库的一份拷贝，这样就能安装其他包了。
 </p>
 
 <p>
-虚拟环境的名字（此例中是 venv ）可以是任意的；若省略名字将会把文件均放在当前目录。
+虚拟环境的名字（此例中是 venv）可以是任意的；若省略名字将会把文件均放在当前目录。
 </p>
 
 <p>
-你可以选择使用一个Python解释器：
+你可以选择使用一个 Python 解释器：
 </p>
 
 <div class="org-src-container">
 <pre class="src src-shell">virtualenv -p /usr/bin/python2.7 venv
+</pre>
+</div>
+
+<p>
+如果想要使用 python3 可以这样：
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">virtualenv -python3 venv
 </pre>
 </div>
 </div>
@@ -319,7 +327,7 @@ virtualenv venv 将会在当前的目录中创建一个文件夹，包含了Pyth
 首先需要激活
 </p>
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #6c71c4;">source</span> venv/bin/activate
+<pre class="src src-shell"><span style="color: #483d8b;">source</span> venv/bin/activate
 </pre>
 </div>
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-01 Sat 10:22 -->
+<!-- 2017-07-05 Wed 20:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Exporting to PDF in org mode</title>
@@ -263,7 +263,7 @@ for the JavaScript code in this tag.
 <h2 id="org91c2400">简介</h2>
 <div class="outline-text-2" id="text-org91c2400">
 <p>
-这篇文章介绍如何配置一下Emacs使其能输出PDF文件。
+这篇文章介绍如何配置一下 Emacs 使其能输出 PDF 文件。
 </p>
 </div>
 </div>
@@ -272,7 +272,7 @@ for the JavaScript code in this tag.
 <h2 id="org2baa867">使用的环境</h2>
 <div class="outline-text-2" id="text-org2baa867">
 <p>
-使用的环境是OSX 10.12版本，Emacs的版本为25.1.1, org mode 的版本为
+使用的环境是 OSX 10.12 版本，Emacs 的版本为 25.1.1, org mode 的版本为
 9.0.3,需要安装 <a href="https://pan.baidu.com/s/1o8CrPl4">MacTex</a> 其他环境没有测试。
 </p>
 </div>
@@ -281,21 +281,21 @@ for the JavaScript code in this tag.
 <h2 id="orgb9be3ae">如何配置</h2>
 <div class="outline-text-2" id="text-orgb9be3ae">
 <ul class="org-ul">
-<li>在你的 .emacs 或 .emacs.d/init.el 上添加对xelatex 的支持，上面装的MacTex会装这个。添加代码如下</li>
+<li>在你的 .emacs 或 .emacs.d/init.el 上添加对 xelatex 的支持，上面装的 MacTex 会装这个。添加代码如下</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #657b83;">(</span>setenv <span style="color: #2aa198;">"PATH"</span> <span style="color: #2aa198;">(</span>concat <span style="color: #b58900;">(</span>getenv <span style="color: #2aa198;">"PATH"</span><span style="color: #b58900;">)</span> <span style="color: #2aa198;">":/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-<span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> exec-path <span style="color: #2aa198;">(</span>append exec-path <span style="color: #859900;">'</span><span style="color: #b58900;">(</span><span style="color: #2aa198;">"/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>setenv <span style="color: #8b2252;">"PATH"</span> <span style="color: #7388d6;">(</span>concat <span style="color: #909183;">(</span>getenv <span style="color: #8b2252;">"PATH"</span><span style="color: #909183;">)</span> <span style="color: #8b2252;">":/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> exec-path <span style="color: #7388d6;">(</span>append exec-path <span style="color: #a020f0;">'</span><span style="color: #909183;">(</span><span style="color: #8b2252;">"/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 <ul class="org-ul">
-<li>同样在配置文件上应该配置使用xelatex, 输出中文pdf。org-mode默认调用的是pdflatex, 因此需要重新设置编译引擎为xelatex</li>
+<li>同样在配置文件上应该配置使用 xelatex, 输出中文 pdf。org-mode 默认调用的是 pdflatex, 因此需要重新设置编译引擎为 xelatex</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #657b83;">(</span><span style="color: #859900;">setq</span> org-latex-pdf-process <span style="color: #859900;">'</span><span style="color: #2aa198;">(</span><span style="color: #2aa198;">"xelatex -interaction nonstopmode %f"</span> <span style="color: #2aa198;">"xelatex -interaction nonstopmode %f"</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> org-latex-pdf-process <span style="color: #a020f0;">'</span><span style="color: #7388d6;">(</span><span style="color: #8b2252;">"xelatex -interaction nonstopmode %f"</span> <span style="color: #8b2252;">"xelatex -interaction nonstopmode %f"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -304,7 +304,7 @@ for the JavaScript code in this tag.
 里面，同时还要将上面的代码放到：
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #657b83;">(</span><span style="color: #859900;">after-load</span> <span style="color: #859900;">'</span><span style="color: #268bd2;">org</span> <span style="color: #657b83;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">after-load</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">org</span> <span style="color: #707183;">)</span>
 </pre>
 </div>
 <p>
@@ -339,7 +339,7 @@ for the JavaScript code in this tag.
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-写于2017清明，碰巧今天也细雨蒙蒙，故引用此诗纪念。
+写于 2017 清明，碰巧今天也细雨蒙蒙，故引用此诗纪念。
 </p></div></div>
 
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-01 Sat 10:22 -->
+<!-- 2017-07-05 Wed 20:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>远程主机登录</title>
@@ -248,6 +248,7 @@ for the JavaScript code in this tag.
 <li><a href="#org71c0e53">使用 SSH key 来登录</a></li>
 <li><a href="#orgc9a6658">配置 ssh config</a></li>
 <li><a href="#org61f250d">还可以更简化？</a></li>
+<li><a href="#orgfb46712">换种思路</a></li>
 <li><a href="#orgb367817">尾声</a></li>
 </ul>
 </div>
@@ -295,7 +296,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-然后会提示你选择一个文件去存储这个key，默认是覆盖 <b>~/.ssh/id_rsa</b> 这个文件。
+然后会提示你选择一个文件去存储这个 key，默认是覆盖 <b>~/.ssh/id_rsa</b> 这个文件。
 一直按回车就好。
 </p>
 
@@ -320,7 +321,7 @@ for the JavaScript code in this tag.
 
 
 <p>
-有个地方需要注意，如果你不是使用默认的 .ssh/id_rsa 这个 ssh key，而是新起的一个名字，例如在~/.ssh目录下叫test.key，同时还会生成一个叫 test.key.pub 的 public key。
+有个地方需要注意，如果你不是使用默认的 .ssh/id_rsa 这个 ssh key，而是新起的一个名字，例如在~/.ssh 目录下叫 test.key，同时还会生成一个叫 test.key.pub 的 public key。
 </p>
 
 <p>
@@ -368,7 +369,7 @@ Host test
 
 <p>
 是不是简化了很多？这样就非常好了。
-如果当你需要登录很多主机的时候，这种方式真的非常好。这让你从特定的ip中解脱出来了。
+如果当你需要登录很多主机的时候，这种方式真的非常好。这让你从特定的 ip 中解脱出来了。
 </p>
 </div>
 </div>
@@ -381,7 +382,7 @@ Host test
 </p>
 
 <p>
-于是，我打开了 .zshrc (因为我使用的是 zsh，如果你使用的是bash，应该是 .bashrc 文件），添加了下面一句
+于是，我打开了 .zshrc (因为我使用的是 zsh，如果你使用的是 bash，应该是 .bashrc 文件），添加了下面一句
 </p>
 
 <pre class="example">
@@ -394,12 +395,32 @@ alias lg='ssh test'
 </div>
 </div>
 
+<div id="outline-container-orgfb46712" class="outline-2">
+<h2 id="orgfb46712">换种思路</h2>
+<div class="outline-text-2" id="text-orgfb46712">
+<p>
+如果说我们可以点点就能实现这种功能不知道你信吗？前提是你要使用 iTerm2，可以看<a href="http://0x100.club/mac/software.html#org800a2b7">这里</a>了解 iTerm2。
+我们首先在在 iTerm2 中添加一个新的 profile，如下选择 Command，输入命令。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/iterm2.png" alt="iterm2.png" width="100%" />
+</p>
+</div>
+
+
+<p>
+下次我们想要登录远程主机的时候直接打开这个新建的 profile，就会自动登录远程主机。这种方式会让你有种 ”iTerm2 还可以这样玩？“的感觉。
+</p>
+</div>
+</div>
 
 <div id="outline-container-orgb367817" class="outline-2">
 <h2 id="orgb367817">尾声</h2>
 <div class="outline-text-2" id="text-orgb367817">
 <p>
-很早之前，因为有很多台机器需要登录，而且ip更换很频繁，而且我们根据不同的区使用了几种不同的 ssh key。这导致很混乱，于是我简单的写了写 <a href="https://github.com/dai92817/linux_settings/blob/master/bashrc">shell</a> 脚本，这对于当时的使用场景是够用了。现在这个用处不大，仅仅当个参考吧。
+很早之前，因为有很多台机器需要登录，而且 ip 更换很频繁，而且我们根据不同的区使用了几种不同的 ssh key。这导致很混乱，于是我简单的写了写 <a href="https://github.com/dai92817/linux_settings/blob/master/bashrc">shell</a> 脚本，这对于当时的使用场景是够用了。现在这个用处不大，仅仅当个参考吧。
 </p>
 </div>
 </div>

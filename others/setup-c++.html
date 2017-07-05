@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-01 Sat 10:22 -->
+<!-- 2017-07-05 Wed 20:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -259,14 +259,14 @@ Seach for program: no such file or directory, global
 
 <p>
 这里要说一下 emacs 中 "PATH" 和 exec-path 的区别。
-如果你想在emacs的SHELL中调用某个程序，要把它的路径加入 "PATH" 中。
+如果你想在 emacs 的 SHELL 中调用某个程序，要把它的路径加入 "PATH" 中。
 如果你想在 elisp 中调用某个程序，要把它的路径加入 exec-path.
 </p>
 
 <p>
-Emacs启动时，会根据系统环境变量PATH的值初始化exec-path。
+Emacs 启动时，会根据系统环境变量 PATH 的值初始化 exec-path。
 如果你后面通过 setenv 向 PATH 中加入了某个路径，
-exec-path并不会自动包含这个路径。
+exec-path 并不会自动包含这个路径。
 </p>
 
 
@@ -276,7 +276,7 @@ exec-path并不会自动包含这个路径。
 
 <p>
 (setenv "PATH" (concat "/path/to/global/bin;" (getenv "PATH")))
-向PATH中加入了global的执行路径，exec-path 中并不包含该路径，所以会报错。
+向 PATH 中加入了 global 的执行路径，exec-path 中并不包含该路径，所以会报错。
 我们要向 exec-path 中加入该路径。
 </p>
 

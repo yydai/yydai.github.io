@@ -6,7 +6,7 @@
 <!-- 2017-07-05 Wed 20:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Argparse 教程</title>
+<title>Git</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,261 +239,49 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Argparse 教程</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org551d301">概念</a></li>
-<li><a href="#org3cc13d7">基本的认识</a></li>
-<li><a href="#org5ea422a">位置参数</a></li>
-</ul>
-</div>
-</div>
-<hr />
-<p>
-作者：Tshepang Lekhonkhobe
-</p>
-
-<p>
-这个教程旨在对 <code>argparse</code> 进行简单的介绍， <code>argparse</code> 是标准库推荐使用的命令行解析模块。
-</p>
-
-<p>
-说明：python 版本：3.60。另外还有两种其他的模块来完成同样的工作，分别是 <code>getopt</code> (类似于 C 语言中的 <code>getopt()</code> )和过时的 <code>optparse</code> 。需要知道的是 <code>argparse</code> 其实是基于 <code>optparse</code> 而来的，
-所以它们在用法上非常的相似。
-</p>
-
-<p>
-<a href="https://docs.python.org/3.6/howto/argparse.html#id1">原文链接</a>
-</p>
+<h1 class="title">Git</h1>
 <hr />
 
-<div id="outline-container-org551d301" class="outline-2">
-<h2 id="org551d301">概念</h2>
-<div class="outline-text-2" id="text-org551d301">
-<p>
-我们首先通过 <code>ls</code> 命令来说明一下我们将要在这个教程中所讲的东西：
+<ol class="org-ol">
+<li><p>
+How to undo 'git add' before commit?
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">$ ls
-cpython  devguide  prog.py  pypy  rm-unused-function.patch
-$ ls pypy
-ctypes_configure  demo  dotviewer  include  lib_pypy  lib-python ...
-$ ls -l
-total 20
-drwxr-xr-x 19 wena wena 4096 Feb 18 18:51 cpython
-drwxr-xr-x  4 wena wena 4096 Feb  8 12:04 devguide
--rwxr-xr-x  1 wena wena  535 Feb 19 00:05 prog.py
-drwxr-xr-x 14 wena wena 4096 Feb  7 00:59 pypy
--rw-r--r--  1 wena wena  741 Feb 18 01:01 rm-unused-function.patch
-$ ls --help
-Usage: ls <span style="color: #707183;">[</span>OPTION<span style="color: #707183;">]</span>... <span style="color: #707183;">[</span>FILE<span style="color: #707183;">]</span>...
-List information about the FILEs <span style="color: #707183;">(</span>the current directory by default<span style="color: #707183;">)</span>.
-Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
-...
+<pre class="src src-shell">git reset &lt;file&gt;
+</pre>
+</div>
+<p>
+which will remove it from the current index (the "about to be committed" list) without changing anything else.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">git reset
+</pre>
+</div>
+<p>
+without any file name to unstage all due changes.
+</p></li>
+
+<li><p>
+How to modify existing, unpushed commits? <a href="https://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits?rq=1">here</a>
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git commit --amend
 </pre>
 </div>
 
 <p>
-我们从这 4 个命令中可以学到如下几点：
-</p>
-<ul class="org-ul">
-<li><code>ls</code> 不带任何参数的时候非常有用，它会默认返回当前目录的内容哦。</li>
-</ul>
-</div>
-</div>
-
-
-<div id="outline-container-org3cc13d7" class="outline-2">
-<h2 id="org3cc13d7">基本的认识</h2>
-<div class="outline-text-2" id="text-org3cc13d7">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> argparse
-<span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">()</span>
-parser.parse_args<span style="color: #707183;">()</span>
-</pre>
-</div>
-
-<p>
-下面是运行的结果：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">$ python3 prog.py
-$ python3 prog.py --help
-usage: prog.py <span style="color: #707183;">[</span>-h<span style="color: #707183;">]</span>
-
-optional arguments:
-  -h, --help  show this help message and exit
-$ python3 prog.py --verbose
-usage: prog.py <span style="color: #707183;">[</span>-h<span style="color: #707183;">]</span>
-prog.py: error: unrecognized arguments: --verbose
-$ python3 prog.py foo
-usage: prog.py <span style="color: #707183;">[</span>-h<span style="color: #707183;">]</span>
-prog.py: error: unrecognized arguments: foo
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org5ea422a" class="outline-2">
-<h2 id="org5ea422a">位置参数</h2>
-<div class="outline-text-2" id="text-org5ea422a">
-<p>
-一个例子：
+Another option is to use interactive rebase.
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> argparse
-<span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">()</span>
-parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">"echo"</span><span style="color: #707183;">)</span>
-<span style="color: #a0522d;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>args.echo<span style="color: #707183;">)</span>
+<pre class="src src-shell">    // X is the number of commits to the last commit you want to be able to edit
+git rebase -i HEAD~X
+    git rebase -i HEAD~X
 </pre>
-</div>
+</div></li>
 
-<p>
-运行的结果：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">$ python3 prog.py
-usage: prog.py <span style="color: #707183;">[</span>-h<span style="color: #707183;">]</span> echo
-prog.py: error: the following arguments are required: echo
-$ python3 prog.py --help
-usage: prog.py <span style="color: #707183;">[</span>-h<span style="color: #707183;">]</span> echo
-
-positional arguments:
-  <span style="color: #483d8b;">echo</span>
-
-optional arguments:
-  -h, --help  show this help message and exit
-$ python3 prog.py foo
-foo
-</pre>
-</div>
-
-<p>
-Note however that, although the help display looks nice and all, it currently is
-not as helpful as it can be. For example we see that we got echo as a positional
-argument, but we don’t know what it does, other than by guessing or by reading
-the source code. So, let’s make it a bit more useful:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> argparse
-<span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">()</span>
-parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">"echo"</span>, <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">"echo the string you use here"</span><span style="color: #707183;">)</span>
-<span style="color: #a0522d;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>args.echo<span style="color: #707183;">)</span>
-</pre>
-</div>
-
-<p>
-我们得到：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">$ python3 prog.py -h
-usage: prog.py <span style="color: #707183;">[</span>-h<span style="color: #707183;">]</span> echo
-
-positional arguments:
-  <span style="color: #483d8b;">echo</span>        echo the string you use here
-
-optional arguments:
-  -h, --help  show this help message and exit
-</pre>
-</div>
-
-<p>
-下面我们做些更加有意思的事情：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> argparse
-<span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">()</span>
-parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">"square"</span>, <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">"display a square of a given number"</span><span style="color: #707183;">)</span>
-<span style="color: #a0522d;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>args.square**2<span style="color: #707183;">)</span>
-</pre>
-</div>
-
-<p>
-运行的结果：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">$ python3 prog.py 4
-<span style="color: #0000ff;">Traceback</span> <span style="color: #707183;">(</span>most recent call last<span style="color: #707183;">)</span>:
-  File <span style="color: #8b2252;">"prog.py"</span>, line 5,<span style="color: #a020f0;"> in</span> &lt;module&gt;
-    <span style="color: #483d8b;">print</span><span style="color: #707183;">(</span>args.square**2<span style="color: #707183;">)</span>
-TypeError: unsupported operand type<span style="color: #707183;">(</span>s<span style="color: #707183;">)</span> <span style="color: #a020f0;">for</span> ** or pow<span style="color: #707183;">()</span>: <span style="color: #8b2252;">'str'</span> and <span style="color: #8b2252;">'int'</span>
-</pre>
-</div>
-
-<p>
-need set type of argument
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> argparse
-<span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">()</span>
-parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">"square"</span>, <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">"display a square of a given number"</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">type</span>=<span style="color: #483d8b;">int</span><span style="color: #707183;">)</span>
-<span style="color: #a0522d;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>args.square**2<span style="color: #707183;">)</span>
-</pre>
-</div>
-
-<p>
-下面是运行的结果：
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">$ python3 prog.py 4
-16
-$ python3 prog.py four
-usage: prog.py <span style="color: #707183;">[</span>-h<span style="color: #707183;">]</span> square
-prog.py: error: argument square: invalid int value: <span style="color: #8b2252;">'four'</span>
-</pre>
-</div>
-
-
-<p>
-o** 可选参数我们已经学会如何添加位置参数，下面我们看下如何添加可选参数：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> argparse
-<span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">()</span>
-parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">"--verbosity"</span>, <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">"increase output verbosity"</span><span style="color: #707183;">)</span>
-<span style="color: #a0522d;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
-<span style="color: #a020f0;">if</span> args.verbosity:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">"verbosity turned on"</span><span style="color: #707183;">)</span>
-</pre>
-</div>
-
-<p>
-输出结果：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">$ python3 prog.py --verbosity 1
-verbosity turned on
-$ python3 prog.py
-$ python3 prog.py --help
-usage: prog.py <span style="color: #707183;">[</span>-h<span style="color: #707183;">]</span> <span style="color: #707183;">[</span>--verbosity VERBOSITY<span style="color: #707183;">]</span>
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --verbosity VERBOSITY
-                        increase output verbosity
-$ python3 prog.py --verbosity
-usage: prog.py <span style="color: #707183;">[</span>-h<span style="color: #707183;">]</span> <span style="color: #707183;">[</span>--verbosity VERBOSITY<span style="color: #707183;">]</span>
-prog.py: error: argument --verbosity: expected one argument
-</pre>
-</div>
-</div>
-</div>
+<li>How do I undo the last commits in Git? <a href="https://stackoverflow.com/questions/927358/how-do-i-undo-the-last-commits-in-git?rq=1">here</a></li>
+</ol>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

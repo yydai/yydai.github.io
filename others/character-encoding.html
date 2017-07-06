@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-06 Thu 15:18 -->
+<!-- 2017-07-06 Thu 15:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>谈谈字符编码</title>
@@ -456,8 +456,16 @@ u<span style="color: #8b2252;">"&#20013;"</span>.encode<span style="color: #7071
 为什么会乱码呢？如果你理解了 ASCII 为什么出现，应该明白是编码的问题。如果一个 Unicode 使用了
 UTF-8 去编码，而你却用 UTF-16 去解码，肯定是有问题的。
 </p>
+
+<div class="org-src-container">
+<pre class="src src-python">u<span style="color: #8b2252;">"&#20013;"</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-8'</span><span style="color: #707183;">)</span>  &#8658; <span style="color: #8b2252;">'\xe4\xb8\xad'</span>
+<span style="color: #8b2252;">'\xe4\xb8\xad'</span>.decode<span style="color: #707183;">()</span>  &#8658; <span style="color: #228b22;">UnicodeDecodeError</span>: <span style="color: #8b2252;">'ascii'</span> codec can<span style="color: #8b2252;">'t decode byte 0xe4 in position 0</span>
+<span style="color: #8b2252;">'</span>\xe4\xb8\xad<span style="color: #8b2252;">'.decode('</span>utf-8<span style="color: #8b2252;">') &#8658; u'</span>\u4e2d<span style="color: #8b2252;">'</span>
+</pre>
 </div>
 </div>
+</div>
+
 <div id="outline-container-org9499894" class="outline-3">
 <h3 id="org9499894">Python2</h3>
 <div class="outline-text-3" id="text-org9499894">

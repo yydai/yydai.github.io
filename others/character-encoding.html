@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-06 Thu 12:14 -->
+<!-- 2017-07-06 Thu 15:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>学习打卡</title>
+<title>谈谈字符编码</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,52 +239,272 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">学习打卡</h1>
+<h1 class="title">谈谈字符编码</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org90c3d68">技术</a></li>
-<li><a href="#org4b8b588">吉他</a></li>
-<li><a href="#orgabc7da8">项目</a></li>
+<li><a href="#orge992e65">史前世界</a></li>
+<li><a href="#org45dac0f">ASCII</a></li>
+<li><a href="#orgf2c9660">Unicode</a></li>
+<li><a href="#orgd0d6d01">UTF-8</a></li>
+<li><a href="#org05d0217">常见的问题</a>
+<ul>
+<li><a href="#orgc590392">乱码</a></li>
+<li><a href="#org9499894">Python2</a></li>
+</ul>
+</li>
+<li><a href="#org8c146e8">Reference</a></li>
 </ul>
 </div>
 </div>
 <hr />
 
-<div id="outline-container-org90c3d68" class="outline-2">
-<h2 id="org90c3d68">技术</h2>
-<div class="outline-text-2" id="text-org90c3d68">
+<p>
+这里总结一下我对 Unicode，UTF-8 和 ASCII 的认识。其中不乏参考了很多别人的思路，但目的只有一个，让我们更加清晰的认识它们是个什么东西。
+</p>
+
+<div id="outline-container-orge992e65" class="outline-2">
+<h2 id="orge992e65">史前世界</h2>
+<div class="outline-text-2" id="text-orge992e65">
+<p>
+身处在现在，我们很难理解 ASCII 出现之前是什么状况。现在我们有必要了解为什么有了 ASCII 编码。
+ASCII 是一个通信标准，更是一种字符显示的标准，因为在这之前任何不同品牌的电脑之间都无法正常的交流。
+</p>
+
+<p>
+在 ASCII 出现前的上世纪 60 年代，是这样一种状况。
+</p>
 <ul class="org-ul">
-<li>Leetcode 每天至少 1 道题</li>
+<li>不同品牌的电脑无法交流</li>
+<li>每个生产商都有自己的一套表示字母、数字以及其他字符的标准</li>
+<li>当时有 60 套左右的标准显示这些字符</li>
+<li>仅仅 IBM 本身，不同的设备就有 9 中之多的字符集</li>
 </ul>
+
+<p>
+在 1961 年，在 IBM 工作的 Bob Bemer 认识到了这种问题的严重性，所以在当年他向美国标准委员会提交了一个提案。经过两年多的讨论，直到 1963 才正式通过。
+</p>
+
+<p>
+因为当时和很多其他的设备都不支持，加之 IBM 对其没有很多的重视导致其被冷落了 18 年，直到 1981 年 IBM 的个人计算机的诞生。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org4b8b588" class="outline-2">
-<h2 id="org4b8b588">吉他</h2>
-<div class="outline-text-2" id="text-org4b8b588">
-<ul class="org-ul">
-<li>练习一小时</li>
-</ul>
+<div id="outline-container-org45dac0f" class="outline-2">
+<h2 id="org45dac0f">ASCII</h2>
+<div class="outline-text-2" id="text-org45dac0f">
+<p>
+有了上面的介绍，我想我们已经能够了解，为什么需要它了，以及它干了什么。
+因为在计算机内部，只能通过二进制而表示任何东西，所以我们需要规定一种字符表示的标准，即一个字符和二进制的映射关系，而这种映射是一种单射。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170706_121012_8442524N.png" alt="20170706_121012_8442524N.png" />
+</p>
+</div>
+
+<p>
+其实任何的编码都是这样一种映射，只是 A 集合和 B 集合大小问题。
+</p>
+
+<p>
+在 ASCII 出现时，它只使用了一个字节的低七位二进制数来表示了 128 个字符。这些字符基本满足了现代英语的需求。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170706_120953_84425puH.png" alt="20170706_120953_84425puH.png" />
+</p>
+</div>
+
+
+<p>
+例如，字符 A 的表示：
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170706_121417_84425DDU.png" alt="20170706_121417_84425DDU.png" />
+</p>
+</div>
+
+
+<p>
+到了这里我们就可以使用英语表示任何东西了，是不是已经很完美了。但是我们如何表示汉语或者其他的语言呢？仅仅 128 个字符是绝对不够用的。到了这里，我们就需要扩充集合 A 了。 这一部分其实不难理解，下面的介绍才是重点。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgabc7da8" class="outline-2">
-<h2 id="orgabc7da8">项目</h2>
-<div class="outline-text-2" id="text-orgabc7da8">
+
+<div id="outline-container-orgf2c9660" class="outline-2">
+<h2 id="orgf2c9660">Unicode</h2>
+<div class="outline-text-2" id="text-orgf2c9660">
+<p>
+现在我们扩从了集合 A 的范围，能够解释更多的字符了。
+</p>
+
+<p>
+例如，我们现在可以用两个字节来表示一个汉字，
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170706_131840_84425QNa.png" alt="20170706_131840_84425QNa.png" />
+</p>
+</div>
+
+
+<p>
+如果全世界都统一使用这种编码是完全可以的，但是有个很大的问题。统一使用这种编码太浪费空间了，原本 ASCII 字符，只需要一个字节就可以表示，而现在需要几个字节。例如上面的字母 'A' 现在需要 2 个字节来表示，本来可以使用 1 个字节就可以。还有一点是对于上面的“中”，我们如果按照 ASCII 来解释的话，解决就完全不同了。对于二进制来说，我们无法判断某一个字节是一个
+ASCII 字符还是 Unicode 的一部分。
+</p>
+
+<p>
+总的来说，Unicode 规定了一个字符的映射关系（字符集），但却没有很好的定义它如何被表示，即如何被计算机去识别。
+</p>
+
+<p>
+在介绍 UTF-8 之前有必要说几个概念。
+</p>
+
+<ol class="org-ol">
+<li><p>
+编码字符集
+</p>
+
+<p>
+这个是用来表示一个字符在字库中的位置。例如上面的 <b>U+4E2D</b> 这叫做 code point，它表示了这个汉子"中"在字库中的位置。
+上面的映射图只是一种抽象的表示，而这里说明了如何找到这种映射，即这里的 code point。
+</p></li>
+
+<li>字符编码这里的字符编码其实就是为了解决上面提到的 Unicode 的问题。我们把 code point 再次的进行编码，就出现了各种的其他编码。
+其中 UTF-8 便是一种，它其实是一种变长编码。</li>
+</ol>
+
+<p>
+另外，关于 Unicode 这里有个视频 <a href="https://www.infoq.com/presentations/unicode-history">A Brief History of Unicode</a>。
+</p>
+
+<p>
+如果还不明白，先继续往下看。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd0d6d01" class="outline-2">
+<h2 id="orgd0d6d01">UTF-8</h2>
+<div class="outline-text-2" id="text-orgd0d6d01">
+<p>
+在进行之前，我们先看个例子，还是以上面的汉字 “中” 为例。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170706_143831_84425qhm.png" alt="20170706_143831_84425qhm.png" />
+</p>
+</div>
+
+<p>
+上面解释了 Unicode 中 code point 表示到 utf-8 表示了转化。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170706_140914_84425dXg.png" alt="20170706_140914_84425dXg.png" />
+</p>
+</div>
+
+<p>
+你可以自己去实验一下，例如在 python 下：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">u<span style="color: #8b2252;">"&#20013;"</span> &#8658; u<span style="color: #8b2252;">'\u4e2d'</span>
+<span style="color: #8b2252;">"{0:b}"</span>.<span style="color: #483d8b;">format</span><span style="color: #707183;">(</span><span style="color: #483d8b;">int</span><span style="color: #7388d6;">(</span><span style="color: #8b2252;">'4e2d'</span>, 16<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> &#8658; <span style="color: #8b2252;">'100111000101101'</span>
+u<span style="color: #8b2252;">"&#20013;"</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-8'</span><span style="color: #707183;">)</span> &#8658; <span style="color: #8b2252;">'\xe4\xb8\xad'</span>
+<span style="color: #8b2252;">"{0:b}"</span>.<span style="color: #483d8b;">format</span><span style="color: #707183;">(</span><span style="color: #483d8b;">int</span><span style="color: #7388d6;">(</span><span style="color: #8b2252;">'e4b8ad'</span>, 16<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> &#8658; <span style="color: #8b2252;">'111001001011100010101101'</span>
+</pre>
+</div>
+
+
+<p>
+下面是编码规则：
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170706_144837_844253rs.png" alt="20170706_144837_844253rs.png" />
+</p>
+</div>
+
+<p>
+对比这个规则再看看上面的例子，我应该明白“UTF-8 是 Unicode 的实现方式之一”这句话的含义了。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org05d0217" class="outline-2">
+<h2 id="org05d0217">常见的问题</h2>
+<div class="outline-text-2" id="text-org05d0217">
+</div><div id="outline-container-orgc590392" class="outline-3">
+<h3 id="orgc590392">乱码</h3>
+<div class="outline-text-3" id="text-orgc590392">
+<p>
+为什么会乱码呢？如果你理解了 ASCII 为什么出现，应该明白是编码的问题。如果一个 Unicode 使用了
+UTF-8 去编码，而你却用 UTF-16 去解码，肯定是有问题的。
+</p>
+</div>
+</div>
+<div id="outline-container-org9499894" class="outline-3">
+<h3 id="org9499894">Python2</h3>
+<div class="outline-text-3" id="text-org9499894">
+<p>
+在 Python2 中，你如果执行
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #8b2252;">"&#20320;&#22909;"</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">"utf8"</span><span style="color: #707183;">)</span> &#8658;
+<span style="color: #228b22;">UnicodeDecodeError</span>: <span style="color: #8b2252;">'ascii'</span> codec can<span style="color: #8b2252;">'t decode byte 0xe4 in position 0: ordinal not in range(128)</span>
+</pre>
+</div>
+
+<p>
+这是为什么呢？
+这里我们首先要看看 "你好" 是什么类型的，事实它是 str 类型。所以它等价于：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #8b2252;">"&#20320;&#22909;"</span>.decode<span style="color: #707183;">()</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-8'</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+首先将 "你好" decode 成 Unicode，然后在按照 UTF-8 编码。因为"你好"
+不是有效的 ASCII，所以错误出现在 decode 这步。我们只需要改成：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">u<span style="color: #8b2252;">"&#20320;&#22909;"</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">"utf8"</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8c146e8" class="outline-2">
+<h2 id="org8c146e8">Reference</h2>
+<div class="outline-text-2" id="text-org8c146e8">
 <ul class="org-ul">
-<li>Linter for Dockerfile <a href="https://github.com/mre/awesome-static-analysis#python">this</a> and <a href="https://github.com/jeromepin/whale-linter/tree/master/whalelinter">this</a></li>
-<li>CI/CD tool</li>
-<li>OAuth server tool  <a href="https://github.com/NateFerrero/oauth2lib">here</a> <a href="https://github.com/idan/oauthlib/tree/master/oauthlib/oauth2/rfc6749">here</a> and <a href="https://github.com/lepture/example-oauth2-server">here</a> and <a href="https://github.com/wndhydrnt/python-oauth2/tree/master/oauth2">here</a> and <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2">here</a></li>
-<li>Ast</li>
-<li>OS <a href="https://github.com/tuhdo/os01">here</a></li>
-<li>学习静态分析 pysonar2 <a href="http://www.yinwang.org/resources/pysonar-slides.pdf">slide</a></li>
-<li>设计一个 DSL</li>
-<li>模板引擎</li>
-<li>代码生成器 autopep8 DOT language</li>
-<li>learn the source code of Lua</li>
-<li>Game scripting master -&#x2014;use Antlr4 and LLVM</li>
+<li><a href="http://ascii-world.wikidot.com/history">http://ascii-world.wikidot.com/history</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Unicode">https://en.wikipedia.org/wiki/Unicode</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html">http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html</a></li>
+<li><a href="http://cenalulu.github.io/linux/character-encoding/">http://cenalulu.github.io/linux/character-encoding/</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/Unicode%E5%AD%97%E7%AC%A6%E5%88%97%E8%A1%A8">https://zh.wikipedia.org/wiki/Unicode 字符列表</a></li>
+<li><a href="https://stackoverflow.com/questions/1273693/why-is-u-used-to-designate-a-unicode-code-point">https://stackoverflow.com/questions/1273693/why-is-u-used-to-designate-a-unicode-code-point</a></li>
+<li><a href="https://stackoverflow.com/questions/9644099/python-ascii-codec-cant-decode-byte">https://stackoverflow.com/questions/9644099/python-ascii-codec-cant-decode-byte</a></li>
+<li><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431664106267f12e9bef7ee14cf6a8776a479bdec9b9000">http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431664106267f12e9bef7ee14cf6a8776a479bdec9b9000</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/ASCII">https://zh.wikipedia.org/wiki/ASCII</a></li>
+<li><a href="https://www.draw.io/">https://www.draw.io/</a></li>
 </ul>
 </div>
 </div>

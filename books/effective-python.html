@@ -1,0 +1,2042 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-07-07 Fri 13:13 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Effective Python</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> Contact </a>
+</div>
+</div>
+</div>
+<div id="content">
+<h1 class="title">Effective Python</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgc57d285">用 python 的方式来思考</a>
+<ul>
+<li><a href="#orgcb6f245">第一条 确认 python 使用的版本</a></li>
+<li><a href="#orga813d4c">第二条 遵循 pep8 规范</a></li>
+<li><a href="#org7ad087b">了解 bytes, str, unicode 的区别</a></li>
+<li><a href="#org3742815">用辅助函数取代复杂表达式</a></li>
+<li><a href="#orgc7cc629">了解切割序列方法</a></li>
+<li><a href="#orgb32cf6d">在单次切片操作，不要同时指定 start, end 和 stride</a></li>
+<li><a href="#org62620e1">用列表推到来取代 map 和 filter</a></li>
+<li><a href="#orgce0758e">不要使用含有两个以上表达式的列表推导</a></li>
+<li><a href="#org489d383">用生成器表达式来改写数据量较大的列表推导</a></li>
+<li><a href="#org3c2eb13">尽量用 enumerate 取代 range</a></li>
+<li><a href="#orga49639c">用 zip 函数同时遍历两个迭代器</a></li>
+<li><a href="#org79c7dca">不要在 for 和 while 后面写 else</a></li>
+<li><a href="#org80f3be8">合理利用 try/except/else/finally 结构中的每个代码块</a></li>
+</ul>
+</li>
+<li><a href="#org61a7cca">函数</a>
+<ul>
+<li><a href="#orgdf58ba8">尽量用异常来表示特殊情况，而不要返回 None</a></li>
+<li><a href="#orgfd407f1">了解如何在闭包里使用外围作用域中的变量</a></li>
+<li><a href="#org87614eb">考虑用生成器改写直接返回列表的函数 &check;</a></li>
+<li><a href="#org4df0449">在参数上面迭代要小心</a></li>
+<li><a href="#org51bd66a">用数量可变的位置参数</a></li>
+<li><a href="#orgfa43571">用关键字参数表达可选的行为</a></li>
+<li><a href="#orgccda751">用 None 和文档字符串来描述具有动态默认值的参数</a></li>
+<li><a href="#org0340fb5">用只能以关键字形式指定的参数来确保代码明晰</a></li>
+</ul>
+</li>
+<li><a href="#orgef5a0d6">类与继承</a>
+<ul>
+<li><a href="#org617e761">尽量用辅助类来维护程序的状态，而不要用字典和元组</a></li>
+<li><a href="#org608b30b">简单的接口应该接受函数，而不是类实例</a></li>
+<li><a href="#orgcbd340d">以 @classmethod 形式的多态去通用地构建对象 &check;</a></li>
+<li><a href="#org00e4080">用 super 初始化父类</a></li>
+<li><a href="#org8bcd869">只在使用 Mix-in 组件制作工具类时进行多重继承</a></li>
+<li><a href="#org4723bcb">多用 public 属性，少用 privte 属性</a></li>
+<li><a href="#org7ca8196">继承 collections.abc 以实现自定义的容器类型</a></li>
+</ul>
+</li>
+<li><a href="#org9bf33ef">元类及属性</a>
+<ul>
+<li><a href="#orgdc99954">用纯属性取代 get 和 set 方法</a></li>
+<li><a href="#org14fb433">考虑用 @property 来代替属性重构</a></li>
+<li><a href="#org9db4497">用描述符来改写需要复用的 @property 方法 &check;</a></li>
+<li><a href="#org3eac6a7">用 <span class="underline"><span class="underline">getattr</span></span>, <span class="underline"><span class="underline">getattribute</span></span> 和 <span class="underline"><span class="underline">setattr</span></span> 实现按需生成的属性 &check;</a></li>
+<li><a href="#org5256a8b">用元类来验证子类</a></li>
+<li><a href="#orgf587f82">用元类来注册子类</a></li>
+<li><a href="#org895110a">用元类来注解类的属性</a></li>
+</ul>
+</li>
+<li><a href="#org22a2907">并行及并发 &check;</a>
+<ul>
+<li><a href="#org0714ff0">用 subprocess 来管理子进程</a></li>
+<li><a href="#orgc67c174">可以用线程来执行阻塞式 IO，但不要它做平行计算</a></li>
+<li><a href="#org18b847b">在线程中使用 LOCK 来防止数据竞争</a></li>
+<li><a href="#orgfb8b491">用 Queue 来协调各线程之间的工作</a></li>
+<li><a href="#org459ac34">考虑用协程来并发地运行多个函数</a></li>
+<li><a href="#org3729cc3">使用 concurrent.futures 来处理并行计算</a></li>
+</ul>
+</li>
+<li><a href="#org2440598">内置模块</a>
+<ul>
+<li><a href="#orgbfb4a77">使用 functool.wraps 来定义函数装饰器</a></li>
+<li><a href="#org8d39432">考虑以 contextlib 和 with 语句来改写可复用的 try／finally 代码</a></li>
+<li><a href="#org4debdce">用 copyreg 实现可靠的 pickle 操作</a></li>
+<li><a href="#org50b74e1">应该用 datetime 模块来处理本地时间，而不是用 time 模块</a></li>
+<li><a href="#orga26dd81">使用内置算法与数据结构</a></li>
+<li><a href="#org79ba982">在重视精确度的场合，应该使用 decimal</a></li>
+<li><a href="#org2271426">学会安装由 Python 开发者社区所构建的模块</a></li>
+</ul>
+</li>
+<li><a href="#org2858046">协作开发</a>
+<ul>
+<li><a href="#orga8247e3">为每个函数、类和模块编写文档字符串</a></li>
+<li><a href="#org114bfa6">用包来安排模块，并提供稳固的 API</a></li>
+<li><a href="#org5dad4d9">为自编的模块定义根异常，以便将调用者与 API 相隔离</a></li>
+<li><a href="#org341a6c8">用适当的方式打破循环依赖关系</a></li>
+<li><a href="#org20ec5ed">用虚拟环境隔离项目，并重建其依赖关系</a></li>
+</ul>
+</li>
+<li><a href="#org97a0ed9">部署</a>
+<ul>
+<li><a href="#org89f750c">考虑用模块级别的代码来配置不同的部署环境</a></li>
+<li><a href="#orgbdc634e">通过 repr 字符串来输出调试信息</a></li>
+<li><a href="#orge9c9d3a">用 unittest 来测试全部代码</a></li>
+<li><a href="#org1dab3e9">考虑用 pdb 实现交互调试</a></li>
+<li><a href="#org974d9bb">先分析性能，然后再优化</a></li>
+<li><a href="#org8614965">用 tracemalloc 来掌握内存的使用及泄漏情况</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<hr />
+
+<div id="outline-container-orgc57d285" class="outline-2">
+<h2 id="orgc57d285">用 python 的方式来思考</h2>
+<div class="outline-text-2" id="text-orgc57d285">
+</div><div id="outline-container-orgcb6f245" class="outline-3">
+<h3 id="orgcb6f245">第一条 确认 python 使用的版本</h3>
+<div class="outline-text-3" id="text-orgcb6f245">
+<p>
+了解 CPython, JPython, IronPython, PyPy 等流行的 python 运行环境。
+</p>
+
+<p>
+python &#x2013;version
+</p>
+
+<p>
+可以通过运行 python3 来运行 python 3
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> sys
+<span style="color: #a020f0;">print</span> sys.version
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga813d4c" class="outline-3">
+<h3 id="orga813d4c">第二条 遵循 pep8 规范</h3>
+<div class="outline-text-3" id="text-orga813d4c">
+<p>
+可以利于多人协作，后续修改工作更加的容易
+</p>
+
+<p>
+指南：www.python.org/dev/peps/pep-0008
+</p>
+<ul class="org-ul">
+<li>使用 space 来缩进</li>
+<li>每行字符数不超过 79</li>
+<li>文件中的函数和类之间 两个空行</li>
+<li>同一类中，各个方法之间用一个空行隔开</li>
+<li>赋值是左右都要有空格 a = b; 而不是 a=b;</li>
+</ul>
+<p>
+函数命名
+</p>
+<ul class="org-ul">
+<li>函数，变量，属性 用小写</li>
+<li>受保护的用单个下划线开头 _leading<sub>underscore</sub></li>
+<li>私有实例属性 用两个下划线 _<sub>double</sub><sub>leading</sub><sub>underscore</sub></li>
+<li>类和异常 全部采用大写字母来拼写 ALL<sub>CAPS</sub></li>
+<li>类中的实例方法应该把首个参数命名为 self</li>
+<li>类方法的首个参数命名为 cls</li>
+</ul>
+
+<p>
+表达式和语句
+</p>
+<ul class="org-ul">
+<li>采用内联形式的否定词 例如 if a is not b 而不是 if not a is b</li>
+<li>不要通过检验长度的方法来判断 list 是否为空，直接使用 if not somelist;</li>
+<li>import 总应该放到文件的开头</li>
+<li>import 应该按顺序划分成三个部分，分别表示标准库模块，第三方模块，自用模块 ，每一部分按模块的字母顺序排列</li>
+</ul>
+
+<p>
+<code>pylint</code> 是流行的 Python 源码静态分析工具，可以自动检测代码是否符合 PEP 8 风格，还可以找出常见的错误
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7ad087b" class="outline-3">
+<h3 id="org7ad087b">了解 bytes, str, unicode 的区别</h3>
+<div class="outline-text-3" id="text-org7ad087b">
+<p>
+python3 有两种表示字符序列的类型：bytes 和 str，前者包含 8 位原始的二进制值；后者包含 Unicode 字符。
+</p>
+
+<p>
+python2 也有两种，str 和 unicode。它们分别对应上面的两种情况。
+</p>
+
+<p>
+在 python2 中：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #483d8b;">type</span><span style="color: #707183;">(</span><span style="color: #8b2252;">"&#20320;&#22909;"</span><span style="color: #707183;">)</span> &#8658; &lt;<span style="color: #483d8b;">type</span> <span style="color: #8b2252;">'str'</span>&gt;
+<span style="color: #483d8b;">type</span><span style="color: #707183;">(</span>u<span style="color: #8b2252;">"&#20320;&#22909;"</span><span style="color: #707183;">)</span> &#8658; &lt;<span style="color: #483d8b;">type</span> <span style="color: #8b2252;">'unicode'</span>&gt;
+</pre>
+</div>
+
+<p>
+在 python3 中：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #483d8b;">type</span><span style="color: #707183;">(</span><span style="color: #8b2252;">"&#20320;&#22909;"</span><span style="color: #707183;">)</span> &#8658; &lt;<span style="color: #a020f0;">class</span> <span style="color: #8b2252;">'str'</span>&gt;
+<span style="color: #483d8b;">type</span><span style="color: #707183;">(</span>u<span style="color: #8b2252;">"&#20320;&#22909;"</span><span style="color: #707183;">)</span> &#8658; &lt;<span style="color: #a020f0;">class</span> <span style="color: #8b2252;">'str'</span>&gt;
+</pre>
+</div>
+
+
+<p>
+我们在 Python 代码中经常出现两种使用场景：
+</p>
+<ul class="org-ul">
+<li>使用 UTF-8 编码的字符串</li>
+<li>操作没有特定编码的 Unicode 字符</li>
+</ul>
+
+<p>
+所以，写了两个辅助函数用于转换：
+在 Python 3 中，接受 str 或 bytes,
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">to_str</span><span style="color: #707183;">(</span>bytes_or_str<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> <span style="color: #483d8b;">isinstance</span><span style="color: #707183;">(</span>bytes_or_str, <span style="color: #483d8b;">bytes</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">value</span> = bytes_or_str.decode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-8'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">value</span> = bytes_or_str
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> value
+
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">to_bytes</span><span style="color: #707183;">(</span>bytes_or_str<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> <span style="color: #483d8b;">isinstance</span><span style="color: #707183;">(</span>bytes_or_str, <span style="color: #483d8b;">str</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">value</span> = bytes_or_str.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-8'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">value</span> = bytes_or_str
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> value
+</pre>
+</div>
+
+<p>
+在 Python 2 中同理。
+</p>
+
+<p>
+在 Python 3 中，str 于 bytes 在任何情况下绝不等价，而 Python 2 却不是。
+</p>
+
+<p>
+另外一个问题是在 Python3 中，使用 open 函数获取文件句柄，这个句柄默认采用 UTF-8 编码，而在 Python 2 中默认是二进制形式。
+所以我们在 Python 2 中可以这样，但 3 中不行：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">with</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'file'</span>, <span style="color: #8b2252;">'w'</span><span style="color: #707183;">)</span> <span style="color: #a020f0;">as</span> f:
+<span style="background-color: #f2f2f2;"> </span>   f.write<span style="color: #707183;">()</span>
+</pre>
+</div>
+
+<p>
+我们要这样：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">with</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'file'</span>, <span style="color: #8b2252;">'wb'</span><span style="color: #707183;">)</span> <span style="color: #a020f0;">as</span> f:
+<span style="background-color: #f2f2f2;"> </span>   f.write<span style="color: #707183;">()</span>
+</pre>
+</div>
+
+<p>
+读取也一样，要用 'rb' 模式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3742815" class="outline-3">
+<h3 id="org3742815">用辅助函数取代复杂表达式</h3>
+<div class="outline-text-3" id="text-org3742815">
+<p>
+表达式如果变得复杂应该考虑将其拆成小块。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgc7cc629" class="outline-3">
+<h3 id="orgc7cc629">了解切割序列方法</h3>
+<div class="outline-text-3" id="text-orgc7cc629">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">a</span> = <span style="color: #707183;">[</span><span style="color: #8b2252;">'a'</span>, <span style="color: #8b2252;">'b'</span>, <span style="color: #8b2252;">'c'</span>, <span style="color: #8b2252;">'d'</span>, <span style="color: #8b2252;">'e'</span>, <span style="color: #8b2252;">'f'</span>, <span style="color: #8b2252;">'g'</span><span style="color: #707183;">]</span>
+fist four: a<span style="color: #707183;">[</span>:4<span style="color: #707183;">]</span>
+last four: a<span style="color: #707183;">[</span>-4:<span style="color: #707183;">]</span>
+</pre>
+</div>
+
+<p>
+切割列表时，start end 越界也不会出现问题。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb32cf6d" class="outline-3">
+<h3 id="orgb32cf6d">在单次切片操作，不要同时指定 start, end 和 stride</h3>
+<div class="outline-text-3" id="text-orgb32cf6d">
+<p>
+Python 还支持 somelist[start:end:stride]
+stride 是步长。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">a</span> = <span style="color: #707183;">[</span><span style="color: #8b2252;">'red'</span>, <span style="color: #8b2252;">'orange'</span>, <span style="color: #8b2252;">'yellow'</span>, <span style="color: #8b2252;">'green'</span>, <span style="color: #8b2252;">'blue'</span>, <span style="color: #8b2252;">'purple'</span><span style="color: #707183;">]</span>
+<span style="color: #a0522d;">odds</span> = a<span style="color: #707183;">[</span>::2<span style="color: #707183;">]</span>
+<span style="color: #a0522d;">evens</span> = a<span style="color: #707183;">[</span>1::2<span style="color: #707183;">]</span>
+</pre>
+</div>
+
+<p>
+有一种技巧，就是翻转字符串：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">x</span> = b<span style="color: #8b2252;">'mongoose'</span>
+<span style="color: #a0522d;">y</span> = x<span style="color: #707183;">[</span>::-1<span style="color: #707183;">]</span>
+</pre>
+</div>
+
+<p>
+不要同时指定 start，end，stride 否则程序会变得非常难理解，可以分两步切割。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org62620e1" class="outline-3">
+<h3 id="org62620e1">用列表推到来取代 map 和 filter</h3>
+<div class="outline-text-3" id="text-org62620e1">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">a</span> = <span style="color: #707183;">[</span>1, 2, 3, 4, 5, 6, 7, 8, 9, 10<span style="color: #707183;">]</span>
+<span style="color: #a0522d;">squares</span> = <span style="color: #707183;">[</span>x**2 <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> a<span style="color: #707183;">]</span>
+<span style="color: #a0522d;">squares</span> = <span style="color: #483d8b;">map</span><span style="color: #707183;">(</span><span style="color: #a020f0;">lambda</span> x: x ** 2, a<span style="color: #707183;">)</span>
+
+<span style="color: #a0522d;">even_squares</span> = <span style="color: #707183;">[</span>x**2 <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> a <span style="color: #a020f0;">if</span> x % 2 == 0<span style="color: #707183;">]</span>
+<span style="color: #a0522d;">alt</span> = <span style="color: #483d8b;">map</span><span style="color: #707183;">(</span><span style="color: #a020f0;">lambda</span> x: x**2, <span style="color: #483d8b;">filter</span><span style="color: #7388d6;">(</span><span style="color: #a020f0;">lambda</span> x: x % 2 == 0, a<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+对于字典结构，我们也可以用:
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">chile_ranks</span> = <span style="color: #707183;">{</span><span style="color: #8b2252;">'ghost'</span>: 1, <span style="color: #8b2252;">'habanero'</span>: 2, <span style="color: #8b2252;">'cayenne'</span>: 3<span style="color: #707183;">}</span>
+<span style="color: #a0522d;">rank_dict</span> = <span style="color: #707183;">{</span>rank: name <span style="color: #a020f0;">for</span> name, rank <span style="color: #a020f0;">in</span> chile_ranks.items<span style="color: #7388d6;">()</span><span style="color: #707183;">}</span>
+<span style="color: #a0522d;">chile_len_set</span> = <span style="color: #707183;">{</span><span style="color: #483d8b;">len</span><span style="color: #7388d6;">(</span>name<span style="color: #7388d6;">)</span> <span style="color: #a020f0;">for</span> name <span style="color: #a020f0;">in</span> rank_dict.values<span style="color: #7388d6;">()</span><span style="color: #707183;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgce0758e" class="outline-3">
+<h3 id="orgce0758e">不要使用含有两个以上表达式的列表推导</h3>
+<div class="outline-text-3" id="text-orgce0758e">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">flat</span> = <span style="color: #707183;">[</span>x <span style="color: #a020f0;">for</span> row <span style="color: #a020f0;">in</span> matrix <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> row<span style="color: #707183;">]</span>
+<span style="color: #707183;">[</span>1, 2, 3, 4, 5, 6, 7, 8, 9<span style="color: #707183;">]</span>
+
+<span style="color: #a0522d;">squared</span> = <span style="color: #707183;">[</span><span style="color: #7388d6;">[</span>x**2 <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> row<span style="color: #7388d6;">]</span> <span style="color: #a020f0;">for</span> row <span style="color: #a020f0;">in</span> matrix<span style="color: #707183;">]</span>
+<span style="color: #707183;">[</span><span style="color: #7388d6;">[</span>1, 4, 9<span style="color: #7388d6;">]</span>, <span style="color: #7388d6;">[</span>16, 25, 36<span style="color: #7388d6;">]</span>, <span style="color: #7388d6;">[</span>49, 64, 81<span style="color: #7388d6;">]</span><span style="color: #707183;">]</span>
+</pre>
+</div>
+
+<p>
+像下面这种就不是很好了：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">b</span> = <span style="color: #707183;">[</span>x <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> a <span style="color: #a020f0;">if</span> x &gt; 4 <span style="color: #a020f0;">if</span> x % 2 == 0<span style="color: #707183;">]</span>
+</pre>
+</div>
+
+<p>
+我们可以搭配 if for 或辅助函数去处理。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org489d383" class="outline-3">
+<h3 id="org489d383">用生成器表达式来改写数据量较大的列表推导</h3>
+<div class="outline-text-3" id="text-org489d383">
+<p>
+当输入的数据量较大时，列表推导可能会因为占用太多的内存而出问题，
+所以我们这时要使用生成器表达式。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">&#36825;&#26102;&#36845;&#20195;&#22120;</span>
+<span style="color: #a0522d;">value</span> = <span style="color: #707183;">[</span><span style="color: #483d8b;">len</span><span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span> <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">open</span><span style="color: #7388d6;">(</span><span style="color: #8b2252;">'my_file.txt'</span><span style="color: #7388d6;">)</span><span style="color: #707183;">]</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&#36825;&#20010;&#23601;&#26159;&#29983;&#25104;&#22120;</span>
+<span style="color: #a0522d;">it</span> = <span style="color: #707183;">(</span><span style="color: #483d8b;">len</span><span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span> <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">open</span><span style="color: #7388d6;">(</span><span style="color: #8b2252;">'my_file.txt'</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #483d8b;">next</span><span style="color: #7388d6;">(</span>it<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+生成器表达还有个好处，就是可以相互组合。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">c</span> = <span style="color: #707183;">[</span>1 , 2 , 3<span style="color: #707183;">]</span>
+<span style="color: #a0522d;">d</span> = <span style="color: #707183;">(</span>x <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> c<span style="color: #707183;">)</span>
+<span style="color: #a0522d;">e</span> = <span style="color: #707183;">(</span>y**2 <span style="color: #a020f0;">for</span> y <span style="color: #a020f0;">in</span> d<span style="color: #707183;">)</span>
+<span style="color: #483d8b;">next</span><span style="color: #707183;">(</span>e<span style="color: #707183;">)</span>
+<span style="color: #483d8b;">next</span><span style="color: #707183;">(</span>e<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+串在一起的生成器表达式执行速度很快。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3c2eb13" class="outline-3">
+<h3 id="org3c2eb13">尽量用 enumerate 取代 range</h3>
+<div class="outline-text-3" id="text-org3c2eb13">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">flavor_list</span> = <span style="color: #707183;">[</span><span style="color: #8b2252;">'vanilla'</span>, <span style="color: #8b2252;">'chocolate'</span>, <span style="color: #8b2252;">'pecan'</span>, <span style="color: #8b2252;">'strawberry'</span><span style="color: #707183;">]</span>
+<span style="color: #a020f0;">for</span> flavor <span style="color: #a020f0;">in</span> flavor_list:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'%s is delicious'</span> % flavor<span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">for</span> i, flavor <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">enumerate</span><span style="color: #707183;">(</span>flavor_list<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'%d: %s'</span> % <span style="color: #7388d6;">(</span>i + 1, flavor<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&#36824;&#21487;&#20197;&#25351;&#23450;&#24320;&#22987;&#35745;&#25968;&#20351;&#29992;&#30340;&#20540;</span>
+<span style="color: #a020f0;">for</span> i, flavor <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">enumerate</span><span style="color: #707183;">(</span>flavor_list, 1<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'%d: %s'</span> % <span style="color: #7388d6;">(</span>i, flavor<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga49639c" class="outline-3">
+<h3 id="orga49639c">用 zip 函数同时遍历两个迭代器</h3>
+<div class="outline-text-3" id="text-orga49639c">
+<p>
+在 Python3 中，zip 可以把两个或以上的迭代器封装成生成器，以便稍后求值。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">names</span> = <span style="color: #707183;">[</span><span style="color: #8b2252;">'Cecilia'</span>, <span style="color: #8b2252;">'Lise'</span>, <span style="color: #8b2252;">'Marie'</span><span style="color: #707183;">]</span>
+<span style="color: #a0522d;">letters</span> = <span style="color: #707183;">[</span><span style="color: #483d8b;">len</span><span style="color: #7388d6;">(</span>n<span style="color: #7388d6;">)</span> <span style="color: #a020f0;">for</span> n <span style="color: #a020f0;">in</span> names<span style="color: #707183;">]</span>
+
+<span style="color: #a0522d;">longest_name</span> = <span style="color: #008b8b;">None</span>
+<span style="color: #a0522d;">max_letters</span> = 0
+<span style="color: #a020f0;">for</span> name, count <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">zip</span><span style="color: #707183;">(</span>names, letters<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> count &gt; max_letters:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">longest_name</span> = name
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">max_letters</span> = count
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>longest_name<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+如果在 Python 2 中用 zip 迭代数据量比较大的迭代器时，会占用大量内存并导致程序崩溃。
+这时应该用 itertools 中的 izip 函数。
+</p>
+
+<p>
+如果提供的迭代器长度不等，zip 会自动终止。 例如
+</p>
+<div class="org-src-container">
+<pre class="src src-python">names.append<span style="color: #707183;">(</span><span style="color: #8b2252;">'Rosalind'</span><span style="color: #707183;">)</span>
+<span style="color: #a020f0;">for</span> name, count <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">zip</span><span style="color: #707183;">(</span>names, letters<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>name<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org79c7dca" class="outline-3">
+<h3 id="org79c7dca">不要在 for 和 while 后面写 else</h3>
+<div class="outline-text-3" id="text-org79c7dca">
+<p>
+for/else 结构中，会使得整个循环执行完立即运行 else。
+</p>
+
+<p>
+try/except/else，中 else 是如果 try 没有失败，就执行 else。
+</p>
+
+<p>
+for/else 中奇怪的是，如果 for 结构中意外的结束，会导致不执行 else。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org80f3be8" class="outline-3">
+<h3 id="org80f3be8">合理利用 try/except/else/finally 结构中的每个代码块</h3>
+<div class="outline-text-3" id="text-org80f3be8">
+<ol class="org-ol">
+<li><p>
+finally
+</p>
+
+<p>
+try/finally 可以将异常向上传播，而且在异常发生时可以执行清理工作。
+这种有一个常见的用途，就是确保程序能可靠的关闭文件句柄。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">handle</span> = <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'random_data.txt'</span><span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">May raise IOError</span>
+<span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data</span> = handle.read<span style="color: #707183;">()</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">May raise UnicodeDecodeError</span>
+<span style="color: #a020f0;">finally</span>:
+<span style="background-color: #f2f2f2;"> </span>   handle.close<span style="color: #707183;">()</span>        <span style="color: #b22222;"># </span><span style="color: #b22222;">Always runs after try:</span>
+</pre>
+</div></li>
+
+<li><p>
+else
+</p>
+
+<p>
+try/except/else 结构可以清晰的描述哪些异常会有自己代码处理，哪些异常传播到上一级。
+如果 try 块没有发生异常，就执行 else 块。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">load_json_key</span><span style="color: #707183;">(</span>data, key<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result_dict</span> = json.loads<span style="color: #707183;">(</span>data<span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">May raise ValueError</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> <span style="color: #228b22;">ValueError</span> <span style="color: #a020f0;">as</span> e:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">KeyError</span> <span style="color: #a020f0;">from</span> e
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> result_dict<span style="color: #707183;">[</span>key<span style="color: #707183;">]</span>         <span style="color: #b22222;"># </span><span style="color: #b22222;">May raise KeyError</span>
+</pre>
+</div></li>
+
+<li><p>
+混合使用
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> json
+<span style="color: #a0522d;">UNDEFINED</span> = <span style="color: #483d8b;">object</span><span style="color: #707183;">()</span>
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">divide_json</span><span style="color: #707183;">(</span>path<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">handle</span> = <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span>path, <span style="color: #8b2252;">'r+'</span><span style="color: #707183;">)</span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">May raise IOError</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data</span> = handle.read<span style="color: #707183;">()</span>    <span style="color: #b22222;"># </span><span style="color: #b22222;">May raise UnicodeDecodeError</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">op</span> = json.loads<span style="color: #707183;">(</span>data<span style="color: #707183;">)</span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">May raise ValueError</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">value</span> = <span style="color: #707183;">(</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   op<span style="color: #7388d6;">[</span><span style="color: #8b2252;">'numerator'</span><span style="color: #7388d6;">]</span> /
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   op<span style="color: #7388d6;">[</span><span style="color: #8b2252;">'denominator'</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">May raise ZeroDivisionError</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> <span style="color: #228b22;">ZeroDivisionError</span> <span style="color: #a020f0;">as</span> e:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> UNDEFINED
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">op</span><span style="color: #707183;">[</span><span style="color: #8b2252;">'result'</span><span style="color: #707183;">]</span> = value
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = json.dumps<span style="color: #707183;">(</span>op<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   handle.seek<span style="color: #707183;">(</span>0<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   handle.write<span style="color: #707183;">(</span>result<span style="color: #707183;">)</span>    <span style="color: #b22222;"># </span><span style="color: #b22222;">May raise IOError</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> value
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">finally</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   handle.close<span style="color: #707183;">()</span>          <span style="color: #b22222;"># </span><span style="color: #b22222;">Always runs</span>
+</pre>
+</div>
+
+<p>
+这几块相互配合非常的有用。
+</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org61a7cca" class="outline-2">
+<h2 id="org61a7cca">函数</h2>
+<div class="outline-text-2" id="text-org61a7cca">
+</div><div id="outline-container-orgdf58ba8" class="outline-3">
+<h3 id="orgdf58ba8">尽量用异常来表示特殊情况，而不要返回 None</h3>
+<div class="outline-text-3" id="text-orgdf58ba8">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">divide</span><span style="color: #707183;">(</span>a, b<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> a / b
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> <span style="color: #228b22;">ZeroDivisionError</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #008b8b;">None</span>
+</pre>
+</div>
+
+<p>
+这种写法会给人一种误导，我们可以这样
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">divide</span><span style="color: #707183;">(</span>a, b<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #008b8b;">True</span>, a / b
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> <span style="color: #228b22;">ZeroDivisionError</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #008b8b;">False</span>, <span style="color: #008b8b;">None</span>
+
+<span style="color: #a0522d;">success</span>, <span style="color: #a0522d;">result</span> = divide<span style="color: #707183;">(</span>x, y<span style="color: #707183;">)</span>
+<span style="color: #a020f0;">if</span> <span style="color: #a020f0;">not</span> success:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Invalid inputs'</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+另一种方法，要抛出异常
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">divide</span><span style="color: #707183;">(</span>a, b<span style="color: #707183;">)</span>:
+<span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> a / b
+<span style="color: #a020f0;">except</span> <span style="color: #228b22;">ZeroDivisionError</span> <span style="color: #a020f0;">as</span> e:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">ValueError</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Invalid inputs'</span><span style="color: #707183;">)</span> <span style="color: #a020f0;">from</span> e
+</pre>
+</div>
+
+<p>
+这样调用者就不得不处理这个异常了
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = divide<span style="color: #707183;">(</span>x, y<span style="color: #707183;">)</span>
+<span style="color: #a020f0;">except</span> <span style="color: #228b22;">ValueError</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Invalid inputs'</span><span style="color: #707183;">)</span>
+<span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Result is %.1f'</span> % result<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfd407f1" class="outline-3">
+<h3 id="orgfd407f1">了解如何在闭包里使用外围作用域中的变量</h3>
+<div class="outline-text-3" id="text-orgfd407f1">
+<p>
+闭包是一种定义在某个作用域中的函数。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Sorter</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, group<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.group = group
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.found = <span style="color: #008b8b;">False</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__call__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, x<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> x <span style="color: #a020f0;">in</span> <span style="color: #a020f0;">self</span>.group:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.found = <span style="color: #008b8b;">True</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #707183;">(</span>0, x<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #707183;">(</span>1, x<span style="color: #707183;">)</span>
+
+<span style="color: #a0522d;">sorter</span> = Sorter<span style="color: #707183;">(</span>group<span style="color: #707183;">)</span>
+numbers.sort<span style="color: #707183;">(</span>key=sorter<span style="color: #707183;">)</span>
+<span style="color: #a020f0;">assert</span> sorter.found <span style="color: #a020f0;">is</span> <span style="color: #008b8b;">True</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Found:'</span>, found<span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>numbers<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org87614eb" class="outline-3">
+<h3 id="org87614eb">考虑用生成器改写直接返回列表的函数 &check;</h3>
+<div class="outline-text-3" id="text-org87614eb">
+<p>
+下面的代码，用 append 方法将这些词的首字母索引加入到列表中，
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">index_words</span><span style="color: #707183;">(</span>text<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = <span style="color: #707183;">[]</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> text:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   result.append<span style="color: #707183;">(</span>0<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> index, letter <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">enumerate</span><span style="color: #707183;">(</span>text<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> letter == <span style="color: #8b2252;">' '</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   result.append<span style="color: #707183;">(</span>index + 1<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> result
+</pre>
+</div>
+
+<p>
+这段代码有些问题。其一，写的太过于拥挤，有很多无用的信息。其二，如果数据量很大的话，在返回之前，将所有的信息放在列表里有可能耗尽内存资源。
+</p>
+
+<p>
+其实，这里使用生成器来写更好。生成器是使用 yield 表达式的函数。调用生成器时，它并不真正运行，而是返回迭代器。生成器传给 yield 的每个值都会有迭代器返回给调用者。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">index_words_iter</span><span style="color: #707183;">(</span>text<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> text:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">yield</span> 0
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> index, letter <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">enumerate</span><span style="color: #707183;">(</span>text<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> letter == <span style="color: #8b2252;">' '</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">yield</span> index + 1
+
+<span style="color: #a0522d;">result</span> = <span style="color: #483d8b;">list</span><span style="color: #707183;">(</span>index_words_iter<span style="color: #7388d6;">(</span>address<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4df0449" class="outline-3">
+<h3 id="org4df0449">在参数上面迭代要小心</h3>
+<div class="outline-text-3" id="text-org4df0449">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">normalize</span><span style="color: #707183;">(</span>numbers<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">total</span> = <span style="color: #483d8b;">sum</span><span style="color: #707183;">(</span>numbers<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = <span style="color: #707183;">[]</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> value <span style="color: #a020f0;">in</span> numbers:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">percent</span> = 100 * value / total
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   result.append<span style="color: #707183;">(</span>percent<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> result
+</pre>
+</div>
+
+<p>
+如果传递一个列表的参数是可以的。现在我们要扩大应用范围，从文件中读取。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">read_visits</span><span style="color: #707183;">(</span>data_path<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">with</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span>data_path<span style="color: #707183;">)</span> <span style="color: #a020f0;">as</span> f:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> line <span style="color: #a020f0;">in</span> f:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">yield</span> <span style="color: #483d8b;">int</span><span style="color: #707183;">(</span>line<span style="color: #707183;">)</span>
+
+
+<span style="color: #a0522d;">it</span> = read_visits<span style="color: #707183;">(</span><span style="color: #8b2252;">'my_numbers.txt'</span><span style="color: #707183;">)</span>
+<span style="color: #a0522d;">percentages</span> = normalize<span style="color: #707183;">(</span>it<span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>percentages<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+但是现在却没有结果，原因就是迭代器只能产生一轮结果。
+</p>
+
+<p>
+解决的办法是我们可以复制一份数据，但这样不好，如果数据大了就会有问题。
+</p>
+
+<p>
+下面我们实现一个迭代器协议的容器类。
+我们只需要让自己的类实现 <span class="underline"><span class="underline">iter</span></span> 方法即可。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">ReadVisits</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, data_path<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.data_path = data_path
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__iter__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">with</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>.data_path<span style="color: #707183;">)</span> <span style="color: #a020f0;">as</span> f:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> line <span style="color: #a020f0;">in</span> f:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">yield</span> <span style="color: #483d8b;">int</span><span style="color: #707183;">(</span>line<span style="color: #707183;">)</span>
+
+<span style="color: #a0522d;">visits</span> = ReadVisits<span style="color: #707183;">(</span>path<span style="color: #707183;">)</span>
+<span style="color: #a0522d;">percentages</span> = normalize<span style="color: #707183;">(</span>visits<span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>percentages<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+
+<p>
+现在我们就可以这样了
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">visits</span> = <span style="color: #707183;">[</span>15, 35, 80<span style="color: #707183;">]</span>
+normalize_defensive<span style="color: #707183;">(</span>visits<span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">No error</span>
+<span style="color: #a0522d;">visits</span> = ReadVisits<span style="color: #707183;">(</span>path<span style="color: #707183;">)</span>
+normalize_defensive<span style="color: #707183;">(</span>visits<span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">No error</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org51bd66a" class="outline-3">
+<h3 id="org51bd66a">用数量可变的位置参数</h3>
+<div class="outline-text-3" id="text-org51bd66a">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">log</span><span style="color: #707183;">(</span>message, *values<span style="color: #707183;">)</span>:  <span style="color: #b22222;"># </span><span style="color: #b22222;">The only difference</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> <span style="color: #a020f0;">not</span> values:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>message<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">values_str</span> = <span style="color: #8b2252;">', '</span>.join<span style="color: #707183;">(</span><span style="color: #483d8b;">str</span><span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span> <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> values<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'%s: %s'</span> % <span style="color: #7388d6;">(</span>message, values_str<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+log<span style="color: #707183;">(</span><span style="color: #8b2252;">'My numbers are'</span>, 1, 2<span style="color: #707183;">)</span>
+log<span style="color: #707183;">(</span><span style="color: #8b2252;">'Hi there'</span><span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">Much better</span>
+</pre>
+</div>
+
+<p>
+对生成器使用 *
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">my_generator</span><span style="color: #707183;">()</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">range</span><span style="color: #707183;">(</span>10<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">yield</span> i
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">my_func</span><span style="color: #707183;">(</span>*args<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>args<span style="color: #707183;">)</span>
+
+<span style="color: #a0522d;">it</span> = my_generator<span style="color: #707183;">()</span>
+my_func<span style="color: #707183;">(</span>*it<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+在 def 中使用 *args, 可令函数接受数量可变的位置参数。
+对迭代器使用 * 可能导致程序耗尽内存。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfa43571" class="outline-3">
+<h3 id="orgfa43571">用关键字参数表达可选的行为</h3>
+<div class="outline-text-3" id="text-orgfa43571">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">remainder</span><span style="color: #707183;">(</span>number, divisor<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> number % divisor
+
+remainder<span style="color: #707183;">(</span>20, divisor=7<span style="color: #707183;">)</span>
+remainder<span style="color: #707183;">(</span>divisor=7, number=20<span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">flow_rate</span><span style="color: #707183;">(</span>weight_diff, time_diff, period=1<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #707183;">(</span>weight_diff / time_diff<span style="color: #707183;">)</span> * period
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgccda751" class="outline-3">
+<h3 id="orgccda751">用 None 和文档字符串来描述具有动态默认值的参数</h3>
+<div class="outline-text-3" id="text-orgccda751">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">log</span><span style="color: #707183;">(</span>message, when=datetime.now<span style="color: #7388d6;">()</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'%s: %s'</span> % <span style="color: #7388d6;">(</span>when, message<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+log<span style="color: #707183;">(</span><span style="color: #8b2252;">'Hi there!'</span><span style="color: #707183;">)</span>
+sleep<span style="color: #707183;">(</span>0.1<span style="color: #707183;">)</span>
+log<span style="color: #707183;">(</span><span style="color: #8b2252;">'Hi again!'</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+上面显示的结果一样，因为 datatime.now()只是执行了一次。
+参数的默认值，会在每个模块加载的时候求出。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">log</span><span style="color: #707183;">(</span>message, when=<span style="color: #008b8b;">None</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #8b2252;">"""Log a message with a timestamp.</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   Args:</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   </span><span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   message: Message to print.</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   </span><span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   when: datetime of when the message occurred.</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   </span><span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   </span><span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   Defaults to the present time.</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   """</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">when</span> = datetime.now<span style="color: #707183;">()</span> <span style="color: #a020f0;">if</span> when <span style="color: #a020f0;">is</span> <span style="color: #008b8b;">None</span> <span style="color: #a020f0;">else</span> when
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'%s: %s'</span> % <span style="color: #7388d6;">(</span>when, message<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+改成这样就可以了
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0340fb5" class="outline-3">
+<h3 id="org0340fb5">用只能以关键字形式指定的参数来确保代码明晰</h3>
+<div class="outline-text-3" id="text-org0340fb5">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">&#36825;&#31181;&#26159;&#20351;&#29992;&#20301;&#32622;&#21442;&#25968;&#26469;&#25351;&#23450;</span>
+<span style="color: #a0522d;">result</span> = safe_division<span style="color: #707183;">(</span>1.0, 10**500, <span style="color: #008b8b;">True</span>, <span style="color: #008b8b;">False</span><span style="color: #707183;">)</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&#36825;&#31181;&#20351;&#29992;&#20851;&#38190;&#23383;&#24418;&#24335;&#26469;&#25351;&#23450;&#21442;&#25968;</span>
+safe_division_b<span style="color: #707183;">(</span>1.0, 10**500, ignore_overflow=<span style="color: #008b8b;">True</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+在 python 3 里，我们使用 * 来结束位置参数
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">safe_division_c</span><span style="color: #707183;">(</span>number, divisor, *,
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   ignore_overflow=<span style="color: #008b8b;">False</span>,
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   ignore_zero_division=<span style="color: #008b8b;">False</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> number / divisor
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> <span style="color: #228b22;">OverflowError</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> ignore_overflow:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> 0
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> <span style="color: #228b22;">ZeroDivisionError</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> ignore_zero_division:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #483d8b;">float</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'inf'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span>
+</pre>
+</div>
+
+<p>
+在 Python 2 中，我们可以这样
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">safe_division_d</span><span style="color: #707183;">(</span>number, divisor, **kwargs<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">ignore_overflow</span> = kwargs.pop<span style="color: #707183;">(</span><span style="color: #8b2252;">'ignore_overflow'</span>, <span style="color: #008b8b;">False</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">ignore_zero_div</span> = kwargs.pop<span style="color: #707183;">(</span><span style="color: #8b2252;">'ignore_zero_division'</span>, <span style="color: #008b8b;">False</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> kwargs:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">TypeError</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Unexpected **kwargs: %r'</span> % kwargs<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> number / divisor
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> <span style="color: #228b22;">OverflowError</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> ignore_overflow:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> 0
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> <span style="color: #228b22;">ZeroDivisionError</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> ignore_zero_div:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #483d8b;">float</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'inf'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgef5a0d6" class="outline-2">
+<h2 id="orgef5a0d6">类与继承</h2>
+<div class="outline-text-2" id="text-orgef5a0d6">
+</div><div id="outline-container-org617e761" class="outline-3">
+<h3 id="org617e761">尽量用辅助类来维护程序的状态，而不要用字典和元组</h3>
+<div class="outline-text-3" id="text-org617e761">
+<p>
+不要使用包含字典的字典，这种结构维护会很麻烦。这时我们应该将其拆成类。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Subject</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>._grades = <span style="color: #707183;">[]</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">report_grade</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, score, weight<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>._grades.append<span style="color: #707183;">(</span>Grade<span style="color: #7388d6;">(</span>score, weight<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">average_grade</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">total</span>, <span style="color: #a0522d;">total_weight</span> = 0, 0
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> grade <span style="color: #a020f0;">in</span> <span style="color: #a020f0;">self</span>._grades:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">total</span> += grade.score * grade.weight
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">total_weight</span> += grade.weight
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> total / total_weight
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Student</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>._subjects = <span style="color: #707183;">{}</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">subject</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, name<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> name <span style="color: #a020f0;">not</span> <span style="color: #a020f0;">in</span> <span style="color: #a020f0;">self</span>._subjects:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>._subjects<span style="color: #707183;">[</span>name<span style="color: #707183;">]</span> = Subject<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">self</span>._subjects<span style="color: #707183;">[</span>name<span style="color: #707183;">]</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">average_grade</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">total</span>, <span style="color: #a0522d;">count</span> = 0, 0
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> subject <span style="color: #a020f0;">in</span> <span style="color: #a020f0;">self</span>._subjects.values<span style="color: #707183;">()</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">total</span> += subject.average_grade<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">count</span> += 1
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> total / count
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org608b30b" class="outline-3">
+<h3 id="org608b30b">简单的接口应该接受函数，而不是类实例</h3>
+<div class="outline-text-3" id="text-org608b30b">
+<p>
+如下，用 λ 表达式充当 key 挂钩，根据名字的长度来排序
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">names</span> = <span style="color: #707183;">[</span><span style="color: #8b2252;">'Socrates'</span>, <span style="color: #8b2252;">'Archimedes'</span>, <span style="color: #8b2252;">'Plato'</span>, <span style="color: #8b2252;">'Aristotle'</span><span style="color: #707183;">]</span>
+names.sort<span style="color: #707183;">(</span>key=<span style="color: #a020f0;">lambda</span> x: <span style="color: #483d8b;">len</span><span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>names<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+这里用到了 defaultdict 函数。如果使用 defaultdict，只要你传入一个默认的工厂方法，那么请求一个不存在的 key 时， 便会调用这个工厂方法使用其结果来作为这个 key 的默认值。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">increment_with_report</span><span style="color: #707183;">(</span>current, increments<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">added_count</span> = 0
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">missing</span><span style="color: #707183;">()</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">nonlocal</span> added_count  <span style="color: #b22222;"># </span><span style="color: #b22222;">Stateful closure</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">added_count</span> += 1
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> 0
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = defaultdict<span style="color: #707183;">(</span>missing, current<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> key, amount <span style="color: #a020f0;">in</span> increments:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span><span style="color: #707183;">[</span>key<span style="color: #707183;">]</span> += amount
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> result, added_count
+
+<span style="color: #a0522d;">current</span> = <span style="color: #707183;">{</span><span style="color: #8b2252;">'green'</span>: 12, <span style="color: #8b2252;">'blue'</span>: 3<span style="color: #707183;">}</span>
+<span style="color: #a0522d;">increments</span> = <span style="color: #707183;">[</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #7388d6;">(</span><span style="color: #8b2252;">'red'</span>, 5<span style="color: #7388d6;">)</span>,
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #7388d6;">(</span><span style="color: #8b2252;">'blue'</span>, 17<span style="color: #7388d6;">)</span>,
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #7388d6;">(</span><span style="color: #8b2252;">'orange'</span>, 9<span style="color: #7388d6;">)</span>,
+<span style="color: #707183;">]</span>
+
+<span style="color: #a0522d;">result</span>, <span style="color: #a0522d;">count</span> = increment_with_report<span style="color: #707183;">(</span>current, increments<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+这里我们还可以通过定义新的类解决：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">CountMissing</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.added = 0
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">missing</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.added += 1
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> 0
+
+<span style="color: #a0522d;">counter</span> = CountMissing<span style="color: #707183;">()</span>
+<span style="color: #a0522d;">result</span> = defaultdict<span style="color: #707183;">(</span>counter.missing, current<span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">Method reference</span>
+</pre>
+</div>
+
+<p>
+上面是用过辅助类来改写带状态的闭包。但是还是不够清晰。
+这里有一个 <span class="underline"><span class="underline">call</span></span> 的特殊方法，它能使相关对象能够像函数那样得到调用。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">BetterCountMissing</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.added = 0
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__call__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.added += 1
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> 0
+
+<span style="color: #a0522d;">counter</span> = BetterCountMissing<span style="color: #707183;">()</span>
+<span style="color: #a0522d;">result</span> = defaultdict<span style="color: #707183;">(</span>counter, current<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcbd340d" class="outline-3">
+<h3 id="orgcbd340d">以 @classmethod 形式的多态去通用地构建对象 &check;</h3>
+<div class="outline-text-3" id="text-orgcbd340d">
+<p>
+多态使得类能满足相同的接口或继承自相同的类，但却有着各自不同的功能。
+为了实现 MapReduce 流程，我们需要定义公共基类来表示输入数据。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">InputData</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">read</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">NotImplementedError</span>
+</pre>
+</div>
+
+<p>
+InputData 具体子类
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">PathInputData</span><span style="color: #707183;">(</span>InputData<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, path<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">super</span><span style="color: #707183;">()</span>.__init__<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.path = path
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">read</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>.path<span style="color: #707183;">)</span>.read<span style="color: #707183;">()</span>
+</pre>
+</div>
+
+<p>
+另外，我们还需要定义 Worker
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Worker</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, input_data<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.input_data = input_data
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.result = <span style="color: #008b8b;">None</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">map</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">NotImplementedError</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">reduce</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, other<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">NotImplementedError</span>
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">LineCountWorker</span><span style="color: #707183;">(</span>Worker<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">map</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data</span> = <span style="color: #a020f0;">self</span>.input_data.read<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.result = data.count<span style="color: #707183;">(</span><span style="color: #8b2252;">'\n'</span><span style="color: #707183;">)</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">reduce</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, other<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.result += other.result
+
+<span style="color: #a020f0;">import</span> os
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">generate_inputs</span><span style="color: #707183;">(</span>data_dir<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> name <span style="color: #a020f0;">in</span> os.listdir<span style="color: #707183;">(</span>data_dir<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">yield</span> PathInputData<span style="color: #707183;">(</span>os.path.join<span style="color: #7388d6;">(</span>data_dir, name<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">create_workers</span><span style="color: #707183;">(</span>input_list<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">workers</span> = <span style="color: #707183;">[]</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> input_data <span style="color: #a020f0;">in</span> input_list:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   workers.append<span style="color: #707183;">(</span>LineCountWorker<span style="color: #7388d6;">(</span>input_data<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> workers
+
+<span style="color: #a020f0;">from</span> threading <span style="color: #a020f0;">import</span> Thread
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">execute</span><span style="color: #707183;">(</span>workers<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">threads</span> = <span style="color: #707183;">[</span>Thread<span style="color: #7388d6;">(</span>target=w.<span style="color: #483d8b;">map</span><span style="color: #7388d6;">)</span> <span style="color: #a020f0;">for</span> w <span style="color: #a020f0;">in</span> workers<span style="color: #707183;">]</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> thread <span style="color: #a020f0;">in</span> threads: thread.start<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> thread <span style="color: #a020f0;">in</span> threads: thread.join<span style="color: #707183;">()</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">first</span>, <span style="color: #a0522d;">rest</span> = workers<span style="color: #707183;">[</span>0<span style="color: #707183;">]</span>, workers<span style="color: #707183;">[</span>1:<span style="color: #707183;">]</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> worker <span style="color: #a020f0;">in</span> rest:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   first.<span style="color: #483d8b;">reduce</span><span style="color: #707183;">(</span>worker<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> first.result
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">mapreduce</span><span style="color: #707183;">(</span>data_dir<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">inputs</span> = generate_inputs<span style="color: #707183;">(</span>data_dir<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">workers</span> = create_workers<span style="color: #707183;">(</span>inputs<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> execute<span style="color: #707183;">(</span>workers<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+
+<p>
+下面是测试函数
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">from</span> tempfile <span style="color: #a020f0;">import</span> TemporaryDirectory
+<span style="color: #a020f0;">import</span> random
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">write_test_files</span><span style="color: #707183;">(</span>tmpdir<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">range</span><span style="color: #707183;">(</span>100<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">with</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span>os.path.join<span style="color: #7388d6;">(</span>tmpdir, <span style="color: #483d8b;">str</span><span style="color: #909183;">(</span>i<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>, <span style="color: #8b2252;">'w'</span><span style="color: #707183;">)</span> <span style="color: #a020f0;">as</span> f:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   f.write<span style="color: #707183;">(</span><span style="color: #8b2252;">'\n'</span> * random.randint<span style="color: #7388d6;">(</span>0, 100<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">with</span> TemporaryDirectory<span style="color: #707183;">()</span> <span style="color: #a020f0;">as</span> tmpdir:
+<span style="background-color: #f2f2f2;"> </span>   write_test_files<span style="color: #707183;">(</span>tmpdir<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = mapreduce<span style="color: #707183;">(</span>tmpdir<span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'There are'</span>, result, <span style="color: #8b2252;">'lines'</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+上面的代码能够完美的运行，但是不够通用。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">GenericInputData</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">read</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">NotImplementedError</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #228b22;">@classmethod</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">generate_inputs</span><span style="color: #707183;">(</span>cls, config<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">NotImplementedError</span>
+
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">PathInputData</span><span style="color: #707183;">(</span>GenericInputData<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, path<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">super</span><span style="color: #707183;">()</span>.__init__<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.path = path
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">read</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>.path<span style="color: #707183;">)</span>.read<span style="color: #707183;">()</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #228b22;">@classmethod</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">generate_inputs</span><span style="color: #707183;">(</span>cls, config<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data_dir</span> = config<span style="color: #707183;">[</span><span style="color: #8b2252;">'data_dir'</span><span style="color: #707183;">]</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> name <span style="color: #a020f0;">in</span> os.listdir<span style="color: #707183;">(</span>data_dir<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">yield</span> cls<span style="color: #707183;">(</span>os.path.join<span style="color: #7388d6;">(</span>data_dir, name<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">GenericWorker</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, input_data<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.input_data = input_data
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.result = <span style="color: #008b8b;">None</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">map</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">NotImplementedError</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">reduce</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, other<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">NotImplementedError</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #228b22;">@classmethod</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">create_workers</span><span style="color: #707183;">(</span>cls, input_class, config<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">workers</span> = <span style="color: #707183;">[]</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> input_data <span style="color: #a020f0;">in</span> input_class.generate_inputs<span style="color: #707183;">(</span>config<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   workers.append<span style="color: #707183;">(</span>cls<span style="color: #7388d6;">(</span>input_data<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> workers
+
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">LineCountWorker</span><span style="color: #707183;">(</span>GenericWorker<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">map</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data</span> = <span style="color: #a020f0;">self</span>.input_data.read<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.result = data.count<span style="color: #707183;">(</span><span style="color: #8b2252;">'\n'</span><span style="color: #707183;">)</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">reduce</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, other<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.result += other.result
+
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">mapreduce</span><span style="color: #707183;">(</span>worker_class, input_class, config<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">workers</span> = worker_class.create_workers<span style="color: #707183;">(</span>input_class, config<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> execute<span style="color: #707183;">(</span>workers<span style="color: #707183;">)</span>
+
+
+<span style="color: #a020f0;">with</span> TemporaryDirectory<span style="color: #707183;">()</span> <span style="color: #a020f0;">as</span> tmpdir:
+<span style="background-color: #f2f2f2;"> </span>   write_test_files<span style="color: #707183;">(</span>tmpdir<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">config</span> = <span style="color: #707183;">{</span><span style="color: #8b2252;">'data_dir'</span>: tmpdir<span style="color: #707183;">}</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = mapreduce<span style="color: #707183;">(</span>LineCountWorker, PathInputData, config<span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'There are'</span>, result, <span style="color: #8b2252;">'lines'</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org00e4080" class="outline-3">
+<h3 id="org00e4080">用 super 初始化父类</h3>
+<div class="outline-text-3" id="text-org00e4080">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">MyBaseClass</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, value<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.value = value
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">MyChildClass</span><span style="color: #707183;">(</span>MyBaseClass<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   MyBaseClass.__init__<span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, 5<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+这种方法对于简单的继承是可行的，但是在许多的情况下会出问题。
+</p>
+
+<p>
+如果子类有多重继承以及出现砖石型继承就有很大的问题。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">TimesFiveCorrect</span><span style="color: #707183;">(</span>MyBaseClass<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, value<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">super</span><span style="color: #707183;">(</span>TimesFiveCorrect, <span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>.__init__<span style="color: #707183;">(</span>value<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.value *= 5
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">PlusTwoCorrect</span><span style="color: #707183;">(</span>MyBaseClass<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, value<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">super</span><span style="color: #707183;">(</span>PlusTwoCorrect, <span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>.__init__<span style="color: #707183;">(</span>value<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.value += 2
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">GoodWay</span><span style="color: #707183;">(</span>TimesFiveCorrect, PlusTwoCorrect<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, value<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">super</span><span style="color: #707183;">(</span>GoodWay, <span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>.__init__<span style="color: #707183;">(</span>value<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8bcd869" class="outline-3">
+<h3 id="org8bcd869">只在使用 Mix-in 组件制作工具类时进行多重继承</h3>
+<div class="outline-text-3" id="text-org8bcd869">
+<p>
+在开发时我们要尽量避免使用多重继承，若一定要利用多重继承带来的便利性，我们就考虑编写 mix-in 类。
+</p>
+
+<p>
+mix-in 是一种小型的类，它只定义了其他类可能需要提供的一套附加方法。
+例如，我们要把内存中的 python 对象转换为字典形式，以便将其序列化。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">ToDictMixin</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">to_dict</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">self</span>._traverse_dict<span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>.__dict__<span style="color: #707183;">)</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&#20855;&#20307;&#23454;&#29616;&#65292;&#25105;&#20204;&#21482;&#38656;&#35201;&#29992; hasattr &#20989;&#25968;&#21160;&#24577;&#30340;&#35775;&#38382;&#23646;&#24615;&#12289;&#29992; isinstance &#21160;&#24577;&#30340;&#26816;&#26597;&#23545;&#35937;&#31867;&#22411;&#65292;&#24182;&#29992; __dict__ &#26469;&#35775;&#38382;&#23454;&#20363;&#20869;&#37096;&#30340;&#23383;&#20856;</span>
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">_traverse_dict</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, instance_dict<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">output</span> = <span style="color: #707183;">{}</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> key, value <span style="color: #a020f0;">in</span> instance_dict.items<span style="color: #707183;">()</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">output</span><span style="color: #707183;">[</span>key<span style="color: #707183;">]</span> = <span style="color: #a020f0;">self</span>._traverse<span style="color: #707183;">(</span>key, value<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> output
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">_traverse</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, key, value<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> <span style="color: #483d8b;">isinstance</span><span style="color: #707183;">(</span>value, ToDictMixin<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> value.to_dict<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">elif</span> <span style="color: #483d8b;">isinstance</span><span style="color: #707183;">(</span>value, <span style="color: #483d8b;">dict</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">self</span>._traverse_dict<span style="color: #707183;">(</span>value<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">elif</span> <span style="color: #483d8b;">isinstance</span><span style="color: #707183;">(</span>value, <span style="color: #483d8b;">list</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #707183;">[</span><span style="color: #a020f0;">self</span>._traverse<span style="color: #7388d6;">(</span>key, i<span style="color: #7388d6;">)</span> <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> value<span style="color: #707183;">]</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">elif</span> <span style="color: #483d8b;">hasattr</span><span style="color: #707183;">(</span>value, <span style="color: #8b2252;">'__dict__'</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">self</span>._traverse_dict<span style="color: #707183;">(</span>value.__dict__<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> value
+</pre>
+</div>
+
+<p>
+下面演示了如何将 max-in 把二叉树表示为字典
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">BinaryTree</span><span style="color: #707183;">(</span>ToDictMixin<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, value, left=<span style="color: #008b8b;">None</span>, right=<span style="color: #008b8b;">None</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.value = value
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.left = left
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.right = right
+
+<span style="color: #a0522d;">tree</span> = BinaryTree<span style="color: #707183;">(</span>10,
+<span style="background-color: #f2f2f2;"> </span>   left=BinaryTree<span style="color: #7388d6;">(</span>7, right=BinaryTree<span style="color: #909183;">(</span>9<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>,
+<span style="background-color: #f2f2f2;"> </span>   right=BinaryTree<span style="color: #7388d6;">(</span>13, left=BinaryTree<span style="color: #909183;">(</span>11<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>tree.to_dict<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+mix-in 的功能是可以随时安插通用的功能，并且能在必要的时候覆盖它们。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">BinaryTreeWithParent</span><span style="color: #707183;">(</span>BinaryTree<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, value, left=<span style="color: #008b8b;">None</span>,
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>right=<span style="color: #008b8b;">None</span>, parent=<span style="color: #008b8b;">None</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">super</span><span style="color: #707183;">()</span>.__init__<span style="color: #707183;">(</span>value, left=left, right=right<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.parent = parent
+
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">&#35206;&#30422;&#21407;&#26469;&#30340;&#26041;&#27861;</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">_traverse</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, key, value<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> <span style="color: #707183;">(</span><span style="color: #483d8b;">isinstance</span><span style="color: #7388d6;">(</span>value, BinaryTreeWithParent<span style="color: #7388d6;">)</span> <span style="color: #a020f0;">and</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   key == <span style="color: #8b2252;">'parent'</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> value.value  <span style="color: #b22222;"># </span><span style="color: #b22222;">Prevent cycles</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #483d8b;">super</span><span style="color: #707183;">()</span>._traverse<span style="color: #707183;">(</span>key, value<span style="color: #707183;">)</span>
+</pre>
+</div>
+<p>
+多个 mix-in 可以相互组合，例如一个通用的 JSON 序列化方法。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">JsonMixin</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #228b22;">@classmethod</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">from_json</span><span style="color: #707183;">(</span>cls, data<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">kwargs</span> = json.loads<span style="color: #707183;">(</span>data<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> cls<span style="color: #707183;">(</span>**kwargs<span style="color: #707183;">)</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">to_json</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> json.dumps<span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>.to_dict<span style="color: #7388d6;">()</span><span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">DatacenterRack</span><span style="color: #707183;">(</span>ToDictMixin, JsonMixin<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, switch=<span style="color: #008b8b;">None</span>, machines=<span style="color: #008b8b;">None</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.switch = Switch<span style="color: #707183;">(</span>**switch<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.machines = <span style="color: #707183;">[</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   Machine<span style="color: #7388d6;">(</span>**kwargs<span style="color: #7388d6;">)</span> <span style="color: #a020f0;">for</span> kwargs <span style="color: #a020f0;">in</span> machines<span style="color: #707183;">]</span>
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Switch</span><span style="color: #707183;">(</span>ToDictMixin, JsonMixin<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, ports=<span style="color: #008b8b;">None</span>, speed=<span style="color: #008b8b;">None</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.ports = ports
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.speed = speed
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Machine</span><span style="color: #707183;">(</span>ToDictMixin, JsonMixin<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, cores=<span style="color: #008b8b;">None</span>, ram=<span style="color: #008b8b;">None</span>, disk=<span style="color: #008b8b;">None</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.cores = cores
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.ram = ram
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.disk = disk
+
+<span style="color: #a0522d;">serialized</span> = <span style="color: #8b2252;">"""{</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   "switch": {"ports": 5, "speed": 1e9},</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   "machines": [</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   </span><span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   {"cores": 8, "ram": 32e9, "disk": 5e12},</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   </span><span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   {"cores": 4, "ram": 16e9, "disk": 1e12},</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   </span><span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   {"cores": 2, "ram": 4e9, "disk": 500e9}</span>
+<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   ]</span>
+<span style="color: #8b2252;">}"""</span>
+
+<span style="color: #a0522d;">deserialized</span> = DatacenterRack.from_json<span style="color: #707183;">(</span>serialized<span style="color: #707183;">)</span>
+<span style="color: #a0522d;">roundtrip</span> = deserialized.to_json<span style="color: #707183;">()</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4723bcb" class="outline-3">
+<h3 id="org4723bcb">多用 public 属性，少用 privte 属性</h3>
+<div class="outline-text-3" id="text-org4723bcb">
+<p>
+编译器无法严格保证 private 的私密性
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7ca8196" class="outline-3">
+<h3 id="org7ca8196">继承 collections.abc 以实现自定义的容器类型</h3>
+<div class="outline-text-3" id="text-org7ca8196">
+<p>
+如果要定制的子类比较简单，那就可以直接从 python 的容器类型，如 list 或 dict 入手
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">FrequencyList</span><span style="color: #707183;">(</span><span style="color: #483d8b;">list</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, members<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">super</span><span style="color: #707183;">()</span>.__init__<span style="color: #707183;">(</span>members<span style="color: #707183;">)</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">frequency</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">counts</span> = <span style="color: #707183;">{}</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> item <span style="color: #a020f0;">in</span> <span style="color: #a020f0;">self</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   counts.setdefault<span style="color: #707183;">(</span>item, 0<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">counts</span><span style="color: #707183;">[</span>item<span style="color: #707183;">]</span> += 1
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> counts
+
+<span style="color: #a0522d;">foo</span> = FrequencyList<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #8b2252;">'a'</span>, <span style="color: #8b2252;">'b'</span>, <span style="color: #8b2252;">'a'</span>, <span style="color: #8b2252;">'c'</span>, <span style="color: #8b2252;">'b'</span>, <span style="color: #8b2252;">'a'</span>, <span style="color: #8b2252;">'d'</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Length is'</span>, <span style="color: #483d8b;">len</span><span style="color: #7388d6;">(</span>foo<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+foo.pop<span style="color: #707183;">()</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'After pop:'</span>, <span style="color: #483d8b;">repr</span><span style="color: #7388d6;">(</span>foo<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Frequency:'</span>, foo.frequency<span style="color: #7388d6;">()</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+如果想要编写自制的容器类型，可以从 collections.abc 模块入手。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9bf33ef" class="outline-2">
+<h2 id="org9bf33ef">元类及属性</h2>
+<div class="outline-text-2" id="text-org9bf33ef">
+<p>
+谈到 python 特性时，元类经常被提到，但很少有人能理解它的实际用途。
+</p>
+
+<p>
+metaclass 只是模糊的描述了一种高于类，而又超乎类的概念。
+</p>
+</div>
+<div id="outline-container-orgdc99954" class="outline-3">
+<h3 id="orgdc99954">用纯属性取代 get 和 set 方法</h3>
+<div class="outline-text-3" id="text-orgdc99954">
+<p>
+不要编写 get set 方法。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Resistor</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, ohms<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.ohms = ohms
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.voltage = 0
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.current = 0
+
+<span style="color: #a0522d;">r1</span> = Resistor<span style="color: #707183;">(</span>50e3<span style="color: #707183;">)</span>
+<span style="color: #a0522d;">r1.ohms</span> = 10e3
+</pre>
+</div>
+
+<p>
+如果想在设置属性的时候实现特殊的行为，可以改用@property 和 setter 方法。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">VoltageResistance</span><span style="color: #707183;">(</span>Resistor<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, ohms<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">super</span><span style="color: #707183;">()</span>.__init__<span style="color: #707183;">(</span>ohms<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>._voltage = 0
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #228b22;">@property</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">voltage</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">self</span>._voltage
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #228b22;">@voltage.setter</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">voltage</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, voltage<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>._voltage = voltage
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.current = <span style="color: #a020f0;">self</span>._voltage / <span style="color: #a020f0;">self</span>.ohms
+
+<span style="color: #a0522d;">r2</span> = VoltageResistance<span style="color: #707183;">(</span>1e3<span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Before: %5r amps'</span> % r2.current<span style="color: #707183;">)</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&#20250;&#25191;&#34892; setter &#26041;&#27861;</span>
+<span style="color: #a0522d;">r2.voltage</span> = 10
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'After:  %5r amps'</span> % r2.current<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+@property 要遵循最小惊讶原则，不要产生奇怪的副作用。
+</p>
+</div>
+</div>
+<div id="outline-container-org14fb433" class="outline-3">
+<h3 id="org14fb433">考虑用 @property 来代替属性重构</h3>
+<div class="outline-text-3" id="text-org14fb433">
+<p>
+@property 还有一种高级的用法，就是可以把简单的数值属性迁移为实时计算(on-the-fly calculation).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Bucket</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, period<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.period_delta = timedelta<span style="color: #707183;">(</span>seconds=period<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.reset_time = datetime.now<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.max_quota = 0
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.quota_consumed = 0
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__repr__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #707183;">(</span><span style="color: #8b2252;">'Bucket(max_quota=%d, quota_consumed=%d)'</span> %
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #7388d6;">(</span><span style="color: #a020f0;">self</span>.max_quota, <span style="color: #a020f0;">self</span>.quota_consumed<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #228b22;">@property</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">quota</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">self</span>.max_quota - <span style="color: #a020f0;">self</span>.quota_consumed
+</pre>
+</div>
+
+<p>
+@property 可以为现有的实例属性添加功能
+</p>
+</div>
+</div>
+<div id="outline-container-org9db4497" class="outline-3">
+<h3 id="org9db4497">用描述符来改写需要复用的 @property 方法 &check;</h3>
+<div class="outline-text-3" id="text-org9db4497">
+<p>
+@property 有个明显的缺点就是不便于复用
+</p>
+
+<p>
+描述符可以提供 <span class="underline"><span class="underline">get</span></span> <span class="underline"><span class="underline">set</span></span> 方法。
+</p>
+</div>
+</div>
+<div id="outline-container-org3eac6a7" class="outline-3">
+<h3 id="org3eac6a7">用 <span class="underline"><span class="underline">getattr</span></span>, <span class="underline"><span class="underline">getattribute</span></span> 和 <span class="underline"><span class="underline">setattr</span></span> 实现按需生成的属性 &check;</h3>
+<div class="outline-text-3" id="text-org3eac6a7">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">LazyDB</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__init__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.exists = 5
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__getattr__</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, name<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">value</span> = <span style="color: #8b2252;">'Value for %s'</span> % name
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">setattr</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>, name, value<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> value
+
+<span style="color: #a0522d;">data</span> = LazyDB<span style="color: #707183;">()</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Before:'</span>, data.__dict__<span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'foo:   '</span>, data.foo<span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'After: '</span>, data.__dict__<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+当系统查询找不到查询的属性，而且定义了 <span class="underline"><span class="underline">getattr</span></span>, 就会调用这个方法。
+而 <span class="underline"><span class="underline">getattribute</span></span> 方法就是查到了，也会调用
+</p>
+</div>
+</div>
+<div id="outline-container-org5256a8b" class="outline-3">
+<h3 id="org5256a8b">用元类来验证子类</h3>
+<div class="outline-text-3" id="text-org5256a8b">
+<p>
+首先，定义元类，我们要继承 type, python 默认会把那些类的 class 语句体中所含的相关内容，发送给元类的 <span class="underline"><span class="underline">new</span></span> 方法。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">Meta</span><span style="color: #707183;">(</span><span style="color: #483d8b;">type</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__new__</span><span style="color: #707183;">(</span>meta, name, bases, class_dict<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>meta, name, bases, class_dict<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #483d8b;">type</span>.__new__<span style="color: #707183;">(</span>meta, name, bases, class_dict<span style="color: #707183;">)</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&#36825;&#26159; python2 &#20889;&#27861;</span>
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">MyClassInPython2</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">__metaclass__</span> = Meta
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">stuff</span> = 123
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">foo</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">pass</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">python 3</span>
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">MyClassInPython2</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span>, metaclass=Meta<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">stuff</span> = 123
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">foo</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">pass</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">ValidatePolygon</span><span style="color: #707183;">(</span><span style="color: #483d8b;">type</span><span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">__new__</span><span style="color: #707183;">(</span>meta, name, bases, class_dict<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">Don't validate the abstract Polygon class</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> bases != <span style="color: #707183;">(</span><span style="color: #483d8b;">object</span>,<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> class_dict<span style="color: #707183;">[</span><span style="color: #8b2252;">'sides'</span><span style="color: #707183;">]</span> &lt; 3:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">ValueError</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Polygons need 3+ sides'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #483d8b;">type</span>.__new__<span style="color: #707183;">(</span>meta, name, bases, class_dict<span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Polygon</span><span style="color: #707183;">(</span><span style="color: #483d8b;">object</span>, metaclass=ValidatePolygon<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">sides</span> = <span style="color: #008b8b;">None</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">Specified by subclasses</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #228b22;">@classmethod</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">interior_angles</span><span style="color: #707183;">(</span>cls<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #707183;">(</span>cls.sides - 2<span style="color: #707183;">)</span> * 180
+
+<span style="color: #a020f0;">class</span> <span style="color: #228b22;">Triangle</span><span style="color: #707183;">(</span>Polygon<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">sides</span> = 3
+
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>Triangle.interior_angles<span style="color: #7388d6;">()</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf587f82" class="outline-3">
+<h3 id="orgf587f82">用元类来注册子类</h3>
+</div>
+<div id="outline-container-org895110a" class="outline-3">
+<h3 id="org895110a">用元类来注解类的属性</h3>
+<div class="outline-text-3" id="text-org895110a">
+<p>
+我们可以在类完全定义好前，率先修改类的属性
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org22a2907" class="outline-2">
+<h2 id="org22a2907">并行及并发 &check;</h2>
+<div class="outline-text-2" id="text-org22a2907">
+</div><div id="outline-container-org0714ff0" class="outline-3">
+<h3 id="org0714ff0">用 subprocess 来管理子进程</h3>
+</div>
+<div id="outline-container-orgc67c174" class="outline-3">
+<h3 id="orgc67c174">可以用线程来执行阻塞式 IO，但不要它做平行计算</h3>
+</div>
+<div id="outline-container-org18b847b" class="outline-3">
+<h3 id="org18b847b">在线程中使用 LOCK 来防止数据竞争</h3>
+</div>
+<div id="outline-container-orgfb8b491" class="outline-3">
+<h3 id="orgfb8b491">用 Queue 来协调各线程之间的工作</h3>
+</div>
+<div id="outline-container-org459ac34" class="outline-3">
+<h3 id="org459ac34">考虑用协程来并发地运行多个函数</h3>
+</div>
+<div id="outline-container-org3729cc3" class="outline-3">
+<h3 id="org3729cc3">使用 concurrent.futures 来处理并行计算</h3>
+</div>
+</div>
+<div id="outline-container-org2440598" class="outline-2">
+<h2 id="org2440598">内置模块</h2>
+<div class="outline-text-2" id="text-org2440598">
+</div><div id="outline-container-orgbfb4a77" class="outline-3">
+<h3 id="orgbfb4a77">使用 functool.wraps 来定义函数装饰器</h3>
+</div>
+<div id="outline-container-org8d39432" class="outline-3">
+<h3 id="org8d39432">考虑以 contextlib 和 with 语句来改写可复用的 try／finally 代码</h3>
+</div>
+<div id="outline-container-org4debdce" class="outline-3">
+<h3 id="org4debdce">用 copyreg 实现可靠的 pickle 操作</h3>
+</div>
+<div id="outline-container-org50b74e1" class="outline-3">
+<h3 id="org50b74e1">应该用 datetime 模块来处理本地时间，而不是用 time 模块</h3>
+</div>
+<div id="outline-container-orga26dd81" class="outline-3">
+<h3 id="orga26dd81">使用内置算法与数据结构</h3>
+</div>
+<div id="outline-container-org79ba982" class="outline-3">
+<h3 id="org79ba982">在重视精确度的场合，应该使用 decimal</h3>
+</div>
+<div id="outline-container-org2271426" class="outline-3">
+<h3 id="org2271426">学会安装由 Python 开发者社区所构建的模块</h3>
+</div>
+</div>
+<div id="outline-container-org2858046" class="outline-2">
+<h2 id="org2858046">协作开发</h2>
+<div class="outline-text-2" id="text-org2858046">
+</div><div id="outline-container-orga8247e3" class="outline-3">
+<h3 id="orga8247e3">为每个函数、类和模块编写文档字符串</h3>
+</div>
+<div id="outline-container-org114bfa6" class="outline-3">
+<h3 id="org114bfa6">用包来安排模块，并提供稳固的 API</h3>
+</div>
+<div id="outline-container-org5dad4d9" class="outline-3">
+<h3 id="org5dad4d9">为自编的模块定义根异常，以便将调用者与 API 相隔离</h3>
+</div>
+<div id="outline-container-org341a6c8" class="outline-3">
+<h3 id="org341a6c8">用适当的方式打破循环依赖关系</h3>
+</div>
+<div id="outline-container-org20ec5ed" class="outline-3">
+<h3 id="org20ec5ed">用虚拟环境隔离项目，并重建其依赖关系</h3>
+</div>
+</div>
+<div id="outline-container-org97a0ed9" class="outline-2">
+<h2 id="org97a0ed9">部署</h2>
+<div class="outline-text-2" id="text-org97a0ed9">
+</div><div id="outline-container-org89f750c" class="outline-3">
+<h3 id="org89f750c">考虑用模块级别的代码来配置不同的部署环境</h3>
+</div>
+<div id="outline-container-orgbdc634e" class="outline-3">
+<h3 id="orgbdc634e">通过 repr 字符串来输出调试信息</h3>
+</div>
+<div id="outline-container-orge9c9d3a" class="outline-3">
+<h3 id="orge9c9d3a">用 unittest 来测试全部代码</h3>
+</div>
+<div id="outline-container-org1dab3e9" class="outline-3">
+<h3 id="org1dab3e9">考虑用 pdb 实现交互调试</h3>
+</div>
+<div id="outline-container-org974d9bb" class="outline-3">
+<h3 id="org974d9bb">先分析性能，然后再优化</h3>
+</div>
+<div id="outline-container-org8614965" class="outline-3">
+<h3 id="org8614965">用 tracemalloc 来掌握内存的使用及泄漏情况</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var clink = comments_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href=\""+ cuserlink + "\">' + cuser + '</a><a class="commentdate" href=\"" + clink + "\">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-07 Fri 19:37 -->
+<!-- 2017-07-08 Sat 20:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>谈谈字符编码</title>
@@ -251,7 +251,7 @@ for the JavaScript code in this tag.
 <li><a href="#org05d0217">常见的问题</a>
 <ul>
 <li><a href="#orgc590392">乱码</a></li>
-<li><a href="#org9499894">Python2</a></li>
+<li><a href="#org2f8dd0c">Python 2</a></li>
 </ul>
 </li>
 <li><a href="#org8c146e8">Reference</a></li>
@@ -380,8 +380,14 @@ ASCII 字符还是 Unicode 的一部分。
 上面的映射图只是一种抽象的表示，而这里说明了如何找到这种映射，即这里的 code point。
 </p></li>
 
-<li>字符编码这里的字符编码其实就是为了解决上面提到的 Unicode 的问题。我们把 code point 再次的进行编码，就出现了各种的其他编码。
-其中 UTF-8 便是一种，它其实是一种变长编码。</li>
+<li><p>
+字符编码
+</p>
+
+<p>
+这里的字符编码其实就是为了解决上面提到的 Unicode 的问题。我们把 code point 再次的进行编码，就出现了各种的其他编码。
+其中 UTF-8 便是一种，它其实是一种变长编码。
+</p></li>
 </ol>
 
 <p>
@@ -408,7 +414,7 @@ ASCII 字符还是 Unicode 的一部分。
 </div>
 
 <p>
-上面解释了 Unicode 中 code point 表示到 utf-8 表示了转化。
+上面解释了 Unicode 中 code point 表示到 UTF-8 表示了转化。
 </p>
 
 
@@ -445,7 +451,6 @@ u<span style="color: #8b2252;">"&#20013;"</span>.encode<span style="color: #7071
 </div>
 </div>
 
-
 <div id="outline-container-org05d0217" class="outline-2">
 <h2 id="org05d0217">常见的问题</h2>
 <div class="outline-text-2" id="text-org05d0217">
@@ -466,11 +471,11 @@ UTF-8 去编码，而你却用 UTF-16 去解码，肯定是有问题的。
 </div>
 </div>
 
-<div id="outline-container-org9499894" class="outline-3">
-<h3 id="org9499894">Python2</h3>
-<div class="outline-text-3" id="text-org9499894">
+<div id="outline-container-org2f8dd0c" class="outline-3">
+<h3 id="org2f8dd0c">Python 2</h3>
+<div class="outline-text-3" id="text-org2f8dd0c">
 <p>
-在 Python2 中，你如果执行
+在 Python 2 中，你如果执行
 </p>
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #8b2252;">"&#20320;&#22909;"</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">"utf8"</span><span style="color: #707183;">)</span> &#8658;

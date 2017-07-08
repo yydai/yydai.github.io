@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-07-08 Sat 14:15 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Elements of Style</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> Contact </a>
+</div>
+</div>
+</div>
+<div id="content">
+<h1 class="title">The Elements of Style</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0497bf9">Chapter 1 基本规则</a>
+<ul>
+<li><a href="#org1429eee">Rule 1 单数名词末尾加 's, 构成名词所有格</a></li>
+<li><a href="#org4cc0dd7">Rule 2 叙述一系列超过三个以上的名词，在最后一个名词前使用连接词，其余的每个名词以逗号隔开</a></li>
+<li><a href="#org688aff8">Rule 3 将作附加说明用的插入语放在两个逗号中间</a></li>
+<li><a href="#org90f5497">Rule 4 以连接词 and 或 but 引导完整的句子，在连接词的前方用逗号标明</a></li>
+<li><a href="#org5b07656">Rule 5 不可用逗号直接连接两个完整的句子</a></li>
+<li><a href="#org49094aa">Rule 6 不可将句子任意拆成两部分</a></li>
+<li><a href="#org540746a">Rule 7 句首的分词短语所指代的主语应与主句的主语保持一致</a></li>
+<li><a href="#org7637b08">Rule 8 在行末需要将单词拆分时，必须遵守构词和发音的规则</a></li>
+</ul>
+</li>
+<li><a href="#org9e15127">Chapter 2 英语写作的基本原理</a>
+<ul>
+<li><a href="#org670b5a8">将每个段落视为一个单位，每个段落有其中心主旨</a></li>
+<li><a href="#orgea3f06c">在段落的开始使用主题句点题，段落的结尾与主题句相呼应</a></li>
+<li><a href="#org6ab6b79">使用主动语态</a></li>
+<li><a href="#org759fe3a">使用肯定句陈述</a></li>
+<li><a href="#orgad48ebd">省略赘词</a></li>
+<li><a href="#orga3269f3">避免连续使用结构松散的句子</a></li>
+<li><a href="#orgb631772">以相似的句型结构叙述对等的概念</a></li>
+<li><a href="#orgc6da6b5">将相关的词放在一起</a></li>
+<li><a href="#org02e2796">总结叙述时，要使用同一时态</a></li>
+<li><a href="#org77506e0">将需要强调的词或词组放在句子的末尾</a></li>
+</ul>
+</li>
+<li><a href="#orgb7e7068">Chapter 3 写作格式需要注意的事项</a></li>
+<li><a href="#orge8abaaa">Chapter 4 常见的易错单词和表达法</a></li>
+<li><a href="#orgb7f0a3f">Chapter 5 常见的拼写错误</a></li>
+</ul>
+</div>
+</div>
+<hr />
+<div id="outline-container-org0497bf9" class="outline-2">
+<h2 id="org0497bf9">Chapter 1 基本规则</h2>
+<div class="outline-text-2" id="text-org0497bf9">
+</div><div id="outline-container-org1429eee" class="outline-3">
+<h3 id="org1429eee">Rule 1 单数名词末尾加 's, 构成名词所有格</h3>
+<div class="outline-text-3" id="text-org1429eee">
+<p>
+表示有生命的东西的名词及某些表示时间、距离、星球、世界、国家等无生命的东西的名词后加 ’s 来表示所有关系，叫做名词所有格。
+</p>
+
+<p>
+单数名词加 <b>'s</b> 构成名词所有格，以 <b>s</b> 结尾的复数结尾的名词加 <b>'</b>
+</p>
+
+<p>
+凡是不能加 <b>'s</b> 的名词，都可以与 <b>of</b> 构成短语，表示所有关心
+</p>
+
+<p>
+双重所有格，即“of+名词所有格”。 “of+名词所有格”中的名词必须表示人，
+不能表示事物。例如 a play of Shakespeare’s。 而且该名词必须是特指的，
+不能是泛指的。我们可以说：a friend of the doctor’s（这位医生的一个朋友），a novel of the writer’s（那位作者的一部小说），而不能说 a
+friend of a doctor’s 或 a novel of a writer’s。
+</p>
+
+<p>
+代词的所有格们，如 hers, its，theirs，yours 和 oneself，可以直接来表示，不用加 ‘
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4cc0dd7" class="outline-3">
+<h3 id="org4cc0dd7">Rule 2 叙述一系列超过三个以上的名词，在最后一个名词前使用连接词，其余的每个名词以逗号隔开</h3>
+<div class="outline-text-3" id="text-org4cc0dd7">
+<p>
+如 and, or, nor
+</p>
+<pre class="example">
+red,white,and blue. 不能写成 red,white and blue.
+</pre>
+
+<p>
+在公司的名词中，最后一个逗号将会被省略
+</p>
+<pre class="example">
+Brown , Shipley and Company (勃朗、雪泼莱公司)
+</pre>
+
+<p>
+对于缩写 etc.，即使其前面只有一个词语，也应该加上一个逗号。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org688aff8" class="outline-3">
+<h3 id="org688aff8">Rule 3 将作附加说明用的插入语放在两个逗号中间</h3>
+<div class="outline-text-3" id="text-org688aff8">
+<pre class="example">
+The best way to see a country, unless you are pressed for time, is to travel on foot.
+要想充分领略一个国家的风光，如果时间不紧迫的话，最好是步行
+</pre>
+<p>
+对于非限定性定语从句而言，从句放在两个逗号之间。
+在这些句子中，由 which，when 和 where 引导的都是非限制性从句。它们并不起限制或限定的作用，而仅起补充说明的作用。
+</p>
+<pre class="example">
+The audience, which had at first been indifferent, became more and more interested.
+
+In 1769, when Napoleon was born, Corsica had but recently been acquired by France.
+</pre>
+
+<p>
+限制性定语从句不是插入成分，因此不用逗号分开。
+The candidate who best meets these requirements will obtain the place.
+</p>
+
+<p>
+除非是在句尾，否则缩写 etc.和 jr.前后都要有逗号隔开。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org90f5497" class="outline-3">
+<h3 id="org90f5497">Rule 4 以连接词 and 或 but 引导完整的句子，在连接词的前方用逗号标明</h3>
+<div class="outline-text-3" id="text-org90f5497">
+<pre class="example">
+The situation is perilous, but there is still one chance of escape.
+
+The early records of the city have disappeared, and the story of its first years can no longer be reconstructed.
+</pre>
+
+<p>
+在上面的例子中，and 表示因果关系。这两个句子也可写成：
+</p>
+<pre class="example">
+Although the situation is perilous, there is still one chance of escape.
+
+As the early records of the city have disappeared, the story of its first years can no longer be reconstructed.
+</pre>
+<p>
+对于由两部分构成的复合句而言，要在 as，for，or，nor 和 while 所引导的第二个句子的连接词前加上逗号。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5b07656" class="outline-3">
+<h3 id="org5b07656">Rule 5 不可用逗号直接连接两个完整的句子</h3>
+<div class="outline-text-3" id="text-org5b07656">
+<p>
+需要注意的是，如果第二个句子是用副词来引导的，例如 accordingly, besides, so, then, therefore 或者 thus, 并在副词之前没有连接词的话，则需要用分号。
+</p>
+<pre class="example">
+I had never been in the placce before; so I had difficulty in finding my way about.
+</pre>
+
+<p>
+一般情况下，我们在写作是最好避免像上面使用 so 来表示因果关系，因为会使用这个句型的作者不自觉的过多使用这个词。一个简单的变换就是将
+so 省略，然后在第一个句子前加上 as 来表示因果关系。
+</p>
+
+<pre class="example">
+As I had never been in the place before, I had difficulty in finding my way about.
+</pre>
+
+<p>
+如果说几个句子都很短，在句型上也很相似的话，可以直接使用逗号隔开
+</p>
+<pre class="example">
+Man proposes, God disposes.
+
+The gate swung apart, the bridge fell, the portcullis was drawn up.
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-org49094aa" class="outline-3">
+<h3 id="org49094aa">Rule 6 不可将句子任意拆成两部分</h3>
+<div class="outline-text-3" id="text-org49094aa">
+<p>
+就是说，如果使用句号后，句子前后的句子变得不再完整的话，那么就不能用句号来代替逗号。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org540746a" class="outline-3">
+<h3 id="org540746a">Rule 7 句首的分词短语所指代的主语应与主句的主语保持一致</h3>
+<div class="outline-text-3" id="text-org540746a">
+<pre class="example">
+Walking slowly down the road, the saw a women accompanied by two children.
+</pre>
+<p>
+这里 walking 引导的短语修饰的是本句的主语，而不是 a women。如果作者想修饰 women 的话，
+</p>
+
+<pre class="example">
+He saw a women, accompanied by two children, walking slowly down the road.
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org7637b08" class="outline-3">
+<h3 id="org7637b08">Rule 8 在行末需要将单词拆分时，必须遵守构词和发音的规则</h3>
+<div class="outline-text-3" id="text-org7637b08">
+<p>
+如 know-ledge (not knowl-edge), de-scribe(not des-cribe)
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9e15127" class="outline-2">
+<h2 id="org9e15127">Chapter 2 英语写作的基本原理</h2>
+<div class="outline-text-2" id="text-org9e15127">
+</div><div id="outline-container-org670b5a8" class="outline-3">
+<h3 id="org670b5a8">将每个段落视为一个单位，每个段落有其中心主旨</h3>
+</div>
+
+<div id="outline-container-orgea3f06c" class="outline-3">
+<h3 id="orgea3f06c">在段落的开始使用主题句点题，段落的结尾与主题句相呼应</h3>
+</div>
+<div id="outline-container-org6ab6b79" class="outline-3">
+<h3 id="org6ab6b79">使用主动语态</h3>
+</div>
+<div id="outline-container-org759fe3a" class="outline-3">
+<h3 id="org759fe3a">使用肯定句陈述</h3>
+</div>
+<div id="outline-container-orgad48ebd" class="outline-3">
+<h3 id="orgad48ebd">省略赘词</h3>
+</div>
+<div id="outline-container-orga3269f3" class="outline-3">
+<h3 id="orga3269f3">避免连续使用结构松散的句子</h3>
+</div>
+<div id="outline-container-orgb631772" class="outline-3">
+<h3 id="orgb631772">以相似的句型结构叙述对等的概念</h3>
+</div>
+<div id="outline-container-orgc6da6b5" class="outline-3">
+<h3 id="orgc6da6b5">将相关的词放在一起</h3>
+</div>
+<div id="outline-container-org02e2796" class="outline-3">
+<h3 id="org02e2796">总结叙述时，要使用同一时态</h3>
+</div>
+<div id="outline-container-org77506e0" class="outline-3">
+<h3 id="org77506e0">将需要强调的词或词组放在句子的末尾</h3>
+</div>
+</div>
+<div id="outline-container-orgb7e7068" class="outline-2">
+<h2 id="orgb7e7068">Chapter 3 写作格式需要注意的事项</h2>
+</div>
+
+
+
+<div id="outline-container-orge8abaaa" class="outline-2">
+<h2 id="orge8abaaa">Chapter 4 常见的易错单词和表达法</h2>
+<div class="outline-text-2" id="text-orge8abaaa">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org7235bde">All right</a></td>
+<td class="org-left"><a href="#org8da1460">As to whether</a></td>
+<td class="org-left"><a href="#orgb15ded4">As good or better than</a></td>
+<td class="org-left"><a href="#org837a277">Bid</a></td>
+<td class="org-left"><a href="#orge14ffe0">Case</a></td>
+<td class="org-left"><a href="#orgc7f8150">Certainly</a></td>
+<td class="org-left"><a href="#orgc3984ea">Character</a></td>
+</tr>
+
+<tr>
+<td class="org-left"><a href="#org6e2a4e3">Claim</a></td>
+<td class="org-left"><a href="#org94ddc99">Compare</a></td>
+<td class="org-left"><a href="#org5046bd1">Clever</a></td>
+<td class="org-left"><a href="#org7db8431">Consider</a></td>
+<td class="org-left"><a href="#orgb523175">Dependable</a></td>
+<td class="org-left"><a href="#orgcd8cab6">Due to</a></td>
+<td class="org-left"><a href="#org12c8bad">Effect</a></td>
+</tr>
+
+<tr>
+<td class="org-left"><a href="#org9df6e7c">Etc</a></td>
+<td class="org-left"><a href="#org1814503">Fact</a></td>
+<td class="org-left"><a href="#orgefb47a6">Factor</a></td>
+<td class="org-left"><a href="#org6dd24bc">Feature</a></td>
+<td class="org-left"><a href="#org314c42b">Fix</a></td>
+<td class="org-left"><a href="#orgb4ba4b5">He is a man who</a></td>
+<td class="org-left"><a href="#org63f87ca">However</a></td>
+</tr>
+
+<tr>
+<td class="org-left"><a href="#orgd5b5778">Kind of</a></td>
+<td class="org-left"><a href="#orgf91437f">Less</a></td>
+<td class="org-left"><a href="#orga493e9f">Line alone these lines</a></td>
+<td class="org-left"><a href="#org76fd062">Literal literally</a></td>
+<td class="org-left"><a href="#orgf70196d">Lose out</a></td>
+<td class="org-left"><a href="#org72bd1b2">Most</a></td>
+<td class="org-left"><a href="#orgd016851">Nature</a></td>
+</tr>
+
+<tr>
+<td class="org-left"><a href="#org099497f">Near by</a></td>
+<td class="org-left"><a href="#org4f320c5">Oftentimes ofttimes</a></td>
+<td class="org-left"><a href="#orgad3cd3c">One hundred and one</a></td>
+<td class="org-left"><a href="#orgafeb012">One of the most</a></td>
+<td class="org-left"><a href="#orga5445b5">People</a></td>
+<td class="org-left"><a href="#orgda4071f">Phase</a></td>
+<td class="org-left"><a href="#orga857013">Possess</a></td>
+</tr>
+
+<tr>
+<td class="org-left"><a href="#org8c99c8d">Respective Respectively</a></td>
+<td class="org-left"><a href="#org5b15fa9">So</a></td>
+<td class="org-left"><a href="#orge1193a7">Sort of</a></td>
+<td class="org-left"><a href="#orgc66333d">State</a></td>
+<td class="org-left"><a href="#org74f2557">Student body</a></td>
+<td class="org-left"><a href="#orgca2a984">System</a></td>
+<td class="org-left"><a href="#org26b4499">Thanking you in advance</a></td>
+</tr>
+
+<tr>
+<td class="org-left"><a href="#org06f610d">They</a></td>
+<td class="org-left"><a href="#orgb159176">Very</a></td>
+<td class="org-left"><a href="#org9b5b41d">Viewpoint</a></td>
+<td class="org-left"><a href="#org4433cac">While</a></td>
+<td class="org-left"><a href="#orgdd7afa1">Whome</a></td>
+<td class="org-left"><a href="#org5a2dfe8">Worth while</a></td>
+<td class="org-left"><a href="#org36a7415">World</a></td>
+</tr>
+</tbody>
+</table>
+
+
+<ol class="org-ol">
+<li><p>
+All right <a id="org7235bde"></a>
+</p>
+
+<p>
+与亲近的人对话时的常用语，如 “Agreed” 或 "Go ahead" 的含义。其他场合避免使用它
+</p></li>
+
+<li><p>
+As to whether <a id="org8da1460"></a>
+</p>
+
+<p>
+仅用 whether 即可
+</p></li>
+
+<li>As good or better than <a id="orgb15ded4"></a></li>
+</ol>
+
+
+<ol class="org-ol">
+<li>Bid <a id="org837a277"></a></li>
+<li>Case <a id="orge14ffe0"></a></li>
+<li>Certainly <a id="orgc7f8150"></a></li>
+<li>Character <a id="orgc3984ea"></a></li>
+<li>Claim <a id="org6e2a4e3"></a></li>
+<li><p>
+Compare <a id="org94ddc99"></a>
+</p>
+
+<p>
+to compare to 用于比较本质上不同的两个人、事或物，指出或暗示他们的相似之处。
+</p>
+
+<p>
+to compare with 用于本质上相同的，指出他们的不同之处
+</p></li>
+
+<li>Clever <a id="org5046bd1"></a></li>
+</ol>
+
+
+<ol class="org-ol">
+<li>Consider <a id="org7db8431"></a></li>
+<li>Dependable <a id="orgb523175"></a></li>
+<li>Due to <a id="orgcd8cab6"></a></li>
+<li>Effect <a id="org12c8bad"></a></li>
+<li>Etc <a id="org9df6e7c"></a></li>
+<li>Fact <a id="org1814503"></a></li>
+<li>Factor <a id="orgefb47a6"></a></li>
+<li>Feature <a id="org6dd24bc"></a></li>
+<li>Fix <a id="org314c42b"></a></li>
+<li>He is a man who <a id="orgb4ba4b5"></a></li>
+<li><p>
+However <a id="org63f87ca"></a>
+</p>
+
+<p>
+表示 "然而" 时，不可放于句首。放在句首，表示 “无论如何，不论怎样”
+</p></li>
+
+<li>Kind of <a id="orgd5b5778"></a></li>
+<li>Less <a id="orgf91437f"></a></li>
+<li>Line alone these lines <a id="orga493e9f"></a></li>
+<li>Literal literally <a id="org76fd062"></a></li>
+<li>Lose out <a id="orgf70196d"></a></li>
+<li>Most <a id="org72bd1b2"></a></li>
+<li>Nature <a id="orgd016851"></a></li>
+<li>Near by <a id="org099497f"></a></li>
+<li>Oftentimes ofttimes <a id="org4f320c5"></a></li>
+<li>One hundred and one <a id="orgad3cd3c"></a></li>
+<li>One of the most <a id="orgafeb012"></a></li>
+<li>People <a id="orga5445b5"></a></li>
+<li>Phase <a id="orgda4071f"></a></li>
+<li>Possess <a id="orga857013"></a></li>
+<li>Respective Respectively <a id="org8c99c8d"></a></li>
+<li>So <a id="org5b15fa9"></a></li>
+<li>Sort of <a id="orge1193a7"></a></li>
+<li>State <a id="orgc66333d"></a></li>
+<li>Student body <a id="org74f2557"></a></li>
+<li>System <a id="orgca2a984"></a></li>
+<li>Thanking you in advance <a id="org26b4499"></a></li>
+<li>They <a id="org06f610d"></a></li>
+<li>Very <a id="orgb159176"></a></li>
+<li>Viewpoint <a id="org9b5b41d"></a></li>
+<li>While <a id="org4433cac"></a></li>
+<li>Whome <a id="orgdd7afa1"></a></li>
+<li>Worth while <a id="org5a2dfe8"></a></li>
+<li>World <a id="org36a7415"></a></li>
+</ol>
+</div>
+</div>
+
+
+
+
+
+
+
+
+<div id="outline-container-orgb7f0a3f" class="outline-2">
+<h2 id="orgb7f0a3f">Chapter 5 常见的拼写错误</h2>
+<div class="outline-text-2" id="text-orgb7f0a3f">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">accidentally</td>
+<td class="org-left">formerly</td>
+<td class="org-left">privilege</td>
+</tr>
+
+<tr>
+<td class="org-left">advice</td>
+<td class="org-left">humorous</td>
+<td class="org-left">repetition</td>
+</tr>
+
+<tr>
+<td class="org-left">beginning</td>
+<td class="org-left">immediately</td>
+<td class="org-left">rhyme</td>
+</tr>
+
+<tr>
+<td class="org-left">believe</td>
+<td class="org-left">latter</td>
+<td class="org-left">ridiculous</td>
+</tr>
+
+<tr>
+<td class="org-left">challenge</td>
+<td class="org-left">led</td>
+<td class="org-left">sacrilegious</td>
+</tr>
+
+<tr>
+<td class="org-left">criticize</td>
+<td class="org-left">lose</td>
+<td class="org-left">seize</td>
+</tr>
+
+<tr>
+<td class="org-left">deceive</td>
+<td class="org-left">marriage</td>
+<td class="org-left">separate</td>
+</tr>
+
+<tr>
+<td class="org-left">definite</td>
+<td class="org-left">mischief</td>
+<td class="org-left">shepherd</td>
+</tr>
+
+<tr>
+<td class="org-left">describe</td>
+<td class="org-left">murmur</td>
+<td class="org-left">siege</td>
+</tr>
+
+<tr>
+<td class="org-left">sespise</td>
+<td class="org-left">necessary</td>
+<td class="org-left">similar</td>
+</tr>
+
+<tr>
+<td class="org-left">develop</td>
+<td class="org-left">occurred</td>
+<td class="org-left">simile</td>
+</tr>
+
+<tr>
+<td class="org-left">disappoint</td>
+<td class="org-left">parallel</td>
+<td class="org-left">too</td>
+</tr>
+
+<tr>
+<td class="org-left">duel</td>
+<td class="org-left">Philip</td>
+<td class="org-left">tragedy</td>
+</tr>
+
+<tr>
+<td class="org-left">ecstasy</td>
+<td class="org-left">playwright</td>
+<td class="org-left">tries</td>
+</tr>
+
+<tr>
+<td class="org-left">effect</td>
+<td class="org-left">preceding</td>
+<td class="org-left">undoubtedly</td>
+</tr>
+
+<tr>
+<td class="org-left">existence</td>
+<td class="org-left">prejudice</td>
+<td class="org-left">until</td>
+</tr>
+
+<tr>
+<td class="org-left">fiery</td>
+<td class="org-left">principal</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var clink = comments_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href=\""+ cuserlink + "\">' + cuser + '</a><a class="commentdate" href=\"" + clink + "\">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

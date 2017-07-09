@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-08 Sat 23:13 -->
+<!-- 2017-07-09 Sun 09:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的一些技巧</title>
@@ -407,7 +407,6 @@ also be a regular expression.
 </div>
 </div>
 
-
 <div id="outline-container-org0dd288b" class="outline-2">
 <h2 id="org0dd288b">在 Emacs 中禁用鼠标</h2>
 <div class="outline-text-2" id="text-org0dd288b">
@@ -545,12 +544,32 @@ M-x butterfly
 <div id="outline-container-orgcc89135" class="outline-2">
 <h2 id="orgcc89135">快速生成有序序列</h2>
 <div class="outline-text-2" id="text-orgcc89135">
+<p>
+如果我们想生成如下效果的序列：
+</p>
+<pre class="example">
+Step 1 of 5: ...
+Step 2 of 5: ...
+Step 3 of 5: ...
+Step 4 of 5: ...
+Step 5 of 5: ...
+</pre>
+
+<p>
+我们就可以借助键盘宏了。
+</p>
 <ul class="org-ul">
-<li><a href="https://github.com/abo-abo/tiny">tiny</a></li>
-<li><a href="https://emacs.stackexchange.com/questions/5632/how-to-input-number-series-with-appointed-amount-in-emacs">very gooood</a></li>
+<li><b>C-x C-k C-f</b> 例如 "- Step %d of 5:"</li>
+<li>按下 <b>F3</b> 开始宏记录</li>
+<li>再次按下 F3 开始插入第一个计数（默认为 0），按下 C-x C-k C-c 可以更改默认值</li>
+<li>按 return 键，到下一行</li>
+<li>按下 F4 结束宏记录</li>
+<li>然后多次按 F4 就可以了</li>
+<li>或者按 C-u &lt;次数&gt; F4</li>
 </ul>
 </div>
 </div>
+
 <div id="outline-container-org41a7a4f" class="outline-2">
 <h2 id="org41a7a4f">C-x r t string-rectangle</h2>
 <div class="outline-text-2" id="text-org41a7a4f">

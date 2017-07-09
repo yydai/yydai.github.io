@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-09 Sun 09:01 -->
+<!-- 2017-07-09 Sun 10:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的一些技巧</title>
@@ -567,6 +567,27 @@ Step 5 of 5: ...
 <li>然后多次按 F4 就可以了</li>
 <li>或者按 C-u &lt;次数&gt; F4</li>
 </ul>
+
+<p>
+根据这个我写了一个函数可以自动做这件事了：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">auto-sequence</span> <span style="color: #7388d6;">(</span>format start end<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"sSequence format is? </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">nEnter start number: </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">nEnter end number:"</span><span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">progn</span>
+      <span style="color: #909183;">(</span>kmacro-set-format format<span style="color: #909183;">)</span>
+      <span style="color: #909183;">(</span>kmacro-set-counter start<span style="color: #909183;">)</span>
+      <span style="color: #909183;">(</span><span style="color: #a020f0;">while</span> <span style="color: #709870;">(</span>&lt; start <span style="color: #907373;">(</span>+ 1 end<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span>execute-kbd-macro <span style="color: #907373;">(</span>read-kbd-macro <span style="color: #8b2252;">"&lt;f3&gt; RET"</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span><span style="color: #a020f0;">setq</span> start <span style="color: #907373;">(</span>+ 1 start<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+      <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+我们只需要提供 format, start number, end number 就可以了。
+</p>
 </div>
 </div>
 

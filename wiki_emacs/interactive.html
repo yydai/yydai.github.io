@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-08 Sat 23:13 -->
+<!-- 2017-07-10 Mon 18:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中 interactive 总结</title>
@@ -249,15 +249,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orge4bed3f">语法规则</a></li>
 <li><a href="#org561dea2">缺省或 <code>nil</code></a></li>
-<li><a href="#org11972d1">带 string 类型参数</a>
-<ul>
-<li><a href="#orge6d3d4b">P and b</a></li>
-<li><a href="#org6e724c3">n</a></li>
-<li><a href="#orgc9c8453">r</a></li>
-<li><a href="#org6ba07a9">a</a></li>
-<li><a href="#org51b0f52">s</a></li>
-</ul>
-</li>
+<li><a href="#org11972d1">带 string 类型参数</a></li>
 <li><a href="#org0627e23">传递一个 List</a></li>
 </ul>
 </li>
@@ -347,9 +339,7 @@ interactive 的使用主要是：
 </p>
 </div>
 
-<div id="outline-container-orge6d3d4b" class="outline-4">
-<h4 id="orge6d3d4b">P and b</h4>
-<div class="outline-text-4" id="text-orge6d3d4b">
+<ul class="org-ul"><li><a id="orge6d3d4b"></a>P and b<br /><div class="outline-text-4" id="text-orge6d3d4b">
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"P</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">bFrobnicate buffer: "</span><span style="color: #707183;">)</span>
 </pre>
@@ -376,12 +366,9 @@ interactive 的使用主要是：
 <p>
 <code>b</code> The name of an existing buffer. By default, uses the name of the current buffer
 </p>
-</div>
-</div>
+</div></li>
 
-<div id="outline-container-org6e724c3" class="outline-4">
-<h4 id="org6e724c3">n</h4>
-<div class="outline-text-4" id="text-org6e724c3">
+<li><a id="org6e724c3"></a>n<br /><div class="outline-text-4" id="text-org6e724c3">
 <p>
 以一个数字作为参数
 </p>
@@ -392,12 +379,9 @@ interactive 的使用主要是：
   <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Name: %d"</span> x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
-</div>
-</div>
+</div></li>
 
-<div id="outline-container-orgc9c8453" class="outline-4">
-<h4 id="orgc9c8453">r</h4>
-<div class="outline-text-4" id="text-orgc9c8453">
+<li><a id="orgc9c8453"></a>r<br /><div class="outline-text-4" id="text-orgc9c8453">
 <p>
 这个是表示这个函数要接受当前选中区域的开始和结束位置。<a href="http://tonyballantyne.com/tech/3-interactive-functions-that-work-on-regions/">这里</a> 有更多的例子。
 </p>
@@ -412,12 +396,9 @@ interactive 的使用主要是：
     <span style="color: #909183;">(</span>goto-char rStart<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>insert <span style="color: #8b2252;">"#+BEGIN_SRC emacs-lisp -n</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
-</div>
-</div>
+</div></li>
 
-<div id="outline-container-org6ba07a9" class="outline-4">
-<h4 id="org6ba07a9">a</h4>
-<div class="outline-text-4" id="text-org6ba07a9">
+<li><a id="org6ba07a9"></a>a<br /><div class="outline-text-4" id="text-org6ba07a9">
 <p>
 函数名称
 </p>
@@ -428,12 +409,9 @@ interactive 的使用主要是：
   <span style="color: #7388d6;">(</span>funcall x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
-</div>
-</div>
+</div></li>
 
-<div id="outline-container-org51b0f52" class="outline-4">
-<h4 id="org51b0f52">s</h4>
-<div class="outline-text-4" id="text-org51b0f52">
+<li><a id="org51b0f52"></a>s<br /><div class="outline-text-4" id="text-org51b0f52">
 <p>
 字符串
 </p>
@@ -443,8 +421,7 @@ interactive 的使用主要是：
     <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Hello %s"</span> name<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
-</div>
-</div>
+</div></li></ul>
 </div>
 
 <div id="outline-container-org0627e23" class="outline-3">

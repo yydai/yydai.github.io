@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-09 Sun 10:42 -->
+<!-- 2017-07-10 Mon 18:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的键盘宏</title>
@@ -257,7 +257,18 @@ for the JavaScript code in this tag.
 <h2 id="orgcea74de">如何使用键盘宏</h2>
 <div class="outline-text-2" id="text-orgcea74de">
 <p>
-一般来说，我们按下 &lt;F3&gt; 开始录制键盘宏，然后进行相应的操作，按下 &lt;F4&gt; 录制结束。
+一般来说，我们按下 &lt;F3&gt; 开始录制键盘宏，然后进行相应的操作，按下 &lt;F4&gt; 录制结束。然后按下 &lt;F4&gt; 执行录制的操作。
+如果想执行多次，可以这样:
+</p>
+<pre class="example">
+C-u &lt;times&gt; F4
+</pre>
+
+<p>
+上面的 F4 可以替换为 <b>C-x e</b> 它们的效果是一样的。
+</p>
+
+<p>
 例如，我有个需求是处理下面的几个文本：
 </p>
 <pre class="example">
@@ -280,6 +291,25 @@ aa bb cc dd ==&gt; "aa", "b", "cc", "dd"
 第 5 章
 </pre>
 
+<p>
+我写了一个函数，能够根据键盘宏来生成上面的序列：
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">auto-sequence</span> <span style="color: #7388d6;">(</span>format start end<span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"sSequence format: </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">nEnter start number: </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">nEnter end number: "</span><span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">progn</span>
+      <span style="color: #909183;">(</span>kmacro-set-format format<span style="color: #909183;">)</span>
+      <span style="color: #909183;">(</span>kmacro-set-counter start<span style="color: #909183;">)</span>
+      <span style="color: #909183;">(</span><span style="color: #a020f0;">while</span> <span style="color: #709870;">(</span>&lt; start <span style="color: #907373;">(</span>+ 1 end<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span>execute-kbd-macro <span style="color: #907373;">(</span>read-kbd-macro <span style="color: #8b2252;">"&lt;f3&gt; RET"</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span><span style="color: #a020f0;">setq</span> start <span style="color: #907373;">(</span>+ 1 start<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+      <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+例如, sequence format 我们可以输入 "第 %d 章"，start number 输入 1，end number 输入 5。
+</p>
 
 <p>
 类似这种有相同模式的操作，使用键盘宏处理起来非常的简单。
@@ -301,7 +331,6 @@ aa bb cc dd ==&gt; "aa", "b", "cc", "dd"
 </p>
 </div>
 </div>
-
 
 <div id="outline-container-org739af0c" class="outline-2">
 <h2 id="org739af0c">设置快捷键</h2>

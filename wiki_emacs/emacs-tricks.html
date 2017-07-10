@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-10 Mon 18:46 -->
+<!-- 2017-07-10 Mon 21:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的一些技巧</title>
@@ -247,12 +247,13 @@ for the JavaScript code in this tag.
 <li><a href="#org0320179">设置一个标记(Mark)</a></li>
 <li><a href="#org39775bd">快速的选中一行</a></li>
 <li><a href="#org38088be">org mode 发布网站的问题</a></li>
-<li><a href="#org81ffdcc">Apropos(!important)</a></li>
+<li><a href="#org7c5402b">Apropos</a></li>
 <li><a href="#orga4fc66d">跳到本行第一个非空格字符上</a></li>
 <li><a href="#org39c7fc6">特殊字符与数字键交换</a></li>
 <li><a href="#org0dd288b">在 Emacs 中禁用鼠标</a></li>
 <li><a href="#org8f609af">交换 C-w 和 M-w 的命令绑定</a></li>
 <li><a href="#org2eb6c59">截图</a></li>
+<li><a href="#orgebcbef7">拖拽图片到 Org mode</a></li>
 <li><a href="#org3498cee">Emacs 的键盘宏</a></li>
 <li><a href="#org1fc0cc9">new-line-and-indent</a></li>
 <li><a href="#org202b303">Butterfly</a></li>
@@ -315,26 +316,28 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org81ffdcc" class="outline-2">
-<h2 id="org81ffdcc">Apropos(!important)</h2>
-<div class="outline-text-2" id="text-org81ffdcc">
+<div id="outline-container-org7c5402b" class="outline-2">
+<h2 id="org7c5402b">Apropos</h2>
+<div class="outline-text-2" id="text-org7c5402b">
 <p>
-Finally,  there are two powerhouse commands that you’ll want to turn to
-when all else fails. For example, when you’re fairly certain that
-Emacs has commands for doing something, but aren’t able to find it
-using any of the usual methods. Say, you want to learn how to edit
-rectangular regions in Emacs, but can’t remember the commands. That’s
-where the apropos commands come in. Two important ones are <code>C-h a</code>, for
-<code>apropos-command</code>, and <code>C-h d</code>, for <code>apropos-documentation</code>.
+Finally, there are two powerhouse commands that you’ll want to
+turn to when all else fails. For example, when you’re fairly
+certain that Emacs has commands for doing something, but aren’t
+able to find it using any of the usual methods. Say, you want to
+learn how to edit rectangular regions in Emacs, but can’t remember
+the commands. That’s where the apropos commands come in. Two
+important ones are <code>C-h a</code>, for <code>apropos-command</code>, and <code>C-h d</code>, for
+<code>apropos-documentation</code>.
 </p>
 
 <p>
-For example, pressing <code>C-h a RET rectangle RET</code> will list all commands
-containing the string <code>rectangle</code>, along with their key bindings. Then
-you can quickly recall that the key binding for <code>kill-rectangle</code> is
- <code>C-x r k</code>, and that most of the other rectangle commands also begin with
-<code>C-x r</code>. Note that the “pattern” you provide to these <code>apropos</code> commands can
-also be a regular expression.
+For example, pressing <code>C-h a RET rectangle RET</code> will list all
+commands containing the string <code>rectangle</code>, along with their key
+bindings. Then you can quickly recall that the key binding for
+<code>kill-rectangle</code> is <code>C-x r k</code>, and that most of the other rectangle
+commands also begin with <code>C-x r</code>. Note that the “pattern” you
+provide to these <code>apropos</code> commands can also be a regular
+expression.
 </p>
 </div>
 </div>
@@ -504,6 +507,42 @@ also be a regular expression.
 </div>
 </div>
 </div>
+<div id="outline-container-orgebcbef7" class="outline-2">
+<h2 id="orgebcbef7">拖拽图片到 Org mode</h2>
+<div class="outline-text-2" id="text-orgebcbef7">
+<p>
+有时候想把电脑上的图片引入到 Org 中会比较繁琐，所以就想能不能直接拖进来呢？后来找了个函数，改了改：
+这个函数会把图片 copy 到当前目录的 imgs 子目录下，如果没有 imgs 需要先创建一个。当然，你可以改下面的函数来满足自己的需求。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">drag file to org mode</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">http://kitchingroup.cheme.cmu.edu/blog/2015/07/10/Drag-images-and-files-onto-org-mode-and-insert-a-link-to-them/</span>
+<span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">my-dnd-func</span> <span style="color: #7388d6;">(</span>event<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"e"</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>goto-char <span style="color: #909183;">(</span>nth 1 <span style="color: #709870;">(</span>event-start event<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>x-focus-frame nil<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">let*</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>payload <span style="color: #907373;">(</span>car <span style="color: #6276ba;">(</span>last event<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+         <span style="color: #709870;">(</span>type <span style="color: #907373;">(</span>car payload<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+         <span style="color: #709870;">(</span>fname <span style="color: #907373;">(</span>cadr payload<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+         <span style="color: #709870;">(</span>img-regexp <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">(</span><span style="color: #8b2252;">png</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">jp[e]?g</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">svg</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">)</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252;">&gt;"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span><span style="color: #a020f0;">cond</span>
+     <span style="color: #b22222;">;; </span><span style="color: #b22222;">insert image link</span>
+     <span style="color: #709870;">(</span><span style="color: #907373;">(</span><span style="color: #a020f0;">and</span>  <span style="color: #6276ba;">(</span>eq <span style="color: #a020f0;">'</span><span style="color: #008b8b;">drag-n-drop</span> <span style="color: #858580;">(</span>car event<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span>
+            <span style="color: #6276ba;">(</span>eq <span style="color: #a020f0;">'</span><span style="color: #008b8b;">file</span> type<span style="color: #6276ba;">)</span>
+            <span style="color: #6276ba;">(</span>string-match img-regexp fname<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+      <span style="color: #907373;">(</span>dired-copy-file fname <span style="color: #6276ba;">(</span>format <span style="color: #8b2252;">"./imgs/%s"</span> <span style="color: #858580;">(</span>file-name-nondirectory fname<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span> t<span style="color: #907373;">)</span>
+      <span style="color: #907373;">(</span>insert <span style="color: #8b2252;">"#+ATTR_HTML: :width 100%</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">"</span><span style="color: #907373;">)</span>
+      <span style="color: #907373;">(</span>insert <span style="color: #6276ba;">(</span>format <span style="color: #8b2252;">"[[%s]]"</span> <span style="color: #858580;">(</span>format <span style="color: #8b2252;">"./imgs/%s"</span> <span style="color: #80a880;">(</span>file-name-nondirectory fname<span style="color: #80a880;">)</span><span style="color: #858580;">)</span><span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+      <span style="color: #907373;">(</span>org-display-inline-images t t<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+     <span style="color: #b22222;">;; </span><span style="color: #b22222;">regular drag and drop on file</span>
+     <span style="color: #709870;">(</span>t
+      <span style="color: #907373;">(</span><span style="color: #ff0000; font-weight: bold;">error</span> <span style="color: #8b2252;">"I am not equipped for dnd on %s"</span> payload<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org3498cee" class="outline-2">
 <h2 id="org3498cee">Emacs 的键盘宏</h2>
 <div class="outline-text-2" id="text-org3498cee">

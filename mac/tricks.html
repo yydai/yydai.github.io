@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-10 Mon 18:46 -->
+<!-- 2017-07-12 Wed 01:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mac OS X tricks</title>
@@ -290,6 +290,28 @@ Change the keyboard behavior:
 <pre class="example">
 left option ⇒ +ESC
 </pre></li>
+
+<li><p>
+How to “Quit” the Finder in OS X
+</p>
+
+<p>
+Using those commands will be ok:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">defaults write com.apple.finder QuitMenuItem -bool true
+killall Finder
+</pre>
+</div>
+
+<p>
+To reverse this action, enter the following command:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">defaults write com.apple.finder QuitMenuItem -bool false
+killall Finder
+</pre>
+</div></li>
 </ol>
 </div>
 <div id="postamble" class="status">

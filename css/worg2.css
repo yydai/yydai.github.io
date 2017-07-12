@@ -32,35 +32,27 @@
     body pre.src {
       font-size: 15px;
     }
-}
 
 
-@media all
-{
-    html {
+    #table-of-contents {
+        float: right;
+        border: 1px solid #CCC;
+        max-width: 50%;
+        overflow: auto;
+        font-size: 10pt;
+        position: fixed;
+        right: 0em;
+        top: 0em;
         background: #fffbf8;
-        color: #585858;
-        padding: 17px;
-    }
-    body #content {
-        padding-top: 45px;
-    }
+        -webkit-box-shadow: 0 0 1em #777777;
+        -moz-box-shadow: 0 0 1em #777777;
+        -webkit-border-bottom-left-radius: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        text-align: right;
+        /* ensure doesn't flow off the screen when expanded */
+        max-height: 80%;
+        overflow: auto; }
 
-  /* TOC inspired by http://jashkenas.github.com/coffee-script */
-  #table-of-contents {
-    font-size: 10pt;
-    position: fixed;
-    right: 0em;
-    top: 0em;
-    background: #fffbf8;
-    -webkit-box-shadow: 0 0 1em #777777;
-    -moz-box-shadow: 0 0 1em #777777;
-    -webkit-border-bottom-left-radius: 5px;
-    -moz-border-radius-bottomleft: 5px;
-    text-align: right;
-    /* ensure doesn't flow off the screen when expanded */
-    max-height: 80%;
-    overflow: auto; }
     #table-of-contents h2 {
       font-size: 10pt;
       max-width: 8em;
@@ -76,6 +68,22 @@
       display: block;
       padding: 0.5em;
       margin-top: -1.5em; }
+}
+
+
+@media all
+{
+    html {
+        background: #fffbf8;
+        color: #585858;
+        padding: 17px;
+    }
+    body #content {
+        padding-top: 45px;
+    }
+
+  /* TOC inspired by http://jashkenas.github.com/coffee-script */
+
 
   #license {
     padding: .3em;
@@ -949,14 +957,6 @@
 
 } /* END OF @media all */
 
-@media screen
-{
-  #table-of-contents {
-    float: right;
-    border: 1px solid #CCC;
-    max-width: 50%;
-    overflow: auto;
-  }
 } /* END OF @media screen */
 
 body pre.src {

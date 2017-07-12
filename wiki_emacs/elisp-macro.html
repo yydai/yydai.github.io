@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-12 Wed 11:41 -->
+<!-- 2017-07-12 Wed 22:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中的宏</title>
@@ -341,7 +341,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">inc</span> <span style="color: #7388d6;">(</span>var<span style="color: #7388d6;">)</span>
     <span style="color: #7388d6;">(</span>list <span style="color: #a020f0;">'</span><span style="color: #008b8b;">setq</span> var <span style="color: #909183;">(</span>list <span style="color: #a020f0;">'</span><span style="color: #008b8b;">1+</span> var<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #707183;">(</span><span style="color: #a020f0;">inc</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">x</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>inc <span style="color: #a020f0;">'</span><span style="color: #008b8b;">x</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -364,7 +364,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> x 1<span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span>eval <span style="color: #7388d6;">(</span><span style="color: #a020f0;">inc</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">x</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  &#8658; &#32467;&#26524;&#20026; 2
+<span style="color: #707183;">(</span>eval <span style="color: #7388d6;">(</span>inc <span style="color: #a020f0;">'</span><span style="color: #008b8b;">x</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  &#8658; &#32467;&#26524;&#20026; 2
 </pre>
 </div>
 
@@ -383,7 +383,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 
 <div class="org-src-container">
 <pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> x 1<span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">inc</span> x<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>inc x<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
@@ -404,8 +404,8 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <span style="color: #707183;">(</span><span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">test2</span> <span style="color: #7388d6;">(</span>var<span style="color: #7388d6;">)</span>
     <span style="color: #7388d6;">(</span>list <span style="color: #a020f0;">'</span><span style="color: #008b8b;">message</span> <span style="color: #8b2252;">"%d %d"</span> var var<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 <span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> x 1<span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span>test1 <span style="color: #7388d6;">(</span><span style="color: #a020f0;">inc</span> x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#32467;&#26524;&#20026; "2 2"</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">test2</span> <span style="color: #7388d6;">(</span><span style="color: #a020f0;">inc</span> x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#32467;&#26524;&#20026; "2 3"</span>
+<span style="color: #707183;">(</span>test1 <span style="color: #7388d6;">(</span>inc x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#32467;&#26524;&#20026; "2 2"</span>
+<span style="color: #707183;">(</span>test2 <span style="color: #7388d6;">(</span>inc x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#32467;&#26524;&#20026; "2 3"</span>
 </pre>
 </div>
 <p>
@@ -423,7 +423,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 如果使用了 ` 所有的元素都是引起（quote）的，例如：
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #a020f0;">`</span><span style="color: #707183;">(</span><span style="color: #a020f0;">hello</span> world<span style="color: #707183;">)</span> <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#30456;&#24403;&#20110; (list 'hello 'world)</span>
+<pre class="src src-elisp"><span style="color: #a020f0;">`</span><span style="color: #707183;">(</span>hello world<span style="color: #707183;">)</span> <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#30456;&#24403;&#20110; (list 'hello 'world)</span>
 </pre>
 </div>
 

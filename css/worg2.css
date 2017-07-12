@@ -1,10 +1,21 @@
-@media all
-{
-    html {
-        background: #fffbf8;
-        color: #585858;
-        padding: 17px;
+@media screen and (max-width: 600px) and (min-width: 200px){
+    body {
+        font-family: "PT Mono", Courier, Helvetica, Arial, Vernada, Tahoma, STFangsong, STXihei, "Songti SC", "Microsoft YaHei", Heiti, sans-serif;
+        font-size: 10px;
+        line-height: 150%;
     }
+
+    body .title {
+        font-size: 10px;
+        text-align: center;
+    }
+
+    body pre.src {
+      font-size: 8px;
+    }
+}
+
+@media screen and (min-width: 800px) {
     body {
         font-family: "PT Mono", Courier, Helvetica, Arial, Vernada, Tahoma, STFangsong, STXihei, "Songti SC", "Microsoft YaHei", Heiti, sans-serif;
         font-size: 18px;
@@ -13,11 +24,25 @@
         width: 70%;
         line-height: 150%;
     }
-    body #content {
-        padding-top: 45px;
-    }
+
     body .title {
         margin-left: 120px;
+    }
+
+    body pre.src {
+      font-size: 15px;
+    }
+}
+
+@media all
+{
+    html {
+        background: #fffbf8;
+        color: #585858;
+        padding: 17px;
+    }
+    body #content {
+        padding-top: 45px;
     }
 
   /* TOC inspired by http://jashkenas.github.com/coffee-script */
@@ -923,8 +948,6 @@
 
 } /* END OF @media all */
 
-
-
 @media screen
 {
   #table-of-contents {
@@ -937,7 +960,6 @@
 
 body pre.src {
     overflow-y: auto !important;
-    font-size: 16px;
 }
 body code {
     background: #eee;

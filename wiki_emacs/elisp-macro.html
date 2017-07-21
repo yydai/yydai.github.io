@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-13 Thu 00:17 -->
+<!-- 2017-07-21 Fri 09:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中的宏</title>
@@ -249,6 +249,7 @@ for the JavaScript code in this tag.
 <li><a href="#org0b25e30">函数和宏</a></li>
 <li><a href="#orga9e2aa9">反引用</a></li>
 <li><a href="#orgc15c668">生成宏的宏</a></li>
+<li><a href="#orgf0c44b1">一个实际应用</a></li>
 <li><a href="#org046584e">参考</a></li>
 </ul>
 </div>
@@ -471,6 +472,44 @@ indent 的类型比较简单，它可以使用这样几种类型：
 </div>
 </div>
 
+<div id="outline-container-orgf0c44b1" class="outline-2">
+<h2 id="orgf0c44b1">一个实际应用</h2>
+<div class="outline-text-2" id="text-orgf0c44b1">
+<p>
+下面这段代码来自于 prelude 的配置。我们从这里能够很好的学到宏的使用方法，以及在何时使用威力更大。
+在 SICP 中讲到了高阶程式（higher-order procedures），这段代码其实就是很好的一个范例。所谓的高阶程式，其实就是处理或操作其他程式的程式。
+</p>
+
+<p>
+下面的代码其实就是通过宏来生成 3 个搜索函数。它们的区别仅仅在于 url 和提示信息不同，其他完全相同。它的优点不言而喻，极大的减少了无聊重复的代码；另外一个优点是它的扩展性很强，我们可以任意的添加其它的搜索函数。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">prelude-search</span> <span style="color: #7388d6;">(</span>query-url prompt<span style="color: #7388d6;">)</span>
+  <span style="color: #8b2252;">"Open the search url constructed with the QUERY-URL.</span>
+<span style="color: #8b2252;">PROMPT sets the `read-string prompt."</span>
+  <span style="color: #7388d6;">(</span>browse-url
+   <span style="color: #909183;">(</span>concat query-url
+           <span style="color: #709870;">(</span>url-hexify-string
+            <span style="color: #907373;">(</span><span style="color: #a020f0;">if</span> mark-active
+                <span style="color: #6276ba;">(</span>buffer-substring <span style="color: #858580;">(</span>region-beginning<span style="color: #858580;">)</span> <span style="color: #858580;">(</span>region-end<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span>
+              <span style="color: #6276ba;">(</span>read-string prompt<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">prelude-install-search-engine</span> <span style="color: #7388d6;">(</span>search-engine-name search-engine-url search-engine-prompt<span style="color: #7388d6;">)</span>
+  <span style="color: #8b2252;">"Given some information regarding a search engine, install the interactive command to search through them"</span>
+  <span style="color: #a020f0;">`</span><span style="color: #7388d6;">(</span><span style="color: #a020f0;">defun</span> ,<span style="color: #909183;">(</span>intern <span style="color: #709870;">(</span>format <span style="color: #8b2252;">"prelude-%s"</span> search-engine-name<span style="color: #709870;">)</span><span style="color: #909183;">)</span> <span style="color: #909183;">()</span>
+     ,<span style="color: #909183;">(</span>format <span style="color: #8b2252;">"Search %s with a query or region if any."</span> search-engine-name<span style="color: #909183;">)</span>
+     <span style="color: #909183;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #909183;">)</span>
+     <span style="color: #909183;">(</span>prelude-search ,search-engine-url ,search-engine-prompt<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+
+<span style="color: #707183;">(</span><span style="color: #a020f0;">prelude-install-search-engine</span> <span style="color: #8b2252;">"google"</span>     <span style="color: #8b2252;">"http://www.google.com/search?q="</span>              <span style="color: #8b2252;">"Google: "</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #a020f0;">prelude-install-search-engine</span> <span style="color: #8b2252;">"youtube"</span>    <span style="color: #8b2252;">"http://www.youtube.com/results?search_query="</span> <span style="color: #8b2252;">"Search YouTube: "</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #a020f0;">prelude-install-search-engine</span> <span style="color: #8b2252;">"github"</span>     <span style="color: #8b2252;">"https://github.com/search?q="</span>                 <span style="color: #8b2252;">"Search GitHub: "</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
 <div id="outline-container-org046584e" class="outline-2">
 <h2 id="org046584e">参考</h2>
 <div class="outline-text-2" id="text-org046584e">

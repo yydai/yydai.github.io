@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-13 Thu 18:27 -->
+<!-- 2017-07-22 Sat 12:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git 的内部原理</title>
@@ -187,7 +187,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -249,6 +249,7 @@ for the JavaScript code in this tag.
 <li><a href="#org36cafc0">tree (树) 对象</a></li>
 <li><a href="#org469cbc7">commit (提交) 对象</a></li>
 <li><a href="#orgca1e881">对象存储</a></li>
+<li><a href="#orgfd04fb1">Read more</a></li>
 </ul>
 </li>
 <li><a href="#orgf9fa79f">内容来源</a></li>
@@ -617,6 +618,44 @@ Date:   Fri May 22 18:09:34 2009 -0700
 如果你按照以上描述进行了操作，可以得到如图所示的对象图。
 </p>
 
+<p>
+例如：
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git cat-file -t c0cab538b970a37ea1e769cbbde608743bc96d
+
+&#32467;&#26524;&#20026;&#65306;
+commit
+</pre>
+</div>
+
+<p>
+我们使用 git cat-file -t 命令，可以判断类型的种类有 blob, tree, commit, tag。
+</p>
+
+<p>
+其中如果看下对象的内容
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git cat-file -p c0cab538b970a37ea1e769cbbde608743bc96d
+</pre>
+</div>
+
+<p>
+结果为：
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">tree b71f9a25a5252c57f3c376d16576f38a9ad94d94
+parent 859da6eaa386a2d5c163fdf42ef11dc23fad384e
+author Ying Dai <a href="mailto:yingdai123%40gmail.com">&lt;yingdai123@gmail.com&gt;</a> 1500094034 +0800
+committer Ying Dai <a href="mailto:yingdai123%40gmail.com">&lt;yingdai123@gmail.com&gt;</a> 1500094034 +0800
+</pre>
+</div>
+
+<p>
+其中包括这个 commit 指向的 tree 以及它的 parent。
+</p>
+
 
 <div class="figure">
 <p><img src="./imgs/20170713_181820_45892Ak0.png" alt="20170713_181820_45892Ak0.png" width="80%" />
@@ -693,8 +732,27 @@ Git 用 zlib 对数据内容进行压缩，在 Ruby 中可以用 zlib 库来实�
 </p>
 </div>
 </div>
-</div>
 
+
+
+<div id="outline-container-orgfd04fb1" class="outline-3">
+<h3 id="orgfd04fb1">Read more</h3>
+<div class="outline-text-3" id="text-orgfd04fb1">
+<ul class="org-ul">
+<li><a href="http://teohm.com/blog/learning-git-internals-by-example/">http://teohm.com/blog/learning-git-internals-by-example/</a></li>
+<li><a href="https://medium.com/@pawan_rawal/demystifying-git-internals-a004f0425a70">https://medium.com/@pawan_rawal/demystifying-git-internals-a004f0425a70</a></li>
+<li><a href="https://www.linkedin.com/pulse/git-internals-how-works-kaushik-rangadurai">https://www.linkedin.com/pulse/git-internals-how-works-kaushik-rangadurai</a></li>
+<li><a href="http://eagain.net/articles/git-for-computer-scientists/">http://eagain.net/articles/git-for-computer-scientists/</a></li>
+<li><a href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing">https://www.atlassian.com/git/tutorials/merging-vs-rebasing</a></li>
+<li><a href="https://codewords.recurse.com/issues/two/git-from-the-inside-out">https://codewords.recurse.com/issues/two/git-from-the-inside-out</a></li>
+<li><a href="https://wildlyinaccurate.com/a-hackers-guide-to-git/#introduction">https://wildlyinaccurate.com/a-hackers-guide-to-git/#introduction</a></li>
+<li><a href="http://ftp.newartisans.com/pub/git.from.bottom.up.pdf">http://ftp.newartisans.com/pub/git.from.bottom.up.pdf</a></li>
+<li><a href="http://opcode.org/peepcode-git.pdf">http://opcode.org/peepcode-git.pdf</a></li>
+<li><a href="http://blog.vmsplice.net/2016/05/git-internals-of-how-objects-are-stored.html">http://blog.vmsplice.net/2016/05/git-internals-of-how-objects-are-stored.html</a></li>
+</ul>
+</div>
+</div>
+</div>
 
 <div id="outline-container-orgf9fa79f" class="outline-2">
 <h2 id="orgf9fa79f">内容来源</h2>

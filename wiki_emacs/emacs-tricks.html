@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-13 Thu 00:17 -->
+<!-- 2017-07-21 Fri 23:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的一些技巧</title>
@@ -187,7 +187,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -262,6 +262,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgd162667">MULTIPLE CURSORS</a></li>
 <li><a href="#orgf6eb023">xah math input (here)</a></li>
 <li><a href="#org12148a9">自动在中英文之间添加空格</a></li>
+<li><a href="#orgb5fcabe">禁用特定模式下的快捷键绑定</a></li>
 </ul>
 </div>
 </div>
@@ -401,6 +402,7 @@ expression.
    mapping<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
 <span style="color: #707183;">(</span>remap-keyboard *unshifted-special-chars-layout*<span style="color: #707183;">)</span>
+
 </pre>
 </div>
 
@@ -441,6 +443,7 @@ expression.
       <span style="color: #709870;">(</span><span style="color: #a020f0;">let</span> <span style="color: #907373;">(</span><span style="color: #6276ba;">(</span>k <span style="color: #858580;">(</span>format <span style="color: #8b2252;">"%s%s-%s"</span> prefix type n<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
         <span style="color: #907373;">(</span>define-key disable-mouse-mode-map
           <span style="color: #6276ba;">(</span>vector <span style="color: #858580;">(</span>intern k<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span> <span style="color: #a020f0;">#'</span><span style="color: #008b8b;">ignore</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 </div>
@@ -691,6 +694,18 @@ Click <a href="https://github.com/magnars/multiple-cursors.el">this</a>.
 <p>
 我们可以使用 <a href="https://github.com/coldnew/pangu-spacing">pangu-spacing</a> 这个 package。
 </p>
+</div>
+</div>
+<div id="outline-container-orgb5fcabe" class="outline-2">
+<h2 id="orgb5fcabe">禁用特定模式下的快捷键绑定</h2>
+<div class="outline-text-2" id="text-orgb5fcabe">
+<p>
+例如，下面这个禁用了 org mode 默认的快捷键绑定，然后使用自己设置的快捷键绑定。
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>define-key org-mode-map <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"C-,"</span><span style="color: #7388d6;">)</span> nil<span style="color: #707183;">)</span>
+</pre>
+</div>
 </div>
 </div>
 </div>

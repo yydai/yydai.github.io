@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-21 Fri 23:25 -->
+<!-- 2017-07-23 Sun 05:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的一些技巧</title>
@@ -263,6 +263,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgf6eb023">xah math input (here)</a></li>
 <li><a href="#org12148a9">自动在中英文之间添加空格</a></li>
 <li><a href="#orgb5fcabe">禁用特定模式下的快捷键绑定</a></li>
+<li><a href="#org7fb7126">&amp;key</a></li>
 </ul>
 </div>
 </div>
@@ -704,6 +705,20 @@ Click <a href="https://github.com/magnars/multiple-cursors.el">this</a>.
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>define-key org-mode-map <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"C-,"</span><span style="color: #7388d6;">)</span> nil<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7fb7126" class="outline-2">
+<h2 id="org7fb7126">&amp;key</h2>
+<div class="outline-text-2" id="text-org7fb7126">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun*</span> hello <span style="color: #7388d6;">(</span><span style="color: #228b22;">&amp;key</span> a b c<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>message <span style="color: #909183;">(</span>format <span style="color: #8b2252;">"%s-%s-%s"</span> a b c<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>hello <span style="color: #483d8b;">:a</span> 1
+       <span style="color: #483d8b;">:b</span> 2
+       <span style="color: #483d8b;">:c</span> 3<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-13 Thu 18:21 -->
+<!-- 2017-07-29 Sat 22:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SICP sicp</title>
@@ -187,7 +187,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -434,6 +434,7 @@ We can write it to the following form as pretty-printing:
          <span style="color: #709870;">(</span>+ 3 5<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
    <span style="color: #7388d6;">(</span>+ <span style="color: #909183;">(</span>- 10 7<span style="color: #909183;">)</span>
       6<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 </div></li>
@@ -449,6 +450,7 @@ In the Scheme, we name things with <code>define</code> .
 size
 
 <span style="color: #707183;">(</span>* 5 size<span style="color: #707183;">)</span>
+
 </pre>
 </div>
 
@@ -609,6 +611,7 @@ positive, negative, or zero.
     <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>&lt; x 0<span style="color: #909183;">)</span>
         <span style="color: #909183;">(</span>- x<span style="color: #909183;">)</span>
         x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 
@@ -1177,6 +1180,7 @@ number is prime. -From Wikipedia
 
 <span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">prime?</span> n<span style="color: #7388d6;">)</span>
     <span style="color: #7388d6;">(</span>= n <span style="color: #909183;">(</span>smallest-divisor n<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 
@@ -1591,6 +1595,7 @@ Data objects constructed from pairs are called list-structured data.
 
 <span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #0000ff;">one-third</span> <span style="color: #7388d6;">(</span>make-rat 1 3<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 <span style="color: #707183;">(</span>print-rat <span style="color: #7388d6;">(</span>add-rat one-half one-third<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 <p>
@@ -1684,6 +1689,7 @@ is equivalent to
         <span style="color: #909183;">(</span>cons . . .
             <span style="color: #709870;">(</span>cons <span style="color: #907373;">&#10216;</span>an<span style="color: #907373;">&#10217;</span>
                 nil<span style="color: #709870;">)</span>. . .<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 
@@ -1815,6 +1821,7 @@ Another way to think of sequences whose elements are sequences is as trees.
 4
 <span style="color: #707183;">(</span>list x x<span style="color: #707183;">)</span>
 <span style="color: #707183;">(</span><span style="color: #7388d6;">(</span><span style="color: #909183;">(</span>1 2<span style="color: #909183;">)</span> 3 4<span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span><span style="color: #909183;">(</span>1 2<span style="color: #909183;">)</span> 3 4<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 
@@ -1909,6 +1916,7 @@ Accumulations can be implemented by
                     <span style="color: #709870;">(</span><span style="color: #a020f0;">map</span> <span style="color: #907373;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #6276ba;">(</span>j<span style="color: #6276ba;">)</span> <span style="color: #6276ba;">(</span>list i j<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
                         <span style="color: #907373;">(</span>enumerate-interval 1 <span style="color: #6276ba;">(</span>- i 1<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
                  <span style="color: #909183;">(</span>enumerate-interval 1 n<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 </div></li>
@@ -1948,6 +1956,7 @@ The answer will be 0, if 4 or 5 is an integer.
 </p>
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span>/ <span style="color: #7388d6;">(</span>+ 5 4 <span style="color: #909183;">(</span>- 2 <span style="color: #709870;">(</span>- 3 <span style="color: #907373;">(</span>+ 6 <span style="color: #6276ba;">(</span>/ 4 5<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span>* 3 <span style="color: #909183;">(</span>- 6 2<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>- 2 7<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 </div></li>
@@ -1963,6 +1972,7 @@ Find a more simple way to do this.
   <span style="color: #7388d6;">(</span><span style="color: #a020f0;">cond</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span><span style="color: #a020f0;">and</span> <span style="color: #907373;">(</span>&lt; a b<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>&lt; a c<span style="color: #907373;">)</span><span style="color: #709870;">)</span> <span style="color: #709870;">(</span>square-two b c<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
         <span style="color: #909183;">(</span><span style="color: #709870;">(</span><span style="color: #a020f0;">and</span> <span style="color: #907373;">(</span>&lt; b a<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>&lt; b c<span style="color: #907373;">)</span><span style="color: #709870;">)</span> <span style="color: #709870;">(</span>square-two a c<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
         <span style="color: #909183;">(</span><span style="color: #a020f0;">else</span> <span style="color: #709870;">(</span>square-two a b<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 </div></li>
@@ -2073,6 +2083,7 @@ The cube root
 
 <span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">good-enough?</span> guess x<span style="color: #7388d6;">)</span>
     <span style="color: #7388d6;">(</span>&lt; <span style="color: #909183;">(</span>abs <span style="color: #709870;">(</span>- <span style="color: #907373;">(</span>* guess guess guess<span style="color: #907373;">)</span> x<span style="color: #709870;">)</span><span style="color: #909183;">)</span> 0.01<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 
@@ -2086,6 +2097,7 @@ How to the \(N_th\) root, visit <a href="https://en.wikipedia.org/wiki/Nth_root_
 <div class="org-src-container">
 <pre class="src src-scheme"><span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">+</span> a b<span style="color: #7388d6;">)</span>
     <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>= a 0<span style="color: #909183;">)</span> b <span style="color: #909183;">(</span>inc <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span>dec a<span style="color: #907373;">)</span> b<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 
@@ -2223,6 +2235,7 @@ I can't understand this problem.
         1
         <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>pascal <span style="color: #907373;">(</span>- row 1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>- col 1<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
            <span style="color: #709870;">(</span>pascal <span style="color: #907373;">(</span>- row 1<span style="color: #907373;">)</span> col<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 </div></li>
@@ -2464,6 +2477,7 @@ The multiplication expression evaluates expmod twice, resulting in binary proces
 <span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">inc</span> x<span style="color: #7388d6;">)</span> <span style="color: #7388d6;">(</span>+ 1 x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
 <span style="color: #707183;">(</span>sum identity 1 inc 10<span style="color: #707183;">)</span>
+
 </pre>
 </div>
 </div></li>
@@ -2530,6 +2544,7 @@ The multiplication expression evaluates expmod twice, resulting in binary proces
 
 <span style="color: #707183;">(</span><span style="color: #a020f0;">define</span> <span style="color: #7388d6;">(</span><span style="color: #0000ff;">product</span> term a next b<span style="color: #7388d6;">)</span>
     <span style="color: #7388d6;">(</span>accumulate * 1 term a next b<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 </div></li>
@@ -2638,6 +2653,7 @@ Look at <a href="https://github.com/sarabander/p2pu-sicp/blob/master/1.3/Ex1.35.
        <span style="color: #709870;">(</span>y2 <span style="color: #907373;">(</span>y-point end<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
       <span style="color: #909183;">(</span>make-point <span style="color: #709870;">(</span>average x1 x2<span style="color: #709870;">)</span>
           <span style="color: #709870;">(</span>average y1 y2<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
 </pre>
 </div>
 </div></li>

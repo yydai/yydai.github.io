@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-25 Tue 20:50 -->
+<!-- 2017-07-29 Sat 11:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mac OS X tricks</title>
@@ -337,6 +337,53 @@ This works in bash or zsh. In other shell, you must explicit name .bashrc to sou
 <pre class="src src-shell"><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">vimbashrc</span>=<span style="color: #8b2252;">'vim ~/.bashrc &amp;&amp; source ~/.bashrc'</span>
 </pre>
 </div></li>
+
+<li><p>
+Auto add, commit, and push a repo with one command
+</p>
+
+<p>
+When Ι push a repo to github, Ι always do the job with the following commands:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git add .
+git commit -m <span style="color: #8b2252;">"the commit message"</span>
+git push origin master
+</pre>
+</div>
+
+<p>
+I feel very tedious about this work, so I need a shell command to do this:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #0000ff;">auto_push</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+    git add .
+    <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$1"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
+        <span style="color: #a0522d;">desc</span>=<span style="color: #8b2252;">"Auto commit"</span>
+    <span style="color: #a020f0;">else</span>
+        <span style="color: #a0522d;">desc</span>=<span style="color: #8b2252;">"$1"</span>
+    <span style="color: #a020f0;">fi</span>
+
+    git commit -m <span style="color: #8b2252;">"$desc"</span>
+    git push origin master
+<span style="color: #707183;">}</span>
+<span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">push</span>=<span style="color: #8b2252;">'auto_push'</span>
+</pre>
+</div>
+
+<p>
+Now, we can use the command <b>push</b> to push any git repo to origin master.
+And the usage is:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">push <span style="color: #b22222;"># </span><span style="color: #b22222;">with default message of "Auto commit"</span>
+push <span style="color: #8b2252;">"&lt;commit message&gt;"</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">commit with a message</span>
+</pre>
+</div>
+
+<p>
+Now, it's much better.
+</p></li>
 </ol>
 </div>
 <div id="postamble" class="status">

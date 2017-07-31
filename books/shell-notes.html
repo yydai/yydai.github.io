@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-31 Mon 11:08 -->
+<!-- 2017-07-31 Mon 11:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>读书那些年</title>
+<title>shell 学习笔记</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,43 +239,96 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">读书那些年</h1>
+<h1 class="title">shell 学习笔记</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgcc163c8">2017</a></li>
+<li><a href="#org89748fb">case</a></li>
+<li><a href="#org3d2d473">awk</a></li>
+<li><a href="#org3004d88">sed</a></li>
+<li><a href="#orga5706e7">grep</a></li>
 </ul>
 </div>
 </div>
-<hr />
-<blockquote>
-<p>
-<i>读书患不多，思义患不明。患足己不学，既学患不行 &#x2013;韩愈《劝学诗》</i>
-</p>
-</blockquote>
 <hr />
 
-<div id="outline-container-orgcc163c8" class="outline-2">
-<h2 id="orgcc163c8">2017</h2>
-<div class="outline-text-2" id="text-orgcc163c8">
-<ul class="org-ul">
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/mastering-emacs.org">Mastering Emacs</a> &check; &diams;</li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/writing-gnu-emacs-extentions.org">Writing GNU Emacs Extensions</a> &check; &diams;</li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/emacs-lisp-tutorial.org">Emacs Lisp 简明教程</a></li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/%E5%BF%85%E7%84%B6.org">必然</a></li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0.org">算法笔记</a> &diams;</li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A.org">SQL 必知必会</a> &#9786;</li>
-<li>异类</li>
-<li><a href="./sicp.html">SICP</a></li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97.org">解忧杂货店</a> &check;</li>
-<li>了不起的盖茨比</li>
-<li>大明王朝 1566</li>
-<li><a href="./effective-python.html">Effective Python</a></li>
-<li><a href="./the-elements-of-style.html">The Elements of Style</a></li>
-<li><a href="./shell-notes.html">shell 学习笔记</a></li>
-</ul>
+<p>
+这里主要通过例子来学习。
+</p>
+
+<div id="outline-container-org89748fb" class="outline-2">
+<h2 id="org89748fb">case</h2>
+<div class="outline-text-2" id="text-org89748fb">
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #a020f0;">case</span> &#20540;<span style="color: #a020f0;"> in</span>
+&#27169;&#24335; 1<span style="color: #88090B;">)</span>
+    command1
+    command2
+    command3
+    ;;
+&#27169;&#24335; 2<span style="color: #88090B;">&#65289;</span>
+    command1
+    command2
+    command3
+    ;;
+*)
+    command1
+    command2
+    command3
+    ;;
+<span style="color: #a020f0;">esac</span>
+</pre>
 </div>
+
+<p>
+;; 与其他语言中的 break 类似
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #a0522d;">option</span>=<span style="color: #8b2252;">"${1}"</span>
+<span style="color: #a020f0;">case</span> $<span style="color: #707183;">{</span><span style="color: #a0522d;">option</span><span style="color: #707183;">}</span> <span style="color: #a020f0;">in</span>
+   -f) <span style="color: #a0522d;">FILE</span>=<span style="color: #8b2252;">"${2}"</span>
+      <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"File name is $FILE"</span>
+      ;;
+   -d) <span style="color: #a0522d;">DIR</span>=<span style="color: #8b2252;">"${2}"</span>
+      <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"Dir name is $DIR"</span>
+      ;;
+   *)
+      <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"`basename ${0}`:usage: [-f file] | [-d directory]"</span>
+      <span style="color: #a020f0;">exit</span> 1 <span style="color: #b22222;"># </span><span style="color: #b22222;">Command to come out of the program with status 1</span>
+      ;;
+<span style="color: #a020f0;">esac</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org3d2d473" class="outline-2">
+<h2 id="org3d2d473">awk</h2>
+<div class="outline-text-2" id="text-org3d2d473">
+<p>
+awk 的强大与复杂让人又爱又恨。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">awk <span style="color: #707183;">[</span>-F field-separator <span style="color: #707183;">]</span> &#8216;commands&#8217; input-file<span style="color: #707183;">(</span>s<span style="color: #707183;">)</span>
+awk -F = <span style="color: #8b2252;">'{if($1~/b_path/) print $2}'</span> /Users/yingdai/.config/zsh-command/path.config
+awk -F = <span style="color: #8b2252;">'{if($1=="b_path") print $2}'</span> /Users/yingdai/.config/zsh-command/path.config
+&#8658; <span style="color: #8b2252;">'/Users/yingdai/workspace/blog/public_html'</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org3004d88" class="outline-2">
+<h2 id="org3004d88">sed</h2>
+</div>
+
+<div id="outline-container-orga5706e7" class="outline-2">
+<h2 id="orga5706e7">grep</h2>
 </div>
 </div>
 <div id="postamble" class="status">

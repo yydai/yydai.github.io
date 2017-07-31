@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-29 Sat 11:34 -->
+<!-- 2017-07-30 Sun 01:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mac OS X tricks</title>
@@ -382,7 +382,48 @@ push <span style="color: #8b2252;">"&lt;commit message&gt;"</span> <span style="
 </div>
 
 <p>
-Now, it's much better.
+And, If I want to use the push command, I need to cd the project dir.
+I want do that, so I write a function like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #0000ff;">read_config</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+    <span style="color: #a0522d;">config</span>=<span style="color: #8b2252;">"~/.config/zsh-command/path.config"</span>
+    <span style="color: #483d8b;">source</span> $<span style="color: #a0522d;">config</span>
+
+    <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$1"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
+        auto_push
+    <span style="color: #a020f0;">elif</span> ! cat $<span style="color: #a0522d;">config</span> | grep <span style="color: #8b2252;">"$1"</span> &gt; /dev/null; <span style="color: #a020f0;">then</span>
+        <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"Push in current dir"</span>
+        auto_push $<span style="color: #a0522d;">2</span>
+    <span style="color: #a020f0;">else</span>
+        <span style="color: #a0522d;">temp</span>=$<span style="color: #7388d6;">{</span><span style="color: #a0522d;">1</span><span style="color: #7388d6;">}</span>_path
+        <span style="color: #b22222;"># </span><span style="color: #b22222;">https://superuser.com/questions/935374/difference-between-and-in-shell-script</span>
+        <span style="color: #b22222;"># </span><span style="color: #b22222;">https://unix.stackexchange.com/questions/68035/foo-and-zsh</span>
+        <span style="color: #483d8b;">pushd</span> $<span style="color: #7388d6;">{</span><span style="color: #909183;">(</span>P<span style="color: #909183;">)</span>temp<span style="color: #7388d6;">}</span> &gt; /dev/null <span style="color: #b22222;"># </span><span style="color: #b22222;">we use pushd instead of cd</span>
+        auto_push $<span style="color: #a0522d;">2</span>
+        <span style="color: #483d8b;">popd</span> &gt; /dev/null
+    <span style="color: #a020f0;">fi</span>
+<span style="color: #707183;">}</span>
+
+<span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">push</span>=<span style="color: #8b2252;">"read_config"</span>
+</pre>
+</div>
+
+<p>
+And the path.config file:
+</p>
+<pre class="example">
+blog_path='~/workspace/blog/public_html'
+emacs_path='~/.emacs.d'
+</pre>
+
+<p>
+Comparing with the first version of push, this is more better.
+</p>
+
+<p>
+Now, we can use the command like <b>push blog &lt;optional message&gt;</b> to do the job without using cd command.
 </p></li>
 </ol>
 </div>

@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-31 Mon 10:12 -->
+<!-- 2017-07-31 Mon 10:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mac OS X tricks</title>
+<title>自动化 Git push</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,154 +239,100 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Mac OS X tricks</h1>
+<h1 class="title">自动化 Git push</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org48c6201">背景</a></li>
+<li><a href="#orgdf25d84">实现</a></li>
+<li><a href="#org310a2af">改进</a></li>
+</ul>
+</div>
+</div>
 <hr />
-<ol class="org-ol">
-<li><p>
-How can I make auto-hide/show for the dock faster? (from <a href="https://apple.stackexchange.com/questions/33600/how-can-i-make-auto-hide-show-for-the-dock-faster">here</a>)
-</p>
 
-<pre class="example">
-defaults write com.apple.dock autohide-time-modifier -int 0;killall Dock
-</pre></li>
-
-<li><p>
-<b>open</b> command can let you open file and url in terminal
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">open . <span style="color: #b22222;"># </span><span style="color: #b22222;">will open the current folder in finder</span>
-open ./XXX.md <span style="color: #b22222;"># </span><span style="color: #b22222;">will open the markdown file with the default editor</span>
-open http://www.baidu.com
-open -a dash <span style="color: #b22222;"># </span><span style="color: #b22222;">open a application of dash</span>
-oepn *.png <span style="color: #b22222;"># </span><span style="color: #b22222;">open all the png images</span>
-</pre>
-</div></li>
-
-<li><p>
-<b>say</b> command
-</p>
-
+<div id="outline-container-org48c6201" class="outline-2">
+<h2 id="org48c6201">背景</h2>
+<div class="outline-text-2" id="text-org48c6201">
 <p>
-You can let your Mac speaking,
+我在使用 Git 时，如果要提交代码到远程仓库，我经常会这样做：
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">say <span style="color: #8b2252;">"Hello world"</span>
-say -f &lt;file&gt;
+<pre class="src src-shell"><span style="color: #483d8b;">cd</span> &lt;target directory&gt;
+git add .
+git commit -m <span style="color: #8b2252;">"commit message"</span>
+git push
 </pre>
-</div></li>
-
-<li><p>
-Setting iterm2
+</div>
+<p>
+注：如果想在一个分支中直接使用 git push，要保证使用过 <b>git push &#x2013;set-upstream origin &lt;branch_name&gt;</b> 。
 </p>
 
 <p>
-This setting will let you use the Emacs keybindings.
+这些命令模式固定而且繁琐，终于有一天我忍受不了了。
+所以我的目标是把这些操作简化为一条命令。
 </p>
 
 <p>
-Change the keyboard behavior:
+最终的成果如下：
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">push                <span style="color: #b22222;"># </span><span style="color: #b22222;">default message in current directory</span>
+push <span style="color: #8b2252;">"message"</span>      <span style="color: #b22222;"># </span><span style="color: #b22222;">push with specified message in current directory</span>
+push blog           <span style="color: #b22222;"># </span><span style="color: #b22222;">default message in the directory of blog</span>
+push blog <span style="color: #8b2252;">"message"</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">push with specified directory and message</span>
+</pre>
+</div>
+
+<p>
+上面的 blog 是我的配置文件中的一条配置，它其实就是一个目录：
 </p>
 <pre class="example">
-left option ⇒ +ESC
-</pre></li>
-
-<li><p>
-How to “Quit” the Finder in OS X
-Using those commands will be ok:
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">defaults write com.apple.finder QuitMenuItem -bool true
-killall Finder
+blog_path='~/workspace/blog/public_html'
 </pre>
 </div>
-
-<p>
-To reverse this action, enter the following command:
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">defaults write com.apple.finder QuitMenuItem -bool false
-killall Finder
-</pre>
-</div></li>
-
-<li><p>
-Configure bash and/or vim to execute source ~/.bashrc everytime I finish editing it
-</p>
-
-<p>
-The direct way to do it:
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">vim ~/.bashrc &amp;&amp; <span style="color: #483d8b;">source</span> $<span style="color: #a0522d;">_</span>
-</pre>
 </div>
 
-<p>
-You can make an alias:
-</p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">vimbashrc</span>=<span style="color: #8b2252;">'vim ~/.bashrc &amp;&amp; source $_'</span>
-</pre>
-</div>
-
-<p>
-This works in bash or zsh. In other shell, you must explicit name .bashrc to source to make it work:
-</p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">vimbashrc</span>=<span style="color: #8b2252;">'vim ~/.bashrc &amp;&amp; source ~/.bashrc'</span>
-</pre>
-</div></li>
-
-<li><p>
-Auto add, commit, and push a repo with one command
-</p>
-
-<p>
-When Ι push a repo to github, Ι always do the job with the following commands:
-</p>
-<div class="org-src-container">
-<pre class="src src-shell">git add .
-git commit -m <span style="color: #8b2252;">"the commit message"</span>
-git push origin master
-</pre>
-</div>
-
-<p>
-I feel very tedious about this work, so I need a shell command to do this:
-</p>
+<div id="outline-container-orgdf25d84" class="outline-2">
+<h2 id="orgdf25d84">实现</h2>
+<div class="outline-text-2" id="text-orgdf25d84">
 <div class="org-src-container">
 <pre class="src src-shell"><span style="color: #0000ff;">auto_push</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
     git add .
+    <span style="color: #483d8b;">local</span> <span style="color: #a0522d;">desc</span>=$<span style="color: #a0522d;">1</span>
     <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$1"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
-        <span style="color: #a0522d;">desc</span>=<span style="color: #8b2252;">"Auto commit"</span>
-    <span style="color: #a020f0;">else</span>
-        <span style="color: #a0522d;">desc</span>=<span style="color: #8b2252;">"$1"</span>
+        <span style="color: #a0522d;">desc</span>=<span style="color: #8b2252;">"Auto commit"</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">default message</span>
     <span style="color: #a020f0;">fi</span>
-
     git commit -m <span style="color: #8b2252;">"$desc"</span>
-    git push origin master
+    git push
 <span style="color: #707183;">}</span>
-<span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">push</span>=<span style="color: #8b2252;">'auto_push'</span>
 </pre>
 </div>
 
 <p>
-Now, we can use the command <b>push</b> to push any git repo to origin master.
-And the usage is:
+到这里我们其实就可以使用:
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">push <span style="color: #b22222;"># </span><span style="color: #b22222;">with default message of "Auto commit"</span>
-push <span style="color: #8b2252;">"&lt;commit message&gt;"</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">commit with a message</span>
+<pre class="example">
+auto_push
+auto_push "message"
 </pre>
+
+<p>
+现在还有个问题，我们首先需要 cd 到某个目录中操作。
+</p>
+
+<p>
+如果我们能够不需要 cd，而且可以在任意的目录中操作就完美了。
+</p>
+</div>
 </div>
 
+<div id="outline-container-org310a2af" class="outline-2">
+<h2 id="org310a2af">改进</h2>
+<div class="outline-text-2" id="text-org310a2af">
 <p>
-Using the push command, I need to cd to the target dir.
-</p>
-
-<p>
-I want a more easy way to do this without the cd command, so the version 2 is coming.
+首先先看代码：
 </p>
 <div class="org-src-container">
 <pre class="src src-shell"><span style="color: #0000ff;">read_config</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
@@ -406,15 +352,11 @@ I want a more easy way to do this without the cd command, so the version 2 is co
         <span style="color: #483d8b;">popd</span> &gt; /dev/null
     <span style="color: #a020f0;">fi</span>
 <span style="color: #707183;">}</span>
-<span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">push</span>=<span style="color: #8b2252;">"read_config"</span>
 </pre>
-</div></li>
-</ol>
-
-
+</div>
 
 <p>
-And the path.config file:
+其中 CONFIG 是配置文件的目录。配置文件如下，
 </p>
 <pre class="example">
 blog_path='~/workspace/blog/public_html'
@@ -422,18 +364,33 @@ emacs_path='~/.emacs.d'
 </pre>
 
 <p>
-Comparing with the first version of push, this is more better.
+使用 <b>source $CONFIG</b> 后就可以直接使用$blog_path 和 $emacs_path 变量了。
 </p>
 
 <p>
-Now, we can use the command like <b>push blog &lt;optional message&gt;</b> to do the job without using cd command.
+注意 <b>${(P)temp}</b> ，这里为什么要加一个 "(P)" 呢？我们如果不加的话，
+它其实就是 temp 的值也就是 blog_path，但是我们想获得 $blog_path 的值加 "(P)" 就是完成了这个功能。还有一点 "(P)" 是在 zsh 中的用法，
+如果用 bash 需要把 "(P)" 改为 "!"。
+</p>
+
+<p>
+下一个有趣的问题时 pushd。如果你没见过这个命令，你可能感觉它很奇怪，
+其实它和 cd 做的事情差不多。这里我们没有用 cd 的原因是，cd 在 shell 中命令无法正确的执行。网上有很多的解决办法，我认为比较优雅的方法是用
+pushd 和 popd。
+</p>
+
+<p>
+最后加一句：
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">push                <span style="color: #b22222;"># </span><span style="color: #b22222;">default message in current directory</span>
-push <span style="color: #8b2252;">"message"</span>      <span style="color: #b22222;"># </span><span style="color: #b22222;">push with specified message in current directory</span>
-push blog           <span style="color: #b22222;"># </span><span style="color: #b22222;">default message in the directory of blog</span>
-push blog <span style="color: #8b2252;">"message"</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">push with specified directory and message</span>
+<pre class="src src-shell"><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">push</span>=<span style="color: #8b2252;">"read_config"</span>
 </pre>
+</div>
+
+<p>
+现在，顿时一切竟然变得如此简单。
+</p>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">

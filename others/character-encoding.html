@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-29 Sat 22:12 -->
+<!-- 2017-08-01 Tue 23:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>谈谈字符编码</title>
@@ -248,6 +248,7 @@ for the JavaScript code in this tag.
 <li><a href="#org45dac0f">ASCII</a></li>
 <li><a href="#orgf2c9660">Unicode</a></li>
 <li><a href="#orgd0d6d01">UTF-8</a></li>
+<li><a href="#org4b3929a">编码 &amp; 解码</a></li>
 <li><a href="#org05d0217">常见的问题</a>
 <ul>
 <li><a href="#orgc590392">乱码</a></li>
@@ -454,6 +455,42 @@ u<span style="color: #8b2252;">"&#20013;"</span>.encode<span style="color: #7071
 </p>
 </div>
 </div>
+
+<div id="outline-container-org4b3929a" class="outline-2">
+<h2 id="org4b3929a">编码 &amp; 解码</h2>
+<div class="outline-text-2" id="text-org4b3929a">
+<p>
+到了这里相信对这几种编码都有了很深刻的认识。下面我再概述一下。
+</p>
+
+<p>
+解码（decoding）是在应用程序使用字节是发生的。此时需要理解这些字节的含义。试想，当应用程序从文件或网络接收到字节是，程序就像一个一流的间谍，对通信信道间传输的原始字节进行解密。
+</p>
+
+<p>
+编码（encoding）是程序将字符串对外输出是所实施的过程。当计算机需要传输或存储符号时，字节才是真正使用的格式。
+</p>
+
+<p>
+下面是一段 Python 的例子。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">if</span> <span style="color: #483d8b;">__name__</span> == <span style="color: #8b2252;">'__main__'</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">Translating from the outside world of bytes to Unicode characters.</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">input_bytes</span> = b<span style="color: #8b2252;">'\xff\xfe4\x001\x003\x00 \x00i\x00s\x00 \x00i\x00n\x00.\x00'</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">input_characters</span> = input_bytes.decode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-16'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #483d8b;">repr</span><span style="color: #7388d6;">(</span>input_characters<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">Translating characters back into bytes before sending them.</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">output_characters</span> = <span style="color: #8b2252;">'We copy you down, Eagle.\n'</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">output_bytes</span> = output_characters.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-8'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">with</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'eagle.txt'</span>, <span style="color: #8b2252;">'wb'</span><span style="color: #707183;">)</span> <span style="color: #a020f0;">as</span> f:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   f.write<span style="color: #707183;">(</span>output_bytes<span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
 
 <div id="outline-container-org05d0217" class="outline-2">
 <h2 id="org05d0217">常见的问题</h2>

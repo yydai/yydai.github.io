@@ -6,7 +6,7 @@
 <!-- 2017-08-01 Tue 21:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>shell 学习笔记</title>
+<title>Python 网络编程</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,250 +239,92 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">shell 学习笔记</h1>
+<h1 class="title">Python 网络编程</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org89748fb">case</a></li>
-<li><a href="#org3d2d473">awk</a></li>
-<li><a href="#org3004d88">sed</a></li>
-<li><a href="#orga5706e7">grep</a></li>
-<li><a href="#org38b0235">Exit Status</a></li>
-<li><a href="#org349e5a9">test</a></li>
+<li><a href="#orgda8f62a">环境搭建（OS X）</a>
+<ul>
+<li><a href="#orgb999755">准备</a></li>
+<li><a href="#orgaec7e4f">启动</a></li>
+</ul>
+</li>
+<li><a href="#orge969bce">Chapter 1 客户算 服务器网络编程简介</a></li>
 </ul>
 </div>
 </div>
 <hr />
 
+<div id="outline-container-orgda8f62a" class="outline-2">
+<h2 id="orgda8f62a">环境搭建（OS X）</h2>
+<div class="outline-text-2" id="text-orgda8f62a">
 <p>
-这里主要通过例子来学习。
+Github 项目的地址：<a href="https://github.com/brandon-rhodes/fopnp">https://github.com/brandon-rhodes/fopnp</a>
 </p>
 
-<div id="outline-container-org89748fb" class="outline-2">
-<h2 id="org89748fb">case</h2>
-<div class="outline-text-2" id="text-org89748fb">
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #a020f0;">case</span> &#20540;<span style="color: #a020f0;"> in</span>
-&#27169;&#24335; 1<span style="color: #88090B;">)</span>
-    command1
-    command2
-    command3
-    ;;
-&#27169;&#24335; 2<span style="color: #88090B;">&#65289;</span>
-    command1
-    command2
-    command3
-    ;;
-*)
-    command1
-    command2
-    command3
-    ;;
-<span style="color: #a020f0;">esac</span>
-</pre>
+<p>
+下面是搭建的网络结构图：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170801_213755_737681cq.png" alt="20170801_213755_737681cq.png" width="80%" />
+</p>
+</div>
 </div>
 
+<div id="outline-container-orgb999755" class="outline-3">
+<h3 id="orgb999755">准备</h3>
+<div class="outline-text-3" id="text-orgb999755">
 <p>
-;; 与其他语言中的 break 类似
+下载 <a href="https://www.vagrantup.com/">Vagrant</a> 和 <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> 。
+在 mac 下，我们可以：
 </p>
-
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #a0522d;">option</span>=<span style="color: #8b2252;">"${1}"</span>
-<span style="color: #a020f0;">case</span> $<span style="color: #707183;">{</span><span style="color: #a0522d;">option</span><span style="color: #707183;">}</span> <span style="color: #a020f0;">in</span>
-   -f) <span style="color: #a0522d;">FILE</span>=<span style="color: #8b2252;">"${2}"</span>
-      <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"File name is $FILE"</span>
-      ;;
-   -d) <span style="color: #a0522d;">DIR</span>=<span style="color: #8b2252;">"${2}"</span>
-      <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"Dir name is $DIR"</span>
-      ;;
-   *)
-      <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"`basename ${0}`:usage: [-f file] | [-d directory]"</span>
-      <span style="color: #a020f0;">exit</span> 1 <span style="color: #b22222;"># </span><span style="color: #b22222;">Command to come out of the program with status 1</span>
-      ;;
-<span style="color: #a020f0;">esac</span>
+<pre class="src src-shell">brew cask install vagrant
+brew cask install virtualbox
 </pre>
 </div>
 </div>
 </div>
 
-
-<div id="outline-container-org3d2d473" class="outline-2">
-<h2 id="org3d2d473">awk</h2>
-<div class="outline-text-2" id="text-org3d2d473">
+<div id="outline-container-orgaec7e4f" class="outline-3">
+<h3 id="orgaec7e4f">启动</h3>
+<div class="outline-text-3" id="text-orgaec7e4f">
 <p>
-awk 的强大与复杂让人又爱又恨。
+使用下面的命令：
 </p>
-
 <div class="org-src-container">
-<pre class="src src-shell">awk <span style="color: #707183;">[</span>-F field-separator <span style="color: #707183;">]</span> &#8216;commands&#8217; input-file<span style="color: #707183;">(</span>s<span style="color: #707183;">)</span>
-awk -F = <span style="color: #8b2252;">'{if($1~/b_path/) print $2}'</span> /Users/yingdai/.config/zsh-command/path.config
-awk -F = <span style="color: #8b2252;">'{if($1=="b_path") print $2}'</span> /Users/yingdai/.config/zsh-command/path.config
-&#8658; <span style="color: #8b2252;">'/Users/yingdai/workspace/blog/public_html'</span>
+<pre class="src src-shell">mkdir workspace
+<span style="color: #483d8b;">cd</span> workspace
+vagrant init brandon-rhodes/playground <span style="color: #b22222;">#</span><span style="color: #b22222;">&#36825;&#19968;&#27493;&#20250;&#19979;&#36733;&#38236;&#20687;</span>
+vagrant up <span style="color: #b22222;"># </span><span style="color: #b22222;">&#21518;&#38754;&#22909;&#20687;&#35201;&#21152; --provider virtualbox, &#19981;&#21152;&#20063;&#21487;</span>
+vagrant ssh
 </pre>
 </div>
-</div>
-</div>
 
-
-<div id="outline-container-org3004d88" class="outline-2">
-<h2 id="org3004d88">sed</h2>
-</div>
-
-<div id="outline-container-orga5706e7" class="outline-2">
-<h2 id="orga5706e7">grep</h2>
-</div>
-
-<div id="outline-container-org38b0235" class="outline-2">
-<h2 id="org38b0235">Exit Status</h2>
-<div class="outline-text-2" id="text-org38b0235">
 <p>
-Commands (including the scripts and shell functions we write) issue a value to the system when they terminate, called an exit status.
-A value of zero indicates success and any other value indicates failure.
+这时我们打开 virtualbox 会看到一个正在运行的虚拟机。
+</p>
+
+<p>
+当 ssh 登录虚拟机以后，执行
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">./launch.sh
+</pre>
+</div>
+
+<p>
+这个脚本会启动上图中需要的 container，然后做些配置。到这一步环境就算是可以了。
 </p>
 </div>
 </div>
-
-<div id="outline-container-org349e5a9" class="outline-2">
-<h2 id="org349e5a9">test</h2>
-<div class="outline-text-2" id="text-org349e5a9">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">Expression</th>
-<th scope="col" class="org-left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">-d file</td>
-<td class="org-left">True if file is a directory.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">-e file</td>
-<td class="org-left">True if file exists.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">-f file</td>
-<td class="org-left">True if file exists and is a regular file.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">-L file</td>
-<td class="org-left">True if file is a symbolic link.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">-r file</td>
-<td class="org-left">True if file is a file readable by you.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">-w file</td>
-<td class="org-left">True if file is a file writable by you.</td>
-</tr>
-
-<tr>
-<td class="org-left">-x file</td>
-<td class="org-left">True if file is a file executable by you.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">file1 -nt file2</td>
-<td class="org-left">True if file1 is newer than (according to modification time) file2</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">file1 -ot file2</td>
-<td class="org-left">True if file1 is older than file2</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">-z string</td>
-<td class="org-left">True if string is empty.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">-n string</td>
-<td class="org-left">True if string is not empty.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">string1 = string2</td>
-<td class="org-left">True if string1 equals string2.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">string1 != string2</td>
-<td class="org-left">True if string1 does not equal string2.</td>
-</tr>
-</tbody>
-</table>
 </div>
+
+
+<div id="outline-container-orge969bce" class="outline-2">
+<h2 id="orge969bce">Chapter 1 客户算 服务器网络编程简介</h2>
 </div>
 </div>
 <div id="postamble" class="status">

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-07-31 Mon 11:07 -->
+<!-- 2017-08-01 Tue 11:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>shell 学习笔记</title>
@@ -248,6 +248,7 @@ for the JavaScript code in this tag.
 <li><a href="#org3d2d473">awk</a></li>
 <li><a href="#org3004d88">sed</a></li>
 <li><a href="#orga5706e7">grep</a></li>
+<li><a href="#org38b0235">Exit Status</a></li>
 </ul>
 </div>
 </div>
@@ -329,6 +330,154 @@ awk -F = <span style="color: #8b2252;">'{if($1=="b_path") print $2}'</span> /Use
 
 <div id="outline-container-orga5706e7" class="outline-2">
 <h2 id="orga5706e7">grep</h2>
+</div>
+
+<div id="outline-container-org38b0235" class="outline-2">
+<h2 id="org38b0235">Exit Status</h2>
+<div class="outline-text-2" id="text-org38b0235">
+<p>
+Commands (including the scripts and shell functions we write) issue a value to the system when they terminate, called an exit status.
+A value of zero indicates success and any other value indicates failure.
+</p>
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Expression</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">-d file</td>
+<td class="org-left">True if file is a directory.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">-e file</td>
+<td class="org-left">True if file exists.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">-f file</td>
+<td class="org-left">True if file exists and is a regular file.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">-L file</td>
+<td class="org-left">True if file is a symbolic link.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">-r file</td>
+<td class="org-left">True if file is a file readable by you.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">-w file</td>
+<td class="org-left">True if file is a file writable by you.</td>
+</tr>
+
+<tr>
+<td class="org-left">-x file</td>
+<td class="org-left">True if file is a file executable by you.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">file1 -nt file2</td>
+<td class="org-left">True if file1 is newer than (according to modification time) file2</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">file1 -ot file2</td>
+<td class="org-left">True if file1 is older than file2</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">-z string</td>
+<td class="org-left">True if string is empty.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">-n string</td>
+<td class="org-left">True if string is not empty.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">string1 = string2</td>
+<td class="org-left">True if string1 equals string2.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">string1 != string2</td>
+<td class="org-left">True if string1 does not equal string2.</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">

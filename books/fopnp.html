@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-05 Sat 10:18 -->
+<!-- 2017-08-05 Sat 12:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python 网络编程</title>
@@ -251,7 +251,24 @@ for the JavaScript code in this tag.
 </ul>
 </li>
 <li><a href="#orge969bce">Chapter 1 客户算 服务器网络编程简介</a></li>
-<li><a href="#org47be318">Chapter 2 UDP</a></li>
+<li><a href="#org47be318">Chapter 2 UDP</a>
+<ul>
+<li><a href="#orgc555c4a">套接字</a></li>
+<li><a href="#orge0274bf">混杂客户端和垃圾回复</a></li>
+<li><a href="#org9fa8cdd">不可靠性、退避、阻塞和超时</a></li>
+<li><a href="#org7402c9b">使用 connect</a></li>
+<li><a href="#orgb255874">广播</a></li>
+<li><a href="#org47775eb">何时使用 UDP</a></li>
+</ul>
+</li>
+<li><a href="#orgfba2dc5">TCP</a>
+<ul>
+<li><a href="#org50585a5">例子</a></li>
+<li><a href="#org791fba4">死锁</a></li>
+</ul>
+</li>
+<li><a href="#org53620ba">套接字名与 DNS</a></li>
+<li><a href="#orge66e35f">网络数据和网络错误</a></li>
 </ul>
 </div>
 </div>
@@ -335,6 +352,9 @@ vagrant ssh
 <div id="outline-container-org47be318" class="outline-2">
 <h2 id="org47be318">Chapter 2 UDP</h2>
 <div class="outline-text-2" id="text-org47be318">
+</div><div id="outline-container-orgc555c4a" class="outline-3">
+<h3 id="orgc555c4a">套接字</h3>
+<div class="outline-text-3" id="text-orgc555c4a">
 <p>
 套接字(socket)是一个通信端点。下面是一个简单 UDP 服务器和 UDP 客户端。
 </p>
@@ -349,6 +369,7 @@ vagrant ssh
 
 
 <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">server</span><span style="color: #707183;">(</span>port<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">AF_INET &#26159; IPv4 &#32593;&#32476;&#21327;&#35758;&#30340;&#22871;&#25509;&#23383;&#31867;&#22411;&#12290;AF &#34920;&#31034;&#22320;&#22336;&#26063;&#12290;SOCK_DGRAM &#34920;&#31034;&#25968;&#25454;&#25253;&#31867;&#22411;&#65292;&#21363;&#22312;&#32593;&#32476;&#19978;&#20351;&#29992; UDP &#21327;&#35758;</span>
 <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">sock</span> = socket.socket<span style="color: #707183;">(</span>socket.AF_INET, socket.SOCK_DGRAM<span style="color: #707183;">)</span>
 <span style="background-color: #f2f2f2;"> </span>   sock.bind<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span><span style="color: #8b2252;">'127.0.0.1'</span>, port<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Listening at {}'</span>.<span style="color: #483d8b;">format</span><span style="color: #7388d6;">(</span>sock.getsockname<span style="color: #909183;">()</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
@@ -386,6 +407,233 @@ vagrant ssh
 </pre>
 </div>
 </div>
+</div>
+<div id="outline-container-orge0274bf" class="outline-3">
+<h3 id="orge0274bf">混杂客户端和垃圾回复</h3>
+<div class="outline-text-3" id="text-orge0274bf">
+<p>
+上面的客户端由于没有检查数据报的原地址，也没有验证数据报是否确实是服务器发回的响应。
+</p>
+
+<p>
+只有使用编写良好的优秀加密算法，才可以保证程序与正确的服务器进行通信。还有两个快速解决方案。第一个方法，设计使用在请求中包含唯一标示符或请求 ID 的协议。
+第二个，检查地址。
+</p>
+</div>
+</div>
+<div id="outline-container-org9fa8cdd" class="outline-3">
+<h3 id="org9fa8cdd">不可靠性、退避、阻塞和超时</h3>
+<div class="outline-text-3" id="text-org9fa8cdd">
+<p>
+下面模拟一下丢包的情况。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> argparse, random, socket, sys
+
+<span style="color: #a0522d;">MAX_BYTES</span> = 65535
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">server</span><span style="color: #707183;">(</span>interface, port<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">sock</span> = socket.socket<span style="color: #707183;">(</span>socket.AF_INET, socket.SOCK_DGRAM<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.bind<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>interface, port<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Listening at'</span>, sock.getsockname<span style="color: #7388d6;">()</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">while</span> <span style="color: #008b8b;">True</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data</span>, <span style="color: #a0522d;">address</span> = sock.recvfrom<span style="color: #707183;">(</span>MAX_BYTES<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> random.random<span style="color: #707183;">()</span> &lt; 0.5:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Pretending to drop packet from {}'</span>.<span style="color: #483d8b;">format</span><span style="color: #7388d6;">(</span>address<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">continue</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">text</span> = data.decode<span style="color: #707183;">(</span><span style="color: #8b2252;">'ascii'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'The client at {} says {!r}'</span>.<span style="color: #483d8b;">format</span><span style="color: #7388d6;">(</span>address, text<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">message</span> = <span style="color: #8b2252;">'Your data was {} bytes long'</span>.<span style="color: #483d8b;">format</span><span style="color: #707183;">(</span><span style="color: #483d8b;">len</span><span style="color: #7388d6;">(</span>data<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   sock.sendto<span style="color: #707183;">(</span>message.encode<span style="color: #7388d6;">(</span><span style="color: #8b2252;">'ascii'</span><span style="color: #7388d6;">)</span>, address<span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">client</span><span style="color: #707183;">(</span>hostname, port<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">sock</span> = socket.socket<span style="color: #707183;">(</span>socket.AF_INET, socket.SOCK_DGRAM<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.connect<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>hostname, port<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Client socket name is {}'</span>.<span style="color: #483d8b;">format</span><span style="color: #7388d6;">(</span>sock.getsockname<span style="color: #909183;">()</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">delay</span> = 0.1  <span style="color: #b22222;"># </span><span style="color: #b22222;">seconds</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">text</span> = <span style="color: #8b2252;">'This is another message'</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data</span> = text.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">'ascii'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">while</span> <span style="color: #008b8b;">True</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   sock.send<span style="color: #707183;">(</span>data<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Waiting up to {} seconds for a reply'</span>.<span style="color: #483d8b;">format</span><span style="color: #7388d6;">(</span>delay<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   sock.settimeout<span style="color: #707183;">(</span>delay<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data</span> = sock.recv<span style="color: #707183;">(</span>MAX_BYTES<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> socket.timeout <span style="color: #a020f0;">as</span> exc:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">delay</span> *= 2  <span style="color: #b22222;"># </span><span style="color: #b22222;">wait even longer for the next request</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> delay &gt; 2.0:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">RuntimeError</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'I think the server is down'</span><span style="color: #707183;">)</span> <span style="color: #a020f0;">from</span> exc
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">break</span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">we are done, and can stop looping</span>
+
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'The server says {!r}'</span>.<span style="color: #483d8b;">format</span><span style="color: #7388d6;">(</span>data.decode<span style="color: #909183;">(</span><span style="color: #8b2252;">'ascii'</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">if</span> <span style="color: #483d8b;">__name__</span> == <span style="color: #8b2252;">'__main__'</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">choices</span> = <span style="color: #707183;">{</span><span style="color: #8b2252;">'client'</span>: client, <span style="color: #8b2252;">'server'</span>: server<span style="color: #707183;">}</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">(</span>description=<span style="color: #8b2252;">'Send and receive UDP,'</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span><span style="color: #8b2252;">' pretending packets are often dropped'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">'role'</span>, choices=choices, <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">'which role to take'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">'host'</span>, <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">'interface the server listens at;'</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #8b2252;">' host the client sends to'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">'-p'</span>, metavar=<span style="color: #8b2252;">'PORT'</span>, <span style="color: #483d8b;">type</span>=<span style="color: #483d8b;">int</span>, default=1060,
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">'UDP port (default 1060)'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">function</span> = choices<span style="color: #707183;">[</span>args.role<span style="color: #707183;">]</span>
+<span style="background-color: #f2f2f2;"> </span>   function<span style="color: #707183;">(</span>args.host, args.p<span style="color: #707183;">)</span>
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7402c9b" class="outline-3">
+<h3 id="org7402c9b">使用 connect</h3>
+<div class="outline-text-3" id="text-org7402c9b">
+<p>
+上个例子中，我们发现使用了一个新的函数 connect()。
+</p>
+</div>
+</div>
+<div id="outline-container-orgb255874" class="outline-3">
+<h3 id="orgb255874">广播</h3>
+<div class="outline-text-3" id="text-orgb255874">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> argparse, socket
+
+<span style="color: #a0522d;">BUFSIZE</span> = 65535
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">server</span><span style="color: #707183;">(</span>interface, port<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">sock</span> = socket.socket<span style="color: #707183;">(</span>socket.AF_INET, socket.SOCK_DGRAM<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.bind<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>interface, port<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Listening for datagrams at {}'</span>.<span style="color: #483d8b;">format</span><span style="color: #7388d6;">(</span>sock.getsockname<span style="color: #909183;">()</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">while</span> <span style="color: #008b8b;">True</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data</span>, <span style="color: #a0522d;">address</span> = sock.recvfrom<span style="color: #707183;">(</span>BUFSIZE<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">text</span> = data.decode<span style="color: #707183;">(</span><span style="color: #8b2252;">'ascii'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'The client at {} says: {!r}'</span>.<span style="color: #483d8b;">format</span><span style="color: #7388d6;">(</span>address, text<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">client</span><span style="color: #707183;">(</span>network, port<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">sock</span> = socket.socket<span style="color: #707183;">(</span>socket.AF_INET, socket.SOCK_DGRAM<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">&#19982;&#21069;&#38754;&#30456;&#27604;&#21482;&#26377;&#36825;&#37324;&#19981;&#21516;</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.setsockopt<span style="color: #707183;">(</span>socket.SOL_SOCKET, socket.SO_BROADCAST, 1<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">text</span> = <span style="color: #8b2252;">'Broadcast datagram!'</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.sendto<span style="color: #707183;">(</span>text.encode<span style="color: #7388d6;">(</span><span style="color: #8b2252;">'ascii'</span><span style="color: #7388d6;">)</span>, <span style="color: #7388d6;">(</span>network, port<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">if</span> <span style="color: #483d8b;">__name__</span> == <span style="color: #8b2252;">'__main__'</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">choices</span> = <span style="color: #707183;">{</span><span style="color: #8b2252;">'client'</span>: client, <span style="color: #8b2252;">'server'</span>: server<span style="color: #707183;">}</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">(</span>description=<span style="color: #8b2252;">'Send, receive UDP broadcast'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">'role'</span>, choices=choices, <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">'which role to take'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">'host'</span>, <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">'interface the server listens at;'</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #8b2252;">' network the client sends to'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">'-p'</span>, metavar=<span style="color: #8b2252;">'port'</span>, <span style="color: #483d8b;">type</span>=<span style="color: #483d8b;">int</span>, default=1060,
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">'UDP port (default 1060)'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">function</span> = choices<span style="color: #707183;">[</span>args.role<span style="color: #707183;">]</span>
+<span style="background-color: #f2f2f2;"> </span>   function<span style="color: #707183;">(</span>args.host, args.p<span style="color: #707183;">)</span>
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org47775eb" class="outline-3">
+<h3 id="org47775eb">何时使用 UDP</h3>
+<div class="outline-text-3" id="text-org47775eb">
+<p>
+实际上，只有在每次只发送一条信息然后等待响应的时候，UDP 才是高效的。
+</p>
+
+<p>
+如果一口气发送多条信息，那么使用 MQ 这样的消息队列实际上效率会更高。
+</p>
+
+<p>
+UDP 最强大的功能是广播。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgfba2dc5" class="outline-2">
+<h2 id="orgfba2dc5">TCP</h2>
+<div class="outline-text-2" id="text-orgfba2dc5">
+</div><div id="outline-container-org50585a5" class="outline-3">
+<h3 id="org50585a5">例子</h3>
+<div class="outline-text-3" id="text-org50585a5">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> argparse, socket
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">recvall</span><span style="color: #707183;">(</span>sock, length<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data</span> = b<span style="color: #8b2252;">''</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">while</span> <span style="color: #483d8b;">len</span><span style="color: #707183;">(</span>data<span style="color: #707183;">)</span> &lt; length:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">more</span> = sock.recv<span style="color: #707183;">(</span>length - <span style="color: #483d8b;">len</span><span style="color: #7388d6;">(</span>data<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> <span style="color: #a020f0;">not</span> more:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">EOFError</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'was expecting %d bytes but only received'</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #8b2252;">' %d bytes before the socket closed'</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  % <span style="color: #7388d6;">(</span>length, <span style="color: #483d8b;">len</span><span style="color: #909183;">(</span>data<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">data</span> += more
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> data
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">server</span><span style="color: #707183;">(</span>interface, port<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">sock</span> = socket.socket<span style="color: #707183;">(</span>socket.AF_INET, socket.SOCK_STREAM<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.setsockopt<span style="color: #707183;">(</span>socket.SOL_SOCKET, socket.SO_REUSEADDR, 1<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.bind<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>interface, port<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.listen<span style="color: #707183;">(</span>1<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Listening at'</span>, sock.getsockname<span style="color: #7388d6;">()</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">while</span> <span style="color: #008b8b;">True</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Waiting to accept a new connection'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">sc</span>, <span style="color: #a0522d;">sockname</span> = sock.accept<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'We have accepted a connection from'</span>, sockname<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'  Socket name:'</span>, sc.getsockname<span style="color: #7388d6;">()</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'  Socket peer:'</span>, sc.getpeername<span style="color: #7388d6;">()</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">message</span> = recvall<span style="color: #707183;">(</span>sc, 16<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'  Incoming sixteen-octet message:'</span>, <span style="color: #483d8b;">repr</span><span style="color: #7388d6;">(</span>message<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   sc.sendall<span style="color: #707183;">(</span>b<span style="color: #8b2252;">'Farewell, client'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   sc.close<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'  Reply sent, socket closed'</span><span style="color: #707183;">)</span>
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">client</span><span style="color: #707183;">(</span>host, port<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">sock</span> = socket.socket<span style="color: #707183;">(</span>socket.AF_INET, socket.SOCK_STREAM<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.connect<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>host, port<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Client has been assigned socket name'</span>, sock.getsockname<span style="color: #7388d6;">()</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.sendall<span style="color: #707183;">(</span>b<span style="color: #8b2252;">'Hi there, server'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">reply</span> = recvall<span style="color: #707183;">(</span>sock, 16<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'The server said'</span>, <span style="color: #483d8b;">repr</span><span style="color: #7388d6;">(</span>reply<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   sock.close<span style="color: #707183;">()</span>
+
+<span style="color: #a020f0;">if</span> <span style="color: #483d8b;">__name__</span> == <span style="color: #8b2252;">'__main__'</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">choices</span> = <span style="color: #707183;">{</span><span style="color: #8b2252;">'client'</span>: client, <span style="color: #8b2252;">'server'</span>: server<span style="color: #707183;">}</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">(</span>description=<span style="color: #8b2252;">'Send and receive over TCP'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">'role'</span>, choices=choices, <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">'which role to play'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">'host'</span>, <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">'interface the server listens at;'</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #8b2252;">' host the client sends to'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">'-p'</span>, metavar=<span style="color: #8b2252;">'PORT'</span>, <span style="color: #483d8b;">type</span>=<span style="color: #483d8b;">int</span>, default=1060,
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">'TCP port (default 1060)'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">function</span> = choices<span style="color: #707183;">[</span>args.role<span style="color: #707183;">]</span>
+<span style="background-color: #f2f2f2;"> </span>   function<span style="color: #707183;">(</span>args.host, args.p<span style="color: #707183;">)</span>
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org791fba4" class="outline-3">
+<h3 id="org791fba4">死锁</h3>
+<div class="outline-text-3" id="text-org791fba4">
+<p>
+在 TCP 中很容易发生。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org53620ba" class="outline-2">
+<h2 id="org53620ba">套接字名与 DNS</h2>
+</div>
+
+<div id="outline-container-orge66e35f" class="outline-2">
+<h2 id="orge66e35f">网络数据和网络错误</h2>
 </div>
 </div>
 <div id="postamble" class="status">

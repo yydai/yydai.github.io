@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:12 -->
+<!-- 2017-08-13 Sun 10:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MAC 好用软件</title>
@@ -255,6 +255,7 @@ for the JavaScript code in this tag.
 <li><a href="#orga702bb2">其他有用的快捷键</a></li>
 </ul>
 </li>
+<li><a href="#org5d6533b">QuickTime Player</a></li>
 <li><a href="#orga27b1d0">Keyboard Maestro</a></li>
 <li><a href="#org37eaed1">IDEΑ</a>
 <ul>
@@ -692,6 +693,65 @@ cmd + -  缩小字体
 </div>
 </div>
 
+<div id="outline-container-org5d6533b" class="outline-2">
+<h2 id="org5d6533b">QuickTime Player</h2>
+<div class="outline-text-2" id="text-org5d6533b">
+<p>
+这个是 mac 自带的软件。我主要用他来录制屏幕，然后转换为 gif。
+</p>
+<ol class="org-ol">
+<li>首先打开它，点击菜单栏文件，找到 New Screen Recording，点击。</li>
+<li>用鼠标选中一块要录制的区域，点击开始录制。</li>
+<li>操作完成后保存。假设保存为 in.mov。</li>
+<li>将 in.mov =&gt; out.gif</li>
+<li><p>
+使用如下的命令
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ffmpeg -i in.mov -s 600x400 -pix_fmt rgb24 -r 20 -f gif - | gifsicle --optimize=3 --delay=3 &gt; out.gif
+</pre>
+</div>
+<p>
+具体可以参考：<a href="https://gist.github.com/dergachev/4627207">https://gist.github.com/dergachev/4627207</a>
+可以写一个 shell 命令来做这个工作。例如我的。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #0000ff;">movtogif</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+    <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$1"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
+        <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"usage: mov-gif &lt;src&gt; [desc]"</span>
+        <span style="color: #a020f0;">return</span> 1
+    <span style="color: #a020f0;">fi</span>
+
+    <span style="color: #483d8b;">local</span> <span style="color: #a0522d;">filename</span>=$<span style="color: #a0522d;">2</span>
+    <span style="color: #b22222;"># </span><span style="color: #b22222;">generate random filename</span>
+    <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$2"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
+        <span style="color: #a0522d;">filename</span>=<span style="color: #ff00ff;">`hexdump -e '/1 "%02x"' -n16 &lt; /dev/urandom`</span>
+    <span style="color: #a020f0;">fi</span>
+    ffmpeg -i $<span style="color: #7388d6;">{</span><span style="color: #a0522d;">1</span><span style="color: #7388d6;">}</span>.mov -vf <span style="color: #a0522d;">scale</span>=800:-1 -r 10 -f image2pipe -vcodec ppm - | <span style="color: #8b2252;">\</span>
+    convert -delay 5 -fuzz 2% -layers Optimize -loop 0 - $<span style="color: #7388d6;">{</span><span style="color: #a0522d;">2</span><span style="color: #7388d6;">}</span>.gif
+<span style="color: #707183;">}</span>
+
+</pre>
+</div>
+
+<p>
+我们就可以直接这样了。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">movtogif<span style="color: #a020f0;"> in</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./imgs/645074da33ab93a13cd12db314a875c3.gif" alt="645074da33ab93a13cd12db314a875c3.gif" width="100%" />
+</p>
+</div></li>
+</ol>
+</div>
+</div>
 <div id="outline-container-orga27b1d0" class="outline-2">
 <h2 id="orga27b1d0">Keyboard Maestro</h2>
 <div class="outline-text-2" id="text-orga27b1d0">

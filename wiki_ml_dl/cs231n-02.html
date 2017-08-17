@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-17 Thu 13:43 -->
+<!-- 2017-08-17 Thu 13:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CS231n 课程笔记</title>
+<title>图像分类之 KNN</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -240,12 +240,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">CS231n 课程笔记</h1>
+<h1 class="title">图像分类之 KNN</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6d9637f">图像分类器</a></li>
 <li><a href="#orgb7ffcb3">数据驱动</a></li>
 <li><a href="#orgb16a91b">最邻近分类器</a></li>
 <li><a href="#orgc94c2ca">KNN 算法</a></li>
@@ -258,9 +257,7 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <hr />
-<div id="outline-container-org6d9637f" class="outline-2">
-<h2 id="org6d9637f">图像分类器</h2>
-<div class="outline-text-2" id="text-org6d9637f">
+
 <p>
 图像分类就是通过输入一个图片然后预测一个对应的标签。
 图像通过 3 维表示，L * W * 3。分别表示长宽，其中的 3 表示 RGB 中 3 基色。
@@ -280,8 +277,6 @@ for the JavaScript code in this tag.
 这个问题，如果我们通过传统的方式，很难找到一个非常完美的方式去实现。其中，一个可能的做法是去识别物体的边界，然后去判断，但是如果换了一个物体又得重新做。
 现在有一个比较好的方式。
 </p>
-</div>
-</div>
 
 <div id="outline-container-orgb7ffcb3" class="outline-2">
 <h2 id="orgb7ffcb3">数据驱动</h2>

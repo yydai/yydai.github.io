@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-08-17 Thu 12:26 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CS231n 课程笔记</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
+<div id="content">
+<h1 class="title">CS231n 课程笔记</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgadc4f87">计算机视觉历史介绍 上</a></li>
+<li><a href="#orgee6c364">计算机视觉历史介绍 中</a></li>
+<li><a href="#org3e57f1c">图像分类</a>
+<ul>
+<li><a href="#org9849f2d">图像分类器</a></li>
+<li><a href="#orgf58e33b">数据驱动</a></li>
+<li><a href="#orge810065">最邻近分类器</a></li>
+<li><a href="#org2675a3b">KNN 算法</a></li>
+<li><a href="#org3ca6fd7">预测</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<hr />
+
+<div id="outline-container-orgadc4f87" class="outline-2">
+<h2 id="orgadc4f87">计算机视觉历史介绍 上</h2>
+<div class="outline-text-2" id="text-orgadc4f87">
+<p>
+介绍了猫看任何图片没有反应，但是在切换幻灯片的过程中，却能刺激到它。
+</p>
+</div>
+</div>
+<div id="outline-container-orgee6c364" class="outline-2">
+<h2 id="orgee6c364">计算机视觉历史介绍 中</h2>
+<div class="outline-text-2" id="text-orgee6c364">
+<p>
+David Marr 视觉是分层的。第一层应该是边缘结构。
+Generalized Cylinder 模型。主旨整个世界都是由简单的形状组成。
+多样性感知分组是视觉领域最为重要的问题。我们看一个物体不会是看到像素这个级别，而是会把像素分类。
+这个问题现在并没有完美的解决。
+</p>
+
+<p>
+有一个非常赞的成果叫 Viola Jones Face Detector。
+<a href="https://en.wikipedia.org/wiki/Viola%E2%80%93Jones_object_detection_framework">https://en.wikipedia.org/wiki/Viola–Jones_object_detection_framework</a>
+<a href="https://allenlu2007.wordpress.com/2016/05/05/%E4%BA%BA%E8%87%89%E5%81%B5%E6%B8%AC-face-detection-%E7%AE%97%E6%B3%95/">https://allenlu2007.wordpress.com/2016/05/05/人臉偵測-face-detection-算法/</a>
+<a href="http://www.vision.caltech.edu/html-files/EE148-2005-Spring/pprs/viola04ijcv.pdf">http://www.vision.caltech.edu/html-files/EE148-2005-Spring/pprs/viola04ijcv.pdf</a>
+</p>
+
+<p>
+在 2012 年的 ImageNet 比赛中，卷积神经网络的使用使得图像识别的成功率大大提高。这成了深度学习兴起的开端。
+</p>
+
+<p>
+图像分类，物体检测。
+</p>
+
+<p>
+CNN 卷积神经网络只是深度学习框架的一种。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3e57f1c" class="outline-2">
+<h2 id="org3e57f1c">图像分类</h2>
+<div class="outline-text-2" id="text-org3e57f1c">
+</div><div id="outline-container-org9849f2d" class="outline-3">
+<h3 id="org9849f2d">图像分类器</h3>
+<div class="outline-text-3" id="text-org9849f2d">
+<p>
+图像分类就是通过输入一个图片然后预测一个对应的标签。
+图像通过 3 维表示，L * W * 3。分别表示长宽，其中的 3 表示 RGB 中 3 基色。
+这种问题不是很容易解决，其中面临很多的挑战。
+</p>
+<ul class="org-ul">
+<li>不同视角下的影响</li>
+<li>体型或大小的不同</li>
+<li>各种的变形。例如，猫的例子。</li>
+<li>物体的一部分可见，其他被遮挡</li>
+<li>光线的影响</li>
+<li>背景的影响</li>
+<li>一个大的物体又会有几个小的分类组成</li>
+</ul>
+
+<p>
+这个问题，如果我们通过传统的方式，很难找到一个非常完美的方式去实现。其中，一个可能的做法是去识别物体的边界，然后去判断，但是如果换了一个物体又得重新做。
+现在有一个比较好的方式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf58e33b" class="outline-3">
+<h3 id="orgf58e33b">数据驱动</h3>
+<div class="outline-text-3" id="text-orgf58e33b">
+<p>
+这个过程的步骤如下：
+</p>
+<ul class="org-ul">
+<li>收集图片及其标签的数据集</li>
+<li>使用机器学习去训练分类器</li>
+<li>计算新图像的分类</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orge810065" class="outline-3">
+<h3 id="orge810065">最邻近分类器</h3>
+<div class="outline-text-3" id="text-orge810065">
+<p>
+这个方式在现实中很少使用，但是它能给我们一个实现的方式去分类图片。
+我们将两个图片表示为 \(I_1, I_2\) 两个向量。一个比较合适的方式是计算他们的 <b>L1 距离</b> 。
+</p>
+
+<p>
+L1 距离，又叫做曼哈顿距离。
+</p>
+\begin{align}
+d_1 (I_1, I_2) = \sum_{p} \left| I^p_1 - I^p_2 \right|
+\end{align}
+
+<p>
+例如。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170817_000943_47854zMH.png" alt="20170817_000943_47854zMH.png" width="100%" />
+</p>
+</div>
+
+<p>
+下面我们需要看下 python 代码。<a href="http://cs231n.stanford.edu/assignments/2017/spring1617_assignment1.zip">下载</a>
+下载这个压缩包后，对应的 knn.ipynb 就是这个部分的代码指导。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">&#36825;&#20010;&#21644;&#25968;&#25454;&#20013;&#30340;&#26631;&#31614;&#21517;&#23545;&#24212;</span>
+<span style="color: #a0522d;">classes</span> = <span style="color: #707183;">[</span><span style="color: #8b2252;">'plane'</span>, <span style="color: #8b2252;">'car'</span>, <span style="color: #8b2252;">'bird'</span>, <span style="color: #8b2252;">'cat'</span>, <span style="color: #8b2252;">'deer'</span>, <span style="color: #8b2252;">'dog'</span>, <span style="color: #8b2252;">'frog'</span>, <span style="color: #8b2252;">'horse'</span>, <span style="color: #8b2252;">'ship'</span>, <span style="color: #8b2252;">'truck'</span><span style="color: #707183;">]</span>
+<span style="color: #a0522d;">num_classes</span> = <span style="color: #483d8b;">len</span><span style="color: #707183;">(</span>classes<span style="color: #707183;">)</span>
+<span style="color: #a0522d;">samples_per_class</span> = 7
+<span style="color: #a020f0;">for</span> y, cls <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">enumerate</span><span style="color: #707183;">(</span>classes<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">idxs</span> = np.flatnonzero<span style="color: #707183;">(</span>y_train == y<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">&#27599;&#20010;&#20998;&#31867;&#38543;&#26426;&#36873;&#20986;7&#20010;&#22270;&#29255;</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">idxs</span> = np.random.choice<span style="color: #707183;">(</span>idxs, samples_per_class, replace=<span style="color: #008b8b;">False</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> i, idx <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">enumerate</span><span style="color: #707183;">(</span>idxs<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">plt_idx</span> = i * num_classes + y + 1
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">&#35774;&#32622;&#22270;&#29255;&#20301;&#32622;</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   plt.subplot<span style="color: #707183;">(</span>samples_per_class, num_classes, plt_idx<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   plt.imshow<span style="color: #707183;">(</span>X_train<span style="color: #7388d6;">[</span>idx<span style="color: #7388d6;">]</span>.astype<span style="color: #7388d6;">(</span><span style="color: #8b2252;">'uint8'</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">plt.imshow(np.uint8(X_train[idx])) &#20063;&#21487;&#20197;</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">&#30446;&#30340;&#37117;&#26159;&#19968;&#26679;&#30340;&#22914;&#26524;&#19981;&#25226;&#25968;&#25454;&#36716;&#21270;&#20026; uint8&#65292;&#26174;&#31034;&#26102;&#21487;&#33021;&#20250;&#26377;&#22855;&#24618;&#30340;&#32467;&#26524;&#12290;</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   plt.axis<span style="color: #707183;">(</span><span style="color: #8b2252;">'off'</span><span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> i == 0:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">&#35774;&#32622;&#27599;&#19968;&#20010;&#20998;&#31867;&#30340;title</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   plt.title<span style="color: #707183;">(</span>cls<span style="color: #707183;">)</span>
+plt.show<span style="color: #707183;">()</span>
+</pre>
+</div>
+
+<p>
+下面是运行的结果。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170817_090505_47854AXN.png" alt="20170817_090505_47854AXN.png" width="100%" />
+</p>
+</div>
+
+<p>
+为了加快训练，做些简化。只选取 5000 个训练集，以及 500 个测试集。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Subsample the data for more efficient code execution in this exercise</span>
+<span style="color: #a0522d;">num_training</span> = 5000
+<span style="color: #a0522d;">mask</span> = <span style="color: #483d8b;">list</span><span style="color: #707183;">(</span><span style="color: #483d8b;">range</span><span style="color: #7388d6;">(</span>num_training<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>mask<span style="color: #7388d6;">[</span>1<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<span style="color: #a0522d;">X_train</span> = X_train<span style="color: #707183;">[</span>mask<span style="color: #707183;">]</span>
+<span style="color: #a0522d;">y_train</span> = y_train<span style="color: #707183;">[</span>mask<span style="color: #707183;">]</span>
+
+<span style="color: #a0522d;">num_test</span> = 500
+<span style="color: #a0522d;">mask</span> = <span style="color: #483d8b;">list</span><span style="color: #707183;">(</span><span style="color: #483d8b;">range</span><span style="color: #7388d6;">(</span>num_test<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #a0522d;">X_test</span> = X_test<span style="color: #707183;">[</span>mask<span style="color: #707183;">]</span>
+<span style="color: #a0522d;">y_test</span> = y_test<span style="color: #707183;">[</span>mask<span style="color: #707183;">]</span>
+</pre>
+</div>
+
+<p>
+为了计算上面公式定义的距离，我们先把数据转化为 2 维的。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">X_train</span> = np.reshape<span style="color: #707183;">(</span>X_train, <span style="color: #7388d6;">(</span>X_train.shape<span style="color: #909183;">[</span>0<span style="color: #909183;">]</span>, -1<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #a0522d;">X_test</span> = np.reshape<span style="color: #707183;">(</span>X_test, <span style="color: #7388d6;">(</span>X_test.shape<span style="color: #909183;">[</span>0<span style="color: #909183;">]</span>, -1<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>X_train.shape, X_test.shape<span style="color: #707183;">)</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&#32467;&#26524;&#65306;(5000, 3072) (500, 3072)</span>
+</pre>
+</div>
+
+<p>
+其中 3072 = 32 * 32 * 3 的结果。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org2675a3b" class="outline-3">
+<h3 id="org2675a3b">KNN 算法</h3>
+<div class="outline-text-3" id="text-org2675a3b">
+<p>
+KNN 叫做 K Nearest Neighbor。
+这里有两个过程。
+</p>
+<ul class="org-ul">
+<li>计算所有测试和训练数据的距离</li>
+<li>通过上面的数据，找到 k 个距离最近的训练样本，然后对测试数据标签进行投票，最多的标签个数就是测试样例的标签。</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">from</span> cs231n.classifiers <span style="color: #a020f0;">import</span> KNearestNeighbor
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Create a kNN classifier instance.</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Remember that training a kNN classifier is a noop:</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">the Classifier simply remembers the data and does no further processing</span>
+<span style="color: #a0522d;">classifier</span> = KNearestNeighbor<span style="color: #707183;">()</span>
+classifier.train<span style="color: #707183;">(</span>X_train, y_train<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">dists</span> = classifier.compute_distances_two_loops<span style="color: #707183;">(</span>X_test<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+这个距离是通过 <b>L2-distance</b> (euclidean distance )，也即是欧几里得距离算出来的。
+</p>
+\begin{align}
+d_2 (I_1, I_2) = \sqrt{\sum_{p} \left( I^p_1 - I^p_2 \right)^2}
+\end{align}
+
+<div class="org-src-container">
+<pre class="src src-python">dists<span style="color: #707183;">[</span>i<span style="color: #707183;">][</span>j<span style="color: #707183;">]</span> = np.sqrt<span style="color: #707183;">(</span>
+np.<span style="color: #483d8b;">sum</span><span style="color: #7388d6;">(</span>np.square<span style="color: #909183;">(</span>X<span style="color: #709870;">[</span>i, :<span style="color: #709870;">]</span> - <span style="color: #a020f0;">self</span>.X_train<span style="color: #709870;">[</span>j, :<span style="color: #709870;">]</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+我们可以把这个距离用图像表示出来。
+</p>
+<div class="org-src-container">
+<pre class="src src-python">plt.imshow<span style="color: #707183;">(</span>dists, interpolation=<span style="color: #8b2252;">'none'</span><span style="color: #707183;">)</span>
+plt.show<span style="color: #707183;">()</span>
+</pre>
+</div>
+
+<p>
+结果如下。
+</p>
+
+<p width="100%">
+<img src="./imgs/20170817_114027_47854BYU.png" alt="20170817_114027_47854BYU.png" width="100%" />
+其中黑色表示距离近，比较亮的部分距离比较远。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3ca6fd7" class="outline-3">
+<h3 id="org3ca6fd7">预测</h3>
+<div class="outline-text-3" id="text-org3ca6fd7">
+<p>
+我们找到最近的 k 个样例的 label，然后取个数最多的一个。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">xrange</span><span style="color: #707183;">(</span>num_test<span style="color: #707183;">)</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">A list of length k storing the labels of the k nearest neighbors to</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">the ith test point.</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">closest_y</span> = <span style="color: #707183;">[]</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">&#25490;&#24207;</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">idx</span> = np.argsort<span style="color: #707183;">(</span>dists<span style="color: #7388d6;">[</span>i, :<span style="color: #7388d6;">]</span>, axis=0<span style="color: #707183;">)</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">&#21462;&#21069;k&#20010;&#26368;&#23567;&#30340;&#25968;&#25454;</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">closest_y</span> = <span style="color: #a020f0;">self</span>.y_train<span style="color: #707183;">[</span>idx<span style="color: #7388d6;">[</span>:k<span style="color: #7388d6;">]</span><span style="color: #707183;">]</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">&#25214;&#21040;&#20010;&#25968;&#20986;&#29616;&#26368;&#22810;&#30340;&#26631;&#31614;</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">y_pred</span><span style="color: #707183;">[</span>i<span style="color: #707183;">]</span> = np.argmax<span style="color: #707183;">(</span>np.bincount<span style="color: #7388d6;">(</span>closest_y<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+最后我们可以得到预测的成功率，不同的 k 值影响还是很大的。k=10 是一个比较好的数值。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">y_test_pred</span> = classifier.predict_labels<span style="color: #707183;">(</span>dists, k=10<span style="color: #707183;">)</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Compute and print the fraction of correctly predicted examples</span>
+<span style="color: #a0522d;">num_correct</span> = np.<span style="color: #483d8b;">sum</span><span style="color: #707183;">(</span>y_test_pred == y_test<span style="color: #707183;">)</span>
+<span style="color: #a0522d;">accuracy</span> = <span style="color: #483d8b;">float</span><span style="color: #707183;">(</span>num_correct<span style="color: #707183;">)</span> / num_test
+<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'Got %d / %d correct =&gt; accuracy: %f'</span> % <span style="color: #7388d6;">(</span>num_correct, num_test, accuracy<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+	repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

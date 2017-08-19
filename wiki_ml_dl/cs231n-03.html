@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-18 Fri 00:44 -->
+<!-- 2017-08-19 Sat 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Linear Classification</title>
+<title>线性分类</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -228,6 +228,7 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -239,8 +240,438 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Linear Classification</h1>
+<h1 class="title">线性分类</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd533c85">Overview</a></li>
+<li><a href="#org173dfef">标签分值</a></li>
+<li><a href="#org5b8eb12">Loss function</a></li>
+<li><a href="#orgf79b30d">SVM</a></li>
+<li><a href="#org0960c33">正则化（Regulariztion）</a></li>
+<li><a href="#org35256e5">实际考虑</a></li>
+<li><a href="#org3aec9ff">Softmax 分类器</a>
+<ul>
+<li><a href="#org7d7ad6a">编程实践：数值稳定</a></li>
+</ul>
+</li>
+<li><a href="#orgbb215bd">SVM 和 Softmax 比较</a></li>
+<li><a href="#org7f4a749">Demo</a></li>
+<li><a href="#org750acac">深入阅读</a></li>
+</ul>
+</div>
+</div>
 <hr />
+
+<div id="outline-container-orgd533c85" class="outline-2">
+<h2 id="orgd533c85">Overview</h2>
+<div class="outline-text-2" id="text-orgd533c85">
+<p>
+这部分会有两个主要的部分，score function 和 loss function。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org173dfef" class="outline-2">
+<h2 id="org173dfef">标签分值</h2>
+<div class="outline-text-2" id="text-org173dfef">
+<p>
+每个 image 计算对应的 label score。
+这里有一个线性分类器的数学描述。
+</p>
+\begin{align}
+f(x_i, W, b) =  W x_i + b
+\end{align}
+
+<p>
+其中，W 是 K*D 维的矩阵。
+</p>
+
+<p>
+一个常见的做法是将 W 和 b 放到一个矩阵中。
+</p>
+\begin{align}
+f(x_i, W) =  W x_i
+\end{align}
+
+
+<div class="figure">
+<p><img src="./imgs/20170819_000640_619233mT.png" alt="20170819_000640_619233mT.png" width="100%" />
+</p>
+</div>
+
+<p>
+我们在矩阵中增加一个为 1 的行就可以了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5b8eb12" class="outline-2">
+<h2 id="org5b8eb12">Loss function</h2>
+<div class="outline-text-2" id="text-org5b8eb12">
+<p>
+上面的 f 函数其实就是 score function。
+Loss function 有时候也叫做 cost function， 它衡量了我们对输出的 score 的不满意程度。
+</p>
+
+<p>
+Lost function tells how good our classifier is。
+</p>
+
+<p>
+其定义是这样的。
+</p>
+\begin{align}
+L = \sum_{i} L_i(f(x_i, W), y_i))
+\end{align}
+</div>
+</div>
+
+<div id="outline-container-orgf79b30d" class="outline-2">
+<h2 id="orgf79b30d">SVM</h2>
+<div class="outline-text-2" id="text-orgf79b30d">
+<p>
+上面说到了 loss function，但是它的定义是什么呢？
+</p>
+
+<p>
+其中一种定义就是 Multiclass Support Vector Machine(SVM) loss。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170819_105024_61923ExZ.png" alt="20170819_105024_61923ExZ.png" width="70%" />
+</p>
+</div>
+
+
+\begin{align}
+L_i = \sum_{j\neq y_i} \max(0, s_j - s_{y_i} + 1)
+\end{align}
+
+<p>
+其中 \(x_i\) 是代表图像， \(y_i\) 代表标签，是一个数字，而 \(s = f(x_i, W)\) 。
+</p>
+
+<p>
+这样空洞的说理论有些不懂。下面看个例子。
+这里首先是标签分值。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170819_105828_61923eFm.png" alt="20170819_105828_61923eFm.png" width="100%" />
+</p>
+</div>
+
+<p>
+这只是一部分，实际上应该是 D 维的，详细看上面。
+这部分数据就是通过 \(f(x, W)\) 计算得到的。
+</p>
+
+<p>
+首先我们先看下猫的这部分。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170819_111028_619233tH.png" alt="20170819_111028_619233tH.png" width="60%" />
+</p>
+</div>
+
+<p>
+其中 \(s_{y_i}=3.2\) ，所以
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170819_110949_61923qjB.png" alt="20170819_110949_61923qjB.png" width="60%" />
+</p>
+</div>
+
+<p>
+然后是汽车。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170819_111204_61923E4N.png" alt="20170819_111204_61923E4N.png" width="100%" />
+</p>
+</div>
+
+
+<p>
+最后是 frog。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170819_111329_61923eMa.png" alt="20170819_111329_61923eMa.png" width="100%" />
+</p>
+</div>
+
+<p>
+它的值达到了 12.9，说明对它的打分 -3.1 偏差非常的大。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">L_i_vectorized</span><span style="color: #657b83;">(</span>x, y, W<span style="color: #657b83;">)</span>:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">scores</span> = W.dot<span style="color: #657b83;">(</span>x<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">margins</span> = np.maximum<span style="color: #657b83;">(</span>0, scores - scores<span style="color: #2aa198;">[</span>y<span style="color: #2aa198;">]</span> + 1<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">margins</span><span style="color: #657b83;">[</span>y<span style="color: #657b83;">]</span> = 0
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">loss_i</span> = np.<span style="color: #6c71c4;">sum</span><span style="color: #657b83;">(</span>margins<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">return</span> loss_i
+</pre>
+</div>
+
+<p>
+另外，loss function 也可以这样写。
+</p>
+\begin{align}
+L_i = \sum_{j\neq y_i} \max(0, w_j^T x_i - w_{y_i}^T x_i + \Delta)
+\end{align}
+
+<p>
+对于整个数据集的 loss 其实就是平均一下。
+</p>
+
+<p>
+例如，
+</p>
+\begin{align}
+L &= (2.9 + 0 + 12.9) / 3\\
+  &=5.27
+\end{align}
+
+<p>
+有点要注意的是，有时候在计算 loss function 的时候，有些人用
+max() 后在平方一下，这样做有时确实很好。但是不平方是标准做法，这个要取决于交叉验证(cross validation)。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0960c33" class="outline-2">
+<h2 id="org0960c33">正则化（Regulariztion）</h2>
+<div class="outline-text-2" id="text-org0960c33">
+<p>
+我们需要添加一个修正叫做 regularization penalty \(R(W)\) 。
+</p>
+
+<p>
+现在 Loss function 变成这样了：
+</p>
+\begin{align}
+L =  \underbrace{ \frac{1}{N} \sum_i L_i }_\text{data loss} + \underbrace{ \lambda R(W) }_\text{regularization loss} \\\\
+\end{align}
+
+<p>
+关于 \(R(W)\) 有几种形式：
+</p>
+<ul class="org-ul">
+<li><p>
+L2 Regularization
+</p>
+
+\begin{align}
+R(W) = \sum_k\sum_l W_{k,l}^2
+\end{align}</li>
+
+<li><p>
+L1 Regularization
+</p>
+
+\begin{align}
+R(W) = \sum_k\sum_l |W_{k,l}|
+\end{align}</li>
+
+<li><p>
+Elastic net (L1 + L2)
+</p>
+
+\begin{align}
+R(W) = \sum_k\sum_l \beta W_{k,l}^2 + |W_{k,l}|
+\end{align}</li>
+</ul>
+
+<p>
+Python 代码
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#27809;&#26377;&#21152;&#27491;&#21017;&#21270;&#30340;&#24773;&#20917;</span>
+<span style="color: #859900;">def</span> <span style="color: #b58900;">L_i</span><span style="color: #657b83;">(</span>x, y, W<span style="color: #657b83;">)</span>:
+<span style="color: #d33682;">"""</span>
+<span style="color: #d33682;">unvectorized version. Compute the multiclass svm loss for a single example (x,y)</span>
+<span style="color: #d33682;">- x is a column vector representing an image (e.g. 3073 x 1 in CIFAR-10)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span><span style="color: #d33682;"> with an appended bias dimension in the 3073-rd position (i.e. bias trick)</span>
+<span style="color: #d33682;">- y is an integer giving index of correct class (e.g. between 0 and 9 in CIFAR-10)</span>
+<span style="color: #d33682;">- W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)</span>
+<span style="color: #d33682;">"""</span>
+<span style="color: #6c71c4;">delta</span> = 1.0 <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">see notes about delta later in this section</span>
+<span style="color: #6c71c4;">scores</span> = W.dot<span style="color: #657b83;">(</span>x<span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">scores becomes of size 10 x 1, the scores for each class</span>
+<span style="color: #6c71c4;">correct_class_score</span> = scores<span style="color: #657b83;">[</span>y<span style="color: #657b83;">]</span>
+<span style="color: #6c71c4;">D</span> = W.shape<span style="color: #657b83;">[</span>0<span style="color: #657b83;">]</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">number of classes, e.g. 10</span>
+<span style="color: #6c71c4;">loss_i</span> = 0.0
+<span style="color: #859900;">for</span> j <span style="color: #859900;">in</span> <span style="color: #6c71c4;">xrange</span><span style="color: #657b83;">(</span>D<span style="color: #657b83;">)</span>: <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">iterate over all wrong classes</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #859900;">if</span> j == y:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">skip for the true class to only loop over incorrect classes</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">continue</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">accumulate loss for the i-th example</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #6c71c4;">loss_i</span> += <span style="color: #6c71c4;">max</span><span style="color: #657b83;">(</span>0, scores<span style="color: #2aa198;">[</span>j<span style="color: #2aa198;">]</span> - correct_class_score + delta<span style="color: #657b83;">)</span>
+<span style="color: #859900;">return</span> loss_i
+</pre>
+</div>
+
+<p>
+下面是添加了使用向量表示的代码，这种方式更加高效：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">L_i_vectorized</span><span style="color: #657b83;">(</span>x, y, W<span style="color: #657b83;">)</span>:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #d33682;">'''</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span><span style="color: #d33682;">   A faster half-vectorized implementation. half-vectorized</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span><span style="color: #d33682;">   refers to the fact that for a single example the implementation</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span><span style="color: #d33682;">   contains no for loops, but there is still one loop over the</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span><span style="color: #d33682;">   examples(outside this function)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span><span style="color: #d33682;">   '''</span>
+
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">delta</span> = 1.0
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">scores</span> = W.dot<span style="color: #657b83;">(</span>x<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">margins</span> = np.maximum<span style="color: #657b83;">(</span>0, scores - scores<span style="color: #2aa198;">[</span>y<span style="color: #2aa198;">]</span> + delta<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">margins</span><span style="color: #657b83;">[</span>y<span style="color: #657b83;">]</span> = 0
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">loss_i</span> = np.<span style="color: #6c71c4;">sum</span><span style="color: #657b83;">(</span>margins<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">return</span> loss_i
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org35256e5" class="outline-2">
+<h2 id="org35256e5">实际考虑</h2>
+<div class="outline-text-2" id="text-org35256e5">
+<p>
+上面中有 \(\delta\) 是一个 magic number, 我们应该如何得到它？
+可以通过交叉验证来得到，但是大部分情况设为 1 是个不错的选择。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3aec9ff" class="outline-2">
+<h2 id="org3aec9ff">Softmax 分类器</h2>
+<div class="outline-text-2" id="text-org3aec9ff">
+<p>
+SVM 和 Softmax 分类器是最常用的分类器。
+</p>
+
+\begin{align}
+L_i = -\log\left(\frac{e^{f_{y_i}}}{ \sum_j e^{f_j} }\right) \hspace{0.5in} \text{or equivalently} \hspace{0.5in} L_i = -f_{y_i} + \log\sum_j e^{f_j}
+\end{align}
+
+<p>
+其中 softmax 函数为
+</p>
+\begin{align}
+f_j(z) = \frac{e^{z_j}}{\sum_k e^{z_k}}
+\end{align}
+
+<p>
+看下面这个图片可能更加清晰一些
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170819_213401_75553NLq.png" alt="20170819_213401_75553NLq.png" width="80%" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7d7ad6a" class="outline-3">
+<h3 id="org7d7ad6a">编程实践：数值稳定</h3>
+<div class="outline-text-3" id="text-org7d7ad6a">
+<p>
+编程时 softmax 函数我们可以做一个变换，分子分母同乘以 \(C\) ：
+</p>
+\begin{align}
+\frac{e^{f_{y_i}}}{\sum_j e^{f_j}}
+= \frac{Ce^{f_{y_i}}}{C\sum_j e^{f_j}}
+= \frac{e^{f_{y_i} + \log C}}{\sum_j e^{f_j + \log C}}
+\end{align}
+
+<p>
+然后， \(C\) 为 \(\log C = -\max_j f_j\) 。
+</p>
+
+<p>
+下面是代码：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #6c71c4;">f</span> = np.array<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span>123, 456, 789<span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">p</span> = np.exp<span style="color: #657b83;">(</span>f<span style="color: #657b83;">)</span> / np.<span style="color: #6c71c4;">sum</span><span style="color: #657b83;">(</span>np.exp<span style="color: #2aa198;">(</span>f<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#21464;&#25442;&#21518;</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#20854;&#23454;&#23601;&#26159;&#23558; f &#25968;&#20540;&#24179;&#31227;&#65292;&#23558;&#26368;&#22823;&#20540;&#21464;&#20026; 0</span>
+<span style="color: #6c71c4;">f</span> -= np.<span style="color: #6c71c4;">max</span><span style="color: #657b83;">(</span>f<span style="color: #657b83;">)</span>  <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">f &#21464;&#25104;&#20102; [-666, -333, 0]</span>
+<span style="color: #6c71c4;">p</span> = np.exp<span style="color: #657b83;">(</span>f<span style="color: #657b83;">)</span> / np.<span style="color: #6c71c4;">sum</span><span style="color: #657b83;">(</span>np.exp<span style="color: #2aa198;">(</span>f<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+
+<p>
+例如
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170819_214619_76270ZQr.png" alt="20170819_214619_76270ZQr.png" width="100%" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">import</span> numpy <span style="color: #859900;">as</span> np
+
+<span style="color: #6c71c4;">f</span> = <span style="color: #657b83;">[</span>3.2, 5.1, -1.7<span style="color: #657b83;">]</span>
+<span style="color: #6c71c4;">f</span> -= np.<span style="color: #6c71c4;">max</span><span style="color: #657b83;">(</span>f<span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">p</span> = np.exp<span style="color: #657b83;">(</span>f<span style="color: #657b83;">)</span> / np.<span style="color: #6c71c4;">sum</span><span style="color: #657b83;">(</span>np.exp<span style="color: #2aa198;">(</span>f<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>p<span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">[ 0.12998254  0.86904954  0.00096793]</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb215bd" class="outline-2">
+<h2 id="orgbb215bd">SVM 和 Softmax 比较</h2>
+<div class="outline-text-2" id="text-orgbb215bd">
+<p>
+首先，通过图片看下结果
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170819_215518_76270luG.png" alt="20170819_215518_76270luG.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org7f4a749" class="outline-2">
+<h2 id="org7f4a749">Demo</h2>
+<div class="outline-text-2" id="text-org7f4a749">
+<p>
+这里有个 interactive web demo for this part
+</p>
+
+
+<div class="figure">
+<p><a href="http://vision.stanford.edu/teaching/cs231n/linear-classify-demo" width="100%"><img src="./imgs/20170819_222545_76270_CT.png" alt="20170819_222545_76270_CT.png" width="100%" /></a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org750acac" class="outline-2">
+<h2 id="org750acac">深入阅读</h2>
+<div class="outline-text-2" id="text-org750acac">
+<ul class="org-ul">
+<li><a href="http://arxiv.org/abs/1306.0239">Deep Learning using Linear Support Vector Machines</a> from Charlie Tang 2013 presents some results claiming that the L2SVM outperforms Softmax.</li>
+</ul>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-16 Wed 14:47 -->
+<!-- 2017-08-21 Mon 20:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MAC 好用软件</title>
@@ -258,12 +258,13 @@ for the JavaScript code in this tag.
 <li><a href="#orge311097">4. QuickTime Player</a></li>
 <li><a href="#org7b2bbe2">5. Duet</a></li>
 <li><a href="#org0cd2b30">6. Keyboard Maestro</a></li>
-<li><a href="#org8ff2ca2">7. IDEΑ</a>
+<li><a href="#orgd15f6e5">7. Vimium</a></li>
+<li><a href="#org73b751e">8. Popcorn-Time</a></li>
+<li><a href="#orgc2606cb">9. IDEΑ</a>
 <ul>
 <li><a href="#org491785a">plugins</a></li>
 </ul>
 </li>
-<li><a href="#org570c409">8. Vimium</a></li>
 </ul>
 </div>
 </div>
@@ -279,11 +280,21 @@ for the JavaScript code in this tag.
 <h2 id="org7ce0e80">1. Emacs</h2>
 <div class="outline-text-2" id="text-org7ce0e80">
 <p>
-为什么第一个推荐 Emacs 呢？即使你是 Vim 用户，学习 Emacs 对你使用 Mac 也很有用。
-为什么这样说呢？我就说说移动的操作。我们都知道 Vim 移动使用的是 H J K L。
-这是很快，但是这对你在 Mac 下没有任何的帮助，你依然要用到方向键，或者鼠标去做很多的操作。但是 Emacs 的方向移动却不是这样的，它与 Vim 是两个完全不一样的哲学。在 Emacs 中，我们使用 C-a, C-e, C-f, C-b, C-p, C-n 等，去做移动操作。你可以在 Mac 上随便一个文本编辑工具或者其他需要输入文字的地方去试一下这几个命令。熟悉了以后你会感到非常的方便，当然 Ctrl 键要大小写键换一下才好用。举个例子，在 Iterm 中我们输入命令，可以很方便的修改，还有写 Email 等等。
-这还只是简单的移动其他还有很多。
-每个人的 Emacs 都是不一样的，也有不同的按键和操作，如果你不想折腾，不建议学。
+Vim 与 Emacs 的争论已经很多了，但是我想说的是你在熟悉了其中一个后能否抛弃鄙视和偏见去试试另一个呢?
+</p>
+
+<p>
+人们不喜欢 Emacs 的原因有很多。有人认为它的按键很奇葩，有很多的
+Ctrl，Meta 要按；有人认为，它太过丑陋而且看起来是个老古董的东西，
+一点也不 cool。 这些观点在我看来都不是问题，如果没有尝试过，或者说是浅尝辄止是没有资格去这样评价它的。我认为适应它一星期足够了，习惯了以后你可能就会喜欢上这种 Edit style。
+</p>
+
+<p>
+相比于 Win 系统，OSX 系统在 Edit 上的方式与 Emacs 是一脉相承的。如果你对 Mac 下的快捷方式很熟悉再看下 Emacs 的快捷键，你就会明白我为什么这样说了。
+</p>
+
+<p>
+在 Emacs 中，我们使用 C-a, C-e, C-f, C-b, C-p, C-n 等，去做移动操作。你可以在 Mac 上随便一个文本编辑工具或者其他需要输入文字的地方去试一下这几个命令。熟悉了以后你会感到非常的方便，当然 Ctrl 键要大小写键换一下才好用。举个例子，在 Iterm 中我们输入命令，可以很方便的修改，还有写 Email 等等。
 </p>
 </div>
 </div>
@@ -377,9 +388,9 @@ window 选项卡下，我们可以设置 terminal 的背景。
 我经常要更新我的 emacs 配置，但是如果我手动的去输入很多的命令就比较麻烦:
 </p>
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #483d8b;">cd</span> ~/.emacs.d
+<pre class="src src-shell"><span style="color: #6c71c4;">cd</span> ~/.emacs.d
 git add .
-git commit -m <span style="color: #8b2252;">"messages.."</span>
+git commit -m <span style="color: #2aa198;">"messages.."</span>
 git push origin master
 </pre>
 </div>
@@ -401,11 +412,11 @@ git push origin master
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">git add .
-<span style="color: #483d8b;">read</span> -p <span style="color: #8b2252;">"Commit description, default is 'Auto commit': "</span> desc
-<span style="color: #a020f0;">if</span> <span style="color: #707183;">[</span> -z <span style="color: #8b2252;">"$desc"</span> <span style="color: #707183;">]</span>; <span style="color: #a020f0;">then</span>
-    <span style="color: #a0522d;">desc</span>=<span style="color: #8b2252;">"Auto commit"</span>
-<span style="color: #a020f0;">fi</span>
-git commit -m <span style="color: #8b2252;">"$desc"</span>
+<span style="color: #6c71c4;">read</span> -p <span style="color: #2aa198;">"Commit description, default is 'Auto commit': "</span> desc
+<span style="color: #859900;">if</span> <span style="color: #657b83;">[</span> -z <span style="color: #2aa198;">"$desc"</span> <span style="color: #657b83;">]</span>; <span style="color: #859900;">then</span>
+    <span style="color: #6c71c4;">desc</span>=<span style="color: #2aa198;">"Auto commit"</span>
+<span style="color: #859900;">fi</span>
+git commit -m <span style="color: #2aa198;">"$desc"</span>
 git push origin master
 </pre>
 </div>
@@ -719,20 +730,20 @@ cmd + -  缩小字体
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #0000ff;">movtogif</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
-    <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$1"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
-        <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"usage: mov-gif &lt;src&gt; [desc]"</span>
-        <span style="color: #a020f0;">return</span> 1
-    <span style="color: #a020f0;">fi</span>
+<pre class="src src-shell"><span style="color: #b58900;">movtogif</span><span style="color: #657b83;">()</span> <span style="color: #657b83;">{</span>
+    <span style="color: #859900;">if</span> <span style="color: #2aa198;">[</span> -z <span style="color: #2aa198;">"$1"</span> <span style="color: #2aa198;">]</span>; <span style="color: #859900;">then</span>
+        <span style="color: #6c71c4;">echo</span> <span style="color: #2aa198;">"usage: mov-gif &lt;src&gt; [desc]"</span>
+        <span style="color: #859900;">return</span> 1
+    <span style="color: #859900;">fi</span>
 
-    <span style="color: #483d8b;">local</span> <span style="color: #a0522d;">filename</span>=$<span style="color: #a0522d;">2</span>
-    <span style="color: #b22222;"># </span><span style="color: #b22222;">generate random filename</span>
-    <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$2"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
-        <span style="color: #a0522d;">filename</span>=<span style="color: #ff00ff;">`hexdump -e '/1 "%02x"' -n16 &lt; /dev/urandom`</span>
-    <span style="color: #a020f0;">fi</span>
-    ffmpeg -i $<span style="color: #7388d6;">{</span><span style="color: #a0522d;">1</span><span style="color: #7388d6;">}</span>.mov -vf <span style="color: #a0522d;">scale</span>=800:-1 -r 10 -f image2pipe -vcodec ppm - | <span style="color: #8b2252;">\</span>
-    convert -delay 5 -fuzz 2% -layers Optimize -loop 0 - $<span style="color: #7388d6;">{</span><span style="color: #a0522d;">2</span><span style="color: #7388d6;">}</span>.gif
-<span style="color: #707183;">}</span>
+    <span style="color: #6c71c4;">local</span> <span style="color: #6c71c4;">filename</span>=$<span style="color: #6c71c4;">2</span>
+    <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">generate random filename</span>
+    <span style="color: #859900;">if</span> <span style="color: #2aa198;">[</span> -z <span style="color: #2aa198;">"$2"</span> <span style="color: #2aa198;">]</span>; <span style="color: #859900;">then</span>
+        <span style="color: #6c71c4;">filename</span>=<span style="color: #d33682;">`hexdump -e '/1 "%02x"' -n16 &lt; /dev/urandom`</span>
+    <span style="color: #859900;">fi</span>
+    ffmpeg -i $<span style="color: #2aa198;">{</span><span style="color: #6c71c4;">1</span><span style="color: #2aa198;">}</span>.mov -vf <span style="color: #6c71c4;">scale</span>=800:-1 -r 10 -f image2pipe -vcodec ppm - | <span style="color: #2aa198;">\</span>
+    convert -delay 5 -fuzz 2% -layers Optimize -loop 0 - $<span style="color: #2aa198;">{</span><span style="color: #6c71c4;">2</span><span style="color: #2aa198;">}</span>.gif
+<span style="color: #657b83;">}</span>
 
 </pre>
 </div>
@@ -741,7 +752,7 @@ cmd + -  缩小字体
 我们就可以直接这样了。
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">movtogif<span style="color: #a020f0;"> in</span>
+<pre class="src src-shell">movtogif<span style="color: #859900;"> in</span>
 </pre>
 </div>
 
@@ -781,29 +792,9 @@ Keyboard Maestro 不可以没有。 在我看来 karabiner 在这个软件面前
 </div>
 </div>
 
-<div id="outline-container-org8ff2ca2" class="outline-2">
-<h2 id="org8ff2ca2">7. IDEΑ</h2>
-<div class="outline-text-2" id="text-org8ff2ca2">
-<p>
-使用 Emacs 开发 Java 还是不方便。这个还得是 IDEA 来比较靠谱，但是关于 Emacs 中的很多快捷方式要能够移植到这个平台就好了。
-</p>
-</div>
-
-<div id="outline-container-org491785a" class="outline-3">
-<h3 id="org491785a">plugins</h3>
-<div class="outline-text-3" id="text-org491785a">
-<ol class="org-ol">
-<li>emacsIDEAs</li>
-
-<li>Ace Jump</li>
-</ol>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org570c409" class="outline-2">
-<h2 id="org570c409">8. Vimium</h2>
-<div class="outline-text-2" id="text-org570c409">
+<div id="outline-container-orgd15f6e5" class="outline-2">
+<h2 id="orgd15f6e5">7. Vimium</h2>
+<div class="outline-text-2" id="text-orgd15f6e5">
 <p>
 Vimium 是一个 Chrome 的插件，并非属于 mac 上的软件，但是我感觉还是有必要说下。
 在浏览器中操作我们经常要通过鼠标或者触摸板来操作，但是这样会比较麻烦。我们知道通过鼠标来操作绝对没有通过键盘来的快速。
@@ -904,6 +895,45 @@ Vimium 是一个 Chrome 的插件，并非属于 mac 上的软件，但是我感
 <div class="figure">
 <p><img src="./imgs/20170816_123325_16711iRG.png" alt="20170816_123325_16711iRG.png" width="100%" />
 </p>
+</div>
+</div>
+</div>
+<div id="outline-container-org73b751e" class="outline-2">
+<h2 id="org73b751e">8. Popcorn-Time</h2>
+<div class="outline-text-2" id="text-org73b751e">
+<p>
+这个软件就是看电影以及美剧的神器。有了它，就不用就到处找资源了，而且还是高清。真是相见恨晚的软件。
+</p>
+
+<p>
+官网地址是：<a href="https://popcorntime.sh">https://popcorntime.sh</a>。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170821_182510_82662iuh.png" alt="20170821_182510_82662iuh.png" width="100%" />
+</p>
+</div>
+
+<p>
+注：国产神剧看不了
+</p>
+</div>
+</div>
+<div id="outline-container-orgc2606cb" class="outline-2">
+<h2 id="orgc2606cb">9. IDEΑ</h2>
+<div class="outline-text-2" id="text-orgc2606cb">
+<p>
+使用 Emacs 开发 Java 还是不方便。这个还得是 IDEA 来比较靠谱，但是关于 Emacs 中的很多快捷方式要能够移植到这个平台就好了。
+</p>
+</div>
+<div id="outline-container-org491785a" class="outline-3">
+<h3 id="org491785a">plugins</h3>
+<div class="outline-text-3" id="text-org491785a">
+<ol class="org-ol">
+<li>emacsIDEAs</li>
+<li>Ace Jump</li>
+</ol>
 </div>
 </div>
 </div>

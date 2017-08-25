@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-21 Mon 18:27 -->
+<!-- 2017-08-23 Wed 12:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>最优化（Opetimization）</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -228,6 +228,7 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -239,14 +240,187 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
+<h1 class="title">最优化（Opetimization）</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7e3db12">策略</a>
+<ul>
+<li><a href="#org4f08d1b">随机搜索</a></li>
+<li><a href="#orgd951d6e">随机本地搜索</a></li>
+<li><a href="#org6db8c76">梯度下降方式</a></li>
+<li><a href="#org08f38f4">微分分析</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<hr />
+
 <p>
-y #+TITLE: 最优化
+这一部分非常的关键。我们通过这个最优化的过程，来找到使得 Loss function 最小的参数 W。
 </p>
 
-<hr />
+<div id="outline-container-org7e3db12" class="outline-2">
+<h2 id="org7e3db12">策略</h2>
+<div class="outline-text-2" id="text-org7e3db12">
+</div><div id="outline-container-org4f08d1b" class="outline-3">
+<h3 id="org4f08d1b">随机搜索</h3>
+<div class="outline-text-3" id="text-org4f08d1b">
 <p>
-<a href="https://zhuanlan.zhihu.com/p/21360434">https://zhuanlan.zhihu.com/p/21360434</a>
+如何优化 W，这里有个比较简单的方式。方法就是不断的随机尝试，找到一个相对好的。
 </p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #6c71c4;">bestloss</span> = <span style="color: #6c71c4;">float</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'inf'</span><span style="color: #657b83;">)</span>
+<span style="color: #859900;">for</span> num <span style="color: #859900;">in</span> <span style="color: #6c71c4;">xrange</span><span style="color: #657b83;">(</span>1000<span style="color: #657b83;">)</span>:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">W</span> = np.random.randn<span style="color: #657b83;">(</span>10, 3073<span style="color: #657b83;">)</span> * 1.0001
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">loss</span> = L<span style="color: #657b83;">(</span>X_train, Y_train, W<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">if</span> loss &lt; bestloss:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">bestloss</span> = loss
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">bestW</span> = W
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">print</span><span style="color: #657b83;">(</span><span style="color: #859900;">in</span> attemp %d the loss was %f, best %f<span style="color: #2aa198;">' %(num, loss, bestloss))</span>
+</pre>
+</div>
+
+<p>
+通过测试集测试准确率约为 15.5%。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd951d6e" class="outline-3">
+<h3 id="orgd951d6e">随机本地搜索</h3>
+<div class="outline-text-3" id="text-orgd951d6e">
+<p>
+策略是向不同的方向去走，如果某个方向是下山的就往这个方向走。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #6c71c4;">W</span> = np.random.randn<span style="color: #657b83;">(</span>10, 3073<span style="color: #657b83;">)</span> * 0.001
+<span style="color: #6c71c4;">bestloss</span> = <span style="color: #6c71c4;">float</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'inf'</span><span style="color: #657b83;">)</span>
+<span style="color: #859900;">for</span> i <span style="color: #859900;">in</span> <span style="color: #6c71c4;">xrange</span><span style="color: #657b83;">(</span>1000<span style="color: #657b83;">)</span>:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">step_size</span> = 0.0001
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">Wtry</span> = W + np.random.randn<span style="color: #657b83;">(</span>10, 3073<span style="color: #657b83;">)</span> * step_size
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">loss</span> = L<span style="color: #657b83;">(</span>Xtr_cols, Ytr, Wtry<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">if</span> loss &lt; bestloss:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">bestloss</span> = loss
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">W</span> = Wtry
+</pre>
+</div>
+
+<p>
+这种方式的准确率是 21.4% 左右。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org6db8c76" class="outline-3">
+<h3 id="org6db8c76">梯度下降方式</h3>
+<div class="outline-text-3" id="text-org6db8c76">
+<p>
+上面的方式虽然是在下山但却不是最快的方式。
+我们通过计算一个函数的梯度，可以更加快速的找到一个局部的最小值。
+</p>
+
+\begin{align}
+\frac{df(x)}{dx} = \lim_{h\ \to 0} \frac{f(x + h) - f(x)}{h}
+\end{align}
+
+<p>
+计算梯度有两种方式：一种是数值梯度法，一种是分析梯度法。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">eval_numerical_gradient</span><span style="color: #657b83;">(</span>f, x<span style="color: #657b83;">)</span>:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">fx</span> = f<span style="color: #657b83;">(</span>x<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">grad</span> = np.zeros<span style="color: #657b83;">(</span>x.shape<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">h</span> = 0.00001
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">it</span> = np.nditer<span style="color: #657b83;">(</span>x, flags=<span style="color: #2aa198;">[</span><span style="color: #2aa198;">'multi_index'</span><span style="color: #2aa198;">]</span>, op_flags=<span style="color: #2aa198;">[</span><span style="color: #2aa198;">'readwrite'</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">while</span> <span style="color: #859900;">not</span> it.finshed:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">ix</span> = it.multi_index <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">(1, 2) ... &#20301;&#32622;</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">old_value</span> = x<span style="color: #657b83;">[</span>ix<span style="color: #657b83;">]</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">x</span><span style="color: #657b83;">[</span>ix<span style="color: #657b83;">]</span> = old_value + h
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">fxh</span> = f<span style="color: #657b83;">(</span>x<span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">x &#20013;&#21482;&#26159; ix &#20986;&#30340; value &#21464;&#20102;</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">x</span><span style="color: #657b83;">[</span>ix<span style="color: #657b83;">]</span> = old_value
+
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">grad</span><span style="color: #657b83;">[</span>ix<span style="color: #657b83;">]</span> = <span style="color: #657b83;">(</span>fxh - fx<span style="color: #657b83;">)</span> / h
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   it.iternext<span style="color: #657b83;">()</span>
+
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">return</span> grad
+</pre>
+</div>
+
+
+<p>
+这个函数返回每个点处的梯度值。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">CIFAR10_fun</span><span style="color: #657b83;">(</span>W<span style="color: #657b83;">)</span>:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">return</span> L<span style="color: #657b83;">(</span>X_train, y_train, W<span style="color: #657b83;">)</span>
+
+<span style="color: #6c71c4;">W</span> = np.random.rand<span style="color: #657b83;">(</span>10, 3073<span style="color: #657b83;">)</span> * 0.001
+<span style="color: #6c71c4;">df</span> = eval_numerical_gradient<span style="color: #657b83;">(</span>CIFAR10_fun, W<span style="color: #657b83;">)</span>
+</pre>
+</div>
+
+<p>
+梯度告诉我们损失函数在每个维度上的斜率，以此来进行更新：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #6c71c4;">loss_original</span> = CIFAR10_loss_fun<span style="color: #657b83;">(</span>W<span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#21021;&#22987;&#25439;&#22833;&#20540;</span>
+<span style="color: #859900;">print</span> <span style="color: #2aa198;">'original loss: %f'</span> % <span style="color: #657b83;">(</span>loss_original, <span style="color: #657b83;">)</span>
+
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#26597;&#30475;&#19981;&#21516;&#27493;&#38271;&#30340;&#25928;&#26524;</span>
+<span style="color: #859900;">for</span> step_size_log <span style="color: #859900;">in</span> <span style="color: #657b83;">[</span>-10, -9, -8, -7, -6, -5,-4,-3,-2,-1<span style="color: #657b83;">]</span>:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">step_size</span> = 10 ** step_size_log
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">W_new</span> = W - step_size * df <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#26435;&#37325;&#31354;&#38388;&#20013;&#30340;&#26032;&#20301;&#32622;</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">loss_new</span> = CIFAR10_loss_fun<span style="color: #657b83;">(</span>W_new<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">print</span> <span style="color: #2aa198;">'for step size %f new loss: %f'</span> % <span style="color: #657b83;">(</span>step_size, loss_new<span style="color: #657b83;">)</span>
+
+</pre>
+</div>
+
+<p>
+在梯度负方向上更新：在上面的代码中，为了计算 W<sub>new</sub>，要注意我们是向着梯度 df 的负方向去更新，这是因为我们希望损失函数值是降低而不是升高。
+</p>
+
+<p>
+步长的不同会有很大的影响，上面的结果。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">original loss: 2.200718</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for step size 1.000000e-10 new loss: 2.200652</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for step size 1.000000e-09 new loss: 2.200057</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for step size 1.000000e-08 new loss: 2.194116</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for step size 1.000000e-07 new loss: 2.135493</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for step size 1.000000e-06 new loss: 1.647802</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for step size 1.000000e-05 new loss: 2.844355</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for step size 1.000000e-04 new loss: 25.558142</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for step size 1.000000e-03 new loss: 254.086573</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for step size 1.000000e-02 new loss: 2539.370888</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">for step size 1.000000e-01 new loss: 25392.214036</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org08f38f4" class="outline-3">
+<h3 id="org08f38f4">微分分析</h3>
+<div class="outline-text-3" id="text-org08f38f4">
+<p>
+使用有限差值近似计算梯度比较简单，但缺点在于终究只是近似（因为我们对于 h 值是选取了一个很小的数值，但真正的梯度定义中 h 趋向 0 的极限），
+且耗费计算资源太多。第二个梯度计算方法是利用微分来分析，能得到计算梯度的公式（不是近似），用公式计算梯度速度很快，唯一不好的就是实现的时候容易出错。为了解决这个问题，在实际操作时常常将分析梯度法的结果和数值梯度法的结果作比较，以此来检查其实现的正确性，这个步骤叫做梯度检查
+</p>
+
+\begin{align}
+\nabla_{w_{y_i}} L_i = - \left( \sum_{j\neq y_i} \mathbb{1}(w_j^Tx_i - w_{y_i}^Tx_i + \Delta > 0) \right) x_i
+\end{align}
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

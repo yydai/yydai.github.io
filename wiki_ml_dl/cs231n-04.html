@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-23 Wed 12:42 -->
+<!-- 2017-08-29 Tue 10:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>最优化（Opetimization）</title>
@@ -251,8 +251,10 @@ for the JavaScript code in this tag.
 <li><a href="#orgd951d6e">随机本地搜索</a></li>
 <li><a href="#org6db8c76">梯度下降方式</a></li>
 <li><a href="#org08f38f4">微分分析</a></li>
+<li><a href="#orge80dda5">梯度下降</a></li>
 </ul>
 </li>
+<li><a href="#org0f1e67b">总结</a></li>
 </ul>
 </div>
 </div>
@@ -415,11 +417,63 @@ for the JavaScript code in this tag.
 且耗费计算资源太多。第二个梯度计算方法是利用微分来分析，能得到计算梯度的公式（不是近似），用公式计算梯度速度很快，唯一不好的就是实现的时候容易出错。为了解决这个问题，在实际操作时常常将分析梯度法的结果和数值梯度法的结果作比较，以此来检查其实现的正确性，这个步骤叫做梯度检查
 </p>
 
+
+<p>
+用 SVM 的损失函数在某个数据点上的计算来举例：
+</p>
+\begin{align}
+L_i = \sum_{j\neq y_i} \left[ \max(0, w_j^Tx_i - w_{y_i}^Tx_i + \Delta) \right]
+\end{align}
+
+<p>
+下面是对 \(W_{y_i}\) 求导：
+</p>
+
 \begin{align}
 \nabla_{w_{y_i}} L_i = - \left( \sum_{j\neq y_i} \mathbb{1}(w_j^Tx_i - w_{y_i}^Tx_i + \Delta > 0) \right) x_i
 \end{align}
+
+<p>
+其中 1 是一个示性函数，如果括号中的条件为真，那么函数值为 1，如果为假，则函数值为 0。
+</p>
 </div>
 </div>
+
+<div id="outline-container-orge80dda5" class="outline-3">
+<h3 id="orge80dda5">梯度下降</h3>
+<div class="outline-text-3" id="text-orge80dda5">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">while</span> <span style="color: #268bd2;">True</span>:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">weights_grad</span> = evaluate_gradient<span style="color: #657b83;">(</span>loss_fun, data, weights<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">weights</span> += - step_size * weights_grad <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#36827;&#34892;&#26799;&#24230;&#26356;&#26032;</span>
+</pre>
+</div>
+
+<p>
+这个简单的循环在所有的神经网络核心库中都有。虽然也有其他实现最优化的方法（比如 LBFGS），但是到目前为止，梯度下降是对神经网络的损失函数最优化中最常用的方法。
+</p>
+
+<p>
+小批量数据梯度下降（Mini-batch gradient descent）：在大规模的应用中（比如 ILSVRC 挑战赛），训练数据可以达到百万级量级。如果像这样计算整个训练集，来获得仅仅一个参数的更新就太浪费了。一个常用的方法是计算训练集中的小批量（batches）数据。例如，在目前最高水平的卷积神经网络中，一个典型的小批量包含 256 个例子，而整个训练集是多少呢？一百二十万个。这个小批量数据就用来实现一个参数更新：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">while</span> <span style="color: #268bd2;">True</span>:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">data_batch</span> = sample_training_data<span style="color: #657b83;">(</span>data, 256<span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">256 &#20010;&#25968;&#25454;</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">weights_grad</span> = evaluate_gradient<span style="color: #657b83;">(</span>loss_fun, data_batch, weights<span style="color: #657b83;">)</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">weights</span> += - step_size * weights_grad <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#21442;&#25968;&#26356;&#26032;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-org0f1e67b" class="outline-2">
+<h2 id="org0f1e67b">总结</h2>
 </div>
 </div>
 <div id="postamble" class="status">

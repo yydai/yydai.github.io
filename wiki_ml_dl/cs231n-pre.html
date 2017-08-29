@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-19 Sat 11:32 -->
+<!-- 2017-08-29 Tue 10:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>准备</title>
@@ -348,6 +348,8 @@ Numpy 主要用于科学计算。它的主要功能是处理数组。
 </div>
 </div></li>
 
+
+
 <li><a id="org2b24970"></a>Array indexing<br /><div class="outline-text-4" id="text-org2b24970">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #6c71c4;">a</span> = np.array<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #b58900;">[</span>1,2,3,4<span style="color: #b58900;">]</span>, <span style="color: #b58900;">[</span>5,6,7,8<span style="color: #b58900;">]</span>, <span style="color: #b58900;">[</span>9,10,11,12<span style="color: #b58900;">]</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
@@ -642,11 +644,25 @@ np.argsort<span style="color: #657b83;">(</span>x<span style="color: #657b83;">)
 array<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span>1, 2, 0<span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
 </pre>
 </div></li>
+
+<li><p>
+np.hstack
+</p>
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="color: #6c71c4;">x</span> = np.array<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #b58900;">[</span>1, 2, 3<span style="color: #b58900;">]</span>, <span style="color: #b58900;">[</span>2, 3, 5<span style="color: #b58900;">]</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+&gt;&gt;&gt; x
+array<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #b58900;">[</span>1, 2, 3<span style="color: #b58900;">]</span>,
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>  <span style="color: #b58900;">[</span>2, 3, 5<span style="color: #b58900;">]</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+
+&gt;&gt;&gt; np.hstack<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span>x, np.ones<span style="color: #b58900;">(</span><span style="color: #859900;">(</span>x.shape<span style="color: #268bd2;">[</span>0<span style="color: #268bd2;">]</span>, 1<span style="color: #859900;">)</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+array<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #b58900;">[</span> 1.,  2.,  3.,  1.<span style="color: #b58900;">]</span>,
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>  <span style="color: #b58900;">[</span> 2.,  3.,  5.,  1.<span style="color: #b58900;">]</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+</pre>
+</div></li>
 </ol>
 </div>
 </div>
 </div>
-
 
 
 <div id="outline-container-org5cbe16e" class="outline-2">

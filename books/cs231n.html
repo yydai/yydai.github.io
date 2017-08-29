@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-17 Thu 09:06 -->
+<!-- 2017-08-29 Tue 10:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CS231n 课程笔记</title>
@@ -283,16 +283,16 @@ more detail <a href="http://cs231n.github.io/gce-tutorial/">http://cs231n.github
 <h3 id="org8ff34bf">Python</h3>
 <div class="outline-text-3" id="text-org8ff34bf">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">quicksort</span><span style="color: #707183;">(</span>arr<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> <span style="color: #483d8b;">len</span><span style="color: #707183;">(</span>arr<span style="color: #707183;">)</span> &lt; 1:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> arr
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">pivot</span> = arr<span style="color: #707183;">[</span><span style="color: #483d8b;">len</span><span style="color: #7388d6;">(</span>arr<span style="color: #7388d6;">)</span> // 2<span style="color: #707183;">]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">left</span> = <span style="color: #707183;">[</span>x <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> arr <span style="color: #a020f0;">if</span> x &lt; pivot<span style="color: #707183;">]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">middle</span> = <span style="color: #707183;">[</span>x <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> arr <span style="color: #a020f0;">if</span> x = pivot<span style="color: #707183;">]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">right</span> = <span style="color: #707183;">[</span>x <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> arr <span style="color: #a020f0;">if</span> x &gt; pivot<span style="color: #707183;">]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> quicksort<span style="color: #707183;">(</span>left<span style="color: #707183;">)</span> + middle + right
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">quicksort</span><span style="color: #657b83;">(</span>arr<span style="color: #657b83;">)</span>:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">if</span> <span style="color: #6c71c4;">len</span><span style="color: #657b83;">(</span>arr<span style="color: #657b83;">)</span> &lt; 1:
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">return</span> arr
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">pivot</span> = arr<span style="color: #657b83;">[</span><span style="color: #6c71c4;">len</span><span style="color: #2aa198;">(</span>arr<span style="color: #2aa198;">)</span> // 2<span style="color: #657b83;">]</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">left</span> = <span style="color: #657b83;">[</span>x <span style="color: #859900;">for</span> x <span style="color: #859900;">in</span> arr <span style="color: #859900;">if</span> x &lt; pivot<span style="color: #657b83;">]</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">middle</span> = <span style="color: #657b83;">[</span>x <span style="color: #859900;">for</span> x <span style="color: #859900;">in</span> arr <span style="color: #859900;">if</span> x = pivot<span style="color: #657b83;">]</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">right</span> = <span style="color: #657b83;">[</span>x <span style="color: #859900;">for</span> x <span style="color: #859900;">in</span> arr <span style="color: #859900;">if</span> x &gt; pivot<span style="color: #657b83;">]</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">return</span> quicksort<span style="color: #657b83;">(</span>left<span style="color: #657b83;">)</span> + middle + right
 
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>quicksort<span style="color: #7388d6;">(</span><span style="color: #909183;">[</span>2, 4, 10, 1, 2, 5<span style="color: #909183;">]</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>quicksort<span style="color: #2aa198;">(</span><span style="color: #b58900;">[</span>2, 4, 10, 1, 2, 5<span style="color: #b58900;">]</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
 </pre>
 </div>
 </div>
@@ -328,46 +328,46 @@ Numpy 主要用于科学计算。它的主要功能是处理数组。
 
 <ul class="org-ul"><li><a id="org51090a8"></a>arrays<br /><div class="outline-text-4" id="text-org51090a8">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">a</span> = np.zeros<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>2,2<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">Create an array of all zeros</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>              <span style="color: #b22222;"># </span><span style="color: #b22222;">Prints "[[ 0.  0.]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span> <span style="color: #b22222;">#          </span><span style="color: #b22222;">[ 0.  0.]]"</span>
-<span style="color: #a0522d;">b</span> = np.ones<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>1,2<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>    <span style="color: #b22222;"># </span><span style="color: #b22222;">Create an array of all ones</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>              <span style="color: #b22222;"># </span><span style="color: #b22222;">Prints "[[ 1.  1.]]"</span>
-<span style="color: #a0522d;">c</span> = np.full<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>2,2<span style="color: #7388d6;">)</span>, 7<span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">Create a constant array</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>c<span style="color: #707183;">)</span>               <span style="color: #b22222;"># </span><span style="color: #b22222;">Prints "[[ 7.  7.]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #b22222;">#          </span><span style="color: #b22222;">[ 7.  7.]]"</span>
-<span style="color: #a0522d;">d</span> = np.eye<span style="color: #707183;">(</span>2<span style="color: #707183;">)</span>         <span style="color: #b22222;"># </span><span style="color: #b22222;">Create a 2x2 identity matrix</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>d<span style="color: #707183;">)</span>              <span style="color: #b22222;"># </span><span style="color: #b22222;">Prints "[[ 1.  0.]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span> <span style="color: #b22222;">#          </span><span style="color: #b22222;">[ 0.  1.]]"</span>
-<span style="color: #a0522d;">e</span> = np.random.random<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>2,2<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">Create an array filled with random values</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>e<span style="color: #707183;">)</span>                     <span style="color: #b22222;">#</span>
+<pre class="src src-python"><span style="color: #6c71c4;">a</span> = np.zeros<span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>2,2<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Create an array of all zeros</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>a<span style="color: #657b83;">)</span>              <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Prints "[[ 0.  0.]</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #93a1a1; font-style: italic;">#          </span><span style="color: #93a1a1; font-style: italic;">[ 0.  0.]]"</span>
+<span style="color: #6c71c4;">b</span> = np.ones<span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>1,2<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>    <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Create an array of all ones</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>b<span style="color: #657b83;">)</span>              <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Prints "[[ 1.  1.]]"</span>
+<span style="color: #6c71c4;">c</span> = np.full<span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>2,2<span style="color: #2aa198;">)</span>, 7<span style="color: #657b83;">)</span>  <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Create a constant array</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>c<span style="color: #657b83;">)</span>               <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Prints "[[ 7.  7.]</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>  <span style="color: #93a1a1; font-style: italic;">#          </span><span style="color: #93a1a1; font-style: italic;">[ 7.  7.]]"</span>
+<span style="color: #6c71c4;">d</span> = np.eye<span style="color: #657b83;">(</span>2<span style="color: #657b83;">)</span>         <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Create a 2x2 identity matrix</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>d<span style="color: #657b83;">)</span>              <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Prints "[[ 1.  0.]</span>
+<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #93a1a1; font-style: italic;">#          </span><span style="color: #93a1a1; font-style: italic;">[ 0.  1.]]"</span>
+<span style="color: #6c71c4;">e</span> = np.random.random<span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>2,2<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>  <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Create an array filled with random values</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>e<span style="color: #657b83;">)</span>                     <span style="color: #93a1a1; font-style: italic;">#</span>
 </pre>
 </div>
 </div></li>
 
 <li><a id="org8389959"></a>Array indexing<br /><div class="outline-text-4" id="text-org8389959">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">a</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>1,2,3,4<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>5,6,7,8<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>9,10,11,12<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">[2,3][6, 7]</span>
-<span style="color: #a0522d;">b</span> = a<span style="color: #707183;">[</span>:2, 1:3<span style="color: #707183;">]</span>
+<pre class="src src-python"><span style="color: #6c71c4;">a</span> = np.array<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #b58900;">[</span>1,2,3,4<span style="color: #b58900;">]</span>, <span style="color: #b58900;">[</span>5,6,7,8<span style="color: #b58900;">]</span>, <span style="color: #b58900;">[</span>9,10,11,12<span style="color: #b58900;">]</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">[2,3][6, 7]</span>
+<span style="color: #6c71c4;">b</span> = a<span style="color: #657b83;">[</span>:2, 1:3<span style="color: #657b83;">]</span>
 </pre>
 </div>
 </div></li>
 
 <li><a id="org7f982d0"></a>datatypes<br /><div class="outline-text-4" id="text-org7f982d0">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>1, 2<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>x.dtype<span style="color: #707183;">)</span> <span style="color: #b22222;">#</span><span style="color: #b22222;">prints "int 64"</span>
+<pre class="src src-python"><span style="color: #6c71c4;">x</span> = np.array<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span>1, 2<span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>x.dtype<span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;">#</span><span style="color: #93a1a1; font-style: italic;">prints "int 64"</span>
 </pre>
 </div>
 </div></li>
 
 <li><a id="org061d2bd"></a>array math<br /><div class="outline-text-4" id="text-org061d2bd">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>1, 2<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>3, 4<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>np.<span style="color: #483d8b;">sum</span><span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>np.<span style="color: #483d8b;">sum</span><span style="color: #7388d6;">(</span>x, axis=0<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">print echo column sum</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>np.<span style="color: #483d8b;">sum</span><span style="color: #7388d6;">(</span>x, axis=1<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">print echo row sum</span>
+<pre class="src src-python"><span style="color: #6c71c4;">x</span> = np.array<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #b58900;">[</span>1, 2<span style="color: #b58900;">]</span>, <span style="color: #b58900;">[</span>3, 4<span style="color: #b58900;">]</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>np.<span style="color: #6c71c4;">sum</span><span style="color: #2aa198;">(</span>x<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>np.<span style="color: #6c71c4;">sum</span><span style="color: #2aa198;">(</span>x, axis=0<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">print echo column sum</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>np.<span style="color: #6c71c4;">sum</span><span style="color: #2aa198;">(</span>x, axis=1<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">print echo row sum</span>
 </pre>
 </div>
 </div></li>
@@ -394,24 +394,24 @@ Scipy build on the numpy.
 Scipy 提供了很多的方法去处理图像。
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">from</span> scipy.misc <span style="color: #a020f0;">import</span> imread, imsave, imresize
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Read an JPEG image into a numpy array</span>
-<span style="color: #a0522d;">img</span> = imread<span style="color: #707183;">(</span><span style="color: #8b2252;">'assets/cat.jpg'</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>img.dtype, img.shape<span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">Prints "uint8 (400, 248, 3)"</span>
+<pre class="src src-python"><span style="color: #859900;">from</span> scipy.misc <span style="color: #859900;">import</span> imread, imsave, imresize
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Read an JPEG image into a numpy array</span>
+<span style="color: #6c71c4;">img</span> = imread<span style="color: #657b83;">(</span><span style="color: #2aa198;">'assets/cat.jpg'</span><span style="color: #657b83;">)</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>img.dtype, img.shape<span style="color: #657b83;">)</span>  <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Prints "uint8 (400, 248, 3)"</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">We can tint the image by scaling each of the color channels</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">by a different scalar constant. The image has shape (400, 248, 3);</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">we multiply it by the array [1, 0.95, 0.9] of shape (3,);</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">numpy broadcasting means that this leaves the red channel unchanged,</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">and multiplies the green and blue channels by 0.95 and 0.9</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">respectively.</span>
-<span style="color: #a0522d;">img_tinted</span> = img * <span style="color: #707183;">[</span>1, 0.95, 0.9<span style="color: #707183;">]</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">We can tint the image by scaling each of the color channels</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">by a different scalar constant. The image has shape (400, 248, 3);</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">we multiply it by the array [1, 0.95, 0.9] of shape (3,);</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">numpy broadcasting means that this leaves the red channel unchanged,</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">and multiplies the green and blue channels by 0.95 and 0.9</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">respectively.</span>
+<span style="color: #6c71c4;">img_tinted</span> = img * <span style="color: #657b83;">[</span>1, 0.95, 0.9<span style="color: #657b83;">]</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Resize the tinted image to be 300 by 300 pixels.</span>
-<span style="color: #a0522d;">img_tinted</span> = imresize<span style="color: #707183;">(</span>img_tinted, <span style="color: #7388d6;">(</span>300, 300<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Resize the tinted image to be 300 by 300 pixels.</span>
+<span style="color: #6c71c4;">img_tinted</span> = imresize<span style="color: #657b83;">(</span>img_tinted, <span style="color: #2aa198;">(</span>300, 300<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Write the tinted image back to disk</span>
-imsave<span style="color: #707183;">(</span><span style="color: #8b2252;">'assets/cat_tinted.jpg'</span>, img_tinted<span style="color: #707183;">)</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Write the tinted image back to disk</span>
+imsave<span style="color: #657b83;">(</span><span style="color: #2aa198;">'assets/cat_tinted.jpg'</span>, img_tinted<span style="color: #657b83;">)</span>
 </pre>
 </div>
 </div></li>
@@ -423,24 +423,24 @@ Scipy 提供了一些有用的函数去处理点之间的距离。
 例如下面计算欧几里得距离。
 </p>
 <div class="org-src-container">
-<pre class="src src-python">Import numpy <span style="color: #a020f0;">as</span> np
-<span style="color: #a020f0;">from</span> scipy.spatial.distance <span style="color: #a020f0;">import</span> pdist, squareform
+<pre class="src src-python">Import numpy <span style="color: #859900;">as</span> np
+<span style="color: #859900;">from</span> scipy.spatial.distance <span style="color: #859900;">import</span> pdist, squareform
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Create the following array where each row is a point in 2D space:</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">[[0 1]</span>
-<span style="color: #b22222;">#  </span><span style="color: #b22222;">[1 0]</span>
-<span style="color: #b22222;">#  </span><span style="color: #b22222;">[2 0]]</span>
-<span style="color: #a0522d;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>0, 1<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>1, 0<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>2, 0<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Create the following array where each row is a point in 2D space:</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">[[0 1]</span>
+<span style="color: #93a1a1; font-style: italic;">#  </span><span style="color: #93a1a1; font-style: italic;">[1 0]</span>
+<span style="color: #93a1a1; font-style: italic;">#  </span><span style="color: #93a1a1; font-style: italic;">[2 0]]</span>
+<span style="color: #6c71c4;">x</span> = np.array<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #b58900;">[</span>0, 1<span style="color: #b58900;">]</span>, <span style="color: #b58900;">[</span>1, 0<span style="color: #b58900;">]</span>, <span style="color: #b58900;">[</span>2, 0<span style="color: #b58900;">]</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>x<span style="color: #657b83;">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Compute the Euclidean distance between all rows of x.</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">d[i, j] is the Euclidean distance between x[i, :] and x[j, :],</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">and d is the following array:</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">[[ 0.          1.41421356  2.23606798]</span>
-<span style="color: #b22222;">#  </span><span style="color: #b22222;">[ 1.41421356  0.          1.        ]</span>
-<span style="color: #b22222;">#  </span><span style="color: #b22222;">[ 2.23606798  1.          0.        ]]</span>
-<span style="color: #a0522d;">d</span> = squareform<span style="color: #707183;">(</span>pdist<span style="color: #7388d6;">(</span>x, <span style="color: #8b2252;">'euclidean'</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>d<span style="color: #707183;">)</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Compute the Euclidean distance between all rows of x.</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">d[i, j] is the Euclidean distance between x[i, :] and x[j, :],</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">and d is the following array:</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">[[ 0.          1.41421356  2.23606798]</span>
+<span style="color: #93a1a1; font-style: italic;">#  </span><span style="color: #93a1a1; font-style: italic;">[ 1.41421356  0.          1.        ]</span>
+<span style="color: #93a1a1; font-style: italic;">#  </span><span style="color: #93a1a1; font-style: italic;">[ 2.23606798  1.          0.        ]]</span>
+<span style="color: #6c71c4;">d</span> = squareform<span style="color: #657b83;">(</span>pdist<span style="color: #2aa198;">(</span>x, <span style="color: #2aa198;">'euclidean'</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>d<span style="color: #657b83;">)</span>
 </pre>
 </div>
 </div></li></ul>
@@ -451,12 +451,12 @@ Scipy 提供了一些有用的函数去处理点之间的距离。
 <div class="outline-text-3" id="text-org7ef05dc">
 </div><ul class="org-ul"><li><a id="org01e74e9"></a>Plotting<br /><div class="outline-text-4" id="text-org01e74e9">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
-<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
-<span style="color: #a0522d;">x</span> = np.arange<span style="color: #707183;">(</span>0, 3*np.pi, 0.1<span style="color: #707183;">)</span>
-<span style="color: #a0522d;">y</span> = np.sin<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-plt.plot<span style="color: #707183;">(</span>x, y<span style="color: #707183;">)</span>
-plt.show<span style="color: #707183;">()</span>
+<pre class="src src-python"><span style="color: #859900;">import</span> numpy <span style="color: #859900;">as</span> np
+<span style="color: #859900;">import</span> matplotlib.pyplot <span style="color: #859900;">as</span> plt
+<span style="color: #6c71c4;">x</span> = np.arange<span style="color: #657b83;">(</span>0, 3*np.pi, 0.1<span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">y</span> = np.sin<span style="color: #657b83;">(</span>x<span style="color: #657b83;">)</span>
+plt.plot<span style="color: #657b83;">(</span>x, y<span style="color: #657b83;">)</span>
+plt.show<span style="color: #657b83;">()</span>
 </pre>
 </div>
 
@@ -468,22 +468,22 @@ plt.show<span style="color: #707183;">()</span>
 
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
-<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+<pre class="src src-python"><span style="color: #859900;">import</span> numpy <span style="color: #859900;">as</span> np
+<span style="color: #859900;">import</span> matplotlib.pyplot <span style="color: #859900;">as</span> plt
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Compute the x and y coordinates for points on sine and cosine curves</span>
-<span style="color: #a0522d;">x</span> = np.arange<span style="color: #707183;">(</span>0, 3 * np.pi, 0.1<span style="color: #707183;">)</span>
-<span style="color: #a0522d;">y_sin</span> = np.sin<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-<span style="color: #a0522d;">y_cos</span> = np.cos<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Compute the x and y coordinates for points on sine and cosine curves</span>
+<span style="color: #6c71c4;">x</span> = np.arange<span style="color: #657b83;">(</span>0, 3 * np.pi, 0.1<span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">y_sin</span> = np.sin<span style="color: #657b83;">(</span>x<span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">y_cos</span> = np.cos<span style="color: #657b83;">(</span>x<span style="color: #657b83;">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Plot the points using matplotlib</span>
-plt.plot<span style="color: #707183;">(</span>x, y_sin<span style="color: #707183;">)</span>
-plt.plot<span style="color: #707183;">(</span>x, y_cos<span style="color: #707183;">)</span>
-plt.xlabel<span style="color: #707183;">(</span><span style="color: #8b2252;">'x axis label'</span><span style="color: #707183;">)</span>
-plt.ylabel<span style="color: #707183;">(</span><span style="color: #8b2252;">'y axis label'</span><span style="color: #707183;">)</span>
-plt.title<span style="color: #707183;">(</span><span style="color: #8b2252;">'Sine and Cosine'</span><span style="color: #707183;">)</span>
-plt.legend<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #8b2252;">'Sine'</span>, <span style="color: #8b2252;">'Cosine'</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-plt.show<span style="color: #707183;">()</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Plot the points using matplotlib</span>
+plt.plot<span style="color: #657b83;">(</span>x, y_sin<span style="color: #657b83;">)</span>
+plt.plot<span style="color: #657b83;">(</span>x, y_cos<span style="color: #657b83;">)</span>
+plt.xlabel<span style="color: #657b83;">(</span><span style="color: #2aa198;">'x axis label'</span><span style="color: #657b83;">)</span>
+plt.ylabel<span style="color: #657b83;">(</span><span style="color: #2aa198;">'y axis label'</span><span style="color: #657b83;">)</span>
+plt.title<span style="color: #657b83;">(</span><span style="color: #2aa198;">'Sine and Cosine'</span><span style="color: #657b83;">)</span>
+plt.legend<span style="color: #657b83;">(</span><span style="color: #2aa198;">[</span><span style="color: #2aa198;">'Sine'</span>, <span style="color: #2aa198;">'Cosine'</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+plt.show<span style="color: #657b83;">()</span>
 </pre>
 </div>
 
@@ -505,25 +505,25 @@ plt.show<span style="color: #707183;">()</span>
 we can use the imshow function to show images.
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
-<span style="color: #a020f0;">from</span> scipy.misc <span style="color: #a020f0;">import</span> imread, imresize
-<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+<pre class="src src-python"><span style="color: #859900;">import</span> numpy <span style="color: #859900;">as</span> np
+<span style="color: #859900;">from</span> scipy.misc <span style="color: #859900;">import</span> imread, imresize
+<span style="color: #859900;">import</span> matplotlib.pyplot <span style="color: #859900;">as</span> plt
 
-<span style="color: #a0522d;">img</span> = imread<span style="color: #707183;">(</span><span style="color: #8b2252;">'assets/cat.jpg'</span><span style="color: #707183;">)</span>
-<span style="color: #a0522d;">img_tinted</span> = img * <span style="color: #707183;">[</span>1, 0.95, 0.9<span style="color: #707183;">]</span>
+<span style="color: #6c71c4;">img</span> = imread<span style="color: #657b83;">(</span><span style="color: #2aa198;">'assets/cat.jpg'</span><span style="color: #657b83;">)</span>
+<span style="color: #6c71c4;">img_tinted</span> = img * <span style="color: #657b83;">[</span>1, 0.95, 0.9<span style="color: #657b83;">]</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Show the original image</span>
-plt.subplot<span style="color: #707183;">(</span>1, 2, 1<span style="color: #707183;">)</span>
-plt.imshow<span style="color: #707183;">(</span>img<span style="color: #707183;">)</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Show the original image</span>
+plt.subplot<span style="color: #657b83;">(</span>1, 2, 1<span style="color: #657b83;">)</span>
+plt.imshow<span style="color: #657b83;">(</span>img<span style="color: #657b83;">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Show the tinted image</span>
-plt.subplot<span style="color: #707183;">(</span>1, 2, 2<span style="color: #707183;">)</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Show the tinted image</span>
+plt.subplot<span style="color: #657b83;">(</span>1, 2, 2<span style="color: #657b83;">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">A slight gotcha with imshow is that it might give strange results</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">if presented with data that is not uint8. To work around this, we</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">explicitly cast the image to uint8 before displaying it.</span>
-plt.imshow<span style="color: #707183;">(</span>np.uint8<span style="color: #7388d6;">(</span>img_tinted<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-plt.show<span style="color: #707183;">()</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">A slight gotcha with imshow is that it might give strange results</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">if presented with data that is not uint8. To work around this, we</span>
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">explicitly cast the image to uint8 before displaying it.</span>
+plt.imshow<span style="color: #657b83;">(</span>np.uint8<span style="color: #2aa198;">(</span>img_tinted<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
+plt.show<span style="color: #657b83;">()</span>
 </pre>
 </div>
 </div></li></ul>
@@ -531,6 +531,11 @@ plt.show<span style="color: #707183;">()</span>
 
 <div id="outline-container-org7588756" class="outline-3">
 <h3 id="org7588756">IPython Tutorial</h3>
+<div class="outline-text-3" id="text-org7588756">
+<p>
+Test multithread
+</p>
+</div>
 </div>
 </div>
 </div>

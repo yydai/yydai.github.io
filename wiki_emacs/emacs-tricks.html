@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-30 Wed 00:43 -->
+<!-- 2017-08-30 Wed 00:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的一些技巧</title>
@@ -808,14 +808,14 @@ C-x C-f 绑定到了 <b>projectile-find-file-in-known-projects</b> 这个函数�
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">yd-toggle-move-indent</span> <span style="color: #7388d6;">()</span>
-<span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #7388d6;">)</span>
-<span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-move-indent</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #a020f0;">progn</span>
-      <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">move-beginning-of-line</span><span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-move-indent</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> nil<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-  <span style="color: #909183;">(</span><span style="color: #a020f0;">progn</span>
-    <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">back-to-indentation</span><span style="color: #709870;">)</span>
-    <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-move-indent</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> t<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-move-indent</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #909183;">)</span>
+        <span style="color: #909183;">(</span><span style="color: #a020f0;">progn</span>
+          <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">move-beginning-of-line</span><span style="color: #709870;">)</span>
+          <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-move-indent</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> nil<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+      <span style="color: #909183;">(</span><span style="color: #a020f0;">progn</span>
+        <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">back-to-indentation</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-move-indent</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> t<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
 
 <span style="color: #707183;">(</span>define-key map <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"C-a"</span><span style="color: #7388d6;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-move-indent</span><span style="color: #707183;">)</span>
@@ -832,23 +832,23 @@ C-x C-f 绑定到了 <b>projectile-find-file-in-known-projects</b> 这个函数�
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">yd-toggle-test</span> <span style="color: #7388d6;">()</span>
-<span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #7388d6;">)</span>
-<span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>not <span style="color: #709870;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"beginning"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>not <span style="color: #709870;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+        <span style="color: #909183;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"beginning"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
 
-<span style="color: #7388d6;">(</span><span style="color: #a020f0;">cond</span>
- <span style="color: #909183;">(</span><span style="color: #709870;">(</span>string= <span style="color: #8b2252;">"beginning"</span> <span style="color: #907373;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-  <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">move-beginning-of-line</span><span style="color: #709870;">)</span>
-  <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"indentation"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">cond</span>
+     <span style="color: #909183;">(</span><span style="color: #709870;">(</span>string= <span style="color: #8b2252;">"beginning"</span> <span style="color: #907373;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">move-beginning-of-line</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"indentation"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
 
- <span style="color: #909183;">(</span><span style="color: #709870;">(</span>string= <span style="color: #8b2252;">"indentation"</span> <span style="color: #907373;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-  <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">back-to-indentation</span><span style="color: #709870;">)</span>
-  <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"end"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+     <span style="color: #909183;">(</span><span style="color: #709870;">(</span>string= <span style="color: #8b2252;">"indentation"</span> <span style="color: #907373;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">back-to-indentation</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"end"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
 
- <span style="color: #909183;">(</span><span style="color: #709870;">(</span>string= <span style="color: #8b2252;">"end"</span> <span style="color: #907373;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-  <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">move-end-of-line</span><span style="color: #709870;">)</span>
-  <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"beginning"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
- <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+     <span style="color: #909183;">(</span><span style="color: #709870;">(</span>string= <span style="color: #8b2252;">"end"</span> <span style="color: #907373;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">move-end-of-line</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"beginning"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+     <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 

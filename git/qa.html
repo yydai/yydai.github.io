@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:12 -->
+<!-- 2017-08-30 Wed 13:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Git</title>
+<title>Git 常见问题总结</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -239,19 +239,19 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Git</h1>
+<h1 class="title">Git 常见问题总结</h1>
 <hr />
 
 <ol class="org-ol">
 <li><p>
-How to undo 'git add' before commit?
+如果恢复到 git add 之前?
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">git reset &lt;file&gt;
 </pre>
 </div>
 <p>
-which will remove it from the current index (the "about to be committed" list) without changing anything else.
+将 file 变成 unstage 状态。
 </p>
 
 <div class="org-src-container">
@@ -259,11 +259,11 @@ which will remove it from the current index (the "about to be committed" list) w
 </pre>
 </div>
 <p>
-without any file name to unstage all due changes.
+不带文件名会 unstage 所有 add 过的文件。
 </p></li>
 
 <li><p>
-How to modify existing, unpushed commits? <a href="https://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits?rq=1">here</a>
+如何更改还未提交的 commit? <a href="https://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits?rq=1">here</a>
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">git commit --amend
@@ -271,16 +271,105 @@ How to modify existing, unpushed commits? <a href="https://stackoverflow.com/que
 </div>
 
 <p>
-Another option is to use interactive rebase.
+另一种方式是通过交互式 rebase：
 </p>
 <div class="org-src-container">
-<pre class="src src-shell">    // X is the number of commits to the last commit you want to be able to edit
+<pre class="src src-shell">// X is the number of commits to the last commit you want to be able to edit
 git rebase -i HEAD~X
-    git rebase -i HEAD~X
 </pre>
 </div></li>
 
-<li>How do I undo the last commits in Git? <a href="https://stackoverflow.com/questions/927358/how-do-i-undo-the-last-commits-in-git?rq=1">here</a></li>
+<li><p>
+恢复到 commit 之前，add 之后的状态? <a href="https://stackoverflow.com/questions/927358/how-do-i-undo-the-last-commits-in-git?rq=1">here</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">$ git commit -m <span style="color: #8b2252;">"Something terribly misguided"</span>              <span style="color: #707183;">(</span>1<span style="color: #707183;">)</span>
+$ git reset HEAD~                                           <span style="color: #707183;">(</span>2<span style="color: #707183;">)</span>
+&lt;&lt; edit files as necessary &gt;&gt;                               <span style="color: #707183;">(</span>3<span style="color: #707183;">)</span>
+<span style="color: #ffa54f;">$ git add ...                                               (4)</span>
+<span style="color: #ffa54f;"># &#25552;&#20132; commit&#65292;&#20351;&#29992;&#21407;&#26469;&#30340; commit message</span>
+<span style="color: #ffa54f;">$ git commit -c ORIG_HEAD                                   (5)</span>
+</pre>
+</div>
+
+<p>
+如果 commit message 写错了
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git commit --amend
+</pre>
+</div>
+
+<p>
+如果多文件又有了修改，这个命令会将改动加到上个 commit 中。
+</p>
+
+<p>
+另一种我认为比较好的方式
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #b22222;"># </span><span style="color: #b22222;">&#22238;&#21040; git add &#21518;&#65292;commit &#21069;</span>
+git reset --soft HEAD~1
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&#22238;&#21040; git add &#20043;&#21069;</span>
+git reset HEAD~1
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&#36825;&#31181;&#26041;&#24335;&#27604;&#36739;&#21361;&#38505;&#12290;&#20250;&#25243;&#24323;&#25152;&#26377;&#30340;&#26356;&#25913;</span>
+git reset --hard HEAD~1
+</pre>
+</div></li>
+
+<li><p>
+git reflog 恢复误删的 commit
+</p>
+
+<p>
+如果我们误删了某个 commit, 我们可以通过 git reflog 还原。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git reflog
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&#25214;&#21040;&#35201;&#24674;&#22797;&#20301;&#32622;&#30340; commit sha</span>
+<span style="color: #b22222;"># </span><span style="color: #b22222;">-b &#19981;&#24102;&#65292;&#40664;&#35748;&#24403;&#21069; branch</span>
+git checkout -b newBranch &lt;sha&gt;
+</pre>
+</div></li>
+
+<li><p>
+branch 操作
+</p>
+
+<p>
+创建新的 branch
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git checkout -b &lt;nb&gt;
+</pre>
+</div>
+
+<p>
+重新命名 branch
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git branch -m &lt;old branch name&gt; &lt;new&gt;
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">current branch</span>
+git branch -m &lt;new&gt;
+</pre>
+</div>
+
+<p>
+删除本地或远程分支
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #b22222;"># </span><span style="color: #b22222;">delete origin</span>
+git push -d origin &lt;branch_name&gt;
+git push origin :&lt;branch_name or tag_name&gt;
+<span style="color: #b22222;"># </span><span style="color: #b22222;">delete local</span>
+git branch -d &lt;branch_name&gt;
+</pre>
+</div></li>
 </ol>
 </div>
 <div id="postamble" class="status">

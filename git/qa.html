@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-31 Thu 01:14 -->
+<!-- 2017-08-31 Thu 22:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git 常见问题总结</title>
@@ -240,12 +240,34 @@ for the JavaScript code in this tag.
 </div>
 <div id="content">
 <h1 class="title">Git 常见问题总结</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0d372e7">1. 如果恢复到 git add 之前?</a></li>
+<li><a href="#org89febf5">2. 如何更改还未提交的 commit? here</a></li>
+<li><a href="#orgb557579">3. 恢复到 commit 之前，add 之后的状态? here</a></li>
+<li><a href="#org77310a8">4. git reflog 恢复误删的 commit</a></li>
+<li><a href="#org6839097">5. branch 操作</a></li>
+<li><a href="#org219c4a3">6. git branch</a></li>
+<li><a href="#org97a1702">7. 提交信息</a></li>
+<li><a href="#org7baf094">8. 将多个 commit 合并为一个 commit</a></li>
+<li><a href="#org9b0baa2">9. 分支的合并</a></li>
+<li><a href="#orgb402d41">10. git stash</a></li>
+<li><a href="#orge03f594">11. 标签</a></li>
+<li><a href="#orgd5cf006">12. git merge &#x2013;squash</a></li>
+<li><a href="#orga0601f1">13. git flow</a></li>
+<li><a href="#orgf9561a7">14. git cherry-pick</a></li>
+<li><a href="#org45cb2fd">15. 如何拯救误删的 stash</a></li>
+<li><a href="#org9354234">16. 什么是 "detached HEAD"</a></li>
+</ul>
+</div>
+</div>
 <hr />
 
-<ol class="org-ol">
-<li><p>
-如果恢复到 git add 之前?
-</p>
+<div id="outline-container-org0d372e7" class="outline-2">
+<h2 id="org0d372e7">1. 如果恢复到 git add 之前?</h2>
+<div class="outline-text-2" id="text-org0d372e7">
 <div class="org-src-container">
 <pre class="src src-shell">git reset &lt;file&gt;
 </pre>
@@ -260,11 +282,13 @@ for the JavaScript code in this tag.
 </div>
 <p>
 不带文件名会 unstage 所有 add 过的文件。
-</p></li>
-
-<li><p>
-如何更改还未提交的 commit? <a href="https://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits?rq=1">here</a>
 </p>
+</div>
+</div>
+
+<div id="outline-container-org89febf5" class="outline-2">
+<h2 id="org89febf5">2. 如何更改还未提交的 commit? <a href="https://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits?rq=1">here</a></h2>
+<div class="outline-text-2" id="text-org89febf5">
 <div class="org-src-container">
 <pre class="src src-shell">git commit --amend
 </pre>
@@ -277,12 +301,13 @@ for the JavaScript code in this tag.
 <pre class="src src-shell">// X is the number of commits to the last commit you want to be able to edit
 git rebase -i HEAD~X
 </pre>
-</div></li>
+</div>
+</div>
+</div>
 
-<li><p>
-恢复到 commit 之前，add 之后的状态? <a href="https://stackoverflow.com/questions/927358/how-do-i-undo-the-last-commits-in-git?rq=1">here</a>
-</p>
-
+<div id="outline-container-orgb557579" class="outline-2">
+<h2 id="orgb557579">3. 恢复到 commit 之前，add 之后的状态? <a href="https://stackoverflow.com/questions/927358/how-do-i-undo-the-last-commits-in-git?rq=1">here</a></h2>
+<div class="outline-text-2" id="text-orgb557579">
 <div class="org-src-container">
 <pre class="src src-shell">$ git commit -m <span style="color: #8b2252;">"Something terribly misguided"</span>              <span style="color: #707183;">(</span>1<span style="color: #707183;">)</span>
 $ git reset HEAD~                                           <span style="color: #707183;">(</span>2<span style="color: #707183;">)</span>
@@ -319,12 +344,13 @@ git reset HEAD~1
 <span style="color: #b22222;"># </span><span style="color: #b22222;">&#36825;&#31181;&#26041;&#24335;&#27604;&#36739;&#21361;&#38505;&#12290;&#20250;&#25243;&#24323;&#25152;&#26377;&#30340;&#26356;&#25913;</span>
 git reset --hard HEAD~1
 </pre>
-</div></li>
+</div>
+</div>
+</div>
 
-<li><p>
-git reflog 恢复误删的 commit
-</p>
-
+<div id="outline-container-org77310a8" class="outline-2">
+<h2 id="org77310a8">4. git reflog 恢复误删的 commit</h2>
+<div class="outline-text-2" id="text-org77310a8">
 <p>
 如果我们误删了某个 commit, 我们可以通过 git reflog 还原。
 </p>
@@ -334,12 +360,13 @@ git reflog 恢复误删的 commit
 <span style="color: #b22222;"># </span><span style="color: #b22222;">-b &#19981;&#24102;&#65292;&#40664;&#35748;&#24403;&#21069; branch</span>
 git checkout -b newBranch &lt;sha&gt;
 </pre>
-</div></li>
+</div>
+</div>
+</div>
 
-<li><p>
-branch 操作
-</p>
-
+<div id="outline-container-org6839097" class="outline-2">
+<h2 id="org6839097">5. branch 操作</h2>
+<div class="outline-text-2" id="text-org6839097">
 <p>
 创建新的 branch
 </p>
@@ -369,24 +396,26 @@ git push origin :&lt;branch_name or tag_name&gt;
 <span style="color: #b22222;"># </span><span style="color: #b22222;">delete local</span>
 git branch -d &lt;branch_name&gt;
 </pre>
-</div></li>
+</div>
+</div>
+</div>
 
-<li><p>
-git branch
-</p>
-
+<div id="outline-container-org219c4a3" class="outline-2">
+<h2 id="org219c4a3">6. git branch</h2>
+<div class="outline-text-2" id="text-org219c4a3">
 <p>
 通常在一个项目中，我们会创建很多个分支。例如，release 分支，feature or dev 分支，hotfix 分支和 master 分支等。
 </p>
 
 <p>
 不同的分支有不同的作用，现在有很多的最佳实践。
-</p></li>
-
-<li><p>
-提交信息
 </p>
+</div>
+</div>
 
+<div id="outline-container-org97a1702" class="outline-2">
+<h2 id="org97a1702">7. 提交信息</h2>
+<div class="outline-text-2" id="text-org97a1702">
 <p>
 我们可以按照如下的模式去书写提交信息：
 </p>
@@ -401,12 +430,13 @@ http://project.management-system.com/ticket/123
 
 <p>
 第一行是不超过 50 个字的提要，然后空一行，罗列出改动原因、主要变动、以及需要注意的问题。最后，提供对应的网址（比如 Bug ticket）。
-</p></li>
-
-<li><p>
-将多个 commit 合并为一个 commit
 </p>
+</div>
+</div>
 
+<div id="outline-container-org7baf094" class="outline-2">
+<h2 id="org7baf094">8. 将多个 commit 合并为一个 commit</h2>
+<div class="outline-text-2" id="text-org7baf094">
 <p>
 如果我们的 commit 历史
 </p>
@@ -459,12 +489,13 @@ s b1b8189 Commit-3
 </div>
 <p>
 就是先撤销 3 个 commit，然后再建一个新的 commit。
-</p></li>
-
-<li><p>
-分支的合并
 </p>
+</div>
+</div>
 
+<div id="outline-container-org9b0baa2" class="outline-2">
+<h2 id="org9b0baa2">9. 分支的合并</h2>
+<div class="outline-text-2" id="text-org9b0baa2">
 <p>
 可以使用 merge 和 rebase
 </p>
@@ -473,12 +504,13 @@ s b1b8189 Commit-3
 <div class="figure">
 <p><img src="./imgs/20170831_011030_54442UuG.png" alt="20170831_011030_54442UuG.png" width="80%" />
 </p>
-</div></li>
+</div>
+</div>
+</div>
 
-<li><p>
-git stash
-</p>
-
+<div id="outline-container-orgb402d41" class="outline-2">
+<h2 id="orgb402d41">10. git stash</h2>
+<div class="outline-text-2" id="text-orgb402d41">
 <p>
 经常有这样的事情发生，当你正在进行项目中某一部分的工作，里面的东西处于一个比较杂乱的状态，而你想转到其他分支上进行一些工作。问题是，
 你不想提交进行了一半的工作，否则以后你无法回到这个工作点。
@@ -513,12 +545,21 @@ git stash
 </p>
 <pre class="example">
 git stash drop stash@{1}
-</pre></li>
+</pre>
 
-<li><p>
-标签
+<p>
+这里还有个问题，当一个文件是新建的，也就是 untracked 的状态，是不能用 git stash 的，而是
 </p>
+<div class="org-src-container">
+<pre class="src src-shell">git stash save -u
+</pre>
+</div>
+</div>
+</div>
 
+<div id="outline-container-orge03f594" class="outline-2">
+<h2 id="orge03f594">11. 标签</h2>
+<div class="outline-text-2" id="text-orge03f594">
 <p>
 标签有两种，轻标签和注解标签。
 </p>
@@ -549,12 +590,13 @@ git tag -n
 <div class="org-src-container">
 <pre class="src src-shell">git tag -d &lt;tagname&gt;
 </pre>
-</div></li>
+</div>
+</div>
+</div>
 
-<li><p>
-git merge &#x2013;squash
-</p>
-
+<div id="outline-container-orgd5cf006" class="outline-2">
+<h2 id="orgd5cf006">12. git merge &#x2013;squash</h2>
+<div class="outline-text-2" id="text-orgd5cf006">
 <p>
 汇合分支上的提交，然后一同合并到分支
 </p>
@@ -577,16 +619,110 @@ git merge &#x2013;squash
 <pre class="src src-shell">git checkout master
 git merge --squash issue1
 </pre>
-</div></li>
+</div>
+</div>
+</div>
 
-<li>git flow
+<div id="outline-container-orga0601f1" class="outline-2">
+<h2 id="orga0601f1">13. git flow</h2>
+<div class="outline-text-2" id="text-orga0601f1">
 <ul class="org-ul">
 <li><a href="http://nvie.com/posts/a-successful-git-branching-model/">http://nvie.com/posts/a-successful-git-branching-model/</a></li>
 <li><a href="https://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html">https://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html</a></li>
 <li><a href="https://gist.github.com/yesmeck/4245406">https://gist.github.com/yesmeck/4245406</a></li>
 <li><a href="https://ihower.tw/blog/archives/5140">https://ihower.tw/blog/archives/5140</a></li>
-</ul></li>
-</ol>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf9561a7" class="outline-2">
+<h2 id="orgf9561a7">14. git cherry-pick</h2>
+<div class="outline-text-2" id="text-orgf9561a7">
+<p>
+我们可以把其他分支的 commit 移到当前分支
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git cherry-pick 5414a3f
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org45cb2fd" class="outline-2">
+<h2 id="org45cb2fd">15. 如何拯救误删的 stash</h2>
+<div class="outline-text-2" id="text-org45cb2fd">
+<p>
+前面说到了通过 git reflog 来找到被误删的 commit，这里说下如何找回被 drop 的 stash
+</p>
+
+<p>
+首先，如果你知道这个被删的 sha 就很方便了
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170831_215733_67723DdT.png" alt="20170831_215733_67723DdT.png" width="80%" />
+</p>
+</div>
+
+<p>
+直接
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git stash apply 766307b21bc775b37f2d56a836dffaf8f7da90aa
+</pre>
+</div>
+
+<p>
+如果不知道了 sha，也可以找到比较麻烦些
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git fsck --unreachable
+</pre>
+</div>
+
+<p>
+这样会列出一些 unreachable 的 node。
+我们通过
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git show &lt;sha&gt;
+</pre>
+</div>
+
+<p>
+查看哪一个使我们想要的，找到对应的 sha 就可以了，方法同上。
+</p>
+
+<p>
+关于这部分还有很多没有说到，可以看这里：<a href="http://gitbook.liuhui998.com/6_1.html">找回丢失的对象</a> 和 <a href="https://git-scm.com/book/zh/v1/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-%E7%BB%B4%E6%8A%A4%E5%8F%8A%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D">数据恢复</a>。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9354234" class="outline-2">
+<h2 id="org9354234">16. 什么是 "detached HEAD"</h2>
+<div class="outline-text-2" id="text-org9354234">
+<ul class="org-ul">
+<li><a href="https://www.git-tower.com/learn/git/faq/detached-head-when-checkout-commit">What's a "detached HEAD" in Git?</a></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #b22222;"># </span><span style="color: #b22222;">instead checkout a branch, we can also checkout a commit</span>
+git checkout 56a4e5c08
+</pre>
+</div>
+
+<p>
+我们现在不是在一个分支上，而是在一个 commit 上。
+如果不行丢失这些东西，可以建一个 branch
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">git checkout -b &lt;new-branch-name&gt;
+</pre>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

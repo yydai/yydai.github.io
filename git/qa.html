@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-31 Thu 22:31 -->
+<!-- 2017-09-06 Wed 00:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git 常见问题总结</title>
@@ -589,6 +589,19 @@ git tag -n
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">git tag -d &lt;tagname&gt;
+</pre>
+</div>
+
+<p>
+默认情况下，git push 并不会把标签传送到远端服务器上，只有通过显式命令才能分享标签到远端仓库。其命令格式如同推送分支，运行 git push
+origin [tagname] 即可。
+</p>
+
+<p>
+如果要一次推送所有本地新增的标签上去，可以使用 &#x2013;tags 选项。
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">git push origin --tags
 </pre>
 </div>
 </div>

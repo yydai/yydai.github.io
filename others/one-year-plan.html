@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-09-09 Sat 11:45 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org392a023">浙大一年计划</a>
+<ul>
+<li><a href="#orgaf6277c">前言</a></li>
+<li><a href="#orge3b999f">我的兴趣以及想干的工作</a></li>
+<li><a href="#orgbba9582">具体如何去做</a></li>
+<li><a href="#orga279b31">其他问题</a></li>
+<li><a href="#org649ab9f">计划具体化</a></li>
+</ul>
+</li>
+<li><a href="#org5133761">Update 1</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org392a023" class="outline-2">
+<h2 id="org392a023">浙大一年计划</h2>
+<div class="outline-text-2" id="text-org392a023">
+</div><div id="outline-container-orgaf6277c" class="outline-3">
+<h3 id="orgaf6277c">前言</h3>
+<div class="outline-text-3" id="text-orgaf6277c">
+<p>
+写这部分之前我有很大的把握，这里制定的计划很可能不会实施。
+</p>
+
+<p>
+所实话，我已经不知道来这里是值得还是不值得了。使我这样想的原因有很多，
+</p>
+<ul class="org-ul">
+<li>学费每年 2W，对我来说是很高的。</li>
+<li>我很担忧，来到这里究竟会使我得到了什么？更多的机会？更高的起点？还是新的起航？</li>
+</ul>
+
+<p>
+但是，如果我没有走到这一步可能我的人生又会有些遗憾。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge3b999f" class="outline-3">
+<h3 id="orge3b999f">我的兴趣以及想干的工作</h3>
+<div class="outline-text-3" id="text-orge3b999f">
+<p>
+如果我能把这个问题想清楚了，后面的事情就好办了。
+我究竟真正喜欢什么？有时候我感觉我对很多的东西都有兴趣，但这种兴趣可能是一种假象，
+例如书法、吉他、摄影、设计以及建筑艺术。但是如果让我十年如一日的枯燥练习，我能坚持吗？
+答案很可能是否定的。我不知道这是否是我没有找到真正热爱的东西，还是我本身就就不能坚持一件事。
+</p>
+
+<p>
+从兴趣回到工作，coding 肯定是以后的工作内容。有时候我还是挺喜欢编写程序的，尤其是当我有了具体的目标以后。限定在 programming 这个小的范围内，我究竟想干哪个方向？
+现在热门的很多，尤其是云计算，机器学习，大数据分析，深度学习，自动驾驶等待，这些东西看着是很高大上的。
+他们本身的门槛也是比较高的，要求我们对数学有很深的理解才能对这些领域游刃有余。我们如果仅限于使用，
+门槛也不见得高，因为现在有很多很多的框架和库来供我们使用。
+</p>
+
+<ul class="org-ul">
+<li>云计算（Docker）</li>
+<li>数据分析，数据挖掘</li>
+<li>机器学习和深度学习</li>
+<li>后端工程师（Python）</li>
+</ul>
+
+<p>
+上面的任何一种其实都可以，但是我可能更加想干机器学习方向吧。我现在要问自己一个问题，能忍受它的枯燥乏味吗？能克服数学上的问题吗？能坚持每天都去编写大量的代码吗？还要要熟悉常见的框架，
+如 Caffe，Tensorflow 等等。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbba9582" class="outline-3">
+<h3 id="orgbba9582">具体如何去做</h3>
+<div class="outline-text-3" id="text-orgbba9582">
+<p>
+看拉钩网上的工资待遇，数据挖掘还有机器学习是相当的高的，平均都在 20k+，所以这个是值得我们去学习的。
+</p>
+
+<p>
+下面我就看看如何具体去做了：
+</p>
+
+<ol class="org-ol">
+<li>看视频看网上的公开课视频，对基本的东西要做讲义，模糊的地方一定不能放过去，否则后面学习会很吃力。Ng，台大的课程还有 cs231n。</li>
+
+<li>同步看书了解一些常用的方法</li>
+<li>常见的比赛要了解，并且做做往年的</li>
+
+<li>阅读优秀框架的源码</li>
+
+<li>from scratch 实现机器学习、深度学习算法</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orga279b31" class="outline-3">
+<h3 id="orga279b31">其他问题</h3>
+<div class="outline-text-3" id="text-orga279b31">
+<p>
+因为要参加个实验室，所以上面的这些能契合实验室的需求吗？如果不能，我如何在空闲时间来学习这些东西？还有平时上课的话，如果能够高效率的学好？ 了解如何考试的？如果很好过的话，
+简单学习。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org649ab9f" class="outline-3">
+<h3 id="org649ab9f">计划具体化</h3>
+<div class="outline-text-3" id="text-org649ab9f">
+<p>
+我在公司的时候，我的 mentor 就告诉过我，一个计划要做的具体，越是具体越好，我现在是深有体会。一个计划如果具体而不是笼统的概括的话，我们更加清晰如何去执行而不是在重新考虑如何去做，这对与我们的时间成本也有很大的节约。
+</p>
+
+<p>
+现在考虑把这项工作作为一个软件工程来管理，可以按照敏捷开发 Scrum 的思路去做。
+</p>
+
+<ol class="org-ol">
+<li>确定 backlog 列表</li>
+
+<li>预估工作量</li>
+
+<li>确定每个 Sprint 的内容（一个 Sprint 定位 3 weeks）</li>
+
+<li>把当前的 Sprint backlog 在细分为更小的任务，可以做到两天内做完。</li>
+
+<li>每天有一个 Daily Scrum meeting</li>
+</ol>
+
+
+<p>
+下面就机器学习这个项目来规划 First Sprint 的任务。
+</p>
+
+<ol class="org-ol">
+<li>backlog of cs231n 课程学习
+
+<ul class="org-ul">
+<li>Lecture 4. Introduction to Neural Networks about 1-2 days</li>
+
+<li>Lecture 5. Convolutional Neural Networks 1 day</li>
+
+<li>Lecture 6. Training Neural Networks, part I 1 day</li>
+
+<li>Assignment #1 2 or 3 days</li>
+
+<li>Lecture 7. Training Neural Networks, part II 1 day</li>
+
+<li>Lecuture 8. Deep Learning Software</li>
+
+<li>Lecture 9. CNN Architectures</li>
+
+<li>Lecture 10. Recurrent Neural Networks</li>
+
+<li>Assignment #2 due 2-3 days</li>
+
+<li>Lecture 11. Detection and Segmentation</li>
+
+<li>Lecture 12. Visualizing and Understanding</li>
+
+<li>Lecture 13. Generative Models</li>
+
+<li>Lecture 14. Deep Reinforcement Learning</li>
+
+<li>Invited talk</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org5133761" class="outline-2">
+<h2 id="org5133761">Update 1</h2>
+<div class="outline-text-2" id="text-org5133761">
+<p>
+刚才和才老师聊完以后，可能计划要有些变动了，因为我有可能要去杭州实习。上面的计划还能按期执行吗？我看很难。一是，有课；二是，如果去杭州的话，可能时间工作比较紧张；
+三是，需要学习额外的一些东西，例如 Go 语言。
+</p>
+
+<ol class="org-ol">
+<li>阶段一：
+<ul class="org-ul">
+<li>任务一：学习 Go 的基本语法								&#x2013; 用时 2 天
+<ul class="org-ul">
+<li><a href="http://docs.ruanjiadeng.com/gopl-zh/index.html">http://docs.ruanjiadeng.com/gopl-zh/index.html</a></li>
+<li><a href="https://gobyexample.com/">https://gobyexample.com/</a></li>
+</ul></li>
+<li>任务二：做一个小的 Demo，了解 Go 的项目					&#x2013; 等会找一个 small project, 或者 Docker 的一个子系统
+<ul class="org-ul">
+<li>Json Parser with Go：<a href="https://github.com/buger/jsonparser">https://github.com/buger/jsonparser</a></li>
+<li><a href="https://forum.golangbridge.org/t/beginner-to-golang-and-coding-projects/5198/2">https://forum.golangbridge.org/t/beginner-to-golang-and-coding-projects/5198/2</a></li>
+<li><a href="https://www.quora.com/What-is-a-good-golang-project-to-work-on-for-beginners-that-can-become-a-decent-project-as-they-get-better-at-golang">https://www.quora.com/What-is-a-good-golang-project-to-work-on-for-beginners-that-can-become-a-decent-project-as-they-get-better-at-golang</a></li>
+<li><a href="https://www.reddit.com/r/golang/comments/2rdzv7/good_projects_to_write_to_learn_go/">https://www.reddit.com/r/golang/comments/2rdzv7/good_projects_to_write_to_learn_go/</a></li>
+<li><a href="http://herman.asia/open-source-go-projects-to-learn-from">http://herman.asia/open-source-go-projects-to-learn-from</a></li>
+</ul></li>
+</ul></li>
+
+<li>阶段二：
+<ul class="org-ul">
+<li>任务三：把 Docker 源码分析一遍， 试着去实现一下 			&#x2013; 看情况</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+	repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

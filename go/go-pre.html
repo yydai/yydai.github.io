@@ -6,7 +6,7 @@
 <!-- 2017-09-11 Mon 22:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>读书那些年</title>
+<title>Go 学习指南</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -242,45 +242,55 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">读书那些年</h1>
+<h1 class="title">Go 学习指南</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgcc163c8">2017</a></li>
+<li><a href="#org4551381">安装</a></li>
+<li><a href="#org22a4282">遇到问题</a>
+<ul>
+<li><a href="#org5ec9329">安装包出错</a></li>
+</ul>
+</li>
+<li><a href="#orgdd4811f">学习资源</a></li>
 </ul>
 </div>
 </div>
-<hr />
-<blockquote>
-<p>
-<i>读书患不多，思义患不明。患足己不学，既学患不行 &#x2013;韩愈《劝学诗》</i>
-</p>
-</blockquote>
 <hr />
 
-<div id="outline-container-orgcc163c8" class="outline-2">
-<h2 id="orgcc163c8">2017</h2>
-<div class="outline-text-2" id="text-orgcc163c8">
-<ul class="org-ul">
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/mastering-emacs.org">Mastering Emacs</a> &check; &diams;</li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/writing-gnu-emacs-extentions.org">Writing GNU Emacs Extensions</a> &check; &diams;</li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/emacs-lisp-tutorial.org">Emacs Lisp 简明教程</a></li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/%E5%BF%85%E7%84%B6.org">必然</a></li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0.org">算法笔记</a> &diams;</li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A.org">SQL 必知必会</a> &#9786;</li>
-<li>The definitive antlr4 reference</li>
-<li>异类</li>
-<li><a href="./sicp.html">SICP</a></li>
-<li><a href="https://github.com/yydai/reading-list/blob/master/reading-notes/%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97.org">解忧杂货店</a> &check;</li>
-<li>了不起的盖茨比</li>
-<li>大明王朝 1566</li>
-<li><a href="./effective-python.html">Effective Python</a></li>
-<li><a href="./the-elements-of-style.html">The Elements of Style</a></li>
-<li><a href="./shell-notes.html">Shell 学习笔记</a></li>
-<li><a href="./fopnp.html">Python 网络编程</a></li>
-</ul>
+
+<div id="outline-container-org4551381" class="outline-2">
+<h2 id="org4551381">安装</h2>
 </div>
+
+<div id="outline-container-org22a4282" class="outline-2">
+<h2 id="org22a4282">遇到问题</h2>
+<div class="outline-text-2" id="text-org22a4282">
+</div><div id="outline-container-org5ec9329" class="outline-3">
+<h3 id="org5ec9329">安装包出错</h3>
+<div class="outline-text-3" id="text-org5ec9329">
+<ol class="org-ol">
+<li><p>
+package golang.org/x/tools/cmd/goimports: unrecognized import path "golang.org/x/tools/cmd/..
+</p>
+
+<p>
+这个问题会出现在高版本的 golang, 一般的解决办法是
+</p>
+<div class="container">
+<pre><code class="shell">mkdir $<span class="org-variable-name">GOPATH</span>/src/golang.org/x/
+<span class="org-builtin">cd</span>  $<span class="org-variable-name">GOPATH</span>/src/golang.org/x/
+git clone https://github.com/golang/tools.git
+go install golang.org/x/tools/cmd/goimports
+</code></pre>
+</div></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdd4811f" class="outline-2">
+<h2 id="orgdd4811f">学习资源</h2>
 </div>
 </div>
 <div id="postamble" class="status">

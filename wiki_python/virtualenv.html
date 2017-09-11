@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:11 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>虚拟环境（virtualenv）</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -269,9 +272,9 @@ for the JavaScript code in this tag.
 <p>
 我们通过 pip 来安装
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">pip install virtualenv
-</pre>
+<div class="container">
+<pre><code class="shell">pip install virtualenv
+</code></pre>
 </div>
 
 <p>
@@ -286,10 +289,10 @@ for the JavaScript code in this tag.
 </div><div id="outline-container-orgbd92ea5" class="outline-3">
 <h3 id="orgbd92ea5">创建虚拟环境</h3>
 <div class="outline-text-3" id="text-orgbd92ea5">
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #483d8b;">cd</span> my_project_folder
+<div class="container">
+<pre><code class="shell"><span class="org-builtin">cd</span> my_project_folder
 virtualenv venv
-</pre>
+</code></pre>
 </div>
 
 <p>
@@ -304,17 +307,17 @@ virtualenv venv 将会在当前的目录中创建一个文件夹，包含了 Pyt
 你可以选择使用一个 Python 解释器：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">virtualenv -p python2.7 venv
-</pre>
+<div class="container">
+<pre><code class="shell">virtualenv -p python2.7 venv
+</code></pre>
 </div>
 
 <p>
 如果想要使用 python3 可以这样：
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">virtualenv -p python3 venv
-</pre>
+<div class="container">
+<pre><code class="shell">virtualenv -p python3 venv
+</code></pre>
 </div>
 </div>
 </div>
@@ -326,10 +329,10 @@ virtualenv venv 将会在当前的目录中创建一个文件夹，包含了 Pyt
 <p>
 首先需要激活
 </p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #483d8b;">cd</span> venv
-<span style="color: #483d8b;">source</span> bin/activate &#25110;&#32773; . bin/activate
-</pre>
+<div class="container">
+<pre><code class="shell"><span class="org-builtin">cd</span> venv
+<span class="org-builtin">source</span> bin/activate &#25110;&#32773; . bin/activate
+</code></pre>
 </div>
 
 <p>
@@ -340,18 +343,18 @@ virtualenv venv 将会在当前的目录中创建一个文件夹，包含了 Pyt
 我们可以像平时一样安装包, 例如：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">pip install requests
-</pre>
+<div class="container">
+<pre><code class="shell">pip install requests
+</code></pre>
 </div>
 
 <p>
 如果你暂时停止工作，使用
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">deactivate
-</pre>
+<div class="container">
+<pre><code class="shell">deactivate
+</code></pre>
 </div>
 
 
@@ -367,9 +370,9 @@ virtualenv venv 将会在当前的目录中创建一个文件夹，包含了 Pyt
 <p>
 为了保证环境的一致性，“冷冻住（freeze）”环境包当前的状态是个好主意。
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">pip freeze &gt; requirements.txt
-</pre>
+<div class="container">
+<pre><code class="shell">pip freeze &gt; requirements.txt
+</code></pre>
 </div>
 
 <p>
@@ -379,9 +382,9 @@ virtualenv venv 将会在当前的目录中创建一个文件夹，包含了 Pyt
 <p>
 使用这个命令，能确保安装、部署和开发者之间的一致性。
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">pip install -r requirements.txt
-</pre>
+<div class="container">
+<pre><code class="shell">pip install -r requirements.txt
+</code></pre>
 </div>
 </div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:12 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog 的搭建及其特性</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -323,21 +326,21 @@ for the JavaScript code in this tag.
 需要编译生成 html 文件时，运行如下的命令 M-x org-publish-all 如果要发布到 GitHub, 运行 M-x compile,会调用 public_html 下的 Makefile 文件，
 这一步会将项目自动 commit, 然后 push 到 github。 下面是 Makefile, 非常简单。
 </p>
-<div class="org-src-container">
-<pre class="src src-makefile"><span style="color: #a0522d;">pub_date</span>    = <span style="color: #8b2252;">`date +'%y.%m.%d %H:%M:%S'`</span>
-<span style="color: #a0522d;">messages</span>    = <span style="color: #8b2252;">"Auto published by yydai at $(</span><span style="color: #a0522d;">pub_data</span><span style="color: #8b2252;">)"</span>
+<div class="container">
+<pre><code class="makefile"><span class="org-variable-name">pub_date</span>    = <span class="org-string">`date +'%y.%m.%d %H:%M:%S'`</span>
+<span class="org-variable-name">messages</span>    = <span class="org-string">"Auto published by yydai at $(</span><span class="org-string"><span class="org-variable-name">pub_data</span></span><span class="org-string">)"</span>
 
-<span style="color: #0000ff;">publish</span>:
- @echo <span style="color: #8b2252;">"======================================"</span>
- @echo <span style="color: #8b2252;">"Begin publish the site, please wait..."</span>
- @echo <span style="color: #8b2252;">"======================================"</span>
+<span class="org-makefile-targets">publish</span>:
+ @echo <span class="org-string">"======================================"</span>
+ @echo <span class="org-string">"Begin publish the site, please wait..."</span>
+ @echo <span class="org-string">"======================================"</span>
  @git add .
- @git commit -m $<span style="color: #707183;">(</span><span style="color: #a0522d;">messages</span><span style="color: #707183;">)</span>
+ @git commit -m $<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-variable-name">messages</span><span class="org-rainbow-delimiters-depth-1">)</span>
  @git pull
  @git push origin
- @echo <span style="color: #8b2252;">"===============Success================"</span>
+ @echo <span class="org-string">"===============Success================"</span>
 
-</pre>
+</code></pre>
 </div>
 
 <p>
@@ -411,33 +414,33 @@ for the JavaScript code in this tag.
 <p>
 这个博客完全是使用的 Org，其中的配置如下：
 </p>
-<div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">-n &#21487;&#20197;&#26174;&#31034;&#34892;&#21495;</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">org-publish</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span>setq org-publish-project-alist
-      '<span style="color: #7388d6;">(</span>
-        <span style="color: #909183;">(</span><span style="color: #8b2252;">"blog-notes"</span>
-         <span style="color: #483d8b;">:base-directory</span> <span style="color: #8b2252;">"~/org/blog/"</span>
-         <span style="color: #483d8b;">:base-extension</span> <span style="color: #8b2252;">"org"</span>
-         <span style="color: #483d8b;">:publishing-directory</span> <span style="color: #8b2252;">"~/org"</span>
-         <span style="color: #483d8b;">:recursive</span> t
-         <span style="color: #483d8b;">:publishing-function</span> org-publish-org-to-html
-         <span style="color: #483d8b;">:headline-levels</span> 4
-         <span style="color: #483d8b;">:section-numbers</span> nil
-         <span style="color: #483d8b;">:auto-preamble</span> t
-         <span style="color: #483d8b;">:style</span>    <span style="color: #8b2252;">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/&gt;"</span>
-         <span style="color: #909183;">)</span>
-        <span style="color: #909183;">(</span><span style="color: #8b2252;">"blog-static"</span>
-         <span style="color: #483d8b;">:base-directory</span> <span style="color: #8b2252;">"~/org/blog/"</span>
-         <span style="color: #483d8b;">:base-extension</span> <span style="color: #8b2252;">"css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"</span>
-         <span style="color: #483d8b;">:publishing-directory</span> <span style="color: #8b2252;">"~/org/publish/"</span>
-         <span style="color: #483d8b;">:recursive</span> t
-         <span style="color: #483d8b;">:publishing-function</span> org-publish-attachment
-         <span style="color: #909183;">)</span>
-        <span style="color: #909183;">(</span><span style="color: #8b2252;">"blog"</span> <span style="color: #483d8b;">:components</span> <span style="color: #709870;">(</span><span style="color: #8b2252;">"blog-notes"</span> <span style="color: #8b2252;">"blog-static"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-        <span style="color: #b22222;">;;</span>
-        <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">-n &#21487;&#20197;&#26174;&#31034;&#34892;&#21495;</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">require</span> '<span class="org-constant">org-publish</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>setq org-publish-project-alist
+      '<span class="org-rainbow-delimiters-depth-2">(</span>
+        <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"blog-notes"</span>
+         <span class="org-builtin">:base-directory</span> <span class="org-string">"~/org/blog/"</span>
+         <span class="org-builtin">:base-extension</span> <span class="org-string">"org"</span>
+         <span class="org-builtin">:publishing-directory</span> <span class="org-string">"~/org"</span>
+         <span class="org-builtin">:recursive</span> t
+         <span class="org-builtin">:publishing-function</span> org-publish-org-to-html
+         <span class="org-builtin">:headline-levels</span> 4
+         <span class="org-builtin">:section-numbers</span> nil
+         <span class="org-builtin">:auto-preamble</span> t
+         <span class="org-builtin">:style</span>    <span class="org-string">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/&gt;"</span>
+         <span class="org-rainbow-delimiters-depth-3">)</span>
+        <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"blog-static"</span>
+         <span class="org-builtin">:base-directory</span> <span class="org-string">"~/org/blog/"</span>
+         <span class="org-builtin">:base-extension</span> <span class="org-string">"css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"</span>
+         <span class="org-builtin">:publishing-directory</span> <span class="org-string">"~/org/publish/"</span>
+         <span class="org-builtin">:recursive</span> t
+         <span class="org-builtin">:publishing-function</span> org-publish-attachment
+         <span class="org-rainbow-delimiters-depth-3">)</span>
+        <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"blog"</span> <span class="org-builtin">:components</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-string">"blog-notes"</span> <span class="org-string">"blog-static"</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+        <span class="org-comment-delimiter">;;</span>
+        <span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>

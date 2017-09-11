@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:11 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Exporting to PDF in org mode</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -284,28 +287,28 @@ for the JavaScript code in this tag.
 <li>在你的 .emacs 或 .emacs.d/init.el 上添加对 xelatex 的支持，上面装的 MacTex 会装这个。添加代码如下</li>
 </ul>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>setenv <span style="color: #8b2252;">"PATH"</span> <span style="color: #7388d6;">(</span>concat <span style="color: #909183;">(</span>getenv <span style="color: #8b2252;">"PATH"</span><span style="color: #909183;">)</span> <span style="color: #8b2252;">":/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> exec-path <span style="color: #7388d6;">(</span>append exec-path <span style="color: #a020f0;">'</span><span style="color: #909183;">(</span><span style="color: #8b2252;">"/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>setenv <span class="org-string">"PATH"</span> <span class="org-rainbow-delimiters-depth-2">(</span>concat <span class="org-rainbow-delimiters-depth-3">(</span>getenv <span class="org-string">"PATH"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-string">":/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> exec-path <span class="org-rainbow-delimiters-depth-2">(</span>append exec-path <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <ul class="org-ul">
 <li>同样在配置文件上应该配置使用 xelatex, 输出中文 pdf。org-mode 默认调用的是 pdflatex, 因此需要重新设置编译引擎为 xelatex</li>
 </ul>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> org-latex-pdf-process <span style="color: #a020f0;">'</span><span style="color: #7388d6;">(</span><span style="color: #8b2252;">"xelatex -interaction nonstopmode %f"</span> <span style="color: #8b2252;">"xelatex -interaction nonstopmode %f"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-latex-pdf-process <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"xelatex -interaction nonstopmode %f"</span> <span class="org-string">"xelatex -interaction nonstopmode %f"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
 注意：如果你使用的是 <code>spacemacs</code> 你需要将上面的配置加到 <code>user config</code>
 里面，同时还要将上面的代码放到：
 </p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">after-load</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">org</span> <span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">after-load</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">org</span> <span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 <p>
 里面，否则上面的代码不会生效。

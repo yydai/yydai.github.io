@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-11 Fri 08:41 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>一个静态评论系统的实现</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -332,52 +335,52 @@ for the JavaScript code in this tag.
 比如说用 ajax 发送 GET 请求：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #a020f0;">function</span> <span style="color: #0000ff;">test</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
-  jQuery.ajax<span style="color: #7388d6;">(</span><span style="color: #909183;">{</span>
-      type: <span style="color: #8b2252;">'GET'</span>,
-      async: <span style="color: #008b8b;">false</span>,
-      dataType:<span style="color: #8b2252;">'json'</span>,
+<div class="container">
+<pre><code class="javascript"><span class="org-keyword">function</span> <span class="org-function-name">test</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+  jQuery.ajax<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">{</span>
+      type: <span class="org-string">'GET'</span>,
+      async: <span class="org-constant">false</span>,
+      dataType:<span class="org-string">'json'</span>,
       url: search_issues,
-      <span style="color: #0000ff;">success</span>:<span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">data</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
+      <span class="org-function-name">success</span>:<span class="org-keyword">function</span><span class="org-rainbow-delimiters-depth-4">(</span><span class="org-variable-name">data</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-rainbow-delimiters-depth-4">{</span>
          result = data;
-      <span style="color: #709870;">}</span>
-  <span style="color: #909183;">}</span><span style="color: #7388d6;">)</span>;
-  <span style="color: #a020f0;">return</span> result;
-<span style="color: #707183;">}</span>
-</pre>
+      <span class="org-rainbow-delimiters-depth-4">}</span>
+  <span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">)</span>;
+  <span class="org-keyword">return</span> result;
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
 </div>
 
 <p>
 以及发送 POST 请求：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-javascript"><span style="color: #a020f0;">function</span> <span style="color: #0000ff;">create</span><span style="color: #707183;">(</span><span style="color: #a0522d;">title</span><span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
-     <span style="color: #a020f0;">var</span> <span style="color: #a0522d;">creare</span> = base_url + <span style="color: #8b2252;">'/repos/'</span> + owner + <span style="color: #8b2252;">'/'</span> + repo + <span style="color: #8b2252;">'/issues'</span>;
-     <span style="color: #a020f0;">var</span> <span style="color: #a0522d;">payload</span> = <span style="color: #7388d6;">{</span>
-          <span style="color: #8b2252;">'title'</span>: title,
-          <span style="color: #8b2252;">'body'</span>: <span style="color: #8b2252;">'You can write comments in this issues.'</span>,
-          <span style="color: #8b2252;">'labels'</span>: <span style="color: #909183;">[</span><span style="color: #8b2252;">'blog'</span><span style="color: #909183;">]</span>,
-      <span style="color: #7388d6;">}</span>
-      $.ajax<span style="color: #7388d6;">(</span><span style="color: #909183;">{</span>
-        type: <span style="color: #8b2252;">'POST'</span>,
+<div class="container">
+<pre><code class="javascript"><span class="org-keyword">function</span> <span class="org-function-name">create</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-variable-name">title</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+     <span class="org-keyword">var</span> <span class="org-variable-name">creare</span> = base_url + <span class="org-string">'/repos/'</span> + owner + <span class="org-string">'/'</span> + repo + <span class="org-string">'/issues'</span>;
+     <span class="org-keyword">var</span> <span class="org-variable-name">payload</span> = <span class="org-rainbow-delimiters-depth-2">{</span>
+          <span class="org-string">'title'</span>: title,
+          <span class="org-string">'body'</span>: <span class="org-string">'You can write comments in this issues.'</span>,
+          <span class="org-string">'labels'</span>: <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">'blog'</span><span class="org-rainbow-delimiters-depth-3">]</span>,
+      <span class="org-rainbow-delimiters-depth-2">}</span>
+      $.ajax<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">{</span>
+        type: <span class="org-string">'POST'</span>,
         url: create,
-        crossDomain: <span style="color: #008b8b;">true</span>,
-              data: JSON.stringify<span style="color: #709870;">(</span>payload<span style="color: #709870;">)</span>,
-        headers: <span style="color: #709870;">{</span>
-          <span style="color: #8b2252;">'Authorization'</span>: <span style="color: #8b2252;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #b22222;">// </span><span style="color: #b22222;">auth2.0</span>
-          <span style="color: #8b2252;">'Access-Control-Allow-Origin'</span> : <span style="color: #8b2252;">'*'</span>
-        <span style="color: #709870;">}</span>,
-        contentType: <span style="color: #8b2252;">'application/json; charset=utf-8'</span>,
-        dataType: <span style="color: #8b2252;">'json'</span>,
-        <span style="color: #0000ff;">success</span>: <span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">data</span><span style="color: #709870;">){</span>alert<span style="color: #907373;">(</span><span style="color: #8b2252;">'create issue success'</span><span style="color: #907373;">)</span>;<span style="color: #709870;">}</span>,
-        <span style="color: #0000ff;">failure</span>: <span style="color: #a020f0;">function</span><span style="color: #709870;">(</span><span style="color: #a0522d;">errMsg</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
-            alert<span style="color: #907373;">(</span>errMsg<span style="color: #907373;">)</span>;
-        <span style="color: #709870;">}</span>
-    <span style="color: #909183;">}</span><span style="color: #7388d6;">)</span>;<span style="color: #707183;">}</span>
+        crossDomain: <span class="org-constant">true</span>,
+              data: JSON.stringify<span class="org-rainbow-delimiters-depth-4">(</span>payload<span class="org-rainbow-delimiters-depth-4">)</span>,
+        headers: <span class="org-rainbow-delimiters-depth-4">{</span>
+          <span class="org-string">'Authorization'</span>: <span class="org-string">'Basic xxxxxxxxxxxxx'</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">auth2.0</span>
+          <span class="org-string">'Access-Control-Allow-Origin'</span> : <span class="org-string">'*'</span>
+        <span class="org-rainbow-delimiters-depth-4">}</span>,
+        contentType: <span class="org-string">'application/json; charset=utf-8'</span>,
+        dataType: <span class="org-string">'json'</span>,
+        <span class="org-function-name">success</span>: <span class="org-keyword">function</span><span class="org-rainbow-delimiters-depth-4">(</span><span class="org-variable-name">data</span><span class="org-rainbow-delimiters-depth-4">){</span>alert<span class="org-rainbow-delimiters-depth-5">(</span><span class="org-string">'create issue success'</span><span class="org-rainbow-delimiters-depth-5">)</span>;<span class="org-rainbow-delimiters-depth-4">}</span>,
+        <span class="org-function-name">failure</span>: <span class="org-keyword">function</span><span class="org-rainbow-delimiters-depth-4">(</span><span class="org-variable-name">errMsg</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-rainbow-delimiters-depth-4">{</span>
+            alert<span class="org-rainbow-delimiters-depth-5">(</span>errMsg<span class="org-rainbow-delimiters-depth-5">)</span>;
+        <span class="org-rainbow-delimiters-depth-4">}</span>
+    <span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">)</span>;<span class="org-rainbow-delimiters-depth-1">}</span>
 
-</pre>
+</code></pre>
 </div>
 </div>
 </div>

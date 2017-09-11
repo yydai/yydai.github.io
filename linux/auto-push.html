@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:12 -->
+<!-- 2017-09-11 Mon 22:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>自动化 Git push</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -258,12 +261,12 @@ for the JavaScript code in this tag.
 <p>
 我在使用 Git 时，如果要提交代码到远程仓库，我经常会这样做：
 </p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #483d8b;">cd</span> &lt;target directory&gt;
+<div class="container">
+<pre><code class="shell"><span class="org-builtin">cd</span> &lt;target directory&gt;
 git add .
-git commit -m <span style="color: #8b2252;">"commit message"</span>
+git commit -m <span class="org-string">"commit message"</span>
 git push
-</pre>
+</code></pre>
 </div>
 <p>
 注：如果想在一个分支中直接使用 git push，要保证使用过 <b>git push &#x2013;set-upstream origin &lt;branch_name&gt;</b> 。
@@ -277,12 +280,12 @@ git push
 <p>
 最终的成果如下：
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">push                <span style="color: #b22222;"># </span><span style="color: #b22222;">default message in current directory</span>
-push <span style="color: #8b2252;">"message"</span>      <span style="color: #b22222;"># </span><span style="color: #b22222;">push with specified message in current directory</span>
-push blog           <span style="color: #b22222;"># </span><span style="color: #b22222;">default message in the directory of blog</span>
-push blog <span style="color: #8b2252;">"message"</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">push with specified directory and message</span>
-</pre>
+<div class="container">
+<pre><code class="shell">push                <span class="org-comment-delimiter"># </span><span class="org-comment">default message in current directory</span>
+push <span class="org-string">"message"</span>      <span class="org-comment-delimiter"># </span><span class="org-comment">push with specified message in current directory</span>
+push blog           <span class="org-comment-delimiter"># </span><span class="org-comment">default message in the directory of blog</span>
+push blog <span class="org-string">"message"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">push with specified directory and message</span>
+</code></pre>
 </div>
 
 <p>
@@ -297,17 +300,17 @@ blog_path='~/workspace/blog/public_html'
 <div id="outline-container-orgdf25d84" class="outline-2">
 <h2 id="orgdf25d84">实现</h2>
 <div class="outline-text-2" id="text-orgdf25d84">
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #0000ff;">auto_push</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+<div class="container">
+<pre><code class="shell"><span class="org-function-name">auto_push</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     git add .
-    <span style="color: #483d8b;">local</span> <span style="color: #a0522d;">desc</span>=$<span style="color: #a0522d;">1</span>
-    <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$1"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
-        <span style="color: #a0522d;">desc</span>=<span style="color: #8b2252;">"Auto commit"</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">default message</span>
-    <span style="color: #a020f0;">fi</span>
-    git commit -m <span style="color: #8b2252;">"$desc"</span>
+    <span class="org-builtin">local</span> <span class="org-variable-name">desc</span>=$<span class="org-variable-name">1</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$1"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">desc</span>=<span class="org-string">"Auto commit"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">default message</span>
+    <span class="org-keyword">fi</span>
+    git commit -m <span class="org-string">"$desc"</span>
     git push
-<span style="color: #707183;">}</span>
-</pre>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
 </div>
 
 <p>
@@ -334,25 +337,25 @@ auto_push "message"
 <p>
 首先先看代码：
 </p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #0000ff;">read_config</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
-    <span style="color: #a0522d;">CONFIG</span>=<span style="color: #8b2252;">"~/.config/zsh-command/path.config"</span>
-    <span style="color: #483d8b;">source</span> $<span style="color: #a0522d;">CONFIG</span>
+<div class="container">
+<pre><code class="shell"><span class="org-function-name">read_config</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-variable-name">CONFIG</span>=<span class="org-string">"~/.config/zsh-command/path.config"</span>
+    <span class="org-builtin">source</span> $<span class="org-variable-name">CONFIG</span>
 
-    <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$1"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$1"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
         auto_push
-    <span style="color: #a020f0;">elif</span> ! cat $<span style="color: #a0522d;">CONFIG</span> | grep <span style="color: #8b2252;">"$1"</span> &gt; /dev/null; <span style="color: #a020f0;">then</span>
-        auto_push $<span style="color: #a0522d;">1</span>
-    <span style="color: #a020f0;">else</span>
-        <span style="color: #a0522d;">temp</span>=$<span style="color: #7388d6;">{</span><span style="color: #a0522d;">1</span><span style="color: #7388d6;">}</span>_path
-        <span style="color: #b22222;"># </span><span style="color: #b22222;">https://superuser.com/questions/935374/difference-between-and-in-shell-script</span>
-        <span style="color: #b22222;"># </span><span style="color: #b22222;">https://unix.stackexchange.com/questions/68035/foo-and-zsh</span>
-        <span style="color: #483d8b;">pushd</span> $<span style="color: #7388d6;">{</span><span style="color: #909183;">(</span>P<span style="color: #909183;">)</span>temp<span style="color: #7388d6;">}</span> &gt; /dev/null <span style="color: #b22222;"># </span><span style="color: #b22222;">we use pushd instead of cd</span>
-        auto_push $<span style="color: #a0522d;">2</span>
-        <span style="color: #483d8b;">popd</span> &gt; /dev/null
-    <span style="color: #a020f0;">fi</span>
-<span style="color: #707183;">}</span>
-</pre>
+    <span class="org-keyword">elif</span> <span class="org-negation-char">!</span> cat $<span class="org-variable-name">CONFIG</span> | grep <span class="org-string">"$1"</span> &gt; /dev/null; <span class="org-keyword">then</span>
+        auto_push $<span class="org-variable-name">1</span>
+    <span class="org-keyword">else</span>
+        <span class="org-variable-name">temp</span>=$<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">1</span><span class="org-rainbow-delimiters-depth-2">}</span>_path
+        <span class="org-comment-delimiter"># </span><span class="org-comment">https://superuser.com/questions/935374/difference-between-and-in-shell-script</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">https://unix.stackexchange.com/questions/68035/foo-and-zsh</span>
+        <span class="org-builtin">pushd</span> $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-rainbow-delimiters-depth-3">(</span>P<span class="org-rainbow-delimiters-depth-3">)</span>temp<span class="org-rainbow-delimiters-depth-2">}</span> &gt; /dev/null <span class="org-comment-delimiter"># </span><span class="org-comment">we use pushd instead of cd</span>
+        auto_push $<span class="org-variable-name">2</span>
+        <span class="org-builtin">popd</span> &gt; /dev/null
+    <span class="org-keyword">fi</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
 </div>
 
 <p>
@@ -382,18 +385,18 @@ pushd 和 popd。
 <p>
 最后加一句：
 </p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">push</span>=<span style="color: #8b2252;">"read_config"</span>
-</pre>
+<div class="container">
+<pre><code class="shell"><span class="org-builtin">alias</span> <span class="org-variable-name">push</span>=<span class="org-string">"read_config"</span>
+</code></pre>
 </div>
 
 <p>
 如果想更简化，直接用单个字母代替单词。
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">p b &lt;= push blog
+<div class="container">
+<pre><code class="shell">p b &lt;= push blog
 p e &lt;= push emacs
-</pre>
+</code></pre>
 </div>
 
 <p>

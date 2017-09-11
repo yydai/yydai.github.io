@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-09-11 Mon 22:31 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgdb851bf">声明</a></li>
+<li><a href="#orged7b9be">变量</a></li>
+<li><a href="#orgfbd5a2c">简短变量声明</a></li>
+<li><a href="#orga5a0a12">指针</a></li>
+<li><a href="#org8818e34">new</a></li>
+<li><a href="#org44cc09b">赋值</a></li>
+<li><a href="#orgaf4ebc8">类型</a></li>
+<li><a href="#orgbf8bddc">包和文件</a></li>
+<li><a href="#org0135af9">基本数据类型</a>
+<ul>
+<li><a href="#orge8cc359">整型</a></li>
+<li><a href="#orgbe625e0">关于 fmt 的技巧</a></li>
+<li><a href="#org3cdeaa7">浮点数</a></li>
+<li><a href="#org22a2ec7">字符串</a></li>
+<li><a href="#org04089cd">switch</a></li>
+<li><a href="#org3811ca5">Arrays</a></li>
+<li><a href="#org340b959">map</a></li>
+<li><a href="#org2c84c19">variadic function</a></li>
+<li><a href="#org3e4ece0">struct</a></li>
+</ul>
+</li>
+<li><a href="#orgf83f74e">方法的声明</a></li>
+<li><a href="#org68a4ad3">goroutines</a></li>
+</ul>
+</div>
+</div>
+<p>
+yyy#+TITLE: 基本语法
+</p>
+
+<hr />
+
+<p>
+关于 org 中执行 go 代码可以看这里：<a href="https://brantou.github.io/2017/06/12/go-source-code-block-in-org/">在 Org-mode 中执行 Go 代码</a>
+</p>
+
+<div id="outline-container-orgdb851bf" class="outline-2">
+<h2 id="orgdb851bf">声明</h2>
+<div class="outline-text-2" id="text-orgdb851bf">
+<p>
+Go 的主要类型有，var、const、type 和 func，分别对应变量、常量、类型和函数的对象的声明。
+</p>
+
+<p>
+一个 Go 语言编写的程序对应一个或多个以.go 为文件后缀名的源文件中。每个源文件以包的声明语句开始，说明该源文件是属于哪个包。
+</p>
+
+<div class="container">
+<pre><code class="golang">const freezingF, boilingF = 32.0, 212.0
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orged7b9be" class="outline-2">
+<h2 id="orged7b9be">变量</h2>
+<div class="outline-text-2" id="text-orged7b9be">
+<div class="container">
+<pre><code class="go"><span class="org-keyword">var</span> &#21464;&#37327;&#21517;&#23383; &#31867;&#22411; = &#34920;&#36798;&#24335;
+&#20854;&#20013;&#8220;&#31867;&#22411;&#8221;&#25110;&#8220;= &#34920;&#36798;&#24335;&#8221;&#20004;&#20010;&#37096;&#20998;&#21487;&#20197;&#30465;&#30053;&#20854;&#20013;&#30340;&#19968;&#20010;
+
+<span class="org-keyword">var</span> s string
+<span class="org-keyword">var</span> i, j , k, int
+<span class="org-keyword">var</span> b, f, s = <span class="org-constant">true</span>, 2, 3 <span class="org-comment-delimiter">// </span><span class="org-comment">&#31867;&#22411;&#33021;&#22815;&#25512;&#21040;&#24471;&#20986;, bool, float64, string</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfbd5a2c" class="outline-2">
+<h2 id="orgfbd5a2c">简短变量声明</h2>
+<div class="outline-text-2" id="text-orgfbd5a2c">
+<p>
+在函数内部，有一种称为简短变量声明语句的形式可用于声明和初始化局部变量。它以“名字 := 表达式”形式声明变量，变量的类型根据表达式来自动推导。
+因为简洁和灵活的特点，简短变量声明被广泛用于大部分的局部变量的声明和初化始。
+</p>
+
+<p>
+var 形式的声明语句往往是用于需要显式指定变量类型地方，或者因为变量稍后会被重新赋值而初始值无关紧要的地方。
+</p>
+<div class="container">
+<pre><code class="go">i := 100
+<span class="org-keyword">var</span> boiling float64 = 100
+<span class="org-keyword">var</span> name <span class="org-rainbow-delimiters-depth-1">[]</span><span class="org-type">string</span>
+<span class="org-keyword">var</span> err error
+<span class="org-keyword">var</span> p Point
+
+i, j := 0, 1
+</code></pre>
+</div>
+
+<p>
+注意， ：= 是一个变量声明语句，而 = 是一个变量赋值语句。
+</p>
+
+<div class="container">
+<pre><code class="go">i, j = j, i
+</code></pre>
+</div>
+
+<p>
+简短变量声明语句也可以用函数的返回值来声明和初始化变量。
+</p>
+<div class="container">
+<pre><code class="go">f, err := os.<span class="org-function-name">Open</span><span class="org-rainbow-delimiters-depth-1">(</span>name<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga5a0a12" class="outline-2">
+<h2 id="orga5a0a12">指针</h2>
+<div class="outline-text-2" id="text-orga5a0a12">
+<div class="container">
+<pre><code class="go"><span class="org-keyword">var</span> x int
+fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delimiters-depth-1">(</span>&amp;x<span class="org-rainbow-delimiters-depth-1">)</span>
+
+y := 1
+p := &amp;y
+fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delimiters-depth-1">(</span>*p<span class="org-rainbow-delimiters-depth-1">)</span>
+*p = 2
+fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delimiters-depth-1">(</span>y<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
+
+<pre class="example">
+0xc42000e230
+1
+2
+
+</pre>
+
+<p>
+下面是返回局部变量的地址
+</p>
+<div class="container">
+<pre><code class="go"><span class="org-keyword">var</span> p = <span class="org-function-name">f</span><span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-keyword">func</span> <span class="org-function-name">f</span><span class="org-rainbow-delimiters-depth-1">()</span> *<span class="org-type">int</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    v := 1
+    <span class="org-keyword">return</span> &amp;v
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+
+<p>
+下面是一个通过 flag 来构建一个命令行工具的例子
+</p>
+<div class="container">
+<pre><code class="go"><span class="org-keyword">package</span> main
+
+<span class="org-keyword">import</span> <span class="org-rainbow-delimiters-depth-1">(</span>
+    <span class="org-string">"flag"</span>
+    <span class="org-string">"fmt"</span>
+    <span class="org-string">"strings"</span>
+<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-keyword">var</span> n = flag.<span class="org-function-name">Bool</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"n"</span>, <span class="org-constant">false</span>, <span class="org-string">"omit trailing newline"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">var</span> sep = flag.<span class="org-function-name">String</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"s"</span>, <span class="org-string">" "</span>, <span class="org-string">"separator"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    flag.<span class="org-function-name">Parse</span><span class="org-rainbow-delimiters-depth-2">()</span>
+    fmt.<span class="org-function-name">Print</span><span class="org-rainbow-delimiters-depth-2">(</span>strings.<span class="org-function-name">Join</span><span class="org-rainbow-delimiters-depth-3">(</span>flag.<span class="org-function-name">Args</span><span class="org-rainbow-delimiters-depth-4">()</span>, *sep<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-keyword">if</span> !*n <span class="org-rainbow-delimiters-depth-2">{</span>
+        fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delimiters-depth-3">()</span>
+    <span class="org-rainbow-delimiters-depth-2">}</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+
+<p>
+程序中的 sep 和 n 变量分别是指向对应命令行标志参数变量的指针，因此必须用*sep 和*n 形式的指针语法间接引用它们。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org8818e34" class="outline-2">
+<h2 id="org8818e34">new</h2>
+<div class="outline-text-2" id="text-org8818e34">
+<p>
+new(T) 创建一个 T 类的匿名变量，初始化为 T 类型的零值，返回变量的指针，指针类型为 *T。
+</p>
+
+<div class="container">
+<pre><code class="go">p := <span class="org-builtin">new</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-type">int</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">// </span><span class="org-comment">p *int &#31867;&#22411;</span>
+fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delimiters-depth-1">(</span>*p<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">// </span><span class="org-comment">0</span>
+
+*p = 2
+
+<span class="org-keyword">func</span> <span class="org-function-name">newInt</span><span class="org-rainbow-delimiters-depth-1">()</span> *<span class="org-type">int</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">return</span> <span class="org-builtin">new</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">int</span><span class="org-rainbow-delimiters-depth-2">)</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org44cc09b" class="outline-2">
+<h2 id="org44cc09b">赋值</h2>
+<div class="outline-text-2" id="text-org44cc09b">
+<div class="container">
+<pre><code class="go">medals := <span class="org-rainbow-delimiters-depth-1">[]</span><span class="org-type">string</span><span class="org-rainbow-delimiters-depth-1">{</span><span class="org-string">"gold"</span>, <span class="org-string">"silver"</span>, <span class="org-string">"bronze"</span><span class="org-rainbow-delimiters-depth-1">}</span>
+
+mdeals<span class="org-rainbow-delimiters-depth-1">[</span>0<span class="org-rainbow-delimiters-depth-1">]</span> = <span class="org-string">"gold"</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaf4ebc8" class="outline-2">
+<h2 id="orgaf4ebc8">类型</h2>
+<div class="outline-text-2" id="text-orgaf4ebc8">
+<p>
+类型声明语句创建一个新的类型名称。
+</p>
+<div class="container">
+<pre><code class="go"><span class="org-keyword">type</span> <span class="org-type">&#31867;&#22411;&#21517;&#23383;</span> <span class="org-type">&#24213;&#23618;&#31867;&#22411;</span>
+
+<span class="org-keyword">type</span> <span class="org-type">Celsius</span> <span class="org-type">float64</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgbf8bddc" class="outline-2">
+<h2 id="orgbf8bddc">包和文件</h2>
+<div class="outline-text-2" id="text-orgbf8bddc">
+<p>
+这里的包和其他语言中的库或者模块类似。每个包都对应一个独立的名字空间。
+有一点要注意的是，一个程序的入口是 main package 下的 main 函数。
+</p>
+
+<p>
+理解了包，我们其实就可以发布一个自己的包了。 下面以温度转换函数说明。
+</p>
+
+<p>
+如果我们有一个包，其目录结构类似 $GOPATH/src/xxx/xxx，那我们在 import 这个包的时候就写 xxxx/xxxx 部分就可以了。
+</p>
+
+<div class="container">
+<pre><code class="go"><span class="org-comment-delimiter">// </span><span class="org-comment">src/ch2/tempconv</span>
+<span class="org-keyword">package</span> tempconv
+
+<span class="org-keyword">import</span> <span class="org-string">"fmt"</span>
+
+<span class="org-keyword">type</span> <span class="org-type">Celsius</span> <span class="org-type">float64</span>
+<span class="org-keyword">type</span> <span class="org-type">Fahrenheit</span> <span class="org-type">float64</span>
+
+<span class="org-keyword">const</span> <span class="org-rainbow-delimiters-depth-1">(</span>
+    AbsoluteZeroC Celsius = -273.15
+    FreezingC     Celsius = 0
+    BoilingC      Celsius = 100
+<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
+
+<p>
+另外还有一个文件
+</p>
+<div class="container">
+<pre><code class="go"><span class="org-comment-delimiter">// </span><span class="org-comment">src/ch2/conv.go</span>
+<span class="org-keyword">package</span> tempconv
+<span class="org-keyword">func</span> <span class="org-function-name">CToF</span><span class="org-rainbow-delimiters-depth-1">(</span>c <span class="org-type">Celsius</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-type">Fahrenheit</span> <span class="org-rainbow-delimiters-depth-1">{</span> <span class="org-keyword">return</span> <span class="org-function-name">Fahrenheit</span><span class="org-rainbow-delimiters-depth-2">(</span>c*9/5 + 32<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-1">}</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">FToC converts a Fahrenheit temperature to Celsius.</span>
+<span class="org-keyword">func</span> <span class="org-function-name">FToC</span><span class="org-rainbow-delimiters-depth-1">(</span>f <span class="org-type">Fahrenheit</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-type">Celsius</span> <span class="org-rainbow-delimiters-depth-1">{</span> <span class="org-keyword">return</span> <span class="org-function-name">Celsius</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>f - 32<span class="org-rainbow-delimiters-depth-3">)</span> * 5 / 9<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+
+<p>
+下面我们在任何地方建一个 main.go
+</p>
+<div class="container">
+<pre><code class="go"><span class="org-keyword">package</span> main
+
+<span class="org-keyword">import</span> <span class="org-rainbow-delimiters-depth-1">(</span>
+    <span class="org-string">"fmt"</span>
+    <span class="org-string">"ch2/tempconv"</span>
+<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    fmt.<span class="org-function-name">Printf</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"%v\n"</span>, tempconv.AbsoluteZeroC<span class="org-rainbow-delimiters-depth-2">)</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+
+<p>
+上面有一点需要注意的是 package name 不一定和目录名相同。
+也就是说，ch2/tempconv 我可以写成 ch2/haha。但是我们用的时候还是得用 tempconv 也就是 package name 而不能用 haha。
+按照惯例，一个包的名字和包的导入路径的最后一个字段相同
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0135af9" class="outline-2">
+<h2 id="org0135af9">基本数据类型</h2>
+<div class="outline-text-2" id="text-org0135af9">
+</div><div id="outline-container-orge8cc359" class="outline-3">
+<h3 id="orge8cc359">整型</h3>
+<div class="outline-text-3" id="text-orge8cc359">
+<ul class="org-ul">
+<li>int8</li>
+<li>int16</li>
+<li>int32</li>
+<li>uint8</li>
+<li>int default is 32 bit</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbe625e0" class="outline-3">
+<h3 id="orgbe625e0">关于 fmt 的技巧</h3>
+<div class="outline-text-3" id="text-orgbe625e0">
+<p>
+通常 Printf 格式化字符串包含多个%参数时将会包含对应相同数量的额外操作数，但是%之后的[1]副词告诉 Printf 函数再次使用第一个操作数。第二，%后的#副词告诉 Printf 在用%o、%x 或%X 输出时生成 0、0x 或 0X 前缀。
+</p>
+<div class="container">
+<pre><code class="go">o := 0666
+fmt.<span class="org-function-name">Printf</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"%d %[1]o %#[1]o\n"</span>, o<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">// </span><span class="org-comment">"438 666 0666"</span>
+x := <span class="org-function-name">int64</span><span class="org-rainbow-delimiters-depth-1">(</span>0xdeadbeef<span class="org-rainbow-delimiters-depth-1">)</span>
+fmt.<span class="org-function-name">Printf</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"%d %[1]x %#[1]x %#[1]X\n"</span>, x<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
+
+<pre class="example">
+438 666 0666
+3735928559 deadbeef 0xdeadbeef 0XDEADBEEF
+
+</pre>
+
+<div class="container">
+<pre><code class="go">ascii := <span class="org-string">'a'</span>
+unicode := <span class="org-string">'&#22269;'</span>
+newline := <span class="org-string">'\n'</span>
+fmt.<span class="org-function-name">Printf</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"%d %[1]c %[1]q\n"</span>, ascii<span class="org-rainbow-delimiters-depth-1">)</span>   <span class="org-comment-delimiter">// </span><span class="org-comment">"97 a 'a'"</span>
+fmt.<span class="org-function-name">Printf</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"%d %[1]c %[1]q\n"</span>, unicode<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">// </span><span class="org-comment">"22269 &#22269; '&#22269;'"</span>
+fmt.<span class="org-function-name">Printf</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"%d %[1]q\n"</span>, newline<span class="org-rainbow-delimiters-depth-1">)</span>       <span class="org-comment-delimiter">// </span><span class="org-comment">"10 '\n'"</span>
+</code></pre>
+</div>
+
+<pre class="example">
+97 a 'a'
+22269 国 '国'
+10 '\n'
+
+</pre>
+</div>
+</div>
+<div id="outline-container-org3cdeaa7" class="outline-3">
+<h3 id="org3cdeaa7">浮点数</h3>
+</div>
+<div id="outline-container-org22a2ec7" class="outline-3">
+<h3 id="org22a2ec7">字符串</h3>
+<div class="outline-text-3" id="text-org22a2ec7">
+<p>
+这部分用的应该比较多，多看下相应的库，bytes, strings, strconv 和 unicode
+一个字符串是不可以改变的
+</p>
+
+<p>
+一个原生字符串的形式是通过反引号来代替双引号，这种方式可以跨越多行。
+</p>
+<div class="container">
+<pre><code class="go"><span class="org-keyword">const</span> hello = <span class="org-string">`Go is a tool for managing Go source code</span>
+<span class="org-string">    Usage: `</span>
+</code></pre>
+</div>
+
+<p>
+下面是几个常见的函数
+</p>
+<div class="container">
+<pre><code class="go"><span class="org-keyword">func</span> <span class="org-function-name">HasPrefix</span><span class="org-rainbow-delimiters-depth-1">(</span>s, prefix <span class="org-type">string</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-type">bool</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">return</span> <span class="org-builtin">len</span><span class="org-rainbow-delimiters-depth-2">(</span>s<span class="org-rainbow-delimiters-depth-2">)</span> &gt;= <span class="org-builtin">len</span><span class="org-rainbow-delimiters-depth-2">(</span>prefix<span class="org-rainbow-delimiters-depth-2">)</span> &amp;&amp; s<span class="org-rainbow-delimiters-depth-2">[</span>:<span class="org-builtin">len</span><span class="org-rainbow-delimiters-depth-3">(</span>prefix<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">]</span> == prefix
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+
+<span class="org-keyword">func</span> <span class="org-function-name">Contains</span><span class="org-rainbow-delimiters-depth-1">(</span>s, substr <span class="org-type">string</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-type">bool</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">for</span> i := 0; i &lt; <span class="org-builtin">len</span><span class="org-rainbow-delimiters-depth-2">(</span>s<span class="org-rainbow-delimiters-depth-2">)</span>; i ++ <span class="org-rainbow-delimiters-depth-2">{</span>
+        <span class="org-keyword">if</span> <span class="org-function-name">HasPrefix</span><span class="org-rainbow-delimiters-depth-3">(</span>s<span class="org-rainbow-delimiters-depth-4">[</span>i:<span class="org-rainbow-delimiters-depth-4">]</span>, substr<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">{</span>
+            <span class="org-keyword">return</span> <span class="org-constant">true</span>
+        <span class="org-rainbow-delimiters-depth-3">}</span>
+    <span class="org-rainbow-delimiters-depth-2">}</span>
+    <span class="org-keyword">return</span> <span class="org-constant">false</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+
+<p>
+一个字符串包含只读字节数组，但是字节 slice 是可以修改的
+</p>
+<div class="container">
+<pre><code class="go">s := <span class="org-string">"abc"</span>
+b := <span class="org-rainbow-delimiters-depth-1">[]</span><span class="org-function-name">bytes</span><span class="org-rainbow-delimiters-depth-1">(</span>s<span class="org-rainbow-delimiters-depth-1">)</span>
+s2 := <span class="org-function-name">string</span><span class="org-rainbow-delimiters-depth-1">(</span>b<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org04089cd" class="outline-3">
+<h3 id="org04089cd">switch</h3>
+<div class="outline-text-3" id="text-org04089cd">
+<div class="container">
+<pre><code class="go"><span class="org-keyword">switch</span> i <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">case</span> 1:
+    <span class="org-keyword">case</span> 2:
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+<span class="org-keyword">switch</span> time.<span class="org-function-name">Now</span><span class="org-rainbow-delimiters-depth-1">()</span>.<span class="org-function-name">Weekday</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">case</span> time.Saturday, time.Sunday:
+    <span class="org-keyword">default</span>:
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+<span class="org-keyword">switch</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">case</span> t.<span class="org-function-name">Hour</span><span class="org-rainbow-delimiters-depth-2">()</span> &lt; 12:
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3811ca5" class="outline-3">
+<h3 id="org3811ca5">Arrays</h3>
+<div class="outline-text-3" id="text-org3811ca5">
+<div class="container">
+<pre><code class="go"><span class="org-keyword">var</span> a <span class="org-rainbow-delimiters-depth-1">[</span>5<span class="org-rainbow-delimiters-depth-1">]</span><span class="org-type">int</span>
+b := <span class="org-rainbow-delimiters-depth-1">[</span>5<span class="org-rainbow-delimiters-depth-1">]</span><span class="org-type">int</span><span class="org-rainbow-delimiters-depth-1">{</span>1, 2, 3, 4, 5<span class="org-rainbow-delimiters-depth-1">}</span>
+<span class="org-keyword">var</span> twoD <span class="org-rainbow-delimiters-depth-1">[</span>2<span class="org-rainbow-delimiters-depth-1">][</span>3<span class="org-rainbow-delimiters-depth-1">]</span><span class="org-type">int</span>
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org340b959" class="outline-3">
+<h3 id="org340b959">map</h3>
+<div class="outline-text-3" id="text-org340b959">
+<p>
+make(map[key-type]val-type)
+</p>
+
+<p>
+make(map[string]int)
+</p>
+
+
+<p>
+kvs := map[string]string{"a": "apple", "b": "banana"}
+for k, v := range kvs {
+    fmt.Printf("%s -&gt; %s\n", k, v)
+}
+</p>
+</div>
+</div>
+<div id="outline-container-org2c84c19" class="outline-3">
+<h3 id="org2c84c19">variadic function</h3>
+<div class="outline-text-3" id="text-org2c84c19">
+<div class="container">
+<pre><code class="go"><span class="org-keyword">package</span> main
+
+<span class="org-keyword">import</span> <span class="org-string">"fmt"</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">sum</span><span class="org-rainbow-delimiters-depth-1">(</span>nums ...<span class="org-type">int</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    fmt.<span class="org-function-name">Print</span><span class="org-rainbow-delimiters-depth-2">(</span>nums, <span class="org-string">" "</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    total := 0
+    <span class="org-keyword">for</span> _, num := <span class="org-keyword">range</span> nums <span class="org-rainbow-delimiters-depth-2">{</span>
+        total += num
+    <span class="org-rainbow-delimiters-depth-2">}</span>
+    fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delimiters-depth-2">(</span>total<span class="org-rainbow-delimiters-depth-2">)</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+<span class="org-keyword">func</span> <span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+
+    <span class="org-function-name">sum</span><span class="org-rainbow-delimiters-depth-2">(</span>1, 2<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-function-name">sum</span><span class="org-rainbow-delimiters-depth-2">(</span>1, 2, 3<span class="org-rainbow-delimiters-depth-2">)</span>
+    nums := <span class="org-rainbow-delimiters-depth-2">[]</span><span class="org-type">int</span><span class="org-rainbow-delimiters-depth-2">{</span>1, 2, 3, 4<span class="org-rainbow-delimiters-depth-2">}</span>
+    <span class="org-function-name">sum</span><span class="org-rainbow-delimiters-depth-2">(</span>nums...<span class="org-rainbow-delimiters-depth-2">)</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3e4ece0" class="outline-3">
+<h3 id="org3e4ece0">struct</h3>
+<div class="outline-text-3" id="text-org3e4ece0">
+<div class="container">
+<pre><code class="go"><span class="org-keyword">type</span> <span class="org-type">person</span> <span class="org-keyword">struct</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    name string
+    age  int
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf83f74e" class="outline-2">
+<h2 id="orgf83f74e">方法的声明</h2>
+<div class="outline-text-2" id="text-orgf83f74e">
+<p>
+在函数声明时，在名字之前放一个变量，即是一个方法。
+这个附加的参数会将函数附加到这种类型上。
+</p>
+
+<div class="container">
+<pre><code class="go"><span class="org-keyword">package</span> main
+
+<span class="org-keyword">import</span> <span class="org-string">"math"</span>
+
+<span class="org-keyword">type</span> <span class="org-type">Point</span> <span class="org-keyword">struct</span><span class="org-rainbow-delimiters-depth-1">{</span>x, y float64<span class="org-rainbow-delimiters-depth-1">}</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">Distance</span><span class="org-rainbow-delimiters-depth-1">(</span>p, q <span class="org-type">Point</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-type">float64</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">return</span> math.<span class="org-function-name">Hypot</span><span class="org-rainbow-delimiters-depth-2">(</span>q.x - p.x, q.y - q.y<span class="org-rainbow-delimiters-depth-2">)</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+<span class="org-keyword">func</span> <span class="org-rainbow-delimiters-depth-1">(</span>p <span class="org-type">Point</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-function-name">Distance</span><span class="org-rainbow-delimiters-depth-1">(</span>q <span class="org-type">Point</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-type">float64</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">return</span> math.<span class="org-function-name">Hypot</span><span class="org-rainbow-delimiters-depth-2">(</span>q.x - p.x, q.y - p.y<span class="org-rainbow-delimiters-depth-2">)</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+p := <span class="org-type">Point</span><span class="org-rainbow-delimiters-depth-1">{</span>1, 2<span class="org-rainbow-delimiters-depth-1">}</span>
+q := <span class="org-type">Point</span><span class="org-rainbow-delimiters-depth-1">{</span>4, 6<span class="org-rainbow-delimiters-depth-1">}</span>
+fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-function-name">Distance</span><span class="org-rainbow-delimiters-depth-2">(</span>p, q<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">// </span><span class="org-comment">"5", function call</span>
+fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delimiters-depth-1">(</span>p.<span class="org-function-name">Distance</span><span class="org-rainbow-delimiters-depth-2">(</span>q<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>  <span class="org-comment-delimiter">// </span><span class="org-comment">"5", method call</span>
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org68a4ad3" class="outline-2">
+<h2 id="org68a4ad3">goroutines</h2>
+<div class="outline-text-2" id="text-org68a4ad3">
+<div class="container">
+<pre><code class="go"><span class="org-keyword">func</span> <span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">go</span> <span class="org-function-name">f</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"goroutine"</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-keyword">go</span> <span class="org-keyword">func</span><span class="org-rainbow-delimiters-depth-2">(</span>msg <span class="org-type">string</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+        <span class="org-comment-delimiter">//</span><span class="org-comment">pass</span>
+    <span class="org-rainbow-delimiters-depth-2">}</span>
+
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+	repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

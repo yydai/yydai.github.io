@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-08 Fri 17:27 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>线性分类</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -412,14 +415,14 @@ L_i = \sum_{j\neq y_i} \max(0, s_j - s_{y_i} + 1)
 它的值达到了 12.9，说明对它的打分 -3.1 偏差非常的大。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">L_i_vectorized</span><span style="color: #707183;">(</span>x, y, W<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">scores</span> = W.dot<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">margins</span> = np.maximum<span style="color: #707183;">(</span>0, scores - scores<span style="color: #7388d6;">[</span>y<span style="color: #7388d6;">]</span> + 1<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">margins</span><span style="color: #707183;">[</span>y<span style="color: #707183;">]</span> = 0
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">loss_i</span> = np.<span style="color: #483d8b;">sum</span><span style="color: #707183;">(</span>margins<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> loss_i
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">def</span> <span class="org-function-name">L_i_vectorized</span><span class="org-rainbow-delimiters-depth-1">(</span>x, y, W<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">scores</span> = W.dot<span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">margins</span> = np.maximum<span class="org-rainbow-delimiters-depth-1">(</span>0, scores - scores<span class="org-rainbow-delimiters-depth-2">[</span>y<span class="org-rainbow-delimiters-depth-2">]</span> + 1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">margins</span><span class="org-rainbow-delimiters-depth-1">[</span>y<span class="org-rainbow-delimiters-depth-1">]</span> = 0
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">loss_i</span> = np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">(</span>margins<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-keyword">return</span> loss_i
+</code></pre>
 </div>
 
 <p>
@@ -501,50 +504,50 @@ R(W) = \sum_k\sum_l \beta W_{k,l}^2 + |W_{k,l}|
 <p>
 Python 代码
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">&#27809;&#26377;&#21152;&#27491;&#21017;&#21270;&#30340;&#24773;&#20917;</span>
-<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">L_i</span><span style="color: #707183;">(</span>x, y, W<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #8b2252;">"""</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   unvectorized version. Compute the multiclass svm loss for a single example (x,y)</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   - x is a column vector representing an image (e.g. 3073 x 1 in CIFAR-10)</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   </span><span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;"> with an appended bias dimension in the 3073-rd position (i.e. bias trick)</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   - y is an integer giving index of correct class (e.g. between 0 and 9 in CIFAR-10)</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   - W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   """</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">delta</span> = 1.0 <span style="color: #b22222;"># </span><span style="color: #b22222;">see notes about delta later in this section</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">scores</span> = W.dot<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">scores becomes of size 10 x 1, the scores for each class</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">correct_class_score</span> = scores<span style="color: #707183;">[</span>y<span style="color: #707183;">]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">D</span> = W.shape<span style="color: #707183;">[</span>0<span style="color: #707183;">]</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">number of classes, e.g. 10</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">loss_i</span> = 0.0
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> j <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">xrange</span><span style="color: #707183;">(</span>D<span style="color: #707183;">)</span>: <span style="color: #b22222;"># </span><span style="color: #b22222;">iterate over all wrong classes</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span> <span style="color: #a020f0;">if</span> j == y:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">skip for the true class to only loop over incorrect classes</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">continue</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span> <span style="color: #b22222;"># </span><span style="color: #b22222;">accumulate loss for the i-th example</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span> <span style="color: #a0522d;">loss_i</span> += <span style="color: #483d8b;">max</span><span style="color: #707183;">(</span>0, scores<span style="color: #7388d6;">[</span>j<span style="color: #7388d6;">]</span> - correct_class_score + delta<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> loss_i
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">&#27809;&#26377;&#21152;&#27491;&#21017;&#21270;&#30340;&#24773;&#20917;</span>
+<span class="org-keyword">def</span> <span class="org-function-name">L_i</span><span class="org-rainbow-delimiters-depth-1">(</span>x, y, W<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-doc">"""</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   unvectorized version. Compute the multiclass svm loss for a single example (x,y)</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   - x is a column vector representing an image (e.g. 3073 x 1 in CIFAR-10)</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   </span><span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc"> with an appended bias dimension in the 3073-rd position (i.e. bias trick)</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   - y is an integer giving index of correct class (e.g. between 0 and 9 in CIFAR-10)</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   - W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   """</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">delta</span> = 1.0 <span class="org-comment-delimiter"># </span><span class="org-comment">see notes about delta later in this section</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">scores</span> = W.dot<span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">scores becomes of size 10 x 1, the scores for each class</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">correct_class_score</span> = scores<span class="org-rainbow-delimiters-depth-1">[</span>y<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">D</span> = W.shape<span class="org-rainbow-delimiters-depth-1">[</span>0<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">number of classes, e.g. 10</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">loss_i</span> = 0.0
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">for</span> j <span class="org-keyword">in</span> <span class="org-builtin">xrange</span><span class="org-rainbow-delimiters-depth-1">(</span>D<span class="org-rainbow-delimiters-depth-1">)</span>: <span class="org-comment-delimiter"># </span><span class="org-comment">iterate over all wrong classes</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-keyword">if</span> j == y:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">skip for the true class to only loop over incorrect classes</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">continue</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-comment-delimiter"># </span><span class="org-comment">accumulate loss for the i-th example</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-variable-name">loss_i</span> += <span class="org-builtin">max</span><span class="org-rainbow-delimiters-depth-1">(</span>0, scores<span class="org-rainbow-delimiters-depth-2">[</span>j<span class="org-rainbow-delimiters-depth-2">]</span> - correct_class_score + delta<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-keyword">return</span> loss_i
+</code></pre>
 </div>
 
 <p>
 下面是添加了使用向量表示的代码，这种方式更加高效：
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">L_i_vectorized</span><span style="color: #707183;">(</span>x, y, W<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #8b2252;">'''</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   A faster half-vectorized implementation. half-vectorized</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   refers to the fact that for a single example the implementation</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   contains no for loops, but there is still one loop over the</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   examples(outside this function)</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   '''</span>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">def</span> <span class="org-function-name">L_i_vectorized</span><span class="org-rainbow-delimiters-depth-1">(</span>x, y, W<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-doc">'''</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   A faster half-vectorized implementation. half-vectorized</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   refers to the fact that for a single example the implementation</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   contains no for loops, but there is still one loop over the</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   examples(outside this function)</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   '''</span>
 
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">delta</span> = 1.0
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">scores</span> = W.dot<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">margins</span> = np.maximum<span style="color: #707183;">(</span>0, scores - scores<span style="color: #7388d6;">[</span>y<span style="color: #7388d6;">]</span> + delta<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">margins</span><span style="color: #707183;">[</span>y<span style="color: #707183;">]</span> = 0
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">loss_i</span> = np.<span style="color: #483d8b;">sum</span><span style="color: #707183;">(</span>margins<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> loss_i
-</pre>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">delta</span> = 1.0
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">scores</span> = W.dot<span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">margins</span> = np.maximum<span class="org-rainbow-delimiters-depth-1">(</span>0, scores - scores<span class="org-rainbow-delimiters-depth-2">[</span>y<span class="org-rainbow-delimiters-depth-2">]</span> + delta<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">margins</span><span class="org-rainbow-delimiters-depth-1">[</span>y<span class="org-rainbow-delimiters-depth-1">]</span> = 0
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">loss_i</span> = np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">(</span>margins<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-keyword">return</span> loss_i
+</code></pre>
 </div>
 </div>
 </div>
@@ -606,15 +609,15 @@ f_j(z) = \frac{e^{z_j}}{\sum_k e^{z_k}}
 <p>
 下面是代码：
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">f</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>123, 456, 789<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #a0522d;">p</span> = np.exp<span style="color: #707183;">(</span>f<span style="color: #707183;">)</span> / np.<span style="color: #483d8b;">sum</span><span style="color: #707183;">(</span>np.exp<span style="color: #7388d6;">(</span>f<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">f</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>123, 456, 789<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">p</span> = np.exp<span class="org-rainbow-delimiters-depth-1">(</span>f<span class="org-rainbow-delimiters-depth-1">)</span> / np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">(</span>np.exp<span class="org-rainbow-delimiters-depth-2">(</span>f<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">&#21464;&#25442;&#21518;</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">&#20854;&#23454;&#23601;&#26159;&#23558; f &#25968;&#20540;&#24179;&#31227;&#65292;&#23558;&#26368;&#22823;&#20540;&#21464;&#20026; 0</span>
-<span style="color: #a0522d;">f</span> -= np.<span style="color: #483d8b;">max</span><span style="color: #707183;">(</span>f<span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">f &#21464;&#25104;&#20102; [-666, -333, 0]</span>
-<span style="color: #a0522d;">p</span> = np.exp<span style="color: #707183;">(</span>f<span style="color: #707183;">)</span> / np.<span style="color: #483d8b;">sum</span><span style="color: #707183;">(</span>np.exp<span style="color: #7388d6;">(</span>f<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21464;&#25442;&#21518;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#20854;&#23454;&#23601;&#26159;&#23558; f &#25968;&#20540;&#24179;&#31227;&#65292;&#23558;&#26368;&#22823;&#20540;&#21464;&#20026; 0</span>
+<span class="org-variable-name">f</span> -= np.<span class="org-builtin">max</span><span class="org-rainbow-delimiters-depth-1">(</span>f<span class="org-rainbow-delimiters-depth-1">)</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">f &#21464;&#25104;&#20102; [-666, -333, 0]</span>
+<span class="org-variable-name">p</span> = np.exp<span class="org-rainbow-delimiters-depth-1">(</span>f<span class="org-rainbow-delimiters-depth-1">)</span> / np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">(</span>np.exp<span class="org-rainbow-delimiters-depth-2">(</span>f<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 
@@ -627,15 +630,15 @@ f_j(z) = \frac{e^{z_j}}{\sum_k e^{z_k}}
 </p>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
+<div class="container">
+<pre><code class="python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
 
-<span style="color: #a0522d;">f</span> = <span style="color: #707183;">[</span>3.2, 5.1, -1.7<span style="color: #707183;">]</span>
-<span style="color: #a0522d;">f</span> -= np.<span style="color: #483d8b;">max</span><span style="color: #707183;">(</span>f<span style="color: #707183;">)</span>
-<span style="color: #a0522d;">p</span> = np.exp<span style="color: #707183;">(</span>f<span style="color: #707183;">)</span> / np.<span style="color: #483d8b;">sum</span><span style="color: #707183;">(</span>np.exp<span style="color: #7388d6;">(</span>f<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span class="org-variable-name">f</span> = <span class="org-rainbow-delimiters-depth-1">[</span>3.2, 5.1, -1.7<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-variable-name">f</span> -= np.<span class="org-builtin">max</span><span class="org-rainbow-delimiters-depth-1">(</span>f<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">p</span> = np.exp<span class="org-rainbow-delimiters-depth-1">(</span>f<span class="org-rainbow-delimiters-depth-1">)</span> / np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">(</span>np.exp<span class="org-rainbow-delimiters-depth-2">(</span>f<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>p<span style="color: #707183;">)</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">[ 0.12998254  0.86904954  0.00096793]</span>
-</pre>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>p<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">[ 0.12998254  0.86904954  0.00096793]</span>
+</code></pre>
 </div>
 </div>
 </div>

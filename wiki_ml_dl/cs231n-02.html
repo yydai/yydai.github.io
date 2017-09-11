@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-18 Fri 10:45 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>图像分类之 KNN</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -321,28 +324,28 @@ d_1 (I_1, I_2) = \sum_{p} \left| I^p_1 - I^p_2 \right|
 下载这个压缩包后，对应的 knn.ipynb 就是这个部分的代码指导。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#36825;&#20010;&#21644;&#25968;&#25454;&#20013;&#30340;&#26631;&#31614;&#21517;&#23545;&#24212;</span>
-<span style="color: #6c71c4;">classes</span> = <span style="color: #657b83;">[</span><span style="color: #2aa198;">'plane'</span>, <span style="color: #2aa198;">'car'</span>, <span style="color: #2aa198;">'bird'</span>, <span style="color: #2aa198;">'cat'</span>, <span style="color: #2aa198;">'deer'</span>, <span style="color: #2aa198;">'dog'</span>, <span style="color: #2aa198;">'frog'</span>, <span style="color: #2aa198;">'horse'</span>, <span style="color: #2aa198;">'ship'</span>, <span style="color: #2aa198;">'truck'</span><span style="color: #657b83;">]</span>
-<span style="color: #6c71c4;">num_classes</span> = <span style="color: #6c71c4;">len</span><span style="color: #657b83;">(</span>classes<span style="color: #657b83;">)</span>
-<span style="color: #6c71c4;">samples_per_class</span> = 7
-<span style="color: #859900;">for</span> y, cls <span style="color: #859900;">in</span> <span style="color: #6c71c4;">enumerate</span><span style="color: #657b83;">(</span>classes<span style="color: #657b83;">)</span>:
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">idxs</span> = np.flatnonzero<span style="color: #657b83;">(</span>y_train == y<span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#27599;&#20010;&#20998;&#31867;&#38543;&#26426;&#36873;&#20986; 7 &#20010;&#22270;&#29255;</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">idxs</span> = np.random.choice<span style="color: #657b83;">(</span>idxs, samples_per_class, replace=<span style="color: #268bd2;">False</span><span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">for</span> i, idx <span style="color: #859900;">in</span> <span style="color: #6c71c4;">enumerate</span><span style="color: #657b83;">(</span>idxs<span style="color: #657b83;">)</span>:
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">plt_idx</span> = i * num_classes + y + 1
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#35774;&#32622;&#22270;&#29255;&#20301;&#32622;</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.subplot<span style="color: #657b83;">(</span>samples_per_class, num_classes, plt_idx<span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.imshow<span style="color: #657b83;">(</span>X_train<span style="color: #2aa198;">[</span>idx<span style="color: #2aa198;">]</span>.astype<span style="color: #2aa198;">(</span><span style="color: #2aa198;">'uint8'</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">plt.imshow(np.uint8(X_train[idx])) &#20063;&#21487;&#20197;</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#30446;&#30340;&#37117;&#26159;&#19968;&#26679;&#30340;&#22914;&#26524;&#19981;&#25226;&#25968;&#25454;&#36716;&#21270;&#20026; uint8&#65292;&#26174;&#31034;&#26102;&#21487;&#33021;&#20250;&#26377;&#22855;&#24618;&#30340;&#32467;&#26524;&#12290;</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.axis<span style="color: #657b83;">(</span><span style="color: #2aa198;">'off'</span><span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">if</span> i == 0:
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#35774;&#32622;&#27599;&#19968;&#20010;&#20998;&#31867;&#30340; title</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.title<span style="color: #657b83;">(</span>cls<span style="color: #657b83;">)</span>
-plt.show<span style="color: #657b83;">()</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">&#36825;&#20010;&#21644;&#25968;&#25454;&#20013;&#30340;&#26631;&#31614;&#21517;&#23545;&#24212;</span>
+<span class="org-variable-name">classes</span> = <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-string">'plane'</span>, <span class="org-string">'car'</span>, <span class="org-string">'bird'</span>, <span class="org-string">'cat'</span>, <span class="org-string">'deer'</span>, <span class="org-string">'dog'</span>, <span class="org-string">'frog'</span>, <span class="org-string">'horse'</span>, <span class="org-string">'ship'</span>, <span class="org-string">'truck'</span><span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-variable-name">num_classes</span> = <span class="org-builtin">len</span><span class="org-rainbow-delimiters-depth-1">(</span>classes<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">samples_per_class</span> = 7
+<span class="org-keyword">for</span> y, cls <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span><span class="org-rainbow-delimiters-depth-1">(</span>classes<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">idxs</span> = np.flatnonzero<span class="org-rainbow-delimiters-depth-1">(</span>y_train == y<span class="org-rainbow-delimiters-depth-1">)</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#27599;&#20010;&#20998;&#31867;&#38543;&#26426;&#36873;&#20986; 7 &#20010;&#22270;&#29255;</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">idxs</span> = np.random.choice<span class="org-rainbow-delimiters-depth-1">(</span>idxs, samples_per_class, replace=<span class="org-constant">False</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">for</span> i, idx <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span><span class="org-rainbow-delimiters-depth-1">(</span>idxs<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">plt_idx</span> = i * num_classes + y + 1
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622;&#22270;&#29255;&#20301;&#32622;</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.subplot<span class="org-rainbow-delimiters-depth-1">(</span>samples_per_class, num_classes, plt_idx<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.imshow<span class="org-rainbow-delimiters-depth-1">(</span>X_train<span class="org-rainbow-delimiters-depth-2">[</span>idx<span class="org-rainbow-delimiters-depth-2">]</span>.astype<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">'uint8'</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">plt.imshow(np.uint8(X_train[idx])) &#20063;&#21487;&#20197;</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#30446;&#30340;&#37117;&#26159;&#19968;&#26679;&#30340;&#22914;&#26524;&#19981;&#25226;&#25968;&#25454;&#36716;&#21270;&#20026; uint8&#65292;&#26174;&#31034;&#26102;&#21487;&#33021;&#20250;&#26377;&#22855;&#24618;&#30340;&#32467;&#26524;&#12290;</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.axis<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'off'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">if</span> i == 0:
+            <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622;&#27599;&#19968;&#20010;&#20998;&#31867;&#30340; title</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.title<span class="org-rainbow-delimiters-depth-1">(</span>cls<span class="org-rainbow-delimiters-depth-1">)</span>
+plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
+</code></pre>
 </div>
 
 <p>
@@ -357,30 +360,30 @@ plt.show<span style="color: #657b83;">()</span>
 <p>
 为了加快训练，做些简化。只选取 5000 个训练集，以及 500 个测试集。
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Subsample the data for more efficient code execution in this exercise</span>
-<span style="color: #6c71c4;">num_training</span> = 5000
-<span style="color: #6c71c4;">mask</span> = <span style="color: #6c71c4;">list</span><span style="color: #657b83;">(</span><span style="color: #6c71c4;">range</span><span style="color: #2aa198;">(</span>num_training<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>mask<span style="color: #2aa198;">[</span>1<span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
-<span style="color: #6c71c4;">X_train</span> = X_train<span style="color: #657b83;">[</span>mask<span style="color: #657b83;">]</span>
-<span style="color: #6c71c4;">y_train</span> = y_train<span style="color: #657b83;">[</span>mask<span style="color: #657b83;">]</span>
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">Subsample the data for more efficient code execution in this exercise</span>
+<span class="org-variable-name">num_training</span> = 5000
+<span class="org-variable-name">mask</span> = <span class="org-builtin">list</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">range</span><span class="org-rainbow-delimiters-depth-2">(</span>num_training<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>mask<span class="org-rainbow-delimiters-depth-2">[</span>1<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">X_train</span> = X_train<span class="org-rainbow-delimiters-depth-1">[</span>mask<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-variable-name">y_train</span> = y_train<span class="org-rainbow-delimiters-depth-1">[</span>mask<span class="org-rainbow-delimiters-depth-1">]</span>
 
-<span style="color: #6c71c4;">num_test</span> = 500
-<span style="color: #6c71c4;">mask</span> = <span style="color: #6c71c4;">list</span><span style="color: #657b83;">(</span><span style="color: #6c71c4;">range</span><span style="color: #2aa198;">(</span>num_test<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-<span style="color: #6c71c4;">X_test</span> = X_test<span style="color: #657b83;">[</span>mask<span style="color: #657b83;">]</span>
-<span style="color: #6c71c4;">y_test</span> = y_test<span style="color: #657b83;">[</span>mask<span style="color: #657b83;">]</span>
-</pre>
+<span class="org-variable-name">num_test</span> = 500
+<span class="org-variable-name">mask</span> = <span class="org-builtin">list</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">range</span><span class="org-rainbow-delimiters-depth-2">(</span>num_test<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">X_test</span> = X_test<span class="org-rainbow-delimiters-depth-1">[</span>mask<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-variable-name">y_test</span> = y_test<span class="org-rainbow-delimiters-depth-1">[</span>mask<span class="org-rainbow-delimiters-depth-1">]</span>
+</code></pre>
 </div>
 
 <p>
 为了计算上面公式定义的距离，我们先把数据转化为 2 维的。
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #6c71c4;">X_train</span> = np.reshape<span style="color: #657b83;">(</span>X_train, <span style="color: #2aa198;">(</span>X_train.shape<span style="color: #b58900;">[</span>0<span style="color: #b58900;">]</span>, -1<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-<span style="color: #6c71c4;">X_test</span> = np.reshape<span style="color: #657b83;">(</span>X_test, <span style="color: #2aa198;">(</span>X_test.shape<span style="color: #b58900;">[</span>0<span style="color: #b58900;">]</span>, -1<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-<span style="color: #859900;">print</span><span style="color: #657b83;">(</span>X_train.shape, X_test.shape<span style="color: #657b83;">)</span>
-<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#32467;&#26524;&#65306;(5000, 3072) (500, 3072)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">X_train</span> = np.reshape<span class="org-rainbow-delimiters-depth-1">(</span>X_train, <span class="org-rainbow-delimiters-depth-2">(</span>X_train.shape<span class="org-rainbow-delimiters-depth-3">[</span>0<span class="org-rainbow-delimiters-depth-3">]</span>, -1<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">X_test</span> = np.reshape<span class="org-rainbow-delimiters-depth-1">(</span>X_test, <span class="org-rainbow-delimiters-depth-2">(</span>X_test.shape<span class="org-rainbow-delimiters-depth-3">[</span>0<span class="org-rainbow-delimiters-depth-3">]</span>, -1<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>X_train.shape, X_test.shape<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#32467;&#26524;&#65306;(5000, 3072) (500, 3072)</span>
+</code></pre>
 </div>
 
 <p>
@@ -401,20 +404,20 @@ KNN 叫做 K Nearest Neighbor。
 <li>通过上面的数据，找到 k 个距离最近的训练样本，然后对测试数据标签进行投票，最多的标签个数就是测试样例的标签。</li>
 </ul>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900;">from</span> cs231n.classifiers <span style="color: #859900;">import</span> KNearestNeighbor
+<div class="container">
+<pre><code class="python"><span class="org-keyword">from</span> cs231n.classifiers <span class="org-keyword">import</span> KNearestNeighbor
 
-<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Create a kNN classifier instance.</span>
-<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Remember that training a kNN classifier is a noop:</span>
-<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">the Classifier simply remembers the data and does no further processing</span>
-<span style="color: #6c71c4;">classifier</span> = KNearestNeighbor<span style="color: #657b83;">()</span>
-classifier.train<span style="color: #657b83;">(</span>X_train, y_train<span style="color: #657b83;">)</span>
-</pre>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Create a kNN classifier instance.</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Remember that training a kNN classifier is a noop:</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">the Classifier simply remembers the data and does no further processing</span>
+<span class="org-variable-name">classifier</span> = KNearestNeighbor<span class="org-rainbow-delimiters-depth-1">()</span>
+classifier.train<span class="org-rainbow-delimiters-depth-1">(</span>X_train, y_train<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #6c71c4;">dists</span> = classifier.compute_distances_two_loops<span style="color: #657b83;">(</span>X_test<span style="color: #657b83;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">dists</span> = classifier.compute_distances_two_loops<span class="org-rainbow-delimiters-depth-1">(</span>X_test<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -434,19 +437,19 @@ classifier.train<span style="color: #657b83;">(</span>X_train, y_train<span styl
 d_2 (I_1, I_2) = \sqrt{\sum_{p} \left( I^p_1 - I^p_2 \right)^2}
 \end{align}
 
-<div class="org-src-container">
-<pre class="src src-python">dists<span style="color: #657b83;">[</span>i<span style="color: #657b83;">][</span>j<span style="color: #657b83;">]</span> = np.sqrt<span style="color: #657b83;">(</span>
-np.<span style="color: #6c71c4;">sum</span><span style="color: #2aa198;">(</span>np.square<span style="color: #b58900;">(</span>X<span style="color: #859900;">[</span>i, :<span style="color: #859900;">]</span> - <span style="color: #859900;">self</span>.X_train<span style="color: #859900;">[</span>j, :<span style="color: #859900;">]</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python">dists<span class="org-rainbow-delimiters-depth-1">[</span>i<span class="org-rainbow-delimiters-depth-1">][</span>j<span class="org-rainbow-delimiters-depth-1">]</span> = np.sqrt<span class="org-rainbow-delimiters-depth-1">(</span>
+np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-2">(</span>np.square<span class="org-rainbow-delimiters-depth-3">(</span>X<span class="org-rainbow-delimiters-depth-4">[</span>i, :<span class="org-rainbow-delimiters-depth-4">]</span> - <span class="org-keyword">self</span>.X_train<span class="org-rainbow-delimiters-depth-4">[</span>j, :<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
 我们可以把这个距离用图像表示出来。
 </p>
-<div class="org-src-container">
-<pre class="src src-python">plt.imshow<span style="color: #657b83;">(</span>dists, interpolation=<span style="color: #2aa198;">'none'</span><span style="color: #657b83;">)</span>
-plt.show<span style="color: #657b83;">()</span>
-</pre>
+<div class="container">
+<pre><code class="python">plt.imshow<span class="org-rainbow-delimiters-depth-1">(</span>dists, interpolation=<span class="org-string">'none'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
+</code></pre>
 </div>
 
 <p>
@@ -476,30 +479,30 @@ plt.show<span style="color: #657b83;">()</span>
 <p>
 相应的代码如下。
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #6c71c4;">k</span> = 5
-<span style="color: #6c71c4;">y_test_pred</span>, <span style="color: #6c71c4;">pred_k</span> = classifier.predict_labels<span style="color: #657b83;">(</span>dists, k=5<span style="color: #657b83;">)</span>
-<span style="color: #6c71c4;">classes</span> = <span style="color: #657b83;">[</span><span style="color: #2aa198;">'plane'</span>, <span style="color: #2aa198;">'car'</span>, <span style="color: #2aa198;">'bird'</span>, <span style="color: #2aa198;">'cat'</span>, <span style="color: #2aa198;">'deer'</span>, <span style="color: #2aa198;">'dog'</span>, <span style="color: #2aa198;">'frog'</span>, <span style="color: #2aa198;">'horse'</span>, <span style="color: #2aa198;">'ship'</span>, <span style="color: #2aa198;">'truck'</span><span style="color: #657b83;">]</span>
-<span style="color: #6c71c4;">samples</span> = pred_k<span style="color: #657b83;">[</span>:k<span style="color: #657b83;">]</span>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">k</span> = 5
+<span class="org-variable-name">y_test_pred</span>, <span class="org-variable-name">pred_k</span> = classifier.predict_labels<span class="org-rainbow-delimiters-depth-1">(</span>dists, k=5<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">classes</span> = <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-string">'plane'</span>, <span class="org-string">'car'</span>, <span class="org-string">'bird'</span>, <span class="org-string">'cat'</span>, <span class="org-string">'deer'</span>, <span class="org-string">'dog'</span>, <span class="org-string">'frog'</span>, <span class="org-string">'horse'</span>, <span class="org-string">'ship'</span>, <span class="org-string">'truck'</span><span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-variable-name">samples</span> = pred_k<span class="org-rainbow-delimiters-depth-1">[</span>:k<span class="org-rainbow-delimiters-depth-1">]</span>
 
-<span style="color: #859900;">for</span> i, x <span style="color: #859900;">in</span> <span style="color: #6c71c4;">enumerate</span><span style="color: #657b83;">(</span>samples<span style="color: #657b83;">)</span>:
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">if</span> i &gt;= k:
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">break</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">plt_idx</span> = i * k + i + 1
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.subplot<span style="color: #657b83;">(</span>k, k+1, plt_idi<span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.imshow<span style="color: #657b83;">(</span>X_test<span style="color: #2aa198;">[</span>i<span style="color: #2aa198;">]</span>.astype<span style="color: #2aa198;">(</span><span style="color: #2aa198;">'uint8'</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.axis<span style="color: #657b83;">(</span><span style="color: #2aa198;">'off'</span><span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.title<span style="color: #657b83;">(</span>classes<span style="color: #2aa198;">[</span>y_test<span style="color: #b58900;">[</span>i<span style="color: #b58900;">]</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+<span class="org-keyword">for</span> i, x <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span><span class="org-rainbow-delimiters-depth-1">(</span>samples<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">if</span> i &gt;= k:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">break</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">plt_idx</span> = i * k + i + 1
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.subplot<span class="org-rainbow-delimiters-depth-1">(</span>k, k+1, plt_idi<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.imshow<span class="org-rainbow-delimiters-depth-1">(</span>X_test<span class="org-rainbow-delimiters-depth-2">[</span>i<span class="org-rainbow-delimiters-depth-2">]</span>.astype<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">'uint8'</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.axis<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'off'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.title<span class="org-rainbow-delimiters-depth-1">(</span>classes<span class="org-rainbow-delimiters-depth-2">[</span>y_test<span class="org-rainbow-delimiters-depth-3">[</span>i<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">for</span> j, y <span style="color: #859900;">in</span> <span style="color: #6c71c4;">enumerate</span><span style="color: #657b83;">(</span>samples<span style="color: #2aa198;">[</span>i<span style="color: #2aa198;">]</span>, start=1<span style="color: #657b83;">)</span>:
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">plt_idj</span> = plt_idx + j
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.subplot<span style="color: #657b83;">(</span>5, k+1, plt_idj<span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.imshow<span style="color: #657b83;">(</span>X_train<span style="color: #2aa198;">[</span><span style="color: #6c71c4;">int</span><span style="color: #b58900;">(</span>y<span style="color: #b58900;">)</span><span style="color: #2aa198;">]</span>.astype<span style="color: #2aa198;">(</span><span style="color: #2aa198;">'uint8'</span><span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.axis<span style="color: #657b83;">(</span><span style="color: #2aa198;">'off'</span><span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   plt.title<span style="color: #657b83;">(</span>classes<span style="color: #2aa198;">[</span>y_train<span style="color: #b58900;">[</span>y<span style="color: #b58900;">]</span><span style="color: #2aa198;">]</span><span style="color: #657b83;">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">for</span> j, y <span class="org-keyword">in</span> <span class="org-builtin">enumerate</span><span class="org-rainbow-delimiters-depth-1">(</span>samples<span class="org-rainbow-delimiters-depth-2">[</span>i<span class="org-rainbow-delimiters-depth-2">]</span>, start=1<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">plt_idj</span> = plt_idx + j
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.subplot<span class="org-rainbow-delimiters-depth-1">(</span>5, k+1, plt_idj<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.imshow<span class="org-rainbow-delimiters-depth-1">(</span>X_train<span class="org-rainbow-delimiters-depth-2">[</span><span class="org-builtin">int</span><span class="org-rainbow-delimiters-depth-3">(</span>y<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">]</span>.astype<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">'uint8'</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.axis<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'off'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   plt.title<span class="org-rainbow-delimiters-depth-1">(</span>classes<span class="org-rainbow-delimiters-depth-2">[</span>y_train<span class="org-rainbow-delimiters-depth-3">[</span>y<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-plt.show<span style="color: #657b83;">()</span>
-</pre>
+plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -510,30 +513,30 @@ plt.show<span style="color: #657b83;">()</span>
 <p>
 我们找到最近的 k 个样例的 label，然后取个数最多的一个。
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900;">for</span> i <span style="color: #859900;">in</span> <span style="color: #6c71c4;">xrange</span><span style="color: #657b83;">(</span>num_test<span style="color: #657b83;">)</span>:
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">A list of length k storing the labels of the k nearest neighbors to</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">the ith test point.</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">closest_y</span> = <span style="color: #657b83;">[]</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#25490;&#24207;</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">idx</span> = np.argsort<span style="color: #657b83;">(</span>dists<span style="color: #2aa198;">[</span>i, :<span style="color: #2aa198;">]</span>, axis=0<span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#21462;&#21069; k &#20010;&#26368;&#23567;&#30340;&#25968;&#25454;</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">closest_y</span> = <span style="color: #859900;">self</span>.y_train<span style="color: #657b83;">[</span>idx<span style="color: #2aa198;">[</span>:k<span style="color: #2aa198;">]</span><span style="color: #657b83;">]</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#25214;&#21040;&#20010;&#25968;&#20986;&#29616;&#26368;&#22810;&#30340;&#26631;&#31614;</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">y_pred</span><span style="color: #657b83;">[</span>i<span style="color: #657b83;">]</span> = np.argmax<span style="color: #657b83;">(</span>np.bincount<span style="color: #2aa198;">(</span>closest_y<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">xrange</span><span class="org-rainbow-delimiters-depth-1">(</span>num_test<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">A list of length k storing the labels of the k nearest neighbors to</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">the ith test point.</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">closest_y</span> = <span class="org-rainbow-delimiters-depth-1">[]</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#25490;&#24207;</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">idx</span> = np.argsort<span class="org-rainbow-delimiters-depth-1">(</span>dists<span class="org-rainbow-delimiters-depth-2">[</span>i, :<span class="org-rainbow-delimiters-depth-2">]</span>, axis=0<span class="org-rainbow-delimiters-depth-1">)</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#21462;&#21069; k &#20010;&#26368;&#23567;&#30340;&#25968;&#25454;</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">closest_y</span> = <span class="org-keyword">self</span>.y_train<span class="org-rainbow-delimiters-depth-1">[</span>idx<span class="org-rainbow-delimiters-depth-2">[</span>:k<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#25214;&#21040;&#20010;&#25968;&#20986;&#29616;&#26368;&#22810;&#30340;&#26631;&#31614;</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-variable-name">y_pred</span><span class="org-rainbow-delimiters-depth-1">[</span>i<span class="org-rainbow-delimiters-depth-1">]</span> = np.argmax<span class="org-rainbow-delimiters-depth-1">(</span>np.bincount<span class="org-rainbow-delimiters-depth-2">(</span>closest_y<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
 最后我们可以得到预测的成功率，不同的 k 值影响还是很大的。k=10 是一个比较好的数值。
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #6c71c4;">y_test_pred</span> = classifier.predict_labels<span style="color: #657b83;">(</span>dists, k=10<span style="color: #657b83;">)</span>
-<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Compute and print the fraction of correctly predicted examples</span>
-<span style="color: #6c71c4;">num_correct</span> = np.<span style="color: #6c71c4;">sum</span><span style="color: #657b83;">(</span>y_test_pred == y_test<span style="color: #657b83;">)</span>
-<span style="color: #6c71c4;">accuracy</span> = <span style="color: #6c71c4;">float</span><span style="color: #657b83;">(</span>num_correct<span style="color: #657b83;">)</span> / num_test
-<span style="color: #859900;">print</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'Got %d / %d correct =&gt; accuracy: %f'</span> % <span style="color: #2aa198;">(</span>num_correct, num_test, accuracy<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">y_test_pred</span> = classifier.predict_labels<span class="org-rainbow-delimiters-depth-1">(</span>dists, k=10<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Compute and print the fraction of correctly predicted examples</span>
+<span class="org-variable-name">num_correct</span> = np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">(</span>y_test_pred == y_test<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">accuracy</span> = <span class="org-builtin">float</span><span class="org-rainbow-delimiters-depth-1">(</span>num_correct<span class="org-rainbow-delimiters-depth-1">)</span> / num_test
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'Got %d / %d correct =&gt; accuracy: %f'</span> % <span class="org-rainbow-delimiters-depth-2">(</span>num_correct, num_test, accuracy<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -555,12 +558,12 @@ plt.show<span style="color: #657b83;">()</span>
 在 KNN 代码中，只使用一个循环。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900;">for</span> i <span style="color: #859900;">in</span> <span style="color: #6c71c4;">xrange</span><span style="color: #657b83;">(</span>num_test<span style="color: #657b83;">)</span>:
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">broadcasting</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">dists</span><span style="color: #657b83;">[</span>i, :<span style="color: #657b83;">]</span> = np.sqrt<span style="color: #657b83;">(</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #657b83; background-color: #eee8d5;"> </span>   np.<span style="color: #6c71c4;">sum</span><span style="color: #2aa198;">(</span>np.square<span style="color: #b58900;">(</span><span style="color: #859900;">self</span>.X_train - X<span style="color: #859900;">[</span>i, :<span style="color: #859900;">]</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>, axis=1<span style="color: #657b83;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">for</span> i <span class="org-keyword">in</span> <span class="org-builtin">xrange</span><span class="org-rainbow-delimiters-depth-1">(</span>num_test<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">broadcasting</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">dists</span><span class="org-rainbow-delimiters-depth-1">[</span>i, :<span class="org-rainbow-delimiters-depth-1">]</span> = np.sqrt<span class="org-rainbow-delimiters-depth-1">(</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-2">(</span>np.square<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">self</span>.X_train - X<span class="org-rainbow-delimiters-depth-4">[</span>i, :<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>, axis=1<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 
@@ -572,26 +575,26 @@ plt.show<span style="color: #657b83;">()</span>
 这三种方式结果是相同的，但是所用时间不同。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">time_function</span><span style="color: #657b83;">(</span>f, *args<span style="color: #657b83;">)</span>:
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #d33682;">"""</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span><span style="color: #d33682;">   Call a function f with args and return the time (in seconds) that it took to execute.</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span><span style="color: #d33682;">   """</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">import</span> time
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">tic</span> = time.time<span style="color: #657b83;">()</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   f<span style="color: #657b83;">(</span>*args<span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #6c71c4;">toc</span> = time.time<span style="color: #657b83;">()</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span>   <span style="color: #859900;">return</span> toc - tic
+<div class="container">
+<pre><code class="python"><span class="org-keyword">def</span> <span class="org-function-name">time_function</span><span class="org-rainbow-delimiters-depth-1">(</span>f, *args<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-doc">"""</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   Call a function f with args and return the time (in seconds) that it took to execute.</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   """</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">import</span> time
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">tic</span> = time.time<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   f<span class="org-rainbow-delimiters-depth-1">(</span>*args<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">toc</span> = time.time<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">return</span> toc - tic
 
-<span style="color: #6c71c4;">two_loop_time</span> = time_function<span style="color: #657b83;">(</span>classifier.compute_distances_two_loops, X_test<span style="color: #657b83;">)</span>
-<span style="color: #859900;">print</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'Two loop version took %f seconds'</span> % two_loop_time<span style="color: #657b83;">)</span>
+<span class="org-variable-name">two_loop_time</span> = time_function<span class="org-rainbow-delimiters-depth-1">(</span>classifier.compute_distances_two_loops, X_test<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'Two loop version took %f seconds'</span> % two_loop_time<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #6c71c4;">one_loop_time</span> = time_function<span style="color: #657b83;">(</span>classifier.compute_distances_one_loop, X_test<span style="color: #657b83;">)</span>
-<span style="color: #859900;">print</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'One loop version took %f seconds'</span> % one_loop_time<span style="color: #657b83;">)</span>
+<span class="org-variable-name">one_loop_time</span> = time_function<span class="org-rainbow-delimiters-depth-1">(</span>classifier.compute_distances_one_loop, X_test<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'One loop version took %f seconds'</span> % one_loop_time<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #6c71c4;">no_loop_time</span> = time_function<span style="color: #657b83;">(</span>classifier.compute_distances_no_loops, X_test<span style="color: #657b83;">)</span>
-<span style="color: #859900;">print</span><span style="color: #657b83;">(</span><span style="color: #2aa198;">'No loop version took %f seconds'</span> % no_loop_time<span style="color: #657b83;">)</span>
-</pre>
+<span class="org-variable-name">no_loop_time</span> = time_function<span class="org-rainbow-delimiters-depth-1">(</span>classifier.compute_distances_no_loops, X_test<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'No loop version took %f seconds'</span> % no_loop_time<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 <p>
 其中不使用循环消耗的时间最少。
@@ -618,29 +621,29 @@ hyperparameters。
 我们现在有一个比较好的做法是把训练集分成两个部分：一部分用于训练；另一个很小的部分作为验证集。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #657b83; background-color: #eee8d5;"> </span>assume we have Xtr_rows, Ytr, Xte_rows, Yte <span style="color: #859900;">as</span> before
-<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">recall Xtr_rows is 50,000 x 3072 matrix</span>
-<span style="color: #6c71c4;">Xval_rows</span> = Xtr_rows<span style="color: #657b83;">[</span>:1000, :<span style="color: #657b83;">]</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">take first 1000 for validation</span>
-<span style="color: #6c71c4;">Yval</span> = Ytr<span style="color: #657b83;">[</span>:1000<span style="color: #657b83;">]</span>
-<span style="color: #6c71c4;">Xtr_rows</span> = Xtr_rows<span style="color: #657b83;">[</span>1000:, :<span style="color: #657b83;">]</span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">keep last 49,000 for train</span>
-<span style="color: #6c71c4;">Ytr</span> = Ytr<span style="color: #657b83;">[</span>1000:<span style="color: #657b83;">]</span>
+<div class="container">
+<pre><code class="python"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>assume we have Xtr_rows, Ytr, Xte_rows, Yte <span class="org-keyword">as</span> before
+<span class="org-comment-delimiter"># </span><span class="org-comment">recall Xtr_rows is 50,000 x 3072 matrix</span>
+<span class="org-variable-name">Xval_rows</span> = Xtr_rows<span class="org-rainbow-delimiters-depth-1">[</span>:1000, :<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">take first 1000 for validation</span>
+<span class="org-variable-name">Yval</span> = Ytr<span class="org-rainbow-delimiters-depth-1">[</span>:1000<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-variable-name">Xtr_rows</span> = Xtr_rows<span class="org-rainbow-delimiters-depth-1">[</span>1000:, :<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">keep last 49,000 for train</span>
+<span class="org-variable-name">Ytr</span> = Ytr<span class="org-rainbow-delimiters-depth-1">[</span>1000:<span class="org-rainbow-delimiters-depth-1">]</span>
 
-<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">find hyperparameters that work best on the validation set</span>
-<span style="color: #6c71c4;">validation_accuracies</span> = <span style="color: #657b83;">[]</span>
-<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">&#36873;&#25321;&#20960;&#20010; k &#20540;&#39564;&#35777;</span>
-<span style="color: #859900;">for</span> k <span style="color: #859900;">in</span> <span style="color: #657b83;">[</span>1, 3, 5, 10, 20, 50, 100<span style="color: #657b83;">]</span>:
-<span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">use a particular value of k and evaluation on validation data</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #6c71c4;">nn</span> = NearestNeighbor<span style="color: #657b83;">()</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span> nn.train<span style="color: #657b83;">(</span>Xtr_rows, Ytr<span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">here we assume a modified NearestNeighbor class that can take a k as input</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #6c71c4;">Yval_predict</span> = nn.predict<span style="color: #657b83;">(</span>Xval_rows, k = k<span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #6c71c4;">acc</span> = np.mean<span style="color: #657b83;">(</span>Yval_predict == Yval<span style="color: #657b83;">)</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #859900;">print</span> <span style="color: #2aa198;">'accuracy: %f'</span> % <span style="color: #657b83;">(</span>acc,<span style="color: #657b83;">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">find hyperparameters that work best on the validation set</span>
+<span class="org-variable-name">validation_accuracies</span> = <span class="org-rainbow-delimiters-depth-1">[]</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#36873;&#25321;&#20960;&#20010; k &#20540;&#39564;&#35777;</span>
+<span class="org-keyword">for</span> k <span class="org-keyword">in</span> <span class="org-rainbow-delimiters-depth-1">[</span>1, 3, 5, 10, 20, 50, 100<span class="org-rainbow-delimiters-depth-1">]</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-comment-delimiter"># </span><span class="org-comment">use a particular value of k and evaluation on validation data</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-variable-name">nn</span> = NearestNeighbor<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> nn.train<span class="org-rainbow-delimiters-depth-1">(</span>Xtr_rows, Ytr<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-comment-delimiter"># </span><span class="org-comment">here we assume a modified NearestNeighbor class that can take a k as input</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-variable-name">Yval_predict</span> = nn.predict<span class="org-rainbow-delimiters-depth-1">(</span>Xval_rows, k = k<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-variable-name">acc</span> = np.mean<span class="org-rainbow-delimiters-depth-1">(</span>Yval_predict == Yval<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-keyword">print</span> <span class="org-string">'accuracy: %f'</span> % <span class="org-rainbow-delimiters-depth-1">(</span>acc,<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #657b83; background-color: #eee8d5;"> </span> <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">keep track of what works on the validation set</span>
-<span style="color: #657b83; background-color: #eee8d5;"> </span> validation_accuracies.append<span style="color: #657b83;">(</span><span style="color: #2aa198;">(</span>k, acc<span style="color: #2aa198;">)</span><span style="color: #657b83;">)</span>
-</pre>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-comment-delimiter"># </span><span class="org-comment">keep track of what works on the validation set</span>
+<span class="org-highlight-indentation"> </span> validation_accuracies.append<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>k, acc<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>

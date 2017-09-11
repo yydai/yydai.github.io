@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:12 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>持续集成系统</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -440,11 +443,11 @@ CI 系统在这样的分布式环境中运行，因此可以进行故障转移�
 <p>
 我们就创建一个 <code>test_repo</code> 的仓库：
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">$ mkdir test_repo
+<div class="container">
+<pre><code class="shell">$ mkdir test_repo
 $ cd test_repo
 $ git init
-</pre>
+</code></pre>
 </div>
 
 <p>
@@ -460,12 +463,12 @@ $ git init
 复制这个 tests 目录到 test_repo 文件夹下，然后 commit.
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">$ cp -r /this/directory/tests /path/to/test_repo/
-$ cd /path/to/test<span style="color: #8b2252;">\_</span>repo
+<div class="container">
+<pre><code class="shell">$ cp -r /this/directory/tests /path/to/test_repo/
+$ cd /path/to/test<span class="org-string">\_</span>repo
 $ git add tests/
-$ git commit -m <span style="color: #8b2252;">"add tests"</span>
-</pre>
+$ git commit -m <span class="org-string">"add tests"</span>
+</code></pre>
 </div>
 
 <p>
@@ -473,18 +476,18 @@ $ git commit -m <span style="color: #8b2252;">"add tests"</span>
 <b>test_repo_clone_obs</b> 中。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">$ git clone /path/to/test_repo test_repo_clone_obs
-</pre>
+<div class="container">
+<pre><code class="shell">$ git clone /path/to/test_repo test_repo_clone_obs
+</code></pre>
 </div>
 
 <p>
 代码测试组件同样也需要一个 master 仓库的拷贝，用来 checkout 到给定的 commit id, 然后运行测试。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">$ git clone /path/to/test_repo test_repo_clone_runner
-</pre>
+<div class="container">
+<pre><code class="shell">$ git clone /path/to/test_repo test_repo_clone_runner
+</code></pre>
 </div>
 </div>
 </div>
@@ -532,19 +535,19 @@ $ git commit -m <span style="color: #8b2252;">"add tests"</span>
 </p>
 
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">poll</span><span style="color: #707183;">()</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">()</span>
-<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">"--dispatcher-server"</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">"dispatcher host:port, "</span> \
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #8b2252;">"by default it uses localhost:8888"</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   default=<span style="color: #8b2252;">"localhost:8888"</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   action=<span style="color: #8b2252;">"store"</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">"repo"</span>, metavar=<span style="color: #8b2252;">"REPO"</span>, <span style="color: #483d8b;">type</span>=<span style="color: #483d8b;">str</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">"path to the repository this will observe"</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">dispatcher_host</span>, <span style="color: #a0522d;">dispatcher_port</span> = args.dispatcher_server.split<span style="color: #707183;">(</span><span style="color: #8b2252;">":"</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">def</span> <span class="org-function-name">poll</span><span class="org-rainbow-delimiters-depth-1">()</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">parser</span> = argparse.ArgumentParser<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"--dispatcher-server"</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-builtin">help</span>=<span class="org-string">"dispatcher host:port, "</span> \
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-string">"by default it uses localhost:8888"</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   default=<span class="org-string">"localhost:8888"</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   action=<span class="org-string">"store"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"repo"</span>, metavar=<span class="org-string">"REPO"</span>, <span class="org-builtin">type</span>=<span class="org-builtin">str</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-builtin">help</span>=<span class="org-string">"path to the repository this will observe"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">args</span> = parser.parse_args<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-variable-name">dispatcher_host</span>, <span class="org-variable-name">dispatcher_port</span> = args.dispatcher_server.split<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">":"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -552,17 +555,17 @@ $ git commit -m <span style="color: #8b2252;">"add tests"</span>
 update_repo.sh 这个脚本文件。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">while</span> <span style="color: #008b8b;">True</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">call the bash script that will update the repo and check</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">for changes. If there's a change, it will drop a .commit_id file</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">with the latest commit in the current working directory</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   subprocess.check_output<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #8b2252;">"./update_repo.sh"</span>, args.repo<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> subprocess.CalledProcessError <span style="color: #a020f0;">as</span> e:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">Exception</span><span style="color: #707183;">(</span><span style="color: #8b2252;">"Could not update and check repository. "</span> +
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #8b2252;">"Reason: %s"</span> % e.output<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">while</span> <span class="org-constant">True</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">try</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">call the bash script that will update the repo and check</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">for changes. If there's a change, it will drop a .commit_id file</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">with the latest commit in the current working directory</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   subprocess.check_output<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-string">"./update_repo.sh"</span>, args.repo<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">except</span> subprocess.CalledProcessError <span class="org-keyword">as</span> e:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">raise</span> <span class="org-type">Exception</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"Could not update and check repository. "</span> +
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-string">"Reason: %s"</span> % e.output<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 
@@ -579,19 +582,19 @@ update_repo.sh 这个文件用来检查任何新的 commits，并且告诉仓库
 首先，执行下面这个。run_or_fail.sh 会被其他的脚本调用，用来执行一个命令，如果命令执行失败，会输出我们预先提供的错误信息。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #b22222;">#</span><span style="color: #b22222;">!/bin/</span><span style="color: #a020f0;">bash</span>
-<span style="color: #483d8b;">source</span> run_or_fail.sh
-</pre>
+<div class="container">
+<pre><code class="shell"><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/</span><span class="org-keyword">bash</span>
+<span class="org-builtin">source</span> run_or_fail.sh
+</code></pre>
 </div>
 
 <p>
 下一步，脚本会尝试删除 .commit_id 文件。因为之前创建的文件中保存的是一个旧的 commit id, 如果我们发现了一个新的 commit id, 我们会重新创建一个新的文件。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">bash rm -f .commit_id
-</pre>
+<div class="container">
+<pre><code class="shell">bash rm -f .commit_id
+</code></pre>
 </div>
 
 <p>
@@ -600,52 +603,52 @@ update_repo.sh 这个文件用来检查任何新的 commits，并且告诉仓库
 </p>
 
 
-<div class="org-src-container">
-<pre class="src src-shell">run_or_fail <span style="color: #8b2252;">"Repository folder not found!"</span> pushd $<span style="color: #a0522d;">1</span> 1&gt; /dev/null
-run_or_fail <span style="color: #8b2252;">"Could not reset git"</span> git reset --hard HEAD
-</pre>
+<div class="container">
+<pre><code class="shell">run_or_fail <span class="org-string">"Repository folder not found!"</span> pushd $<span class="org-variable-name">1</span> 1&gt; /dev/null
+run_or_fail <span class="org-string">"Could not reset git"</span> git reset --hard HEAD
+</code></pre>
 </div>
 
 
 <p>
 下一步，执行 git log, 然后得到当前仓库最新的 commit id。
 </p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #a0522d;">COMMIT</span>=$<span style="color: #707183;">(</span>run_or_fail <span style="color: #8b2252;">"Could not call 'git log' on repository"</span> git log -n1<span style="color: #707183;">)</span>
-<span style="color: #a020f0;">if</span> <span style="color: #707183;">[</span> $<span style="color: #a0522d;">?</span> != 0 <span style="color: #707183;">]</span>; <span style="color: #a020f0;">then</span>
-  <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"Could not call 'git log' on repository"</span>
-  <span style="color: #a020f0;">exit</span> 1
-<span style="color: #a020f0;">fi</span>
-<span style="color: #a0522d;">COMMIT_ID</span>=<span style="color: #ff00ff;">`echo $COMMIT | awk '{ print $2 }'`</span>
-</pre>
+<div class="container">
+<pre><code class="shell"><span class="org-variable-name">COMMIT</span>=$<span class="org-rainbow-delimiters-depth-1">(</span>run_or_fail <span class="org-string">"Could not call 'git log' on repository"</span> git log -n1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> $<span class="org-variable-name">?</span> != 0 <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
+  <span class="org-builtin">echo</span> <span class="org-string">"Could not call 'git log' on repository"</span>
+  <span class="org-keyword">exit</span> 1
+<span class="org-keyword">fi</span>
+<span class="org-variable-name">COMMIT_ID</span>=<span class="org-sh-quoted-exec">`echo $COMMIT | awk '{ print $2 }'`</span>
+</code></pre>
 </div>
 
 <p>
 这一步会执行 git pull 来更新代码，然后再次查询最新的 commit id。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">run_or_fail <span style="color: #8b2252;">"Could not pull from repository"</span> git pull
-<span style="color: #a0522d;">COMMIT</span>=$<span style="color: #707183;">(</span>run_or_fail <span style="color: #8b2252;">"Could not call 'git log' on repository"</span> git log -n1<span style="color: #707183;">)</span>
-<span style="color: #a020f0;">if</span> <span style="color: #707183;">[</span> $<span style="color: #a0522d;">?</span> != 0 <span style="color: #707183;">]</span>; <span style="color: #a020f0;">then</span>
-  <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"Could not call 'git log' on repository"</span>
-  <span style="color: #a020f0;">exit</span> 1
-<span style="color: #a020f0;">fi</span>
-<span style="color: #a0522d;">NEW_COMMIT_ID</span>=<span style="color: #ff00ff;">`echo $COMMIT | awk '{ print $2 }'`</span>
-</pre>
+<div class="container">
+<pre><code class="shell">run_or_fail <span class="org-string">"Could not pull from repository"</span> git pull
+<span class="org-variable-name">COMMIT</span>=$<span class="org-rainbow-delimiters-depth-1">(</span>run_or_fail <span class="org-string">"Could not call 'git log' on repository"</span> git log -n1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> $<span class="org-variable-name">?</span> != 0 <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
+  <span class="org-builtin">echo</span> <span class="org-string">"Could not call 'git log' on repository"</span>
+  <span class="org-keyword">exit</span> 1
+<span class="org-keyword">fi</span>
+<span class="org-variable-name">NEW_COMMIT_ID</span>=<span class="org-sh-quoted-exec">`echo $COMMIT | awk '{ print $2 }'`</span>
+</code></pre>
 </div>
 
 <p>
 最后，如果这个 commit id 和之前的不同，我们就知道有新的代码提交了，所以这个脚本就会将最新的 commit id 保存到 .commit_id 文件中。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #b22222;"># </span><span style="color: #b22222;">if the id changed, then write it to a file</span>
-<span style="color: #a020f0;">if</span> <span style="color: #707183;">[</span> $<span style="color: #a0522d;">NEW_COMMIT_ID</span> != $<span style="color: #a0522d;">COMMIT_ID</span> <span style="color: #707183;">]</span>; <span style="color: #a020f0;">then</span>
-  <span style="color: #483d8b;">popd</span> 1&gt; /dev/null
-  <span style="color: #483d8b;">echo</span> $<span style="color: #a0522d;">NEW_COMMIT_ID</span> &gt; .commit_id
-<span style="color: #a020f0;">fi</span>
-</pre>
+<div class="container">
+<pre><code class="shell"><span class="org-comment-delimiter"># </span><span class="org-comment">if the id changed, then write it to a file</span>
+<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> $<span class="org-variable-name">NEW_COMMIT_ID</span> != $<span class="org-variable-name">COMMIT_ID</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
+  <span class="org-builtin">popd</span> 1&gt; /dev/null
+  <span class="org-builtin">echo</span> $<span class="org-variable-name">NEW_COMMIT_ID</span> &gt; .commit_id
+<span class="org-keyword">fi</span>
+</code></pre>
 </div>
 
 <p>
@@ -653,16 +656,16 @@ run_or_fail <span style="color: #8b2252;">"Could not reset git"</span> git reset
 'status' 请求，用来确保调度器可以正常工作。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">if</span> os.path.isfile<span style="color: #707183;">(</span><span style="color: #8b2252;">".commit_id"</span><span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">response</span> = helpers.communicate<span style="color: #707183;">(</span>dispatcher_host,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #483d8b;">int</span><span style="color: #7388d6;">(</span>dispatcher_port<span style="color: #7388d6;">)</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #8b2252;">"status"</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> socket.error <span style="color: #a020f0;">as</span> e:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">Exception</span><span style="color: #707183;">(</span><span style="color: #8b2252;">"Could not communicate with dispatcher server: %s"</span> % e<span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">if</span> os.path.isfile<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">".commit_id"</span><span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">try</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">response</span> = helpers.communicate<span class="org-rainbow-delimiters-depth-1">(</span>dispatcher_host,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>  <span class="org-builtin">int</span><span class="org-rainbow-delimiters-depth-2">(</span>dispatcher_port<span class="org-rainbow-delimiters-depth-2">)</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>  <span class="org-string">"status"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">except</span> socket.error <span class="org-keyword">as</span> e:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">raise</span> <span class="org-type">Exception</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"Could not communicate with dispatcher server: %s"</span> % e<span class="org-rainbow-delimiters-depth-1">)</span>
 
-</pre>
+</code></pre>
 </div>
 
 
@@ -671,23 +674,23 @@ run_or_fail <span style="color: #8b2252;">"Could not reset git"</span> git reset
 如果有任何地方失败了，我们同样也会重复执行。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">if</span> response == <span style="color: #8b2252;">"OK"</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">commit</span> = <span style="color: #8b2252;">""</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">with</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span><span style="color: #8b2252;">".commit_id"</span>, <span style="color: #8b2252;">"r"</span><span style="color: #707183;">)</span> <span style="color: #a020f0;">as</span> f:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">commit</span> = f.readline<span style="color: #707183;">()</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">response</span> = helpers.communicate<span style="color: #707183;">(</span>dispatcher_host,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #483d8b;">int</span><span style="color: #7388d6;">(</span>dispatcher_port<span style="color: #7388d6;">)</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #8b2252;">"dispatch:%s"</span> % commit<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> response != <span style="color: #8b2252;">"OK"</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">Exception</span><span style="color: #707183;">(</span><span style="color: #8b2252;">"Could not dispatch the test: %s"</span> %
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   response<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span> <span style="color: #8b2252;">"dispatched!"</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">else</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">Exception</span><span style="color: #707183;">(</span><span style="color: #8b2252;">"Could not dispatch the test: %s"</span> %
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   response<span style="color: #707183;">)</span>
-time.sleep<span style="color: #707183;">(</span>5<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">if</span> response == <span class="org-string">"OK"</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">commit</span> = <span class="org-string">""</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">with</span> <span class="org-builtin">open</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">".commit_id"</span>, <span class="org-string">"r"</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-keyword">as</span> f:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">commit</span> = f.readline<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">response</span> = helpers.communicate<span class="org-rainbow-delimiters-depth-1">(</span>dispatcher_host,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>  <span class="org-builtin">int</span><span class="org-rainbow-delimiters-depth-2">(</span>dispatcher_port<span class="org-rainbow-delimiters-depth-2">)</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>  <span class="org-string">"dispatch:%s"</span> % commit<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">if</span> response != <span class="org-string">"OK"</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">raise</span> <span class="org-type">Exception</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"Could not dispatch the test: %s"</span> %
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   response<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span> <span class="org-string">"dispatched!"</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">else</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">raise</span> <span class="org-type">Exception</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"Could not dispatch the test: %s"</span> %
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   response<span class="org-rainbow-delimiters-depth-1">)</span>
+time.sleep<span class="org-rainbow-delimiters-depth-1">(</span>5<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -708,19 +711,19 @@ time.sleep<span style="color: #707183;">(</span>5<span style="color: #707183;">)
 <p>
 当 dispatch.py 开始执行时，会先执行 serve 函数。首先，它允许你指定调度器的主机地址和端口：
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">serve</span><span style="color: #707183;">()</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">()</span>
-<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">"--host"</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">"dispatcher's host, by default it uses localhost"</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   default=<span style="color: #8b2252;">"localhost"</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   action=<span style="color: #8b2252;">"store"</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #8b2252;">"--port"</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">help</span>=<span style="color: #8b2252;">"dispatcher's port, by default it uses 8888"</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   default=8888,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   action=<span style="color: #8b2252;">"store"</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">def</span> <span class="org-function-name">serve</span><span class="org-rainbow-delimiters-depth-1">()</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">parser</span> = argparse.ArgumentParser<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"--host"</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-builtin">help</span>=<span class="org-string">"dispatcher's host, by default it uses localhost"</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   default=<span class="org-string">"localhost"</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   action=<span class="org-string">"store"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   parser.add_argument<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"--port"</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-builtin">help</span>=<span class="org-string">"dispatcher's port, by default it uses 8888"</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   default=8888,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   action=<span class="org-string">"store"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-variable-name">args</span> = parser.parse_args<span class="org-rainbow-delimiters-depth-1">()</span>
+</code></pre>
 </div>
 
 <p>
@@ -729,26 +732,26 @@ redistribute 函数。
 </p>
 
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">server</span> = ThreadingTCPServer<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>args.host, <span style="color: #483d8b;">int</span><span style="color: #909183;">(</span>args.port<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>, DispatcherHandler<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span> `serving on %s:%s` % <span style="color: #707183;">(</span>args.host, <span style="color: #483d8b;">int</span><span style="color: #7388d6;">(</span>args.port<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">server</span> = ThreadingTCPServer<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>args.host, <span class="org-builtin">int</span><span class="org-rainbow-delimiters-depth-3">(</span>args.port<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>, DispatcherHandler<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span> `serving on %s:%s` % <span class="org-rainbow-delimiters-depth-1">(</span>args.host, <span class="org-builtin">int</span><span class="org-rainbow-delimiters-depth-2">(</span>args.port<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="background-color: #f2f2f2;"> </span>   ...
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   ...
 
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">runner_heartbeat</span> = threading.Thread<span style="color: #707183;">(</span>target=runner_checker, args=<span style="color: #7388d6;">(</span>server,<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">redistributor</span> = threading.Thread<span style="color: #707183;">(</span>target=redistribute, args=<span style="color: #7388d6;">(</span>server,<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   runner_heartbeat.start<span style="color: #707183;">()</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   redistributor.start<span style="color: #707183;">()</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">Activate the server; this will keep running until you</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">interrupt the program with Ctrl+C or Cmd+C</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   server.serve_forever<span style="color: #707183;">()</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> <span style="color: #707183;">(</span><span style="color: #228b22;">KeyboardInterrupt</span>, <span style="color: #228b22;">Exception</span><span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">if any exception occurs, kill the thread</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">server.dead</span> = <span style="color: #008b8b;">True</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   runner_heartbeat.join<span style="color: #707183;">()</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   redistributor.join<span style="color: #707183;">()</span>
-</pre>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">runner_heartbeat</span> = threading.Thread<span class="org-rainbow-delimiters-depth-1">(</span>target=runner_checker, args=<span class="org-rainbow-delimiters-depth-2">(</span>server,<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">redistributor</span> = threading.Thread<span class="org-rainbow-delimiters-depth-1">(</span>target=redistribute, args=<span class="org-rainbow-delimiters-depth-2">(</span>server,<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">try</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   runner_heartbeat.start<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   redistributor.start<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Activate the server; this will keep running until you</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">interrupt the program with Ctrl+C or Cmd+C</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   server.serve_forever<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">except</span> <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-type">KeyboardInterrupt</span>, <span class="org-type">Exception</span><span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">if any exception occurs, kill the thread</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">server.dead</span> = <span class="org-constant">True</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   runner_heartbeat.join<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   redistributor.join<span class="org-rainbow-delimiters-depth-1">()</span>
+</code></pre>
 </div>
 
 <p>
@@ -756,107 +759,107 @@ redistribute 函数。
 这个函数会将 commit id 保存到 pending_commits 中。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">runner_checker</span><span style="color: #707183;">(</span>server<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">manage_commit_lists</span><span style="color: #707183;">(</span>runner<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> commit, assigned_runner <span style="color: #a020f0;">in</span> server.dispatched_commits.iteritems<span style="color: #707183;">()</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> assigned_runner == runner:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">del</span> server.dispatched_commits<span style="color: #707183;">[</span>commit<span style="color: #707183;">]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   server.pending_commits.append<span style="color: #707183;">(</span>commit<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">break</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   server.runners.remove<span style="color: #707183;">(</span>runner<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">while</span> <span style="color: #a020f0;">not</span> server.dead:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   time.sleep<span style="color: #707183;">(</span>1<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> runner <span style="color: #a020f0;">in</span> server.runners:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">s</span> = socket.socket<span style="color: #707183;">(</span>socket.AF_INET, socket.SOCK_STREAM<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">try</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">response</span> = helpers.communicate<span style="color: #707183;">(</span>runner<span style="color: #7388d6;">[</span><span style="color: #8b2252;">"host"</span><span style="color: #7388d6;">]</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #483d8b;">int</span><span style="color: #7388d6;">(</span>runner<span style="color: #909183;">[</span><span style="color: #8b2252;">"port"</span><span style="color: #909183;">]</span><span style="color: #7388d6;">)</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #8b2252;">"ping"</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> response != <span style="color: #8b2252;">"pong"</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span> <span style="color: #8b2252;">"removing runner %s"</span> % runner
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   manage_commit_lists<span style="color: #707183;">(</span>runner<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">except</span> socket.error <span style="color: #a020f0;">as</span> e:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   manage_commit_lists<span style="color: #707183;">(</span>runner<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">def</span> <span class="org-function-name">runner_checker</span><span class="org-rainbow-delimiters-depth-1">(</span>server<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">def</span> <span class="org-function-name">manage_commit_lists</span><span class="org-rainbow-delimiters-depth-1">(</span>runner<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">for</span> commit, assigned_runner <span class="org-keyword">in</span> server.dispatched_commits.iteritems<span class="org-rainbow-delimiters-depth-1">()</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">if</span> assigned_runner == runner:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">del</span> server.dispatched_commits<span class="org-rainbow-delimiters-depth-1">[</span>commit<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   server.pending_commits.append<span class="org-rainbow-delimiters-depth-1">(</span>commit<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">break</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   server.runners.remove<span class="org-rainbow-delimiters-depth-1">(</span>runner<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">while</span> <span class="org-keyword">not</span> server.dead:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   time.sleep<span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">for</span> runner <span class="org-keyword">in</span> server.runners:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">s</span> = socket.socket<span class="org-rainbow-delimiters-depth-1">(</span>socket.AF_INET, socket.SOCK_STREAM<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">try</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">response</span> = helpers.communicate<span class="org-rainbow-delimiters-depth-1">(</span>runner<span class="org-rainbow-delimiters-depth-2">[</span><span class="org-string">"host"</span><span class="org-rainbow-delimiters-depth-2">]</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>  <span class="org-builtin">int</span><span class="org-rainbow-delimiters-depth-2">(</span>runner<span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">"port"</span><span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">)</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>  <span class="org-string">"ping"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">if</span> response != <span class="org-string">"pong"</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span> <span class="org-string">"removing runner %s"</span> % runner
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   manage_commit_lists<span class="org-rainbow-delimiters-depth-1">(</span>runner<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">except</span> socket.error <span class="org-keyword">as</span> e:
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   manage_commit_lists<span class="org-rainbow-delimiters-depth-1">(</span>runner<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">redistribute</span><span style="color: #707183;">(</span>server<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">while</span> <span style="color: #a020f0;">not</span> server.dead:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> commit <span style="color: #a020f0;">in</span> server.pending_commits:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span> <span style="color: #8b2252;">"running redistribute"</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span> server.pending_commits
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   dispatch_tests<span style="color: #707183;">(</span>server, commit<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   time.sleep<span style="color: #707183;">(</span>5<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">def</span> <span class="org-function-name">redistribute</span><span class="org-rainbow-delimiters-depth-1">(</span>server<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">while</span> <span class="org-keyword">not</span> server.dead:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">for</span> commit <span class="org-keyword">in</span> server.pending_commits:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span> <span class="org-string">"running redistribute"</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span> server.pending_commits
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   dispatch_tests<span class="org-rainbow-delimiters-depth-1">(</span>server, commit<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   time.sleep<span class="org-rainbow-delimiters-depth-1">(</span>5<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">dispatch_tests</span><span style="color: #707183;">(</span>server, commit_id<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">NOTE: usually we don't run this forever</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">while</span> <span style="color: #008b8b;">True</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span> <span style="color: #8b2252;">"trying to dispatch to runners"</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">for</span> runner <span style="color: #a020f0;">in</span> server.runners:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">response</span> = helpers.communicate<span style="color: #707183;">(</span>runner<span style="color: #7388d6;">[</span><span style="color: #8b2252;">"host"</span><span style="color: #7388d6;">]</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #483d8b;">int</span><span style="color: #7388d6;">(</span>runner<span style="color: #909183;">[</span><span style="color: #8b2252;">"port"</span><span style="color: #909183;">]</span><span style="color: #7388d6;">)</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #8b2252;">"runtest:%s"</span> % commit_id<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> response == <span style="color: #8b2252;">"OK"</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span> <span style="color: #8b2252;">"adding id %s"</span> % commit_id
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">server.dispatched_commits</span><span style="color: #707183;">[</span>commit_id<span style="color: #707183;">]</span> = runner
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> commit_id <span style="color: #a020f0;">in</span> server.pending_commits:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   server.pending_commits.remove<span style="color: #707183;">(</span>commit_id<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   time.sleep<span style="color: #707183;">(</span>2<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">def</span> <span class="org-function-name">dispatch_tests</span><span class="org-rainbow-delimiters-depth-1">(</span>server, commit_id<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">NOTE: usually we don't run this forever</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">while</span> <span class="org-constant">True</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span> <span class="org-string">"trying to dispatch to runners"</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">for</span> runner <span class="org-keyword">in</span> server.runners:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">response</span> = helpers.communicate<span class="org-rainbow-delimiters-depth-1">(</span>runner<span class="org-rainbow-delimiters-depth-2">[</span><span class="org-string">"host"</span><span class="org-rainbow-delimiters-depth-2">]</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>  <span class="org-builtin">int</span><span class="org-rainbow-delimiters-depth-2">(</span>runner<span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">"port"</span><span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">)</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>  <span class="org-string">"runtest:%s"</span> % commit_id<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">if</span> response == <span class="org-string">"OK"</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span> <span class="org-string">"adding id %s"</span> % commit_id
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">server.dispatched_commits</span><span class="org-rainbow-delimiters-depth-1">[</span>commit_id<span class="org-rainbow-delimiters-depth-1">]</span> = runner
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">if</span> commit_id <span class="org-keyword">in</span> server.pending_commits:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   server.pending_commits.remove<span class="org-rainbow-delimiters-depth-1">(</span>commit_id<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">return</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   time.sleep<span class="org-rainbow-delimiters-depth-1">(</span>2<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">ThreadingTCPServer</span><span style="color: #707183;">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">runners</span> = <span style="color: #707183;">[]</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">Keeps track of test runner pool</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">dead</span> = <span style="color: #008b8b;">False</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">Indicate to other threads that we are no longer running</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">dispatched_commits</span> = <span style="color: #707183;">{}</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">Keeps track of commits we dispatched</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">pending_commits</span> = <span style="color: #707183;">[]</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">Keeps track of commits we have yet to dispatch</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">class</span> <span class="org-type">ThreadingTCPServer</span><span class="org-rainbow-delimiters-depth-1">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">runners</span> = <span class="org-rainbow-delimiters-depth-1">[]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Keeps track of test runner pool</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">dead</span> = <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Indicate to other threads that we are no longer running</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">dispatched_commits</span> = <span class="org-rainbow-delimiters-depth-1">{}</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Keeps track of commits we dispatched</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-variable-name">pending_commits</span> = <span class="org-rainbow-delimiters-depth-1">[]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Keeps track of commits we have yet to dispatch</span>
+</code></pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">DispatcherHandler</span><span style="color: #707183;">(</span>SocketServer.BaseRequestHandler<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #8b2252;">"""</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   The RequestHandler class for our dispatcher.</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   This will dispatch test runners against the incoming commit</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   and handle their requests and test results</span>
-<span style="color: #8b2252; background-color: #f2f2f2;"> </span><span style="color: #8b2252;">   """</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">command_re</span> = re.<span style="color: #483d8b;">compile</span><span style="color: #707183;">(</span>r<span style="color: #8b2252;">"(\w+)(:.+)*"</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">BUF_SIZE</span> = 1024
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">handle</span><span style="color: #707183;">(</span><span style="color: #a020f0;">self</span><span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.data = <span style="color: #a020f0;">self</span>.request.recv<span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>.BUF_SIZE<span style="color: #707183;">)</span>.strip<span style="color: #707183;">()</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">command_groups</span> = <span style="color: #a020f0;">self</span>.command_re.match<span style="color: #707183;">(</span><span style="color: #a020f0;">self</span>.data<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> <span style="color: #a020f0;">not</span> command_groups:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.request.sendall<span style="color: #707183;">(</span><span style="color: #8b2252;">"Invalid command"</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">command</span> = command_groups.group<span style="color: #707183;">(</span>1<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">class</span> <span class="org-type">DispatcherHandler</span><span class="org-rainbow-delimiters-depth-1">(</span>SocketServer.BaseRequestHandler<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-doc">"""</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   The RequestHandler class for our dispatcher.</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   This will dispatch test runners against the incoming commit</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   and handle their requests and test results</span>
+<span class="org-doc"><span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span></span><span class="org-doc">   """</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">command_re</span> = re.<span class="org-builtin">compile</span><span class="org-rainbow-delimiters-depth-1">(</span>r<span class="org-string">"(\w+)(:.+)*"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">BUF_SIZE</span> = 1024
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">def</span> <span class="org-function-name">handle</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">self</span><span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">self</span>.data = <span class="org-keyword">self</span>.request.recv<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">self</span>.BUF_SIZE<span class="org-rainbow-delimiters-depth-1">)</span>.strip<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">command_groups</span> = <span class="org-keyword">self</span>.command_re.match<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">self</span>.data<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">if</span> <span class="org-keyword">not</span> command_groups:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">self</span>.request.sendall<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"Invalid command"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">return</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-variable-name">command</span> = command_groups.group<span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">if</span> command == <span style="color: #8b2252;">"status"</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span> <span style="color: #8b2252;">"in status"</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.request.sendall<span style="color: #707183;">(</span><span style="color: #8b2252;">"OK"</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">if</span> command == <span class="org-string">"status"</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span> <span class="org-string">"in status"</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-keyword">self</span>.request.sendall<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"OK"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">elif</span> command == <span style="color: #8b2252;">"register"</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">Add this test runner to our pool</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span> <span style="color: #8b2252;">"register"</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">address</span> = command_groups.group<span style="color: #707183;">(</span>2<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">host</span>, <span style="color: #a0522d;">port</span> = re.findall<span style="color: #707183;">(</span>r<span style="color: #8b2252;">":(\w*)"</span>, address<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">runner</span> = <span style="color: #707183;">{</span><span style="color: #8b2252;">"host"</span>: host, <span style="color: #8b2252;">"port"</span>:port<span style="color: #707183;">}</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.server.runners.append<span style="color: #707183;">(</span>runner<span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">self</span>.request.sendall<span style="color: #707183;">(</span><span style="color: #8b2252;">"OK"</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">elif</span> command == <span class="org-string">"register"</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Add this test runner to our pool</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span> <span class="org-string">"register"</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">address</span> = command_groups.group<span class="org-rainbow-delimiters-depth-1">(</span>2<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">host</span>, <span class="org-variable-name">port</span> = re.findall<span class="org-rainbow-delimiters-depth-1">(</span>r<span class="org-string">":(\w*)"</span>, address<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">runner</span> = <span class="org-rainbow-delimiters-depth-1">{</span><span class="org-string">"host"</span>: host, <span class="org-string">"port"</span>:port<span class="org-rainbow-delimiters-depth-1">}</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">self</span>.server.runners.append<span class="org-rainbow-delimiters-depth-1">(</span>runner<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   <span class="org-keyword">self</span>.request.sendall<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"OK"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -864,13 +867,13 @@ redistribute 函数。
 <div id="outline-container-org61b3dc5" class="outline-3">
 <h3 id="org61b3dc5">测试组件( <code>test_runner.py</code>)</h3>
 <div class="outline-text-3" id="text-org61b3dc5">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">class</span> <span style="color: #228b22;">ThreadingTCPServer</span><span style="color: #707183;">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">dispatcher_server</span> = <span style="color: #008b8b;">None</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">Holds the dispatcher server host/port information</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">last_communication</span> = <span style="color: #008b8b;">None</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">Keeps track of last communication from dispatcher</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">busy</span> = <span style="color: #008b8b;">False</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">Status flag</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">dead</span> = <span style="color: #008b8b;">False</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">Status flag</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">class</span> <span class="org-type">ThreadingTCPServer</span><span class="org-rainbow-delimiters-depth-1">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">dispatcher_server</span> = <span class="org-constant">None</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Holds the dispatcher server host/port information</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">last_communication</span> = <span class="org-constant">None</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Keeps track of last communication from dispatcher</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">busy</span> = <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Status flag</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-variable-name">dead</span> = <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Status flag</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -894,17 +897,17 @@ redistribute 函数。
 <div id="outline-container-orgbc204ac" class="outline-3">
 <h3 id="orgbc204ac">运行代码</h3>
 <div class="outline-text-3" id="text-orgbc204ac">
-<div class="org-src-container">
-<pre class="src src-sh">$ python dispatcher.py
-</pre>
+<div class="container">
+<pre><code class="sh">$ python dispatcher.py
+</code></pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-sh">$ cd /path/to/test_repo
+<div class="container">
+<pre><code class="sh">$ cd /path/to/test_repo
 $ touch new_file
 $ git add new_file
-$ git commit -m<span style="color: #8b2252;">"new file"</span> new_file
-</pre>
+$ git commit -m<span class="org-string">"new file"</span> new_file
+</code></pre>
 </div>
 </div>
 </div>

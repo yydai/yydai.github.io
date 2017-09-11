@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:11 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中 interactive 总结</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -264,10 +267,10 @@ for the JavaScript code in this tag.
 在开始之前我们先看一个例子：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">say-hello</span><span style="color: #7388d6;">(</span>name<span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Hello %s"</span> name<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">say-hello</span><span class="org-rainbow-delimiters-depth-2">(</span>name<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-string">"Hello %s"</span> name<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -275,11 +278,11 @@ for the JavaScript code in this tag.
 是不是提示没有找到这个命令，这就对了。我们再看看下面的例子。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">say-hello</span><span style="color: #7388d6;">(</span>name<span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"sEnter your name: "</span><span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Hello %s"</span> name<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">say-hello</span><span class="org-rainbow-delimiters-depth-2">(</span>name<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"sEnter your name: "</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-string">"Hello %s"</span> name<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -304,9 +307,9 @@ name:</code> ,你输入一个名称，minibuffer 就会打印出一条消息。
 interactive 的使用主要是：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span> arg-descriptor<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">interactive</span> arg-descriptor<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -322,10 +325,10 @@ interactive 的使用主要是：
 这种情况下的命名不能带参数，如果这个命令要求有参数就会出错。例如：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span> nil<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">interactive</span> nil<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -340,9 +343,9 @@ interactive 的使用主要是：
 </div>
 
 <ul class="org-ul"><li><a id="orge6d3d4b"></a>P and b<br /><div class="outline-text-4" id="text-orge6d3d4b">
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"P</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">bFrobnicate buffer: "</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">interactive</span> <span class="org-string">"P</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">bFrobnicate buffer: "</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -354,9 +357,9 @@ interactive 的使用主要是：
 这个提示的字符串可以使用 '%' 来包含前一个参数值。例如下面是你读入已经存在的 buffer 名称，然后跟着一个新的名字。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"bBuffer to rename: </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">sRename buffer %s to: "</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">interactive</span> <span class="org-string">"bBuffer to rename: </span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">sRename buffer %s to: "</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -372,12 +375,12 @@ interactive 的使用主要是：
 <p>
 以一个数字作为参数
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ask-age</span> <span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span>
-  <span style="color: #8b2252;">"Ask age."</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"nEnter your age: "</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Name: %d"</span> x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">ask-age</span> <span class="org-rainbow-delimiters-depth-2">(</span>x<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Ask age."</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"nEnter your age: "</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-string">"Name: %d"</span> x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div></li>
 
@@ -386,15 +389,15 @@ interactive 的使用主要是：
 这个是表示这个函数要接受当前选中区域的开始和结束位置。<a href="http://tonyballantyne.com/tech/3-interactive-functions-that-work-on-regions/">这里</a> 有更多的例子。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">myMark-elisp-region</span> <span style="color: #7388d6;">(</span>rStart rEnd<span style="color: #7388d6;">)</span>
-  <span style="color: #8b2252;">"Mark region as Elisp source code for org mode export."</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"r"</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Region begin at: %d, end at: %d"</span> rStart rEnd<span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">save-excursion</span>
-    <span style="color: #909183;">(</span>goto-char rEnd<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>insert <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">#+END_SRC</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span>goto-char rStart<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>insert <span style="color: #8b2252;">"#+BEGIN_SRC emacs-lisp -n</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">myMark-elisp-region</span> <span class="org-rainbow-delimiters-depth-2">(</span>rStart rEnd<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Mark region as Elisp source code for org mode export."</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"r"</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-string">"Region begin at: %d, end at: %d"</span> rStart rEnd<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">save-excursion</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>goto-char rEnd<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>insert <span class="org-string">"</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">#+END_SRC</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>goto-char rStart<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>insert <span class="org-string">"#+BEGIN_SRC emacs-lisp -n</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div></li>
 
@@ -403,11 +406,11 @@ interactive 的使用主要是：
 函数名称
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">call-a-func</span> <span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"aEnter a function:"</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>funcall x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">call-a-func</span> <span class="org-rainbow-delimiters-depth-2">(</span>x<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"aEnter a function:"</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>funcall x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div></li>
 
@@ -416,10 +419,10 @@ interactive 的使用主要是：
 字符串
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">say-hello</span><span style="color: #7388d6;">(</span>name<span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Hello %s"</span> name<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">say-hello</span><span class="org-rainbow-delimiters-depth-2">(</span>name<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-string">"Hello %s"</span> name<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div></li></ul>
 </div>
@@ -427,26 +430,26 @@ interactive 的使用主要是：
 <div id="outline-container-org0627e23" class="outline-3">
 <h3 id="org0627e23">传递一个 List</h3>
 <div class="outline-text-3" id="text-org0627e23">
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">do-something</span> <span style="color: #7388d6;">(</span>x y<span style="color: #7388d6;">)</span>
-  <span style="color: #8b2252;">"Ask name and age"</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span>
-   <span style="color: #b22222;">;; </span><span style="color: #b22222;">complex code here that returns a list</span>
-   <span style="color: #909183;">(</span>list <span style="color: #8b2252;">"Mary"</span> 22<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Name is: %s, Age is: %d"</span> x y<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">do-something</span> <span class="org-rainbow-delimiters-depth-2">(</span>x y<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Ask name and age"</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span>
+   <span class="org-comment-delimiter">;; </span><span class="org-comment">complex code here that returns a list</span>
+   <span class="org-rainbow-delimiters-depth-3">(</span>list <span class="org-string">"Mary"</span> 22<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-string">"Name is: %s, Age is: %d"</span> x y<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ff</span> <span style="color: #7388d6;">(</span>name age<span style="color: #7388d6;">)</span>
-  <span style="color: #8b2252;">"Prompt user to enter a string, with input history support."</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span>
-   <span style="color: #909183;">(</span>list
-    <span style="color: #709870;">(</span>read-string <span style="color: #8b2252;">"Enter your name:"</span><span style="color: #709870;">)</span>
-    <span style="color: #709870;">(</span>read-string <span style="color: #8b2252;">"Enter your age:"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Name is %s."</span> name<span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"Age is: %s"</span> age<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">ff</span> <span class="org-rainbow-delimiters-depth-2">(</span>name age<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Prompt user to enter a string, with input history support."</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span>
+   <span class="org-rainbow-delimiters-depth-3">(</span>list
+    <span class="org-rainbow-delimiters-depth-4">(</span>read-string <span class="org-string">"Enter your name:"</span><span class="org-rainbow-delimiters-depth-4">)</span>
+    <span class="org-rainbow-delimiters-depth-4">(</span>read-string <span class="org-string">"Enter your age:"</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-string">"Name is %s."</span> name<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-string">"Age is: %s"</span> age<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>

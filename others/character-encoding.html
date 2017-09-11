@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:12 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>谈谈字符编码</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -427,12 +430,12 @@ ASCII 字符还是 Unicode 的一部分。
 <p>
 你可以自己去实验一下，例如在 python 下：
 </p>
-<div class="org-src-container">
-<pre class="src src-python">u<span style="color: #8b2252;">"&#20013;"</span> &#8658; u<span style="color: #8b2252;">'\u4e2d'</span>
-<span style="color: #8b2252;">"{0:b}"</span>.<span style="color: #483d8b;">format</span><span style="color: #707183;">(</span><span style="color: #483d8b;">int</span><span style="color: #7388d6;">(</span><span style="color: #8b2252;">'4e2d'</span>, 16<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> &#8658; <span style="color: #8b2252;">'100111000101101'</span>
-u<span style="color: #8b2252;">"&#20013;"</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-8'</span><span style="color: #707183;">)</span> &#8658; <span style="color: #8b2252;">'\xe4\xb8\xad'</span>
-<span style="color: #8b2252;">"{0:b}"</span>.<span style="color: #483d8b;">format</span><span style="color: #707183;">(</span><span style="color: #483d8b;">int</span><span style="color: #7388d6;">(</span><span style="color: #8b2252;">'e4b8ad'</span>, 16<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> &#8658; <span style="color: #8b2252;">'111001001011100010101101'</span>
-</pre>
+<div class="container">
+<pre><code class="python">u<span class="org-doc">"&#20013;"</span> &#8658; u<span class="org-doc">'\u4e2d'</span>
+<span class="org-doc">"{0:b}"</span>.<span class="org-builtin">format</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">int</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-doc">'4e2d'</span>, 16<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> &#8658; <span class="org-doc">'100111000101101'</span>
+u<span class="org-string">"&#20013;"</span>.encode<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'utf-8'</span><span class="org-rainbow-delimiters-depth-1">)</span> &#8658; <span class="org-string">'\xe4\xb8\xad'</span>
+<span class="org-string">"{0:b}"</span>.<span class="org-builtin">format</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">int</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">'e4b8ad'</span>, 16<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> &#8658; <span class="org-string">'111001001011100010101101'</span>
+</code></pre>
 </div>
 
 
@@ -474,19 +477,19 @@ u<span style="color: #8b2252;">"&#20013;"</span>.encode<span style="color: #7071
 <p>
 下面是一段 Python 的例子。
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">if</span> <span style="color: #483d8b;">__name__</span> == <span style="color: #8b2252;">'__main__'</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">Translating from the outside world of bytes to Unicode characters.</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">input_bytes</span> = b<span style="color: #8b2252;">'\xff\xfe4\x001\x003\x00 \x00i\x00s\x00 \x00i\x00n\x00.\x00'</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">input_characters</span> = input_bytes.decode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-16'</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span><span style="color: #707183;">(</span><span style="color: #483d8b;">repr</span><span style="color: #7388d6;">(</span>input_characters<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">if</span> <span class="org-builtin">__name__</span> == <span class="org-string">'__main__'</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Translating from the outside world of bytes to Unicode characters.</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">input_bytes</span> = b<span class="org-string">'\xff\xfe4\x001\x003\x00 \x00i\x00s\x00 \x00i\x00n\x00.\x00'</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">input_characters</span> = input_bytes.decode<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'utf-16'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">repr</span><span class="org-rainbow-delimiters-depth-2">(</span>input_characters<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">Translating characters back into bytes before sending them.</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">output_characters</span> = <span style="color: #8b2252;">'We copy you down, Eagle.\n'</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">output_bytes</span> = output_characters.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-8'</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">with</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span><span style="color: #8b2252;">'eagle.txt'</span>, <span style="color: #8b2252;">'wb'</span><span style="color: #707183;">)</span> <span style="color: #a020f0;">as</span> f:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   f.write<span style="color: #707183;">(</span>output_bytes<span style="color: #707183;">)</span>
-</pre>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Translating characters back into bytes before sending them.</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">output_characters</span> = <span class="org-string">'We copy you down, Eagle.\n'</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">output_bytes</span> = output_characters.encode<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'utf-8'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">with</span> <span class="org-builtin">open</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'eagle.txt'</span>, <span class="org-string">'wb'</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-keyword">as</span> f:
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>   f.write<span class="org-rainbow-delimiters-depth-1">(</span>output_bytes<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -503,11 +506,11 @@ u<span style="color: #8b2252;">"&#20013;"</span>.encode<span style="color: #7071
 UTF-8 去编码，而你却用 UTF-16 去解码，肯定是有问题的。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-python">u<span style="color: #8b2252;">"&#20013;"</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-8'</span><span style="color: #707183;">)</span>  &#8658; <span style="color: #8b2252;">'\xe4\xb8\xad'</span>
-<span style="color: #8b2252;">'\xe4\xb8\xad'</span>.decode<span style="color: #707183;">()</span>  &#8658; <span style="color: #228b22;">UnicodeDecodeError</span>: <span style="color: #8b2252;">'ascii'</span> codec can<span style="color: #8b2252;">'t decode byte 0xe4 in position 0</span>
-<span style="color: #8b2252;">'</span>\xe4\xb8\xad<span style="color: #8b2252;">'.decode('</span>utf-8<span style="color: #8b2252;">') &#8658; u'</span>\u4e2d<span style="color: #8b2252;">'</span>
-</pre>
+<div class="container">
+<pre><code class="python">u<span class="org-doc">"&#20013;"</span>.encode<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-doc">'utf-8'</span><span class="org-rainbow-delimiters-depth-1">)</span>  &#8658; <span class="org-doc">'\xe4\xb8\xad'</span>
+<span class="org-doc">'\xe4\xb8\xad'</span>.decode<span class="org-rainbow-delimiters-depth-1">()</span>  &#8658; <span class="org-type">UnicodeDecodeError</span>: <span class="org-doc">'ascii'</span> codec can<span class="org-doc">'t decode byte 0xe4 in position 0</span>
+<span class="org-doc">'</span>\xe4\xb8\xad<span class="org-doc">'.decode('</span>utf-8<span class="org-doc">') &#8658; u'</span>\u4e2d<span class="org-doc">'</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -518,28 +521,28 @@ UTF-8 去编码，而你却用 UTF-16 去解码，肯定是有问题的。
 <p>
 在 Python 2 中，你如果执行
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #8b2252;">"&#20320;&#22909;"</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">"utf8"</span><span style="color: #707183;">)</span> &#8658;
-<span style="color: #228b22;">UnicodeDecodeError</span>: <span style="color: #8b2252;">'ascii'</span> codec can<span style="color: #8b2252;">'t decode byte 0xe4 in position 0: ordinal not in range(128)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-doc">"&#20320;&#22909;"</span>.encode<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-doc">"utf8"</span><span class="org-rainbow-delimiters-depth-1">)</span> &#8658;
+<span class="org-type">UnicodeDecodeError</span>: <span class="org-string">'ascii'</span> codec can<span class="org-string">'t decode byte 0xe4 in position 0: ordinal not in range(128)</span>
+</code></pre>
 </div>
 
 <p>
 这是为什么呢？
 这里我们首先要看看 "你好" 是什么类型的，事实它是 str 类型。所以它等价于：
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #8b2252;">"&#20320;&#22909;"</span>.decode<span style="color: #707183;">()</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">'utf-8'</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-doc">"&#20320;&#22909;"</span>.decode<span class="org-rainbow-delimiters-depth-1">()</span>.encode<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-doc">'utf-8'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
 首先将 "你好" decode 成 Unicode，然后在按照 UTF-8 编码。因为"你好"
 不是有效的 ASCII，所以错误出现在 decode 这步。我们只需要改成：
 </p>
-<div class="org-src-container">
-<pre class="src src-python">u<span style="color: #8b2252;">"&#20320;&#22909;"</span>.encode<span style="color: #707183;">(</span><span style="color: #8b2252;">"utf8"</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python">u<span class="org-doc">"&#20320;&#22909;"</span>.encode<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-doc">"utf8"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>

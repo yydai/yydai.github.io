@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-31 Thu 12:26 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的一些技巧</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -270,6 +273,7 @@ for the JavaScript code in this tag.
 <li><a href="#org80c5dd3">24. Emacs Dired mode</a></li>
 <li><a href="#orgddbb8f4">25. 定义 toggle/cycle command（参考）</a></li>
 <li><a href="#org3a40834">26. Emacs &#x2013;script</a></li>
+<li><a href="#orgea87798">27. Install and Update packages</a></li>
 </ul>
 </div>
 </div>
@@ -294,9 +298,9 @@ for the JavaScript code in this tag.
 <p>
 现在一行的开头设置一个 <code>mark</code> ，然后移动到行尾。即：
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">C-a C-. C-e
-</pre>
+<div class="container">
+<pre><code class="shell">C-a C-. C-e
+</code></pre>
 </div>
 
 <p>
@@ -317,9 +321,9 @@ for the JavaScript code in this tag.
 另外一个问题时，在使用 publish 发布的时候，如何禁用 cache，可以这样：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #707183;">(</span>setq org-publish-use-timestamps-flag nil<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="lisp"><span class="org-rainbow-delimiters-depth-1">(</span>setq org-publish-use-timestamps-flag nil<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -373,44 +377,44 @@ expression.
 但是这种字符的输入有些麻烦，需要按住 shift 键才行，下面我们就优化一下这种操作。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defvar</span> <span style="color: #a0522d;">*unshifted-special-chars-layout*</span>
-  <span style="color: #a020f0;">'</span><span style="color: #7388d6;">(</span><span style="color: #909183;">(</span><span style="color: #8b2252;">"1"</span> <span style="color: #8b2252;">"!"</span><span style="color: #909183;">)</span> <span style="color: #b22222;">; </span><span style="color: #b22222;">from -&gt; to</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"2"</span> <span style="color: #8b2252;">"@"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"3"</span> <span style="color: #8b2252;">"#"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"4"</span> <span style="color: #8b2252;">"$"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"5"</span> <span style="color: #8b2252;">"%"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"6"</span> <span style="color: #8b2252;">"^"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"7"</span> <span style="color: #8b2252;">"&amp;"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"8"</span> <span style="color: #8b2252;">"*"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"9"</span> <span style="color: #8b2252;">"("</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"0"</span> <span style="color: #8b2252;">")"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"!"</span> <span style="color: #8b2252;">"1"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"@"</span> <span style="color: #8b2252;">"2"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"#"</span> <span style="color: #8b2252;">"3"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"$"</span> <span style="color: #8b2252;">"4"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"%"</span> <span style="color: #8b2252;">"5"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"^"</span> <span style="color: #8b2252;">"6"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"&amp;"</span> <span style="color: #8b2252;">"7"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"*"</span> <span style="color: #8b2252;">"8"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">"("</span> <span style="color: #8b2252;">"9"</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #8b2252;">")"</span> <span style="color: #8b2252;">"0"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defvar</span> <span class="org-variable-name">*unshifted-special-chars-layout*</span>
+  <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"1"</span> <span class="org-string">"!"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-comment-delimiter">; </span><span class="org-comment">from -&gt; to</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"2"</span> <span class="org-string">"@"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"3"</span> <span class="org-string">"#"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"4"</span> <span class="org-string">"$"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"5"</span> <span class="org-string">"%"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"6"</span> <span class="org-string">"^"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"7"</span> <span class="org-string">"&amp;"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"8"</span> <span class="org-string">"*"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"9"</span> <span class="org-string">"("</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"0"</span> <span class="org-string">")"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"!"</span> <span class="org-string">"1"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"@"</span> <span class="org-string">"2"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"#"</span> <span class="org-string">"3"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"$"</span> <span class="org-string">"4"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"%"</span> <span class="org-string">"5"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"^"</span> <span class="org-string">"6"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"&amp;"</span> <span class="org-string">"7"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"*"</span> <span class="org-string">"8"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">"("</span> <span class="org-string">"9"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-string">")"</span> <span class="org-string">"0"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">mb-str-to-unibyte-char</span> <span style="color: #7388d6;">(</span>s<span style="color: #7388d6;">)</span>
-  <span style="color: #8b2252;">"Translate first multibyte char in s to internal unibyte representation."</span>
-  <span style="color: #7388d6;">(</span>multibyte-char-to-unibyte <span style="color: #909183;">(</span>string-to-char s<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">mb-str-to-unibyte-char</span> <span class="org-rainbow-delimiters-depth-2">(</span>s<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Translate first multibyte char in s to internal unibyte representation."</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>multibyte-char-to-unibyte <span class="org-rainbow-delimiters-depth-3">(</span>string-to-char s<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">remap-keyboard</span> <span style="color: #7388d6;">(</span>mapping<span style="color: #7388d6;">)</span>
-  <span style="color: #8b2252;">"Setup keyboard translate table using a list of pairwise key-mappings."</span>
-  <span style="color: #7388d6;">(</span>mapcar
-   <span style="color: #909183;">(</span><span style="color: #a020f0;">lambda</span> <span style="color: #709870;">(</span>mb-string-pair<span style="color: #709870;">)</span>
-     <span style="color: #709870;">(</span>apply <span style="color: #a020f0;">#'</span><span style="color: #008b8b;">keyboard-translate</span>
-        <span style="color: #907373;">(</span>mapcar <span style="color: #a020f0;">#'</span><span style="color: #008b8b;">mb-str-to-unibyte-char</span> mb-string-pair<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-   mapping<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">remap-keyboard</span> <span class="org-rainbow-delimiters-depth-2">(</span>mapping<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Setup keyboard translate table using a list of pairwise key-mappings."</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>mapcar
+   <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">lambda</span> <span class="org-rainbow-delimiters-depth-4">(</span>mb-string-pair<span class="org-rainbow-delimiters-depth-4">)</span>
+     <span class="org-rainbow-delimiters-depth-4">(</span>apply <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">keyboard-translate</span>
+        <span class="org-rainbow-delimiters-depth-5">(</span>mapcar <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">mb-str-to-unibyte-char</span> mb-string-pair<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   mapping<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #707183;">(</span>remap-keyboard *unshifted-special-chars-layout*<span style="color: #707183;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>remap-keyboard *unshifted-special-chars-layout*<span class="org-rainbow-delimiters-depth-1">)</span>
 
-</pre>
+</code></pre>
 </div>
 
 <p>
@@ -435,23 +439,23 @@ expression.
 设置的代码，我是直接 copy 的<a href="http://endlessparentheses.com/disable-mouse-only-inside-emacs.html">这里</a>。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">define-minor-mode</span> <span style="color: #0000ff;">disable-mouse-mode</span>
-  <span style="color: #8b2252;">"A minor-mode that disables all mouse keybinds."</span>
-  <span style="color: #483d8b;">:global</span> t
-  <span style="color: #483d8b;">:lighter</span> <span style="color: #8b2252;">"Mouse&#128045;"</span>
-  <span style="color: #483d8b;">:keymap</span> <span style="color: #7388d6;">(</span>make-sparse-keymap<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">define-minor-mode</span> <span class="org-function-name">disable-mouse-mode</span>
+  <span class="org-doc">"A minor-mode that disables all mouse keybinds."</span>
+  <span class="org-builtin">:global</span> t
+  <span class="org-builtin">:lighter</span> <span class="org-string">"Mouse&#128045;"</span>
+  <span class="org-builtin">:keymap</span> <span class="org-rainbow-delimiters-depth-2">(</span>make-sparse-keymap<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #707183;">(</span><span style="color: #a020f0;">dolist</span> <span style="color: #7388d6;">(</span>type <span style="color: #a020f0;">'</span><span style="color: #909183;">(</span>mouse down-mouse drag-mouse
-                      double-mouse triple-mouse<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">dolist</span> <span style="color: #909183;">(</span>prefix <span style="color: #a020f0;">'</span><span style="color: #709870;">(</span><span style="color: #8b2252;">""</span> C- M- S- M-S- C-M- C-S- C-M-S-<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-    <span style="color: #b22222;">;; </span><span style="color: #b22222;">Yes, I actually HAD to go up to 7 here.</span>
-    <span style="color: #909183;">(</span><span style="color: #a020f0;">dotimes</span> <span style="color: #709870;">(</span>n 7<span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span><span style="color: #a020f0;">let</span> <span style="color: #907373;">(</span><span style="color: #6276ba;">(</span>k <span style="color: #858580;">(</span>format <span style="color: #8b2252;">"%s%s-%s"</span> prefix type n<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
-        <span style="color: #907373;">(</span>define-key disable-mouse-mode-map
-          <span style="color: #6276ba;">(</span>vector <span style="color: #858580;">(</span>intern k<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span> <span style="color: #a020f0;">#'</span><span style="color: #008b8b;">ignore</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">dolist</span> <span class="org-rainbow-delimiters-depth-2">(</span>type <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-3">(</span>mouse down-mouse drag-mouse
+                      double-mouse triple-mouse<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">dolist</span> <span class="org-rainbow-delimiters-depth-3">(</span>prefix <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-4">(</span><span class="org-string">""</span> C- M- S- M-S- C-M- C-S- C-M-S-<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Yes, I actually HAD to go up to 7 here.</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">dotimes</span> <span class="org-rainbow-delimiters-depth-4">(</span>n 7<span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-rainbow-delimiters-depth-6">(</span>k <span class="org-rainbow-delimiters-depth-7">(</span>format <span class="org-string">"%s%s-%s"</span> prefix type n<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+        <span class="org-rainbow-delimiters-depth-5">(</span>define-key disable-mouse-mode-map
+          <span class="org-rainbow-delimiters-depth-6">(</span>vector <span class="org-rainbow-delimiters-depth-7">(</span>intern k<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span> <span class="org-highlight-quoted-quote">#'</span><span class="org-highlight-quoted-symbol">ignore</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-</pre>
+</code></pre>
 </div>
 </div>
 </div>
@@ -464,10 +468,10 @@ expression.
 因为 C-w 绑定到了 <code>whole-line-or-region-kill-region</code> 上，而 M-w 到了 <code>whole-line-or-region-kill-ring-save</code>
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"C-w"</span><span style="color: #7388d6;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">whole-line-or-region-kill-ring-save</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"M-w"</span><span style="color: #7388d6;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">whole-line-or-region-kill-region</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-w"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">whole-line-or-region-kill-ring-save</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"M-w"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">whole-line-or-region-kill-region</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -484,36 +488,36 @@ expression.
 我在网上找了一个截图的函数，稍加修改了一下。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #b22222;">;;; </span><span style="color: #b22222;">https://emacs-china.org/t/org-mode/79</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">my-org-screenshot</span> <span style="color: #7388d6;">()</span>
-  <span style="color: #8b2252;">"Take a screenshot into a time stamped unique-named file in the</span>
-<span style="color: #8b2252;">same directory as the org-buffer and insert a link to this file."</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>org-display-inline-images<span style="color: #7388d6;">)</span>
+<div class="container">
+<pre><code class="elisp"><span class="org-comment-delimiter">;;; </span><span class="org-comment">https://emacs-china.org/t/org-mode/79</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">my-org-screenshot</span> <span class="org-rainbow-delimiters-depth-2">()</span>
+  <span class="org-doc">"Take a screenshot into a time stamped unique-named file in the</span>
+<span class="org-doc">same directory as the org-buffer and insert a link to this file."</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>org-display-inline-images<span class="org-rainbow-delimiters-depth-2">)</span>
 
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">setq</span> filename
-        <span style="color: #909183;">(</span>concat
-         <span style="color: #709870;">(</span>make-temp-name
-          <span style="color: #907373;">(</span>concat <span style="color: #6276ba;">(</span>file-name-directory <span style="color: #858580;">(</span>buffer-file-name<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span>
-                  <span style="color: #8b2252;">"/imgs/"</span>
-                  <span style="color: #6276ba;">(</span>format-time-string <span style="color: #8b2252;">"%Y%m%d_%H%M%S_"</span><span style="color: #6276ba;">)</span><span style="color: #907373;">)</span> <span style="color: #709870;">)</span> <span style="color: #8b2252;">".png"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">unless</span> <span style="color: #909183;">(</span>file-exists-p <span style="color: #709870;">(</span>file-name-directory filename<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span>make-directory <span style="color: #709870;">(</span>file-name-directory filename<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-                                        <span style="color: #b22222;">; </span><span style="color: #b22222;">take screenshot</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>eq system-type <span style="color: #a020f0;">'</span><span style="color: #008b8b;">darwin</span><span style="color: #909183;">)</span>
-      <span style="color: #909183;">(</span><span style="color: #a020f0;">progn</span>
-        <span style="color: #709870;">(</span>call-process-shell-command <span style="color: #8b2252;">"screencapture"</span> nil nil nil nil <span style="color: #8b2252;">" -s "</span> <span style="color: #907373;">(</span>concat
-                                                                            <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> filename <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> <span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-        <span style="color: #709870;">(</span>call-process-shell-command <span style="color: #8b2252;">"convert"</span> nil nil nil nil <span style="color: #907373;">(</span>concat <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> filename <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;"> -resize  </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">50%</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> <span style="color: #907373;">)</span> <span style="color: #907373;">(</span>concat <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> filename <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">"</span><span style="color: #8b2252;">"</span> <span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-        <span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">setq</span> filename
+        <span class="org-rainbow-delimiters-depth-3">(</span>concat
+         <span class="org-rainbow-delimiters-depth-4">(</span>make-temp-name
+          <span class="org-rainbow-delimiters-depth-5">(</span>concat <span class="org-rainbow-delimiters-depth-6">(</span>file-name-directory <span class="org-rainbow-delimiters-depth-7">(</span>buffer-file-name<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
+                  <span class="org-string">"/imgs/"</span>
+                  <span class="org-rainbow-delimiters-depth-6">(</span>format-time-string <span class="org-string">"%Y%m%d_%H%M%S_"</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-string">".png"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">unless</span> <span class="org-rainbow-delimiters-depth-3">(</span>file-exists-p <span class="org-rainbow-delimiters-depth-4">(</span>file-name-directory filename<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>make-directory <span class="org-rainbow-delimiters-depth-4">(</span>file-name-directory filename<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+                                        <span class="org-comment-delimiter">; </span><span class="org-comment">take screenshot</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span>eq system-type <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">darwin</span><span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">progn</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span>call-process-shell-command <span class="org-string">"screencapture"</span> nil nil nil nil <span class="org-string">" -s "</span> <span class="org-rainbow-delimiters-depth-5">(</span>concat
+                                                                            <span class="org-string">"</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">"</span></span></span><span class="org-string">"</span> filename <span class="org-string">"</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">"</span></span></span><span class="org-string">"</span> <span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span>call-process-shell-command <span class="org-string">"convert"</span> nil nil nil nil <span class="org-rainbow-delimiters-depth-5">(</span>concat <span class="org-string">"</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">"</span></span></span><span class="org-string">"</span> filename <span class="org-string">"</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">"</span></span></span><span class="org-string"> -resize  </span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">"</span></span></span><span class="org-string">50%</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">"</span></span></span><span class="org-string">"</span> <span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>concat <span class="org-string">"</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">"</span></span></span><span class="org-string">"</span> filename <span class="org-string">"</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">"</span></span></span><span class="org-string">"</span> <span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
 
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">setq</span> relative-dir <span style="color: #909183;">(</span>concat <span style="color: #8b2252;">"./imgs/"</span> <span style="color: #709870;">(</span>file-name-nondirectory filename<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>file-exists-p filename<span style="color: #909183;">)</span>
-      <span style="color: #909183;">(</span>insert <span style="color: #709870;">(</span>concat <span style="color: #8b2252;">"[[file:"</span> relative-dir <span style="color: #8b2252;">"]]"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>org-display-inline-images<span style="color: #7388d6;">)</span>
-  <span style="color: #707183;">)</span>
-</pre>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">setq</span> relative-dir <span class="org-rainbow-delimiters-depth-3">(</span>concat <span class="org-string">"./imgs/"</span> <span class="org-rainbow-delimiters-depth-4">(</span>file-name-nondirectory filename<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span>file-exists-p filename<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>insert <span class="org-rainbow-delimiters-depth-4">(</span>concat <span class="org-string">"[[file:"</span> relative-dir <span class="org-string">"]]"</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>org-display-inline-images<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -525,30 +529,30 @@ expression.
 这个函数会把图片 copy 到当前目录的 imgs 子目录下，如果没有 imgs 需要先创建一个。当然，你可以改下面的函数来满足自己的需求。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">drag file to org mode</span>
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">http://kitchingroup.cheme.cmu.edu/blog/2015/07/10/Drag-images-and-files-onto-org-mode-and-insert-a-link-to-them/</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">my-dnd-func</span> <span style="color: #7388d6;">(</span>event<span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"e"</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>goto-char <span style="color: #909183;">(</span>nth 1 <span style="color: #709870;">(</span>event-start event<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>x-focus-frame nil<span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span><span style="color: #a020f0;">let*</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>payload <span style="color: #907373;">(</span>car <span style="color: #6276ba;">(</span>last event<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-         <span style="color: #709870;">(</span>type <span style="color: #907373;">(</span>car payload<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-         <span style="color: #709870;">(</span>fname <span style="color: #907373;">(</span>cadr payload<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-         <span style="color: #709870;">(</span>img-regexp <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">(</span><span style="color: #8b2252;">png</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">jp[e]?g</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">|</span><span style="color: #8b2252;">svg</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">)</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252;">&gt;"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-    <span style="color: #909183;">(</span><span style="color: #a020f0;">cond</span>
-     <span style="color: #b22222;">;; </span><span style="color: #b22222;">insert image link</span>
-     <span style="color: #709870;">(</span><span style="color: #907373;">(</span><span style="color: #a020f0;">and</span>  <span style="color: #6276ba;">(</span>eq <span style="color: #a020f0;">'</span><span style="color: #008b8b;">drag-n-drop</span> <span style="color: #858580;">(</span>car event<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span>
-            <span style="color: #6276ba;">(</span>eq <span style="color: #a020f0;">'</span><span style="color: #008b8b;">file</span> type<span style="color: #6276ba;">)</span>
-            <span style="color: #6276ba;">(</span>string-match img-regexp fname<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
-      <span style="color: #907373;">(</span>dired-copy-file fname <span style="color: #6276ba;">(</span>format <span style="color: #8b2252;">"./imgs/%s"</span> <span style="color: #858580;">(</span>file-name-nondirectory fname<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span> t<span style="color: #907373;">)</span>
-      <span style="color: #907373;">(</span>insert <span style="color: #8b2252;">"#+ATTR_HTML: :width 100%</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">"</span><span style="color: #907373;">)</span>
-      <span style="color: #907373;">(</span>insert <span style="color: #6276ba;">(</span>format <span style="color: #8b2252;">"[[%s]]"</span> <span style="color: #858580;">(</span>format <span style="color: #8b2252;">"./imgs/%s"</span> <span style="color: #80a880;">(</span>file-name-nondirectory fname<span style="color: #80a880;">)</span><span style="color: #858580;">)</span><span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
-      <span style="color: #907373;">(</span>org-display-inline-images t t<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-     <span style="color: #b22222;">;; </span><span style="color: #b22222;">regular drag and drop on file</span>
-     <span style="color: #709870;">(</span>t
-      <span style="color: #907373;">(</span><span style="color: #ff0000; font-weight: bold;">error</span> <span style="color: #8b2252;">"I am not equipped for dnd on %s"</span> payload<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">drag file to org mode</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">http://kitchingroup.cheme.cmu.edu/blog/2015/07/10/Drag-images-and-files-onto-org-mode-and-insert-a-link-to-them/</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">my-dnd-func</span> <span class="org-rainbow-delimiters-depth-2">(</span>event<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"e"</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>goto-char <span class="org-rainbow-delimiters-depth-3">(</span>nth 1 <span class="org-rainbow-delimiters-depth-4">(</span>event-start event<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>x-focus-frame nil<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>payload <span class="org-rainbow-delimiters-depth-5">(</span>car <span class="org-rainbow-delimiters-depth-6">(</span>last event<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>type <span class="org-rainbow-delimiters-depth-5">(</span>car payload<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>fname <span class="org-rainbow-delimiters-depth-5">(</span>cadr payload<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>img-regexp <span class="org-string">"</span><span class="org-string"><span class="org-regexp-grouping-backslash"><span class="org-hes-escape-backslash">\</span></span></span><span class="org-string"><span class="org-regexp-grouping-backslash"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">\</span></span></span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">png</span><span class="org-string"><span class="org-regexp-grouping-backslash"><span class="org-hes-escape-backslash">\</span></span></span><span class="org-string"><span class="org-regexp-grouping-backslash"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">\</span></span></span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">jp[e]?g</span><span class="org-string"><span class="org-regexp-grouping-backslash"><span class="org-hes-escape-backslash">\</span></span></span><span class="org-string"><span class="org-regexp-grouping-backslash"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">\</span></span></span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">svg</span><span class="org-string"><span class="org-regexp-grouping-backslash"><span class="org-hes-escape-backslash">\</span></span></span><span class="org-string"><span class="org-regexp-grouping-backslash"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">\</span></span></span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">\</span></span></span><span class="org-string">&gt;"</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">cond</span>
+     <span class="org-comment-delimiter">;; </span><span class="org-comment">insert image link</span>
+     <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">and</span>  <span class="org-rainbow-delimiters-depth-6">(</span>eq <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">drag-n-drop</span> <span class="org-rainbow-delimiters-depth-7">(</span>car event<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
+            <span class="org-rainbow-delimiters-depth-6">(</span>eq <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">file</span> type<span class="org-rainbow-delimiters-depth-6">)</span>
+            <span class="org-rainbow-delimiters-depth-6">(</span>string-match img-regexp fname<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-rainbow-delimiters-depth-5">(</span>dired-copy-file fname <span class="org-rainbow-delimiters-depth-6">(</span>format <span class="org-string">"./imgs/%s"</span> <span class="org-rainbow-delimiters-depth-7">(</span>file-name-nondirectory fname<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span> t<span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-rainbow-delimiters-depth-5">(</span>insert <span class="org-string">"#+ATTR_HTML: :width 100%</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">"</span><span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-rainbow-delimiters-depth-5">(</span>insert <span class="org-rainbow-delimiters-depth-6">(</span>format <span class="org-string">"[[%s]]"</span> <span class="org-rainbow-delimiters-depth-7">(</span>format <span class="org-string">"./imgs/%s"</span> <span class="org-rainbow-delimiters-depth-8">(</span>file-name-nondirectory fname<span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-rainbow-delimiters-depth-5">(</span>org-display-inline-images t t<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+     <span class="org-comment-delimiter">;; </span><span class="org-comment">regular drag and drop on file</span>
+     <span class="org-rainbow-delimiters-depth-4">(</span>t
+      <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-warning">error</span> <span class="org-string">"I am not equipped for dnd on %s"</span> payload<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -569,10 +573,10 @@ expression.
 在写代码的时候，我们经常需要自动缩进，而不是回到下一行的开头。这时我们就需要这个函数了，
 <b>new-line-and-indent</b> 。我们可以直接使用快捷键 <b>C-j</b> 。也可以绑定到 RETURN 键上。
 </p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>add-hook <span style="color: #a020f0;">'</span><span style="color: #008b8b;">lisp-mode-hook</span> <span style="color: #a020f0;">'</span><span style="color: #7388d6;">(</span>lambda <span style="color: #909183;">()</span>
-  <span style="color: #909183;">(</span>local-set-key <span style="color: #709870;">(</span>kbd <span style="color: #8b2252;">"RET"</span><span style="color: #709870;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">newline-and-indent</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>add-hook <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">lisp-mode-hook</span> <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-2">(</span>lambda <span class="org-rainbow-delimiters-depth-3">()</span>
+  <span class="org-rainbow-delimiters-depth-3">(</span>local-set-key <span class="org-rainbow-delimiters-depth-4">(</span>kbd <span class="org-string">"RET"</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">newline-and-indent</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -621,17 +625,17 @@ Step 5 of 5: ...
 根据这个我写了一个函数可以自动做这件事了：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">auto-sequence</span> <span style="color: #7388d6;">(</span>format start end<span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"sSequence format is? </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">nEnter start number: </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">nEnter end number:"</span><span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">progn</span>
-      <span style="color: #909183;">(</span>kmacro-set-format format<span style="color: #909183;">)</span>
-      <span style="color: #909183;">(</span>kmacro-set-counter start<span style="color: #909183;">)</span>
-      <span style="color: #909183;">(</span><span style="color: #a020f0;">while</span> <span style="color: #709870;">(</span>&lt; start <span style="color: #907373;">(</span>+ 1 end<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-        <span style="color: #709870;">(</span>execute-kbd-macro <span style="color: #907373;">(</span>read-kbd-macro <span style="color: #8b2252;">"&lt;f3&gt; RET"</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-        <span style="color: #709870;">(</span><span style="color: #a020f0;">setq</span> start <span style="color: #907373;">(</span>+ 1 start<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-      <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">auto-sequence</span> <span class="org-rainbow-delimiters-depth-2">(</span>format start end<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"sSequence format is? </span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">nEnter start number: </span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">nEnter end number:"</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">progn</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>kmacro-set-format format<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>kmacro-set-counter start<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-4">(</span>&lt; start <span class="org-rainbow-delimiters-depth-5">(</span>+ 1 end<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span>execute-kbd-macro <span class="org-rainbow-delimiters-depth-5">(</span>read-kbd-macro <span class="org-string">"&lt;f3&gt; RET"</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">setq</span> start <span class="org-rainbow-delimiters-depth-5">(</span>+ 1 start<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -694,9 +698,9 @@ Click <a href="https://github.com/magnars/multiple-cursors.el">this</a>.
 在后来发现在写代码的时候经常会按到这个快捷键，所以我只在 org mode 中打开。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #707183;">(</span>add-hook 'org-mode-hook #'xah-math-input-mode-on<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="lisp"><span class="org-rainbow-delimiters-depth-1">(</span>add-hook 'org-mode-hook #'xah-math-input-mode-on<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -714,23 +718,23 @@ Click <a href="https://github.com/magnars/multiple-cursors.el">this</a>.
 <p>
 例如，下面这个禁用了 org mode 默认的快捷键绑定，然后使用自己设置的快捷键绑定。
 </p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>define-key org-mode-map <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"C-,"</span><span style="color: #7388d6;">)</span> nil<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>define-key org-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-,"</span><span class="org-rainbow-delimiters-depth-2">)</span> nil<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
 <div id="outline-container-org9186d74" class="outline-2">
 <h2 id="org9186d74">20. &amp;key</h2>
 <div class="outline-text-2" id="text-org9186d74">
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun*</span> hello <span style="color: #7388d6;">(</span><span style="color: #228b22;">&amp;key</span> a b c<span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>message <span style="color: #909183;">(</span>format <span style="color: #8b2252;">"%s-%s-%s"</span> a b c<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun*</span> hello <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">&amp;key</span> a b c<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-rainbow-delimiters-depth-3">(</span>format <span class="org-string">"%s-%s-%s"</span> a b c<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #707183;">(</span>hello <span style="color: #483d8b;">:a</span> 1
-       <span style="color: #483d8b;">:b</span> 2
-       <span style="color: #483d8b;">:c</span> 3<span style="color: #707183;">)</span>
-</pre>
+<span class="org-rainbow-delimiters-depth-1">(</span>hello <span class="org-builtin">:a</span> 1
+       <span class="org-builtin">:b</span> 2
+       <span class="org-builtin">:c</span> 3<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -787,9 +791,9 @@ C-x C-f 绑定到了 <b>projectile-find-file-in-known-projects</b> 这个函数�
 如果我们这样设置的话会遇到一个问题：这个命令非常的慢。这时我们需要将 projectile 的 cache 打开 (<a href="https://github.com/syl20bnr/spacemacs/issues/4207#issuecomment-199951764">reference</a>):
 </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> projectile-enable-caching t<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> projectile-enable-caching t<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -811,20 +815,20 @@ C-x C-f 绑定到了 <b>projectile-find-file-in-known-projects</b> 这个函数�
 <p>
 如果我们有两个状态要切换，比较简单：
 </p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">yd-toggle-move-indent</span> <span style="color: #7388d6;">()</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-move-indent</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #909183;">)</span>
-        <span style="color: #909183;">(</span><span style="color: #a020f0;">progn</span>
-          <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">move-beginning-of-line</span><span style="color: #709870;">)</span>
-          <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-move-indent</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> nil<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-      <span style="color: #909183;">(</span><span style="color: #a020f0;">progn</span>
-        <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">back-to-indentation</span><span style="color: #709870;">)</span>
-        <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-move-indent</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> t<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">yd-toggle-move-indent</span> <span class="org-rainbow-delimiters-depth-2">()</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span>get <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-move-indent</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span><span class="org-rainbow-delimiters-depth-3">)</span>
+        <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">progn</span>
+          <span class="org-rainbow-delimiters-depth-4">(</span>call-interactively <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">move-beginning-of-line</span><span class="org-rainbow-delimiters-depth-4">)</span>
+          <span class="org-rainbow-delimiters-depth-4">(</span>put <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-move-indent</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span> nil<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">progn</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span>call-interactively <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">back-to-indentation</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span>put <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-move-indent</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span> t<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 
-<span style="color: #707183;">(</span>define-key map <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"C-a"</span><span style="color: #7388d6;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-move-indent</span><span style="color: #707183;">)</span>
-</pre>
+<span class="org-rainbow-delimiters-depth-1">(</span>define-key map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-a"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-move-indent</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -835,26 +839,26 @@ C-x C-f 绑定到了 <b>projectile-find-file-in-known-projects</b> 这个函数�
 <p>
 但是如果有多个状态呢？这里我们就需要使用数字或字符串来表示状态了。
 </p>
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">yd-toggle-test</span> <span style="color: #7388d6;">()</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> <span style="color: #909183;">(</span>not <span style="color: #709870;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-        <span style="color: #909183;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"beginning"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">yd-toggle-test</span> <span class="org-rainbow-delimiters-depth-2">()</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span>not <span class="org-rainbow-delimiters-depth-4">(</span>get <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-test</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+        <span class="org-rainbow-delimiters-depth-3">(</span>put <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-test</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span> <span class="org-string">"beginning"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
 
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">cond</span>
-     <span style="color: #909183;">(</span><span style="color: #709870;">(</span>string= <span style="color: #8b2252;">"beginning"</span> <span style="color: #907373;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">move-beginning-of-line</span><span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"indentation"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">cond</span>
+     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>string= <span class="org-string">"beginning"</span> <span class="org-rainbow-delimiters-depth-5">(</span>get <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-test</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span>call-interactively <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">move-beginning-of-line</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span>put <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-test</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span> <span class="org-string">"indentation"</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
 
-     <span style="color: #909183;">(</span><span style="color: #709870;">(</span>string= <span style="color: #8b2252;">"indentation"</span> <span style="color: #907373;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">back-to-indentation</span><span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"end"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>string= <span class="org-string">"indentation"</span> <span class="org-rainbow-delimiters-depth-5">(</span>get <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-test</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span>call-interactively <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">back-to-indentation</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span>put <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-test</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span> <span class="org-string">"end"</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
 
-     <span style="color: #909183;">(</span><span style="color: #709870;">(</span>string= <span style="color: #8b2252;">"end"</span> <span style="color: #907373;">(</span>get <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span>call-interactively <span style="color: #a020f0;">'</span><span style="color: #008b8b;">move-end-of-line</span><span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span>put <span style="color: #a020f0;">'</span><span style="color: #008b8b;">yd-toggle-test</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">state</span> <span style="color: #8b2252;">"beginning"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-     <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>string= <span class="org-string">"end"</span> <span class="org-rainbow-delimiters-depth-5">(</span>get <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-test</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span>call-interactively <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">move-end-of-line</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span>put <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">yd-toggle-test</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">state</span> <span class="org-string">"beginning"</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+     <span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -875,10 +879,23 @@ C-x C-f 绑定到了 <b>projectile-find-file-in-known-projects</b> 这个函数�
 我们可以将一个 elisp 文件作为一个脚本执行。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">emacs --script test.el
-</pre>
+<div class="container">
+<pre><code class="shell">emacs --script test.el
+</code></pre>
 </div>
+</div>
+</div>
+<div id="outline-container-orgea87798" class="outline-2">
+<h2 id="orgea87798">27. Install and Update packages</h2>
+<div class="outline-text-2" id="text-orgea87798">
+<p>
+Type M-x list-packages to open the package list. Press ‘i’ to mark
+for installation, ‘u’ to unmark, and ‘x’ to perform the
+installation. Press ‘RET’ to read more about installing and using
+each package. hit Uto mark available upgrades, then review to
+decide if there are any I don't want to pick up. Then x to
+upgrade.
+</p>
 </div>
 </div>
 </div>

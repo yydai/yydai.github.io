@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:12 -->
+<!-- 2017-09-11 Mon 22:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mac OS X tricks</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -254,13 +257,13 @@ defaults write com.apple.dock autohide-time-modifier -int 0;killall Dock
 <b>open</b> command can let you open file and url in terminal
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">open . <span style="color: #b22222;"># </span><span style="color: #b22222;">will open the current folder in finder</span>
-open ./XXX.md <span style="color: #b22222;"># </span><span style="color: #b22222;">will open the markdown file with the default editor</span>
+<div class="container">
+<pre><code class="shell">open . <span class="org-comment-delimiter"># </span><span class="org-comment">will open the current folder in finder</span>
+open ./XXX.md <span class="org-comment-delimiter"># </span><span class="org-comment">will open the markdown file with the default editor</span>
 open http://www.baidu.com
-open -a dash <span style="color: #b22222;"># </span><span style="color: #b22222;">open a application of dash</span>
-oepn *.png <span style="color: #b22222;"># </span><span style="color: #b22222;">open all the png images</span>
-</pre>
+open -a dash <span class="org-comment-delimiter"># </span><span class="org-comment">open a application of dash</span>
+oepn *.png <span class="org-comment-delimiter"># </span><span class="org-comment">open all the png images</span>
+</code></pre>
 </div></li>
 
 <li><p>
@@ -270,10 +273,10 @@ oepn *.png <span style="color: #b22222;"># </span><span style="color: #b22222;">
 <p>
 You can let your Mac speaking,
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">say <span style="color: #8b2252;">"Hello world"</span>
+<div class="container">
+<pre><code class="shell">say <span class="org-string">"Hello world"</span>
 say -f &lt;file&gt;
-</pre>
+</code></pre>
 </div></li>
 
 <li><p>
@@ -295,19 +298,19 @@ left option ⇒ +ESC
 How to “Quit” the Finder in OS X
 Using those commands will be ok:
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">defaults write com.apple.finder QuitMenuItem -bool true
+<div class="container">
+<pre><code class="shell">defaults write com.apple.finder QuitMenuItem -bool true
 killall Finder
-</pre>
+</code></pre>
 </div>
 
 <p>
 To reverse this action, enter the following command:
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">defaults write com.apple.finder QuitMenuItem -bool false
+<div class="container">
+<pre><code class="shell">defaults write com.apple.finder QuitMenuItem -bool false
 killall Finder
-</pre>
+</code></pre>
 </div></li>
 
 <li><p>
@@ -317,25 +320,25 @@ Configure bash and/or vim to execute source ~/.bashrc everytime I finish editing
 <p>
 The direct way to do it:
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">vim ~/.bashrc &amp;&amp; <span style="color: #483d8b;">source</span> $<span style="color: #a0522d;">_</span>
-</pre>
+<div class="container">
+<pre><code class="shell">vim ~/.bashrc &amp;&amp; <span class="org-builtin">source</span> $<span class="org-variable-name">_</span>
+</code></pre>
 </div>
 
 <p>
 You can make an alias:
 </p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">vimbashrc</span>=<span style="color: #8b2252;">'vim ~/.bashrc &amp;&amp; source $_'</span>
-</pre>
+<div class="container">
+<pre><code class="shell"><span class="org-builtin">alias</span> <span class="org-variable-name">vimbashrc</span>=<span class="org-string">'vim ~/.bashrc &amp;&amp; source $_'</span>
+</code></pre>
 </div>
 
 <p>
 This works in bash or zsh. In other shell, you must explicit name .bashrc to source to make it work:
 </p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">vimbashrc</span>=<span style="color: #8b2252;">'vim ~/.bashrc &amp;&amp; source ~/.bashrc'</span>
-</pre>
+<div class="container">
+<pre><code class="shell"><span class="org-builtin">alias</span> <span class="org-variable-name">vimbashrc</span>=<span class="org-string">'vim ~/.bashrc &amp;&amp; source ~/.bashrc'</span>
+</code></pre>
 </div></li>
 
 <li><p>
@@ -345,40 +348,40 @@ Auto add, commit, and push a repo with one command
 <p>
 When Ι push a repo to github, Ι always do the job with the following commands:
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">git add .
-git commit -m <span style="color: #8b2252;">"the commit message"</span>
+<div class="container">
+<pre><code class="shell">git add .
+git commit -m <span class="org-string">"the commit message"</span>
 git push origin master
-</pre>
+</code></pre>
 </div>
 
 <p>
 I feel very tedious about this work, so I need a shell command to do this:
 </p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #0000ff;">auto_push</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+<div class="container">
+<pre><code class="shell"><span class="org-function-name">auto_push</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
     git add .
-    <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$1"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
-        <span style="color: #a0522d;">desc</span>=<span style="color: #8b2252;">"Auto commit"</span>
-    <span style="color: #a020f0;">else</span>
-        <span style="color: #a0522d;">desc</span>=<span style="color: #8b2252;">"$1"</span>
-    <span style="color: #a020f0;">fi</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$1"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">desc</span>=<span class="org-string">"Auto commit"</span>
+    <span class="org-keyword">else</span>
+        <span class="org-variable-name">desc</span>=<span class="org-string">"$1"</span>
+    <span class="org-keyword">fi</span>
 
-    git commit -m <span style="color: #8b2252;">"$desc"</span>
+    git commit -m <span class="org-string">"$desc"</span>
     git push origin master
-<span style="color: #707183;">}</span>
-<span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">push</span>=<span style="color: #8b2252;">'auto_push'</span>
-</pre>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+<span class="org-builtin">alias</span> <span class="org-variable-name">push</span>=<span class="org-string">'auto_push'</span>
+</code></pre>
 </div>
 
 <p>
 Now, we can use the command <b>push</b> to push any git repo to origin master.
 And the usage is:
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">push <span style="color: #b22222;"># </span><span style="color: #b22222;">with default message of "Auto commit"</span>
-push <span style="color: #8b2252;">"&lt;commit message&gt;"</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">commit with a message</span>
-</pre>
+<div class="container">
+<pre><code class="shell">push <span class="org-comment-delimiter"># </span><span class="org-comment">with default message of "Auto commit"</span>
+push <span class="org-string">"&lt;commit message&gt;"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">commit with a message</span>
+</code></pre>
 </div>
 
 <p>
@@ -388,28 +391,28 @@ Using the push command, I need to cd to the target dir.
 <p>
 I want a more easy way to do this without the cd command, so the version 2 is coming.
 </p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #0000ff;">read_config</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
-    <span style="color: #a0522d;">config</span>=<span style="color: #8b2252;">"~/.config/zsh-command/path.config"</span>
-    <span style="color: #483d8b;">source</span> $<span style="color: #a0522d;">config</span>
+<div class="container">
+<pre><code class="shell"><span class="org-function-name">read_config</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-variable-name">config</span>=<span class="org-string">"~/.config/zsh-command/path.config"</span>
+    <span class="org-builtin">source</span> $<span class="org-variable-name">config</span>
 
-    <span style="color: #a020f0;">if</span> <span style="color: #7388d6;">[</span> -z <span style="color: #8b2252;">"$1"</span> <span style="color: #7388d6;">]</span>; <span style="color: #a020f0;">then</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$1"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
         auto_push
-    <span style="color: #a020f0;">elif</span> ! cat $<span style="color: #a0522d;">config</span> | grep <span style="color: #8b2252;">"$1"</span> &gt; /dev/null; <span style="color: #a020f0;">then</span>
-        <span style="color: #483d8b;">echo</span> <span style="color: #8b2252;">"Push in current dir"</span>
-        auto_push $<span style="color: #a0522d;">1</span>
-    <span style="color: #a020f0;">else</span>
-        <span style="color: #a0522d;">temp</span>=$<span style="color: #7388d6;">{</span><span style="color: #a0522d;">1</span><span style="color: #7388d6;">}</span>_path
-        <span style="color: #b22222;"># </span><span style="color: #b22222;">https://superuser.com/questions/935374/difference-between-and-in-shell-script</span>
-        <span style="color: #b22222;"># </span><span style="color: #b22222;">https://unix.stackexchange.com/questions/68035/foo-and-zsh</span>
-        <span style="color: #483d8b;">pushd</span> $<span style="color: #7388d6;">{</span><span style="color: #909183;">(</span>P<span style="color: #909183;">)</span>temp<span style="color: #7388d6;">}</span> &gt; /dev/null <span style="color: #b22222;"># </span><span style="color: #b22222;">we use pushd instead of cd</span>
-        auto_push $<span style="color: #a0522d;">2</span>
-        <span style="color: #483d8b;">popd</span> &gt; /dev/null
-    <span style="color: #a020f0;">fi</span>
-<span style="color: #707183;">}</span>
+    <span class="org-keyword">elif</span> <span class="org-negation-char">!</span> cat $<span class="org-variable-name">config</span> | grep <span class="org-string">"$1"</span> &gt; /dev/null; <span class="org-keyword">then</span>
+        <span class="org-builtin">echo</span> <span class="org-string">"Push in current dir"</span>
+        auto_push $<span class="org-variable-name">1</span>
+    <span class="org-keyword">else</span>
+        <span class="org-variable-name">temp</span>=$<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">1</span><span class="org-rainbow-delimiters-depth-2">}</span>_path
+        <span class="org-comment-delimiter"># </span><span class="org-comment">https://superuser.com/questions/935374/difference-between-and-in-shell-script</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">https://unix.stackexchange.com/questions/68035/foo-and-zsh</span>
+        <span class="org-builtin">pushd</span> $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-rainbow-delimiters-depth-3">(</span>P<span class="org-rainbow-delimiters-depth-3">)</span>temp<span class="org-rainbow-delimiters-depth-2">}</span> &gt; /dev/null <span class="org-comment-delimiter"># </span><span class="org-comment">we use pushd instead of cd</span>
+        auto_push $<span class="org-variable-name">2</span>
+        <span class="org-builtin">popd</span> &gt; /dev/null
+    <span class="org-keyword">fi</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-<span style="color: #483d8b;">alias</span> <span style="color: #a0522d;">push</span>=<span style="color: #8b2252;">"read_config"</span>
-</pre>
+<span class="org-builtin">alias</span> <span class="org-variable-name">push</span>=<span class="org-string">"read_config"</span>
+</code></pre>
 </div>
 
 <p>
@@ -427,12 +430,12 @@ Comparing with the first version of push, this is more better.
 <p>
 Now, we can use the command like <b>push blog &lt;optional message&gt;</b> to do the job without using cd command.
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">push                <span style="color: #b22222;"># </span><span style="color: #b22222;">default message in current directory</span>
-push <span style="color: #8b2252;">"message"</span>      <span style="color: #b22222;"># </span><span style="color: #b22222;">push with specified message in current directory</span>
-push blog           <span style="color: #b22222;"># </span><span style="color: #b22222;">default message in the directory of blog</span>
-push blog <span style="color: #8b2252;">"message"</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">push with specified directory and message</span>
-</pre>
+<div class="container">
+<pre><code class="shell">push                <span class="org-comment-delimiter"># </span><span class="org-comment">default message in current directory</span>
+push <span class="org-string">"message"</span>      <span class="org-comment-delimiter"># </span><span class="org-comment">push with specified message in current directory</span>
+push blog           <span class="org-comment-delimiter"># </span><span class="org-comment">default message in the directory of blog</span>
+push blog <span class="org-string">"message"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">push with specified directory and message</span>
+</code></pre>
 </div></li>
 </ol>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-21 Mon 20:05 -->
+<!-- 2017-09-11 Mon 22:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MAC 好用软件</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -387,12 +390,12 @@ window 选项卡下，我们可以设置 terminal 的背景。
 关于 Profiles 其实还有一个很重要的应用，我们可以让 profile 执行我们想要的命令。举一个很具体的例子。
 我经常要更新我的 emacs 配置，但是如果我手动的去输入很多的命令就比较麻烦:
 </p>
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #6c71c4;">cd</span> ~/.emacs.d
+<div class="container">
+<pre><code class="shell"><span class="org-builtin">cd</span> ~/.emacs.d
 git add .
-git commit -m <span style="color: #2aa198;">"messages.."</span>
+git commit -m <span class="org-string">"messages.."</span>
 git push origin master
-</pre>
+</code></pre>
 </div>
 
 <p>
@@ -410,15 +413,15 @@ git push origin master
 然后关键的是 Send text at start，这里填的才是我们将要执行的命令。
 这里的 test.sh 如下：
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">git add .
-<span style="color: #6c71c4;">read</span> -p <span style="color: #2aa198;">"Commit description, default is 'Auto commit': "</span> desc
-<span style="color: #859900;">if</span> <span style="color: #657b83;">[</span> -z <span style="color: #2aa198;">"$desc"</span> <span style="color: #657b83;">]</span>; <span style="color: #859900;">then</span>
-    <span style="color: #6c71c4;">desc</span>=<span style="color: #2aa198;">"Auto commit"</span>
-<span style="color: #859900;">fi</span>
-git commit -m <span style="color: #2aa198;">"$desc"</span>
+<div class="container">
+<pre><code class="shell">git add .
+<span class="org-builtin">read</span> -p <span class="org-string">"Commit description, default is 'Auto commit': "</span> desc
+<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -z <span class="org-string">"$desc"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
+    <span class="org-variable-name">desc</span>=<span class="org-string">"Auto commit"</span>
+<span class="org-keyword">fi</span>
+git commit -m <span class="org-string">"$desc"</span>
 git push origin master
-</pre>
+</code></pre>
 </div>
 
 <p>
@@ -557,9 +560,9 @@ git push origin master
 举个例子，我们要在登录几台 remote server。
 我们就可以先输入：
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">ssh ubuntu@
-</pre>
+<div class="container">
+<pre><code class="shell">ssh ubuntu@
+</code></pre>
 </div>
 <p>
 然后在不同的 pane 中输入不同 server ip。
@@ -720,40 +723,40 @@ cmd + -  缩小字体
 使用如下的命令
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell">ffmpeg -i in.mov -s 600x400 -pix_fmt rgb24 -r 20 -f gif - | gifsicle --optimize=3 --delay=3 &gt; out.gif
-</pre>
+<div class="container">
+<pre><code class="shell">ffmpeg -i in.mov -s 600x400 -pix_fmt rgb24 -r 20 -f gif - | gifsicle --optimize=3 --delay=3 &gt; out.gif
+</code></pre>
 </div>
 <p>
 具体可以参考：<a href="https://gist.github.com/dergachev/4627207">https://gist.github.com/dergachev/4627207</a>
 可以写一个 shell 命令来做这个工作。例如我的。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-shell"><span style="color: #b58900;">movtogif</span><span style="color: #657b83;">()</span> <span style="color: #657b83;">{</span>
-    <span style="color: #859900;">if</span> <span style="color: #2aa198;">[</span> -z <span style="color: #2aa198;">"$1"</span> <span style="color: #2aa198;">]</span>; <span style="color: #859900;">then</span>
-        <span style="color: #6c71c4;">echo</span> <span style="color: #2aa198;">"usage: mov-gif &lt;src&gt; [desc]"</span>
-        <span style="color: #859900;">return</span> 1
-    <span style="color: #859900;">fi</span>
+<div class="container">
+<pre><code class="shell"><span class="org-function-name">movtogif</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$1"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-builtin">echo</span> <span class="org-string">"usage: mov-gif &lt;src&gt; [desc]"</span>
+        <span class="org-keyword">return</span> 1
+    <span class="org-keyword">fi</span>
 
-    <span style="color: #6c71c4;">local</span> <span style="color: #6c71c4;">filename</span>=$<span style="color: #6c71c4;">2</span>
-    <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">generate random filename</span>
-    <span style="color: #859900;">if</span> <span style="color: #2aa198;">[</span> -z <span style="color: #2aa198;">"$2"</span> <span style="color: #2aa198;">]</span>; <span style="color: #859900;">then</span>
-        <span style="color: #6c71c4;">filename</span>=<span style="color: #d33682;">`hexdump -e '/1 "%02x"' -n16 &lt; /dev/urandom`</span>
-    <span style="color: #859900;">fi</span>
-    ffmpeg -i $<span style="color: #2aa198;">{</span><span style="color: #6c71c4;">1</span><span style="color: #2aa198;">}</span>.mov -vf <span style="color: #6c71c4;">scale</span>=800:-1 -r 10 -f image2pipe -vcodec ppm - | <span style="color: #2aa198;">\</span>
-    convert -delay 5 -fuzz 2% -layers Optimize -loop 0 - $<span style="color: #2aa198;">{</span><span style="color: #6c71c4;">2</span><span style="color: #2aa198;">}</span>.gif
-<span style="color: #657b83;">}</span>
+    <span class="org-builtin">local</span> <span class="org-variable-name">filename</span>=$<span class="org-variable-name">2</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">generate random filename</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$2"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
+        <span class="org-variable-name">filename</span>=<span class="org-sh-quoted-exec">`hexdump -e '/1 "%02x"' -n16 &lt; /dev/urandom`</span>
+    <span class="org-keyword">fi</span>
+    ffmpeg -i $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">1</span><span class="org-rainbow-delimiters-depth-2">}</span>.mov -vf <span class="org-variable-name">scale</span>=800:-1 -r 10 -f image2pipe -vcodec ppm - | <span class="org-sh-escaped-newline">\</span>
+    convert -delay 5 -fuzz 2% -layers Optimize -loop 0 - $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">2</span><span class="org-rainbow-delimiters-depth-2">}</span>.gif
+<span class="org-rainbow-delimiters-depth-1">}</span>
 
-</pre>
+</code></pre>
 </div>
 
 <p>
 我们就可以直接这样了。
 </p>
-<div class="org-src-container">
-<pre class="src src-shell">movtogif<span style="color: #859900;"> in</span>
-</pre>
+<div class="container">
+<pre><code class="shell">movtogif<span class="org-keyword"> in</span>
+</code></pre>
 </div>
 
 

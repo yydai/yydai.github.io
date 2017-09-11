@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:12 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的键盘宏</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -294,17 +297,17 @@ aa bb cc dd ==&gt; "aa", "b", "cc", "dd"
 <p>
 我写了一个函数，能够根据键盘宏来生成上面的序列：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">auto-sequence</span> <span style="color: #7388d6;">(</span>format start end<span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"sSequence format: </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">nEnter start number: </span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">nEnter end number: "</span><span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">progn</span>
-      <span style="color: #909183;">(</span>kmacro-set-format format<span style="color: #909183;">)</span>
-      <span style="color: #909183;">(</span>kmacro-set-counter start<span style="color: #909183;">)</span>
-      <span style="color: #909183;">(</span><span style="color: #a020f0;">while</span> <span style="color: #709870;">(</span>&lt; start <span style="color: #907373;">(</span>+ 1 end<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-        <span style="color: #709870;">(</span>execute-kbd-macro <span style="color: #907373;">(</span>read-kbd-macro <span style="color: #8b2252;">"&lt;f3&gt; RET"</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-        <span style="color: #709870;">(</span><span style="color: #a020f0;">setq</span> start <span style="color: #907373;">(</span>+ 1 start<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-      <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">auto-sequence</span> <span class="org-rainbow-delimiters-depth-2">(</span>format start end<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"sSequence format: </span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">nEnter start number: </span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">nEnter end number: "</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">progn</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>kmacro-set-format format<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>kmacro-set-counter start<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-4">(</span>&lt; start <span class="org-rainbow-delimiters-depth-5">(</span>+ 1 end<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span>execute-kbd-macro <span class="org-rainbow-delimiters-depth-5">(</span>read-kbd-macro <span class="org-string">"&lt;f3&gt; RET"</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">setq</span> start <span class="org-rainbow-delimiters-depth-5">(</span>+ 1 start<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -339,9 +342,9 @@ aa bb cc dd ==&gt; "aa", "b", "cc", "dd"
 在使用命令方式调用的时候如果嫌麻烦，可以为这个宏设置一个快捷键。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span>global-set-key <span style="color: #7388d6;">(</span>kbd <span style="color: #8b2252;">"C-cm"</span><span style="color: #7388d6;">)</span> <span style="color: #a020f0;">'</span><span style="color: #008b8b;">test-marco</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-cm"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">test-marco</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>

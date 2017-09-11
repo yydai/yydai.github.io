@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-08-10 Thu 23:12 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中的宏</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -269,11 +272,11 @@ for the JavaScript code in this tag.
 <p>
 例如，when 的实现：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">when</span> <span style="color: #7388d6;">(</span><span style="color: #a020f0;">cond</span> <span style="color: #228b22;">&amp;rest</span> body<span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">declare</span> <span style="color: #909183;">(</span>indent 1<span style="color: #909183;">)</span> <span style="color: #909183;">(</span>debug t<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span>list <span style="color: #a020f0;">'</span><span style="color: #008b8b;">if</span> cond <span style="color: #909183;">(</span>cons <span style="color: #a020f0;">'</span><span style="color: #008b8b;">progn</span> body<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defmacro</span> <span class="org-function-name">when</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">cond</span> <span class="org-type">&amp;rest</span> body<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">declare</span> <span class="org-rainbow-delimiters-depth-3">(</span>indent 1<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>debug t<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span>list <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">if</span> cond <span class="org-rainbow-delimiters-depth-3">(</span>cons <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">progn</span> body<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -295,34 +298,34 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <p>
 下面我们就可以使用 when 了：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> x 1<span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> y 2<span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">when</span> <span style="color: #7388d6;">(</span>&lt; x y<span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>insert <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">Hello world"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> x 1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> y 2<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-2">(</span>&lt; x y<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>insert <span class="org-string">"</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">Hello world"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
 我们可以使用 macroexpand 来展开宏：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span>macroexpand <span style="color: #a020f0;">'</span><span style="color: #7388d6;">(</span>when <span style="color: #909183;">(</span>&lt; x y<span style="color: #909183;">)</span>
-                <span style="color: #909183;">(</span>insert <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">hello world"</span><span style="color: #909183;">)</span>
-                <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span>macroexpand <span class="org-highlight-quoted-quote">'</span><span class="org-rainbow-delimiters-depth-2">(</span>when <span class="org-rainbow-delimiters-depth-3">(</span>&lt; x y<span class="org-rainbow-delimiters-depth-3">)</span>
+                <span class="org-rainbow-delimiters-depth-3">(</span>insert <span class="org-string">"</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">hello world"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+                <span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
 结果如下：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">if</span>
-    <span style="color: #7388d6;">(</span>&lt; x y<span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span><span style="color: #a020f0;">progn</span>
-      <span style="color: #909183;">(</span>insert <span style="color: #8b2252;">"</span><span style="color: #8b2252; font-weight: bold;">\</span><span style="color: #8b2252; font-weight: bold;">n</span><span style="color: #8b2252;">hello world"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">if</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span>&lt; x y<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">progn</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>insert <span class="org-string">"</span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">hello world"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -338,12 +341,12 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <p>
 例如，写一个 inc 函数，它会自动将 var 加 1：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">inc</span> <span style="color: #7388d6;">(</span>var<span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span>list <span style="color: #a020f0;">'</span><span style="color: #008b8b;">setq</span> var <span style="color: #909183;">(</span>list <span style="color: #a020f0;">'</span><span style="color: #008b8b;">1+</span> var<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">inc</span> <span class="org-rainbow-delimiters-depth-2">(</span>var<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span>list <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">setq</span> var <span class="org-rainbow-delimiters-depth-3">(</span>list <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">1+</span> var<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #707183;">(</span>inc <span style="color: #a020f0;">'</span><span style="color: #008b8b;">x</span><span style="color: #707183;">)</span>
-</pre>
+<span class="org-rainbow-delimiters-depth-1">(</span>inc <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">x</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -353,39 +356,39 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <p>
 会输出如下的结果：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> x
-  <span style="color: #7388d6;">(</span>1+ x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> x
+  <span class="org-rainbow-delimiters-depth-2">(</span>1+ x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
 我们发现，这就是一段代码啊。所以，我们可以这样：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> x 1<span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span>eval <span style="color: #7388d6;">(</span>inc <span style="color: #a020f0;">'</span><span style="color: #008b8b;">x</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  &#8658; &#32467;&#26524;&#20026; 2
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> x 1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>eval <span class="org-rainbow-delimiters-depth-2">(</span>inc <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">x</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>  &#8658; &#32467;&#26524;&#20026; 2
+</code></pre>
 </div>
 
 <p>
 如果我们使用宏来实现呢？
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">inc</span> <span style="color: #7388d6;">(</span>var<span style="color: #7388d6;">)</span>
-  <span style="color: #7388d6;">(</span>list <span style="color: #a020f0;">'</span><span style="color: #008b8b;">setq</span> var <span style="color: #909183;">(</span>list <span style="color: #a020f0;">'</span><span style="color: #008b8b;">1+</span> var<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defmacro</span> <span class="org-function-name">inc</span> <span class="org-rainbow-delimiters-depth-2">(</span>var<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>list <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">setq</span> var <span class="org-rainbow-delimiters-depth-3">(</span>list <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">1+</span> var<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
 然后我们可以直接这样使用与上面通过函数的方式效果一样：
 </p>
 
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> x 1<span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span>inc x<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> x 1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>inc x<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -398,16 +401,16 @@ indent 的类型比较简单，它可以使用这样几种类型：
 宏的参数是出现在最后扩展后的表达式中，而函数参数是求值后才传递给这个函数。
 例如下面的例子：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">test1</span> <span style="color: #7388d6;">(</span>var<span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span>message <span style="color: #8b2252;">"%d %d"</span> var var<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">test1</span> <span class="org-rainbow-delimiters-depth-2">(</span>var<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span>message <span class="org-string">"%d %d"</span> var var<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #707183;">(</span><span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">test2</span> <span style="color: #7388d6;">(</span>var<span style="color: #7388d6;">)</span>
-    <span style="color: #7388d6;">(</span>list <span style="color: #a020f0;">'</span><span style="color: #008b8b;">message</span> <span style="color: #8b2252;">"%d %d"</span> var var<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">setq</span> x 1<span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span>test1 <span style="color: #7388d6;">(</span>inc x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#32467;&#26524;&#20026; "2 2"</span>
-<span style="color: #707183;">(</span>test2 <span style="color: #7388d6;">(</span>inc x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#32467;&#26524;&#20026; "2 3"</span>
-</pre>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defmacro</span> <span class="org-function-name">test2</span> <span class="org-rainbow-delimiters-depth-2">(</span>var<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span>list <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">message</span> <span class="org-string">"%d %d"</span> var var<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> x 1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>test1 <span class="org-rainbow-delimiters-depth-2">(</span>inc x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>  <span class="org-comment-delimiter">;; </span><span class="org-comment">&#32467;&#26524;&#20026; "2 2"</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>test2 <span class="org-rainbow-delimiters-depth-2">(</span>inc x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>  <span class="org-comment-delimiter">;; </span><span class="org-comment">&#32467;&#26524;&#20026; "2 3"</span>
+</code></pre>
 </div>
 <p>
 原因是 (test2 1) 被展开为 (message "%d %d" (inc x) (inc x))。
@@ -423,9 +426,9 @@ indent 的类型比较简单，它可以使用这样几种类型：
 为了简化宏的定义，我们可以使用一个特殊的宏 “`”，这个键位于 tab 的上面。
 如果使用了 ` 所有的元素都是引起（quote）的，例如：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #a020f0;">`</span><span style="color: #707183;">(</span>hello world<span style="color: #707183;">)</span> <span style="color: #b22222;">;; </span><span style="color: #b22222;">&#30456;&#24403;&#20110; (list 'hello 'world)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-highlight-quoted-quote">`</span><span class="org-rainbow-delimiters-depth-1">(</span>hello world<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">&#30456;&#24403;&#20110; (list 'hello 'world)</span>
+</code></pre>
 </div>
 
 <p>
@@ -435,11 +438,11 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <p>
 例如上面定义的 when 就可以这样来写：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">when</span> <span style="color: #7388d6;">(</span><span style="color: #a020f0;">cond</span> <span style="color: #228b22;">&amp;rest</span> body<span style="color: #7388d6;">)</span>
-    <span style="color: #a020f0;">`</span><span style="color: #7388d6;">(</span><span style="color: #a020f0;">if</span> ,cond
-         <span style="color: #909183;">(</span><span style="color: #a020f0;">progn</span> ,@body<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defmacro</span> <span class="org-function-name">when</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">cond</span> <span class="org-type">&amp;rest</span> body<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-highlight-quoted-quote">`</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> ,cond
+         <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">progn</span> ,@body<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -450,20 +453,20 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <p>
 如果要生成的宏为这个：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">inc</span> <span style="color: #7388d6;">(</span>var<span style="color: #7388d6;">)</span>
-    <span style="color: #a020f0;">`</span><span style="color: #7388d6;">(</span><span style="color: #a020f0;">setq</span> ,var <span style="color: #909183;">(</span>1+ ,var<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defmacro</span> <span class="org-function-name">inc</span> <span class="org-rainbow-delimiters-depth-2">(</span>var<span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-highlight-quoted-quote">`</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">setq</span> ,var <span class="org-rainbow-delimiters-depth-3">(</span>1+ ,var<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
 我们可以这样写：
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">create-inc</span> <span style="color: #7388d6;">()</span>
-    <span style="color: #a020f0;">`</span><span style="color: #7388d6;">(</span><span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">inc</span> <span style="color: #909183;">(</span>var<span style="color: #909183;">)</span>
-        <span style="color: #a020f0;">`</span><span style="color: #909183;">(</span><span style="color: #a020f0;">setq</span> ,var <span style="color: #709870;">(</span>1+ ,var<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defmacro</span> <span class="org-function-name">create-inc</span> <span class="org-rainbow-delimiters-depth-2">()</span>
+    <span class="org-highlight-quoted-quote">`</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">defmacro</span> <span class="org-function-name">inc</span> <span class="org-rainbow-delimiters-depth-3">(</span>var<span class="org-rainbow-delimiters-depth-3">)</span>
+        <span class="org-highlight-quoted-quote">`</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">setq</span> ,var <span class="org-rainbow-delimiters-depth-4">(</span>1+ ,var<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -484,29 +487,29 @@ indent 的类型比较简单，它可以使用这样几种类型：
 下面的代码其实就是通过宏来生成 3 个搜索函数。它们的区别仅仅在于 url 和提示信息不同，其他完全相同。它的优点不言而喻，极大的减少了无聊重复的代码；另外一个优点是它的扩展性很强，我们可以任意的添加其它的搜索函数。
 </p>
 
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #707183;">(</span><span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">prelude-search</span> <span style="color: #7388d6;">(</span>query-url prompt<span style="color: #7388d6;">)</span>
-  <span style="color: #8b2252;">"Open the search url constructed with the QUERY-URL.</span>
-<span style="color: #8b2252;">PROMPT sets the `read-string prompt."</span>
-  <span style="color: #7388d6;">(</span>browse-url
-   <span style="color: #909183;">(</span>concat query-url
-           <span style="color: #709870;">(</span>url-hexify-string
-            <span style="color: #907373;">(</span><span style="color: #a020f0;">if</span> mark-active
-                <span style="color: #6276ba;">(</span>buffer-substring <span style="color: #858580;">(</span>region-beginning<span style="color: #858580;">)</span> <span style="color: #858580;">(</span>region-end<span style="color: #858580;">)</span><span style="color: #6276ba;">)</span>
-              <span style="color: #6276ba;">(</span>read-string prompt<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">prelude-search</span> <span class="org-rainbow-delimiters-depth-2">(</span>query-url prompt<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Open the search url constructed with the QUERY-URL.</span>
+<span class="org-doc">PROMPT sets the `read-string prompt."</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>browse-url
+   <span class="org-rainbow-delimiters-depth-3">(</span>concat query-url
+           <span class="org-rainbow-delimiters-depth-4">(</span>url-hexify-string
+            <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">if</span> mark-active
+                <span class="org-rainbow-delimiters-depth-6">(</span>buffer-substring <span class="org-rainbow-delimiters-depth-7">(</span>region-beginning<span class="org-rainbow-delimiters-depth-7">)</span> <span class="org-rainbow-delimiters-depth-7">(</span>region-end<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
+              <span class="org-rainbow-delimiters-depth-6">(</span>read-string prompt<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #707183;">(</span><span style="color: #a020f0;">defmacro</span> <span style="color: #0000ff;">prelude-install-search-engine</span> <span style="color: #7388d6;">(</span>search-engine-name search-engine-url search-engine-prompt<span style="color: #7388d6;">)</span>
-  <span style="color: #8b2252;">"Given some information regarding a search engine, install the interactive command to search through them"</span>
-  <span style="color: #a020f0;">`</span><span style="color: #7388d6;">(</span><span style="color: #a020f0;">defun</span> ,<span style="color: #909183;">(</span>intern <span style="color: #709870;">(</span>format <span style="color: #8b2252;">"prelude-%s"</span> search-engine-name<span style="color: #709870;">)</span><span style="color: #909183;">)</span> <span style="color: #909183;">()</span>
-     ,<span style="color: #909183;">(</span>format <span style="color: #8b2252;">"Search %s with a query or region if any."</span> search-engine-name<span style="color: #909183;">)</span>
-     <span style="color: #909183;">(</span><span style="color: #a020f0;">interactive</span><span style="color: #909183;">)</span>
-     <span style="color: #909183;">(</span>prelude-search ,search-engine-url ,search-engine-prompt<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defmacro</span> <span class="org-function-name">prelude-install-search-engine</span> <span class="org-rainbow-delimiters-depth-2">(</span>search-engine-name search-engine-url search-engine-prompt<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-doc">"Given some information regarding a search engine, install the interactive command to search through them"</span>
+  <span class="org-highlight-quoted-quote">`</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">defun</span> ,<span class="org-rainbow-delimiters-depth-3">(</span>intern <span class="org-rainbow-delimiters-depth-4">(</span>format <span class="org-string">"prelude-%s"</span> search-engine-name<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">()</span>
+     ,<span class="org-rainbow-delimiters-depth-3">(</span>format <span class="org-string">"Search %s with a query or region if any."</span> search-engine-name<span class="org-rainbow-delimiters-depth-3">)</span>
+     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-3">)</span>
+     <span class="org-rainbow-delimiters-depth-3">(</span>prelude-search ,search-engine-url ,search-engine-prompt<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 
-<span style="color: #707183;">(</span><span style="color: #a020f0;">prelude-install-search-engine</span> <span style="color: #8b2252;">"google"</span>     <span style="color: #8b2252;">"http://www.google.com/search?q="</span>              <span style="color: #8b2252;">"Google: "</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">prelude-install-search-engine</span> <span style="color: #8b2252;">"youtube"</span>    <span style="color: #8b2252;">"http://www.youtube.com/results?search_query="</span> <span style="color: #8b2252;">"Search YouTube: "</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span><span style="color: #a020f0;">prelude-install-search-engine</span> <span style="color: #8b2252;">"github"</span>     <span style="color: #8b2252;">"https://github.com/search?q="</span>                 <span style="color: #8b2252;">"Search GitHub: "</span><span style="color: #707183;">)</span>
-</pre>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">prelude-install-search-engine</span> <span class="org-string">"google"</span>     <span class="org-string">"http://www.google.com/search?q="</span>              <span class="org-string">"Google: "</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">prelude-install-search-engine</span> <span class="org-string">"youtube"</span>    <span class="org-string">"http://www.youtube.com/results?search_query="</span> <span class="org-string">"Search YouTube: "</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">prelude-install-search-engine</span> <span class="org-string">"github"</span>     <span class="org-string">"https://github.com/search?q="</span>                 <span class="org-string">"Search GitHub: "</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 </div>

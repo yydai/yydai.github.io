@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-08 Fri 10:39 -->
+<!-- 2017-09-11 Mon 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>准备</title>
@@ -180,6 +180,9 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <script type="text/javascript">
@@ -285,18 +288,18 @@ Google Cloud platform
 </div><div id="outline-container-org23cdb5c" class="outline-3">
 <h3 id="org23cdb5c">Python</h3>
 <div class="outline-text-3" id="text-org23cdb5c">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">quicksort</span><span style="color: #707183;">(</span>arr<span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">if</span> <span style="color: #483d8b;">len</span><span style="color: #707183;">(</span>arr<span style="color: #707183;">)</span> &lt; 1:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> arr
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">pivot</span> = arr<span style="color: #707183;">[</span><span style="color: #483d8b;">len</span><span style="color: #7388d6;">(</span>arr<span style="color: #7388d6;">)</span> // 2<span style="color: #707183;">]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">left</span> = <span style="color: #707183;">[</span>x <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> arr <span style="color: #a020f0;">if</span> x &lt; pivot<span style="color: #707183;">]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">middle</span> = <span style="color: #707183;">[</span>x <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> arr <span style="color: #a020f0;">if</span> x = pivot<span style="color: #707183;">]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">right</span> = <span style="color: #707183;">[</span>x <span style="color: #a020f0;">for</span> x <span style="color: #a020f0;">in</span> arr <span style="color: #a020f0;">if</span> x &gt; pivot<span style="color: #707183;">]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> quicksort<span style="color: #707183;">(</span>left<span style="color: #707183;">)</span> + middle + quicksort<span style="color: #707183;">(</span>right<span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">def</span> <span class="org-function-name">quicksort</span><span class="org-rainbow-delimiters-depth-1">(</span>arr<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">if</span> <span class="org-builtin">len</span><span class="org-rainbow-delimiters-depth-1">(</span>arr<span class="org-rainbow-delimiters-depth-1">)</span> &lt; 1:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">return</span> arr
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">pivot</span> = arr<span class="org-rainbow-delimiters-depth-1">[</span><span class="org-builtin">len</span><span class="org-rainbow-delimiters-depth-2">(</span>arr<span class="org-rainbow-delimiters-depth-2">)</span> // 2<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">left</span> = <span class="org-rainbow-delimiters-depth-1">[</span>x <span class="org-keyword">for</span> x <span class="org-keyword">in</span> arr <span class="org-keyword">if</span> x &lt; pivot<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">middle</span> = <span class="org-rainbow-delimiters-depth-1">[</span>x <span class="org-keyword">for</span> x <span class="org-keyword">in</span> arr <span class="org-keyword">if</span> x = pivot<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">right</span> = <span class="org-rainbow-delimiters-depth-1">[</span>x <span class="org-keyword">for</span> x <span class="org-keyword">in</span> arr <span class="org-keyword">if</span> x &gt; pivot<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">return</span> quicksort<span class="org-rainbow-delimiters-depth-1">(</span>left<span class="org-rainbow-delimiters-depth-1">)</span> + middle + quicksort<span class="org-rainbow-delimiters-depth-1">(</span>right<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>quicksort<span style="color: #7388d6;">(</span><span style="color: #909183;">[</span>2, 4, 10, 1, 2, 5<span style="color: #909183;">]</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-</pre>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>quicksort<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">[</span>2, 4, 10, 1, 2, 5<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div>
 
@@ -330,57 +333,57 @@ Numpy 主要用于科学计算。它的主要功能是处理数组。
 </div>
 
 <ul class="org-ul"><li><a id="org37de7c9"></a>arrays<br /><div class="outline-text-4" id="text-org37de7c9">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">a</span> = np.zeros<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>2,2<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">Create an array of all zeros</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>              <span style="color: #b22222;"># </span><span style="color: #b22222;">Prints "[[ 0.  0.]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span> <span style="color: #b22222;">#          </span><span style="color: #b22222;">[ 0.  0.]]"</span>
-<span style="color: #a0522d;">b</span> = np.ones<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>1,2<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>    <span style="color: #b22222;"># </span><span style="color: #b22222;">Create an array of all ones</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>              <span style="color: #b22222;"># </span><span style="color: #b22222;">Prints "[[ 1.  1.]]"</span>
-<span style="color: #a0522d;">c</span> = np.full<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>2,2<span style="color: #7388d6;">)</span>, 7<span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">Create a constant array</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>c<span style="color: #707183;">)</span>               <span style="color: #b22222;"># </span><span style="color: #b22222;">Prints "[[ 7.  7.]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #b22222;">#          </span><span style="color: #b22222;">[ 7.  7.]]"</span>
-<span style="color: #a0522d;">d</span> = np.eye<span style="color: #707183;">(</span>2<span style="color: #707183;">)</span>         <span style="color: #b22222;"># </span><span style="color: #b22222;">Create a 2x2 identity matrix</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>d<span style="color: #707183;">)</span>              <span style="color: #b22222;"># </span><span style="color: #b22222;">Prints "[[ 1.  0.]</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span> <span style="color: #b22222;">#          </span><span style="color: #b22222;">[ 0.  1.]]"</span>
-<span style="color: #a0522d;">e</span> = np.random.random<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>2,2<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">Create an array filled with random values</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>e<span style="color: #707183;">)</span>                     <span style="color: #b22222;">#</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">a</span> = np.zeros<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>2,2<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Create an array of all zeros</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>a<span class="org-rainbow-delimiters-depth-1">)</span>              <span class="org-comment-delimiter"># </span><span class="org-comment">Prints "[[ 0.  0.]</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-comment-delimiter">#          </span><span class="org-comment">[ 0.  0.]]"</span>
+<span class="org-variable-name">b</span> = np.ones<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>1,2<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>    <span class="org-comment-delimiter"># </span><span class="org-comment">Create an array of all ones</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>b<span class="org-rainbow-delimiters-depth-1">)</span>              <span class="org-comment-delimiter"># </span><span class="org-comment">Prints "[[ 1.  1.]]"</span>
+<span class="org-variable-name">c</span> = np.full<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>2,2<span class="org-rainbow-delimiters-depth-2">)</span>, 7<span class="org-rainbow-delimiters-depth-1">)</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">Create a constant array</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>c<span class="org-rainbow-delimiters-depth-1">)</span>               <span class="org-comment-delimiter"># </span><span class="org-comment">Prints "[[ 7.  7.]</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>  <span class="org-comment-delimiter">#          </span><span class="org-comment">[ 7.  7.]]"</span>
+<span class="org-variable-name">d</span> = np.eye<span class="org-rainbow-delimiters-depth-1">(</span>2<span class="org-rainbow-delimiters-depth-1">)</span>         <span class="org-comment-delimiter"># </span><span class="org-comment">Create a 2x2 identity matrix</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>d<span class="org-rainbow-delimiters-depth-1">)</span>              <span class="org-comment-delimiter"># </span><span class="org-comment">Prints "[[ 1.  0.]</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-comment-delimiter">#          </span><span class="org-comment">[ 0.  1.]]"</span>
+<span class="org-variable-name">e</span> = np.random.random<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>2,2<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">Create an array filled with random values</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>e<span class="org-rainbow-delimiters-depth-1">)</span>                     <span class="org-comment-delimiter">#</span>
+</code></pre>
 </div>
 </div></li>
 
 
 
 <li><a id="org2b24970"></a>Array indexing<br /><div class="outline-text-4" id="text-org2b24970">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">a</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>1,2,3,4<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>5,6,7,8<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>9,10,11,12<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">[2,3][6, 7]</span>
-<span style="color: #a0522d;">b</span> = a<span style="color: #707183;">[</span>:2, 1:3<span style="color: #707183;">]</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">a</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>1,2,3,4<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>5,6,7,8<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>9,10,11,12<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">[2,3][6, 7]</span>
+<span class="org-variable-name">b</span> = a<span class="org-rainbow-delimiters-depth-1">[</span>:2, 1:3<span class="org-rainbow-delimiters-depth-1">]</span>
+</code></pre>
 </div>
 </div></li>
 
 <li><a id="orgd05f827"></a>datatypes<br /><div class="outline-text-4" id="text-orgd05f827">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>1, 2<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>x.dtype<span style="color: #707183;">)</span> <span style="color: #b22222;">#</span><span style="color: #b22222;">prints "int 64"</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">x</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>1, 2<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>x.dtype<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">#</span><span class="org-comment">prints "int 64"</span>
+</code></pre>
 </div>
 </div></li>
 
 <li><a id="org4db1f11"></a>array math<br /><div class="outline-text-4" id="text-org4db1f11">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>1, 2<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>3, 4<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>np.<span style="color: #483d8b;">sum</span><span style="color: #7388d6;">(</span>x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>np.<span style="color: #483d8b;">sum</span><span style="color: #7388d6;">(</span>x, axis=0<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">print echo column sum</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>np.<span style="color: #483d8b;">sum</span><span style="color: #7388d6;">(</span>x, axis=1<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">print echo row sum</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">x</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>1, 2<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>3, 4<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-2">(</span>x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-2">(</span>x, axis=0<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">print echo column sum</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-2">(</span>x, axis=1<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">print echo row sum</span>
+</code></pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">a</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>1, 2, 3<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>3, 4, 5<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #a0522d;">b</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>1, 2, 3<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>a - b<span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">a</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>1, 2, 3<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>3, 4, 5<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">b</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>1, 2, 3<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>a - b<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
 <p>
@@ -413,26 +416,26 @@ Scipy build on the numpy.
 <p>
 Scipy 提供了很多的方法去处理图像。
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">from</span> scipy.misc <span style="color: #a020f0;">import</span> imread, imsave, imresize
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Read an JPEG image into a numpy array</span>
-<span style="color: #a0522d;">img</span> = imread<span style="color: #707183;">(</span><span style="color: #8b2252;">'assets/cat.jpg'</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>img.dtype, img.shape<span style="color: #707183;">)</span>  <span style="color: #b22222;"># </span><span style="color: #b22222;">Prints "uint8 (400, 248, 3)"</span>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">from</span> scipy.misc <span class="org-keyword">import</span> imread, imsave, imresize
+<span class="org-comment-delimiter"># </span><span class="org-comment">Read an JPEG image into a numpy array</span>
+<span class="org-variable-name">img</span> = imread<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'assets/cat.jpg'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>img.dtype, img.shape<span class="org-rainbow-delimiters-depth-1">)</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">Prints "uint8 (400, 248, 3)"</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">We can tint the image by scaling each of the color channels</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">by a different scalar constant. The image has shape (400, 248, 3);</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">we multiply it by the array [1, 0.95, 0.9] of shape (3,);</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">numpy broadcasting means that this leaves the red channel unchanged,</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">and multiplies the green and blue channels by 0.95 and 0.9</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">respectively.</span>
-<span style="color: #a0522d;">img_tinted</span> = img * <span style="color: #707183;">[</span>1, 0.95, 0.9<span style="color: #707183;">]</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">We can tint the image by scaling each of the color channels</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">by a different scalar constant. The image has shape (400, 248, 3);</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">we multiply it by the array [1, 0.95, 0.9] of shape (3,);</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">numpy broadcasting means that this leaves the red channel unchanged,</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">and multiplies the green and blue channels by 0.95 and 0.9</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">respectively.</span>
+<span class="org-variable-name">img_tinted</span> = img * <span class="org-rainbow-delimiters-depth-1">[</span>1, 0.95, 0.9<span class="org-rainbow-delimiters-depth-1">]</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Resize the tinted image to be 300 by 300 pixels.</span>
-<span style="color: #a0522d;">img_tinted</span> = imresize<span style="color: #707183;">(</span>img_tinted, <span style="color: #7388d6;">(</span>300, 300<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Resize the tinted image to be 300 by 300 pixels.</span>
+<span class="org-variable-name">img_tinted</span> = imresize<span class="org-rainbow-delimiters-depth-1">(</span>img_tinted, <span class="org-rainbow-delimiters-depth-2">(</span>300, 300<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Write the tinted image back to disk</span>
-imsave<span style="color: #707183;">(</span><span style="color: #8b2252;">'assets/cat_tinted.jpg'</span>, img_tinted<span style="color: #707183;">)</span>
-</pre>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Write the tinted image back to disk</span>
+imsave<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'assets/cat_tinted.jpg'</span>, img_tinted<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div></li>
 
@@ -442,26 +445,26 @@ imsave<span style="color: #707183;">(</span><span style="color: #8b2252;">'asset
 Scipy 提供了一些有用的函数去处理点之间的距离。
 例如下面计算欧几里得距离。
 </p>
-<div class="org-src-container">
-<pre class="src src-python">Import numpy <span style="color: #a020f0;">as</span> np
-<span style="color: #a020f0;">from</span> scipy.spatial.distance <span style="color: #a020f0;">import</span> pdist, squareform
+<div class="container">
+<pre><code class="python">Import numpy <span class="org-keyword">as</span> np
+<span class="org-keyword">from</span> scipy.spatial.distance <span class="org-keyword">import</span> pdist, squareform
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Create the following array where each row is a point in 2D space:</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">[[0 1]</span>
-<span style="color: #b22222;">#  </span><span style="color: #b22222;">[1 0]</span>
-<span style="color: #b22222;">#  </span><span style="color: #b22222;">[2 0]]</span>
-<span style="color: #a0522d;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>0, 1<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>1, 0<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>2, 0<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Create the following array where each row is a point in 2D space:</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">[[0 1]</span>
+<span class="org-comment-delimiter">#  </span><span class="org-comment">[1 0]</span>
+<span class="org-comment-delimiter">#  </span><span class="org-comment">[2 0]]</span>
+<span class="org-variable-name">x</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>0, 1<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>1, 0<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>2, 0<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Compute the Euclidean distance between all rows of x.</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">d[i, j] is the Euclidean distance between x[i, :] and x[j, :],</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">and d is the following array:</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">[[ 0.          1.41421356  2.23606798]</span>
-<span style="color: #b22222;">#  </span><span style="color: #b22222;">[ 1.41421356  0.          1.        ]</span>
-<span style="color: #b22222;">#  </span><span style="color: #b22222;">[ 2.23606798  1.          0.        ]]</span>
-<span style="color: #a0522d;">d</span> = squareform<span style="color: #707183;">(</span>pdist<span style="color: #7388d6;">(</span>x, <span style="color: #8b2252;">'euclidean'</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span><span style="color: #707183;">(</span>d<span style="color: #707183;">)</span>
-</pre>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Compute the Euclidean distance between all rows of x.</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">d[i, j] is the Euclidean distance between x[i, :] and x[j, :],</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">and d is the following array:</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">[[ 0.          1.41421356  2.23606798]</span>
+<span class="org-comment-delimiter">#  </span><span class="org-comment">[ 1.41421356  0.          1.        ]</span>
+<span class="org-comment-delimiter">#  </span><span class="org-comment">[ 2.23606798  1.          0.        ]]</span>
+<span class="org-variable-name">d</span> = squareform<span class="org-rainbow-delimiters-depth-1">(</span>pdist<span class="org-rainbow-delimiters-depth-2">(</span>x, <span class="org-string">'euclidean'</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>d<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 </div></li></ul>
 </div>
@@ -470,14 +473,14 @@ Scipy 提供了一些有用的函数去处理点之间的距离。
 <h3 id="org5d38b92">Matplotlib</h3>
 <div class="outline-text-3" id="text-org5d38b92">
 </div><ul class="org-ul"><li><a id="orgb08854b"></a>Plotting<br /><div class="outline-text-4" id="text-orgb08854b">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
-<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
-<span style="color: #a0522d;">x</span> = np.arange<span style="color: #707183;">(</span>0, 3*np.pi, 0.1<span style="color: #707183;">)</span>
-<span style="color: #a0522d;">y</span> = np.sin<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-plt.plot<span style="color: #707183;">(</span>x, y<span style="color: #707183;">)</span>
-plt.show<span style="color: #707183;">()</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<span class="org-variable-name">x</span> = np.arange<span class="org-rainbow-delimiters-depth-1">(</span>0, 3*np.pi, 0.1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">y</span> = np.sin<span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>
+plt.plot<span class="org-rainbow-delimiters-depth-1">(</span>x, y<span class="org-rainbow-delimiters-depth-1">)</span>
+plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
+</code></pre>
 </div>
 
 
@@ -486,24 +489,24 @@ plt.show<span style="color: #707183;">()</span>
 </p>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
-<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+<div class="container">
+<pre><code class="python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Compute the x and y coordinates for points on sine and cosine curves</span>
-<span style="color: #a0522d;">x</span> = np.arange<span style="color: #707183;">(</span>0, 3 * np.pi, 0.1<span style="color: #707183;">)</span>
-<span style="color: #a0522d;">y_sin</span> = np.sin<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-<span style="color: #a0522d;">y_cos</span> = np.cos<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Compute the x and y coordinates for points on sine and cosine curves</span>
+<span class="org-variable-name">x</span> = np.arange<span class="org-rainbow-delimiters-depth-1">(</span>0, 3 * np.pi, 0.1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">y_sin</span> = np.sin<span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">y_cos</span> = np.cos<span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Plot the points using matplotlib</span>
-plt.plot<span style="color: #707183;">(</span>x, y_sin<span style="color: #707183;">)</span>
-plt.plot<span style="color: #707183;">(</span>x, y_cos<span style="color: #707183;">)</span>
-plt.xlabel<span style="color: #707183;">(</span><span style="color: #8b2252;">'x axis label'</span><span style="color: #707183;">)</span>
-plt.ylabel<span style="color: #707183;">(</span><span style="color: #8b2252;">'y axis label'</span><span style="color: #707183;">)</span>
-plt.title<span style="color: #707183;">(</span><span style="color: #8b2252;">'Sine and Cosine'</span><span style="color: #707183;">)</span>
-plt.legend<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #8b2252;">'Sine'</span>, <span style="color: #8b2252;">'Cosine'</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-plt.show<span style="color: #707183;">()</span>
-</pre>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Plot the points using matplotlib</span>
+plt.plot<span class="org-rainbow-delimiters-depth-1">(</span>x, y_sin<span class="org-rainbow-delimiters-depth-1">)</span>
+plt.plot<span class="org-rainbow-delimiters-depth-1">(</span>x, y_cos<span class="org-rainbow-delimiters-depth-1">)</span>
+plt.xlabel<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'x axis label'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+plt.ylabel<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'y axis label'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+plt.title<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'Sine and Cosine'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+plt.legend<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-string">'Sine'</span>, <span class="org-string">'Cosine'</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
+</code></pre>
 </div>
 
 <p>
@@ -530,27 +533,27 @@ subplot(a, b, c) 表示创建 a 行，b 列的图，做为第 c 个图。
 <p>
 we can use the imshow function to show images.
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> numpy <span style="color: #a020f0;">as</span> np
-<span style="color: #a020f0;">from</span> scipy.misc <span style="color: #a020f0;">import</span> imread, imresize
-<span style="color: #a020f0;">import</span> matplotlib.pyplot <span style="color: #a020f0;">as</span> plt
+<div class="container">
+<pre><code class="python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+<span class="org-keyword">from</span> scipy.misc <span class="org-keyword">import</span> imread, imresize
+<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
 
-<span style="color: #a0522d;">img</span> = imread<span style="color: #707183;">(</span><span style="color: #8b2252;">'assets/cat.jpg'</span><span style="color: #707183;">)</span>
-<span style="color: #a0522d;">img_tinted</span> = img * <span style="color: #707183;">[</span>1, 0.95, 0.9<span style="color: #707183;">]</span>
+<span class="org-variable-name">img</span> = imread<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">'assets/cat.jpg'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">img_tinted</span> = img * <span class="org-rainbow-delimiters-depth-1">[</span>1, 0.95, 0.9<span class="org-rainbow-delimiters-depth-1">]</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Show the original image</span>
-plt.subplot<span style="color: #707183;">(</span>1, 2, 1<span style="color: #707183;">)</span>
-plt.imshow<span style="color: #707183;">(</span>img<span style="color: #707183;">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Show the original image</span>
+plt.subplot<span class="org-rainbow-delimiters-depth-1">(</span>1, 2, 1<span class="org-rainbow-delimiters-depth-1">)</span>
+plt.imshow<span class="org-rainbow-delimiters-depth-1">(</span>img<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Show the tinted image</span>
-plt.subplot<span style="color: #707183;">(</span>1, 2, 2<span style="color: #707183;">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Show the tinted image</span>
+plt.subplot<span class="org-rainbow-delimiters-depth-1">(</span>1, 2, 2<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">A slight gotcha with imshow is that it might give strange results</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">if presented with data that is not uint8. To work around this, we</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">explicitly cast the image to uint8 before displaying it.</span>
-plt.imshow<span style="color: #707183;">(</span>np.uint8<span style="color: #7388d6;">(</span>img_tinted<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-plt.show<span style="color: #707183;">()</span>
-</pre>
+<span class="org-comment-delimiter"># </span><span class="org-comment">A slight gotcha with imshow is that it might give strange results</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">if presented with data that is not uint8. To work around this, we</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">explicitly cast the image to uint8 before displaying it.</span>
+plt.imshow<span class="org-rainbow-delimiters-depth-1">(</span>np.uint8<span class="org-rainbow-delimiters-depth-2">(</span>img_tinted<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
+</code></pre>
 </div>
 
 
@@ -577,22 +580,22 @@ numpy 中 flatnonzero()
 这个函数返回一个矩阵中非零元素的位置。
 例如
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">x</span> = np.arange<span style="color: #707183;">(</span>-2, 3<span style="color: #707183;">)</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">x = array([-2, -1,  0,  1,  2])</span>
-np.flatnozero<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">array([0, 1, 3, 4])</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">x</span> = np.arange<span class="org-rainbow-delimiters-depth-1">(</span>-2, 3<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">x = array([-2, -1,  0,  1,  2])</span>
+np.flatnozero<span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">array([0, 1, 3, 4])</span>
+</code></pre>
 </div>
 
 <p>
 如果是
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">d</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>1,2,3,4,4,3,5,3,6<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-<span style="color: #a0522d;">haa</span> = np.flatnonzero<span style="color: #707183;">(</span>d == 3<span style="color: #707183;">)</span>
-<span style="color: #a020f0;">print</span> haa
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">d</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>1,2,3,4,4,3,5,3,6<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">haa</span> = np.flatnonzero<span class="org-rainbow-delimiters-depth-1">(</span>d == 3<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">print</span> haa
+</code></pre>
 </div>
 
 <p>
@@ -612,22 +615,22 @@ reshape(a, newshape, order='C')
 其中的 newshape 是 int 或 tuple。
 例如下面的用法。
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">a</span> = np.arange<span style="color: #707183;">(</span>6<span style="color: #707183;">)</span>.reshape<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>3, 2<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
-array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>0, 1<span style="color: #909183;">]</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #909183;">[</span>2, 3<span style="color: #909183;">]</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #909183;">[</span>4, 5<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">a</span> = np.arange<span class="org-rainbow-delimiters-depth-1">(</span>6<span class="org-rainbow-delimiters-depth-1">)</span>.reshape<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>3, 2<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>0, 1<span class="org-rainbow-delimiters-depth-3">]</span>,
+       <span class="org-rainbow-delimiters-depth-3">[</span>2, 3<span class="org-rainbow-delimiters-depth-3">]</span>,
+       <span class="org-rainbow-delimiters-depth-3">[</span>4, 5<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div>
 
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">reshape &#21518;&#35201;&#19982;&#21407;&#26469;&#30340;&#25968;&#25454;&#19968;&#33268;&#65292;&#24403;&#20351;&#29992;-1 &#30340;&#26102;&#20505;&#65292;numpy &#20250;&#24110;&#25105;&#20204;&#33258;&#21160;&#35745;&#31639;&#12290;</span>
-np.reshape<span style="color: #707183;">(</span>a, <span style="color: #7388d6;">(</span>3,-1<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">reshape &#21518;&#35201;&#19982;&#21407;&#26469;&#30340;&#25968;&#25454;&#19968;&#33268;&#65292;&#24403;&#20351;&#29992;-1 &#30340;&#26102;&#20505;&#65292;numpy &#20250;&#24110;&#25105;&#20204;&#33258;&#21160;&#35745;&#31639;&#12290;</span>
+np.reshape<span class="org-rainbow-delimiters-depth-1">(</span>a, <span class="org-rainbow-delimiters-depth-2">(</span>3,-1<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>1, 2<span style="color: #909183;">]</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #909183;">[</span>3, 4<span style="color: #909183;">]</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #909183;">[</span>5, 6<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-</pre>
+array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>1, 2<span class="org-rainbow-delimiters-depth-3">]</span>,
+       <span class="org-rainbow-delimiters-depth-3">[</span>3, 4<span class="org-rainbow-delimiters-depth-3">]</span>,
+       <span class="org-rainbow-delimiters-depth-3">[</span>5, 6<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div></li>
 
 <li><p>
@@ -638,26 +641,26 @@ np.argsort
 这个函数返回排序序号。
 例如
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a0522d;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>3, 1, 2<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-np.argsort<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>1, 2, 0<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">x</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>3, 1, 2<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+np.argsort<span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>
+array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>1, 2, 0<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div></li>
 
 <li><p>
 np.hstack
 </p>
-<div class="org-src-container">
-<pre class="src src-python">&gt;&gt;&gt; <span style="color: #a0522d;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>1, 2, 3<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>2, 3, 5<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<div class="container">
+<pre><code class="python">&gt;&gt;&gt; <span class="org-variable-name">x</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>1, 2, 3<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>2, 3, 5<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 &gt;&gt;&gt; x
-array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>1, 2, 3<span style="color: #909183;">]</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #909183;">[</span>2, 3, 5<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>1, 2, 3<span class="org-rainbow-delimiters-depth-3">]</span>,
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>  <span class="org-rainbow-delimiters-depth-3">[</span>2, 3, 5<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-&gt;&gt;&gt; np.hstack<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>x, np.ones<span style="color: #909183;">(</span><span style="color: #709870;">(</span>x.shape<span style="color: #907373;">[</span>0<span style="color: #907373;">]</span>, 1<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span> 1.,  2.,  3.,  1.<span style="color: #909183;">]</span>,
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  <span style="color: #909183;">[</span> 2.,  3.,  5.,  1.<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
-</pre>
+&gt;&gt;&gt; np.hstack<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>x, np.ones<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>x.shape<span class="org-rainbow-delimiters-depth-5">[</span>0<span class="org-rainbow-delimiters-depth-5">]</span>, 1<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span> 1.,  2.,  3.,  1.<span class="org-rainbow-delimiters-depth-3">]</span>,
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span>  <span class="org-rainbow-delimiters-depth-3">[</span> 2.,  3.,  5.,  1.<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
 </div></li>
 </ol>
 </div>
@@ -693,13 +696,13 @@ array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span
 关于这部分数据是通过 pickle 处理过的数据。
 我们可以通过下面的方式得到原始的字典结构。
 </p>
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #a020f0;">import</span> pickle
-<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">unpickle</span><span style="color: #707183;">(</span><span style="color: #483d8b;">file</span><span style="color: #707183;">)</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">with</span> <span style="color: #483d8b;">open</span><span style="color: #707183;">(</span><span style="color: #483d8b;">file</span>, <span style="color: #8b2252;">'rb'</span><span style="color: #707183;">)</span> <span style="color: #a020f0;">as</span> fo:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="color: #483d8b;">dict</span> = pickle.load<span style="color: #707183;">(</span>fo, encoding=<span style="color: #8b2252;">'bytes'</span><span style="color: #707183;">)</span>
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">return</span> <span style="color: #483d8b;">dict</span>
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">import</span> pickle
+<span class="org-keyword">def</span> <span class="org-function-name">unpickle</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">file</span><span class="org-rainbow-delimiters-depth-1">)</span>:
+    <span class="org-keyword">with</span> <span class="org-builtin">open</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">file</span>, <span class="org-string">'rb'</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-keyword">as</span> fo:
+        <span class="org-builtin">dict</span> = pickle.load<span class="org-rainbow-delimiters-depth-1">(</span>fo, encoding=<span class="org-string">'bytes'</span><span class="org-rainbow-delimiters-depth-1">)</span>
+    <span class="org-keyword">return</span> <span class="org-builtin">dict</span>
+</code></pre>
 </div>
 
 <p>
@@ -707,9 +710,9 @@ array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span
 </p>
 <pre class="example">
 {
-    'num_cases_per_batch': 10000,
-    'label_names': ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'],
-    'num_vis': 3072
+	'num_cases_per_batch': 10000,
+	'label_names': ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'],
+	'num_vis': 3072
 }
 </pre>
 </div>

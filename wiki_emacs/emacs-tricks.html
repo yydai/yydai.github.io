@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-11 Mon 22:30 -->
+<!-- 2017-09-12 Tue 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的一些技巧</title>
@@ -369,9 +369,10 @@ expression.
 <p>
 在几乎所有的语言中，我们要输入很多的特殊字符，例如
 </p>
-<pre class="example">
-! @ # $ % ^ &amp; * ( )
-</pre>
+<div class="container">
+<pre><code class="python">! @ <span class="org-comment-delimiter"># </span><span class="org-comment">$ % ^ &amp; * ( )</span>
+</code></pre>
+</div>
 
 <p>
 但是这种字符的输入有些麻烦，需要按住 shift 键才行，下面我们就优化一下这种操作。
@@ -586,11 +587,11 @@ expression.
 <p>
 M-x butterfly
 </p>
-
-<p>
-(animate-string "Hello world"
-    (/ (window-height) 2) (- (/ (window-width) 2) 12))
-</p>
+<div class="container">
+<pre><code class="lisp"><span class="org-rainbow-delimiters-depth-1">(</span>animate-string <span class="org-string">"Hello world"</span>
+    <span class="org-rainbow-delimiters-depth-2">(</span>/ <span class="org-rainbow-delimiters-depth-3">(</span>window-height<span class="org-rainbow-delimiters-depth-3">)</span> 2<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span>- <span class="org-rainbow-delimiters-depth-3">(</span>/ <span class="org-rainbow-delimiters-depth-4">(</span>window-width<span class="org-rainbow-delimiters-depth-4">)</span> 2<span class="org-rainbow-delimiters-depth-3">)</span> 12<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
 </div>
 </div>
 
@@ -600,13 +601,14 @@ M-x butterfly
 <p>
 如果我们想生成如下效果的序列：
 </p>
-<pre class="example">
-Step 1 of 5: ...
+<div class="container">
+<pre><code class="python">Step 1 of 5: ...
 Step 2 of 5: ...
 Step 3 of 5: ...
 Step 4 of 5: ...
 Step 5 of 5: ...
-</pre>
+</code></pre>
+</div>
 
 <p>
 我们就可以借助键盘宏了。
@@ -655,19 +657,21 @@ Step 5 of 5: ...
 <p>
 这里我们说下 <b>C-x r t</b> 这个命令。举个例子一看就明白了。
 </p>
-<pre class="example">
-var a = 1
-var b = 2
-var c = 3
-</pre>
+<div class="container">
+<pre><code class="python">var <span class="org-variable-name">a</span> = 1
+var <span class="org-variable-name">b</span> = 2
+var <span class="org-variable-name">c</span> = 3
+</code></pre>
+</div>
 <p>
 改成
 </p>
-<pre class="example">
-this.a = 1
-this.b = 2
-this.c = 3
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">this.a</span> = 1
+<span class="org-variable-name">this.b</span> = 2
+<span class="org-variable-name">this.c</span> = 3
+</code></pre>
+</div>
 <p>
 我们就可以用这个命令了。具体的可以看 <a href="http://emacsrocks.com/e01.html">这里</a>。
 </p>

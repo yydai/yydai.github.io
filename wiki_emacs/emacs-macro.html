@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-11 Mon 22:30 -->
+<!-- 2017-09-12 Tue 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的键盘宏</title>
@@ -263,9 +263,10 @@ for the JavaScript code in this tag.
 一般来说，我们按下 &lt;F3&gt; 开始录制键盘宏，然后进行相应的操作，按下 &lt;F4&gt; 录制结束。然后按下 &lt;F4&gt; 执行录制的操作。
 如果想执行多次，可以这样:
 </p>
-<pre class="example">
-C-u &lt;times&gt; F4
-</pre>
+<div class="container">
+<pre><code class="python">C-u &lt;times&gt; F4
+</code></pre>
+</div>
 
 <p>
 上面的 F4 可以替换为 <b>C-x e</b> 它们的效果是一样的。
@@ -274,25 +275,27 @@ C-u &lt;times&gt; F4
 <p>
 例如，我有个需求是处理下面的几个文本：
 </p>
-<pre class="example">
-aa bb cc dd ==&gt; "aa", "b", "cc", "dd"
-</pre>
+<div class="container">
+<pre><code class="python">aa bb cc dd ==&gt; <span class="org-string">"aa"</span>, <span class="org-string">"b"</span>, <span class="org-string">"cc"</span>, <span class="org-string">"dd"</span>
+</code></pre>
+</div>
 
 <p>
 或者自动生成这个：
 </p>
 
-<pre class="example">
-第 1 章
+<div class="container">
+<pre><code class="python">&#31532; 1 &#31456;
 
-第 2 章
+&#31532; 2 &#31456;
 
-第 3 章
+&#31532; 3 &#31456;
 
-第 4 章
+&#31532; 4 &#31456;
 
-第 5 章
-</pre>
+&#31532; 5 &#31456;
+</code></pre>
+</div>
 
 <p>
 我写了一个函数，能够根据键盘宏来生成上面的序列：

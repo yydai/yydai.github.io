@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-11 Mon 22:30 -->
+<!-- 2017-09-12 Tue 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ANTLR 应用实例</title>
@@ -247,22 +247,22 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd386a94">例 1：将数组转化为字符串</a>
+<li><a href="#orge49cd93">例 1：将数组转化为字符串</a>
 <ul>
 <li><a href="#org12f133d">实现需求</a></li>
 </ul>
 </li>
-<li><a href="#orgfdd59ed">例 2：实现一个计算器</a></li>
-<li><a href="#org4ccb6b9">例 3：实现翻译器</a></li>
-<li><a href="#orgdf43ccd">例 4：提取某列数据</a></li>
+<li><a href="#org8db8ea2">例 2：实现一个计算器</a></li>
+<li><a href="#org261a605">例 3：实现翻译器</a></li>
+<li><a href="#org069168e">例 4：提取某列数据</a></li>
 </ul>
 </div>
 </div>
 <hr />
 
-<div id="outline-container-orgd386a94" class="outline-2">
-<h2 id="orgd386a94">例 1：将数组转化为字符串</h2>
-<div class="outline-text-2" id="text-orgd386a94">
+<div id="outline-container-orge49cd93" class="outline-2">
+<h2 id="orge49cd93">例 1：将数组转化为字符串</h2>
+<div class="outline-text-2" id="text-orge49cd93">
 <p>
 例如
 </p>
@@ -352,9 +352,10 @@ EOF
 <p>
 就会输出：
 </p>
-<pre class="example">
-(init { (value 1) , (value (init { (value 2) , (value 3) })) , (value 4) })
-</pre>
+<div class="container">
+<pre><code class="lisp"><span class="org-rainbow-delimiters-depth-1">(</span>init { <span class="org-rainbow-delimiters-depth-2">(</span>value 1<span class="org-rainbow-delimiters-depth-2">)</span> , <span class="org-rainbow-delimiters-depth-2">(</span>value <span class="org-rainbow-delimiters-depth-3">(</span>init { <span class="org-rainbow-delimiters-depth-4">(</span>value 2<span class="org-rainbow-delimiters-depth-4">)</span> , <span class="org-rainbow-delimiters-depth-4">(</span>value 3<span class="org-rainbow-delimiters-depth-4">)</span> }<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span> , <span class="org-rainbow-delimiters-depth-2">(</span>value 4<span class="org-rainbow-delimiters-depth-2">)</span> }<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
 </div>
 
 
@@ -454,16 +455,17 @@ Ctrl-d
 <p>
 结果：
 </p>
-<pre class="example">
-"\u0063\u0003\u01c3"
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-doc">"\u0063\u0003\u01c3"</span>
+</code></pre>
+</div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgfdd59ed" class="outline-2">
-<h2 id="orgfdd59ed">例 2：实现一个计算器</h2>
-<div class="outline-text-2" id="text-orgfdd59ed">
+<div id="outline-container-org8db8ea2" class="outline-2">
+<h2 id="org8db8ea2">例 2：实现一个计算器</h2>
+<div class="outline-text-2" id="text-org8db8ea2">
 <p>
 定义 LabeledExpr.g4
 </p>
@@ -616,13 +618,14 @@ Ctrl-d
 其中 t.expr:
 </p>
 
-<pre class="example">
-193
-a=5
-b=6
+<div class="container">
+<pre><code class="python">193
+<span class="org-variable-name">a</span>=5
+<span class="org-variable-name">b</span>=6
 a+b*2
-(1+2)*3
-</pre>
+<span class="org-rainbow-delimiters-depth-1">(</span>1+2<span class="org-rainbow-delimiters-depth-1">)</span>*3
+</code></pre>
+</div>
 
 <div class="container">
 <pre><code class="shell">javac Calc.java LabeledExpr*.java
@@ -633,11 +636,12 @@ java Calc t.expr
 <p>
 结果：
 </p>
-<pre class="example">
-193
+<div class="container">
+<pre><code class="python">193
 17
 9
-</pre>
+</code></pre>
+</div>
 
 <p>
 我们这里还需要写一个 clear 实现，用于清除 memory。
@@ -645,9 +649,9 @@ java Calc t.expr
 </div>
 </div>
 
-<div id="outline-container-org4ccb6b9" class="outline-2">
-<h2 id="org4ccb6b9">例 3：实现翻译器</h2>
-<div class="outline-text-2" id="text-org4ccb6b9">
+<div id="outline-container-org261a605" class="outline-2">
+<h2 id="org261a605">例 3：实现翻译器</h2>
+<div class="outline-text-2" id="text-org261a605">
 <p>
 这个例子要求通过类的定义自动生成接口
 </p>
@@ -789,17 +793,18 @@ java ExtractInterfaceTool Demo.java
 </div>
 </div>
 
-<div id="outline-container-orgdf43ccd" class="outline-2">
-<h2 id="orgdf43ccd">例 4：提取某列数据</h2>
-<div class="outline-text-2" id="text-orgdf43ccd">
+<div id="outline-container-org069168e" class="outline-2">
+<h2 id="org069168e">例 4：提取某列数据</h2>
+<div class="outline-text-2" id="text-org069168e">
 <p>
 t.rows
 </p>
-<pre class="example">
-parrt	Terence Parr	101
-tombu	Tom Burns	020
-bke	Kevin Edgar	008
-</pre>
+<div class="container">
+<pre><code class="python">parrt   Terence Parr    101
+tombu   Tom Burns   020
+bke Kevin Edgar 008
+</code></pre>
+</div>
 
 <p>
 定义的 Rows.g4

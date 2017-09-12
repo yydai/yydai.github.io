@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-11 Mon 22:30 -->
+<!-- 2017-09-12 Tue 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog 的搭建及其特性</title>
@@ -448,15 +448,16 @@ for the JavaScript code in this tag.
 <div id="outline-container-orgd473605" class="outline-2">
 <h2 id="orgd473605">表格</h2>
 <div class="outline-text-2" id="text-orgd473605">
-<pre class="example">
-#+CAPTION: Books
-#+LABEL: tbl:table1
-| 书名   | 类型 |  价格 |
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter">#</span><span class="org-comment">+CAPTION: Books</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">+LABEL: tbl:table1</span>
+| &#20070;&#21517;   | &#31867;&#22411; |  &#20215;&#26684; |
 |--------+------+-------|
-| 你好啊 | 文学 | 12.33 |
+| &#20320;&#22909;&#21834; | &#25991;&#23398; | 12.33 |
 | Python | IT   |    44 |
 | Java   | IT   |    55 |
-</pre>
+</code></pre>
+</div>
 
 
 <table id="org3abc45a" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -497,12 +498,13 @@ for the JavaScript code in this tag.
 </tbody>
 </table>
 
-<pre class="example">
-| Start Date |   End Date | Duration |
+<div class="container">
+<pre><code class="python">| Start Date |   End Date | Duration |
 |------------+------------+----------|
 | 2004.08.07 | 2005.07.08 |      335 |
-#+TBLFM: $3=(date(&lt;$2&gt;)-date(&lt;$1&gt;))
-</pre>
+<span class="org-comment-delimiter">#</span><span class="org-comment">+TBLFM: $3=(date(&lt;$2&gt;)-date(&lt;$1&gt;))</span>
+</code></pre>
+</div>
 
 
 <p>
@@ -567,13 +569,14 @@ for the JavaScript code in this tag.
 这里我们可以自动生成 Email 而不用手动输入, 按 C-c C-c 就可以执行。
 </p>
 
-<pre class="example">
-| First Name | Last Name | Email              |
+<div class="container">
+<pre><code class="python">| First Name | Last Name | Email              |
 |------------+-----------+--------------------|
 | Jone       | Doe       | Jone.Doe@emacs.edu |
 | Ying       | Dai       | Ying.Dai@emacs.edu |
-#+TBLFM: $3='(concat $1 "." $2 "@emacs.edu")
-</pre>
+<span class="org-comment-delimiter">#</span><span class="org-comment">+TBLFM: $3='(concat $1 "." $2 "@emacs.edu")</span>
+</code></pre>
+</div>
 
 <p>
 更多的用法，我们可以看这里：
@@ -588,16 +591,18 @@ for the JavaScript code in this tag.
 <p>
 例如下面的，选中一个区域，然后按下 <code>C-c |</code>,
 </p>
-<pre class="example">
-some, comma, separated, values
-</pre>
+<div class="container">
+<pre><code class="python">some, comma, separated, values
+</code></pre>
+</div>
 
 <p>
 就会变成
 </p>
-<pre class="example">
-| some | comma | separated | values |
-</pre>
+<div class="container">
+<pre><code class="python">| some | comma | separated | values |
+</code></pre>
+</div>
 </div>
 </div>
 
@@ -662,11 +667,12 @@ some, comma, separated, values
 This is a test for image. You can see <a href="http://orgmode.org/manual/Images-and-tables.html">this</a> to find how to cross-reference. And <a href="http://orgmode.org/manual/Internal-links.html#Internal-links">Read more</a>.
 </p>
 
-<pre class="example">
-#+CAPTION: unicorn
-#+NAME: fig:unicorn
-[[file:./img/org-mode-unicorn.png]]
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter">#</span><span class="org-comment">+CAPTION: unicorn</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">+NAME: fig:unicorn</span>
+<span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-builtin">file</span>:./img/org-mode-unicorn.png<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+</code></pre>
+</div>
 
 
 
@@ -706,20 +712,21 @@ Ditaa is a small command-line utility written in Java, that can convert diagrams
 <p>
 在 Emacs 中可以使用 artist-mode 来画图。
 </p>
-<pre class="example">
-#+BEGIN_SRC ditaa :file ~/workspace/blog/org/img/ditaa.png
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter">#</span><span class="org-comment">+BEGIN_EXAMPLE ditaa :file ~/workspace/blog/org/img/ditaa.png</span>
 
 +--------+   +-------+    +-------+
 |        | --+ ditaa +--&gt; |       |
 |  Text  |   +-------+    |diagram|
 |Document|   |!magic!|    |       |
-|     {d}|   |       |    |       |
+|     <span class="org-rainbow-delimiters-depth-1">{</span>d<span class="org-rainbow-delimiters-depth-1">}</span>|   |       |    |       |
 +---+----+   +-------+    +-------+
-    :                         ^
-    |       Lots of work      |
-    +-------------------------+
-#+END_SRC
-</pre>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   :                         ^
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   |       Lots of work      |
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   +-------------------------+
+<span class="org-comment-delimiter">#</span><span class="org-comment">+END_EXAMPLE</span>
+</code></pre>
+</div>
 <p>
 结果：
 </p>
@@ -734,18 +741,17 @@ Ditaa is a small command-line utility written in Java, that can convert diagrams
 <div id="outline-container-org18b60b8" class="outline-3">
 <h3 id="org18b60b8">R</h3>
 <div class="outline-text-3" id="text-org18b60b8">
-<pre class="example">
-
-
-#+name: simpledrift(N=1000, X1=600, ngens=100)
-#+begin_src R :file ~/workspace/blog/org/img/orgmode-babel-R1.png :var ngens=100 X1=600 N=1000 :results graphics
-  p &lt;- numeric(ngens)
-  p[1] &lt;- X1/N
-  for(g in 2:ngens)
-      p[g] &lt;- rbinom(1, size=N, prob=p[g-1]) / N
-  plot(p, type="l", ylim=c(0,1), xlab="Generation", ylab="Proportion red")
-#+end_src
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter">#</span><span class="org-comment">+name: simpledrift(N=1000, X1=600, ngens=100)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">+begin_example R :file ~/workspace/blog/org/img/orgmode-babel-R1.png :var ngens=100 X1=600 N=1000 :results graphics</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> p &lt;- numeric<span class="org-rainbow-delimiters-depth-1">(</span>ngens<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> p<span class="org-rainbow-delimiters-depth-1">[</span>1<span class="org-rainbow-delimiters-depth-1">]</span> &lt;- X1/N
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-keyword">for</span><span class="org-rainbow-delimiters-depth-1">(</span>g <span class="org-keyword">in</span> 2:ngens<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> p<span class="org-rainbow-delimiters-depth-1">[</span>g<span class="org-rainbow-delimiters-depth-1">]</span> &lt;- rbinom<span class="org-rainbow-delimiters-depth-1">(</span>1, size=N, prob=p<span class="org-rainbow-delimiters-depth-2">[</span>g-1<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span> / N
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> plot<span class="org-rainbow-delimiters-depth-1">(</span>p, <span class="org-builtin">type</span>=<span class="org-string">"l"</span>, ylim=c<span class="org-rainbow-delimiters-depth-2">(</span>0,1<span class="org-rainbow-delimiters-depth-2">)</span>, xlab=<span class="org-string">"Generation"</span>, ylab=<span class="org-string">"Proportion red"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">+end_example</span>
+</code></pre>
+</div>
 
 <p>
 结果：
@@ -762,12 +768,13 @@ Ditaa is a small command-line utility written in Java, that can convert diagrams
 <div id="outline-container-org17ad89d" class="outline-3">
 <h3 id="org17ad89d">Shell</h3>
 <div class="outline-text-3" id="text-org17ad89d">
-<pre class="example">
-#+name: directories
-#+begin_src sh :results replace
-  cd ~ &amp;&amp; du -sc * |grep -v total
-#+end_src
-</pre>
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter">#</span><span class="org-comment">+name: directories</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">+begin_example sh :results replace</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> cd ~ &amp;&amp; du -sc * |grep -v total
+<span class="org-comment-delimiter">#</span><span class="org-comment">+end_example</span>
+</code></pre>
+</div>
 
 <p>
 结果：

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-11 Mon 22:31 -->
+<!-- 2017-09-12 Tue 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>自动化 Git push</title>
@@ -291,9 +291,10 @@ push blog <span class="org-string">"message"</span> <span class="org-comment-del
 <p>
 上面的 blog 是我的配置文件中的一条配置，它其实就是一个目录：
 </p>
-<pre class="example">
-blog_path='~/workspace/blog/public_html'
-</pre>
+<div class="container">
+<pre><code class="shell"><span class="org-variable-name">blog_path</span>=<span class="org-string">'~/workspace/blog/public_html'</span>
+</code></pre>
+</div>
 </div>
 </div>
 
@@ -316,10 +317,11 @@ blog_path='~/workspace/blog/public_html'
 <p>
 到这里我们其实就可以使用:
 </p>
-<pre class="example">
-auto_push
-auto_push "message"
-</pre>
+<div class="container">
+<pre><code class="shell">auto_push
+auto_push <span class="org-string">"message"</span>
+</code></pre>
+</div>
 
 <p>
 现在还有个问题，我们首先需要 cd 到某个目录中操作。
@@ -361,10 +363,11 @@ auto_push "message"
 <p>
 其中 CONFIG 是配置文件的目录。配置文件如下，
 </p>
-<pre class="example">
-blog_path='~/workspace/blog/public_html'
-emacs_path='~/.emacs.d'
-</pre>
+<div class="container">
+<pre><code class="shell"><span class="org-variable-name">blog_path</span>=<span class="org-string">'~/workspace/blog/public_html'</span>
+<span class="org-variable-name">emacs_path</span>=<span class="org-string">'~/.emacs.d'</span>
+</code></pre>
+</div>
 
 <p>
 使用 <b>source $CONFIG</b> 后就可以直接使用$blog_path 和 $emacs_path 变量了。

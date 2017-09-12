@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-11 Mon 22:30 -->
+<!-- 2017-09-12 Tue 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>远程主机登录</title>
@@ -354,12 +354,13 @@ for the JavaScript code in this tag.
 <p>
 在 ~/.ssh/config 中，我们添加如下配置
 </p>
-<pre class="example">
-Host test
-	HostName 106.75.57.80
-	IdentityFile ~/.ssh/test.key
-	User ubuntu
-</pre>
+<div class="container">
+<pre><code class="shell">Host test
+    HostName 106.75.57.80
+    IdentityFile ~/.ssh/test.key
+    User ubuntu
+</code></pre>
+</div>
 
 <p>
 下面我们就可以这样登录了
@@ -388,9 +389,10 @@ Host test
 于是，我打开了 .zshrc (因为我使用的是 zsh，如果你使用的是 bash，应该是 .bashrc 文件），添加了下面一句
 </p>
 
-<pre class="example">
-alias lg='ssh test'
-</pre>
+<div class="container">
+<pre><code class="shell"><span class="org-builtin">alias</span> <span class="org-variable-name">lg</span>=<span class="org-string">'ssh test'</span>
+</code></pre>
+</div>
 
 <p>
 下次，我们直接输入 lg 就登录了。哈哈，大功告成。

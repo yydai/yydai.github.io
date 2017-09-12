@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-11 Mon 22:30 -->
+<!-- 2017-09-12 Tue 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>高亮代码</title>
+<title>代码高亮</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -242,22 +242,40 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">高亮代码</h1>
+<h1 class="title">代码高亮</h1>
 <hr />
 
 <p>
-通过 highlight.js 来高亮代码。
+通过 highlight.js 来高亮通过 org mode 导出的 HTML 代码片段。
 </p>
 
 <p>
 由于 org mode 在 export 代码的时候不支持 highlight.js，而使用 htmlize 来高亮又不是很好看。所以看了下 ox-html.el 的代码改了部分的内容，使得导出的 html 中代码能够通过 highlight.js 来高亮。
 </p>
 
-<p>
-&lt;link href="<a href="http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css">http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css</a>" rel="stylesheet"&gt;
-    &lt;script src="<a href="http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js">http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js</a>"&gt;&lt;/script&gt;
-    &lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+<ol class="org-ol">
+<li>M-x customize 然后输入 htmlize</li>
+<li>找到 'Org Html Htmlize Output Type' 并且改变它的值为 css</li>
+<li>找到 elpa/org 目录下的 ox-html.el</li>
+<li><p>
+在 ox-html.el 下找到 'org-html-src-block' 并且修改最后一行为
 </p>
+<div class="container">
+<pre><code class="lisp"><span class="org-rainbow-delimiters-depth-1">(</span>format <span class="org-string">"&lt;pre&gt;&lt;code class=\"%s\"%s&gt;%s&lt;/code&gt;&lt;/pre&gt;"</span>
+                    lang label code<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div></li>
+<li><p>
+将下面的代码放到你的配置文件中，我的是放到了 org-html-head-extra 中。
+</p>
+
+<div class="container">
+<pre><code class="html">&lt;<span class="org-function-name">link</span> <span class="org-variable-name">href</span>=<span class="org-string">"http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css"</span> <span class="org-variable-name">rel</span>=<span class="org-string">"stylesheet"</span>&gt;
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">script</span>&gt;hljs.initHighlightingOnLoad();&lt;/<span class="org-function-name">script</span>&gt;
+</code></pre>
+</div></li>
+</ol>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

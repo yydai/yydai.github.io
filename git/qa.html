@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-11 Mon 22:31 -->
+<!-- 2017-09-12 Tue 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git 常见问题总结</title>
@@ -422,14 +422,15 @@ git branch -d &lt;branch_name&gt;
 <p>
 我们可以按照如下的模式去书写提交信息：
 </p>
-<pre class="example">
-Present-tense summary under 50 characters
+<div class="container">
+<pre><code class="python">Present-tense summary under 50 characters
 
-* More information about commit (under 72 characters).
-* More information about commit (under 72 characters).
+* More information about commit <span class="org-rainbow-delimiters-depth-1">(</span>under 72 characters<span class="org-rainbow-delimiters-depth-1">)</span>.
+* More information about commit <span class="org-rainbow-delimiters-depth-1">(</span>under 72 characters<span class="org-rainbow-delimiters-depth-1">)</span>.
 
 http://project.management-system.com/ticket/123
-</pre>
+</code></pre>
+</div>
 
 <p>
 第一行是不超过 50 个字的提要，然后空一行，罗列出改动原因、主要变动、以及需要注意的问题。最后，提供对应的网址（比如 Bug ticket）。
@@ -443,12 +444,13 @@ http://project.management-system.com/ticket/123
 <p>
 如果我们的 commit 历史
 </p>
-<pre class="example">
-* b1b8189 - (HEAD -&gt; master) Commit-3
+<div class="container">
+<pre><code class="python">* b1b8189 - <span class="org-rainbow-delimiters-depth-1">(</span>HEAD -&gt; master<span class="org-rainbow-delimiters-depth-1">)</span> Commit-3
 * 5756e15 - Commit-2
 * e7ba81d - Commit-1
 * 5d39ff2 - Commit-0
-</pre>
+</code></pre>
+</div>
 
 <p>
 现在我们想合并前三个，我们可以使用如下命令：
@@ -464,20 +466,22 @@ git rebase -i HEAD~3
 <p>
 然后进入交互界面
 </p>
-<pre class="example">
-pick e7ba81d Commit-1
+<div class="container">
+<pre><code class="python">pick e7ba81d Commit-1
 pick 5756e15 Commit-2
 pick b1b8189 Commit-3
-</pre>
+</code></pre>
+</div>
 
 <p>
 改成如下
 </p>
-<pre class="example">
-pick e7ba81d Commit-1
+<div class="container">
+<pre><code class="python">pick e7ba81d Commit-1
 s 5756e15 Commit-2
 s b1b8189 Commit-3
-</pre>
+</code></pre>
+</div>
 
 <p>
 保存退出后，会进入一个新的界面，这里我们填写合并后的 commit message。
@@ -546,9 +550,10 @@ s b1b8189 Commit-3
 <p>
 使用 git stash pop 要好些，否则你还得需要手动 drop。
 </p>
-<pre class="example">
-git stash drop stash@{1}
-</pre>
+<div class="container">
+<pre><code class="python">git stash drop stash@<span class="org-rainbow-delimiters-depth-1">{</span>1<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
 
 <p>
 这里还有个问题，当一个文件是新建的，也就是 untracked 的状态，是不能用 git stash 的，而是

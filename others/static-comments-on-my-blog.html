@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-11 Mon 22:30 -->
+<!-- 2017-09-12 Tue 10:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>一个静态评论系统的实现</title>
@@ -436,16 +436,17 @@ for the JavaScript code in this tag.
 这里会用到 3 个 github 的 API（<a href="https://developer.github.com/v3/search/#search-issues">Github api</a>） 分别如下:
 </p>
 
-<pre class="example">
-这个用来模糊查询 issue：
-{{base_api}}/search/issues?q=A Continuous Integration System+user:yydai+labels:blog
+<div class="container">
+<pre><code class="python">&#36825;&#20010;&#29992;&#26469;&#27169;&#31946;&#26597;&#35810; issue&#65306;
+<span class="org-rainbow-delimiters-depth-1">{</span><span class="org-rainbow-delimiters-depth-2">{</span>base_api<span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>/search/issues?<span class="org-variable-name">q</span>=A Continuous Integration System+user:yydai+labels:blog
 
-这个用来获取该 issue 下的 comments
-{{base_api}}/repos/yydai/yydai.github.io/issues/1/comments
+&#36825;&#20010;&#29992;&#26469;&#33719;&#21462;&#35813; issue &#19979;&#30340; comments
+<span class="org-rainbow-delimiters-depth-1">{</span><span class="org-rainbow-delimiters-depth-2">{</span>base_api<span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>/repos/yydai/yydai.github.io/issues/1/comments
 
-这个用来创建 issue
-{{base_api}}/repos/yydai/yydai.github.io/issues
-</pre>
+&#36825;&#20010;&#29992;&#26469;&#21019;&#24314; issue
+<span class="org-rainbow-delimiters-depth-1">{</span><span class="org-rainbow-delimiters-depth-2">{</span>base_api<span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>/repos/yydai/yydai.github.io/issues
+</code></pre>
+</div>
 </div>
 </div>
 

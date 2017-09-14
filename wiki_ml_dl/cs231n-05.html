@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-09-14 Thu 12:14 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>反向传播算法（Backpropagation）</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
+<div id="content">
+<h1 class="title">反向传播算法（Backpropagation）</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org6a8a923">简单的例子</a></li>
+<li><a href="#orgd025ee6">Sigmoid 的例子</a></li>
+<li><a href="#orgd8ecffe">反向传播实践：分段计算</a></li>
+<li><a href="#org462f7c5">用向量化操作计算梯度</a></li>
+<li><a href="#org8bb335b">参考</a></li>
+</ul>
+</div>
+</div>
+<hr />
+<p>
+反向传播是利用链式法则递归计算表达式的梯度的方法。
+</p>
+
+<div id="outline-container-org6a8a923" class="outline-2">
+<h2 id="org6a8a923">简单的例子</h2>
+<div class="outline-text-2" id="text-org6a8a923">
+<p>
+使用链式法则计算复合表达式
+</p>
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622;&#36755;&#20837;&#20540;</span>
+<span class="org-variable-name">x</span> = -2; <span class="org-variable-name">y</span> = 5; <span class="org-variable-name">z</span> = -4
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#36827;&#34892;&#21069;&#21521;&#20256;&#25773;</span>
+<span class="org-variable-name">q</span> = x + y <span class="org-comment-delimiter"># </span><span class="org-comment">q becomes 3</span>
+<span class="org-variable-name">f</span> = q * z <span class="org-comment-delimiter"># </span><span class="org-comment">f becomes -12</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#36827;&#34892;&#21453;&#21521;&#20256;&#25773;:</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#39318;&#20808;&#22238;&#20256;&#21040; f = q * z</span>
+<span class="org-variable-name">dfdz</span> = q <span class="org-comment-delimiter"># </span><span class="org-comment">df/dz = q, &#25152;&#20197;&#20851;&#20110; z &#30340;&#26799;&#24230;&#26159; 3</span>
+<span class="org-variable-name">dfdq</span> = z <span class="org-comment-delimiter"># </span><span class="org-comment">df/dq = z, &#25152;&#20197;&#20851;&#20110; q &#30340;&#26799;&#24230;&#26159;-4</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#29616;&#22312;&#22238;&#20256;&#21040; q = x + y</span>
+<span class="org-variable-name">dfdx</span> = 1.0 * dfdq <span class="org-comment-delimiter"># </span><span class="org-comment">dq/dx = 1. &#36825;&#37324;&#30340;&#20056;&#27861;&#26159;&#22240;&#20026;&#38142;&#24335;&#27861;&#21017;</span>
+<span class="org-variable-name">dfdy</span> = 1.0 * dfdq <span class="org-comment-delimiter"># </span><span class="org-comment">dq/dy = 1</span>
+</code></pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./imgs/20170914_005158_499478Fa.png" alt="20170914_005158_499478Fa.png" width="70%" />
+</p>
+</div>
+
+
+<p>
+这个例子是比较简单的，但是复杂一点的不是很好理解了
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgd025ee6" class="outline-2">
+<h2 id="orgd025ee6">Sigmoid 的例子</h2>
+<div class="outline-text-2" id="text-orgd025ee6">
+<p>
+现在我们看一个表达式
+</p>
+\begin{align}
+f(w,x) = \frac{1}{1+e^{-(w_0x_0 + w_1x_1 + w_2)}}
+\end{align}
+
+<p>
+这个函数是由多个门组成的。除了上文介绍的加法门，乘法门，取最大值门，还有下面这 4 种：
+</p>
+\begin{align}
+f(x) = \frac{1}{x}
+\hspace{1in} &\rightarrow \hspace{1in}
+\frac{df}{dx} = -1/x^2
+\\\\
+f_c(x) = c + x
+\hspace{1in} &\rightarrow \hspace{1in}
+\frac{df}{dx} = 1
+\\\\
+f(x) = e^x
+\hspace{1in} &\rightarrow \hspace{1in}
+\frac{df}{dx} = e^x
+\\\\
+f_a(x) = ax
+\hspace{1in} &\rightarrow \hspace{1in}
+\frac{df}{dx} = a
+\end{align}
+
+<p>
+下面是整个的计算
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170914_103856_49947JQg.png" alt="20170914_103856_49947JQg.png" width="100%" />
+</p>
+</div>
+
+<p>
+具体到每一步如下：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20170914_104047_49947Wam.png" alt="20170914_104047_49947Wam.png" width="100%" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./imgs/20170914_104144_49947jks.png" alt="20170914_104144_49947jks.png" width="100%" />
+</p>
+</div>
+
+
+<p>
+但是我们可以简化一下计算的流程
+</p>
+	\begin{align}
+	\sigma(x) = \frac{1}{1+e^{-x}} \\\\
+\rightarrow \hspace{0.3in} \frac{d\sigma(x)}{dx} = \frac{e^{-x}}{(1+e^{-x})^2} = \left( \frac{1 + e^{-x} - 1}{1 + e^{-x}} \right) \left( \frac{1}{1+e^{-x}} \right)
+= \left( 1 - \sigma(x) \right) \sigma(x)
+	\end{align}
+
+
+
+<div class="figure">
+<p><img src="./imgs/20170914_104621_49947wuy.png" alt="20170914_104621_49947wuy.png" width="100%" />
+</p>
+</div>
+
+<p>
+相应的 Python 代码可以这样实现
+</p>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">w</span> = <span class="org-rainbow-delimiters-depth-1">[</span>2,-3,-3<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#20551;&#35774;&#19968;&#20123;&#38543;&#26426;&#25968;&#25454;&#21644;&#26435;&#37325;</span>
+<span class="org-variable-name">x</span> = <span class="org-rainbow-delimiters-depth-1">[</span>-1, -2<span class="org-rainbow-delimiters-depth-1">]</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21069;&#21521;&#20256;&#25773;</span>
+<span class="org-variable-name">dot</span> = w<span class="org-rainbow-delimiters-depth-1">[</span>0<span class="org-rainbow-delimiters-depth-1">]</span>*x<span class="org-rainbow-delimiters-depth-1">[</span>0<span class="org-rainbow-delimiters-depth-1">]</span> + w<span class="org-rainbow-delimiters-depth-1">[</span>1<span class="org-rainbow-delimiters-depth-1">]</span>*x<span class="org-rainbow-delimiters-depth-1">[</span>1<span class="org-rainbow-delimiters-depth-1">]</span> + w<span class="org-rainbow-delimiters-depth-1">[</span>2<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-variable-name">f</span> = 1.0 / <span class="org-rainbow-delimiters-depth-1">(</span>1 + math.exp<span class="org-rainbow-delimiters-depth-2">(</span>-dot<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">sigmoid &#20989;&#25968;</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#23545;&#31070;&#32463;&#20803;&#21453;&#21521;&#20256;&#25773;</span>
+<span class="org-variable-name">ddot</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1 - f<span class="org-rainbow-delimiters-depth-1">)</span> * f <span class="org-comment-delimiter"># </span><span class="org-comment">&#28857;&#31215;&#21464;&#37327;&#30340;&#26799;&#24230;, &#20351;&#29992; sigmoid &#20989;&#25968;&#27714;&#23548;</span>
+<span class="org-variable-name">dx</span> = <span class="org-rainbow-delimiters-depth-1">[</span>w<span class="org-rainbow-delimiters-depth-2">[</span>0<span class="org-rainbow-delimiters-depth-2">]</span> * ddot, w<span class="org-rainbow-delimiters-depth-2">[</span>1<span class="org-rainbow-delimiters-depth-2">]</span> * ddot<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#22238;&#20256;&#21040; x</span>
+<span class="org-variable-name">dw</span> = <span class="org-rainbow-delimiters-depth-1">[</span>x<span class="org-rainbow-delimiters-depth-2">[</span>0<span class="org-rainbow-delimiters-depth-2">]</span> * ddot, x<span class="org-rainbow-delimiters-depth-2">[</span>1<span class="org-rainbow-delimiters-depth-2">]</span> * ddot, 1.0 * ddot<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#22238;&#20256;&#21040; w</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#23436;&#25104;&#65281;&#24471;&#21040;&#36755;&#20837;&#30340;&#26799;&#24230;</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd8ecffe" class="outline-2">
+<h2 id="orgd8ecffe">反向传播实践：分段计算</h2>
+<div class="outline-text-2" id="text-orgd8ecffe">
+<p>
+下面我们再看一个更加复杂的例子。
+</p>
+
+\begin{align}
+f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}
+\end{align}
+
+<p>
+下面是构建前向传播的代码模式：
+</p>
+<div class="container">
+<pre><code class="python"><span class="org-variable-name">x</span> = 3 <span class="org-comment-delimiter"># </span><span class="org-comment">example values</span>
+<span class="org-variable-name">y</span> = -4
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">forward pass</span>
+<span class="org-variable-name">sigy</span> = 1.0 / <span class="org-rainbow-delimiters-depth-1">(</span>1 + math.exp<span class="org-rainbow-delimiters-depth-2">(</span>-y<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">sigmoid in numerator   #(1)</span>
+<span class="org-variable-name">num</span> = x + sigy <span class="org-comment-delimiter"># </span><span class="org-comment">numerator                               #(2)</span>
+<span class="org-variable-name">sigx</span> = 1.0 / <span class="org-rainbow-delimiters-depth-1">(</span>1 + math.exp<span class="org-rainbow-delimiters-depth-2">(</span>-x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">sigmoid in denominator #(3)</span>
+<span class="org-variable-name">xpy</span> = x + y                                              <span class="org-comment-delimiter">#</span><span class="org-comment">(4)</span>
+<span class="org-variable-name">xpysqr</span> = xpy**2                                          <span class="org-comment-delimiter">#</span><span class="org-comment">(5)</span>
+<span class="org-variable-name">den</span> = sigx + xpysqr <span class="org-comment-delimiter"># </span><span class="org-comment">denominator                        #(6)</span>
+<span class="org-variable-name">invden</span> = 1.0 / den                                       <span class="org-comment-delimiter">#</span><span class="org-comment">(7)</span>
+<span class="org-variable-name">f</span> = num * invden <span class="org-comment-delimiter"># </span><span class="org-comment">done!                                 #(8)</span>
+</code></pre>
+</div>
+
+<p>
+有了前向传播，我们就可以根据这个来得到反向传播的代码。我们对前向传播时产生每个变量(sigy, num, sigx, xpy, xpysqr, den, invden)进行回传。我们会有同样数量的变量，但是都以 d 开头，用来存储对应变量的梯度。
+注意在反向传播的每一小块中都将包含了表达式的局部梯度，然后根据使用链式法则乘以上游梯度。
+</p>
+
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">backprop f = num * invden</span>
+<span class="org-variable-name">dnum</span> = invden <span class="org-comment-delimiter"># </span><span class="org-comment">gradient on numerator                             #(8)</span>
+<span class="org-variable-name">dinvden</span> = num                                                     <span class="org-comment-delimiter">#</span><span class="org-comment">(8)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">backprop invden = 1.0 / den</span>
+<span class="org-variable-name">dden</span> = <span class="org-rainbow-delimiters-depth-1">(</span>-1.0 / <span class="org-rainbow-delimiters-depth-2">(</span>den**2<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> * dinvden                                <span class="org-comment-delimiter">#</span><span class="org-comment">(7)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">backprop den = sigx + xpysqr</span>
+<span class="org-variable-name">dsigx</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dden                                                <span class="org-comment-delimiter">#</span><span class="org-comment">(6)</span>
+<span class="org-variable-name">dxpysqr</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dden                                              <span class="org-comment-delimiter">#</span><span class="org-comment">(6)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">backprop xpysqr = xpy**2</span>
+<span class="org-variable-name">dxpy</span> = <span class="org-rainbow-delimiters-depth-1">(</span>2 * xpy<span class="org-rainbow-delimiters-depth-1">)</span> * dxpysqr                                        <span class="org-comment-delimiter">#</span><span class="org-comment">(5)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">backprop xpy = x + y</span>
+<span class="org-variable-name">dx</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dxpy                                                   <span class="org-comment-delimiter">#</span><span class="org-comment">(4)</span>
+<span class="org-variable-name">dy</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dxpy                                                   <span class="org-comment-delimiter">#</span><span class="org-comment">(4)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">backprop sigx = 1.0 / (1 + math.exp(-x))</span>
+<span class="org-variable-name">dx</span> += <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>1 - sigx<span class="org-rainbow-delimiters-depth-2">)</span> * sigx<span class="org-rainbow-delimiters-depth-1">)</span> * dsigx <span class="org-comment-delimiter"># </span><span class="org-comment">Notice += !! See notes below  #(3)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">backprop num = x + sigy</span>
+<span class="org-variable-name">dx</span> += <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dnum                                                  <span class="org-comment-delimiter">#</span><span class="org-comment">(2)</span>
+<span class="org-variable-name">dsigy</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dnum                                                <span class="org-comment-delimiter">#</span><span class="org-comment">(2)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">backprop sigy = 1.0 / (1 + math.exp(-y))</span>
+<span class="org-variable-name">dy</span> += <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>1 - sigy<span class="org-rainbow-delimiters-depth-2">)</span> * sigy<span class="org-rainbow-delimiters-depth-1">)</span> * dsigy                                 <span class="org-comment-delimiter">#</span><span class="org-comment">(1)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">done! phew</span>
+</code></pre>
+</div>
+
+<p>
+上面有些地方要注意:
+</p>
+<ol class="org-ol">
+<li><p>
+对前向传播变量进行缓存。
+</p>
+
+<p>
+在计算反向传播时，前向传播过程中得到的一些中间变量非常有用。在实际操作中，最好代码实现对于这些中间变量的缓存，这样在反向传播的时候也能用上它们。
+</p></li>
+
+<li><p>
+在不同分支的梯度要相加。
+</p>
+
+<p>
+如果变量 x，y 在前向传播的表达式中出现多次，那么进行反向传播的时候就要非常小心，使用+=而不是=来累计这些变量的梯度（不然就会造成覆写）。这是遵循了在微积分中的多元链式法则，该法则指出如果变量在线路中分支走向不同的部分，那么梯度在回传的时候，就应该进行累加。
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org462f7c5" class="outline-2">
+<h2 id="org462f7c5">用向量化操作计算梯度</h2>
+<div class="outline-text-2" id="text-org462f7c5">
+<p>
+矩阵相乘的梯度：可能最有技巧的操作是矩阵相乘（也适用于矩阵和向量，向量和向量相乘）的乘法操作：
+</p>
+
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">&#21069;&#21521;&#20256;&#25773;</span>
+<span class="org-variable-name">W</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>5, 10<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">X</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>10, 3<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">D</span> = W.dot<span class="org-rainbow-delimiters-depth-1">(</span>X<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#20551;&#35774;&#25105;&#20204;&#24471;&#21040;&#20102; D &#30340;&#26799;&#24230;</span>
+<span class="org-variable-name">dD</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>*D.shape<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#21644; D &#19968;&#26679;&#30340;&#23610;&#23544;</span>
+<span class="org-variable-name">dW</span> = dD.dot<span class="org-rainbow-delimiters-depth-1">(</span>X.T<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">#</span><span class="org-comment">.T &#23601;&#26159;&#23545;&#30697;&#38453;&#36827;&#34892;&#36716;&#32622;</span>
+<span class="org-variable-name">dX</span> = W.T.dot<span class="org-rainbow-delimiters-depth-1">(</span>dD<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
+
+<p>
+提示：要分析维度！注意不需要去记忆 dW 和 dX 的表达，因为它们很容易通过维度推导出来。例如，权重的梯度 dW 的尺寸肯定和权重矩阵 W 的尺寸是一样的，而这又是由 X 和 dD 的矩阵乘法决定的（在上面的例子中 X 和 W 都是数字不是矩阵）。总有一个方式是能够让维度之间能够对的上的。例如，X 的尺寸是[10x3]，dD 的尺寸是[5x3]，如果你想要 dW 和 W 的尺寸是[5x10]，那就要 dD.dot(X.T)。
+</p>
+
+
+<p>
+Erik Learned-Miller has also written up a longer related document on taking matrix/vector derivatives which you might find helpful.
+<a href="http://cs231n.stanford.edu/vecDerivs.pdf">Find it here</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org8bb335b" class="outline-2">
+<h2 id="org8bb335b">参考</h2>
+<div class="outline-text-2" id="text-org8bb335b">
+<ul class="org-ul">
+<li><a href="https://arxiv.org/abs/1502.05767">Automatic differentiation in machine learning: a survey</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+	repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

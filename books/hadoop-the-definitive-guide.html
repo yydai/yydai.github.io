@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-23 Sat 11:49 -->
+<!-- 2017-09-23 Sat 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hadoop, the Definitive Guide</title>
@@ -266,7 +266,15 @@ for the JavaScript code in this tag.
 <li><a href="#orga9f80c8">联邦 HDFS</a></li>
 <li><a href="#orgf71b631">命令行接口</a></li>
 <li><a href="#orgc41d98f">Java 接口</a></li>
-<li><a href="#org1237707">数据流</a></li>
+<li><a href="#orgc7f3464">数据流</a></li>
+<li><a href="#org9fa4491">一致模型</a></li>
+<li><a href="#orgf4bdb78">通过 distcp 并行复制</a></li>
+<li><a href="#org4286af4">Hadoop 存档 （这部分第 4 版没了）</a></li>
+</ul>
+</li>
+<li><a href="#org926b879">Chapter 4 YARN</a>
+<ul>
+<li><a href="#org5c470f9">YARN 运行一个 APP</a></li>
 </ul>
 </li>
 </ul>
@@ -380,7 +388,7 @@ reduce 接收到 (年，[温度列表])， 然后找到最大温度。
 </p>
 </div></li>
 
-<li><a id="org12866d5"></a>数据流<br /><div class="outline-text-4" id="text-org12866d5">
+<li><a id="org440f3ec"></a>数据流<br /><div class="outline-text-4" id="text-org440f3ec">
 <p>
 MapReduce 作业是客户端需要执行的一个工作单元：它包括输入数据、MapReduce 程序和配置信息。Hadoop 将作业粉刺若干个小任务来执行：map 任务和 reduce 任务。
 </p>
@@ -656,9 +664,9 @@ hadoop fs -copyToLocal ...
 </div>
 </div>
 </div>
-<div id="outline-container-org1237707" class="outline-3">
-<h3 id="org1237707">数据流</h3>
-<div class="outline-text-3" id="text-org1237707">
+<div id="outline-container-orgc7f3464" class="outline-3">
+<h3 id="orgc7f3464">数据流</h3>
+<div class="outline-text-3" id="text-orgc7f3464">
 <p>
 下面先看文件的读取。
 为了了解客户端以及与之交互的 HDFS、namenode 和 datanode
@@ -702,6 +710,150 @@ RPC 来调用 namenode，以确定文件块的起始位置。对于每一个块�
 DitributedFileSytem 向客户端返回一个 FSDataOutputStream 对象，客户端开始写入数据。
 注意其中的 4、5 的过程，其中三个 datanode 是节点的副本，默认为 3 个。
 </p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170923_133041_77207nhh.png" alt="20170923_133041_77207nhh.png" width="40%" />
+</p>
+</div>
+
+<p>
+上图解释了，我们应该如何去放复本。默认策略时候运行客户端的节点上放第一个复本。（如果客户端运行在集群外，就随机选择一个节点，但是要避免太满或太忙的节点）。第二个选在与第一个不同且随机另外选择的机架。
+</p>
+</div>
+</div>
+<div id="outline-container-org9fa4491" class="outline-3">
+<h3 id="org9fa4491">一致模型</h3>
+<div class="outline-text-3" id="text-org9fa4491">
+<p>
+新建文件以后能够立即可见，但是写入文件内容不能保证立即可见。只有在写入超过一个块对新的 reader 才可见。
+但是我们可以通过使用 sync() 来使得所有缓存与数据节点强行同步。
+</p>
+
+<p>
+在 HDFS 中关闭文件其实还隐含执行 sync() 方法。
+</p>
+<div class="container">
+<pre><code class="java"><span class="org-type">Path</span> <span class="org-variable-name">p</span> = <span class="org-keyword">new</span> <span class="org-type">Path</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"p"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+OutputStream out = fs.create<span class="org-rainbow-delimiters-depth-1">(</span>p<span class="org-rainbow-delimiters-depth-1">)</span>;
+out.write<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"content"</span>.getBytes<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"UTF-8"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>;
+out.close<span class="org-rainbow-delimiters-depth-1">()</span>;
+assertThat<span class="org-rainbow-delimiters-depth-1">(</span>fs.getFileStatus<span class="org-rainbow-delimiters-depth-2">(</span>p<span class="org-rainbow-delimiters-depth-2">)</span>.getLen<span class="org-rainbow-delimiters-depth-2">()</span>, is<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span><span class="org-type">long</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-string">"content"</span>.length<span class="org-rainbow-delimiters-depth-4">()</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>;
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf4bdb78" class="outline-3">
+<h3 id="orgf4bdb78">通过 distcp 并行复制</h3>
+<div class="outline-text-3" id="text-orgf4bdb78">
+<p>
+distcp 是一个分布式复制程序，它可以从 Hadoop 中复制大量的数据，
+也可以将大量的数据复制到 Hadoop 中。它的一个典型的应用是在两个 Hadoop 集群间复制数据。
+</p>
+
+<p>
+例如
+</p>
+<div class="container">
+<pre><code class="shell">hadoop distcp hdfs://namenode1/foo hdfs://namenode2/bar
+</code></pre>
+</div>
+
+<p>
+这个指令把第一个集群的 /foo 目录复制到第二个集群的 /bar 目录下，所以第二个集群的目录变为了
+/bar/foo。
+</p>
+
+<p>
+distcp 是作为一个 MapReduce 作业来实现的，这里没有 reducer, 只有 map。
+</p>
+
+<p>
+一个有效的替换是对
+</p>
+<div class="container">
+<pre><code class="shell">hadoop distcp file1 file2
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#26367;&#25442;</span>
+hadoop fs -cp
+</code></pre>
+</div>
+
+<p>
+也可以对文件夹操作
+</p>
+<div class="container">
+<pre><code class="shell">hadoop distcp dir1 dir2
+<span class="org-comment-delimiter"># </span><span class="org-comment">if dir2 does not exist, it will be created.</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">else it will be dir2/dir2</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">if you dont want it, you can use -overwrite option</span>
+</code></pre>
+</div>
+
+<p>
+我们可以使用 update 来更新那些改变的文件
+</p>
+<div class="container">
+<pre><code class="shell">hadoop distcp -update dir1 dir2
+</code></pre>
+</div>
+
+<p>
+如果两个集群的 HDFS 版本不同，我们可以使用 webhdfs 来代替前面的。
+</p>
+</div>
+</div>
+<div id="outline-container-org4286af4" class="outline-3">
+<h3 id="org4286af4">Hadoop 存档 （这部分第 4 版没了）</h3>
+<div class="outline-text-3" id="text-org4286af4">
+<p>
+每个块存到 namenode 的内存中，因此如果 Hadoop 来存小文件是非常不适合的。
+</p>
+
+<div class="container">
+<pre><code class="shell">hadoop archive -archiveName file.har /my/files /my
+</code></pre>
+</div>
+
+<p>
+删除一个 har 文件
+</p>
+<div class="container">
+<pre><code class="shell">hadoop fs -rmr /my/files.har
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org926b879" class="outline-2">
+<h2 id="org926b879">Chapter 4 YARN</h2>
+<div class="outline-text-2" id="text-org926b879">
+<p>
+YARN 是 Hadoop 集群的资源管理系统。YARN 提供了一套 API，但是用户一般不会直接调用。用户一般会调用基于 YARN 的上层的服务的 API，资源管理的细节对用户都是透明的。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170923_143710_772070rn.png" alt="20170923_143710_772070rn.png" width="60%" />
+</p>
+</div>
+
+<p>
+看上图，我们应该很清楚这种架构设计。
+这一章，我们会对 YARN 有一个大体的了解，对于后面学习 Hadoop 分布式处理框架很有帮助。
+</p>
+</div>
+<div id="outline-container-org5c470f9" class="outline-3">
+<h3 id="org5c470f9">YARN 运行一个 APP</h3>
+<div class="outline-text-3" id="text-org5c470f9">
+<p>
+YARN 主要通过两个长期运行的服务：一个资源管理器（每个集群一个）和 node 管理器（每个节点上都会有），它用来监控和启动容器（指的是 Unix process 或一个 Linux cgroup）。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170923_144450_77207AKD.png" alt="20170923_144450_77207AKD.png" width="60%" />
+</p>
+</div>
 </div>
 </div>
 </div>

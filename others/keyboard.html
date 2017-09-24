@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-24 Sun 14:13 -->
+<!-- 2017-09-24 Sun 14:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mac OS X tricks</title>
+<title>键盘</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -242,107 +242,42 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Mac OS X tricks</h1>
+<h1 class="title">键盘</h1>
 <hr />
-<ol class="org-ol">
-<li><p>
-How can I make auto-hide/show for the dock faster? (from <a href="https://apple.stackexchange.com/questions/33600/how-can-i-make-auto-hide-show-for-the-dock-faster">here</a>)
-</p>
 
-<div class="container">
-<pre><code class="python">defaults write com.apple.dock autohide-time-modifier -<span class="org-builtin">int</span> 0;killall Dock
-</code></pre>
-</div></li>
-
-<li><p>
-<b>open</b> command can let you open file and url in terminal
-</p>
-
-<div class="container">
-<pre><code class="shell">open . <span class="org-comment-delimiter"># </span><span class="org-comment">will open the current folder in finder</span>
-open ./XXX.md <span class="org-comment-delimiter"># </span><span class="org-comment">will open the markdown file with the default editor</span>
-open http://www.baidu.com
-open -a dash <span class="org-comment-delimiter"># </span><span class="org-comment">open a application of dash</span>
-oepn *.png <span class="org-comment-delimiter"># </span><span class="org-comment">open all the png images</span>
-</code></pre>
-</div></li>
-
-<li><p>
-<b>say</b> command
+<p>
+心心念了很久终于还是入了 HHKB。
 </p>
 
 <p>
-You can let your Mac speaking,
-</p>
-<div class="container">
-<pre><code class="shell">say <span class="org-string">"Hello world"</span>
-say -f &lt;file&gt;
-</code></pre>
-</div></li>
-
-<li><p>
-Setting iterm2
+如何评价它呢？我想每个人对他都有不同的看法，但是我认为它不适合大部分的人。
 </p>
 
 <p>
-This setting will let you use the Emacs keybindings.
+为什么我用起来非常的爽呢？我想可能有很多原因，其中一个是我用 Emacs; 另一个是我用 Mac；
+还有一个是我用了 keyboard maestro 这个工具。
 </p>
 
 <p>
-Change the keyboard behavior:
-</p>
-<div class="container">
-<pre><code class="python">left option &#8658; +ESC
-</code></pre>
-</div></li>
-
-<li><p>
-How to “Quit” the Finder in OS X
-Using those commands will be ok:
-</p>
-<div class="container">
-<pre><code class="shell">defaults write com.apple.finder QuitMenuItem -bool true
-killall Finder
-</code></pre>
-</div>
-
-<p>
-To reverse this action, enter the following command:
-</p>
-<div class="container">
-<pre><code class="shell">defaults write com.apple.finder QuitMenuItem -bool false
-killall Finder
-</code></pre>
-</div></li>
-
-<li><p>
-Configure bash and/or vim to execute source ~/.bashrc everytime I finish editing it
+首先，Emacs 改变了我的操作习惯，我恨不得所有的操作都能按照 Emacs 的方式来做。还有在 Emacs 中，我是全键盘操作的，这种体验是非常的美好的，而且也不会有任何的痛苦。
+基于以上，方向键对我来说，没有任何的意义。为什么我会用到 keyboard maestro 这个工具呢？因为它能很好的帮我做了键盘的映射，也就是我把 Mac 下很多的操作都映射成了 Emacs 模式。
 </p>
 
 <p>
-The direct way to do it:
+我说的上面的这些和 HHKB 有什么关系？我认为，HHKB 是为 Emacs 和 Mac 而生的。
 </p>
-<div class="container">
-<pre><code class="shell">vim ~/.bashrc &amp;&amp; <span class="org-builtin">source</span> $<span class="org-variable-name">_</span>
-</code></pre>
-</div>
 
 <p>
-You can make an alias:
+另外，在使用的过程中，你会很享受这种打字的感觉。真的有种敲在巧克力上的感觉，顺滑、流畅。
 </p>
-<div class="container">
-<pre><code class="shell"><span class="org-builtin">alias</span> <span class="org-variable-name">vimbashrc</span>=<span class="org-string">'vim ~/.bashrc &amp;&amp; source $_'</span>
-</code></pre>
-</div>
 
 <p>
-This works in bash or zsh. In other shell, you must explicit name .bashrc to source to make it work:
+我用的是 HHKB BT 版，也就是它的蓝牙版。后面的控制，我是 2、3、5 调成 ON，其他 OFF。
 </p>
-<div class="container">
-<pre><code class="shell"><span class="org-builtin">alias</span> <span class="org-variable-name">vimbashrc</span>=<span class="org-string">'vim ~/.bashrc &amp;&amp; source ~/.bashrc'</span>
-</code></pre>
-</div></li>
-</ol>
+
+<p>
+续航上来说，还可以，用了 40 天左右了，到现在还是很好的。
+</p>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

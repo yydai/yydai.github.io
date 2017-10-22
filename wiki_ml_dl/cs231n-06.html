@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-10-22 Sun 11:45 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>神经网络</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
+<div id="content">
+<h1 class="title">神经网络</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org57389df">单个神经元</a></li>
+<li><a href="#org41af2fb">常用的激活函数</a>
+<ul>
+<li><a href="#orgd74ec6c">Sigmoid 函数</a></li>
+<li><a href="#org6c936a7">Tanh</a></li>
+<li><a href="#orgfca8fb4">ReLU</a></li>
+<li><a href="#org6cc44ee">Leaky ReLU</a></li>
+<li><a href="#orgc925ea4">Maxout</a></li>
+<li><a href="#org90223f1">总结一下</a></li>
+</ul>
+</li>
+<li><a href="#org00bcd1c">一个二层神经网络的实现</a></li>
+<li><a href="#orgc240f77">神经网络的基本结构</a></li>
+<li><a href="#orge7a6add">深入阅读</a></li>
+<li><a href="#org9ba6a92">Demo</a></li>
+</ul>
+</div>
+</div>
+<hr />
+<p>
+神经网络算法领域最初是被对生物神经系统建模这一目标启发，但随后与其分道扬镳，成为一个工程问题，并在机器学习领域取得良好效果。然而，讨论将还是从对生物系统的一个高层次的简略描述开始，因为神经网络毕竟是从这里得到了启发。
+</p>
+
+<div id="outline-container-org57389df" class="outline-2">
+<h2 id="org57389df">单个神经元</h2>
+<div class="outline-text-2" id="text-org57389df">
+<p>
+大脑的基本计算单位是神经元（neuron）。人类的神经系统中大约有 860 亿个神经元，它们被大约 10<sup>14</sup>-10<sup>15</sup> 个突触（synapses）连接起来。下面图表的左边展示了一个生物学的神经元，右边展示了一个常用的数学模型。每个神经元都从它的树突获得输入信号，然后沿着它唯一的轴突（axon）产生输出信号。轴突在末端会逐渐分枝，通过突触和其他神经元的树突相连。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20170914_142652_66963iSb.png" alt="20170914_142652_66963iSb.png" width="100%" />
+</p>
+</div>
+
+<p>
+一个神经元前向传播的实例代码如下
+</p>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">class</span> <span class="org-type">Neuron</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">object</span><span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">...</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">def</span> <span class="org-function-name">forward</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">self</span>, inputs<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-doc">""" assume inputs and weights are 1-D numpy arrays and bias is a number """</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-variable-name">cell_body_sum</span> = np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">(</span>inputs * <span class="org-keyword">self</span>.weights<span class="org-rainbow-delimiters-depth-1">)</span> + <span class="org-keyword">self</span>.bias
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-variable-name">firing_rate</span> = 1.0 / <span class="org-rainbow-delimiters-depth-1">(</span>1.0 + math.exp<span class="org-rainbow-delimiters-depth-2">(</span>-cell_body_sum<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">sigmoid activation function</span>
+<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span> <span class="org-keyword">return</span> firing_rate
+</code></pre>
+</div>
+
+<p>
+换句话说，每个神经元都对它的输入和权重进行点积，然后加上偏差，最后使用非线性函数（或称为激活函数）
+</p>
+</div>
+</div>
+
+<div id="outline-container-org41af2fb" class="outline-2">
+<h2 id="org41af2fb">常用的激活函数</h2>
+<div class="outline-text-2" id="text-org41af2fb">
+
+<div class="figure">
+<p><img src="./imgs/20170914_143703_66963vch.png" alt="20170914_143703_66963vch.png" width="100%" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd74ec6c" class="outline-3">
+<h3 id="orgd74ec6c">Sigmoid 函数</h3>
+<div class="outline-text-3" id="text-orgd74ec6c">
+<p>
+前面说到了它的表达式为
+</p>
+\begin{align}
+\sigma(x) = 1 / (1 + e^{-x})
+\end{align}
+
+<p>
+它输入实数值并将其“挤压”到 0 到 1 范围内。更具体地说，很大的负数变成 0，很大的正数变成 1。
+现在实际不使用它了，原因主要它有如下的缺点：
+</p>
+<ul class="org-ul">
+<li><p>
+Sigmoid 函数饱和使梯度消失。
+</p>
+
+<p>
+  sigmoid 神经元有一个不好的特性，就是当神经元的激活在接近 0 或 1 处时会饱和：在这些区域，梯度几乎为 0。回忆一下，在反向传播的时候，
+这个（局部）梯度将会与整个损失函数关于该门单元输出的梯度相乘。因此，如果局部梯度非常小，那么相乘的结果也会接近零，这会有效地“杀死”梯度，几乎就有没有信号通过神经元传到权重再到数据了。
+</p></li>
+
+<li>Sigmoid 函数的输出不是零中心的。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6c936a7" class="outline-3">
+<h3 id="org6c936a7">Tanh</h3>
+<div class="outline-text-3" id="text-org6c936a7">
+<p>
+它的定义就是简单放大的 Sigma
+</p>
+\begin{align}
+\tanh(x) = 2 \sigma(2x) -1
+\end{align}
+</div>
+</div>
+
+<div id="outline-container-orgfca8fb4" class="outline-3">
+<h3 id="orgfca8fb4">ReLU</h3>
+<div class="outline-text-3" id="text-orgfca8fb4">
+<p>
+The Tectified Linear Unit(ReLU) 在最近几年变得非常的流行。
+它有很多的优点：
+</p>
+<ul class="org-ul">
+<li>相较于 sigmoid 和 tanh 函数，ReLU 对于随机梯度下降的收敛有巨大的加速作用</li>
+<li>sigmoid 和 tanh 神经元含有指数运算等耗费计算资源的操作，而 ReLU 可以简单地通过对一个矩阵进行阈值计算得到。</li>
+</ul>
+
+<p>
+缺点来说：
+</p>
+<ul class="org-ul">
+<li><p>
+在训练的时候，ReLU 单元比较脆弱并且可能“死掉”。
+</p>
+
+<p>
+举例来说，当一个很大的梯度流过 ReLU 的神经元的时候，可能会导致梯度更新到一种特别的状态，在这种状态下神经元将无法被其他任何数据点再次激活。如果这种情况发生，那么从此所以流过这个神经元的梯度将都变成 0。
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6cc44ee" class="outline-3">
+<h3 id="org6cc44ee">Leaky ReLU</h3>
+<div class="outline-text-3" id="text-org6cc44ee">
+<p>
+Leaky ReLUs are one attempt to fix the “dying ReLU” problem. Instead of the function being zero when x &lt; 0, a leaky ReLU will instead have a small negative slope (of 0.01, or so).
+</p>
+</div>
+</div>
+<div id="outline-container-orgc925ea4" class="outline-3">
+<h3 id="orgc925ea4">Maxout</h3>
+<div class="outline-text-3" id="text-orgc925ea4">
+<p>
+这个以后加上
+</p>
+</div>
+</div>
+<div id="outline-container-org90223f1" class="outline-3">
+<h3 id="org90223f1">总结一下</h3>
+<div class="outline-text-3" id="text-org90223f1">
+<p>
+一图胜千言：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20171022_112849_294VJV.png" alt="20171022_112849_294VJV.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org00bcd1c" class="outline-2">
+<h2 id="org00bcd1c">一个二层神经网络的实现</h2>
+<div class="outline-text-2" id="text-org00bcd1c">
+<p>
+下面我们来看下如何通过 Sigmoid 和 ReLu 激活函数来实现一个二层的神经网络。
+</p>
+
+<p>
+首先是 Sigmoid 的实现
+</p>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+<span class="org-keyword">from</span> numpy.random <span class="org-keyword">import</span> randn
+<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+
+<span class="org-variable-name">N</span>, <span class="org-variable-name">D_in</span>, <span class="org-variable-name">H</span>, <span class="org-variable-name">D_out</span> = 64, 1000, 100, 10
+<span class="org-variable-name">x</span>, <span class="org-variable-name">y</span> = randn<span class="org-rainbow-delimiters-depth-1">(</span>N, D_in<span class="org-rainbow-delimiters-depth-1">)</span>, randn<span class="org-rainbow-delimiters-depth-1">(</span>N, D_out<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">w1</span>, <span class="org-variable-name">w2</span> = randn<span class="org-rainbow-delimiters-depth-1">(</span>D_in, H<span class="org-rainbow-delimiters-depth-1">)</span>, randn<span class="org-rainbow-delimiters-depth-1">(</span>H, D_out<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">loss_col</span> = <span class="org-rainbow-delimiters-depth-1">[]</span>
+
+<span class="org-keyword">for</span> t <span class="org-keyword">in</span> <span class="org-builtin">range</span><span class="org-rainbow-delimiters-depth-1">(</span>2000<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">h</span> = 1 / <span class="org-rainbow-delimiters-depth-1">(</span>1 + np.exp<span class="org-rainbow-delimiters-depth-2">(</span>-x.dot<span class="org-rainbow-delimiters-depth-3">(</span>w1<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">y_pred</span> = h.dot<span class="org-rainbow-delimiters-depth-1">(</span>w2<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">loss</span> = np.square<span class="org-rainbow-delimiters-depth-1">(</span>y_pred - y<span class="org-rainbow-delimiters-depth-1">)</span>.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   loss_col.append<span class="org-rainbow-delimiters-depth-1">(</span>loss<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>t, loss, y_pred<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_y_pred</span> = 2.0 * <span class="org-rainbow-delimiters-depth-1">(</span>y_pred - y<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_w2</span> = h.T.dot<span class="org-rainbow-delimiters-depth-1">(</span>grad_y_pred<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_h</span> = grad_y_pred.dot<span class="org-rainbow-delimiters-depth-1">(</span>w2.T<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_w1</span> = x.T.dot<span class="org-rainbow-delimiters-depth-1">(</span>grad_h * h * <span class="org-rainbow-delimiters-depth-2">(</span>1 - h<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">w1</span> -= 1e-4 * grad_w1
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">w2</span> -= 1e-4 * grad_w2
+
+plt.plot<span class="org-rainbow-delimiters-depth-1">(</span>loss_col<span class="org-rainbow-delimiters-depth-1">)</span>
+plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
+</code></pre>
+</div>
+
+
+<p>
+下面的激活函数式用的 ReLu:
+</p>
+<div class="container">
+<pre><code class="python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
+<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">N is batch size(sample size); D_in is input dimension;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">H is hidden dimension; D_out is output dimension.</span>
+<span class="org-variable-name">N</span>, <span class="org-variable-name">D_in</span>, <span class="org-variable-name">H</span>, <span class="org-variable-name">D_out</span> = 4, 2, 30, 1
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Create random input and output data</span>
+<span class="org-variable-name">x</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>0, 0<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>0, 1<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>1, 0<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>1, 1<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">y</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>0<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>1<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>1<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>0<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Randomly initialize weights</span>
+<span class="org-variable-name">w1</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>D_in, H<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">w2</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>H, D_out<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-variable-name">learning_rate</span> = 0.002
+<span class="org-variable-name">loss_col</span> = <span class="org-rainbow-delimiters-depth-1">[]</span>
+<span class="org-keyword">for</span> t <span class="org-keyword">in</span> <span class="org-builtin">range</span><span class="org-rainbow-delimiters-depth-1">(</span>200<span class="org-rainbow-delimiters-depth-1">)</span>:
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Forward pass: compute predicted y</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">h</span> = x.dot<span class="org-rainbow-delimiters-depth-1">(</span>w1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">h_relu</span> = np.maximum<span class="org-rainbow-delimiters-depth-1">(</span>h, 0<span class="org-rainbow-delimiters-depth-1">)</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">using ReLU as activate function</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">y_pred</span> = h_relu.dot<span class="org-rainbow-delimiters-depth-1">(</span>w2<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Compute and print loss</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">loss</span> = np.square<span class="org-rainbow-delimiters-depth-1">(</span>y_pred - y<span class="org-rainbow-delimiters-depth-1">)</span>.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-comment-delimiter"># </span><span class="org-comment">loss function</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   loss_col.append<span class="org-rainbow-delimiters-depth-1">(</span>loss<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>t, loss, y_pred<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Backprop to compute gradients of w1 and w2 with respect to loss</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_y_pred</span> = 2.0 * <span class="org-rainbow-delimiters-depth-1">(</span>y_pred - y<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">the last layer's error</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_w2</span> = h_relu.T.dot<span class="org-rainbow-delimiters-depth-1">(</span>grad_y_pred<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_h_relu</span> = grad_y_pred.dot<span class="org-rainbow-delimiters-depth-1">(</span>w2.T<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">the second laye's error</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_h</span> = grad_h_relu.copy<span class="org-rainbow-delimiters-depth-1">()</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_h</span><span class="org-rainbow-delimiters-depth-1">[</span>h &lt; 0<span class="org-rainbow-delimiters-depth-1">]</span> = 0  <span class="org-comment-delimiter"># </span><span class="org-comment">the derivate of ReLU</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_w1</span> = x.T.dot<span class="org-rainbow-delimiters-depth-1">(</span>grad_h<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Update weights</span>
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">w1</span> -= learning_rate * grad_w1
+<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">w2</span> -= learning_rate * grad_w2
+
+plt.plot<span class="org-rainbow-delimiters-depth-1">(</span>loss_col<span class="org-rainbow-delimiters-depth-1">)</span>
+plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
+</code></pre>
+</div>
+
+<p>
+这个是 Loss function 的迭代结果：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20171022_112049_294I_O.png" alt="20171022_112049_294I_O.png" width="80%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc240f77" class="outline-2">
+<h2 id="orgc240f77">神经网络的基本结构</h2>
+<div class="outline-text-2" id="text-orgc240f77">
+
+<div class="figure">
+<p><img src="./imgs/20171022_113203_294iTb.png" alt="20171022_113203_294iTb.png" width="70%" />
+</p>
+</div>
+
+<div class="container">
+<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">forward pass of 3-layer neural network</span>
+<span class="org-variable-name">f</span> = <span class="org-keyword">lambda</span> x: 1.0 / <span class="org-rainbow-delimiters-depth-1">(</span>1.0 + np.exp<span class="org-rainbow-delimiters-depth-2">(</span>-x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">activation function</span>
+<span class="org-variable-name">x</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>3, 1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">h1</span> = f<span class="org-rainbow-delimiters-depth-1">(</span>np.dot<span class="org-rainbow-delimiters-depth-2">(</span>W1, x<span class="org-rainbow-delimiters-depth-2">)</span> + b1<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">calculate first hidden layer activation</span>
+<span class="org-variable-name">h2</span> = f<span class="org-rainbow-delimiters-depth-1">(</span>np.dot<span class="org-rainbow-delimiters-depth-2">(</span>W2, h1<span class="org-rainbow-delimiters-depth-2">)</span> + b2<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">calculate second hidden layer activation</span>
+<span class="org-variable-name">out</span> = np.dot<span class="org-rainbow-delimiters-depth-1">(</span>W3, h2<span class="org-rainbow-delimiters-depth-1">)</span> + b3 <span class="org-comment-delimiter"># </span><span class="org-comment">output neuron</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge7a6add" class="outline-2">
+<h2 id="orge7a6add">深入阅读</h2>
+<div class="outline-text-2" id="text-orge7a6add">
+<ul class="org-ul">
+<li><a href="http://www.deeplearningbook.org/">Deep Learning</a> book in press by Bengio, Goodfellow, Courville, in particular <a href="http://www.deeplearningbook.org/contents/mlp.html">Chapter 6.4</a></li>
+<li><a href="http://arxiv.org/abs/1312.6184">Do Deep Nets Really Need to be Deep?</a></li>
+<li><a href="http://arxiv.org/abs/1412.6550">FitNets: Hints for Thin Deep Nets</a></li>
+<li><a href="https://neurophysics.ucsd.edu/courses/physics_171/annurev.neuro.28.061604.135703.pdf">https://neurophysics.ucsd.edu/courses/physics_171/annurev.neuro.28.061604.135703.pdf</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9ba6a92" class="outline-2">
+<h2 id="org9ba6a92">Demo</h2>
+<div class="outline-text-2" id="text-org9ba6a92">
+<ul class="org-ul">
+<li><a href="http://cs.stanford.edu/people/karpathy/convnetjs/demo/classify2d.html">ConvnetJS demo: toy 2d classification with 2-layer neural network</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+	repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

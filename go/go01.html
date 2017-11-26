@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-12 Tue 10:49 -->
+<!-- 2017-11-18 Sat 22:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>基本语法</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -243,6 +243,7 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
+<h1 class="title">基本语法</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -270,13 +271,13 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orgf83f74e">方法的声明</a></li>
 <li><a href="#org68a4ad3">goroutines</a></li>
+<li><a href="#org70df1b8">接口</a></li>
+<li><a href="#orge01fb45">测试</a></li>
+<li><a href="#orgc87b697">select</a></li>
+<li><a href="#org35a66d7">defer</a></li>
 </ul>
 </div>
 </div>
-<p>
-yyy#+TITLE: 基本语法
-</p>
-
 <hr />
 
 <p>
@@ -357,7 +358,6 @@ i, j := 0, 1
 </div>
 </div>
 
-
 <div id="outline-container-orga5a0a12" class="outline-2">
 <h2 id="orga5a0a12">指针</h2>
 <div class="outline-text-2" id="text-orga5a0a12">
@@ -423,7 +423,6 @@ fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delim
 </div>
 </div>
 
-
 <div id="outline-container-org8818e34" class="outline-2">
 <h2 id="org8818e34">new</h2>
 <div class="outline-text-2" id="text-org8818e34">
@@ -444,7 +443,6 @@ fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delim
 </div>
 </div>
 </div>
-
 
 <div id="outline-container-org44cc09b" class="outline-2">
 <h2 id="org44cc09b">赋值</h2>
@@ -472,7 +470,6 @@ mdeals<span class="org-rainbow-delimiters-depth-1">[</span>0<span class="org-rai
 </div>
 </div>
 </div>
-
 
 <div id="outline-container-orgbf8bddc" class="outline-2">
 <h2 id="orgbf8bddc">包和文件</h2>
@@ -786,6 +783,76 @@ fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delim
 <span class="org-rainbow-delimiters-depth-1">}</span>
 </code></pre>
 </div>
+</div>
+</div>
+<div id="outline-container-org70df1b8" class="outline-2">
+<h2 id="org70df1b8">接口</h2>
+<div class="outline-text-2" id="text-org70df1b8">
+<p>
+在 go 语言中，接口是非侵入式的设计。也就是说，你只需要去实现接口的方法，而不需要显式的继承这个接口。这种方式在我们定义一个新接口是可以不用改变已经存在的定义。
+</p>
+</div>
+</div>
+<div id="outline-container-orge01fb45" class="outline-2">
+<h2 id="orge01fb45">测试</h2>
+<div class="outline-text-2" id="text-orge01fb45">
+<p>
+同过 go test 来测试包目录内的以 _test.go 为结尾的测试文件。
+</p>
+
+<p>
+测试函数必须导入 testing 包，名字必须以 Test 开头，可选的后缀名以大写字母开头
+</p>
+<div class="container">
+<pre><code class="go"><span class="org-keyword">func</span> <span class="org-function-name">TestSin</span><span class="org-rainbow-delimiters-depth-1">(</span>t *<span class="org-type">test.T</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{}</span>
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc87b697" class="outline-2">
+<h2 id="orgc87b697">select</h2>
+<div class="outline-text-2" id="text-orgc87b697">
+<p>
+select 用法和 switch 有些类似。
+</p>
+<div class="container">
+<pre><code class="go">timeout := <span class="org-builtin">make</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">chan</span> <span class="org-type">bool</span>, 1<span class="org-rainbow-delimiters-depth-1">)</span>
+ch := <span class="org-builtin">make</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">chan</span> <span class="org-type">int</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-keyword">select</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">case</span> &lt;- ch:
+    <span class="org-keyword">case</span> &lt;- timeout:
+        fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"timeout"</span><span class="org-rainbow-delimiters-depth-2">)</span>
+    <span class="org-keyword">default</span>:
+        fmt.<span class="org-function-name">Println</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"default case is running"</span><span class="org-rainbow-delimiters-depth-2">)</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+
+<p>
+如果没有 default, select 会一直等待某个 case 完成，否则会一直阻塞。
+</p>
+</div>
+</div>
+<div id="outline-container-org35a66d7" class="outline-2">
+<h2 id="org35a66d7">defer</h2>
+<div class="outline-text-2" id="text-org35a66d7">
+<p>
+defer 在 return 之前执行。
+所谓之前是在 return 之后，REΤ 之后。
+</p>
+<div class="container">
+<pre><code class="go"><span class="org-keyword">func</span> <span class="org-function-name">f</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">(</span>result <span class="org-type">int</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">defer</span> <span class="org-keyword">func</span><span class="org-rainbow-delimiters-depth-2">()</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+        result ++
+    <span class="org-rainbow-delimiters-depth-2">}()</span>
+    <span class="org-keyword">return</span> 0
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+
+<p>
+返回的结果为 1，而不是 0
+</p>
 </div>
 </div>
 </div>

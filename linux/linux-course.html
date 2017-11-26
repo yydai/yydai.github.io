@@ -6,7 +6,7 @@
 <!-- 2017-11-18 Sat 22:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CS231n 课程</title>
+<title></title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -231,6 +231,7 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -242,32 +243,279 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">CS231n 课程</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org70123f1">目录</a></li>
+<li><a href="#orgea8f9d7">第 5 章 准备构建系统</a></li>
 </ul>
 </div>
 </div>
-<hr />
+<p>
+<a href="https://www.52os.net/articles/linux-from-scrath-7-7-part-two.html">https://www.52os.net/articles/linux-from-scrath-7-7-part-two.html</a>
+</p>
 
-<div id="outline-container-org70123f1" class="outline-2">
-<h2 id="org70123f1">目录</h2>
-<div class="outline-text-2" id="text-org70123f1">
-<ul class="org-ul">
-<li>00. <a href="./cs231n-pre.html">准备工作</a></li>
-<li>01. <a href="./cs231n-01.html">计算机视觉历史介绍</a></li>
-<li>02. <a href="./cs231n-02.html">图像分类</a></li>
-<li>03. <a href="./cs231n-03.html">线性分类</a></li>
-<li>04. <a href="./cs231n-04.html">最优化</a></li>
-<li>05. <a href="./cs231n-05.html">反向传播算法</a></li>
-<li>06. <a href="./cs231n-06.html">神经网络</a></li>
-</ul>
+<ol class="org-ol">
+<li>create centos vm 2G 内存 20G 硬盘</li>
+<li><p>
+ssh to vm
+</p>
+<div class="container">
+<pre><code class="shell">su -
+chkconfig sshd on
+service sshd start
+chkconfig iptables off
+service iptables stop
+passwd root
+</code></pre>
+</div>
 
 <p>
-注： 上面的有些参考了 “CS231n 课程笔记翻译”， 就不一一说明了。
+在 host pc
+</p>
+<div class="container">
+<pre><code class="shell">ssh root@vm-ip
+</code></pre>
+</div></li>
+<li><p>
+run the version-check.sh on vm
+</p>
+<div class="container">
+<pre><code class="shell">bash version-check.sh
+</code></pre>
+</div>
+<p>
+或者
+</p>
+<div class="container">
+<pre><code class="shell">curl -s https://raw.githubusercontent.com/viktomas/linux-from-scratch/master/version-check.sh | bash
+</code></pre>
+</div>
+
+<p>
+很可能会遇到问题，例如 command not found。我们安装一下就好。
+</p>
+<div class="container">
+<pre><code class="shell">yum install bison
+ln -s /usr/bin/bison /usr/bin/yacc
+yum install gcc
+yum install texinfo
+yum install patch
+</code></pre>
+</div></li>
+
+<li>创建新分区
+<ul class="org-ul">
+<li>根分区
+10 G</li>
+<li>交换分区
+2 G</li>
+<li>/boot 分区该分区用于存储内核和其他的启动信息。尽量将该分区设为磁盘驱动器的第一个物理分区。
+100 M</li>
+<li>/home 分区空间尽量大</li>
+<li>/usr 分区
+LFS 通常不需要</li>
+<li>/opt 分区</li>
+<li><p>
+/tmp 分区
+</p>
+
+<p>
+下面创建一个 root 分区和一个 swap 分区
+</p>
+<div class="container">
+<pre><code class="shell">fdisk /dev/sda
+</code></pre>
+</div>
+<p>
+输入 n， 然后接着输入 p, 然后是输入 1 为第一个分区。然后回车使用默认的 1，接着输入分区的大小，例如我输入的是 +16000M，你可以自己看着调整。
+</p>
+
+<p>
+下面创建 swap 分区。和上面差不多，输入 n, p, 2 然后回车使用默认的的大小。最后输入 t , 2, 82。
+</p>
+
+<p>
+最后，我们把我们的配置保存，使用命令 w。
+</p>
+
+<p>
+现在可以通过
+</p>
+<div class="container">
+<pre><code class="shell">fdisk -l
+</code></pre>
+</div>
+<p>
+看下我们的设置。
+</p></li>
+</ul></li>
+<li><p>
+在分区上创建文件系统
+LFS 使用 Linux 内核能识别的任何文件系统，最常用的是
+ex3 和 ex4。
+</p>
+
+<p>
+ext2: 适用于分区容量不是太大，更新也不是特别频繁的情况，如 /boot 分区。
+ext3: 是 ext2 改进版，支持日志功能。它通常被用作通用的文件系统。
+ext4: 是 ext 文件系统的最新版。提供很多新的特性。
+</p>
+
+<p>
+其他的文件系统，包括 FAT32、NTFS 等都在专门领域有独到的作用。
+</p>
+
+<p>
+执行如下的命令
+</p>
+<div class="container">
+<pre><code class="shell">mkfs -v -t ext4 /dev/sda1
+mkswap /dev/sda2
+</code></pre>
+</div>
+
+<p>
+现在文件系统已经创建完成了。下一步就是访问这些分区。
+</p></li>
+<li><p>
+挂载新分区下面我们将新建的分区挂载到选定的挂载点 */mnt/lfs*，
+我们这里可以根据自己的喜好更改。
+</p>
+
+<div class="container">
+<pre><code class="shell"><span class="org-builtin">export</span> <span class="org-variable-name">LFS</span>=/mnt/lfs
+</code></pre>
+</div>
+<p>
+下一步，创建挂载点并用下面的命令挂载 LFS 文件系统：
+</p>
+<div class="container">
+<pre><code class="shell">mkdir -pv $<span class="org-variable-name">LFS</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#24314;&#31435;&#25346;&#36733;&#28857;</span>
+mount -v -t ext4 /dev/sda1 $<span class="org-variable-name">LFS</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558;/dev/sda1 &#25346;&#36733;&#21040; $LFS</span>
+</code></pre>
+</div>
+
+<p>
+对于交换分区：
+</p>
+<div class="container">
+<pre><code class="shell">/sbin/swapon -v /dev/sda2
+</code></pre>
+</div>
+
+<p>
+补充：什么是挂载？为什么要挂载？
+</p>
+
+<p>
+ linux、unix 这类操作系统将系统中的一切都作为文件来管理。在 windows 中我们常见的硬件设备、磁盘分区等，在 linux、unix 中都被视作文件，对设备、
+分区的访问就是读写对应的文件。linux 里,没有盘符这个概念,我们用目录的形式进行管理,把每一个分区和某一个目录对应.那么,我们对这个目录的操作就是对这个分区的操作,这样就实现了硬件管理手段和软件目录管理手段的统一,这个把分区和目录对应的过程就叫做挂载,也就是 mount.
+</p>
+
+<p>
+现在准备工作差不多了，我们需要下载软件包。
+</p></li>
+<li><p>
+软件包和补丁下载的软件包需要保存在某个地方，以方便在整个构建的过程中都能有效访问。
+我们可以用 <b>$LFS/sources</b> 保存软件包和补丁，同时作为工作目录。
+</p>
+
+<div class="container">
+<pre><code class="shell">mkdir -v $<span class="org-variable-name">LFS</span>/sources
+</code></pre>
+</div>
+
+<p>
+设置目录的写权限和粘滞模式。“粘滞模式”意思是就算有多个用户对某个目录有写权 限，仍然只有该文件的主人能删除一个粘滞目录里的文件。
+</p>
+
+<div class="container">
+<pre><code class="shell">chmod -v a+wt $<span class="org-variable-name">LFS</span>/sources
+</code></pre>
+</div>
+
+<p>
+我们首先创建一个 wget-list，也就是下载的链接文件
+</p>
+<div class="container">
+<pre><code class="shell">curl -s https://blog.iandreev.com/wp-content/uploads/2013/09/wget-list.txt &gt;&gt; wget-list.txt
+</code></pre>
+</div>
+
+<p>
+我们可以这样下载
+</p>
+<div class="container">
+<pre><code class="shell">wget -i wget-list -P $<span class="org-variable-name">LFS</span>/sources
+</code></pre>
+</div>
+<p>
+但是我发现非常非常的慢。
+</p>
+
+<p>
+后来找了一个命令 aria2c,
+</p>
+<div class="container">
+<pre><code class="shell">aria2c -j5 --input-file=wget-list.txt
+</code></pre>
+</div>
+
+<p>
+这部分我是在 host 上下载的，然后我通过 scp 命令传到 vm 中。
+</p>
+<div class="container">
+<pre><code class="shell">scp -rp &lt;file or dir&gt; root@vm-ip:/mnt/lfs/sources
+</code></pre>
+</div></li>
+</ol>
+
+
+<div id="outline-container-orgea8f9d7" class="outline-2">
+<h2 id="orgea8f9d7">第 5 章 准备构建系统</h2>
+<div class="outline-text-2" id="text-orgea8f9d7">
+<p>
+../binutils-2.25/configure \
+    &#x2013;prefix=/tools \
+    &#x2013;with-sysroot=$LFS \
+    &#x2013;with-lib-path=/tools/lib \
+    &#x2013;target=$LFS<sub>TGT</sub> \
+    &#x2013;disable-nls \
+    &#x2013;disable-werror
+</p>
+
+
+<p>
+case $(uname -m) in
+    x86<sub>64</sub>) mkdir -v /tools/lib &amp;&amp; ln -sv lib /tools/lib64 ;;
+esac
+</p>
+
+
+<p>
+do
+sed -e 's@/lib\(64\)\?\(32\)\?/ld@/tools&amp;@g' \
+-e 's@/usr@/tools@g' $file.orig &gt; $file
+echo '
+</p>
+
+<p>
+#undef STANDARD<sub>STARTFILE</sub><sub>PREFIX</sub><sub>1</sub>
+#undef STANDARD<sub>STARTFILE</sub><sub>PREFIX</sub><sub>2</sub>
+#define STANDARD<sub>STARTFILE</sub><sub>PREFIX</sub><sub>1</sub> "<i>tools/lib</i>"
+#define STANDARD<sub>STARTFILE</sub><sub>PREFIX</sub><sub>2</sub> ""' &gt;&gt; $file
+touch $file.orig
+done
+</p>
+
+
+<p>
+gcc compile
+</p>
+
+<p>
+../gcc -4.9.2/configure \ - - target=$LFS<sub>TGT</sub> \ - - prefix=/tools \ - - with - sysroot=$LFS \ - - with - newlib \ - - without - headers \
 </p>
 </div>
 </div>

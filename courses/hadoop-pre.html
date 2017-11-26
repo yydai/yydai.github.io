@@ -6,7 +6,7 @@
 <!-- 2017-11-18 Sat 22:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CS231n 课程</title>
+<title>Hadoop 课程</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -242,32 +242,68 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">CS231n 课程</h1>
+<h1 class="title">Hadoop 课程</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org70123f1">目录</a></li>
+<li><a href="#org033f8dd">环境搭建</a>
+<ul>
+<li><a href="#orga83b046">JDK 安装</a></li>
+</ul>
+</li>
+<li><a href="#org7fd07a1">笔记</a></li>
 </ul>
 </div>
 </div>
 <hr />
 
-<div id="outline-container-org70123f1" class="outline-2">
-<h2 id="org70123f1">目录</h2>
-<div class="outline-text-2" id="text-org70123f1">
-<ul class="org-ul">
-<li>00. <a href="./cs231n-pre.html">准备工作</a></li>
-<li>01. <a href="./cs231n-01.html">计算机视觉历史介绍</a></li>
-<li>02. <a href="./cs231n-02.html">图像分类</a></li>
-<li>03. <a href="./cs231n-03.html">线性分类</a></li>
-<li>04. <a href="./cs231n-04.html">最优化</a></li>
-<li>05. <a href="./cs231n-05.html">反向传播算法</a></li>
-<li>06. <a href="./cs231n-06.html">神经网络</a></li>
-</ul>
+<div id="outline-container-org033f8dd" class="outline-2">
+<h2 id="org033f8dd">环境搭建</h2>
+<div class="outline-text-2" id="text-org033f8dd">
+</div><div id="outline-container-orga83b046" class="outline-3">
+<h3 id="orga83b046">JDK 安装</h3>
+<div class="outline-text-3" id="text-orga83b046">
+<p>
+先检查 linux 系统上是否存在其它版本的 JDK，如果有则先卸载旧版本的 JKD。
+方法如下:
+</p>
+<div class="container">
+<pre><code class="shell"><span class="org-comment-delimiter"># </span><span class="org-comment">&#29615;&#22659;&#20026; redhat</span>
+java -version
+rpm -qa | grep java
+rpm -e --nodeps java-1.4.2-gcj-compat-1.4.2.0-40jpp.115
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org7fd07a1" class="outline-2">
+<h2 id="org7fd07a1">笔记</h2>
+<div class="outline-text-2" id="text-org7fd07a1">
+<p>
+SequenceFile 格式 压缩 &#x2013;普通压缩
+</p>
 
 <p>
-注： 上面的有些参考了 “CS231n 课程笔记翻译”， 就不一一说明了。
+还有一种基于块压缩, 一次性压缩多条记录
+</p>
+
+<p>
+Hadoop 1.0
+    JobTracker 管理资源调度和作业调度
+    TaskTracker
+</p>
+
+<p>
+Hadoop 2.0
+    ResourceManager
+    MRAppManager
+    NodeManager
 </p>
 </div>
 </div>

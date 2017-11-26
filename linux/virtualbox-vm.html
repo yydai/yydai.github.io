@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-22 Fri 12:36 -->
+<!-- 2017-11-18 Sat 22:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>Virtual Box 虚拟机网络</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -242,19 +242,31 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
+<h1 class="title">Virtual Box 虚拟机网络</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org076f18c">VM 动态获取 ip</a></li>
+<li><a href="#org605fb7d">VM 动态获取 IP</a></li>
+<li><a href="#orge723359">设置静态 IP</a></li>
 </ul>
 </div>
 </div>
 <hr />
 
-<div id="outline-container-org076f18c" class="outline-2">
-<h2 id="org076f18c">VM 动态获取 ip</h2>
-<div class="outline-text-2" id="text-org076f18c">
+<div id="outline-container-org605fb7d" class="outline-2">
+<h2 id="org605fb7d">VM 动态获取 IP</h2>
+<div class="outline-text-2" id="text-org605fb7d">
+<p>
+使用这种方式,
+</p>
+<ul class="org-ul">
+<li>VM 和 host 能互相访问</li>
+<li>VM 可以上网</li>
+<li>VM 和 host 处于同一个网段中</li>
+<li>VM 之间也可以互访</li>
+</ul>
+
 <p>
 virtualbox 如下选择 Bridged Adapter:
 </p>
@@ -306,6 +318,16 @@ vi /etc/sysconfig/network-scripts/ifcfg-eth0
 
 <p>
 可以看到添加的路由信息。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orge723359" class="outline-2">
+<h2 id="orge723359">设置静态 IP</h2>
+<div class="outline-text-2" id="text-orge723359">
+<p>
+<a href="https://askubuntu.com/questions/446183/how-to-set-up-nat-and-host-only-networking-with-static-ip-address-in-virtualbox">https://askubuntu.com/questions/446183/how-to-set-up-nat-and-host-only-networking-with-static-ip-address-in-virtualbox</a>
 </p>
 </div>
 </div>

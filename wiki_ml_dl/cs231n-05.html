@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-14 Thu 12:14 -->
+<!-- 2017-11-18 Sat 22:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>反向传播算法（Backpropagation）</title>
@@ -498,6 +498,10 @@ f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}
 
 <p>
 提示：要分析维度！注意不需要去记忆 dW 和 dX 的表达，因为它们很容易通过维度推导出来。例如，权重的梯度 dW 的尺寸肯定和权重矩阵 W 的尺寸是一样的，而这又是由 X 和 dD 的矩阵乘法决定的（在上面的例子中 X 和 W 都是数字不是矩阵）。总有一个方式是能够让维度之间能够对的上的。例如，X 的尺寸是[10x3]，dD 的尺寸是[5x3]，如果你想要 dW 和 W 的尺寸是[5x10]，那就要 dD.dot(X.T)。
+</p>
+
+<p>
+这部分课件中有详细的例子描述。
 </p>
 
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:33 -->
+<!-- 2018-01-14 Sun 00:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git 的内部原理</title>
@@ -240,6 +240,7 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -684,10 +685,14 @@ committer Ying Dai <a href="mailto:yingdai123%40gmail.com">&lt;yingdai123@gmail.
 </p>
 <div class="container">
 <pre><code class="shell">$ irb
-&gt;&gt; <span class="org-variable-name">content</span> = <span class="org-string">"what is up, doc?"</span>
+&gt;&gt; <span class="org-variable-name">content</span> = <span class="org-string">"what is up, doc?\n"</span>
 =&gt; <span class="org-string">"what is up, doc?</span>
 </code></pre>
 </div>
+<p>
+注意：这里的 content 字符串结尾需要加上\n,这样算出来的结果才和使用 git 算出的结果一致。
+</p>
+
 <p>
 Git 以对象类型为起始内容构造一个文件头，本例中是一个 blob。然后添加一个空格，接着是数据内容的长度，最后是一个空字节 (null byte)：
 </p>

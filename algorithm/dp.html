@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-13 Tue 15:24 -->
+<!-- 2018-03-13 Tue 16:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>动态规划问题</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -240,6 +240,7 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -251,30 +252,23 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
+<h1 class="title">动态规划问题</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8017729">动态规划问题</a>
-<ul>
 <li><a href="#org5e3f78e">初级问题</a></li>
 </ul>
-</li>
-</ul>
 </div>
 </div>
-<div id="outline-container-org8017729" class="outline-2">
-<h2 id="org8017729">动态规划问题</h2>
-<div class="outline-text-2" id="text-org8017729">
 <p>
 动态规划问题的关键是找到状态以及状态转移方程。
 这里有一些很好的讨论：<a href="https://www.zhihu.com/question/23995189">https://www.zhihu.com/question/23995189</a>
 </p>
-</div>
 
-<div id="outline-container-org5e3f78e" class="outline-3">
-<h3 id="org5e3f78e">初级问题</h3>
-<div class="outline-text-3" id="text-org5e3f78e">
+<div id="outline-container-org5e3f78e" class="outline-2">
+<h2 id="org5e3f78e">初级问题</h2>
+<div class="outline-text-2" id="text-org5e3f78e">
 <ol class="org-ol">
 <li><p>
 如果我们有面值为 1 元、3 元和 5 元的硬币若干枚，如何用最少的硬币凑够 11 元？
@@ -329,8 +323,41 @@ dp<span style="color: #cccccc;">(</span>5<span style="color: #cccccc;">)</span> 
 <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">return</span> dp<span style="color: #cccccc;">[</span>n<span style="color: #cccccc;">]</span>
 </code></pre>
 </div></li>
+
+<li><p>
+一个序列有 N 个数：A[1],A[2],…,A[N]，求出最长非降子序列的长度。
+还是如上一个找到状态以及状态转移方程。
+这里的状态我们定义 d(i) 为以 A[i] 结尾最长非降子序列的长度。
+显然 dp(1) = 1, 转移方程定义如下：
+</p>
+
+<p>
+\[dp(i)=\left\{ \begin{aligned} dp(i-1)+1 & , & if & & A[i]>A[i-1] \\ 1 & , & if & & Others \end{aligned} \right.\]
+</p>
+
+<p>
+简单的写下代码如下：
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #ffcc66;">s</span> = <span style="color: #cccccc;">[</span>5, 3, 4, 8, 6, 7<span style="color: #cccccc;">]</span>
+
+<span style="color: #ffcc66;">dp</span> = <span style="color: #cccccc;">{</span>0: 1<span style="color: #cccccc;">}</span>
+<span style="color: #ffcc66;">m</span> = 1
+<span style="color: #99cc99;">for</span> i <span style="color: #99cc99;">in</span> <span style="color: #cc99cc;">range</span><span style="color: #cccccc;">(</span>1, <span style="color: #cc99cc;">len</span><span style="color: #66cccc;">(</span>s<span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">try</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">if</span> dp<span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">continue</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">except</span> <span style="color: #6699cc;">KeyError</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">if</span> s<span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span> &gt; s<span style="color: #cccccc;">[</span>i - 1<span style="color: #cccccc;">]</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">dp</span><span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span> = dp<span style="color: #cccccc;">[</span>i - 1<span style="color: #cccccc;">]</span> + 1
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">else</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">dp</span><span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span> = 1
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">if</span> dp<span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span> &gt; m:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">m</span> = dp<span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span>
+<span style="color: #99cc99;">print</span> <span style="color: #66cccc;">"m: "</span>, m
+</code></pre>
+</div></li>
 </ol>
-</div>
 </div>
 </div>
 </div>

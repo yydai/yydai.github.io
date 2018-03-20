@@ -6,7 +6,7 @@
 <!-- 2018-03-20 Tue 13:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>website collections</title>
+<title>数据仓库</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -251,8 +251,209 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">website collections</h1>
+<h1 class="title">数据仓库</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd92f586">事实和纬度</a>
+<ul>
+<li><a href="#org4888933">如何发现事实和纬度？</a></li>
+</ul>
+</li>
+<li><a href="#orgea4b2f5">仓库模型</a>
+<ul>
+<li><a href="#org6bef6d7">星型模型</a></li>
+<li><a href="#orge623d1c">星型模型的应用：查询事实</a></li>
+<li><a href="#orgc089d50">维度表特性</a></li>
+<li><a href="#org0596ad7">雪花模型</a></li>
+<li><a href="#org860b72b">事实表特性</a></li>
+<li><a href="#orgb157e7c">缓慢变化维</a></li>
+<li><a href="#org2d13ec5">事实表</a></li>
+<li><a href="#orgdc080f3">横向钻取</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <hr />
+<div id="outline-container-orgd92f586" class="outline-2">
+<h2 id="orgd92f586">事实和纬度</h2>
+<div class="outline-text-2" id="text-orgd92f586">
+</div><div id="outline-container-org4888933" class="outline-3">
+<h3 id="org4888933">如何发现事实和纬度？</h3>
+<div class="outline-text-3" id="text-org4888933">
+<ol class="org-ol">
+<li>通过语言描述分析来发现事实纬度
+<ul class="org-ul">
+<li>纬度关键词： 通过、根据、按照、在&#x2026;时间，用于描述事情发生的环境、情况</li>
+<li><p>
+事实:度量，发生了什么，通常在描述中表现为数值
+</p>
+
+<p>
+例如：预定数为一万件。这个例子中，一万件为事实，其中的关键词为预定数。
+</p></li>
+</ul></li>
+<li>通过报表发现事实与维度
+<ul class="org-ul">
+<li>维度：标签信息、过滤器、查询谓词、分组分类排序聚集控制量</li>
+<li>事实：被汇总、聚集或者分类的数据</li>
+</ul></li>
+<li>聚合纬度聚合维度，主要表现维度之间的关联关系，通过聚集到同一 个关联表中反应他们之间的自然聚类关系。</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orgea4b2f5" class="outline-2">
+<h2 id="orgea4b2f5">仓库模型</h2>
+<div class="outline-text-2" id="text-orgea4b2f5">
+</div><div id="outline-container-org6bef6d7" class="outline-3">
+<h3 id="org6bef6d7">星型模型</h3>
+<div class="outline-text-3" id="text-org6bef6d7">
+<ul class="org-ul">
+<li>事实存储在事实表中的列中</li>
+<li>星型模型中事实表在中心，维度表在四周围绕展开</li>
+</ul>
+
+
+<ol class="org-ol">
+<li>维度表维度表由维度组成，因维度表经常被简写成维度，为了区分，所以将维度表中的列称为维度属性</li>
+<li>事实表
+<ul class="org-ul">
+<li>事实表中的外键通常用于区分事实表中的唯一行</li>
+<li>事实表中行存储特定级别的细节事实</li>
+<li>事实表中通过外键与维度表联系</li>
+<li>细节的级别称为事实表的粒度</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orge623d1c" class="outline-3">
+<h3 id="orge623d1c">星型模型的应用：查询事实</h3>
+<div class="outline-text-3" id="text-orge623d1c">
+<ul class="org-ul">
+<li>星型模型可以通过对维度任意组合进行查询</li>
+<li>回答问题的能力取决于事实存储的细节</li>
+
+<li>代理键 SK Surrogate Key
+<ul class="org-ul">
+<li>在星型模式中，每个维度表都分配有一个代理键</li>
+<li>该列是维度表的唯一标识符，是维度表的主键，并不来自于操作 型数据库系统，在 ETL 过程中创建</li>
+<li>代理键没有业务含义，通常用整型表示</li>
+</ul></li>
+<li>自然键 NK Nature Key
+<ul class="org-ul">
+<li>自然键来自于操作性数据库系统，不作为维度表行的唯一标识， 但在源系统中一般都是行的唯一标识</li>
+</ul></li>
+</ul>
+
+<p>
+联想传统数据库的设计，代理键作为唯一标识符有什么好处?
+</p>
+<ol class="org-ol">
+<li>允许数据仓库对源系统的变化做出响应，维护历史信息例如：比如学校的学籍管理系统，包含一个学号为 20170001 的学生的记录，如果维度表中使用学号做主键，那么数仓中这条记录只能 保存一条，如果用代理键做主键，我们可以同一个学号保存多条记录</li>
+<li>避免多列连接，查询优化。比如操作型系统合同管理系统中对合同的唯一性用合同类型和合同号表示，这样在维度表中就有两个主键，事实表中需要对这两个主键建立外键关系，加大了连接查询复杂性</li>
+</ol>
+
+<p>
+维度集合越丰富，能回答的问题越详细，能分析的数据越有价值
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20180102_142221_36448U7l.png" alt="20180102_142221_36448U7l.png" width="80%" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc089d50" class="outline-3">
+<h3 id="orgc089d50">维度表特性</h3>
+<div class="outline-text-3" id="text-orgc089d50">
+<ol class="org-ol">
+<li>行为维度基于事实计算的到的维度称为行为维度</li>
+
+<li>组合维度</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org0596ad7" class="outline-3">
+<h3 id="org0596ad7">雪花模型</h3>
+<div class="outline-text-3" id="text-org0596ad7">
+<p>
+维度表中会存在大量冗余，可以将重复出现的属性，例如产 品维度中的品牌属性提取出来放在一张新的品牌表中，品牌表 与产品表通过外键关联，
+品牌表在这里称为支架表，这种模式 就叫做雪花模式
+</p>
+</div>
+</div>
+
+<div id="outline-container-org860b72b" class="outline-3">
+<h3 id="org860b72b">事实表特性</h3>
+<div class="outline-text-3" id="text-org860b72b">
+<p>
+退化维：不能将所有与业务相关的维度分类到一个紧凑的表集合中，当 将一个或多个维度存储到事实表时，这个存储到事实表中的维度被称为 退化维，简称退化列
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb157e7c" class="outline-3">
+<h3 id="orgb157e7c">缓慢变化维</h3>
+<div class="outline-text-3" id="text-orgb157e7c">
+<ul class="org-ul">
+<li>维度表中的数据来源于操作型系统，进入到维度表中的信息，在 操作型系统中会发生更新和变化</li>
+<li>维度表要怎么应对数据元素的改变?</li>
+</ul>
+
+<p>
+应对数据元素改变存在不同的响应方式，主要有 2 种缓慢变化方式:
+</p>
+<ul class="org-ul">
+<li>类型 1:重写事务历史</li>
+<li>类型 2:保留变化情况</li>
+</ul>
+
+<p>
+类型 1:当一个维度值的源发生变化，并且不需要在星型模型中保留变化 历史时，通常采用类型 1 来响应变化情况，仅仅使用变化的值来重写维度即可,
+该技术通常用于更改错误
+</p>
+
+<p>
+类型 2:维度表中包含重复的信息，给定的某以自然键在维度表中有多条记录，但不知道何时采 用那一种表示是正确的，解决办法用时间戳区分。
+</p>
+
+<p>
+选择何种缓慢变换处理类型：在难以确定时，选择变化类型 2 最安全
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2d13ec5" class="outline-3">
+<h3 id="org2d13ec5">事实表</h3>
+<div class="outline-text-3" id="text-org2d13ec5">
+<p>
+将不同粒度的事实放在不同的事实表中
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdc080f3" class="outline-3">
+<h3 id="orgdc080f3">横向钻取</h3>
+<div class="outline-text-3" id="text-orgdc080f3">
+<p>
+比较两个过程的适当方法是横向钻取
+</p>
+
+<p>
+这一技术可应用于两个或两个以上的星型模式，跨多个数据 库，甚至跨越存储在不同厂商关系数据库系统中的数据，也可 以采用对星型模式查询多次的方法将横向钻去技术应用于星型 模式上，以便建立可用的对比报表
+</p>
+
+<p>
+第一步:按照相同的细节层次从每个星型模式中汇总事实，主要从事实表中查询。
+第二步:合并汇总的事实。
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

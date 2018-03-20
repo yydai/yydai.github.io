@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-01-26 Fri 00:39 -->
+<!-- 2018-03-20 Tue 13:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Spark bike 数据分析</title>
@@ -272,9 +272,6 @@ for the JavaScript code in this tag.
 <li><a href="#org553a06d">用户分析</a></li>
 <li><a href="#org386d412">车站相关统计</a></li>
 <li><a href="#orge66fb6b">日期相关统计</a></li>
-<li><a href="#orgaaf5c74">User</a></li>
-<li><a href="#orgfb7be8b">自行车站热度排名</a></li>
-<li><a href="#org68ad2a4">根据日期统计</a></li>
 </ul>
 </li>
 </ul>
@@ -494,7 +491,7 @@ bin/zookeeper-server-start.sh config/zookeeper.properties
 SparkConf<span style="color: #cccccc;">()</span>.<span style="color: #cc99cc;">set</span><span style="color: #cccccc;">(</span><span style="color: #66cccc;">"spark.streaming.kafka.maxRatePerPartition"</span>,<span style="color: #66cccc;">"1"</span><span style="color: #cccccc;">)</span>
 <span style="color: #ffcc66;">ssc</span> = StreamingContext<span style="color: #cccccc;">(</span>sc, 5<span style="color: #cccccc;">)</span>
 <span style="color: #ffcc66;">kf</span> = KafkaUtils.createDirectStream<span style="color: #cccccc;">(</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   ssc, <span style="color: #66cccc;">[</span><span style="color: #66cccc;">"biki"</span><span style="color: #66cccc;">]</span>, <span style="color: #66cccc;">{</span><span style="color: #66cccc;">"bootstrap.servers"</span>: <span style="color: #66cccc;">"127.0.0.1:9092"</span><span style="color: #66cccc;">}</span><span style="color: #cccccc;">)</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   ssc, <span style="color: #66cccc;">[</span><span style="color: #66cccc;">"bike"</span><span style="color: #66cccc;">]</span>, <span style="color: #66cccc;">{</span><span style="color: #66cccc;">"bootstrap.servers"</span>: <span style="color: #66cccc;">"127.0.0.1:9092"</span><span style="color: #66cccc;">}</span><span style="color: #cccccc;">)</span>
 <span style="color: #ffcc66;">lines</span> = kf.<span style="color: #cc99cc;">map</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">lambda</span> x: x<span style="color: #66cccc;">[</span>1<span style="color: #66cccc;">]</span><span style="color: #cccccc;">)</span>
 <span style="color: #ffcc66;">lines</span> = lines.<span style="color: #cc99cc;">map</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">lambda</span> line: line.split<span style="color: #66cccc;">(</span><span style="color: #66cccc;">","</span><span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>
 lines.foreachRDD<span style="color: #cccccc;">(</span>process<span style="color: #cccccc;">)</span>
@@ -559,10 +556,240 @@ lines.foreachRDD<span style="color: #cccccc;">(</span>process<span style="color:
 
 <div id="outline-container-org6973656" class="outline-3">
 <h3 id="org6973656">数据的持久化存储</h3>
+<div class="outline-text-3" id="text-org6973656">
+<p>
+上面是基本的操作流程，在实践过程中，我发现在本地 Spark 执行 sql 的速度非常的慢，而慢的地方主要还是 IO 操作。下一步我就是将数据存储到 mysql 数据库中。
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #99cc99;">def</span> <span style="color: #f99157;">load_csv</span><span style="color: #cccccc;">(</span>conf<span style="color: #cccccc;">)</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">spark</span> = getSparkSessionInstance<span style="color: #cccccc;">(</span>conf<span style="color: #cccccc;">)</span>
+
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">schema</span> = StructType<span style="color: #cccccc;">(</span><span style="color: #66cccc;">[</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"tripduration"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"starttime"</span>, TimestampType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"starttime_hour"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"stoptime"</span>, TimestampType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"stoptime_hour"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"start_station_id"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"start_station_name"</span>, StringType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"start_station_latitude"</span>, FloatType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"start_station_longitude"</span>, FloatType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"end_station_id"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"end_station_name"</span>, StringType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"end_station_latitude"</span>, FloatType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"end_station_longitude"</span>, FloatType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"bikeid"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"usertype"</span>, StringType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"age"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"gender"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"distance"</span>, FloatType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #66cccc;">]</span><span style="color: #cccccc;">)</span>
+
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; font-style: italic;"># </span><span style="color: #999999; font-style: italic;">for path in file_paths:</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">df</span> = spark.read.<span style="color: #cc99cc;">format</span><span style="color: #cccccc;">(</span><span style="color: #66cccc;">"csv"</span><span style="color: #cccccc;">)</span>.option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"header"</span>, <span style="color: #66cccc;">"true"</span><span style="color: #cccccc;">)</span>.load<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"citibike/201409-citibike-tripdata.csv"</span><span style="color: #cccccc;">)</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">try</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">df</span> = df.rdd.<span style="color: #cc99cc;">map</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">lambda</span> p: Row<span style="color: #66cccc;">(</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>0<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>1<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>1<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>.hour,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>2<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>2<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>.hour,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>3<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   p<span style="color: #ffcc66;">[</span>4<span style="color: #ffcc66;">]</span>.strip<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>5<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>6<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>7<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   p<span style="color: #ffcc66;">[</span>8<span style="color: #ffcc66;">]</span>.strip<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>9<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>10<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>11<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   p<span style="color: #ffcc66;">[</span>12<span style="color: #ffcc66;">]</span>.strip<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   2018 - <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>13<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span> <span style="color: #99cc99;">if</span> p<span style="color: #99cc99;">[</span>13<span style="color: #99cc99;">]</span> <span style="color: #99cc99;">not</span> <span style="color: #99cc99;">in</span> <span style="color: #99cc99;">(</span><span style="color: #66cccc;">'""'</span>, <span style="color: #66cccc;">'\\N'</span>, <span style="color: #6699cc;">None</span><span style="color: #99cc99;">)</span>  <span style="color: #99cc99;">else</span> <span style="color: #66cccc;">'0'</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>14<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   dis<span style="color: #ffcc66;">(</span><span style="color: #cc99cc;">float</span><span style="color: #99cc99;">(</span>p<span style="color: #6699cc;">[</span>5<span style="color: #6699cc;">]</span>.strip<span style="color: #6699cc;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #6699cc;">)</span><span style="color: #99cc99;">)</span>, <span style="color: #cc99cc;">float</span><span style="color: #99cc99;">(</span>p<span style="color: #6699cc;">[</span>6<span style="color: #6699cc;">]</span>.strip<span style="color: #6699cc;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #6699cc;">)</span><span style="color: #99cc99;">)</span>, <span style="color: #cc99cc;">float</span><span style="color: #99cc99;">(</span>p<span style="color: #6699cc;">[</span>9<span style="color: #6699cc;">]</span>.strip<span style="color: #6699cc;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #6699cc;">)</span><span style="color: #99cc99;">)</span>, <span style="color: #cc99cc;">float</span><span style="color: #99cc99;">(</span>p<span style="color: #6699cc;">[</span>10<span style="color: #6699cc;">]</span>.strip<span style="color: #6699cc;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #6699cc;">)</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">except</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">pass</span>
+
+
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">schemadf</span> = spark.createDataFrame<span style="color: #cccccc;">(</span>df, schema<span style="color: #cccccc;">)</span>
+
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   schemadf.write \
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   .<span style="color: #cc99cc;">format</span><span style="color: #cccccc;">(</span><span style="color: #66cccc;">"jdbc"</span><span style="color: #cccccc;">)</span> \
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   .option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"driver"</span>, <span style="color: #66cccc;">"com.mysql.jdbc.Driver"</span><span style="color: #cccccc;">)</span> \
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   .option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"url"</span>, <span style="color: #66cccc;">"jdbc:mysql://localhost/citibike"</span><span style="color: #cccccc;">)</span> \
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   .option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"dbtable"</span>, <span style="color: #66cccc;">"trip"</span><span style="color: #cccccc;">)</span> \
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   .option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"user"</span>, <span style="color: #66cccc;">"root"</span><span style="color: #cccccc;">)</span> \
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   .option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"password"</span>, <span style="color: #66cccc;">"root"</span><span style="color: #cccccc;">)</span> \
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   .mode<span style="color: #cccccc;">(</span><span style="color: #66cccc;">'append'</span><span style="color: #cccccc;">)</span> \
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   .save<span style="color: #cccccc;">()</span>
+</code></pre>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org6c3ea42" class="outline-3">
 <h3 id="org6c3ea42">数据的分析</h3>
+<div class="outline-text-3" id="text-org6c3ea42">
+<p>
+对于数据分析的工作主要在 mysql 中做的，执行的语句如下：
+</p>
+
+<p>
+创建表
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">create</span> database citibike;
+
+use citibike;
+
+<span style="color: #99cc99;">create</span> <span style="color: #99cc99;">table</span> <span style="color: #f99157;">trip</span> <span style="color: #cccccc;">(</span>
+        id <span style="color: #6699cc;">int</span> <span style="color: #99cc99;">primary</span> <span style="color: #99cc99;">key</span> auto_increment,
+        tripduration <span style="color: #6699cc;">int</span> ,
+        starttime datetime,
+        starttime_hour <span style="color: #6699cc;">int</span>,
+        stoptime datetime,
+        stoptime_hour <span style="color: #6699cc;">int</span>,
+        start_station_id <span style="color: #6699cc;">int</span>,
+        start_station_name <span style="color: #6699cc;">varchar</span><span style="color: #66cccc;">(</span>40<span style="color: #66cccc;">)</span>,
+        start_station_latitude <span style="color: #6699cc;">float</span>,
+        start_station_longitude <span style="color: #6699cc;">float</span>,
+        end_station_id <span style="color: #6699cc;">int</span>,
+        end_station_name <span style="color: #6699cc;">varchar</span><span style="color: #66cccc;">(</span>40<span style="color: #66cccc;">)</span>,
+        end_station_latitude <span style="color: #6699cc;">float</span>,
+        end_station_longitude <span style="color: #6699cc;">float</span>,
+        bikeid <span style="color: #6699cc;">int</span>,
+        usertype <span style="color: #6699cc;">varchar</span><span style="color: #66cccc;">(</span>10<span style="color: #66cccc;">)</span>,
+        age <span style="color: #6699cc;">int</span>,
+        gender <span style="color: #6699cc;">int</span><span style="color: #66cccc;">(</span>1<span style="color: #66cccc;">)</span>,
+        distance <span style="color: #6699cc;">float</span>,
+        duration <span style="color: #6699cc;">float</span>
+<span style="color: #cccccc;">)</span>;
+
+<span style="color: #99cc99;">create</span> <span style="color: #99cc99;">table</span> <span style="color: #f99157;">gender_age_speed</span>  <span style="color: #cccccc;">(</span>
+    age <span style="color: #6699cc;">int</span>,
+    gender <span style="color: #6699cc;">int</span>,
+    speed <span style="color: #6699cc;">float</span>
+<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">select</span> age, gender, distance/tripduration*3.6 <span style="color: #99cc99;">as</span> speed <span style="color: #99cc99;">from</span> trip;
+</code></pre>
+</div>
+
+<ol class="org-ol">
+<li><p>
+用户类型
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">select</span> usertype, <span style="color: #cc99cc;">count</span><span style="color: #cccccc;">(</span>*<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">from</span> trip <span style="color: #99cc99;">group</span> <span style="color: #99cc99;">by</span> usertype;
+</code></pre>
+</div></li>
+
+<li><p>
+年龄和平均骑行速度关系
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">select</span> age, <span style="color: #cc99cc;">avg</span><span style="color: #cccccc;">(</span>speed<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">as</span> avg_speed <span style="color: #99cc99;">from</span> gender_age_speed <span style="color: #99cc99;">where</span> speed &gt; 0 <span style="color: #99cc99;">group</span> <span style="color: #99cc99;">by</span> age  <span style="color: #99cc99;">order</span> <span style="color: #99cc99;">by</span> avg_speed <span style="color: #99cc99;">desc</span>;
+</code></pre>
+</div></li>
+
+<li><p>
+性别和平均骑行速度关系
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">select</span> gender, <span style="color: #cc99cc;">avg</span><span style="color: #cccccc;">(</span>tripduration<span style="color: #cccccc;">)</span>/60.0 <span style="color: #99cc99;">as</span> duration <span style="color: #99cc99;">from</span> trip <span style="color: #99cc99;">where</span> distance &gt; 0 <span style="color: #99cc99;">group</span> <span style="color: #99cc99;">by</span> gender;
+</code></pre>
+</div></li>
+
+<li><p>
+查询使用过的自行车数量
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">select</span> <span style="color: #cc99cc;">count</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">distinct</span> bikeid<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">from</span> trip;
+</code></pre>
+</div></li>
+
+<li><p>
+查询出站站名和对应的经纬度，以及热度
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">SELECT</span>
+     <span style="color: #99cc99;">distinct</span><span style="color: #cccccc;">(</span>start_station_name<span style="color: #cccccc;">)</span>, start_station_latitude, start_station_longitude, a.<span style="color: #cc99cc;">sum</span>
+<span style="color: #99cc99;">FROM</span>
+    <span style="color: #cccccc;">(</span><span style="color: #99cc99;">SELECT</span>
+        start_station_id, <span style="color: #cc99cc;">COUNT</span><span style="color: #66cccc;">(</span>*<span style="color: #66cccc;">)</span> <span style="color: #99cc99;">AS</span> <span style="color: #cc99cc;">sum</span>
+    <span style="color: #99cc99;">FROM</span>
+        trip
+    <span style="color: #99cc99;">GROUP</span> <span style="color: #99cc99;">BY</span> start_station_id
+    <span style="color: #99cc99;">ORDER</span> <span style="color: #99cc99;">BY</span> <span style="color: #cc99cc;">sum</span> <span style="color: #99cc99;">DESC</span> <span style="color: #99cc99;">limit</span> 10<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">AS</span> a,
+    trip
+<span style="color: #99cc99;">WHERE</span>
+    trip.start_station_id = a.start_station_id <span style="color: #99cc99;">order</span> <span style="color: #99cc99;">by</span> a.<span style="color: #cc99cc;">sum</span> <span style="color: #99cc99;">desc</span>;
+</code></pre>
+</div></li>
+
+<li><p>
+查询入站站名，经纬度，热度
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">SELECT</span>
+     <span style="color: #99cc99;">distinct</span><span style="color: #cccccc;">(</span>end_station_name<span style="color: #cccccc;">)</span>, end_station_latitude, end_station_longitude, a.<span style="color: #cc99cc;">sum</span>
+<span style="color: #99cc99;">FROM</span>
+    <span style="color: #cccccc;">(</span><span style="color: #99cc99;">SELECT</span>
+        end_station_id, <span style="color: #cc99cc;">COUNT</span><span style="color: #66cccc;">(</span>*<span style="color: #66cccc;">)</span> <span style="color: #99cc99;">AS</span> <span style="color: #cc99cc;">sum</span>
+    <span style="color: #99cc99;">FROM</span>
+        trip
+    <span style="color: #99cc99;">GROUP</span> <span style="color: #99cc99;">BY</span> end_station_id
+    <span style="color: #99cc99;">ORDER</span> <span style="color: #99cc99;">BY</span> <span style="color: #cc99cc;">sum</span> <span style="color: #99cc99;">DESC</span> <span style="color: #99cc99;">limit</span> 10<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">AS</span> a,
+    trip
+<span style="color: #99cc99;">WHERE</span>
+    trip.end_station_id = a.end_station_id <span style="color: #99cc99;">order</span> <span style="color: #99cc99;">by</span> a.<span style="color: #cc99cc;">sum</span> <span style="color: #99cc99;">desc</span>;
+</code></pre>
+</div></li>
+
+<li><p>
+性别比例统计
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">SELECT</span>
+    gender, <span style="color: #cc99cc;">COUNT</span><span style="color: #cccccc;">(</span>*<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">AS</span> <span style="color: #cc99cc;">sum</span>
+<span style="color: #99cc99;">FROM</span>
+    trip
+<span style="color: #99cc99;">GROUP</span> <span style="color: #99cc99;">BY</span> gender;
+</code></pre>
+</div></li>
+
+<li><p>
+24 小时骑行分布统计
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">SELECT</span>
+    starttime_hour, <span style="color: #cc99cc;">COUNT</span><span style="color: #cccccc;">(</span>*<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">AS</span> <span style="color: #cc99cc;">sum</span>
+<span style="color: #99cc99;">FROM</span>
+    trip
+<span style="color: #99cc99;">GROUP</span> <span style="color: #99cc99;">BY</span> starttime_hour
+<span style="color: #99cc99;">ORDER</span> <span style="color: #99cc99;">BY</span> starttime_hour;
+</code></pre>
+</div></li>
+
+<li><p>
+9 月 3 日，24 小时骑行分布
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">select</span> starttime_hour, <span style="color: #cc99cc;">count</span><span style="color: #cccccc;">(</span>*<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">as</span> <span style="color: #cc99cc;">sum</span> <span style="color: #99cc99;">from</span> trip <span style="color: #99cc99;">where</span> DATE_FORMAT<span style="color: #cccccc;">(</span>starttime, <span style="color: #66cccc;">'%Y-%m-%d'</span><span style="color: #cccccc;">)</span> = DATE_FORMAT<span style="color: #cccccc;">(</span><span style="color: #66cccc;">'2014-9-3'</span>, <span style="color: #66cccc;">'%Y-%m-%d'</span><span style="color: #cccccc;">)</span> <span style="color: #99cc99;">group</span> <span style="color: #99cc99;">by</span> starttime_hour <span style="color: #99cc99;">order</span> <span style="color: #99cc99;">by</span> starttime_hour;
+</code></pre>
+</div></li>
+
+<li><p>
+计算各个年龄段的用户数
+</p>
+<div class="container">
+<pre><code class="sql"><span style="color: #99cc99;">select</span> age div 10, <span style="color: #cc99cc;">count</span><span style="color: #cccccc;">(</span>*<span style="color: #cccccc;">)</span>
+<span style="color: #99cc99;">from</span> gender_age_speed
+<span style="color: #99cc99;">where</span> age &lt; 100
+<span style="color: #99cc99;">group</span> <span style="color: #99cc99;">by</span> age div 10;
+</code></pre>
+</div></li>
+</ol>
+</div>
 </div>
 </div>
 
@@ -727,7 +954,6 @@ TOP 10 入站站点
 </div>
 </div>
 
-
 <div id="outline-container-orge66fb6b" class="outline-3">
 <h3 id="orge66fb6b">日期相关统计</h3>
 <div class="outline-text-3" id="text-orge66fb6b">
@@ -766,66 +992,6 @@ TOP 10 入站站点
 这个是一个月内的所有数据的统计情况，与上面解释的基本是一样的，也是在早晚有两个高峰期。
 </p>
 </div>
-</div>
-
-
-
-
-<div id="outline-container-orgaaf5c74" class="outline-3">
-<h3 id="orgaaf5c74">User</h3>
-<div class="outline-text-3" id="text-orgaaf5c74">
-<iframe src="//datawrapper.dwcdn.net/0pe6n/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="600"></iframe>
-
-<iframe src="//datawrapper.dwcdn.net/9hzmK/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="400"></iframe>
-</div>
-
-<ul class="org-ul"><li><a id="org9707a2c"></a>用户年龄和骑行速度<br /><div class="outline-text-4" id="text-org9707a2c">
-<iframe src="//datawrapper.dwcdn.net/ChJOQ/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="308"></iframe>
-</div></li>
-
-<li><a id="org059fd1f"></a>性别和骑行时间关系<br /><div class="outline-text-4" id="text-org059fd1f">
-<iframe src="//datawrapper.dwcdn.net/isKSX/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="210"></iframe>
-</div></li>
-
-
-<li><a id="org3a8c6eb"></a>年龄分布<br /><div class="outline-text-4" id="text-org3a8c6eb">
-<iframe src="//datawrapper.dwcdn.net/GrBpC/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="400"></iframe>
-</div></li></ul>
-</div>
-
-<div id="outline-container-orgfb7be8b" class="outline-3">
-<h3 id="orgfb7be8b">自行车站热度排名</h3>
-<div class="outline-text-3" id="text-orgfb7be8b">
-</div><ul class="org-ul"><li><a id="org6508665"></a>出站站点热度排名（前 10）<br /><div class="outline-text-4" id="text-org6508665">
-<iframe src="//datawrapper.dwcdn.net/ZE0Ao/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="313"></iframe>
-</div></li>
-
-<li><a id="orgb203dca"></a>入站站点热度排名（前 10）<br /><div class="outline-text-4" id="text-orgb203dca">
-<iframe src="//datawrapper.dwcdn.net/xZAUI/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="313"></iframe>
-</div></li>
-
-<li><a id="orge56be6e"></a>站点热度排名（前 10）<br /><div class="outline-text-4" id="text-orge56be6e">
-<iframe src="//datawrapper.dwcdn.net/SgvZm/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="284"></iframe>
-</div></li>
-
-<li><a id="org95b1d31"></a>出站地理位置信息<br /><div class="outline-text-4" id="text-org95b1d31">
-<iframe src="//datawrapper.dwcdn.net/bVtVx/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="400"></iframe>
-</div></li>
-
-<li><a id="org43dad40"></a>入站站点位置信息<br /><div class="outline-text-4" id="text-org43dad40">
-<iframe src="//datawrapper.dwcdn.net/jwoAR/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="400"></iframe>
-</div></li></ul>
-</div>
-
-<div id="outline-container-org68ad2a4" class="outline-3">
-<h3 id="org68ad2a4">根据日期统计</h3>
-<div class="outline-text-3" id="text-org68ad2a4">
-</div><ul class="org-ul"><li><a id="orgbd88751"></a>周末和非周末<br /><div class="outline-text-4" id="text-orgbd88751">
-<iframe src="//datawrapper.dwcdn.net/cm7wn/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="400"></iframe>
-
-
-<iframe src="//datawrapper.dwcdn.net/QFIRc/1/" scrolling="no" frameborder="0" allowtransparency="true" width="600" height="400"></iframe>
-</div></li></ul>
 </div>
 </div>
 </div>

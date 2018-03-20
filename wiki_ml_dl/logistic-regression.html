@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-20 Tue 13:26 -->
+<!-- 2018-03-20 Tue 16:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>website collections</title>
+<title>LR 与 Sigmoid</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -240,6 +240,7 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -251,8 +252,142 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">website collections</h1>
+<h1 class="title">LR 与 Sigmoid</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgbffbda7">本文目的</a></li>
+<li><a href="#org426b708">Logistic Function</a></li>
+<li><a href="#orgff9c8ef">Logistic Regression 回归模型</a></li>
+<li><a href="#org808c5c5">LR 与 Sigmoid</a></li>
+<li><a href="#org955aa0b">参考</a></li>
+</ul>
+</div>
+</div>
 <hr />
+
+<div id="outline-container-orgbffbda7" class="outline-2">
+<h2 id="orgbffbda7">本文目的</h2>
+<div class="outline-text-2" id="text-orgbffbda7">
+<p>
+LR 也就是 Logistic Regression，但是在学习的过程中，有些不解的疑惑。
+下面的内容就是这篇文章的主要内容：
+</p>
+<ol class="org-ol">
+<li>为什么有了 Linear Regression, 又会出现一个 Logistic Regression?</li>
+<li>Logistic Regression 明明是一个回归模型，为什么会用于分类？</li>
+<li>Logistic Regression 叫法的由来是什么？</li>
+<li>关于 LR 中使用为什么使用 Sigmoid 函数，而不是其他的？</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org426b708" class="outline-2">
+<h2 id="org426b708">Logistic Function</h2>
+<div class="outline-text-2" id="text-org426b708">
+<p>
+Logistic Function（Logistic Curve） 是下面的这种形式：
+\[{\displaystyle f(x)={\frac {L}{1+e^{-k(x-x_{0})}}}}\]
+</p>
+
+<p>
+其中的 x<sub>0</sub>, L, k 会决定这个函数的形式，当 x<sub>0</sub>=0, L=1, k=1 时就是我们常见的 Sigmoid 函数了：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20180320_132129_207791eF.png" alt="20180320_132129_207791eF.png" width="60%" />
+</p>
+</div>
+
+<p>
+我们可以在 <a href="http://www.wolframalpha.com/input/?i=plot+2/%7B1+exp%7B-2%7Bx-0%7D%7D%7D,+with+-10+%3C+x+%3C+10">WolframAlpha</a> 上调戏一下这个公式。
+</p>
+
+<p>
+关于“为什么叫 Logistic Regression?”这个问题就不言而明了，正是因为它使用了 Logistic Function，所以才有了 Logistic Regression 这个名字。
+</p>
+
+<p>
+但是问题又来了，为什么会使用 Sigmoid 函数也就是 Logistic Function 呢？
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgff9c8ef" class="outline-2">
+<h2 id="orgff9c8ef">Logistic Regression 回归模型</h2>
+<div class="outline-text-2" id="text-orgff9c8ef">
+<p>
+在机器学习中，我们用 Logistic Regression 来进行分类问题的处理，一般是处理二分类问题，其实它还可以处理多分类的问题。
+</p>
+
+<p>
+既然是处理模型的分类问题，为什么还叫 Regression 呢？其实，它就是一个回归模型，我们看 Logistic
+Function 应该也明白了，它的输出 <i>Y</i> 是一个概率。只是碰巧我们可以拿它来进行分类的处理。
+</p>
+</div>
+</div>
+<div id="outline-container-org808c5c5" class="outline-2">
+<h2 id="org808c5c5">LR 与 Sigmoid</h2>
+<div class="outline-text-2" id="text-org808c5c5">
+<p>
+现在就出现一个重要的问题，“为什么 LR 会使用 Sigmoid，而不是其他的函数？”。
+</p>
+
+<p>
+其实这个问题本身就是不对的，前面解释了正是因为 Sigmoid 才有了 LR，
+而不是 LR 选择了 Sigmoid。所以这里的本质问题是：为什么使用线性模型进行回归学习要使用 基于 Sigmoid 的 LR，而不是其他的 Regression。如果我们能够找到一个函数 <i>F</i> ，也能达到下面的功能的话，是不是也可以用 <i>F</i> Regression 呢？
+\[\begin{equation}
+	H(x)={\begin{cases}0,&x<0\\{\frac{1}{2}},&x=0\\1,&x>0\end{cases}}\tag {1}
+	\end{equation}\]
+</p>
+
+<p>
+到这里会出现一个新的概念: 广义线性模型(GLM)。如何使用线性模型进行分类任务？我们可以在广义线性模型中找到答案：找到一个单调可微的函数将分类认为的真实标记 <i>y</i> 与线性回归模型(<i>w*x + b</i>)的到的预测值联系起来，也就是使用一个(link function)。这里也解释了为什么公式 (1) 无法使用。
+</p>
+
+<p>
+现在的一个关键就是这个 <i>link function</i> 是什么呢？ 事实情况是这里的 link function 有三个，我们可以在 <a href="http://www.stats.uwo.ca/faculty/bellhouse/Links.pdf">Links Function</a> 了解一下。
+这个解释了为什么我们会选择使用 sigmoid function, 也就是 logit link function。关于一个分布对应什么样的 link function，是有一些条件的，
+具体可以看 <a href="https://zh.wikipedia.org/zh-cn/%E5%BB%A3%E7%BE%A9%E7%B7%9A%E6%80%A7%E6%A8%A1%E5%9E%8B">广义线性模型</a> 。
+</p>
+
+<p>
+最终，关于最初的疑问其实是历史的选择，我们可以选择其他的 regression 来做这个问题，但是这里是有好坏之分的。这也是为什么选择 Sigmoid 的原因。
+它有如下的优点：
+</p>
+<ol class="org-ol">
+<li>sigmoid 函数连续，单调递增</li>
+<li>对 sigmoid 函数求导非常的方便
+\[S(t)={\frac {1}{1+e^{-t}}}.\]
+\[{\displaystyle S'(t)=S(t)(1-S(t)).}\]</li>
+</ol>
+<p>
+缺点：
+这里主要看应用场景了，如果在深度学习中，它相比于 ReLU 确实是不好的。
+</p>
+<ol class="org-ol">
+<li>sigmoid 函数反向传播时，很容易就会出现梯度消失的情况</li>
+<li>sigmoid 作为激活函数计算量大（指数运算）</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org955aa0b" class="outline-2">
+<h2 id="org955aa0b">参考</h2>
+<div class="outline-text-2" id="text-org955aa0b">
+<ol class="org-ol">
+<li><a href="https://stats.stackexchange.com/questions/111035/what-does-the-name-logistic-regression-mean">https://stats.stackexchange.com/questions/111035/what-does-the-name-logistic-regression-mean</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Logistic_distribution">Logistic Distribution</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Logistic_regression">Logistic Regression</a></li>
+<li><a href="http://thomaslau.xyz/2017/08/04/2017-08-04-derivative-of-logistic-sigmoid-function/">http://thomaslau.xyz/2017/08/04/2017-08-04-derivative-of-logistic-sigmoid-function/</a></li>
+<li>机器学习 周志华</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%BD%8D%E9%98%B6%E8%B7%83%E5%87%BD%E6%95%B0">https://zh.wikipedia.org/wiki/单位阶跃函数</a></li>
+<li><a href="http://www.stats.uwo.ca/faculty/bellhouse/Links.pdf">http://www.stats.uwo.ca/faculty/bellhouse/Links.pdf</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/%E5%BB%A3%E7%BE%A9%E7%B7%9A%E6%80%A7%E6%A8%A1%E5%9E%8B">https://zh.wikipedia.org/zh-cn/廣義線性模型</a></li>
+</ol>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>

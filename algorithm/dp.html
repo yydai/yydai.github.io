@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-13 Tue 16:21 -->
+<!-- 2018-03-20 Tue 13:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>动态规划问题</title>
@@ -357,7 +357,64 @@ dp<span style="color: #cccccc;">(</span>5<span style="color: #cccccc;">)</span> 
 <span style="color: #99cc99;">print</span> <span style="color: #66cccc;">"m: "</span>, m
 </code></pre>
 </div></li>
+
+<li><p>
+Zigzag 问题来源 <a href="https://community.topcoder.com/stat?c=problem_statement&amp;pm=1259&amp;rd=4493">TopCoder</a>
+</p>
+
+<p>
+这个问题相比与上面的两个要复杂一些，因为状态多了，看着要麻烦些。
+还是按照套路来，找状态和转移方程。
+我们定义 z(i, 0) 为第 i 个值比前面值大时的最长 zigzag 序列长度。同样定义
+z(i, 1)为第 i 个值比前面值小时的最长 zigzag 序列长度。
+有：
+</p>
+<div class="container">
+<pre><code class="python">z<span style="color: #cccccc;">(</span>0, 0<span style="color: #cccccc;">)</span> = 1
+z<span style="color: #cccccc;">(</span>1, 0<span style="color: #cccccc;">)</span> = 1
+
+z<span style="color: #cccccc;">(</span>i, 0<span style="color: #cccccc;">)</span> = <span style="color: #cc99cc;">max</span><span style="color: #cccccc;">(</span>z<span style="color: #66cccc;">(</span>j, 1<span style="color: #66cccc;">)</span> + 1<span style="color: #cccccc;">)</span>, &#20854;&#20013; j &lt; i, A<span style="color: #cccccc;">[</span>j<span style="color: #cccccc;">]</span> &lt; A<span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span>
+z<span style="color: #cccccc;">(</span>i, 1<span style="color: #cccccc;">)</span> = <span style="color: #cc99cc;">max</span><span style="color: #cccccc;">(</span>z<span style="color: #66cccc;">(</span>j, 0<span style="color: #66cccc;">)</span> + 1<span style="color: #cccccc;">)</span>, &#20854;&#20013; j &lt; i, A<span style="color: #cccccc;">[</span>j<span style="color: #cccccc;">]</span> &gt; A<span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span>
+</code></pre>
+</div>
+
+<p>
+代码如下：
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #99cc99;">def</span> <span style="color: #f99157;">Zigzag</span><span style="color: #cccccc;">(</span>l<span style="color: #cccccc;">)</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">z</span> = <span style="color: #cccccc;">{}</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">z</span><span style="color: #cccccc;">[</span>0, 0<span style="color: #cccccc;">]</span> = 1
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">z</span><span style="color: #cccccc;">[</span>0, 1<span style="color: #cccccc;">]</span> = 1
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">m</span> = 0
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">for</span> i <span style="color: #99cc99;">in</span> <span style="color: #cc99cc;">range</span><span style="color: #cccccc;">(</span><span style="color: #cc99cc;">len</span><span style="color: #66cccc;">(</span>l<span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">if</span> <span style="color: #99cc99;">not</span> z.get<span style="color: #cccccc;">(</span><span style="color: #66cccc;">(</span>i, 0<span style="color: #66cccc;">)</span>, <span style="color: #6699cc;">None</span><span style="color: #cccccc;">)</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">z</span><span style="color: #cccccc;">[</span>i, 0<span style="color: #cccccc;">]</span> = 0
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">if</span> <span style="color: #99cc99;">not</span> z.get<span style="color: #cccccc;">(</span><span style="color: #66cccc;">(</span>i, 1<span style="color: #66cccc;">)</span>, <span style="color: #6699cc;">None</span><span style="color: #cccccc;">)</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">z</span><span style="color: #cccccc;">[</span>i, 1<span style="color: #cccccc;">]</span> = 0
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">for</span> j <span style="color: #99cc99;">in</span> <span style="color: #cc99cc;">range</span><span style="color: #cccccc;">(</span>i<span style="color: #cccccc;">)</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">if</span> l<span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span> &gt; l<span style="color: #cccccc;">[</span>j<span style="color: #cccccc;">]</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">z</span><span style="color: #cccccc;">[</span>i, 0<span style="color: #cccccc;">]</span> = <span style="color: #cc99cc;">max</span><span style="color: #cccccc;">(</span>z<span style="color: #66cccc;">[</span>j, 1<span style="color: #66cccc;">]</span> + 1, z<span style="color: #66cccc;">[</span>i, 0<span style="color: #66cccc;">]</span><span style="color: #cccccc;">)</span>
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">if</span> l<span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span> &lt; l<span style="color: #cccccc;">[</span>j<span style="color: #cccccc;">]</span>:
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">z</span><span style="color: #cccccc;">[</span>i, 1<span style="color: #cccccc;">]</span> = <span style="color: #cc99cc;">max</span><span style="color: #cccccc;">(</span>z<span style="color: #66cccc;">[</span>j, 0<span style="color: #66cccc;">]</span> + 1, z<span style="color: #66cccc;">[</span>i, 1<span style="color: #66cccc;">]</span><span style="color: #cccccc;">)</span>
+
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">m</span> = <span style="color: #cc99cc;">max</span><span style="color: #cccccc;">(</span>m, <span style="color: #cc99cc;">max</span><span style="color: #66cccc;">(</span>z<span style="color: #ffcc66;">[</span>i, 0<span style="color: #ffcc66;">]</span>, z<span style="color: #ffcc66;">[</span>i, 1<span style="color: #ffcc66;">]</span><span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>
+
+<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">return</span> m
+</code></pre>
+</div></li>
 </ol>
+
+
+
+<p>
+<a href="http://www.hawstein.com/posts/dp-novice-to-advanced.html">http://www.hawstein.com/posts/dp-novice-to-advanced.html</a>
+<a href="http://www.hawstein.com/posts/dp-knapsack.html">http://www.hawstein.com/posts/dp-knapsack.html</a>
+<a href="http://www.cnblogs.com/wuyuegb2312/p/3273337.html">http://www.cnblogs.com/wuyuegb2312/p/3273337.html</a>
+<a href="http://www.cnblogs.com/wuyuegb2312/p/3281264.html">http://www.cnblogs.com/wuyuegb2312/p/3281264.html</a>
+<a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=114">https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=114</a>
+<a href="https://www.zybuluo.com/Yano/note/253649">https://www.zybuluo.com/Yano/note/253649</a>
+</p>
 </div>
 </div>
 </div>

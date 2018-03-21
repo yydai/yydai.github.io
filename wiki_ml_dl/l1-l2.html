@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-03-21 Wed 19:03 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>深入理解 L1 L2 正则</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-111585106-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
+<div id="content">
+<h1 class="title">深入理解 L1 L2 正则</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org6fafa9d">范数以及 L0 L1 L2 是什么</a></li>
+<li><a href="#org4319841">引入 L0 L1 L2 范数的目的</a></li>
+<li><a href="#orgf7f2b94">几何学上解释</a></li>
+<li><a href="#org59ac382">L1 L2 的比较？</a></li>
+<li><a href="#orgc2d88bb">总结</a></li>
+<li><a href="#org12180e5">参考</a></li>
+</ul>
+</div>
+</div>
+<hr />
+<p>
+对如刚入门的人来说，对于 L1 L2 Regularization 可能不好理解。
+</p>
+
+<ol class="org-ol">
+<li>什么是 L0 L1 L2 范数？</li>
+<li>引入 L0 L1 L2 的目的是什么？</li>
+<li>为什么 L1 正则可以实现参数稀疏，而 L2 正则不可以？</li>
+</ol>
+
+<div id="outline-container-org6fafa9d" class="outline-2">
+<h2 id="org6fafa9d">范数以及 L0 L1 L2 是什么</h2>
+<div class="outline-text-2" id="text-org6fafa9d">
+<p>
+简单来描述，范数的本质是距离，存在的意义是为了实现比较。比如，在一维实数集合中，我们随便取两个点 4 和 9，我们知道 9 比 4 大，但是到了二维实数空间中，取两个点（1，1）和（0，3），这个时候我们就没办法比较它们之间的大小，因为它们不是可以比较的实数，于是我们引入范数这个概念，把我们的（1，1）和（0，3）通过范数分别映射到实数 和 3，这样我们就比较这两个点了。所以你可以看到，范数它其实是一个函数，它把不能比较的向量转换成可以比较的实数。这里的 L0 L1 L2 的距离都是和 0 进行比较的。
+例如 L1 是点 \(|x-0|\) 大小
+</p>
+
+<ul class="org-ul">
+<li>L0 范数表示的就是向量中非零元素的个数</li>
+<li>L1 范数就是绝对值范数，
+\[\left\|x\right\|=\left|x\right|\]</li>
+<li>L2 范数就是欧几里得距离
+\[{\displaystyle \left\|{\boldsymbol {X}}\right\|_{2}:={\sqrt {x_{1}^{2}+\cdots +x_{n}^{2}}}.}\]</li>
+<li>Lp 范数就是下面的定义， 其中 \(p ≥ 1\)
+\[\left\|\mathbf {x} \right\|_{p}:={\bigg (}\sum _{i=1}^{n}\left|x_{i}\right|^{p}{\bigg )}^{1/p}.\]</li>
+</ul>
+
+<p>
+图形上看下可能更加的直观，但是对于高维图像表示起来很困难尤其是到了三维以上，为了简单的理解我们以 2 维为例。
+我们有 \(\mathbf x =\{x_1,x_2\} \;\mathbf w=\{w_1,w_2\}\), 其中横坐标是\(w_1\), 纵坐标是 \(w_2\)
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20180321_124931_20779CpL.png" alt="20180321_124931_20779CpL.png" width="60%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4319841" class="outline-2">
+<h2 id="org4319841">引入 L0 L1 L2 范数的目的</h2>
+<div class="outline-text-2" id="text-org4319841">
+<p>
+因为 L0 的计算是一个 NP 难问题（why？），所以为了折中我们比较常用的是 L1 和 L2。它们的引入本质上是为了加入规则限制，减少目标函数的过拟合程度。为什么可以这样说呢？因为引入正则项后，最后估计出的向量参数变短了，所以这就可以实现用尽量少的参数去估计数据。由奥卡姆剃刀原则，简单的训练模型泛化能力可能要好很多。
+</p>
+
+<p>
+例如下图中的黄色和蓝色曲线，明显的蓝色拟合的要好一些，但是相应的参数也要多。如果我们分析一下泛化能力，
+蓝色的泛化能力有很大可能要比黄色的好。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/l1l201.png" alt="l1l201.png" />
+</p>
+</div>
+
+<p>
+举一个例子，假如有如下的目标函数：
+\[L(w)=min\left\{  \frac{1}{N}\sum_{i=1}^{N}{(y_{i} - f(x_{i} ))^{2}  + r(d)}   \right\}\]
+我们让 \(f(x_{i})=w_{0}x_{0}+w_{1}x_{1}+w_{2}x_{2} + w_{3}x_{3}+.....+w_{n}x_{n}\)
+有泰勒公式我们可以知道使用\(f(x_i)\) 我们可以逼近任何一个函数。
+</p>
+
+<p>
+假设这里我们学到了很多的参数，为了防止过拟合，我们能想到的方式是使得参数的个数最小，也就是 L0 范数最小。但是 L0 是不好求的，所以我们可以使用在某些情况下等价的 L1。L2 范数是指向量各元素的平方和然后求平方根。我们让 L2 范数的正则项||W||2 最小，可以使得 W 的每个元素都很小，都接近于 0，但与 L1 范数不同，它不会让它等于 0，而是接近于 0。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf7f2b94" class="outline-2">
+<h2 id="orgf7f2b94">几何学上解释</h2>
+<div class="outline-text-2" id="text-orgf7f2b94">
+<p>
+下面我们从几何学上来直观的看下，L1 L2 是如何发挥作用的。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/l1l202.png" alt="l1l202.png" />
+</p>
+</div>
+
+<p>
+想象现在只有两个参数 &theta;<sub>1</sub> &theta;<sub>2</sub> 要学, 蓝色的圆心是误差最小的地方, 而每条蓝线上的误差都是一样的. 正规化的方程是在黄线上产生的额外误差(也能理解为惩罚度), 在黄圈上的额外误差也是一样. 所以在蓝线和黄线 交点上的点能让两个误差的合最小. 这就是 &theta;<sub>1</sub> 和 &theta;<sub>2</sub> 正规化后的解. 要提到另外一点是, 使用 L1 的方法, 我们很可能得到的结果是只有 &theta;<sub>1</sub> 的特征被保留, 所以很多人也用 l1 正规化来挑选对结果贡献最大的重要特征。
+</p>
+
+<p>
+关于为什么 L1 能够更容易比 L2 获得稀疏解，可以看西瓜书中的解答：
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/IMG_0055.JPG" alt="IMG_0055.JPG" width="70%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org59ac382" class="outline-2">
+<h2 id="org59ac382">L1 L2 的比较？</h2>
+<div class="outline-text-2" id="text-org59ac382">
+<ol class="org-ol">
+<li>L1 正则可产生比较稀疏的解, L2 会产生更多的小的，分布比较均匀的小解来。</li>
+<li>L1 对 outlier 数据没有 L2 敏感，L2 对大数的惩罚比较大</li>
+<li>L1 加入后，有些点是不可导的点，需要做一些特殊处理</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgc2d88bb" class="outline-2">
+<h2 id="orgc2d88bb">总结</h2>
+<div class="outline-text-2" id="text-orgc2d88bb">
+<p>
+我这里写的是比较浅显的，算不上深入理解。如果想看一些证明，<a href="https://zhuanlan.zhihu.com/p/29360425">深入理解 L1、L2 正则化</a> 这个文章写的还是很好的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org12180e5" class="outline-2">
+<h2 id="org12180e5">参考</h2>
+<div class="outline-text-2" id="text-org12180e5">
+<ol class="org-ol">
+<li><a href="https://www.zhihu.com/question/21868680/answer/136376374">https://www.zhihu.com/question/21868680/answer/136376374</a></li>
+<li><a href="https://morvanzhou.github.io/tutorials/machine-learning/ML-intro/3-09-l1l2regularization/">https://morvanzhou.github.io/tutorials/machine-learning/ML-intro/3-09-l1l2regularization/</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Norm_(mathematics)">https://en.wikipedia.org/wiki/Norm_(mathematics)</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/29360425">https://zhuanlan.zhihu.com/p/29360425</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+	repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

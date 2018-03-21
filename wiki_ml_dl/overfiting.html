@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-21 Wed 12:51 -->
+<!-- 2018-03-20 Tue 22:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>V for Vendetta</title>
+<title>过拟合的处理</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -179,7 +179,6 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/worg2.css"/>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
@@ -243,126 +242,186 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
 <div id="content">
-<h1 class="title">V for Vendetta</h1>
+<h1 class="title">过拟合的处理</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgae3f857">过拟合是什么</a></li>
+<li><a href="#org6bc14e0">L0 L1 L2</a></li>
+<li><a href="#orgac82bb6">Dropout</a></li>
+<li><a href="#org0fd2a24">参考</a></li>
+</ul>
+</div>
+</div>
 <hr />
+<div id="outline-container-orgae3f857" class="outline-2">
+<h2 id="orgae3f857">过拟合是什么</h2>
+<div class="outline-text-2" id="text-orgae3f857">
+<p>
+机器学习中过拟合是经常出现的问题，那什么是过拟合呢？
+</p>
 
-<div id="outline-container-orgf33152c" class="outline-2">
-<h2 id="orgf33152c">Hello Godiva</h2>
-<div class="outline-text-2" id="text-orgf33152c">
-<ul class="org-ul">
-<li><a href="./wiki_emacs/blog-test.html">Blog 的搭建</a></li>
-<li><a href="./others/static-comments-on-my-blog.html">Blog 静态评论实现</a></li>
-<li><a href="./others/character-encoding.html">谈谈字符编码</a></li>
-<li><a href="./others/ssh-remote-host.html">远程主机登录</a></li>
-<li><a href="./projects/json-parser.html">JSON 解析器</a></li>
-<li><a href="./projects/antlr-example.html">ANTLR 应用实例</a></li>
-<li><a href="./books/readings.html">读书那些年</a></li>
-<li><a href="./mac/tricks.html">Mac OS X Tricks</a></li>
-<li><a href="./mac/software.html">Mac 上好用的软件</a></li>
-<li><a href="./others/keyboard.html">我的键盘</a></li>
-</ul>
-</div>
-</div>
+<p>
+我们通过一定的机器学习算法，对训练样本进行训练，如果我们对这个样本学习的太好了，就可能出现过拟合。因为我们的训练样本中可能存在一些噪声数据，如果我们把这部分也学的很好，那我们训练出来的模型，就会对现有的数据拟合的很好，而对未知的数据拟合性很差。
+</p>
 
-<div id="outline-container-org0d9fb15" class="outline-2">
-<h2 id="org0d9fb15">Emacs</h2>
-<div class="outline-text-2" id="text-org0d9fb15">
-<ul class="org-ul">
-<li><a href="./wiki_emacs/emacs-tricks.html">Emacs 技巧</a></li>
-<li><a href="./wiki_emacs/emacs-resourses.html">Emacs 学习资源</a></li>
-<li><a href="./wiki_emacs/emacs-macro.html">Emacs 键盘宏</a></li>
-<li><a href="./wiki_emacs/interactive.html">Elisp 中 interactive 使用</a></li>
-<li><a href="./wiki_emacs/mac-org-mode-output-pdf.html">如何在 Org Mode 输出 PDF 文件</a></li>
-<li><a href="./wiki_emacs/elisp-macro.html">Elisp 中的宏</a></li>
-<li><a href="./wiki_emacs/highlight-code.html">blog 代码高亮</a></li>
-<li>如何写 Minor Mode, Major Mode</li>
-<li>如何写 company-mode backend</li>
-</ul>
+<p>
+引用莫烦的话说就是：自负。也就是机器学习模型于自信. 已经到了自负的阶段了. 那自负的坏处, 大家也知道, 就是在自己的小圈子里表现非凡, 不过在现实的大圈子里却往往处处碰壁.
+</p>
+
+<p>
+过拟合无法彻底的避免，我们能做到的只是尽可能的缓解。下面介绍一些常用的方法。
+</p>
+<ol class="org-ol">
+<li>增加数据， 学习到更多的特性</li>
+<li>加入正则项，也就是防止目标函数过于复杂</li>
+<li>Dropout</li>
+<li>early stopping</li>
+</ol>
 </div>
 </div>
 
-<div id="outline-container-org18d589e" class="outline-2">
-<h2 id="org18d589e">Python</h2>
-<div class="outline-text-2" id="text-org18d589e">
-<ul class="org-ul">
-<li><a href="./wiki_python/virtualenv.html">虚拟环境(virtualenv)</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org508a9d2" class="outline-2">
-<h2 id="org508a9d2">Linux</h2>
-<div class="outline-text-2" id="text-org508a9d2">
-<ul class="org-ul">
-<li><a href="./git/git-internals.html">Git 的内部原理</a></li>
-<li><a href="./linux/auto-push.html">自动化 Git Push</a></li>
-<li><a href="./git/qa.html">Git 常见问题总结</a></li>
-<li><a href="./linux/makefile-qa.html">Makefile 的常见问题</a></li>
-</ul>
+<div id="outline-container-org6bc14e0" class="outline-2">
+<h2 id="org6bc14e0">L0 L1 L2</h2>
+<div class="outline-text-2" id="text-org6bc14e0">
+<p>
+正则化项即罚函数，该项对模型向量进行“惩罚”，从而避免单纯最小二乘问题的过拟合问题。感觉这部分需要单独的讲讲。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgdefbdcf" class="outline-2">
-<h2 id="orgdefbdcf">Algorithm</h2>
-<div class="outline-text-2" id="text-orgdefbdcf">
-<ul class="org-ul">
-<li><a href="./algorithm/index.html">Leetcode</a></li>
-<li><a href="./algorithm/dp.html">动态规划问题</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org89cbd7a" class="outline-2">
-<h2 id="org89cbd7a">Translations</h2>
-<div class="outline-text-2" id="text-org89cbd7a">
-<ul class="org-ul">
-<li><a href="./trans/a-continuous-integration-system.html">A Continuous Integration System</a></li>
-<li><a href="./wiki_python/argparse.html">Argparse 中文教程</a></li>
-</ul>
-</div>
-</div>
+<div id="outline-container-orgac82bb6" class="outline-2">
+<h2 id="orgac82bb6">Dropout</h2>
+<div class="outline-text-2" id="text-orgac82bb6">
+<p>
+还有一种专门用在神经网络的正规化的方法, 叫作 dropout. 在训练的时候,
+我们随机忽略掉一些神经元和神经联结 , 是这个神经网络变得”不完整”.
+用一个不完整的神经网络训练一次.
+</p>
 
-<div id="outline-container-org4ead625" class="outline-2">
-<h2 id="org4ead625">AI/ML/DL/DM</h2>
-<div class="outline-text-2" id="text-org4ead625">
-<ul class="org-ul">
-<li><a href="./wiki_ml_dl/machine-learning.html">机器学习资源</a></li>
-<li><a href="./wiki_ml_dl/cs231n-index.html">CS231n 课程</a></li>
-<li><a href="./wiki_ml_dl/logistic-regression.html">LR 与 Sigmoid</a></li>
-<li><a href="./wiki_ml_dl/overfitting.html">过拟合问题</a></li>
-<li><a href="./wiki_ml_dl/l1-l2.html">深入理解 L0 L1 L2</a></li>
-<li>梯度下降，梯度上升，坐标下降，牛顿法，优化</li>
-<li><a href="http://selfdrivingcars.mit.edu/resources/">S094: Deep Learning for Self-Driving Cars</a></li>
-<li><a href="https://www.cnblogs.com/LeftNotEasy/archive/2011/01/19/svd-and-applications.html">奇异值分解与应用</a></li>
-<li>线性判别分析（LDA）, 主成分分析(PCA)</li>
-</ul>
+<p>
+到第二次再随机忽略另一些, 变成另一个不完整的神经网络. 有了这些随机
+drop 掉的规则, 我们可以想象其实每次训练的时候, 我们都让每一次预测结果都不会依赖于其中某部分特定的神经元. 像 l1, l2 正规化一样, 过度依赖的 W , 也就是训练参数的数值会很大, l1, l2 会惩罚这些大的 参数.
+Dropout 的做法是从根本上让神经网络没机会过度依赖.
+</p>
 </div>
 </div>
+<div id="outline-container-org0fd2a24" class="outline-2">
+<h2 id="org0fd2a24">参考</h2>
+<div class="outline-text-2" id="text-org0fd2a24">
+<ol class="org-ol">
+<li><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-02-A-overfitting/">https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-02-A-overfitting/</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
 
-<div id="outline-container-org7d6e789" class="outline-2">
-<h2 id="org7d6e789">Guitar</h2>
-<div class="outline-text-2" id="text-org7d6e789">
-<ul class="org-ul">
-<li><a href="./guitar/奇跡の山.html">奇跡の山</a></li>
-</ul>
-</div>
-</div>
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
 
-<div id="outline-container-org302f840" class="outline-2">
-<h2 id="org302f840">Foods</h2>
-<div class="outline-text-2" id="text-org302f840">
-<ul class="org-ul">
-<li><a href="./food/food.html">厨房实验室</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org7ef3b55" class="outline-2">
-<h2 id="org7ef3b55">Docker</h2>
-<div class="outline-text-2" id="text-org7ef3b55">
-<ul class="org-ul">
-<li>Docker 容器网络</li>
-<li><a href="./docker/docker-tips.html">docker 常用备忘</a></li>
-</ul>
-</div>
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+	repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
 </div>
 </div>
 </body>

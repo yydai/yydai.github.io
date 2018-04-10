@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-04-07 Sat 18:42 -->
+<!-- 2018-04-10 Tue 18:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>机器学习资源</title>
+<title>Python 中的 GIL</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -251,57 +251,60 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">机器学习资源</h1>
+<h1 class="title">Python 中的 GIL</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf87c23f">网络课程</a></li>
-<li><a href="#org106de8d">Books</a></li>
+<li><a href="#orgb092621">GIL 是什么？</a></li>
+<li><a href="#orgc206e31">参考</a></li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-orgf87c23f" class="outline-2">
-<h2 id="orgf87c23f">网络课程</h2>
-<div class="outline-text-2" id="text-orgf87c23f">
-<ul class="org-ul">
-<li><a href="https://www.bilibili.com/video/av9770302/">李宏毅深度学习(2017)</a>、<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses.html">Courses</a> and <a href="https://www.youtube.com/watch?v=ZrEsLwCjdxY">Youtube overview</a></li>
-<li><a href="http://ocw.nctu.edu.tw/course_detail-v.php?bgid=1&amp;gid=1&amp;nid=563">機器學習 Machine Learning - Introduction to Machine Learning</a> by 李育杰</li>
-<li><a href="https://github.com/fastai/numerical-linear-algebra">Computational Linear Algebra for Coders</a></li>
-<li><a href="http://selfdrivingcars.mit.edu/resources/">Deep Learning for Self-Driving Cars</a></li>
-<li><a href="http://scikit-learn.org/stable/">scikit-learn</a></li>
-<li><a href="https://www.coursera.org/learn/machine-learning?">Machine Learning of Coursera</a></li>
-<li><a href="https://www.bilibili.com/video/av9016433/">机器学习 Machine Learning-余凯&amp;张潼</a> AND <a href="http://bigeye.au.tsinghua.edu.cn/DragonStar2012/teacher.html">课程主页&amp;课件</a></li>
-<li><a href="http://open.163.com/special/opencourse/machinelearning.html">ML-网易</a> and <a href="http://cs229.stanford.edu/materials.html">讲义</a></li>
-<li><a href="http://machinelearningmastery.com/a-tour-of-machine-learning-algorithms/">A Tour of Machine Learning Algorithms</a></li>
-<li><a href="https://lagunita.stanford.edu/courses/HumanitiesandScience/StatLearning/Winter2015/about">Statistical Learning</a> good A</li>
-<li><a href="https://www.coursera.org/learn/neural-networks">Neural Networks for Machine Learning</a></li>
-<li><a href="https://www.coursera.org/learn/python-machine-learning">Applied Machine Learning in Python</a></li>
-<li><a href="https://www.coursera.org/learn/practical-machine-learning">Practical Machine Learning</a></li>
-<li><a href="https://www.coursera.org/learn/ml-foundationsa">Machine Learning Foundations: A Case Study Approach</a></li>
-<li><a href="http://www.bilibili.com/video/av6991226/">机器学习技法</a> AND <a href="https://www.csie.ntu.edu.tw/~htlin/mooc/">slides</a> AND <a href="https://www.csie.ntu.edu.tw/~htlin/course/ml15fall/">homework</a></li>
-<li><a href="http://www.bilibili.com/video/av4294020/?from=search&amp;seid=3981385247995430087">机器学习基石</a> AND slides</li>
-<li><a href="http://amlbook.com">Learning from data</a></li>
-<li><a href="http://www.stat.cmu.edu/~ryantibs/statml/">Statistical Machine Learning: Spring 2017</a> by Larry Wasserman</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org106de8d" class="outline-2">
-<h2 id="org106de8d">Books</h2>
-<div class="outline-text-2" id="text-org106de8d">
-<ul class="org-ul">
-<li>pattern recognition and machine learning</li>
-<li>李航 统计学习方法</li>
-<li>机器学习 周志华</li>
-<li>机器学习实战</li>
-<li><a href="https://github.com/ty4z2008/Qix/blob/master/dl.md">https://github.com/ty4z2008/Qix/blob/master/dl.md</a></li>
-</ul>
+<hr />
+<p>
+最近面试问到了 GIL，虽然以前知道，但是非常的生疏了，现在再系统的学习一下。
+</p>
 
 <p>
-我发现台湾在机器学习方面确实有很多好的课程，无论的林轩田、李宏毅还是上面的李育杰的课都非常的好，各有特色。十分感谢这些人的奉献。
+这里会包含如下的内容：
 </p>
+<ol class="org-ol">
+<li>GIL 是什么？</li>
+<li>如何写出更加高效代码？</li>
+<li>如何绕过 GIL 的限制？</li>
+</ol>
+
+<div id="outline-container-orgb092621" class="outline-2">
+<h2 id="orgb092621">GIL 是什么？</h2>
+<div class="outline-text-2" id="text-orgb092621">
+<p>
+在说 GIL 之前，我们先看看 Python 的不同实现: CPython, Pypy, Jython 等等。
+</p>
+
+<p>
+而 GIL 只是在 CPython 和 PyPy 中有，其他的实现中并没有这种限制。
+</p>
+
+<p>
+先挖坑了，最近准备找实习，没太多时间研究了。抽时间补上吧。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgc206e31" class="outline-2">
+<h2 id="orgc206e31">参考</h2>
+<div class="outline-text-2" id="text-orgc206e31">
+<ol class="org-ol">
+<li><a href="http://www.dabeaz.com/GIL/gilvis/index.html">http://www.dabeaz.com/GIL/gilvis/index.html</a></li>
+<li><a href="http://www.dabeaz.com/python/UnderstandingGIL.pdf">http://www.dabeaz.com/python/UnderstandingGIL.pdf</a></li>
+<li><a href="https://opensource.com/article/17/4/grok-gil">https://opensource.com/article/17/4/grok-gil</a></li>
+<li><a href="https://callhub.io/understanding-python-gil/">https://callhub.io/understanding-python-gil/</a></li>
+<li><a href="http://jessenoller.com/blog/2009/02/01/python-threads-and-the-global-interpreter-lock">http://jessenoller.com/blog/2009/02/01/python-threads-and-the-global-interpreter-lock</a></li>
+<li><a href="http://zhuoqiang.me/python-thread-gil-and-ctypes.html">http://zhuoqiang.me/python-thread-gil-and-ctypes.html</a></li>
+</ol>
 </div>
 </div>
 </div>

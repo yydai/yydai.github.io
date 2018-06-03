@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-06-03 Sun 19:02 -->
+<!-- 2018-06-03 Sun 12:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>V for Vendetta</title>
+<title>Python 内存管理</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -179,7 +179,6 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/worg2.css"/>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
@@ -243,151 +242,290 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
 <div id="content">
-<h1 class="title">V for Vendetta</h1>
+<h1 class="title">Python 内存管理</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0017874">小块空间的内存池</a></li>
+<li><a href="#org17d5d52">内存池</a></li>
+<li><a href="#orge16915e">循环引用的垃圾收集</a>
+<ul>
+<li><a href="#org4d2083d">标记-清除算法</a></li>
+<li><a href="#org30ea2fb">分代</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <hr />
-<div style="float:right; margin: 20px;font-style: oblique;">
-    <p>今生今世</p>
-    今生今世，我最忘情的哭声有两次 <br/>
-    一次在我生命的开始，一次在你生命的告终 <br/>
-    第一次我不会记得 是听你说的， <br/>
-    第二次你不会晓得 我说也没用， <br/>
-    但两次哭声的中间啊！ 有无穷无尽的笑声， <br/>
-    一遍一遍又一遍，回荡了整整三十年，你都晓得我都记得。<br/>
-</div>
+<ol class="org-ol">
+<li><p>
+内存管理架构：
+</p>
 
-<div id="outline-container-orgf33152c" class="outline-2">
-<h2 id="orgf33152c">Hello Godiva</h2>
-<div class="outline-text-2" id="text-orgf33152c">
-<ul class="org-ul">
-<li><a href="./wiki_emacs/blog-test.html">Blog 的搭建</a></li>
-<li><a href="./others/static-comments-on-my-blog.html">Blog 静态评论实现</a></li>
-<li><a href="./others/character-encoding.html">谈谈字符编码</a></li>
-<li><a href="./others/ssh-remote-host.html">远程主机登录</a></li>
-<li><a href="./projects/json-parser.html">JSON 解析器</a></li>
-<li><a href="./projects/antlr-example.html">ANTLR 应用实例</a></li>
-<li><a href="./books/readings.html">读书那些年</a></li>
-<li><a href="./mac/tricks.html">Mac OS X Tricks</a></li>
-<li><a href="./mac/software.html">Mac 上好用的软件</a></li>
-<li><a href="./others/keyboard.html">我的键盘</a></li>
-</ul>
+<p>
+python 内存管理的层次结构，分为三层。
+</p>
 
-<div style="float:right; margin: 20px;font-style: oblique;color: red;padding-right:200px;font-size:">
-    求实习岗位(17684580636)...
-</div>
-</div>
-</div>
+<p>
+第一层封装一下操作系统的内存管理接口，主要是为了可移植性。例如在 malloc 的时候，python 不会允许 malloc(0)的，最小就是 1
+</p>
 
-<div id="outline-container-org0d9fb15" class="outline-2">
-<h2 id="org0d9fb15">Emacs</h2>
-<div class="outline-text-2" id="text-org0d9fb15">
-<ul class="org-ul">
-<li><a href="./wiki_emacs/emacs-tricks.html">Emacs 技巧</a></li>
-<li><a href="./wiki_emacs/emacs-resourses.html">Emacs 学习资源</a></li>
-<li><a href="./wiki_emacs/emacs-macro.html">Emacs 键盘宏</a></li>
-<li><a href="./wiki_emacs/interactive.html">Elisp 中 interactive 使用</a></li>
-<li><a href="./wiki_emacs/mac-org-mode-output-pdf.html">如何在 Org Mode 输出 PDF 文件</a></li>
-<li><a href="./wiki_emacs/elisp-macro.html">Elisp 中的宏</a></li>
-<li><a href="./wiki_emacs/highlight-code.html">blog 代码高亮</a></li>
-<li>如何写 Minor Mode, Major Mode</li>
-<li>如何写 company-mode backend</li>
-</ul>
-</div>
-</div>
+<p>
+真正在 Python 中发挥巨大作用的，同时也是 GC 的藏身之处的内存管理机制就在第二层中。
+</p></li>
+</ol>
 
-<div id="outline-container-org18d589e" class="outline-2">
-<h2 id="org18d589e">Python</h2>
-<div class="outline-text-2" id="text-org18d589e">
-<ul class="org-ul">
-<li><a href="./wiki_python/virtualenv.html">虚拟环境(virtualenv)</a></li>
-<li><a href="./python/axis.html">Pandas 和 Numpy 中的 axis</a></li>
-<li><a href="./wiki_python/mutable-immutable.html">Mutable vs. Immutable</a></li>
-<li><a href="./wiki_python/gil.html">Python 中 GIL</a></li>
-<li><a href="./wiki_python/decorators.html">装饰器</a></li>
-</ul>
+<div id="outline-container-org0017874" class="outline-2">
+<h2 id="org0017874">小块空间的内存池</h2>
+<div class="outline-text-2" id="text-org0017874">
+<p>
+小块的内存申请很开又会释放掉，频繁的 malloc free 会导致 os 平凡的在用户态和核心态之间进行切换。所以引入了内存池的机制。
+</p>
+
+<p>
+引入了层次结构，block pool arena 内存池。
+block 是一个确定的小块内存块。2.5 版本上限是 256
+</p>
+
+<p>
+一组 block 的集合称为一个 poll，换句话说一个 pool 管理着一堆固定大小的内存块。事实是 pool 管理一大块的内存，它通常的大小为一个内存页，一般为 4K
+</p>
+
+<p>
+每一个 pool 管理的所有 block 大小都是一样的，也就是说它管理的内存 block 不会出现不同的大小块。
+</p>
+
+<p>
+python 内存释放动作会出现大量的离散的 block，python 就是使用自由的 block 链表来管理的。
+</p>
+
+<p>
+它是通过 freeblock 来管理的，也就是说当有一个 block free 的时候，它先看看它属于哪个 pool，然后加入到 pool-&gt;freeblock 中。
+</p>
+
+<p>
+arena：Pool 的集合
+arena 对应 arena<sub>object</sub> 结构体，但是它不仅仅是它，还包括 pool 的集合。
+这一部分还是比较复杂的。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org508a9d2" class="outline-2">
-<h2 id="org508a9d2">Linux</h2>
-<div class="outline-text-2" id="text-org508a9d2">
-<ul class="org-ul">
-<li><a href="./git/git-internals.html">Git 的内部原理</a></li>
-<li><a href="./linux/auto-push.html">自动化 Git Push</a></li>
-<li><a href="./git/qa.html">Git 常见问题总结</a></li>
-<li><a href="./linux/makefile-qa.html">Makefile 的常见问题</a></li>
-</ul>
+<div id="outline-container-org17d5d52" class="outline-2">
+<h2 id="org17d5d52">内存池</h2>
+<div class="outline-text-2" id="text-org17d5d52">
+<p>
+在 2.5 中，python 内部默认的小块内存和大块内存分界点在 256B，也就是说当申请内存小于 256 字节，它会通过 PyObject<sub>Malloc</sub> 在内存池中申请，当大于这个数时，PyObject<sub>Malloc</sub> 会退化为 malloc 行为。
+当然，我们可以修改 python 源代码改变这个默认值，从而改变 python 默认的内存管理行为。
+</p>
+
+<p>
+python 内部是否有对 arena 的个数有限制呢？默认情况下是没有做任何的限制。
+</p>
+
+<p>
+在 arena 中所有处于 used 状态的 pool 都被置于 usedpools 的控制下。
+</p>
+
+<p>
+python 使用了延迟分配的策略，也就是说在开始的时候，pool 是没有分配的当我们需要一个 pool 的时候，我们再开始分配。
+</p>
+
+
+<p>
+内存管理其实非常的复杂，但是尽管这样，所有的内存都是在 arenas 的控制下。
+</p>
 </div>
 </div>
 
-<div id="outline-container-orgdefbdcf" class="outline-2">
-<h2 id="orgdefbdcf">Algorithm</h2>
-<div class="outline-text-2" id="text-orgdefbdcf">
-<ul class="org-ul">
-<li><a href="./algorithm/index.html">Leetcode</a></li>
-<li><a href="./algorithm/dp.html">动态规划问题</a></li>
-<li><a href="./algorithm/top-k.html">Top-K 问题</a></li>
-<li><a href="./algorithm/trie.html">Trie 树</a></li>
-</ul>
+
+<div id="outline-container-orge16915e" class="outline-2">
+<h2 id="orge16915e">循环引用的垃圾收集</h2>
+<div class="outline-text-2" id="text-orge16915e">
+<p>
+ 引用计数和垃圾收集引用计数有一个很大的优点就是实时性，一旦没有指向它的应用，它就被立即回收。
+</p>
+
+<p>
+但是它的却缺点也是很大的，就是它需要引用计数的额外操作，它的代价和内存分配和释放，以及引用赋值操作的次数成正比。
+</p>
+
+<p>
+为了弥补这种缺陷，python 中大量使用的内存池机制就是为了弥补这种缺陷所做的努力。
+</p>
+
+<p>
+这里还有一个致命的缺点，那就是循环引用。
+</p>
+
+<p>
+因为引用计数非常简单，就是对象的引用被创建或复制时，对象引用计数加一，否则减 1，到 0 释放。
+</p>
+
+<p>
+如果存在这样的情况，几个变量之间循环的引用，他们的引用 计数都不为 0，也就是他们永远都不会释放。
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #ffcc66;">l1</span> = <span style="color: #cccccc;">[]</span>
+<span style="color: #ffcc66;">l2</span> = <span style="color: #cccccc;">[]</span>
+l1.append<span style="color: #cccccc;">(</span>l2<span style="color: #cccccc;">)</span>
+l2.append<span style="color: #cccccc;">(</span>l1<span style="color: #cccccc;">)</span>
+</code></pre>
+</div>
+
+<p>
+为了弥补这种问题，python 引入了标记-清除和分代收集技术来解决。
+</p>
+</div>
+
+<div id="outline-container-org4d2083d" class="outline-3">
+<h3 id="org4d2083d">标记-清除算法</h3>
+<div class="outline-text-3" id="text-org4d2083d">
+<p>
+任何的垃圾回收机制都会分为两个阶段，垃圾检测和垃圾回收。首先，我们需要从 root object 入手，也就是一些全局引用和函数栈中的引用。
+</p>
+
+<p>
+下面是三色标记模型：在开始前，我们将所有的对象都假设为不可达的。对应在有向图上都是白色。然后开始 root object 集合中的一个 object 开始检查它的引用，例如到达了 A，将其标记为灰色，灰色表示对象是可达的，但是它的引用还没有检查，如果检查完它包含的所有引用，我们就把它设为黑色。
+</p>
+
+<p>
+python 使用的还是引用计数，引入了它主要是为了解决循环引用的问题。而向 int string 这种是不可能产生循环引用的，只有内部可以持有其他对象的引用才可能产生循环引用。也就是发生在 container 间。
+</p>
+
+<p>
+所以 python 的垃圾收集，只需要检查这些 container 对象就可以了。
+</p>
 </div>
 </div>
 
-<div id="outline-container-org89cbd7a" class="outline-2">
-<h2 id="org89cbd7a">Translations</h2>
-<div class="outline-text-2" id="text-org89cbd7a">
-<ul class="org-ul">
-<li><a href="./trans/a-continuous-integration-system.html">A Continuous Integration System</a></li>
-<li><a href="./wiki_python/argparse.html">Argparse 中文教程</a></li>
-</ul>
-</div>
-</div>
+<div id="outline-container-org30ea2fb" class="outline-3">
+<h3 id="org30ea2fb">分代</h3>
+<div class="outline-text-3" id="text-org30ea2fb">
+<p>
+基于统计规律我们了解到内存块的生存周期，根据不同的时间划分为不同的集合。
+</p>
 
-<div id="outline-container-org4ead625" class="outline-2">
-<h2 id="org4ead625">AI/ML/DL/DM</h2>
-<div class="outline-text-2" id="text-org4ead625">
-<ul class="org-ul">
-<li><a href="./wiki_ml_dl/machine-learning.html">机器学习资源</a></li>
-<li><a href="./wiki_ml_dl/cs231n-index.html">CS231n 课程</a></li>
-<li><a href="./wiki_ml_dl/logistic-regression.html">LR 与 Sigmoid</a></li>
-<li><a href="./wiki_ml_dl/overfitting.html">过拟合问题</a></li>
-<li><a href="./wiki_ml_dl/l1-l2.html">深入理解 L1 L2 正则</a></li>
-<li><a href="http://selfdrivingcars.mit.edu/resources/">S094: Deep Learning for Self-Driving Cars</a></li>
-<li><a href="https://www.cnblogs.com/LeftNotEasy/archive/2011/01/19/svd-and-applications.html">奇异值分解与应用</a></li>
-<li><a href="./wiki_ml_dl/kaggle/index.html">Kaggle 比赛</a></li>
-<li>XGBoost 论文翻译</li>
-<li>SVM</li>
-<li>梯度下降以及优化算法</li>
-<li>如何做特征工程</li>
-<li>线性判别分析（LDA）, 主成分分析(PCA)</li>
-</ul>
-</div>
-</div>
+<p>
+python 中会有三个“代”。 _PyGC<sub>generation0</sub>, 指向的就是 0 代内存集合。
+</p>
 
-<div id="outline-container-org7d6e789" class="outline-2">
-<h2 id="org7d6e789">Guitar</h2>
-<div class="outline-text-2" id="text-org7d6e789">
-<ul class="org-ul">
-<li><a href="./guitar/奇跡の山.html">奇跡の山</a></li>
-</ul>
+<p>
+第 0 代中最多可以容纳 700 个 container 对象，一旦超过了 700，会触发垃圾回收
+</p>
 </div>
 </div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
 
-<div id="outline-container-org302f840" class="outline-2">
-<h2 id="org302f840">Foods</h2>
-<div class="outline-text-2" id="text-org302f840">
-<ul class="org-ul">
-<li><a href="./food/food.html">厨房实验室</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org7ef3b55" class="outline-2">
-<h2 id="org7ef3b55">Docker</h2>
-<div class="outline-text-2" id="text-org7ef3b55">
-<ul class="org-ul">
-<li>Docker 容器网络</li>
-<li><a href="./docker/docker-tips.html">docker 常用备忘</a></li>
-</ul>
-</div>
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+	repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
 </div>
 </div>
 </body>

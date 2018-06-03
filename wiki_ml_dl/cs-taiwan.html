@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-06-03 Sun 19:02 -->
+<!-- 2018-06-03 Sun 12:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>V for Vendetta</title>
+<title></title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -179,7 +179,6 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/worg2.css"/>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
@@ -241,153 +240,164 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
 <div id="content">
-<h1 class="title">V for Vendetta</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgbbdfc82">阶段二计划</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbbdfc82" class="outline-2">
+<h2 id="orgbbdfc82">阶段二计划</h2>
+<div class="outline-text-2" id="text-orgbbdfc82">
+<ol class="org-ol">
+<li>彻底搞懂 SVM, 理解而不是限于理解它的一些思想方法。</li>
+<li>读源码 libsvm liblinear</li>
+<li>其他算法的推导过程也要会</li>
+<li>手动实现一下常见的算法，参考李航的《统计学习方法》</li>
+<li>看一些公开课：<a href="http://course.fast.ai/about.html">http://course.fast.ai/about.html</a></li>
+<li>撸一下：<a href="https://github.com/fastai/numerical-linear-algebra">https://github.com/fastai/numerical-linear-algebra</a></li>
+<li><p>
+Kaggle 比赛 or 天池比赛拿一个名次
+</p>
+
+<p>
+\(hθ(x) = g(θTx)\)
+</p></li>
+</ol>
+
+<p>
+至于说深度学习方面的东西，可以把视觉方面的 opencv 看看。
+上面的这些过程做完，才真的敢说机器学习入门了。
+另外看一些书：
+</p>
+<ol class="org-ol">
+<li>PRML</li>
+<li>机器学习实战</li>
+<li>统计学习方法</li>
+<li>西瓜书</li>
+</ol>
+
+
+<p>
+笔记记录：
+</p>
+<ol class="org-ol">
+<li>测量误差的容忍度，svm 找到一个线</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+	document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+	jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+	repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
 <hr />
-<div style="float:right; margin: 20px;font-style: oblique;">
-    <p>今生今世</p>
-    今生今世，我最忘情的哭声有两次 <br/>
-    一次在我生命的开始，一次在你生命的告终 <br/>
-    第一次我不会记得 是听你说的， <br/>
-    第二次你不会晓得 我说也没用， <br/>
-    但两次哭声的中间啊！ 有无穷无尽的笑声， <br/>
-    一遍一遍又一遍，回荡了整整三十年，你都晓得我都记得。<br/>
-</div>
-
-<div id="outline-container-orgf33152c" class="outline-2">
-<h2 id="orgf33152c">Hello Godiva</h2>
-<div class="outline-text-2" id="text-orgf33152c">
-<ul class="org-ul">
-<li><a href="./wiki_emacs/blog-test.html">Blog 的搭建</a></li>
-<li><a href="./others/static-comments-on-my-blog.html">Blog 静态评论实现</a></li>
-<li><a href="./others/character-encoding.html">谈谈字符编码</a></li>
-<li><a href="./others/ssh-remote-host.html">远程主机登录</a></li>
-<li><a href="./projects/json-parser.html">JSON 解析器</a></li>
-<li><a href="./projects/antlr-example.html">ANTLR 应用实例</a></li>
-<li><a href="./books/readings.html">读书那些年</a></li>
-<li><a href="./mac/tricks.html">Mac OS X Tricks</a></li>
-<li><a href="./mac/software.html">Mac 上好用的软件</a></li>
-<li><a href="./others/keyboard.html">我的键盘</a></li>
-</ul>
-
-<div style="float:right; margin: 20px;font-style: oblique;color: red;padding-right:200px;font-size:">
-    求实习岗位(17684580636)...
-</div>
-</div>
-</div>
-
-<div id="outline-container-org0d9fb15" class="outline-2">
-<h2 id="org0d9fb15">Emacs</h2>
-<div class="outline-text-2" id="text-org0d9fb15">
-<ul class="org-ul">
-<li><a href="./wiki_emacs/emacs-tricks.html">Emacs 技巧</a></li>
-<li><a href="./wiki_emacs/emacs-resourses.html">Emacs 学习资源</a></li>
-<li><a href="./wiki_emacs/emacs-macro.html">Emacs 键盘宏</a></li>
-<li><a href="./wiki_emacs/interactive.html">Elisp 中 interactive 使用</a></li>
-<li><a href="./wiki_emacs/mac-org-mode-output-pdf.html">如何在 Org Mode 输出 PDF 文件</a></li>
-<li><a href="./wiki_emacs/elisp-macro.html">Elisp 中的宏</a></li>
-<li><a href="./wiki_emacs/highlight-code.html">blog 代码高亮</a></li>
-<li>如何写 Minor Mode, Major Mode</li>
-<li>如何写 company-mode backend</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org18d589e" class="outline-2">
-<h2 id="org18d589e">Python</h2>
-<div class="outline-text-2" id="text-org18d589e">
-<ul class="org-ul">
-<li><a href="./wiki_python/virtualenv.html">虚拟环境(virtualenv)</a></li>
-<li><a href="./python/axis.html">Pandas 和 Numpy 中的 axis</a></li>
-<li><a href="./wiki_python/mutable-immutable.html">Mutable vs. Immutable</a></li>
-<li><a href="./wiki_python/gil.html">Python 中 GIL</a></li>
-<li><a href="./wiki_python/decorators.html">装饰器</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org508a9d2" class="outline-2">
-<h2 id="org508a9d2">Linux</h2>
-<div class="outline-text-2" id="text-org508a9d2">
-<ul class="org-ul">
-<li><a href="./git/git-internals.html">Git 的内部原理</a></li>
-<li><a href="./linux/auto-push.html">自动化 Git Push</a></li>
-<li><a href="./git/qa.html">Git 常见问题总结</a></li>
-<li><a href="./linux/makefile-qa.html">Makefile 的常见问题</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-orgdefbdcf" class="outline-2">
-<h2 id="orgdefbdcf">Algorithm</h2>
-<div class="outline-text-2" id="text-orgdefbdcf">
-<ul class="org-ul">
-<li><a href="./algorithm/index.html">Leetcode</a></li>
-<li><a href="./algorithm/dp.html">动态规划问题</a></li>
-<li><a href="./algorithm/top-k.html">Top-K 问题</a></li>
-<li><a href="./algorithm/trie.html">Trie 树</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org89cbd7a" class="outline-2">
-<h2 id="org89cbd7a">Translations</h2>
-<div class="outline-text-2" id="text-org89cbd7a">
-<ul class="org-ul">
-<li><a href="./trans/a-continuous-integration-system.html">A Continuous Integration System</a></li>
-<li><a href="./wiki_python/argparse.html">Argparse 中文教程</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org4ead625" class="outline-2">
-<h2 id="org4ead625">AI/ML/DL/DM</h2>
-<div class="outline-text-2" id="text-org4ead625">
-<ul class="org-ul">
-<li><a href="./wiki_ml_dl/machine-learning.html">机器学习资源</a></li>
-<li><a href="./wiki_ml_dl/cs231n-index.html">CS231n 课程</a></li>
-<li><a href="./wiki_ml_dl/logistic-regression.html">LR 与 Sigmoid</a></li>
-<li><a href="./wiki_ml_dl/overfitting.html">过拟合问题</a></li>
-<li><a href="./wiki_ml_dl/l1-l2.html">深入理解 L1 L2 正则</a></li>
-<li><a href="http://selfdrivingcars.mit.edu/resources/">S094: Deep Learning for Self-Driving Cars</a></li>
-<li><a href="https://www.cnblogs.com/LeftNotEasy/archive/2011/01/19/svd-and-applications.html">奇异值分解与应用</a></li>
-<li><a href="./wiki_ml_dl/kaggle/index.html">Kaggle 比赛</a></li>
-<li>XGBoost 论文翻译</li>
-<li>SVM</li>
-<li>梯度下降以及优化算法</li>
-<li>如何做特征工程</li>
-<li>线性判别分析（LDA）, 主成分分析(PCA)</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org7d6e789" class="outline-2">
-<h2 id="org7d6e789">Guitar</h2>
-<div class="outline-text-2" id="text-org7d6e789">
-<ul class="org-ul">
-<li><a href="./guitar/奇跡の山.html">奇跡の山</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org302f840" class="outline-2">
-<h2 id="org302f840">Foods</h2>
-<div class="outline-text-2" id="text-org302f840">
-<ul class="org-ul">
-<li><a href="./food/food.html">厨房实验室</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org7ef3b55" class="outline-2">
-<h2 id="org7ef3b55">Docker</h2>
-<div class="outline-text-2" id="text-org7ef3b55">
-<ul class="org-ul">
-<li>Docker 容器网络</li>
-<li><a href="./docker/docker-tips.html">docker 常用备忘</a></li>
-</ul>
-</div>
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
 </div>
 </div>
 </body>

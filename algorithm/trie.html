@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-06-03 Sun 12:47 -->
+<!-- 2018-06-03 Sun 12:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SVM</title>
+<title>Trie</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -251,77 +251,210 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">SVM</h1>
+<h1 class="title">Trie</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9731ef0">参考</a></li>
-<li><a href="#orge42440a">Linear SVM</a></li>
+<li><a href="#org7f33778">介绍</a></li>
+<li><a href="#orgeca7772">应用</a>
+<ul>
+<li><a href="#orgb5fa941">浏览器自动补全</a></li>
+<li><a href="#org3645b4c">拼写检查</a></li>
+<li><a href="#orge318a45">IP routing (Longest prefix matching)</a></li>
+<li><a href="#org75770c5">T9 predictive text</a></li>
+</ul>
+</li>
+<li><a href="#org1b2db96">Prefix Trie</a>
+<ul>
+<li><a href="#org1a860dc">先看实现代码</a></li>
+</ul>
+</li>
+<li><a href="#orgfdcca27">Reference</a></li>
 </ul>
 </div>
 </div>
 <hr />
+
+<div id="outline-container-org7f33778" class="outline-2">
+<h2 id="org7f33778">介绍</h2>
+<div class="outline-text-2" id="text-org7f33778">
 <p>
-这部分是一个比较大的主题，关于 SVM 东西还是比较多的，我写这部分是为了解决一些很难理解的东西，包括一些东西为什么是这样而不是那样，还有一些公式的推导过程。
+Trie 树也就是所谓的字典树，一般用来做字符串前缀匹配，词频统计。如果数据量比较大，而且数据重复率比较高（或者说前缀重复率比较高），用
+trie 做词频统计可以节省很多空间。如果对空间没要求，hash 算法还是要好于用 trie。另一个用处是可以对字符串进行字典序排序（深度优先搜索）。
+这个用 hash 也是不能做的。Trie 的插入和查询时间复杂度都为 O(k) ，
+其中 k 为 key 的长度，与 Trie 中保存了多少个元素无关。
+</p>
+</div>
+</div>
+<div id="outline-container-orgeca7772" class="outline-2">
+<h2 id="orgeca7772">应用</h2>
+<div class="outline-text-2" id="text-orgeca7772">
+</div><div id="outline-container-orgb5fa941" class="outline-3">
+<h3 id="orgb5fa941">浏览器自动补全</h3>
+<div class="outline-text-3" id="text-orgb5fa941">
+<p>
+这个是 google 的自动补全功能，当然 baidu 的也有。
 </p>
 
-<div id="outline-container-org9731ef0" class="outline-2">
-<h2 id="org9731ef0">参考</h2>
-<div class="outline-text-2" id="text-org9731ef0">
-<ol class="org-ol">
-<li>机器学习实战</li>
-<li>统计学习方法</li>
-<li>林 公开课</li>
-<li>NG notes</li>
-<li>西瓜书</li>
-</ol>
+
+<div class="figure">
+<p><img src="./imgs/GoogleSuggest.png" alt="GoogleSuggest.png" width="60%" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Google AutoComplete</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3645b4c" class="outline-3">
+<h3 id="org3645b4c">拼写检查</h3>
+<div class="outline-text-3" id="text-org3645b4c">
+<p>
+例如 word 里面的
+</p>
+
+<div class="figure">
+<p><img src="./imgs/SpellCheck.png" alt="SpellCheck.png" width="60%" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Word</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge318a45" class="outline-3">
+<h3 id="orge318a45"><a href="https://en.wikipedia.org/wiki/Longest_prefix_match">IP routing (Longest prefix matching)</a></h3>
+<div class="outline-text-3" id="text-orge318a45">
+
+<div class="figure">
+<p><img src="./imgs/208_IPRouting.gif" alt="208_IPRouting.gif" width="70%" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Ip Routing</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org75770c5" class="outline-3">
+<h3 id="org75770c5">T9 predictive text</h3>
+<div class="outline-text-3" id="text-org75770c5">
+
+<div class="figure">
+<p><img src="./imgs/208_T9.jpg" alt="208_T9.jpg" width="60%" />
+</p>
+<p><span class="figure-number">Figure 4: </span>T9 which stands for Text on 9 keys, was used on phones to input texts during the late 1990s.</p>
+</div>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orge42440a" class="outline-2">
-<h2 id="orge42440a">Linear SVM</h2>
-<div class="outline-text-2" id="text-orge42440a">
-<ol class="org-ol">
-<li>为什么支持向量机要用拉格朗日对偶算法来解最大化间隔问题？ <a href="https://www.zhihu.com/question/36694952">zhihu</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/26514613">浅谈最优化问题的 KKT 条件</a></li>
-<li><a href="https://www.zhihu.com/question/21704547">SVM 和 logistic 回归分别在什么情况下使用？</a></li>
-<li><p>
-SVM 和 LR 的区别
+
+<div id="outline-container-org1b2db96" class="outline-2">
+<h2 id="org1b2db96">Prefix Trie</h2>
+<div class="outline-text-2" id="text-org1b2db96">
+</div><div id="outline-container-org1a860dc" class="outline-3">
+<h3 id="org1a860dc">先看实现代码</h3>
+<div class="outline-text-3" id="text-org1a860dc">
+<p>
+定义 Trie 结构：
 </p>
+<div class="container">
+<pre><code class="C++"><span style="color: #cc99cc;">#include</span> <span style="color: #cccccc;">&lt;</span><span style="color: #66cccc;">iostream</span><span style="color: #cccccc;">&gt;</span>
+<span style="color: #cc99cc;">#define</span> <span style="color: #ffcc66;">MAX</span> 26
+<span style="color: #99cc99;">using</span> <span style="color: #99cc99;">namespace</span> <span style="color: #6699cc;">std</span>;
+
+<span style="color: #99cc99;">typedef</span> <span style="color: #99cc99;">struct</span> <span style="color: #6699cc;">TrieNode</span> <span style="color: #cccccc;">{</span>
+    <span style="color: #6699cc;">bool</span> <span style="color: #ffcc66;">isStr</span>; <span style="color: #999999; font-style: italic;">// </span><span style="color: #999999; font-style: italic;">&#23383;&#31526;&#20018;&#26159;&#21542;&#32467;&#26463;</span>
+    <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">prefixCount</span>; <span style="color: #999999; font-style: italic;">// </span><span style="color: #999999; font-style: italic;">&#20197;&#35813;&#23383;&#31526;&#32467;&#26463;&#30340;&#21069;&#32512;&#26377;&#22810;&#23569;&#20010;</span>
+    <span style="color: #99cc99;">struct</span> <span style="color: #6699cc;">TrieNode</span> *<span style="color: #ffcc66;">next</span><span style="color: #66cccc;">[</span>MAX<span style="color: #66cccc;">]</span>;
+<span style="color: #cccccc;">}</span> <span style="color: #6699cc;">Trie</span>;
+</code></pre>
+</div>
 
 <p>
-支持向量机和逻辑回归的相同点：
+插入我们可以这样来：
 </p>
+<div class="container">
+<pre><code class="C++"><span style="color: #6699cc;">void</span> <span style="color: #f99157;">insert</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">Trie</span> *<span style="color: #ffcc66;">root</span>, <span style="color: #99cc99;">const</span> <span style="color: #6699cc;">char</span> *<span style="color: #ffcc66;">s</span><span style="color: #cccccc;">)</span> <span style="color: #cccccc;">{</span>
+    <span style="color: #99cc99;">if</span> <span style="color: #66cccc;">(</span><span style="color: #6699cc;">!</span>root || *s == <span style="color: #66cccc;">'</span><span style="color: #ffcc66;">\</span><span style="color: #cc99cc;">0</span><span style="color: #66cccc;">'</span><span style="color: #66cccc;">)</span>
+        <span style="color: #99cc99;">return</span>;
+    <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">i</span>;
+    <span style="color: #6699cc;">Trie</span> *<span style="color: #ffcc66;">p</span> = root;
+
+    <span style="color: #99cc99;">while</span><span style="color: #66cccc;">(</span>*s!=<span style="color: #66cccc;">'</span><span style="color: #ffcc66;">\</span><span style="color: #cc99cc;">0</span><span style="color: #66cccc;">'</span><span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
+        <span style="color: #99cc99;">if</span> <span style="color: #ffcc66;">(</span><span style="color: #6699cc;">!</span>p-&gt;next<span style="color: #99cc99;">[</span>*s-<span style="color: #66cccc;">'a'</span><span style="color: #99cc99;">]</span><span style="color: #ffcc66;">)</span> <span style="color: #ffcc66;">{</span>
+            <span style="color: #6699cc;">Trie</span> *<span style="color: #ffcc66;">temp</span> = <span style="color: #99cc99;">new</span> <span style="color: #6699cc;">Trie</span><span style="color: #99cc99;">()</span>;
+            <span style="color: #99cc99;">for</span> <span style="color: #99cc99;">(</span>i = 0;i &lt; MAX; i ++<span style="color: #99cc99;">){</span>
+                temp-&gt;next<span style="color: #6699cc;">[</span>i<span style="color: #6699cc;">]</span> = <span style="color: #6699cc;">NULL</span>;
+            <span style="color: #99cc99;">}</span>
+            temp-&gt;isStr = <span style="color: #6699cc;">false</span>;
+            temp-&gt;prefixCount=1;
+            p-&gt;next<span style="color: #99cc99;">[</span>*s-<span style="color: #66cccc;">'a'</span><span style="color: #99cc99;">]</span> = temp;
+            p = p-&gt;next<span style="color: #99cc99;">[</span>*s-<span style="color: #66cccc;">'a'</span><span style="color: #99cc99;">]</span>;
+        <span style="color: #ffcc66;">}</span> <span style="color: #99cc99;">else</span> <span style="color: #ffcc66;">{</span>
+            p = p-&gt;next<span style="color: #99cc99;">[</span>*s - <span style="color: #66cccc;">'a'</span><span style="color: #99cc99;">]</span>;
+            p-&gt;prefixCount += 1;
+        <span style="color: #ffcc66;">}</span>
+        s ++;
+    <span style="color: #66cccc;">}</span>
+    p-&gt;isStr = <span style="color: #6699cc;">true</span>;
+<span style="color: #cccccc;">}</span>
+</code></pre>
+</div>
+
+<p>
+查询：
+</p>
+<div class="container">
+<pre><code class="C++"><span style="color: #6699cc;">int</span> <span style="color: #f99157;">search</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">Trie</span> *<span style="color: #ffcc66;">root</span>, <span style="color: #99cc99;">const</span> <span style="color: #6699cc;">char</span> *<span style="color: #ffcc66;">s</span><span style="color: #cccccc;">)</span> <span style="color: #cccccc;">{</span>
+    <span style="color: #6699cc;">Trie</span> *<span style="color: #ffcc66;">p</span> = root;
+    <span style="color: #99cc99;">while</span><span style="color: #66cccc;">(</span>p != <span style="color: #6699cc;">NULL</span> &amp;&amp; *s != <span style="color: #66cccc;">'</span><span style="color: #ffcc66;">\</span><span style="color: #cc99cc;">0</span><span style="color: #66cccc;">'</span><span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
+        <span style="color: #99cc99;">if</span> <span style="color: #ffcc66;">(</span>p-&gt;next<span style="color: #99cc99;">[</span>*s-<span style="color: #66cccc;">'a'</span><span style="color: #99cc99;">]</span><span style="color: #ffcc66;">)</span> <span style="color: #ffcc66;">{</span>
+            p = p-&gt;next<span style="color: #99cc99;">[</span>*s - <span style="color: #66cccc;">'a'</span><span style="color: #99cc99;">]</span>;
+            s ++;
+        <span style="color: #ffcc66;">}</span>
+    <span style="color: #66cccc;">}</span>
+    <span style="color: #99cc99;">return</span> <span style="color: #66cccc;">(</span>p != <span style="color: #6699cc;">NULL</span> &amp;&amp; p-&gt;isStr == <span style="color: #6699cc;">true</span><span style="color: #66cccc;">)</span>;
+<span style="color: #cccccc;">}</span>
+</code></pre>
+</div>
+
+<p>
+查找前缀出现次数：
+</p>
+<div class="container">
+<pre><code class="C++"><span style="color: #6699cc;">int</span> <span style="color: #f99157;">countPrefix</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">Trie</span> *<span style="color: #ffcc66;">root</span>, <span style="color: #6699cc;">char</span> *<span style="color: #ffcc66;">s</span><span style="color: #cccccc;">)</span> <span style="color: #cccccc;">{</span>
+    <span style="color: #99cc99;">if</span> <span style="color: #66cccc;">(</span><span style="color: #6699cc;">!</span>root || *s == <span style="color: #66cccc;">'</span><span style="color: #ffcc66;">\</span><span style="color: #cc99cc;">0</span><span style="color: #66cccc;">'</span><span style="color: #66cccc;">)</span>
+        <span style="color: #99cc99;">return</span> 0;
+    <span style="color: #6699cc;">Trie</span> *<span style="color: #ffcc66;">p</span> = root;
+    <span style="color: #99cc99;">while</span><span style="color: #66cccc;">(</span>p != <span style="color: #6699cc;">NULL</span> &amp;&amp; *s != <span style="color: #66cccc;">'</span><span style="color: #ffcc66;">\</span><span style="color: #cc99cc;">0</span><span style="color: #66cccc;">'</span><span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
+        <span style="color: #99cc99;">if</span> <span style="color: #ffcc66;">(</span>p-&gt;next<span style="color: #99cc99;">[</span>*s - <span style="color: #66cccc;">'a'</span><span style="color: #99cc99;">]</span><span style="color: #ffcc66;">)</span> <span style="color: #ffcc66;">{</span>
+            p = p-&gt;next<span style="color: #99cc99;">[</span>*s - <span style="color: #66cccc;">'a'</span><span style="color: #99cc99;">]</span>;
+            s ++;
+        <span style="color: #ffcc66;">}</span> <span style="color: #99cc99;">else</span> <span style="color: #ffcc66;">{</span>
+            <span style="color: #99cc99;">return</span> 0;
+        <span style="color: #ffcc66;">}</span>
+    <span style="color: #66cccc;">}</span>
+    <span style="color: #99cc99;">if</span><span style="color: #66cccc;">(</span>p == <span style="color: #6699cc;">NULL</span><span style="color: #66cccc;">)</span>
+        <span style="color: #99cc99;">return</span> 0;
+    <span style="color: #99cc99;">else</span>
+        <span style="color: #99cc99;">return</span> p-&gt;prefixCount;
+<span style="color: #cccccc;">}</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgfdcca27" class="outline-2">
+<h2 id="orgfdcca27">Reference</h2>
+<div class="outline-text-2" id="text-orgfdcca27">
 <ul class="org-ul">
-<li>都是线性分类器，模型求解出一个划分超平面</li>
-<li>两种方法都可以增加不同的正则化项</li>
-<li>通常来说性能相当</li>
+<li><a href="https://leetcode.com/articles/implement-trie-prefix-tree/">208. Implement Trie (Prefix Tree)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Trie">Trie</a></li>
+<li><a href="https://www.zhihu.com/question/29592463">鹅厂面试题，英语单词拼写检查算法？</a></li>
+<li><a href="https://blog.csdn.net/v_july_v/article/details/6897097">从 Trie 树（字典树）谈到后缀树（10.28 修订）</a></li>
 </ul>
-<p>
-不同点：
-</p>
-<ul class="org-ul">
-<li>LR 使用对率损失，SVM 一般用 hinge 损失</li>
-<li>LR 的解受训练数据本身的分布影响，SVM 的模型只与占训练数据少部分的支持向量有关，所以说，SVM 不直接依赖数据分布</li>
-<li>LR 的优势在于其输出具有自然概率的意义，也就是说它在预测标记的同时也给出了概率，而 SVM 的输出不具有概率的意义。</li>
-<li>LR 能用于多分类回归，SVM 需要进行扩展。</li>
-<li>hinge 损失函数有一块平坦的零区域，这使得 SVM 的解具有稀疏性。</li>
-</ul>
-<p>
-在 Andrew NG 的课里讲到过：
-</p>
-<ul class="org-ul">
-<li>如果 Feature 的数量很大，跟样本数量差不多，这时候选用 LR 或者是 Linear Kernel 的 SVM</li>
-<li>如果 Feature 的数量比较小，样本数量一般，不算大也不算小，选用 SVM+Gaussian Kernel</li>
-<li>如果 Feature 的数量比较小，而样本数量很多，需要手工添加一些 feature 变成第一种情况</li>
-</ul></li>
-</ol>
-
-
-<p>
-libsvm
-</p>
 </div>
 </div>
 </div>

@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-06-03 Sun 12:48 -->
+<!-- 2018-06-04 Mon 12:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Trie</title>
+<title>Trie 与补全、纠错</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -251,7 +251,7 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Trie</h1>
+<h1 class="title">Trie 与补全、纠错</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -270,6 +270,8 @@ for the JavaScript code in this tag.
 <li><a href="#org1a860dc">先看实现代码</a></li>
 </ul>
 </li>
+<li><a href="#orgd5ed958">自动补全功能和纠错</a></li>
+<li><a href="#org28d9170">扩展：Double Array Trie</a></li>
 <li><a href="#orgfdcca27">Reference</a></li>
 </ul>
 </div>
@@ -345,7 +347,6 @@ trie 做词频统计可以节省很多空间。如果对空间没要求，hash �
 </div>
 </div>
 </div>
-
 
 <div id="outline-container-org1b2db96" class="outline-2">
 <h2 id="org1b2db96">Prefix Trie</h2>
@@ -444,7 +445,128 @@ trie 做词频统计可以节省很多空间。如果对空间没要求，hash �
 </div>
 </div>
 
+<div id="outline-container-orgd5ed958" class="outline-2">
+<h2 id="orgd5ed958">自动补全功能和纠错</h2>
+<div class="outline-text-2" id="text-orgd5ed958">
+<p>
+核心代码如下， 比较简单，不解释了。完整代码(<a href="https://gist.github.com/yydai/8baed7b2406d2c0b087f680fd39a84ff">这里</a>)。
+</p>
+<div class="container">
+<pre><code class="C++"><span style="color: #6699cc;">void</span> <span style="color: #f99157;">FindFullStr</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">TreeNode</span> *<span style="color: #ffcc66;">root</span>, <span style="color: #6699cc;">string</span> <span style="color: #ffcc66;">query</span>, <span style="color: #6699cc;">vector</span><span style="color: #66cccc;">&lt;</span><span style="color: #6699cc;">string</span><span style="color: #66cccc;">&gt;</span> &amp;<span style="color: #ffcc66;">result</span><span style="color: #cccccc;">)</span> <span style="color: #cccccc;">{</span>
+    <span style="color: #6699cc;">TreeNode</span> *<span style="color: #ffcc66;">p</span> = root;
+    <span style="color: #99cc99;">if</span> <span style="color: #66cccc;">(</span>root == <span style="color: #6699cc;">NULL</span><span style="color: #66cccc;">)</span>
+        <span style="color: #99cc99;">return</span>;
+    <span style="color: #99cc99;">if</span> <span style="color: #66cccc;">(</span>root-&gt;isEnd<span style="color: #66cccc;">)</span>
+        result.push_back<span style="color: #66cccc;">(</span>query<span style="color: #66cccc;">)</span>;
+    <span style="color: #99cc99;">for</span> <span style="color: #66cccc;">(</span><span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">i</span> = 0;i &lt; N; i ++<span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
+        <span style="color: #99cc99;">if</span> <span style="color: #ffcc66;">(</span>root-&gt;next<span style="color: #99cc99;">[</span>i<span style="color: #99cc99;">]</span> != <span style="color: #6699cc;">NULL</span><span style="color: #ffcc66;">)</span> <span style="color: #ffcc66;">{</span>
+            <span style="color: #6699cc;">char</span> <span style="color: #ffcc66;">c</span> = <span style="color: #99cc99;">(</span><span style="color: #6699cc;">char</span><span style="color: #99cc99;">)</span>i;
+            FindFullStr<span style="color: #99cc99;">(</span>root-&gt;next<span style="color: #6699cc;">[</span>i<span style="color: #6699cc;">]</span>, query+c, result<span style="color: #99cc99;">)</span>;
+        <span style="color: #ffcc66;">}</span>
+    <span style="color: #66cccc;">}</span>
+<span style="color: #cccccc;">}</span>
 
+<span style="color: #6699cc;">void</span> <span style="color: #f99157;">FindStr</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">string</span> <span style="color: #ffcc66;">src</span>, <span style="color: #6699cc;">vector</span><span style="color: #66cccc;">&lt;</span><span style="color: #6699cc;">string</span><span style="color: #66cccc;">&gt;</span> &amp;<span style="color: #ffcc66;">result</span><span style="color: #cccccc;">)</span> <span style="color: #cccccc;">{</span>
+    <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">cur</span> = 0;
+    <span style="color: #6699cc;">TreeNode</span> *<span style="color: #ffcc66;">p</span> = <span style="color: #99cc99;">this</span>-&gt;root;
+    <span style="color: #6699cc;">unsigned</span> <span style="color: #6699cc;">char</span> <span style="color: #ffcc66;">index</span> = <span style="color: #66cccc;">(</span><span style="color: #6699cc;">unsigned</span> <span style="color: #6699cc;">char</span><span style="color: #66cccc;">)</span> src<span style="color: #66cccc;">[</span>cur<span style="color: #66cccc;">]</span>;
+
+    <span style="color: #99cc99;">while</span> <span style="color: #66cccc;">(</span>cur &lt; src.size<span style="color: #ffcc66;">()</span> &amp;&amp; p-&gt;next<span style="color: #ffcc66;">[</span>index<span style="color: #ffcc66;">]</span><span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
+        p = p-&gt;next<span style="color: #ffcc66;">[</span>index<span style="color: #ffcc66;">]</span>;
+        ++cur;
+        index = <span style="color: #ffcc66;">(</span><span style="color: #6699cc;">unsigned</span> <span style="color: #6699cc;">char</span><span style="color: #ffcc66;">)</span> src<span style="color: #ffcc66;">[</span>cur<span style="color: #ffcc66;">]</span>;
+    <span style="color: #66cccc;">}</span>
+    <span style="color: #99cc99;">if</span> <span style="color: #66cccc;">(</span>cur != src.size<span style="color: #ffcc66;">()</span> || p == <span style="color: #6699cc;">NULL</span><span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
+        <span style="color: #99cc99;">return</span>;
+    <span style="color: #66cccc;">}</span>
+    FindFullStr<span style="color: #66cccc;">(</span>p, src, result<span style="color: #66cccc;">)</span>;
+<span style="color: #cccccc;">}</span>
+
+<span style="color: #6699cc;">int</span> <span style="color: #f99157;">IsError</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">string</span> <span style="color: #ffcc66;">query</span><span style="color: #cccccc;">)</span> <span style="color: #cccccc;">{</span>
+    <span style="color: #6699cc;">TreeNode</span> *<span style="color: #ffcc66;">p</span> = <span style="color: #99cc99;">this</span>-&gt;root;
+    <span style="color: #99cc99;">if</span> <span style="color: #66cccc;">(</span>p == <span style="color: #6699cc;">NULL</span><span style="color: #66cccc;">)</span>
+        <span style="color: #99cc99;">return</span> 0;
+    <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">cur</span> = 0;
+    <span style="color: #6699cc;">unsigned</span> <span style="color: #6699cc;">char</span> <span style="color: #ffcc66;">index</span> = <span style="color: #66cccc;">(</span><span style="color: #6699cc;">unsigned</span> <span style="color: #6699cc;">char</span><span style="color: #66cccc;">)</span> query<span style="color: #66cccc;">[</span>cur<span style="color: #66cccc;">]</span>;
+    <span style="color: #99cc99;">while</span><span style="color: #66cccc;">(</span>cur &lt; query.size<span style="color: #ffcc66;">()</span> &amp;&amp; p-&gt;next<span style="color: #ffcc66;">[</span>index<span style="color: #ffcc66;">]</span><span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
+        p = p-&gt;next<span style="color: #ffcc66;">[</span>index<span style="color: #ffcc66;">]</span>;
+        ++ cur;
+        index = <span style="color: #ffcc66;">(</span><span style="color: #6699cc;">unsigned</span> <span style="color: #6699cc;">char</span><span style="color: #ffcc66;">)</span> query<span style="color: #ffcc66;">[</span>cur<span style="color: #ffcc66;">]</span>;
+    <span style="color: #66cccc;">}</span>
+    <span style="color: #99cc99;">if</span> <span style="color: #66cccc;">(</span><span style="color: #6699cc;">!</span>p-&gt;isEnd<span style="color: #66cccc;">)</span>
+        <span style="color: #99cc99;">return</span> cur;
+
+    <span style="color: #99cc99;">return</span> 0;
+<span style="color: #cccccc;">}</span>
+
+<span style="color: #6699cc;">void</span> <span style="color: #f99157;">CorrectSpell</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">string</span> <span style="color: #ffcc66;">query</span>, <span style="color: #6699cc;">vector</span><span style="color: #66cccc;">&lt;</span><span style="color: #6699cc;">string</span><span style="color: #66cccc;">&gt;</span> &amp;<span style="color: #ffcc66;">res</span><span style="color: #cccccc;">)</span> <span style="color: #cccccc;">{</span>
+    <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">index</span> = IsError<span style="color: #66cccc;">(</span>query<span style="color: #66cccc;">)</span>;
+    <span style="color: #99cc99;">if</span> <span style="color: #66cccc;">(</span>index<span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
+        <span style="color: #6699cc;">string</span> <span style="color: #ffcc66;">sub</span> = query.substr<span style="color: #ffcc66;">(</span>0, index<span style="color: #ffcc66;">)</span>;
+        FindStr<span style="color: #ffcc66;">(</span>sub, res<span style="color: #ffcc66;">)</span>;
+    <span style="color: #66cccc;">}</span>
+<span style="color: #cccccc;">}</span>
+
+
+<span style="color: #6699cc;">int</span> <span style="color: #f99157;">main</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">argc</span>, <span style="color: #6699cc;">char</span> *<span style="color: #ffcc66;">argv</span><span style="color: #66cccc;">[]</span><span style="color: #cccccc;">)</span>
+<span style="color: #cccccc;">{</span>
+    <span style="color: #6699cc;">Trie</span> *<span style="color: #ffcc66;">p</span> = <span style="color: #99cc99;">new</span> <span style="color: #6699cc;">Trie</span><span style="color: #66cccc;">()</span>;
+    p-&gt;InsertNode<span style="color: #66cccc;">(</span><span style="color: #66cccc;">"hello world"</span><span style="color: #66cccc;">)</span>;
+    p-&gt;InsertNode<span style="color: #66cccc;">(</span><span style="color: #66cccc;">"hello baby"</span><span style="color: #66cccc;">)</span>;
+    p-&gt;InsertNode<span style="color: #66cccc;">(</span><span style="color: #66cccc;">"hello emm.."</span><span style="color: #66cccc;">)</span>;
+    p-&gt;InsertNode<span style="color: #66cccc;">(</span><span style="color: #66cccc;">"hello"</span><span style="color: #66cccc;">)</span>;
+    p-&gt;InsertNode<span style="color: #66cccc;">(</span><span style="color: #66cccc;">"&#20320;&#22909;&#21834;"</span><span style="color: #66cccc;">)</span>;
+    p-&gt;InsertNode<span style="color: #66cccc;">(</span><span style="color: #66cccc;">"&#20320;&#30495;&#22909;"</span><span style="color: #66cccc;">)</span>;
+    p-&gt;InsertNode<span style="color: #66cccc;">(</span><span style="color: #66cccc;">"&#20320;&#22909;&#22351;"</span><span style="color: #66cccc;">)</span>;
+
+    <span style="color: #6699cc;">string</span> <span style="color: #ffcc66;">query</span>;
+    cout &lt;&lt; <span style="color: #66cccc;">"Please input query"</span> &lt;&lt; endl;
+    cin &gt;&gt; query;
+
+    <span style="color: #6699cc;">vector</span><span style="color: #66cccc;">&lt;</span><span style="color: #6699cc;">string</span><span style="color: #66cccc;">&gt;</span> <span style="color: #ffcc66;">result</span>;
+    <span style="color: #999999; font-style: italic;">//</span><span style="color: #999999; font-style: italic;">p-&gt;FindStr(query, result);</span>
+
+    p-&gt;CorrectSpell<span style="color: #66cccc;">(</span>query, result<span style="color: #66cccc;">)</span>;
+
+    <span style="color: #6699cc;">vector</span><span style="color: #66cccc;">&lt;</span><span style="color: #6699cc;">string</span><span style="color: #66cccc;">&gt;</span>::<span style="color: #6699cc;">iterator</span> <span style="color: #ffcc66;">it</span>;
+    <span style="color: #99cc99;">if</span> <span style="color: #66cccc;">(</span>result.size<span style="color: #ffcc66;">()</span> &gt; 0<span style="color: #66cccc;">)</span>
+        cout &lt;&lt; <span style="color: #66cccc;">"You may want input:"</span> &lt;&lt; endl;
+    <span style="color: #99cc99;">else</span>
+        cout &lt;&lt; <span style="color: #66cccc;">"You input is correct"</span> &lt;&lt; endl;
+    <span style="color: #99cc99;">for</span><span style="color: #66cccc;">(</span>it = result.begin<span style="color: #ffcc66;">()</span>; it != result.end<span style="color: #ffcc66;">()</span>; ++ it<span style="color: #66cccc;">){</span>
+        cout &lt;&lt; *it &lt;&lt; endl;
+    <span style="color: #66cccc;">}</span>
+    <span style="color: #99cc99;">return</span> 0;
+<span style="color: #cccccc;">}</span>
+</code></pre>
+</div>
+
+<p>
+实验效果如下：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20180604_122203_1118wlQ.png" alt="20180604_122203_1118wlQ.png" width="40%" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./imgs/20180604_122249_1118K6c.png" alt="20180604_122249_1118K6c.png" width="40%" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org28d9170" class="outline-2">
+<h2 id="org28d9170">扩展：Double Array Trie</h2>
+<div class="outline-text-2" id="text-org28d9170">
+<p>
+<a href="https://pdfs.semanticscholar.org/f2ad/2a67218e458a979afafb311d1d7867f3f624.pdf">double array tree</a>
+</p>
+</div>
+</div>
 
 <div id="outline-container-orgfdcca27" class="outline-2">
 <h2 id="orgfdcca27">Reference</h2>
@@ -454,6 +576,7 @@ trie 做词频统计可以节省很多空间。如果对空间没要求，hash �
 <li><a href="https://en.wikipedia.org/wiki/Trie">Trie</a></li>
 <li><a href="https://www.zhihu.com/question/29592463">鹅厂面试题，英语单词拼写检查算法？</a></li>
 <li><a href="https://blog.csdn.net/v_july_v/article/details/6897097">从 Trie 树（字典树）谈到后缀树（10.28 修订）</a></li>
+<li><a href="https://blog.csdn.net/susidian/article/details/52468257">https://blog.csdn.net/susidian/article/details/52468257</a></li>
 </ul>
 </div>
 </div>

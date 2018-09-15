@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-15 Sat 21:05 -->
+<!-- 2018-09-15 Sat 21:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>规则引擎的设计和实现(一)</title>
+<title></title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -251,7 +251,6 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">规则引擎的设计和实现(一)</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -267,7 +266,15 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
+<p>
+6#+TITLE: 规则引擎的设计和实现(一)
+</p>
+
 <hr />
+
+<p>
+先占坑，有时间再加注释和改进，然后写一下如何应用。
+</p>
 
 <div id="outline-container-orgd02580b" class="outline-2">
 <h2 id="orgd02580b">规则引擎是什么</h2>
@@ -283,9 +290,10 @@ for the JavaScript code in this tag.
 <p>
 我们的配置文件长啥样呢
 </p>
-<pre><code class="example">
-(and (or_ (and 1 2) (gt_ 2 1) (contain_ 规则引擎的设计和实现 规则))
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">and</span> <span style="color: #bc6ec5;">(</span>or_ <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">and</span> 1 2<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>gt_ 2 1<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>contain_ &#35268;&#21017;&#24341;&#25806;&#30340;&#35774;&#35745;&#21644;&#23454;&#29616; &#35268;&#21017;<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
 </code></pre>
+</div>
 
 <p>
 类似上面的 lisp 语言的写法定义，函数的支持，需要自己定义。

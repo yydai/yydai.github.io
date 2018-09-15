@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-13 Thu 23:35 -->
+<!-- 2018-09-15 Sat 21:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>规则引擎的设计和实现(一)</title>
@@ -257,10 +257,8 @@ for the JavaScript code in this tag.
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgd02580b">规则引擎是什么</a></li>
-<li><a href="#org47e3cd5">效果</a></li>
 <li><a href="#orge47e7e2">一个简单的实现</a></li>
 <li><a href="#orgebbfc36">规则的定义</a></li>
-<li><a href="#orgfb4cedb">效果</a></li>
 <li><a href="#org5dc1b77">问题</a>
 <ul>
 <li><a href="#org06800b2">慢</a></li>
@@ -273,22 +271,169 @@ for the JavaScript code in this tag.
 
 <div id="outline-container-orgd02580b" class="outline-2">
 <h2 id="orgd02580b">规则引擎是什么</h2>
+<div class="outline-text-2" id="text-orgd02580b">
+<p>
+&#x2026;
+</p>
 </div>
-
-<div id="outline-container-org47e3cd5" class="outline-2">
-<h2 id="org47e3cd5">效果</h2>
 </div>
-
 <div id="outline-container-orge47e7e2" class="outline-2">
 <h2 id="orge47e7e2">一个简单的实现</h2>
+<div class="outline-text-2" id="text-orge47e7e2">
+<p>
+我们的配置文件长啥样呢
+</p>
+<pre><code class="example">
+(and (or_ (and 1 2) (gt_ 2 1) (contain_ 规则引擎的设计和实现 规则))
+</code></pre>
+
+<p>
+类似上面的 lisp 语言的写法定义，函数的支持，需要自己定义。
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">RuleEngine</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">object</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">__init__</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, rules, slot<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">self</span>.rules = <span style="color: #4f97d7;">open</span><span style="color: #4f97d7;">(</span>rules, <span style="color: #2d9574;">'r'</span><span style="color: #4f97d7;">)</span>.read<span style="color: #4f97d7;">()</span>  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Json.load(CONF_RULES)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">parse</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, program<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7; font-weight: bold;">self</span>.read_from_token<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>.tokenize<span style="color: #bc6ec5;">(</span>program<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">tokenize</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, s<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> s.replace<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'('</span>, <span style="color: #2d9574;">' ( '</span><span style="color: #4f97d7;">)</span>.replace<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">')'</span>, <span style="color: #2d9574;">' ) '</span><span style="color: #4f97d7;">)</span>.split<span style="color: #4f97d7;">()</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">read_from_token</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, tokens<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>tokens<span style="color: #4f97d7;">)</span> == 0:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">raise</span> <span style="color: #ce537a; font-weight: bold;">SyntaxError</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'unexpected EOF while reading'</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">token</span> = tokens.pop<span style="color: #4f97d7;">(</span>0<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">'('</span> == token:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">L</span> = <span style="color: #4f97d7;">[]</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">while</span> tokens<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span> != <span style="color: #2d9574;">')'</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   L.append<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>.read_from_token<span style="color: #bc6ec5;">(</span>tokens<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   tokens.pop<span style="color: #4f97d7;">(</span>0<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> L
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">elif</span> <span style="color: #2d9574;">')'</span> == token:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">raise</span> <span style="color: #ce537a; font-weight: bold;">SyntaxError</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'unexpected )'</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">else</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7; font-weight: bold;">self</span>.atom<span style="color: #4f97d7;">(</span>token<span style="color: #4f97d7;">)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">atom</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, token<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">try</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">int</span><span style="color: #4f97d7;">(</span>token<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">except</span> <span style="color: #ce537a; font-weight: bold;">ValueError</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">try</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">float</span><span style="color: #4f97d7;">(</span>token<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">except</span> <span style="color: #ce537a; font-weight: bold;">ValueError</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">str</span><span style="color: #4f97d7;">(</span>token<span style="color: #4f97d7;">)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#36825;&#37324;&#30340;&#23454;&#29616;&#27604;&#36739;&#30340; low&#65292;&#20854;&#23454;&#29992;&#35813;&#25918;&#21040;&#19968;&#20010; global env &#20013;</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#36825;&#26679;&#25105;&#20204;&#23601;&#21487;&#20197;&#22312;&#37197;&#32622;&#20013;&#23454;&#29616;&#21464;&#37327;&#30340;&#23450;&#20041;&#65292;&#20989;&#25968;&#30340;&#23450;&#20041;&#20102;</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#26412;&#36136;&#19978;&#20854;&#23454;&#26159;&#19968;&#20010; lisp &#30340;&#35299;&#37322;&#22120;</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Functions</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">object</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">eq_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>args<span style="color: #4f97d7;">)</span> &gt; 1:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> args<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span> == args<span style="color: #4f97d7;">[</span>1<span style="color: #4f97d7;">]</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">False</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">gt_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>args<span style="color: #4f97d7;">)</span> &gt; 1:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> args<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span> &gt; args<span style="color: #4f97d7;">[</span>1<span style="color: #4f97d7;">]</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">False</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">ge_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>args<span style="color: #4f97d7;">)</span> &gt; 1:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> args<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span> &gt;= args<span style="color: #4f97d7;">[</span>1<span style="color: #4f97d7;">]</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">False</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">lt_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>args<span style="color: #4f97d7;">)</span> &gt; 1:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> args<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span> &lt; args<span style="color: #4f97d7;">[</span>1<span style="color: #4f97d7;">]</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">le_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>args<span style="color: #4f97d7;">)</span> &gt; 1:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> args<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span> &lt;= args<span style="color: #4f97d7;">[</span>1<span style="color: #4f97d7;">]</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">False</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">or_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">any</span><span style="color: #4f97d7;">(</span>args<span style="color: #4f97d7;">)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">ne_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> args<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span> != args<span style="color: #4f97d7;">[</span>1<span style="color: #4f97d7;">]</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">and_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">all</span><span style="color: #4f97d7;">(</span>args<span style="color: #4f97d7;">)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">int_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">int</span><span style="color: #4f97d7;">(</span>args<span style="color: #bc6ec5;">[</span>0<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">float_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">float</span><span style="color: #4f97d7;">(</span>args<span style="color: #bc6ec5;">[</span>0<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">str_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">str</span><span style="color: #4f97d7;">(</span>args<span style="color: #bc6ec5;">[</span>0<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">contain_</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, *args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>args<span style="color: #4f97d7;">)</span> &gt; 1:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> re.search<span style="color: #4f97d7;">(</span>r<span style="color: #2d9574;">'{}'</span>.<span style="color: #4f97d7;">format</span><span style="color: #bc6ec5;">(</span>args<span style="color: #2d9574;">[</span>1<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)</span>, args<span style="color: #bc6ec5;">[</span>0<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">False</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#27880;&#24847;&#29702;&#35299;&#36825;&#37324;&#30340;&#36882;&#24402;&#22788;&#29702;&#65292;&#36825;&#26159;&#20851;&#38190;&#30340;&#19968;&#27493;</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">_eval</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, rules, fns<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">_recurse_eval</span><span style="color: #4f97d7;">(</span>args<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">isinstance</span><span style="color: #4f97d7;">(</span>args, <span style="color: #4f97d7;">list</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7; font-weight: bold;">self</span>._eval<span style="color: #4f97d7;">(</span>args, fns<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">else</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> args
+
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">r</span> = <span style="color: #4f97d7;">list</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">map</span><span style="color: #bc6ec5;">(</span>_recurse_eval, rules<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">func</span> = <span style="color: #4f97d7;">getattr</span><span style="color: #4f97d7;">(</span>fns, r<span style="color: #bc6ec5;">[</span>0<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> func<span style="color: #4f97d7;">(</span>*r<span style="color: #bc6ec5;">[</span>1:<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">eval</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">r</span> = <span style="color: #4f97d7; font-weight: bold;">self</span>.parse<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>.rules<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">fns</span> = <span style="color: #4f97d7; font-weight: bold;">self</span>.Functions<span style="color: #4f97d7;">()</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">ret</span> = <span style="color: #4f97d7; font-weight: bold;">self</span>._eval<span style="color: #4f97d7;">(</span>r, fns<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7; font-weight: bold;">not</span> <span style="color: #4f97d7;">isinstance</span><span style="color: #4f97d7;">(</span>ret, <span style="color: #4f97d7;">bool</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">raise</span> <span style="color: #ce537a; font-weight: bold;">Exception</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"Error.."</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> ret
+</code></pre>
+</div>
+
+<p>
+我们用的时候只需这样就可以了：
+</p>
+<div class="container">
+<pre><code class="python">RuleEngine<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'config_file'</span><span style="color: #4f97d7;">)</span>.<span style="color: #4f97d7;">eval</span><span style="color: #4f97d7;">()</span>
+</code></pre>
+</div>
+
+<p>
+具体应用的需求就看我们进一步如何改进了。后面有时间写一个增强版本的，现在功能还是太弱了。
+</p>
+</div>
 </div>
 
 <div id="outline-container-orgebbfc36" class="outline-2">
 <h2 id="orgebbfc36">规则的定义</h2>
+<div class="outline-text-2" id="text-orgebbfc36">
+<p>
+我们希望定义的规则如下:
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7;">(</span>define a 1<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>define b 2<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>define c 4<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">and</span> a b<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>define f <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>* x x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">and</span> <span style="color: #bc6ec5;">(</span>eq <span style="color: #2d9574;">(</span>f 2<span style="color: #2d9574;">)</span> c<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</code></pre>
 </div>
 
-<div id="outline-container-orgfb4cedb" class="outline-2">
-<h2 id="orgfb4cedb">效果</h2>
+<p>
+看起来真的非常的强大，如果我们实现了增强的版本就能做到这样的功能。
+</p>
+</div>
 </div>
 
 <div id="outline-container-org5dc1b77" class="outline-2">

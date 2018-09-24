@@ -421,99 +421,10 @@ for the JavaScript code in this tag.
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
 
-<script>
-var base_url = 'https://api.github.com';
-var title = document.title;
-var owner = 'yydai';
-var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
-
-console.log("search_issues = "+ search_issues);
-
-function test() {
-  jQuery.ajax({
-      type: 'GET',
-      async: false,
-      dataType:'json',
-      url: search_issues,
-      success:function(data) {
-         result = data;
-      }
-  });
-  return result;
-}
-var result = test();
-var items = result.items[0];
-if(jQuery.isEmptyObject(items)) {
-    create(title);
-} else {
-    html_url = items.html_url;
-        document.body.innerHTML +=
-'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
-}
-
-
-function create(title) {
-        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
-
-        jQuery.ajax({
-      type: 'GET',
-      async: false,
-      dataType:'json',
-      url: create_url,
-      success:function(data) {
-         result = data;
-      }
-  });
-}
-
-
-console.log("total_count = " + result.total_count);
-if(result.total_count == 1) {
-    var comments_url = result.items[0].comments_url;
-} else if (result.total_count == 0) {
-        // create a new issue
-    //create(title);
-} else {
-        // result not only
-        alert('Cannot load the comments.');
-}
-
-function loadComments(data) {
-        repo = 'github.com'
-    for (var i=0; i<data.length; i++) {
-      var cuser = data[i].user.login;
-      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
-      var cbody = data[i].body_html;
-      var cavatarlink = data[i].user.avatar_url;
-      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
-
-          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
-
-      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
-
-      $('#comments').append(code);
-    }
-  }
-
-
-var comments_api = comments_url + '?per_page=100';
-console.log("comments api: " + comments_api);
-$.ajax(comments_api, {
-    headers: {Accept: 'application/vnd.github.full+json'},
-    dataType: 'json',
-    success: function(msg){
-      loadComments(msg);
-   }
-  });
-
-
-</script>
-
 <hr />
  <div class='footer'>
-© 2017 yydai<br/>
-Email: dai92817@icloud.com
+© 2018 yydai<br/>
+Email: yingdai@zju.edu.cn
 </div>
 </div>
 </body>

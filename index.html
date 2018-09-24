@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-15 Sat 20:37 -->
+<!-- 2018-09-24 Mon 16:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>V for Vendetta</title>
@@ -179,7 +179,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/worg2.css"/>
+<link rel="stylesheet" type="text/css" href="css/worg3.css"/>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
@@ -243,17 +243,35 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
 <div id="content">
 <h1 class="title">V for Vendetta</h1>
-<hr />
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf33152c">Hello Godiva</a></li>
+<li><a href="#org0d9fb15">Emacs</a></li>
+<li><a href="#org18d589e">Python</a></li>
+<li><a href="#org508a9d2">Linux</a></li>
+<li><a href="#orgdefbdcf">Algorithm</a></li>
+<li><a href="#org89cbd7a">Translations</a></li>
+<li><a href="#org4ead625">AI/ML/DL/DM</a></li>
+<li><a href="#orgc6832c0">Projects</a></li>
+<li><a href="#org7d6e789">Guitar</a></li>
+<li><a href="#org302f840">Foods</a></li>
+<li><a href="#org7ef3b55">Docker</a></li>
+</ul>
+</div>
+</div>
 <div style="float:right; margin: 20px;font-style: oblique;">
-    <p>今生今世</p>
-    今生今世，我最忘情的哭声有两次 <br/>
-    一次在我生命的开始，一次在你生命的告终 <br/>
-    第一次我不会记得 是听你说的， <br/>
-    第二次你不会晓得 我说也没用， <br/>
-    但两次哭声的中间啊！ 有无穷无尽的笑声， <br/>
-    一遍一遍又一遍，回荡了整整三十年，你都晓得我都记得。<br/>
 </div>
 
 <div id="outline-container-orgf33152c" class="outline-2">
@@ -272,8 +290,7 @@ for the JavaScript code in this tag.
 <li><a href="./others/keyboard.html">我的键盘</a></li>
 </ul>
 
-<div style="float:right; margin: 20px;font-style: oblique;color: red;padding-right:200px;font-size:">
-    求实习岗位(17684580636)...
+<div style="float:right; margin: 20px;font-style: oblique;color: #d06558;padding-right:200px;font-size:">
 </div>
 </div>
 </div>
@@ -398,6 +415,105 @@ for the JavaScript code in this tag.
 <li><a href="./docker/docker-tips.html">docker 常用备忘</a></li>
 </ul>
 </div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+        document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+        jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+        repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
 </div>
 </div>
 </body>

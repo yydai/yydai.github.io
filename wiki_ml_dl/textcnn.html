@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-08 Thu 23:03 -->
+<!-- 2018-11-09 Fri 11:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>TextCNN</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -252,47 +252,102 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
+<h1 class="title">TextCNN</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbbdfc82">阶段二计划</a></li>
+<li><a href="#org6f7e440">1. 简介</a></li>
+<li><a href="#org25c945b">2. 模型</a></li>
+<li><a href="#org208e95d">3. 正则化</a></li>
+<li><a href="#orgf686d22">4. 训练使用的超参数</a></li>
+<li><a href="#orge208b07">5. 调参</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbbdfc82" class="outline-2">
-<h2 id="orgbbdfc82">阶段二计划</h2>
-<div class="outline-text-2" id="text-orgbbdfc82">
-<ol class="org-ol">
-<li>彻底搞懂 SVM, 理解而不是限于理解它的一些思想方法。</li>
-<li>读源码 libsvm liblinear</li>
-<li>其他算法的推导过程也要会</li>
-<li>手动实现一下常见的算法，参考李航的《统计学习方法》</li>
-<li>看一些公开课：<a href="http://course.fast.ai/about.html">http://course.fast.ai/about.html</a></li>
-<li><p>
-Kaggle 比赛 or 天池比赛拿一个名次
+
+
+<div id="outline-container-org6f7e440" class="outline-2">
+<h2 id="org6f7e440">1. 简介</h2>
+<div class="outline-text-2" id="text-org6f7e440">
+<p>
+CNN 在图像和音频领域取得了很大的成果，这篇论文是 CNN 在 NLP 领域的应用：文本分类。 论文地址：<a href="https://arxiv.org/abs/1408.5882">Convolutional Neural Networks for Sentence Classification</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org25c945b" class="outline-2">
+<h2 id="org25c945b">2. 模型</h2>
+<div class="outline-text-2" id="text-org25c945b">
+<p>
+模型的结构，在下图：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181108_230039_27042lN2.png" alt="20181108_230039_27042lN2.png" width="100%" />
+</p>
+</div>
+
+<p>
+定义如下：\(x_i \in R^k\) (这里的 k 表示 word2vec 的 dimension，常用的有 300) 表示一个句子中第 \(i\) 个词的 \(k\) 维词向量。一个长度为
+\(n\) 的句子可以 padding 为如下的形式
 </p>
 
 <p>
-\(hθ(x) = g(θTx)\)
-</p></li>
-</ol>
-
-<p>
-至于说深度学习方面的东西，可以把视觉方面的 opencv 看看。
-上面的这些过程做完，才真的敢说机器学习入门了。
-另外看一些书：
+\[ x_{1:n}=x_1⊕x_2⊕...⊕x_n \tag{1} \]
 </p>
-<ol class="org-ol">
-<li>PRML</li>
-<li>机器学习实战</li>
-<li>统计学习方法</li>
-<li>西瓜书</li>
-</ol>
-
 
 <p>
-笔记记录：
+\(x_{i:i+j}\) 表示词 \(x_i,x_{i+1}···，x_{i+j}\) 的连接（也就是一个 filter size 的窗口大小的词）
+比如，特征 c<sub>i</sub> 产生于一个词汇窗口 \(x_{i:i+h-1}\) 计算公式如下：
+</p>
+
+<p>
+\[c_i=f(w·x_{i:i+h-1}+b) \tag{2}\]
+</p>
+
+<p>
+其中，\(b \in R\) 是偏置值, \(f\) 为非线性函数，例如 \(relu\), \(tanh\) 等。该滤波器应用在句子中\({x_{1∶ h}, x_{2∶h+1},…,x_{n+h-1∶n}}\) 可产生如下的特征映射
+\[c=[c_1,c_2,…,c_{n+h-1}] \tag{3}\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org208e95d" class="outline-2">
+<h2 id="org208e95d">3. 正则化</h2>
+<div class="outline-text-2" id="text-org208e95d">
+<p>
+为了防止过拟合，使用 dropout 和 L2 范数约束。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf686d22" class="outline-2">
+<h2 id="orgf686d22">4. 训练使用的超参数</h2>
+<div class="outline-text-2" id="text-orgf686d22">
+<p>
+我们在所有的数据集中都采用下列参数：
+</p>
+<ul class="org-ul">
+<li>对于所有的数据集我们使用修正线性单元(Rectified linear units)；</li>
+<li>滤波器窗口大小 h 为 3、4、5， 每种滤波器个数为 100。；（在实践中可以设置不同的 filter number，另外 filter size 也可以尝试下 1 2）</li>
+<li>dropout 的比例为 0.5；</li>
+<li>l2 正则化限制权值的大小为３；</li>
+<li>mini-batch 大小为 50；</li>
+<li>这些值都是在 SST-2 验证数据集上通过网格搜索选择得到的。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge208b07" class="outline-2">
+<h2 id="orge208b07">5. 调参</h2>
+<div class="outline-text-2" id="text-orge208b07">
+<p>
+参考论文：<a href="https://arxiv.org/pdf/1510.03820.pdf">A Sensitivity Analysis of (and Practitioners’ Guide to) Convolutional Neural Networks for Sentence Classification</a>
+</p>
+
+<p>
+<a href="https://plushunter.github.io/2018/02/26/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E7%B3%BB%E5%88%97%EF%BC%887%EF%BC%89%EF%BC%9ATextCNN%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7/">https://plushunter.github.io/2018/02/26/自然语言处理系列（7）：TextCNN 调参技巧/</a>
 </p>
 </div>
 </div>

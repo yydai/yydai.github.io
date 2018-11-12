@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-11-12 Mon 23:38 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Word2Vec 使用指南</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-111585106-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
+<div id="content">
+<h1 class="title">Word2Vec 使用指南</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org78ecedf">准备数据</a></li>
+<li><a href="#org1328dd3">训练</a></li>
+<li><a href="#orgdad29a9">内存</a></li>
+<li><a href="#org3df7f69">测评</a></li>
+<li><a href="#org7a1db4e">存储和加载模型</a></li>
+<li><a href="#orgc9a0975">在线训练/持续训练？(Online training/Resuming training)</a></li>
+<li><a href="#orgb7d49cf">如何使用模型</a></li>
+<li><a href="#org69df334">Bonus App</a></li>
+<li><a href="#org748ee7b">内容来源</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org78ecedf" class="outline-2">
+<h2 id="org78ecedf">准备数据</h2>
+<div class="outline-text-2" id="text-org78ecedf">
+<p>
+使用 gensim 生成 word2vec 需要输入为一个可迭代的序列。没得句子为词组成的 list（utf-8 编码）。
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">import modules &amp; set up logging</span>
+<span style="color: #4f97d7; font-weight: bold;">import</span> gensim, logging
+logging.basicConfig<span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">format</span>=<span style="color: #2d9574;">'%(asctime)s: %(levelname)s : %(message)s'</span>, level=logging.INFO<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">sentences</span> = <span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'first'</span>, <span style="color: #2d9574;">'sentence'</span><span style="color: #bc6ec5;">]</span>, <span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'second'</span>, <span style="color: #2d9574;">'sentence'</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span>
+<span style="color: #7590db;">model</span> = gensim.models.Word2Vec<span style="color: #4f97d7;">(</span>sentences, min_count=1<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+使用 Python 原生的 list 非常的方便，但当输入非常大的时候内存就可能不够用了，所以一个好的方法是使用生成器(区别迭代器和生成器)来做。
+</p>
+
+<p>
+例如，如果我们的输入是磁盘的多个文件（文件每一行，为一个句子），我们可以一行行的处理，而不是把所有的都加载到内存中。
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">MySentences</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">object</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">__init__</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, dirname<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">self</span>.dirname = dirname
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">__iter__</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> fname <span style="color: #4f97d7; font-weight: bold;">in</span> os.listdir<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>.dirname<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> line <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">open</span><span style="color: #4f97d7;">(</span>os.path.join<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>.dirname, fname<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">yield</span> line.split<span style="color: #4f97d7;">()</span>
+<span style="color: #7590db;">sentences</span> = MySentences<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'/some/directory'</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">model</span> = gensim.models.Word2Vec<span style="color: #4f97d7;">(</span>sentences<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+如果我们想更进一步的对文本进行编码、大小写、移除数字或者提取实体等等都可以在 MySentences 里面来做，这些都是对 word2vec 透明的操作。
+</p>
+
+<p>
+对于高级用户来说需要了解，Word2Vec(sentences, iter=1) 会执行两轮迭代
+（更加准确的说法是 iter+1 轮，默认 iter=5）。第一轮，会获取词频，然后构建内部的树字典结构。第二以及随后的迭代会训练模型。在有些情况，数据可能不能重复迭代，你可以手动的初始化第一轮的词典：
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">model</span> = gensim.models.Word2Vec<span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">iter</span>=1<span style="color: #4f97d7;">)</span>  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">an empty model, no training yet</span>
+model.build_vocab<span style="color: #4f97d7;">(</span>some_sentences<span style="color: #4f97d7;">)</span>  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">can be a non-repeatable, 1-pass generator</span>
+model.train<span style="color: #4f97d7;">(</span>other_sentences<span style="color: #4f97d7;">)</span>  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">can be a non-repeatable, 1-pass generator</span>
+</code></pre>
+</div>
+
+<p>
+为了能够深入的理解 iterators, iterables, generates，我们可以看这个教程：<a href="https://rare-technologies.com/data-streaming-in-python-generators-iterators-iterables/">Data Streaming in Python</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1328dd3" class="outline-2">
+<h2 id="org1328dd3">训练</h2>
+<div class="outline-text-2" id="text-org1328dd3">
+<p>
+Word2Vec 的训练参数对训练的速度和结果的质量有非常大的影响。
+</p>
+
+<p>
+其中之一是对内部词典的过滤，也就是在成千上百万的词中，仅仅出现一次二次的，很有可能是拼写错误或者没意义的词，对于它们训练没有太大的意义，最好的方式就是忽略掉这种词。
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">model</span> = Word2Vec<span style="color: #4f97d7;">(</span>sentences, min_count=10<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">default value is 5</span>
+</code></pre>
+</div>
+
+<p>
+对于 min_count 一个合理的大小是 0-100，取决于语料的大小。
+</p>
+
+<p>
+另外一个重要的参数是训练的层数，它和训练的自由度相关
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">model</span> = Word2Vec<span style="color: #4f97d7;">(</span>sentences, size=100<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">default value is 100</span>
+</code></pre>
+</div>
+
+<p>
+更大的值同样需要跟多的语料，同时也会得到一个更加准确，表现更好的模型。合理的大小是 几十到几百之间。
+</p>
+
+<p>
+最后一个非常重要的参数会影响训练的速度，也就是 worker 的个数
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">model</span> = Word2Vec<span style="color: #4f97d7;">(</span>sentences, worker=100<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">default value is 1, worker no parallelization</span>
+</code></pre>
+</div>
+
+<p>
+如果你没有安装 Cython, 因为 GIL 的原因，这个参数设置不会生效，只能使用单核。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdad29a9" class="outline-2">
+<h2 id="orgdad29a9">内存</h2>
+<div class="outline-text-2" id="text-orgdad29a9">
+<p>
+说起内存占用，word2vec 模型参数是以 numpy arrays 来存储的。假设单词数
+n=100000, size=200(size 参数)，存储的类型为无符号浮点型(float)(假设占用 4B)。
+</p>
+
+<p>
+内存中存储 3 个这样的矩阵参数，所以最终的内存占用为：
+</p>
+
+<p>
+\[3 * 100000 * 200 * 4B = \sim 229M\]
+</p>
+
+<p>
+另外，大部分情况仅仅需要少量的空间来存储词典树（100000 个词大约需要几 M），除非你的词都是非常非常长的字符串。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3df7f69" class="outline-2">
+<h2 id="org3df7f69">测评</h2>
+<div class="outline-text-2" id="text-org3df7f69">
+<p>
+Word2vec 训练是非监督学习，没有非常客观的方法来评价这个结果。
+Google 放出了大约 20000 个的测试集，测试“A 相对于 B 类似于 C 相对于 D”的任务。
+<a href="https://raw.githubusercontent.com/RaRe-Technologies/gensim/develop/gensim/test/test_data/questions-words.txt.">questions-words</a>
+</p>
+
+<p>
+Gensim 支持同样的操作，
+</p>
+<div class="container">
+<pre><code class="python">model.accuracy<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'questions-words.txt'</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+再次强调一下，在测试集上好的表现未必在你的应用上工作的很好。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7a1db4e" class="outline-2">
+<h2 id="org7a1db4e">存储和加载模型</h2>
+<div class="outline-text-2" id="text-org7a1db4e">
+<p>
+你可以使用标准的方法来存储和加载 w2v 模型：
+</p>
+<div class="container">
+<pre><code class="python">model.save<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'/tmp/mymodel'</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">new_model</span> = gensim.models.Word2Vec.load<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'/tmp/mymodel'</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+<p>
+这个内部实现其实是使用了 pickle。
+</p>
+
+<p>
+另外，你可以加载通过 C 语言工具生成的模型
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">model</span> = Word2Vec.load_word2vec_format<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'/tmp/vectors.txt'</span>, binary=<span style="color: #a45bad;">False</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">using gzipped/bz2 input works too, no need to unzip:</span>
+<span style="color: #7590db;">model</span> = Word2Vec.load_word2vec_format<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'/tmp/vectors.bin.gz'</span>, binary=<span style="color: #a45bad;">True</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+或者可以这样：
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">model</span> = word2vec.Word2Vec<span style="color: #4f97d7;">(</span>sentences, min_count=1<span style="color: #4f97d7;">)</span>
+model.wv.save_word2vec_format<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'mymodel.bin'</span>, binary=<span style="color: #a45bad;">True</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #7590db;">new_model</span> = KeyedVectors.load_word2vec_format<span style="color: #4f97d7;">(</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #2d9574;">'mymodel.bin'</span>, binary=<span style="color: #a45bad;">True</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc9a0975" class="outline-2">
+<h2 id="orgc9a0975">在线训练/持续训练？(Online training/Resuming training)</h2>
+<div class="outline-text-2" id="text-orgc9a0975">
+<p>
+高级用户可以加载模型，然后通过更多语句来进一步的训练：
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">model</span> = gensim.models.Word2Vec.load<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'/tmp/mymodel'</span><span style="color: #4f97d7;">)</span>
+model.train<span style="color: #4f97d7;">(</span>more_sentences<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+你或许需要微调一下 train() 的 total_words 参数。
+</p>
+
+<p>
+需要注意的是，如果模型是通过二进制文件存储的，则无法进行持续训练，因为训练相关的重要信息丢失了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb7d49cf" class="outline-2">
+<h2 id="orgb7d49cf">如何使用模型</h2>
+<div class="outline-text-2" id="text-orgb7d49cf">
+<p>
+Word2vec 支持多种相似度的使用方式：
+</p>
+<div class="container">
+<pre><code class="python">model.most_similar<span style="color: #4f97d7;">(</span>positive=<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'woman'</span>, <span style="color: #2d9574;">'king'</span><span style="color: #bc6ec5;">]</span>, negative=<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'man'</span><span style="color: #bc6ec5;">]</span>, topn=1<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">'queen'</span>, 0.50882536<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
+model.doesnt_match<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"breakfast cereal dinner lunch"</span>;.split<span style="color: #bc6ec5;">()</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2d9574;">'cereal'</span>
+model.similarity<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'woman'</span>, <span style="color: #2d9574;">'man'</span><span style="color: #4f97d7;">)</span>
+0.73723527
+</code></pre>
+</div>
+
+<p>
+如果想获取原生的向量输出，可以直接这样：
+</p>
+<div class="container">
+<pre><code class="python">model<span style="color: #4f97d7;">[</span><span style="color: #2d9574;">'computer'</span><span style="color: #4f97d7;">]</span>  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">raw NumPy vector of a word</span>
+array<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>-0.00449447, -0.00310097,  0.02421786, ...<span style="color: #bc6ec5;">]</span>, dtype=float32<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org69df334" class="outline-2">
+<h2 id="org69df334">Bonus App</h2>
+<div class="outline-text-2" id="text-org69df334">
+<p>
+TODO &lt;<a href="https://github.com/RaRe-Technologies/w2v_server_googlenews">github</a>&gt;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org748ee7b" class="outline-2">
+<h2 id="org748ee7b">内容来源</h2>
+<div class="outline-text-2" id="text-org748ee7b">
+<p>
+翻译：<a href="https://rare-technologies.com/word2vec-tutorial/">https://rare-technologies.com/word2vec-tutorial/</a>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+        document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+        jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+        repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

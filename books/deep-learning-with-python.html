@@ -1,0 +1,913 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-11-08 Thu 23:03 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deeplearning with python</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-111585106-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
+<div id="content">
+<h1 class="title">Deeplearning with python</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org491a76b">Part1 Fundamentals of deep learning</a>
+<ul>
+<li><a href="#orgbe8b54c">Chapter1 What is deep learning</a></li>
+<li><a href="#orgd2b02b2">Chapter2 Before we begin:the math building blocks of neural networks</a></li>
+<li><a href="#org5c001b5">Chapter3 Getting Started with neural networks</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org491a76b" class="outline-2">
+<h2 id="org491a76b">Part1 Fundamentals of deep learning</h2>
+<div class="outline-text-2" id="text-org491a76b">
+</div><div id="outline-container-orgbe8b54c" class="outline-3">
+<h3 id="orgbe8b54c">Chapter1 What is deep learning</h3>
+<div class="outline-text-3" id="text-orgbe8b54c">
+</div><ul class="org-ul"><li><a id="org0a2ffc0"></a>AI ML DL 的关系<br /><div class="outline-text-4" id="text-org0a2ffc0">
+
+<div class="figure">
+<p><img src="./imgs/20180910_150342_964v0U.png" alt="20180910_150342_964v0U.png" width="60%" />
+</p>
+</div>
+</div></li>
+
+<li><a id="orga050c9f"></a>Learning representations from data<br /><div class="outline-text-4" id="text-orga050c9f">
+<p>
+To define deep learning and understand the differ between dl and
+other ml appoaches, we need know the idea of what ml do.
+</p>
+<ul class="org-ul">
+<li>input data</li>
+<li>expected output</li>
+<li>a way to measure whether the algorithm is doing a good job</li>
+</ul>
+
+<p>
+What machine learning is：searching for useful representations of
+some input data, within a predefined space of possibilities, using
+guidance from a feedback signal.
+</p>
+</div></li>
+
+<li><a id="org3ee33ff"></a>The "deep" in deep learning<br /><div class="outline-text-4" id="text-org3ee33ff">
+<p>
+It stands for the idea of successive layers of representations,
+and how many layers contribute to a models of the data is called
+the depth of the model. [shallow learning]
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20180910_154850_9648-a.png" alt="20180910_154850_9648-a.png" width="70%" />
+</p>
+</div>
+
+<p>
+This look like a magic.
+</p>
+</div></li>
+
+<li><a id="orga3bdd46"></a>Understanding how deep learning works, in three figures<br /><div class="outline-text-4" id="text-orga3bdd46">
+<p>
+To specification of what a layer does to its input data is stored
+in the layer's weights, which in essence are a bunch of numbers.
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20180910_155910_964JJh.png" alt="20180910_155910_964JJh.png" width="80%" />
+</p>
+</div>
+
+<p>
+In technical terms, we'd say that the transformation implemented
+by a layer is parameterized by its weights(Weights are also
+sometimes called the parameters of a layer.)
+</p>
+
+<p>
+To control something, first you need to be able to observe it and
+measure how far this output is from what you expected. This is the
+job of <i>loss function</i>.
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20180910_161059_964WTn.png" alt="20180910_161059_964WTn.png" width="80%" />
+</p>
+</div>
+</div></li></ul>
+</div>
+
+<div id="outline-container-orgd2b02b2" class="outline-3">
+<h3 id="orgd2b02b2">Chapter2 Before we begin:the math building blocks of neural networks</h3>
+<div class="outline-text-3" id="text-orgd2b02b2">
+<p>
+this chapter covers:
+</p>
+<ul class="org-ul">
+<li>example of neural network</li>
+<li>tensors and its op</li>
+<li>how neural network learn via bp and dg algorithm</li>
+</ul>
+</div>
+
+<ul class="org-ul"><li><a id="orgdac1ff6"></a>an example of MNISΤ with keras<br /></li>
+
+<li><a id="orgb89e462"></a>Data representations for neural networks<br /><div class="outline-text-4" id="text-orgb89e462">
+<p>
+What is a tensor? a tensor is a container for data&#x2013;almost
+numerical data.
+</p>
+</div>
+
+<ul class="org-ul"><li><a id="org1330ca9"></a>0D tensor<br /><div class="outline-text-5" id="text-org1330ca9">
+<p>
+a tensor contains only one number is called a scalar.
+</p>
+</div></li>
+
+<li><a id="org0ec4fe3"></a>1D tensor<br /><div class="outline-text-5" id="text-org0ec4fe3">
+<p>
+vectors. An 1D tensor is said to have exactly one axis.
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #7590db;">x</span> = np.array<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>1, 2, 3<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">print</span> x.ndim
+</code></pre>
+</div>
+
+<p>
+the vector of x have 3 entries and so is called a 3-dimensional
+vector.(Don't confuse a 3D vector with 3D tensor. A 3D vector only
+has one axis, while a 3D tensor has 3 axis)
+</p>
+</div></li>
+
+<li><a id="org0872127"></a>2D tensor<br /><div class="outline-text-5" id="text-org0872127">
+<p>
+Matrices.
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #7590db;">x</span> = np.array<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>1,2,3<span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span>2, 3, 4<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">print</span> x.ndim
+</code></pre>
+</div>
+</div></li>
+
+<li><a id="org80f710d"></a>3D tensors and higher &#x2026;<br /></li>
+
+<li><a id="org567c652"></a>Real-world example of data tensors<br /><div class="outline-text-5" id="text-org567c652">
+
+<div class="figure">
+<p><img src="./imgs/20180910_184327_964-OR.png" alt="20180910_184327_964-OR.png" width="70%" />
+</p>
+</div>
+</div></li></ul></li>
+
+<li><a id="orga999134"></a>The gears of nerual networks: tensor op<br /><div class="outline-text-4" id="text-orga999134">
+<p>
+relu(x) ==&gt; max(x, 0)
+</p>
+</div></li>
+
+<li><a id="org3060502"></a>Element-wise operations<br /><div class="outline-text-4" id="text-org3060502">
+<p>
+x is a 2D tensor
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">naive_relu</span><span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">assert</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>x.shape<span style="color: #4f97d7;">)</span> == 2
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">avoid overwriting the input tensor</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">x</span> = x.copy<span style="color: #4f97d7;">()</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>x.shape<span style="color: #bc6ec5;">(</span>0<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>x.shape<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">x</span><span style="color: #4f97d7;">[</span>i, j<span style="color: #4f97d7;">]</span> = <span style="color: #4f97d7;">max</span><span style="color: #4f97d7;">(</span>x<span style="color: #bc6ec5;">[</span>i, j<span style="color: #bc6ec5;">]</span>, 0<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> x
+</code></pre>
+</div>
+
+<p>
+the addition op:
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">naive_add</span><span style="color: #4f97d7;">(</span>x, y<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">assert</span> <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>x.shape<span style="color: #4f97d7;">)</span> == 2
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">assert</span> x.shape == y.shape
+
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">x</span> = x.copy<span style="color: #4f97d7;">()</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>x.shape<span style="color: #bc6ec5;">[</span>0<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> j <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>x.shape<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">x</span><span style="color: #4f97d7;">[</span>i, j<span style="color: #4f97d7;">]</span> += y<span style="color: #4f97d7;">[</span>i,j<span style="color: #4f97d7;">]</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> x
+</code></pre>
+</div>
+
+<p>
+&lt; BASIC LINEAR ALGEBRA SUBPROGRAMS(BLAS) ===&gt; install it &gt; !!!
+</p>
+
+<p>
+In numpy:
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #7590db;">z</span> = x + y
+<span style="color: #7590db;">z</span> = np.maximum<span style="color: #4f97d7;">(</span>z, 0.<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">element-wise relu</span>
+</code></pre>
+</div>
+</div></li>
+
+<li><a id="orga2ec8a1"></a>Tensor reshaping<br /><div class="outline-text-4" id="text-orga2ec8a1">
+<div class="container">
+<pre><code class="python">train.reshape<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span>6000, 28*28<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+TRANSPOSITION:
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #7590db;">x</span> = np.transpose<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div></li>
+
+<li><a id="org7d01e15"></a>[n] The engine of neural networks：gradient-based optimization<br /><div class="outline-text-4" id="text-org7d01e15">
+<p>
+momentum algorithm==&gt; 1. convergence speed and local minima
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20180911_095916_77620_lg.png" alt="20180911_095916_77620_lg.png" width="70%" />
+</p>
+</div>
+
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">past_velocity</span> = 0
+<span style="color: #7590db;">momentum</span> = 0.1
+<span style="color: #4f97d7; font-weight: bold;">while</span> loss &gt; 0.01:
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">w</span>, <span style="color: #7590db;">loss</span>, <span style="color: #7590db;">gradient</span> = get_current_parameters<span style="color: #4f97d7;">()</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">velocity</span> = past_velocity * momentum + learning_rate * gradient
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">w</span> = w + momentum * velocity - learning_rate * gradient
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">past_velocity</span> = velocity
+<span style="background-color: #292e34;"> </span>   update_parameter<span style="color: #4f97d7;">(</span>w<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+&lt; Think, understand code above &#x2014;&gt; why &gt; !!!!
+</p>
+</div></li>
+
+<li><a id="org4f35a22"></a>Chaining derivatives: the Backpropagation algorithm<br /><div class="outline-text-4" id="text-org4f35a22">
+<p>
+chain rule
+</p>
+</div></li></ul>
+</div>
+
+<div id="outline-container-org5c001b5" class="outline-3">
+<h3 id="org5c001b5">Chapter3 Getting Started with neural networks</h3>
+<div class="outline-text-3" id="text-org5c001b5">
+<p>
+this chapter covers:
+</p>
+<ul class="org-ul">
+<li>Core components of neural networks</li>
+<li>An introduce to Keras</li>
+<li>Setting up a deep-learning workstation</li>
+<li>Using neural network to solve basic problems</li>
+</ul>
+</div>
+
+<ul class="org-ul"><li><a id="orgf31b314"></a>Anatomy of a neural network<br /><div class="outline-text-4" id="text-orgf31b314">
+<p>
+training a neural network revolves around the following objects:
+</p>
+<ul class="org-ul">
+<li>Layers</li>
+<li>input data</li>
+<li>loss function: defines the feedback signal used for learning</li>
+<li>optimizer: determines how learning proceeds</li>
+</ul>
+
+<p>
+Relationship between the network, layers, loss function and optimizer !!! &lt;IMPORTANT&gt;
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20180911_123314_77620YOC.png" alt="20180911_123314_77620YOC.png" width="70%" />
+</p>
+</div>
+</div></li>
+
+<li><a id="org3069e43"></a>Layers: the building blocks of deep learning<br /><div class="outline-text-4" id="text-org3069e43">
+<p>
+a layers take one or more tensors and ouput one or more tensors.
+some layers are stateless, but more frequently layers have a state.
+the layer's <i>weights</i>, together contain the network's knowledge.
+</p>
+
+<p>
+different layers are appropriate for different tensor formats and
+different data processing. For instance, vector data stored in 2D
+of shape (samples, features), is often processed by <i>densely connected</i> layers,
+also called <i>fully connected</i>.
+</p>
+
+<p>
+sequence data, stored in 3D tensors of shape (samples, timesteps,
+features), often processed by recurrent layers such as an <i>LSTM</i> layer.
+Image data, stored in 4D tensors, usually processed by 2D convolution layers(Conv2D)
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">from</span> keras <span style="color: #4f97d7; font-weight: bold;">import</span> layers
+<span style="color: #7590db;">layer</span> = layers.Dense<span style="color: #4f97d7;">(</span>32, input_shape=<span style="color: #bc6ec5;">(</span>784,<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+a dense layer with 32 output units. We're creating a layer that will only accept
+as input 2D tensors where the first dimension is 784. This layer will return a tensor
+where the first dimensio has been transformed to be 32.
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">from</span> keras <span style="color: #4f97d7; font-weight: bold;">import</span> models
+<span style="color: #4f97d7; font-weight: bold;">from</span> keras <span style="color: #4f97d7; font-weight: bold;">import</span> layers
+<span style="color: #7590db;">model</span> = models.Sequential<span style="color: #4f97d7;">()</span>
+model.add<span style="color: #4f97d7;">(</span>layers.Dense<span style="color: #bc6ec5;">(</span>32, input_shape=<span style="color: #2d9574;">(</span>784,<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">this layer not set receive input shape, it automatically do this</span>
+model.add<span style="color: #4f97d7;">(</span>layers.Dense<span style="color: #bc6ec5;">(</span>32<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div></li>
+
+<li><a id="orgf4b3544"></a>Loss function and optimizers<br /><div class="outline-text-4" id="text-orgf4b3544">
+<p>
+Once the network architecuture is defined, you have to choose two more things:
+</p>
+<ul class="org-ul">
+<li>loss function</li>
+<li>Optimizer</li>
+</ul>
+
+<p>
+multiple outputs may have multiple loss function.
+</p>
+
+<p>
+&lt;guideline&gt; &#x2014;read again !!!!
+How to choose: (why)
+</p>
+<ul class="org-ul">
+<li>binary crossentropy for two-class classification</li>
+<li>categorical crossentropy for a many-class classification</li>
+<li>mean squared error for a regression problem</li>
+<li>connectionist temporal classification(CTC) for a
+sequence-learning problem.</li>
+</ul>
+</div></li>
+
+<li><a id="org4f19ca7"></a>Introduction to Keras<br /><div class="outline-text-4" id="text-org4f19ca7">
+<p>
+Keras has the following key features:
+</p>
+<ul class="org-ul">
+<li>the same code to run seamlessly on CPU or GPU</li>
+<li>user-friendly api</li>
+<li>It supports arbitrary network architecutures.</li>
+</ul>
+
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">from</span> keras <span style="color: #4f97d7; font-weight: bold;">import</span> models
+<span style="color: #4f97d7; font-weight: bold;">from</span> keras <span style="color: #4f97d7; font-weight: bold;">import</span> layers
+<span style="color: #7590db;">model</span> = models.Sequential<span style="color: #4f97d7;">()</span>
+model.add<span style="color: #4f97d7;">(</span>layers.Dense<span style="color: #bc6ec5;">(</span>32, activation=<span style="color: #2d9574;">'relu'</span>, input_shape=<span style="color: #2d9574;">(</span>784, <span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+model.add<span style="color: #4f97d7;">(</span>layers.Dense<span style="color: #bc6ec5;">(</span>10, activation=<span style="color: #2d9574;">'softmax'</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+and here's the same model defined using the functional api:
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">input_tensor</span> = layers.Input<span style="color: #4f97d7;">(</span>shape=<span style="color: #bc6ec5;">(</span>784,<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">x</span> = layers.Dense<span style="color: #4f97d7;">(</span>32, activation=<span style="color: #2d9574;">'relu'</span><span style="color: #4f97d7;">)(</span>input_tensor<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">output_tensor</span> = layers.Dense<span style="color: #4f97d7;">(</span>10, activation=<span style="color: #2d9574;">'softmax'</span><span style="color: #4f97d7;">)(</span>x<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">model</span> = models.Model<span style="color: #4f97d7;">(</span>inputs=input_tensor, outputs=output_tensor<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+specify the optimizer and loss function that the model should use,
+as well as the metrics you want to monitor during training.
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">from</span> keras <span style="color: #4f97d7; font-weight: bold;">import</span> optimizers
+model.<span style="color: #4f97d7;">compile</span><span style="color: #4f97d7;">(</span>optimizer=optimizers.RMSprop<span style="color: #bc6ec5;">(</span>lr=0.001<span style="color: #bc6ec5;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span> loss=<span style="color: #2d9574;">'mse'</span>, metrics=<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'accuracy'</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+
+model.fit<span style="color: #4f97d7;">(</span>input_tensor, target_tensor, batch_size=128, epochs=10<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div></li>
+
+<li><a id="org9d5ee9c"></a>Setting up a deep-learning workstation<br /><div class="outline-text-4" id="text-org9d5ee9c">
+<p>
+better use GPU
+</p>
+</div>
+
+<ul class="org-ul"><li><a id="orge8058aa"></a>Jupyter notebook<br /></li>
+
+<li><a id="org8d00563"></a>GPU to choose<br /><div class="outline-text-5" id="text-org8d00563">
+<p>
+What is the best GPU for deep learning?
+NVIDIA TITAN Xp
+GTX 1060
+</p>
+</div></li></ul></li>
+
+<li><a id="org76c6968"></a>Classification movie reviews: a binary classification example<br /><div class="outline-text-4" id="text-org76c6968">
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">from</span> keras.datasets <span style="color: #4f97d7; font-weight: bold;">import</span> imdb
+<span style="color: #4f97d7;">(</span>train_data, train_labels<span style="color: #4f97d7;">)</span>, <span style="color: #4f97d7;">(</span>test_data, test_labels<span style="color: #4f97d7;">)</span> = imdb.load_data<span style="color: #4f97d7;">(</span>num_words=10000<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+decode one of these reviews back to English words:
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">word_index</span> = imdb.get_word_index<span style="color: #4f97d7;">()</span>
+<span style="color: #7590db;">reverse_word_index</span> = <span style="color: #4f97d7;">dict</span><span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">(</span>value, key<span style="color: #2d9574;">)</span> <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #2d9574;">(</span>key, value<span style="color: #2d9574;">)</span> <span style="color: #4f97d7; font-weight: bold;">in</span> word_index.items<span style="color: #2d9574;">()</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">decoded_review</span> = <span style="color: #2d9574;">' '</span>.join<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>reverse_word_index.get<span style="color: #2d9574;">(</span>i-3, <span style="color: #2d9574;">'?'</span><span style="color: #2d9574;">)</span> <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> train_data<span style="color: #2d9574;">[</span>0<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div>
+
+<ul class="org-ul"><li><a id="orgfcf8eac"></a>Preparing the data<br /><div class="outline-text-5" id="text-orgfcf8eac">
+<p>
+you can't feed lists of integers into a nerual network, you have to turn your lists into tensors.
+There two ways to do this.
+</p>
+<ul class="org-ul">
+<li>pad your lists so that they all have the same length, turn them
+into integer tensor of shape (samples, word<sub>indices</sub>) and then
+use the first layer handing such integer tensors(the embedding layer)</li>
+
+<li>One-hot encode yours lists to turn them into vectors of 0s and
+1s. For example, turning the [3, 5] into 10000-dim vector that
+would be all 0s except for indices 3 and 5. And then we can use Dense layer.</li>
+</ul>
+
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">vectorize_sequence</span><span style="color: #4f97d7;">(</span>sequences, dimension=10000<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">results</span> = np.zeros<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span><span style="color: #4f97d7;">len</span><span style="color: #2d9574;">(</span>sequences<span style="color: #2d9574;">)</span>, dimension<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> i, sequence <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">enumerate</span><span style="color: #4f97d7;">(</span>sequences<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">results</span><span style="color: #4f97d7;">[</span>i, sequence<span style="color: #4f97d7;">]</span> = 1
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> results
+
+<span style="color: #7590db;">x_train</span> = vectorize_sequence<span style="color: #4f97d7;">(</span>train_data<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">x_test</span> = vectorize_sequence<span style="color: #4f97d7;">(</span>test_data<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+Also vectorize labels:
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">y_train</span> = np.asarray<span style="color: #4f97d7;">(</span>train_labels<span style="color: #4f97d7;">)</span>.astype<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'float32'</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">y_test</span> = np.asarray<span style="color: #4f97d7;">(</span>test_labels<span style="color: #4f97d7;">)</span>.astype<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'float32'</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div></li>
+
+<li><a id="orgb28a726"></a>Building your network<br /><div class="outline-text-5" id="text-orgb28a726">
+<p>
+a type of network that performs well on such a problem is a
+simple stack of fully connected(Dense) layers with <i>relu</i> activations:
+</p>
+<div class="container">
+<pre><code class="python">Dense<span style="color: #4f97d7;">(</span>16, activation=<span style="color: #2d9574;">'relu'</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+!!!!&#x2014;&gt; the argument being passed to each Dense layers 16 is the
+number of <i>hidden units</i> of the layer.
+</p>
+
+<p>
+relu activation implements the following chain of tensor
+operations:
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">output</span> = relu<span style="color: #4f97d7;">(</span>dot<span style="color: #bc6ec5;">(</span>W, <span style="color: #4f97d7;">input</span><span style="color: #bc6ec5;">)</span> + b<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+[having 16 hidden units means the weight matrix W will have shape (input<sub>dimension</sub>, 16)]
+</p>
+
+<p>
+Three are two key architecuture decisions to be made about such a stack of Dense layers:
+</p>
+<ul class="org-ul">
+<li>How many layers to use</li>
+<li>How many hidden units to choose for each layer ===&gt; see chapter 4 for more detail</li>
+</ul>
+
+<p>
+the model definition:
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">from</span> keras <span style="color: #4f97d7; font-weight: bold;">import</span> models
+<span style="color: #4f97d7; font-weight: bold;">from</span> keras <span style="color: #4f97d7; font-weight: bold;">import</span> layers
+<span style="color: #7590db;">model</span> = models.Sequential<span style="color: #4f97d7;">()</span>
+model.add<span style="color: #4f97d7;">(</span>layers.Dense<span style="color: #bc6ec5;">(</span>16, activation=<span style="color: #2d9574;">'relu'</span>, input_shape=<span style="color: #2d9574;">(</span>10000,<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+model.add<span style="color: #4f97d7;">(</span>layers.Dense<span style="color: #bc6ec5;">(</span>16, activation=<span style="color: #2d9574;">'relu'</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+model.add<span style="color: #4f97d7;">(</span>layers.Dense<span style="color: #bc6ec5;">(</span>1, activation=<span style="color: #2d9574;">'sigmoid'</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+What are activation functions, and why are they necessary?
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20180917_093119_10783yZ.png" alt="20180917_093119_10783yZ.png" width="60%" />
+</p>
+</div>
+
+<div class="container">
+<pre><code class="python">model
+</code></pre>
+</div>
+</div></li></ul></li></ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+        document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+        jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+        repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

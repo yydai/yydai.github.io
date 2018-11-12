@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-08 Thu 23:03 -->
+<!-- 2018-11-09 Fri 12:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>基于 Tensorflow 的 LSTM 实战</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -252,49 +252,57 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
+<h1 class="title">基于 Tensorflow 的 LSTM 实战</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbbdfc82">阶段二计划</a></li>
+<li><a href="#orgcf694cd">LSTM cells 以及 网络结构</a></li>
+<li><a href="#org4228d63">网络搭建</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbbdfc82" class="outline-2">
-<h2 id="orgbbdfc82">阶段二计划</h2>
-<div class="outline-text-2" id="text-orgbbdfc82">
-<ol class="org-ol">
-<li>彻底搞懂 SVM, 理解而不是限于理解它的一些思想方法。</li>
-<li>读源码 libsvm liblinear</li>
-<li>其他算法的推导过程也要会</li>
-<li>手动实现一下常见的算法，参考李航的《统计学习方法》</li>
-<li>看一些公开课：<a href="http://course.fast.ai/about.html">http://course.fast.ai/about.html</a></li>
-<li><p>
-Kaggle 比赛 or 天池比赛拿一个名次
+<p>
+LSTM 网络出现已经出现了近 20 年（<a href="http://www.bioinf.jku.at/publications/older/2604.pdf">Hochreiter and Schmidhuber, 1997</a>），
+但是它在最近几年才得到成功的应用。LSTM 是一种特殊的 RNN(recurrent
+neural network): 用于处理序列数据的神经网络结构并经常应用于 NLP 领域。
+相比于传统的 RNN，LSTM 的长处在于可以保留长期的记忆（也就是长时间序列的信息），并且保证在序列靠前的信息能够对后面信息的决策有比较大的影响。
 </p>
 
 <p>
-\(hθ(x) = g(θTx)\)
-</p></li>
-</ol>
-
-<p>
-至于说深度学习方面的东西，可以把视觉方面的 opencv 看看。
-上面的这些过程做完，才真的敢说机器学习入门了。
-另外看一些书：
+这个教程里，我们会介绍 LSTM 网络结构，并且将它用于一个股票市场的情感分类问题。使用 tensorflow 的原因在于它的简洁，以及高层次的抽象，能够方便我们快速的搭建这样一个网络。
 </p>
-<ol class="org-ol">
-<li>PRML</li>
-<li>机器学习实战</li>
-<li>统计学习方法</li>
-<li>西瓜书</li>
-</ol>
 
 
+<div id="outline-container-orgcf694cd" class="outline-2">
+<h2 id="orgcf694cd">LSTM cells 以及 网络结构</h2>
+<div class="outline-text-2" id="text-orgcf694cd">
 <p>
-笔记记录：
+在开始构建我们的 LSTM 网络前，我们先要对 LSTM 有一个基本的认识，它是如何工作的，以及它的架构是什么。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181109_111933_27042khL.png" alt="20181109_111933_27042khL.png" width="80%" />
 </p>
 </div>
+
+<p>
+上图展示了一个完整的 RNN cell，它首先接受一个序列的输入（在本例中也就是一个单词），\(x_i\), 同时输出当前的隐藏状态(hidden state)信息, \(h_i\), 并且将 \(h_i\) 作为下一个 RNN cell 的输入。LSTM 的内部结构相对来说是比较复杂的。传统的 RNN 只有一个 internal layer 作用于当前的状态(\(h_{t-1}\)) 以及当前的输入(\(x_i\)), 而 LSTM 有三个这样的 internal layer。
+</p>
+
+<p>
+首先，有一个遗忘门（\(forget gate\)）控制上一个状态（\(h_{t-1}\)）是否需要保留。这一步会将上一步的\(h_{t-1}\) 与 当前输入 \(x_i\) 共同作为 sigmoid
+激活层的输入（\(\sigma\)）, 输出为一个 0 到 1 之间的隐藏单元。接着是一个和当前状态的点乘操作(element-wise multiplication)。
+</p>
+
+<p>
+&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4228d63" class="outline-2">
+<h2 id="org4228d63">网络搭建</h2>
 </div>
 </div>
 <div id="postamble" class="status">

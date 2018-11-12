@@ -240,7 +240,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -256,43 +255,74 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbbdfc82">阶段二计划</a></li>
+<li><a href="#org9393e40">Chapter1</a></li>
+<li><a href="#org9bcb696">Chapter6</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbbdfc82" class="outline-2">
-<h2 id="orgbbdfc82">阶段二计划</h2>
-<div class="outline-text-2" id="text-orgbbdfc82">
+<div id="outline-container-org9393e40" class="outline-2">
+<h2 id="org9393e40">Chapter1</h2>
+<div class="outline-text-2" id="text-org9393e40">
+<p>
+抽象和形式化任务对人是很困难的，但是对计算机确是最容易的。人工智能的一个关键就是如何将非形式化的知识传达给计算机。
+</p>
+
 <ol class="org-ol">
-<li>彻底搞懂 SVM, 理解而不是限于理解它的一些思想方法。</li>
-<li>读源码 libsvm liblinear</li>
-<li>其他算法的推导过程也要会</li>
-<li>手动实现一下常见的算法，参考李航的《统计学习方法》</li>
-<li>看一些公开课：<a href="http://course.fast.ai/about.html">http://course.fast.ai/about.html</a></li>
+<li>表示学习用机器学习来挖掘表示本身，而不仅仅把表示映射到输出。典型的应用例子是自编码器和解码器。</li>
+
+<li>深度学习深度学习的典型例子是前馈深度网络或多层感知机(multilayer perceptron MLP)。</li>
+
 <li><p>
-Kaggle 比赛 or 天池比赛拿一个名次
+AI
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20180829_150114_37410-He.png" alt="20180829_150114_37410-He.png" width="50%" />
+</p>
+</div></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org9bcb696" class="outline-2">
+<h2 id="org9bcb696">Chapter6</h2>
+<div class="outline-text-2" id="text-org9bcb696">
+<p>
+万能近似性质：一个前馈神经网络如果具有线性输出层和至少一层具有任何一种”挤压“性质的激活函数(sigmoid)的隐藏层，只要给予网络足够过的隐藏单元，它可以以任意的精度来近似任何从一个有限维空间到另一个有限维空间的
+Borel 可测函数。
 </p>
 
 <p>
-\(hθ(x) = g(θTx)\)
-</p></li>
-</ol>
-
-<p>
-至于说深度学习方面的东西，可以把视觉方面的 opencv 看看。
-上面的这些过程做完，才真的敢说机器学习入门了。
-另外看一些书：
+为什么需要深度？由上面的理论来说，我们通过单层的前馈网络可以表示任何函数，但是这个时候需要的函数需要很多，而且无法正确的学习和泛化。很多时候浅层模型需要的隐藏单元的数量是 n 的指数级。
 </p>
-<ol class="org-ol">
-<li>PRML</li>
-<li>机器学习实战</li>
-<li>统计学习方法</li>
-<li>西瓜书</li>
-</ol>
+
+<p>
+另外可以基于统计的原因给出为什么要选择深度模型。选择深度模型默许了一个非常普遍的信念，那就是我们想要学的函数应该涉及几个更加简单的函数的组合。
+</p>
+
+<p>
+参数数量和模型的深浅：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20180829_171158_49147p8D.png" alt="20180829_171158_49147p8D.png" width="50%" />
+</p>
+</div>
 
 
 <p>
-笔记记录：
+反向传播
+</p>
+
+<p>
+符号到符号的导数。代数表达式和计算图都对符号或不具有特定值的变量进行操作，这种表示成为符号表示。当实际使用或者训练神经网络时，我们必须给这些符号赋特定的值。一些反向传播的方法采用计算图和一组用于图的输入的数值，然后返回输入值处梯度的一组数值&#x2013;符号到数值的微分。(用于 Torch 和 Caffe 中)。
+</p>
+
+<p>
+另外一种方法是采用计算图以及添加额外的节点到计算图中，额外节点提供了我们所需导数的符号描述。(Theano 和 Tensorflow)
+</p>
+
+<p>
+计算梯度的时候，用为了避免对公共子表达式重复计算，我们可以将反向传播看作是一种表填充算法，利用存储的中间结果来对表填充，这种填充策略有时被称为动态规划。
 </p>
 </div>
 </div>

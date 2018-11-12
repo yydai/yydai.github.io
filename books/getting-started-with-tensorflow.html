@@ -6,7 +6,7 @@
 <!-- 2018-11-08 Thu 23:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>Getting Started with tensorflow</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -240,7 +240,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -252,48 +251,184 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
+<h1 class="title">Getting Started with tensorflow</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbbdfc82">阶段二计划</a></li>
+<li><a href="#org16a094b">Chapter 1 Basic Concepts</a>
+<ul>
+<li><a href="#orga11f159">Data Flow Graphs</a></li>
+<li><a href="#org2342a9e">Tensorflow programming model</a></li>
+<li><a href="#org16a7da0">Computing gradients</a></li>
+<li><a href="#orgfd6f68a">Uniform distribution</a></li>
+<li><a href="#orge8d657a">Normal Distribution</a></li>
+<li><a href="#org7ca7519">seed</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbbdfc82" class="outline-2">
-<h2 id="orgbbdfc82">阶段二计划</h2>
-<div class="outline-text-2" id="text-orgbbdfc82">
-<ol class="org-ol">
-<li>彻底搞懂 SVM, 理解而不是限于理解它的一些思想方法。</li>
-<li>读源码 libsvm liblinear</li>
-<li>其他算法的推导过程也要会</li>
-<li>手动实现一下常见的算法，参考李航的《统计学习方法》</li>
-<li>看一些公开课：<a href="http://course.fast.ai/about.html">http://course.fast.ai/about.html</a></li>
+<hr />
+
+<div id="outline-container-org16a094b" class="outline-2">
+<h2 id="org16a094b">Chapter 1 Basic Concepts</h2>
+<div class="outline-text-2" id="text-org16a094b">
+</div><div id="outline-container-orga11f159" class="outline-3">
+<h3 id="orga11f159">Data Flow Graphs</h3>
+<div class="outline-text-3" id="text-orga11f159">
+<ul class="org-ul">
+<li><i>Node</i>: In tensorflow, each node ==&gt; instantion of an operation(&gt;=0 inputs, &gt;=0 outputs)</li>
+<li><i>Edges</i>:
+<ul class="org-ul">
+<li><i>Normal Edges</i>: Carriers one operation's result(become the input of another op)</li>
+<li><i>Special Edges</i>: Special Edges: These edges are not data
+carriers between the output of a node (operator) and the input
+of another node. A special edge indicates a control dependency
+between two nodes. Let's suppose we have two nodes A and B and
+a special edges connecting A to B; it means that B will start
+its operation only when the operation in A ends. Special edges
+are used in Data Flow Graph to set the happens-before
+relationship between operations on the tensors.</li>
+</ul></li>
+
 <li><p>
-Kaggle 比赛 or 天池比赛拿一个名次
+Session
 </p>
 
 <p>
-\(hθ(x) = g(θTx)\)
-</p></li>
-</ol>
+ When the client program has to establish communication with
+the TensorFlow runtime system, a session must be created. As
+soon as the session is created for a client, an initial graph
+is created and is empty. It has two fundamental methods
+</p>
+<ul class="org-ul">
+<li>session.run</li>
+<li>session.extend</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org2342a9e" class="outline-3">
+<h3 id="org2342a9e">Tensorflow programming model</h3>
+<div class="outline-text-3" id="text-org2342a9e">
+<p>
+Consider a simple example: multiply two integers.
+</p>
 
 <p>
-至于说深度学习方面的东西，可以把视觉方面的 opencv 看看。
-上面的这些过程做完，才真的敢说机器学习入门了。
-另外看一些书：
+steps:
 </p>
 <ol class="org-ol">
-<li>PRML</li>
-<li>机器学习实战</li>
-<li>统计学习方法</li>
-<li>西瓜书</li>
-</ol>
-
-
-<p>
-笔记记录：
+<li><p>
+import
 </p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> tensorflow <span style="color: #4f97d7; font-weight: bold;">as</span> tf
+</code></pre>
+</div></li>
+
+<li><p>
+define two vars a and b hold the data, and a b are called placeholder:
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">a</span> = tf.placeholder<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"int32"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">b</span> = tf.placeholder<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"int32"</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div></li>
+
+<li><p>
+placeholder allow us create our op and build our computation graph, without needing the data
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">y</span> = tf.mul<span style="color: #4f97d7;">(</span>a, b<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div></li>
+
+<li><p>
+manage the execution flow, create a session
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">sess</span> = tf.Session<span style="color: #4f97d7;">()</span>
+</code></pre>
+</div></li>
+
+<li><p>
+visualize the results, run our model, feed the data into the data flow
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>sess.run<span style="color: #bc6ec5;">(</span>y, feed_dict=<span style="color: #2d9574;">{</span>a:2, b:5<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>
+</code></pre>
+</div></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org16a7da0" class="outline-3">
+<h3 id="org16a7da0">Computing gradients</h3>
+<div class="outline-text-3" id="text-org16a7da0">
+<p>
+y = 2*x<sup>2</sup>
+</p>
+
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> tensorflow <span style="color: #4f97d7; font-weight: bold;">as</span> tf
+<span style="color: #7590db;">x</span> = tf.placeholder<span style="color: #4f97d7;">(</span>tf.float32<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">y</span> = 2 * x * x
+<span style="color: #7590db;">var_grad</span> = tf.gradients<span style="color: #4f97d7;">(</span>y, x<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">with</span> tf.Session<span style="color: #4f97d7;">()</span> <span style="color: #4f97d7; font-weight: bold;">as</span> sess:
+<span style="background-color: #292e34;"> </span>  <span style="color: #7590db;">grad_val</span> = sess.run<span style="color: #4f97d7;">(</span>var_grad, feed_dict=<span style="color: #bc6ec5;">{</span>x: 1<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>  <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>grad_val<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfd6f68a" class="outline-3">
+<h3 id="orgfd6f68a">Uniform distribution</h3>
+<div class="outline-text-3" id="text-orgfd6f68a">
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #4f97d7; font-weight: bold;">as</span> plt
+<span style="color: #7590db;">uniform</span> = tf.random_uniform<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>100<span style="color: #bc6ec5;">]</span>, minval=0, maxval=1, dtype=tf.float32<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">with</span> tf.Session<span style="color: #4f97d7;">()</span> <span style="color: #4f97d7; font-weight: bold;">as</span> sess:
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>uniform.<span style="color: #4f97d7;">eval</span><span style="color: #bc6ec5;">()</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   plt.hist<span style="color: #4f97d7;">(</span>uniform.<span style="color: #4f97d7;">eval</span><span style="color: #bc6ec5;">()</span>, normed=<span style="color: #a45bad;">True</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   plt.show<span style="color: #4f97d7;">()</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge8d657a" class="outline-3">
+<h3 id="orge8d657a">Normal Distribution</h3>
+<div class="outline-text-3" id="text-orge8d657a">
+<p>
+same as uniform distribution
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">norm</span> = tf.random_normal<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>100<span style="color: #bc6ec5;">]</span>, mean=0, stddev=2<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">with</span> tf.Session<span style="color: #4f97d7;">()</span> <span style="color: #4f97d7; font-weight: bold;">as</span> sess:
+<span style="background-color: #292e34;"> </span>  plt.hist<span style="color: #4f97d7;">(</span>norm.<span style="color: #4f97d7;">eval</span><span style="color: #bc6ec5;">()</span>, normed=<span style="color: #a45bad;">True</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>  plt.show<span style="color: #4f97d7;">()</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7ca7519" class="outline-3">
+<h3 id="org7ca7519">seed</h3>
+<div class="outline-text-3" id="text-org7ca7519">
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">uniform_with_seed</span> = tf.random_uniform<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span>, seed=1<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>

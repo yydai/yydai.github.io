@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-08 Thu 23:03 -->
+<!-- 2018-11-09 Fri 15:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
+<title>深入理解 LSTM</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -252,49 +252,138 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
+<h1 class="title">深入理解 LSTM</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbbdfc82">阶段二计划</a></li>
+<li><a href="#orga156937">RNN(Recurrent Neural Networks)</a></li>
+<li><a href="#org546c6ab">LSTM</a>
+<ul>
+<li><a href="#org795b2e1">LSTM 的核心思想</a></li>
+<li><a href="#org990e94c">深入剖析 LSTM</a></li>
+<li><a href="#org29498e7">LSTM 的变体</a></li>
+</ul>
+</li>
+<li><a href="#org4f01d26">总结</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbbdfc82" class="outline-2">
-<h2 id="orgbbdfc82">阶段二计划</h2>
-<div class="outline-text-2" id="text-orgbbdfc82">
-<ol class="org-ol">
-<li>彻底搞懂 SVM, 理解而不是限于理解它的一些思想方法。</li>
-<li>读源码 libsvm liblinear</li>
-<li>其他算法的推导过程也要会</li>
-<li>手动实现一下常见的算法，参考李航的《统计学习方法》</li>
-<li>看一些公开课：<a href="http://course.fast.ai/about.html">http://course.fast.ai/about.html</a></li>
-<li><p>
-Kaggle 比赛 or 天池比赛拿一个名次
+<p>
+翻译：<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a> （未完）
+</p>
+
+<div id="outline-container-orga156937" class="outline-2">
+<h2 id="orga156937">RNN(Recurrent Neural Networks)</h2>
+</div>
+<div id="outline-container-org546c6ab" class="outline-2">
+<h2 id="org546c6ab">LSTM</h2>
+<div class="outline-text-2" id="text-org546c6ab">
+</div><div id="outline-container-org795b2e1" class="outline-3">
+<h3 id="org795b2e1">LSTM 的核心思想</h3>
+</div>
+<div id="outline-container-org990e94c" class="outline-3">
+<h3 id="org990e94c">深入剖析 LSTM</h3>
+<div class="outline-text-3" id="text-org990e94c">
+<p>
+LSTM 的第一步是决定什么信息要保留什么抛弃掉。这一步的决策使用过 sigmoid
+layer 来做，通常被称为遗忘门（\(forget \, gate \, layer\)）。输出为 0 到 1 的数字。
+这串数字（list，非一个）用来决定 \(C_{t-1}\) 中数字是否保留。1 表示完全保留，0 表示完全舍弃。
 </p>
 
 <p>
-\(hθ(x) = g(θTx)\)
-</p></li>
-</ol>
-
-<p>
-至于说深度学习方面的东西，可以把视觉方面的 opencv 看看。
-上面的这些过程做完，才真的敢说机器学习入门了。
-另外看一些书：
+依据前面的单词预测下一个词的例子中，LSTM cell(\(C_{i}\)) 可能包含出现过的主题，因此我们可以正确的使用指代词来表示这个主题。当我们看到一个新的主题
+（subject）的时候，我们就希望忘记先前出现的主题(subject)。
 </p>
-<ol class="org-ol">
-<li>PRML</li>
-<li>机器学习实战</li>
-<li>统计学习方法</li>
-<li>西瓜书</li>
-</ol>
 
 
-<p>
-笔记记录：
+<div class="figure">
+<p><img src="./imgs/20181109_120515_27042xrR.png" alt="20181109_120515_27042xrR.png" width="100%" />
 </p>
 </div>
+
+
+<p>
+下一步就是决定什么样的信息我们需要存储到 cell 状态中(\(C_{i}\))。第一个阶段是一个叫做 <b>输入门</b> 的 sigmoid 层, 决定什么值将会被更新。下一步，
+\(tanh\) 层会创建一个候选向量矩阵， \(\tilde{C}_t\), 这个可以加到状态 cell
+中。接下来，我们会结合上面两步的过程，创建一个状态的更新。看下图。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20181109_132653_27042-1X.png" alt="20181109_132653_27042-1X.png" width="100%" />
+</p>
+</div>
+
+<p>
+下面，我们将老的 cell 状态信息，\(C_{t-1}\) 更新到新的 cell 状态 \(C_t\) 中。
+我们将前面算的 \(f_t\) 和老的状态 \(C_{t-1}\) 相乘，然后加上 上面算出的 \(i_t*\tilde{C}_t\) 。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20181109_141639_27042LAe.png" alt="20181109_141639_27042LAe.png" width="100%" />
+</p>
+</div>
+
+<p>
+最后一步就是决定，我们要输出什么。输出的内容基于我们的 cell 状态，但是最终是一个过滤后的版本。
+首先，我们通过一个 sigmoid 层决定 cell 状态中的哪部分作为输出 \(o_t\) 。接着，我们将 cell 状态(\(C_t\)) 通过一个 tanh 层（将值变为 -1 到 1 间的数）
+并且乘上一步的 \(o_t\) ， 最终的输出为 \(h_t\) 。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20181109_143354_27042YKk.png" alt="20181109_143354_27042YKk.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org29498e7" class="outline-3">
+<h3 id="org29498e7">LSTM 的变体</h3>
+<div class="outline-text-3" id="text-org29498e7">
+<p>
+上面介绍的 LSTM 算是一个正常版本的结构，事实上几乎所有的 paper 中涉及到的 LSTM 都是一个稍微不同的版本。
+差别虽然不大，但还是要提一下。
+</p>
+
+<p>
+一个比较流行的变体是增加 “peephole” 连接，也就是各个门会看 cell 的状态。看下图就比较好理解了。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181109_144521_27042lUq.png" alt="20181109_144521_27042lUq.png" width="100%" />
+</p>
+</div>
+
+<p>
+上面的 \(f_t\) 在计算的时候考虑到了 \(C_{t-1}\) , 这就是添加了所谓的 peephole 信息。
+</p>
+
+<p>
+另外一个变体是使用耦合的遗忘和输入门。我们将这个决策综合使用，而不是单独的决策，什么该遗忘，什么信息该添加。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181109_145324_27042yew.png" alt="20181109_145324_27042yew.png" width="100%" />
+</p>
+</div>
+
+<p>
+另一个，比较有意思的变体是 GRU(Gated Recurrent Unit), <a href="http://arxiv.org/pdf/1406.1078v3.pdf">Cho, et al. (2014)</a>。 它将遗忘和输入门综合作为更新门(update gate)。
+另外，它结合 cell 状态和隐藏状态到一起。最终的模型要比标准的模型简单很多，并且变得比较流行起来。
+</p>
+
+<p>
+上面只是众多变体中的几种，还有很多没有介绍到。至于哪种变体是最好的，<a href="http://arxiv.org/pdf/1503.04069.pdf">Greff, et al. (2015)</a> 这个论文有很好的比较。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4f01d26" class="outline-2">
+<h2 id="org4f01d26">总结</h2>
 </div>
 </div>
 <div id="postamble" class="status">

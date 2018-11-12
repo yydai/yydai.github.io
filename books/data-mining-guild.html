@@ -240,7 +240,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -256,44 +255,183 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbbdfc82">阶段二计划</a></li>
+<li><a href="#org92a4e94">. 用户评分</a>
+<ul>
+<li><a href="#orgdcf6c36">问题</a></li>
+<li><a href="#orgc18b9a9">皮尔逊相关系数</a></li>
+<li><a href="#orgc6d1acc">余弦相似度</a></li>
+<li><a href="#orgd2ae29e">应该使用哪种相似度</a></li>
+</ul>
+</li>
+<li><a href="#org798f90f">Chapter3</a>
+<ul>
+<li><a href="#org41f7ab0">隐式评价</a></li>
+<li><a href="#orgb7e3184">Slope One 算法</a></li>
+<li><a href="#orgb81253a">评分标准</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbbdfc82" class="outline-2">
-<h2 id="orgbbdfc82">阶段二计划</h2>
-<div class="outline-text-2" id="text-orgbbdfc82">
-<ol class="org-ol">
-<li>彻底搞懂 SVM, 理解而不是限于理解它的一些思想方法。</li>
-<li>读源码 libsvm liblinear</li>
-<li>其他算法的推导过程也要会</li>
-<li>手动实现一下常见的算法，参考李航的《统计学习方法》</li>
-<li>看一些公开课：<a href="http://course.fast.ai/about.html">http://course.fast.ai/about.html</a></li>
-<li><p>
-Kaggle 比赛 or 天池比赛拿一个名次
+
+<div id="outline-container-org92a4e94" class="outline-2">
+<h2 id="org92a4e94">. 用户评分</h2>
+<div class="outline-text-2" id="text-org92a4e94">
+</div><div id="outline-container-orgdcf6c36" class="outline-3">
+<h3 id="orgdcf6c36">问题</h3>
+<div class="outline-text-3" id="text-orgdcf6c36">
+<p>
+每个用户的打分标准非常的不同
+</p>
+<ul class="org-ul">
+<li>A 没有打出极端的分数，都不在 2 到 4 分间</li>
+<li>B 打分都在 4-5 分</li>
+<li>C 分数不是 1 就是 4</li>
+</ul>
+<p>
+如何比较这些用户呢？C 的四分相当于 B 的 4 分还是 5 分？
+</p>
+</div>
+</div>
+<div id="outline-container-orgc18b9a9" class="outline-3">
+<h3 id="orgc18b9a9">皮尔逊相关系数</h3>
+<div class="outline-text-3" id="text-orgc18b9a9">
+<p>
+这个问题在数据挖掘领域称为“分数膨胀“，解决这个问题的一个方法就是通过皮尔逊相关系数。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20180817_112733_2578sdk.png" alt="20180817_112733_2578sdk.png" width="70%" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./imgs/20180817_112756_25785nq.png" alt="20180817_112756_25785nq.png" width="70%" />
+</p>
+</div>
+
+<p>
+直线表示，Clara 和 Robert 的偏好完全一致。皮尔逊相关系数用于衡量两个变量(Clara, Robert)的相关性，[-1, 1], 1 代表完全吻合，-1 代表完全相反。
 </p>
 
 <p>
-\(hθ(x) = g(θTx)\)
-</p></li>
-</ol>
+公式：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20180817_113042_2578Gyw.png" alt="20180817_113042_2578Gyw.png" width="50%" />
+</p>
+</div>
 
 <p>
-至于说深度学习方面的东西，可以把视觉方面的 opencv 看看。
-上面的这些过程做完，才真的敢说机器学习入门了。
-另外看一些书：
+公式近似（可以一次迭代，比较快）
 </p>
-<ol class="org-ol">
-<li>PRML</li>
-<li>机器学习实战</li>
-<li>统计学习方法</li>
-<li>西瓜书</li>
-</ol>
 
+<div class="figure">
+<p><img src="./imgs/20180817_113340_2578FGG.png" alt="20180817_113340_2578FGG.png" width="50%" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc6d1acc" class="outline-3">
+<h3 id="orgc6d1acc">余弦相似度</h3>
+<div class="outline-text-3" id="text-orgc6d1acc">
+
+<div class="figure">
+<p><img src="./imgs/20180817_120103_6726VGD.png" alt="20180817_120103_6726VGD.png" width="80%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd2ae29e" class="outline-3">
+<h3 id="orgd2ae29e">应该使用哪种相似度</h3>
+<div class="outline-text-3" id="text-orgd2ae29e">
+<ul class="org-ul">
+<li>“分数膨胀” -&gt; 皮尔逊相关系数</li>
+<li>数据密集 -&gt; 欧几里得或曼哈顿距离</li>
+<li>稀疏 -&gt; 余弦相似度</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org798f90f" class="outline-2">
+<h2 id="org798f90f">Chapter3</h2>
+<div class="outline-text-2" id="text-org798f90f">
+</div><div id="outline-container-org41f7ab0" class="outline-3">
+<h3 id="org41f7ab0">隐式评价</h3>
+<div class="outline-text-3" id="text-org41f7ab0">
+<p>
+显式评价的问题：
+</p>
+<ul class="org-ul">
+<li>不愿评价物品</li>
+<li>评价有偏见</li>
+<li>不会更新评价</li>
+</ul>
 
 <p>
-笔记记录：
+修正的余弦函数前面我们说到了分数膨胀的问题，这里我们可以使用修正的余弦公式来计算，基本的思想就是将用户的评价减去评价的均值。
 </p>
+
+
+<div class="figure">
+<p><img src="./imgs/20180817_123013_6726vaP.png" alt="20180817_123013_6726vaP.png" width="50%" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb7e3184" class="outline-3">
+<h3 id="orgb7e3184">Slope One 算法</h3>
+<div class="outline-text-3" id="text-orgb7e3184">
+
+<div class="figure">
+<p><img src="./imgs/20180817_141043_6726Jvb.png" alt="20180817_141043_6726Jvb.png" width="50%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb81253a" class="outline-3">
+<h3 id="orgb81253a">评分标准</h3>
+<div class="outline-text-3" id="text-orgb81253a">
+<p>
+标准化数据
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20180817_143303_6726W5h.png" alt="20180817_143303_6726W5h.png" width="80%" />
+</p>
+</div>
+
+<p>
+标准化数据的问题，容易受 outlie 的影响。
+</p>
+
+<p>
+修正的标准分（绝对偏差）：
+将均值改为中位数
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20180817_144252_6726jDo.png" alt="20180817_144252_6726jDo.png" width="80%" />
+</p>
+</div>
+
+<p>
+是否需要标准化如果物品的特征数值尺寸不一样，就有必要进行标准化。
+</p>
+<ul class="org-ul">
+<li>需要通过物品的特征来计算距离</li>
+<li>不同特征之间的尺度相差比较的大</li>
+</ul>
+</div>
 </div>
 </div>
 </div>

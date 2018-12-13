@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-13 Thu 18:55 -->
+<!-- 2018-12-13 Thu 18:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>V for Vendetta</title>
+<title>对抗生成网络</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -179,12 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/worg3.css"/>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg3.css' typbe='text/css'/>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -243,177 +242,329 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
 <div id="content">
-<h1 class="title">V for Vendetta</h1>
+<h1 class="title">对抗生成网络</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf33152c">Hello Godiva</a></li>
-<li><a href="#org0d9fb15">Emacs</a></li>
-<li><a href="#org18d589e">Python</a></li>
-<li><a href="#org508a9d2">Linux</a></li>
-<li><a href="#orgdefbdcf">Algorithm</a></li>
-<li><a href="#org89cbd7a">Translations</a></li>
-<li><a href="#org4ead625">AI/ML/DL/DM</a></li>
-<li><a href="#orgc6832c0">Projects</a></li>
-<li><a href="#org7d6e789">Guitar</a></li>
-<li><a href="#org302f840">Foods</a></li>
-<li><a href="#org7ef3b55">Docker</a></li>
+<li><a href="#org175eec4">介绍</a></li>
+<li><a href="#org64bcc7a">如何操作的</a></li>
+<li><a href="#org237555a">概念上理解 GAN</a></li>
+<li><a href="#orgc07873a">todo</a></li>
+<li><a href="#org4eb08a2">From</a></li>
 </ul>
 </div>
 </div>
 
+<div id="outline-container-org175eec4" class="outline-2">
+<h2 id="org175eec4">介绍</h2>
+<div class="outline-text-2" id="text-org175eec4">
+<p>
+  GAN 是一种神经网络，从 2014 年开始出现。它的应用非常的有趣，而且在生成数据方面有令人惊喜的效果。
+在现实生活中，从文本到图像再到视频都有 GAN 的应用。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/gan01.jpeg" alt="gan01.jpeg" width="100%" />
+</p>
+</div>
+
+<p>
+让机器生成东西，生成图像，写诗。要做的就是训练一个 generator, 例如输入一个 vector 通过一个 NN generator 生成一个图像。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181213_164636_11108ai.png" alt="20181213_164636_11108ai.png" width="80%" />
+</p>
+</div>
+
+<p>
+generator 就是一个 NN，GAN 中 input 就是一个 vector，在 image 中 output 就是一个 image(high dim vector)
+</p>
+
+<p>
+例如在二次元生成的应用中，一个维度的输入对应到某一个特征，所以改变某一个量，生成的内容会有稍微的不同。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181213_165024_1110Wvu.png" alt="20181213_165024_1110Wvu.png" width="80%" />
+</p>
+</div>
+
+
+<p>
+在 GAN 中同时要训练一个 Discriminator, 也是一个 NN。它的输入和输出
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181213_165155_1110j50.png" alt="20181213_165155_1110j50.png" width="80%" />
+</p>
+</div>
+
+<p>
+输入一个图片，输出一个 scalar（一个数字，代表生成图的质量）。
+</p>
+
+<p>
+generator 和 disciminator 关系类似捕猎者和猎物的关系，不断的进化。
+</p>
 
 
 
-<div id="outline-container-orgf33152c" class="outline-2">
-<h2 id="orgf33152c">Hello Godiva</h2>
-<div class="outline-text-2" id="text-orgf33152c">
+<div class="figure">
+<p><img src="./imgs/20181213_165643_1110VDE.png" alt="20181213_165643_1110VDE.png" width="80%" />
+</p>
+</div>
+
+<p>
+Generator 生成一组图像，然后第一个代的 Discriminator 就判断这个图像和真实的图像的差异。同时 Generatorv2 跟着进化，生成另一组图像试图骗过 Discriminator。
+</p>
+
+<p>
+用老师和学生的比喻可以这样理解：
+G v1 是一年级的学生，画了些不太好的图像，D v1 是一年级的老师指出，它的画和真实的画差别在哪里。
+G v2 是二年级的学生，它改进了 D v1 指出来的问题，D V2 是二年级的老师，又指出了新的问题。
+</p>
+
+<p>
+所以现在有了一个问题，G 为什么不能自己学习呢？非得弄一个 D 来教给它。同样，D 这么懂，为什么不自己做呢？（星星眼）
+</p>
+</div>
+</div>
+
+<div id="outline-container-org64bcc7a" class="outline-2">
+<h2 id="org64bcc7a">如何操作的</h2>
+<div class="outline-text-2" id="text-org64bcc7a">
+<ol class="org-ol">
+<li>初始化 G D</li>
+<li>在每一次的迭代中：</li>
+<li>step1: 固定 G，更新 D</li>
+</ol>
+
+<div class="figure">
+<p><img src="./imgs/20181213_171026_1110iNK.png" alt="20181213_171026_1110iNK.png" width="80%" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./imgs/20181213_171050_1110vXQ.png" alt="20181213_171050_1110vXQ.png" width="80%" />
+</p>
+</div>
+
+<p>
+我们的目标就是将 databse 里出来的图，放到 D 中能够 output 一个高的分数。
+G 生成的图，丢到 D 中 output 一个小的分数。
+</p>
+
+<p>
+step2: 固定 D，更新 G
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181213_171341_11108hW.png" alt="20181213_171341_11108hW.png" width="80%" />
+</p>
+</div>
+
+<p>
+基本想法就是，让 G 尽量的骗过 D，让它生成一个高的分数。在实现的时候其实就是将 G 和 D 合成一个大的神经网络。图片作为一个 hidden layer，例如一个图是
+64*64。我们就调整前面的几个 layer，固定后面的 layer。
+</p>
+
+<p>
+具体的算法是这样的：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181213_171804_1110Jsc.png" alt="20181213_171804_1110Jsc.png" width="80%" />
+</p>
+</div>
+
+<p>
+注意里面的目标函数，我们的目标是 max(V)。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-org237555a" class="outline-2">
+<h2 id="org237555a">概念上理解 GAN</h2>
+<div class="outline-text-2" id="text-org237555a">
+<p>
+GAN as structured learning：
+找到一个 f 能够做
+f: x-&gt;y
+</p>
+
+<p>
+例如 image2image, text2image:
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181213_173418_1110W2i.png" alt="20181213_173418_1110W2i.png" width="80%" />
+</p>
+</div>
+
+<p>
+one-shot / zero-shot learning:
+类似对某一个机器没有见过或很少见过的东西，它能否分辨出。
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20181213_174722_1110wKv.png" alt="20181213_174722_1110wKv.png" width="80%" />
+</p>
+</div>
+
+<p>
+在数字生成中，我们的向量怎么来，比如两个 1，我们想要它们的 vector 中有某些地方是相似的，如果随机生成可能就不行了。
+</p>
+
+<p>
+这里我们可以用一个 Encoder：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181213_174940_1110veE.png" alt="20181213_174940_1110veE.png" width="80%" />
+</p>
+</div>
+
+<p>
+可以使用 Auto-encoder， 我们需要一个 Encoder 和 Decoder
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20181213_175027_11108oK.png" alt="20181213_175027_11108oK.png" width="80%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc07873a" class="outline-2">
+<h2 id="orgc07873a">todo</h2>
+<div class="outline-text-2" id="text-orgc07873a">
+<p>
+实现一下 Anime face generation
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4eb08a2" class="outline-2">
+<h2 id="org4eb08a2">From</h2>
+<div class="outline-text-2" id="text-org4eb08a2">
 <ul class="org-ul">
-<li><a href="./wiki_emacs/blog-test.html">Blog 的搭建</a></li>
-<li><a href="./others/static-comments-on-my-blog.html">Blog 静态评论实现</a></li>
-<li><a href="./others/character-encoding.html">谈谈字符编码</a></li>
-<li><a href="./others/ssh-remote-host.html">远程主机登录</a></li>
-<li><a href="./projects/json-parser.html">JSON 解析器</a></li>
-<li><a href="./projects/antlr-example.html">ANTLR 应用实例</a></li>
-<li><a href="./books/readings.html">读书那些年</a></li>
-<li><a href="./mac/tricks.html">Mac OS X Tricks</a></li>
-<li><a href="./mac/software.html">Mac 上好用的软件</a></li>
-<li><a href="./others/keyboard.html">我的键盘</a></li>
+<li><a href="https://www.youtube.com/watch?v=DQNNMiAP5lw&amp;list=PLJV_el3uVTsMq6JEFPW35BCiOQTsoqwNw&amp;index=1">https://www.youtube.com/watch?v=DQNNMiAP5lw&amp;list=PLJV_el3uVTsMq6JEFPW35BCiOQTsoqwNw&amp;index=1</a></li>
 </ul>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
 
-<div id="outline-container-org0d9fb15" class="outline-2">
-<h2 id="org0d9fb15">Emacs</h2>
-<div class="outline-text-2" id="text-org0d9fb15">
-<ul class="org-ul">
-<li><a href="./wiki_emacs/emacs-tricks.html">Emacs 技巧</a></li>
-<li><a href="./wiki_emacs/emacs-resourses.html">Emacs 学习资源</a></li>
-<li><a href="./wiki_emacs/emacs-macro.html">Emacs 键盘宏</a></li>
-<li><a href="./wiki_emacs/interactive.html">Elisp 中 interactive 使用</a></li>
-<li><a href="./wiki_emacs/mac-org-mode-output-pdf.html">如何在 Org Mode 输出 PDF 文件</a></li>
-<li><a href="./wiki_emacs/elisp-macro.html">Elisp 中的宏</a></li>
-<li><a href="./wiki_emacs/highlight-code.html">blog 代码高亮</a></li>
-<li><a href="./wiki_emacs/write-a-minor-mode.html">write a minor mode-from lazycat</a></li>
-<li>如何写 Minor Mode, Major Mode</li>
-<li>如何写 company-mode backend</li>
-</ul>
-</div>
-</div>
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
 
-<div id="outline-container-org18d589e" class="outline-2">
-<h2 id="org18d589e">Python</h2>
-<div class="outline-text-2" id="text-org18d589e">
-<ul class="org-ul">
-<li><a href="./wiki_python/virtualenv.html">虚拟环境(virtualenv)</a></li>
-<li><a href="./python/axis.html">Pandas 和 Numpy 中的 axis</a></li>
-<li><a href="./wiki_python/mutable-immutable.html">Mutable vs. Immutable</a></li>
-<li><a href="./wiki_python/gil.html">Python 中 GIL</a></li>
-<li><a href="./wiki_python/decorators.html">装饰器</a></li>
-<li><a href="./wiki_python/lazy-evaluation.html">懒加载</a></li>
-</ul>
-</div>
-</div>
+console.log("search_issues = "+ search_issues);
 
-<div id="outline-container-org508a9d2" class="outline-2">
-<h2 id="org508a9d2">Linux</h2>
-<div class="outline-text-2" id="text-org508a9d2">
-<ul class="org-ul">
-<li><a href="./git/git-internals.html">Git 的内部原理</a></li>
-<li><a href="./linux/auto-push.html">自动化 Git Push</a></li>
-<li><a href="./git/qa.html">Git 常见问题总结</a></li>
-<li><a href="./linux/makefile-qa.html">Makefile 的常见问题</a></li>
-</ul>
-</div>
-</div>
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+        document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
 
-<div id="outline-container-orgdefbdcf" class="outline-2">
-<h2 id="orgdefbdcf">Algorithm</h2>
-<div class="outline-text-2" id="text-orgdefbdcf">
-<ul class="org-ul">
-<li><a href="./algorithm/index.html">Leetcode</a></li>
-<li><a href="./algorithm/dp.html">动态规划问题</a></li>
-<li><a href="./algorithm/top-k.html">Top-K 问题</a></li>
-<li><a href="./algorithm/trie.html">Trie 与补全、纠错</a></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org89cbd7a" class="outline-2">
-<h2 id="org89cbd7a">Translations</h2>
-<div class="outline-text-2" id="text-org89cbd7a">
-<ul class="org-ul">
-<li><a href="./trans/a-continuous-integration-system.html">A Continuous Integration System</a></li>
-<li><a href="./wiki_python/argparse.html">Argparse 中文教程</a></li>
-</ul>
-</div>
-</div>
+function create(title) {
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-<div id="outline-container-org4ead625" class="outline-2">
-<h2 id="org4ead625">AI/ML/DL/DM</h2>
-<div class="outline-text-2" id="text-org4ead625">
-<ul class="org-ul">
-<li><a href="./wiki_ml_dl/gan.html">生成对抗网络简介</a></li>
-<li><a href="./wiki_ml_dl/word2vec-tutorial.html">Word2Vec 食用指南-应用篇（一）</a></li>
-<li><a href="./wiki_ml_dl/machine-learning.html">机器学习资源</a></li>
-<li><a href="./wiki_ml_dl/cs231n-index.html">CS231n 课程</a></li>
-<li><a href="./wiki_ml_dl/logistic-regression.html">LR 与 Sigmoid</a></li>
-<li><a href="./wiki_ml_dl/overfitting.html">过拟合问题</a></li>
-<li><a href="./wiki_ml_dl/l1-l2.html">深入理解 L1 L2 正则</a></li>
-<li><a href="http://selfdrivingcars.mit.edu/resources/">S094: Deep Learning for Self-Driving Cars</a></li>
-<li><a href="https://www.cnblogs.com/LeftNotEasy/archive/2011/01/19/svd-and-applications.html">奇异值分解与应用</a></li>
-<li><a href="./wiki_ml_dl/kaggle/index.html">Kaggle 比赛</a></li>
-<li>Word2Vec 食用指南-原理篇（二）</li>
-<li>Word2Vec 食用指南-造轮子（三）</li>
-<li>Sentence Embedding</li>
-<li>XGBoost 论文翻译</li>
-<li>SVM</li>
-<li>梯度下降以及优化算法</li>
-<li>如何做特征工程</li>
-<li>线性判别分析（LDA）, 主成分分析(PCA)</li>
-</ul>
-</div>
-</div>
+        jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
 
-<div id="outline-container-orgc6832c0" class="outline-2">
-<h2 id="orgc6832c0">Projects</h2>
-<div class="outline-text-2" id="text-orgc6832c0">
-<ul class="org-ul">
-<li><a href="./projects/rule_engine.html">规则引擎的设计和实现（一）</a></li>
-<li>规则引擎的设计和实现（二）&lt;drools&gt;</li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org7d6e789" class="outline-2">
-<h2 id="org7d6e789">Guitar</h2>
-<div class="outline-text-2" id="text-org7d6e789">
-<ul class="org-ul">
-<li><a href="./guitar/奇跡の山.html">奇跡の山</a></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org302f840" class="outline-2">
-<h2 id="org302f840">Foods</h2>
-<div class="outline-text-2" id="text-org302f840">
-<ul class="org-ul">
-<li><a href="./food/food.html">厨房实验室</a></li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org7ef3b55" class="outline-2">
-<h2 id="org7ef3b55">Docker</h2>
-<div class="outline-text-2" id="text-org7ef3b55">
-<ul class="org-ul">
-<li>Docker 容器网络</li>
-<li><a href="./docker/docker-tips.html">docker 常用备忘</a></li>
-</ul>
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
 
-<div style="float:right; margin: 20px;font-style: oblique;">
-</div>
-</div>
+function loadComments(data) {
+        repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
 </div>
 </div>
 </body>

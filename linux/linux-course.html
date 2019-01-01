@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:33 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -247,7 +247,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -393,15 +393,15 @@ mkswap /dev/sda2
 </p>
 
 <div class="container">
-<pre><code class="shell"><span class="org-builtin">export</span> <span class="org-variable-name">LFS</span>=/mnt/lfs
+<pre><code class="shell"><span style="color: #4f97d7;">export</span> <span style="color: #7590db;">LFS</span>=/mnt/lfs
 </code></pre>
 </div>
 <p>
 下一步，创建挂载点并用下面的命令挂载 LFS 文件系统：
 </p>
 <div class="container">
-<pre><code class="shell">mkdir -pv $<span class="org-variable-name">LFS</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#24314;&#31435;&#25346;&#36733;&#28857;</span>
-mount -v -t ext4 /dev/sda1 $<span class="org-variable-name">LFS</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558;/dev/sda1 &#25346;&#36733;&#21040; $LFS</span>
+<pre><code class="shell">mkdir -pv $<span style="color: #7590db;">LFS</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#24314;&#31435;&#25346;&#36733;&#28857;</span>
+mount -v -t ext4 /dev/sda1 $<span style="color: #7590db;">LFS</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#23558;/dev/sda1 &#25346;&#36733;&#21040; $LFS</span>
 </code></pre>
 </div>
 
@@ -431,7 +431,7 @@ mount -v -t ext4 /dev/sda1 $<span class="org-variable-name">LFS</span> <span cla
 </p>
 
 <div class="container">
-<pre><code class="shell">mkdir -v $<span class="org-variable-name">LFS</span>/sources
+<pre><code class="shell">mkdir -v $<span style="color: #7590db;">LFS</span>/sources
 </code></pre>
 </div>
 
@@ -440,7 +440,7 @@ mount -v -t ext4 /dev/sda1 $<span class="org-variable-name">LFS</span> <span cla
 </p>
 
 <div class="container">
-<pre><code class="shell">chmod -v a+wt $<span class="org-variable-name">LFS</span>/sources
+<pre><code class="shell">chmod -v a+wt $<span style="color: #7590db;">LFS</span>/sources
 </code></pre>
 </div>
 
@@ -456,7 +456,7 @@ mount -v -t ext4 /dev/sda1 $<span class="org-variable-name">LFS</span> <span cla
 我们可以这样下载
 </p>
 <div class="container">
-<pre><code class="shell">wget -i wget-list -P $<span class="org-variable-name">LFS</span>/sources
+<pre><code class="shell">wget -i wget-list -P $<span style="color: #7590db;">LFS</span>/sources
 </code></pre>
 </div>
 <p>
@@ -560,15 +560,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -592,7 +592,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -600,7 +600,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

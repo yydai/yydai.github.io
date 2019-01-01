@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:33 -->
+<!-- 2019-01-01 Tue 15:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Docker</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -298,15 +298,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -330,7 +330,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -338,7 +338,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

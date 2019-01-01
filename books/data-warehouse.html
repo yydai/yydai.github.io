@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-20 Tue 13:26 -->
+<!-- 2019-01-01 Tue 15:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>数据仓库</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -313,6 +313,8 @@ for the JavaScript code in this tag.
 <div class="outline-text-3" id="text-org6bef6d7">
 <ul class="org-ul">
 <li>事实存储在事实表中的列中</li>
+</ul>
+<ul class="org-ul">
 <li>星型模型中事实表在中心，维度表在四周围绕展开</li>
 </ul>
 
@@ -334,6 +336,8 @@ for the JavaScript code in this tag.
 <div class="outline-text-3" id="text-orge623d1c">
 <ul class="org-ul">
 <li>星型模型可以通过对维度任意组合进行查询</li>
+</ul>
+<ul class="org-ul">
 <li>回答问题的能力取决于事实存储的细节</li>
 
 <li>代理键 SK Surrogate Key
@@ -344,24 +348,31 @@ for the JavaScript code in this tag.
 </ul></li>
 <li>自然键 NK Nature Key
 <ul class="org-ul">
-<li>自然键来自于操作性数据库系统，不作为维度表行的唯一标识， 但在源系统中一般都是行的唯一标识</li>
-</ul></li>
-</ul>
+<li><p>
+自然键来自于操作性数据库系统，不作为维度表行的唯一标识， 但在源系统中一般都是行的唯一标识
+</p>
 
 <p>
 联想传统数据库的设计，代理键作为唯一标识符有什么好处?
 </p>
 <ol class="org-ol">
-<li>允许数据仓库对源系统的变化做出响应，维护历史信息例如：比如学校的学籍管理系统，包含一个学号为 20170001 的学生的记录，如果维度表中使用学号做主键，那么数仓中这条记录只能 保存一条，如果用代理键做主键，我们可以同一个学号保存多条记录</li>
-<li>避免多列连接，查询优化。比如操作型系统合同管理系统中对合同的唯一性用合同类型和合同号表示，这样在维度表中就有两个主键，事实表中需要对这两个主键建立外键关系，加大了连接查询复杂性</li>
+<li>允许数据仓库对源系统的变化做出响应，维护历史信息例如：比如学校</li>
 </ol>
+<p>
+的学籍管理系统，包含一个学号为 20170001 的学生的记录，如果维度表中使用学号做主键，那么数仓中这条记录只能 保存一条，如果用代理键做主键，我们可以同一个学号保存多条记录
+</p></li>
+</ul></li>
+<li><p>
+避免多列连接，查询优化。比如操作型系统合同管理系统中对合同的唯一性用合同类型和合同号表示，这样在维度表中就有两个主键，事实表中需要对这两个主键建立外键关系，加大了连接查询复杂性
+</p>
 
 <p>
 维度集合越丰富，能回答的问题越详细，能分析的数据越有价值
-</p>
+</p></li>
+</ul>
 
 <div class="figure">
-<p><img src="./imgs/20180102_142221_36448U7l.png" alt="20180102_142221_36448U7l.png" width="80%" />
+<p><img src="./imgs/20180102_142221_36448U7l.png" alt="20180102_142221_36448U7l.png" />
 </p>
 </div>
 </div>
@@ -371,7 +382,8 @@ for the JavaScript code in this tag.
 <div class="outline-text-3" id="text-orgc089d50">
 <ol class="org-ol">
 <li>行为维度基于事实计算的到的维度称为行为维度</li>
-
+</ol>
+<ol class="org-ol">
 <li>组合维度</li>
 </ol>
 </div>
@@ -401,16 +413,21 @@ for the JavaScript code in this tag.
 <div class="outline-text-3" id="text-orgb157e7c">
 <ul class="org-ul">
 <li>维度表中的数据来源于操作型系统，进入到维度表中的信息，在 操作型系统中会发生更新和变化</li>
-<li>维度表要怎么应对数据元素的改变?</li>
 </ul>
+<ul class="org-ul">
+<li><p>
+维度表要怎么应对数据元素的改变?
+</p>
 
 <p>
 应对数据元素改变存在不同的响应方式，主要有 2 种缓慢变化方式:
 </p>
 <ul class="org-ul">
 <li>类型 1:重写事务历史</li>
-<li>类型 2:保留变化情况</li>
-</ul>
+</ul></li>
+<li><p>
+类型 2:保留变化情况
+</p>
 
 <p>
 类型 1:当一个维度值的源发生变化，并且不需要在星型模型中保留变化 历史时，通常采用类型 1 来响应变化情况，仅仅使用变化的值来重写维度即可,
@@ -423,7 +440,8 @@ for the JavaScript code in this tag.
 
 <p>
 选择何种缓慢变换处理类型：在难以确定时，选择变化类型 2 最安全
-</p>
+</p></li>
+</ul>
 </div>
 </div>
 
@@ -486,15 +504,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -518,7 +536,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -526,7 +544,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

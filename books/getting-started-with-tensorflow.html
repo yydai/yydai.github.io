@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-11-08 Thu 23:03 -->
+<!-- 2019-01-01 Tue 15:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Getting Started with tensorflow</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -256,9 +256,9 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org16a094b">Chapter 1 Basic Concepts</a>
+<li><a href="#org233ae77">Chapter 1 基本概念</a>
 <ul>
-<li><a href="#orga11f159">Data Flow Graphs</a></li>
+<li><a href="#orgc1170f0">数据流图（Data Flow Graphs）</a></li>
 <li><a href="#org2342a9e">Tensorflow programming model</a></li>
 <li><a href="#org16a7da0">Computing gradients</a></li>
 <li><a href="#orgfd6f68a">Uniform distribution</a></li>
@@ -266,19 +266,26 @@ for the JavaScript code in this tag.
 <li><a href="#org7ca7519">seed</a></li>
 </ul>
 </li>
+<li><a href="#org2501e55">Chapter 2 Doing Math with TensorFlow</a>
+<ul>
+<li><a href="#orgd998399">tensor</a></li>
+<li><a href="#org79f1c5c">opertation</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <hr />
 
-<div id="outline-container-org16a094b" class="outline-2">
-<h2 id="org16a094b">Chapter 1 Basic Concepts</h2>
-<div class="outline-text-2" id="text-org16a094b">
-</div><div id="outline-container-orga11f159" class="outline-3">
-<h3 id="orga11f159">Data Flow Graphs</h3>
-<div class="outline-text-3" id="text-orga11f159">
+<div id="outline-container-org233ae77" class="outline-2">
+<h2 id="org233ae77">Chapter 1 基本概念</h2>
+<div class="outline-text-2" id="text-org233ae77">
+</div><div id="outline-container-orgc1170f0" class="outline-3">
+<h3 id="orgc1170f0">数据流图（Data Flow Graphs）</h3>
+<div class="outline-text-3" id="text-orgc1170f0">
 <ul class="org-ul">
-<li><i>Node</i>: In tensorflow, each node ==&gt; instantion of an operation(&gt;=0 inputs, &gt;=0 outputs)</li>
+<li><i>Node</i>: In tensorflow, each node ==&gt; instantion of an
+operation(&gt;=0 inputs, &gt;=0 outputs)</li>
 <li><i>Edges</i>:
 <ul class="org-ul">
 <li><i>Normal Edges</i>: Carriers one operation's result(become the input of another op)</li>
@@ -309,7 +316,6 @@ is created and is empty. It has two fundamental methods
 </ul>
 </div>
 </div>
-
 
 <div id="outline-container-org2342a9e" class="outline-3">
 <h3 id="org2342a9e">Tensorflow programming model</h3>
@@ -426,6 +432,53 @@ same as uniform distribution
 <div class="outline-text-3" id="text-org7ca7519">
 <div class="container">
 <pre><code class="python"><span style="color: #7590db;">uniform_with_seed</span> = tf.random_uniform<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span>, seed=1<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org2501e55" class="outline-2">
+<h2 id="org2501e55">Chapter 2 Doing Math with TensorFlow</h2>
+<div class="outline-text-2" id="text-org2501e55">
+</div><div id="outline-container-orgd998399" class="outline-3">
+<h3 id="orgd998399">tensor</h3>
+<div class="outline-text-3" id="text-orgd998399">
+</div><ul class="org-ul"><li><a id="orged98b7a"></a>One dim<br /><div class="outline-text-4" id="text-orged98b7a">
+<div class="container">
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> tensorflow <span style="color: #4f97d7; font-weight: bold;">as</span> tf
+<span style="color: #7590db;">tensor_1d</span> = np.array<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>1, 2, 3<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #7590db;">tf_tensor</span> = tf.convert_to_tensor<span style="color: #4f97d7;">(</span>tensor_1d, dtype=tf.float64<span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+</div></li></ul>
+</div>
+
+<div id="outline-container-org79f1c5c" class="outline-3">
+<h3 id="org79f1c5c">opertation</h3>
+<div class="outline-text-3" id="text-org79f1c5c">
+<div class="container">
+<pre><code class="python">tf.add
+tf.sub
+tf.mul
+tf.div
+tf.mod
+tf.<span style="color: #4f97d7;">abs</span>
+tf.neg
+tf.sign
+tf.inv <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">inverse</span>
+tf.square
+</code></pre>
+</div>
+
+
+<p>
+associate the input to a variable of x:
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #7590db;">x</span> = tf.Variable<span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">input</span>, name=<span style="color: #2d9574;">'x'</span><span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-04-25 Wed 19:26 -->
+<!-- 2019-01-01 Tue 15:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Top-K 问题</title>
@@ -247,7 +247,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -276,30 +276,30 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="C++"><span style="color: #cc99cc;">#include</span> <span style="color: #cccccc;">&lt;</span><span style="color: #66cccc;">iostream</span><span style="color: #cccccc;">&gt;</span>
-<span style="color: #cc99cc;">#include</span> <span style="color: #cccccc;">&lt;</span><span style="color: #66cccc;">algorithm</span><span style="color: #cccccc;">&gt;</span>
-<span style="color: #99cc99;">using</span> <span style="color: #99cc99;">namespace</span> <span style="color: #6699cc;">std</span>;
+<pre><code class="C++"><span style="color: #bc6ec5;">    #include</span> <span style="color: #4f97d7;">&lt;</span><span style="color: #2d9574;">iostream</span><span style="color: #4f97d7;">&gt;</span>
+<span style="color: #bc6ec5;">    #include</span> <span style="color: #4f97d7;">&lt;</span><span style="color: #2d9574;">algorithm</span><span style="color: #4f97d7;">&gt;</span>
+    <span style="color: #4f97d7; font-weight: bold;">using</span> <span style="color: #4f97d7; font-weight: bold;">namespace</span> <span style="color: #a45bad;">std</span>;
 
-<span style="color: #6699cc;">int</span> <span style="color: #f99157;">partition</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">a</span><span style="color: #66cccc;">[]</span>, <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">l</span>, <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">r</span><span style="color: #cccccc;">)</span> <span style="color: #cccccc;">{</span>
-    <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">i</span> = l, <span style="color: #ffcc66;">j</span> = r;
-    <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">pivot</span> = a<span style="color: #66cccc;">[</span>l<span style="color: #66cccc;">]</span>;
-    <span style="color: #99cc99;">while</span> <span style="color: #66cccc;">(</span>i &lt; j<span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
-        <span style="color: #99cc99;">while</span> <span style="color: #ffcc66;">(</span>a<span style="color: #99cc99;">[</span>i<span style="color: #99cc99;">]</span> &lt; pivot &amp;&amp; i &lt; j<span style="color: #ffcc66;">)</span>
+    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #bc6ec5; font-weight: bold;">partition</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">a</span><span style="color: #bc6ec5;">[]</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">l</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">r</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span> = l, <span style="color: #7590db;">j</span> = r;
+    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">pivot</span> = a<span style="color: #bc6ec5;">[</span>l<span style="color: #bc6ec5;">]</span>;
+    <span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #bc6ec5;">(</span>i &lt; j<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+        <span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #2d9574;">(</span>a<span style="color: #67b11d;">[</span>i<span style="color: #67b11d;">]</span> &lt; pivot &amp;&amp; i &lt; j<span style="color: #2d9574;">)</span>
             i ++;
-        <span style="color: #99cc99;">while</span> <span style="color: #ffcc66;">(</span>a<span style="color: #99cc99;">[</span>j<span style="color: #99cc99;">]</span> &gt; pivot &amp;&amp; i &lt; j<span style="color: #ffcc66;">)</span>
+        <span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #2d9574;">(</span>a<span style="color: #67b11d;">[</span>j<span style="color: #67b11d;">]</span> &gt; pivot &amp;&amp; i &lt; j<span style="color: #2d9574;">)</span>
             j --;
-        swap<span style="color: #ffcc66;">(</span>a<span style="color: #99cc99;">[</span>i<span style="color: #99cc99;">]</span>, a<span style="color: #99cc99;">[</span>j<span style="color: #99cc99;">]</span><span style="color: #ffcc66;">)</span>;
-    <span style="color: #66cccc;">}</span>
-    swap<span style="color: #66cccc;">(</span>a<span style="color: #ffcc66;">[</span>j<span style="color: #ffcc66;">]</span>, pivot<span style="color: #66cccc;">)</span>;
-    <span style="color: #99cc99;">return</span> j;
-<span style="color: #cccccc;">}</span>
-<span style="color: #6699cc;">void</span> <span style="color: #f99157;">qs</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">a</span><span style="color: #66cccc;">[]</span>, <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">l</span>, <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">r</span><span style="color: #cccccc;">)</span> <span style="color: #cccccc;">{</span>
-    <span style="color: #99cc99;">if</span> <span style="color: #66cccc;">(</span>l &lt; r<span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
-        <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">p</span> = partition2<span style="color: #ffcc66;">(</span>a, l, r<span style="color: #ffcc66;">)</span>;
-        qs2<span style="color: #ffcc66;">(</span>a, l, p-1<span style="color: #ffcc66;">)</span>;
-        qs2<span style="color: #ffcc66;">(</span>a, p+1, r<span style="color: #ffcc66;">)</span>;
-    <span style="color: #66cccc;">}</span>
-<span style="color: #cccccc;">}</span>
+        swap<span style="color: #2d9574;">(</span>a<span style="color: #67b11d;">[</span>i<span style="color: #67b11d;">]</span>, a<span style="color: #67b11d;">[</span>j<span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span>;
+    <span style="color: #bc6ec5;">}</span>
+    swap<span style="color: #bc6ec5;">(</span>a<span style="color: #2d9574;">[</span>j<span style="color: #2d9574;">]</span>, pivot<span style="color: #bc6ec5;">)</span>;
+    <span style="color: #4f97d7; font-weight: bold;">return</span> j;
+<span style="color: #4f97d7;">}</span>
+<span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">qs</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">a</span><span style="color: #bc6ec5;">[]</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">l</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">r</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>l &lt; r<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+        <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">p</span> = partition2<span style="color: #2d9574;">(</span>a, l, r<span style="color: #2d9574;">)</span>;
+        qs2<span style="color: #2d9574;">(</span>a, l, p-1<span style="color: #2d9574;">)</span>;
+        qs2<span style="color: #2d9574;">(</span>a, p+1, r<span style="color: #2d9574;">)</span>;
+    <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
 </code></pre>
 </div>
 </div>
@@ -317,61 +317,61 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="C++"><span style="color: #99cc99;">class</span> <span style="color: #6699cc;">Solution</span> <span style="color: #cccccc;">{</span>
-    <span style="color: #99cc99;">public</span>:
-        <span style="color: #6699cc;">vector</span><span style="color: #66cccc;">&lt;</span><span style="color: #6699cc;">int</span><span style="color: #66cccc;">&gt;</span> <span style="color: #f99157;">GetLeastNumbers_Solution</span><span style="color: #66cccc;">(</span><span style="color: #6699cc;">vector</span><span style="color: #ffcc66;">&lt;</span><span style="color: #6699cc;">int</span><span style="color: #ffcc66;">&gt;</span> <span style="color: #ffcc66;">input</span>, <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">k</span><span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
-            <span style="color: #6699cc;">vector</span><span style="color: #ffcc66;">&lt;</span><span style="color: #6699cc;">int</span><span style="color: #ffcc66;">&gt;</span> <span style="color: #ffcc66;">heap_k</span>;
-            <span style="color: #99cc99;">if</span> <span style="color: #ffcc66;">(</span>input.size<span style="color: #99cc99;">()</span>==0 || input.size<span style="color: #99cc99;">()</span> &lt; k || k &lt;= 0<span style="color: #ffcc66;">)</span> <span style="color: #ffcc66;">{</span>
-                <span style="color: #99cc99;">return</span> heap_k;
-            <span style="color: #ffcc66;">}</span>
-            <span style="color: #99cc99;">for</span> <span style="color: #ffcc66;">(</span><span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">i</span> = 0; i &lt; input.size<span style="color: #99cc99;">()</span>; i ++<span style="color: #ffcc66;">)</span> <span style="color: #ffcc66;">{</span>
-                <span style="color: #99cc99;">if</span> <span style="color: #99cc99;">(</span>heap_k.size<span style="color: #6699cc;">()</span> &lt; k<span style="color: #99cc99;">)</span> <span style="color: #99cc99;">{</span>
-                    heap_k.push_back<span style="color: #6699cc;">(</span><span style="color: #6699cc;">input</span><span style="color: #cccccc;">[</span>i<span style="color: #cccccc;">]</span><span style="color: #6699cc;">)</span>;
-                    max_heapify<span style="color: #6699cc;">(</span>heap_k, 0, heap_k.size<span style="color: #cccccc;">()</span>-1<span style="color: #6699cc;">)</span>;
-                    <span style="color: #99cc99;">continue</span>;
-                <span style="color: #99cc99;">}</span>
-                max_heapify<span style="color: #99cc99;">(</span>heap_k, 0, heap_k.size<span style="color: #6699cc;">()</span>-1<span style="color: #99cc99;">)</span>;
-                <span style="color: #99cc99;">if</span> <span style="color: #99cc99;">(</span>input<span style="color: #6699cc;">[</span>i<span style="color: #6699cc;">]</span> &gt;= heap_k<span style="color: #6699cc;">[</span>0<span style="color: #6699cc;">]</span><span style="color: #99cc99;">){</span>
-                    <span style="color: #99cc99;">continue</span>;
-                <span style="color: #99cc99;">}</span> <span style="color: #99cc99;">else</span> <span style="color: #99cc99;">{</span>
-                    heap_k<span style="color: #6699cc;">[</span>0<span style="color: #6699cc;">]</span> = input<span style="color: #6699cc;">[</span>i<span style="color: #6699cc;">]</span>;
-                <span style="color: #99cc99;">}</span>
-            <span style="color: #ffcc66;">}</span>
-            <span style="color: #999999; font-style: italic;">// </span><span style="color: #999999; font-style: italic;">heap_sort(heap_k);</span>
-            <span style="color: #99cc99;">return</span> heap_k;
-        <span style="color: #66cccc;">}</span>
+<pre><code class="C++"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Solution</span> <span style="color: #4f97d7;">{</span>
+<span style="color: #4f97d7; font-weight: bold;">public</span>:
+    <span style="color: #ce537a; font-weight: bold;">vector</span><span style="color: #bc6ec5;">&lt;</span><span style="color: #ce537a; font-weight: bold;">int</span><span style="color: #bc6ec5;">&gt;</span> <span style="color: #bc6ec5; font-weight: bold;">GetLeastNumbers_Solution</span><span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">vector</span><span style="color: #2d9574;">&lt;</span><span style="color: #ce537a; font-weight: bold;">int</span><span style="color: #2d9574;">&gt;</span> <span style="color: #7590db;">input</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">k</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+        <span style="color: #ce537a; font-weight: bold;">vector</span><span style="color: #2d9574;">&lt;</span><span style="color: #ce537a; font-weight: bold;">int</span><span style="color: #2d9574;">&gt;</span> <span style="color: #7590db;">heap_k</span>;
+        <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>input.size<span style="color: #67b11d;">()</span>==0 || input.size<span style="color: #67b11d;">()</span> &lt; k || k &lt;= 0<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+            <span style="color: #4f97d7; font-weight: bold;">return</span> heap_k;
+        <span style="color: #2d9574;">}</span>
+        <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #2d9574;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span> = 0; i &lt; input.size<span style="color: #67b11d;">()</span>; i ++<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+            <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>heap_k.size<span style="color: #b1951d;">()</span> &lt; k<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
+                heap_k.push_back<span style="color: #b1951d;">(</span><span style="color: #ce537a; font-weight: bold;">input</span><span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">]</span><span style="color: #b1951d;">)</span>;
+                                        max_heapify<span style="color: #b1951d;">(</span>heap_k, 0, heap_k.size<span style="color: #4f97d7;">()</span>-1<span style="color: #b1951d;">)</span>;
+                <span style="color: #4f97d7; font-weight: bold;">continue</span>;
+            <span style="color: #67b11d;">}</span>
+            max_heapify<span style="color: #67b11d;">(</span>heap_k, 0, heap_k.size<span style="color: #b1951d;">()</span>-1<span style="color: #67b11d;">)</span>;
+            <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>input<span style="color: #b1951d;">[</span>i<span style="color: #b1951d;">]</span> &gt;= heap_k<span style="color: #b1951d;">[</span>0<span style="color: #b1951d;">]</span><span style="color: #67b11d;">){</span>
+                <span style="color: #4f97d7; font-weight: bold;">continue</span>;
+            <span style="color: #67b11d;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #67b11d;">{</span>
+                heap_k<span style="color: #b1951d;">[</span>0<span style="color: #b1951d;">]</span> = input<span style="color: #b1951d;">[</span>i<span style="color: #b1951d;">]</span>;
+            <span style="color: #67b11d;">}</span>
+        <span style="color: #2d9574;">}</span>
+        <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">heap_sort(heap_k);</span>
+        <span style="color: #4f97d7; font-weight: bold;">return</span> heap_k;
+    <span style="color: #bc6ec5;">}</span>
 
-        <span style="color: #6699cc;">void</span> <span style="color: #f99157;">max_heapify</span><span style="color: #66cccc;">(</span><span style="color: #6699cc;">vector</span><span style="color: #ffcc66;">&lt;</span><span style="color: #6699cc;">int</span><span style="color: #ffcc66;">&gt;</span> &amp;<span style="color: #ffcc66;">input</span>, <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">start</span>, <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">end</span><span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
-            <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">root</span> = start;
+    <span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">max_heapify</span><span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">vector</span><span style="color: #2d9574;">&lt;</span><span style="color: #ce537a; font-weight: bold;">int</span><span style="color: #2d9574;">&gt;</span> &amp;<span style="color: #7590db;">input</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">start</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">end</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+        <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">root</span> = start;
 
-            <span style="color: #99cc99;">while</span> <span style="color: #ffcc66;">(</span>1<span style="color: #ffcc66;">)</span> <span style="color: #ffcc66;">{</span>
-                <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">child</span> = root * 2 + 1;
-                <span style="color: #99cc99;">if</span> <span style="color: #99cc99;">(</span>child &gt; end<span style="color: #99cc99;">)</span> <span style="color: #99cc99;">{</span>
-                    <span style="color: #99cc99;">break</span>;
-                <span style="color: #99cc99;">}</span>
-                <span style="color: #99cc99;">if</span> <span style="color: #99cc99;">(</span>child + 1 &lt;= end &amp;&amp; input<span style="color: #6699cc;">[</span>child+1<span style="color: #6699cc;">]</span> &gt; input<span style="color: #6699cc;">[</span>child<span style="color: #6699cc;">]</span><span style="color: #99cc99;">)</span> <span style="color: #99cc99;">{</span>
-                    child += 1;
-                <span style="color: #99cc99;">}</span>
-                <span style="color: #99cc99;">if</span> <span style="color: #99cc99;">(</span>input<span style="color: #6699cc;">[</span>child<span style="color: #6699cc;">]</span> &gt; input<span style="color: #6699cc;">[</span>root<span style="color: #6699cc;">]</span><span style="color: #99cc99;">)</span> <span style="color: #99cc99;">{</span>
-                    swap<span style="color: #6699cc;">(</span><span style="color: #6699cc;">input</span><span style="color: #cccccc;">[</span>child<span style="color: #cccccc;">]</span>, <span style="color: #6699cc;">input</span><span style="color: #cccccc;">[</span>root<span style="color: #cccccc;">]</span><span style="color: #6699cc;">)</span>;
-                    root = child;
-                <span style="color: #99cc99;">}</span> <span style="color: #99cc99;">else</span> <span style="color: #99cc99;">{</span>
-                    <span style="color: #99cc99;">break</span>;
-                <span style="color: #99cc99;">}</span>
-            <span style="color: #ffcc66;">}</span>
-        <span style="color: #66cccc;">}</span>
+        <span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #2d9574;">(</span>1<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+            <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">child</span> = root * 2 + 1;
+            <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>child &gt; end<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
+                <span style="color: #4f97d7; font-weight: bold;">break</span>;
+            <span style="color: #67b11d;">}</span>
+            <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>child + 1 &lt;= end &amp;&amp; input<span style="color: #b1951d;">[</span>child+1<span style="color: #b1951d;">]</span> &gt; input<span style="color: #b1951d;">[</span>child<span style="color: #b1951d;">]</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
+                child += 1;
+            <span style="color: #67b11d;">}</span>
+            <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>input<span style="color: #b1951d;">[</span>child<span style="color: #b1951d;">]</span> &gt; input<span style="color: #b1951d;">[</span>root<span style="color: #b1951d;">]</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
+                swap<span style="color: #b1951d;">(</span><span style="color: #ce537a; font-weight: bold;">input</span><span style="color: #4f97d7;">[</span>child<span style="color: #4f97d7;">]</span>, <span style="color: #ce537a; font-weight: bold;">input</span><span style="color: #4f97d7;">[</span>root<span style="color: #4f97d7;">]</span><span style="color: #b1951d;">)</span>;
+                root = child;
+            <span style="color: #67b11d;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #67b11d;">{</span>
+                <span style="color: #4f97d7; font-weight: bold;">break</span>;
+            <span style="color: #67b11d;">}</span>
+        <span style="color: #2d9574;">}</span>
+    <span style="color: #bc6ec5;">}</span>
 
-        <span style="color: #6699cc;">void</span> <span style="color: #f99157;">heap_sort</span><span style="color: #66cccc;">(</span><span style="color: #6699cc;">vector</span><span style="color: #ffcc66;">&lt;</span><span style="color: #6699cc;">int</span><span style="color: #ffcc66;">&gt;</span> &amp;<span style="color: #ffcc66;">input</span><span style="color: #66cccc;">)</span> <span style="color: #66cccc;">{</span>
-            <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">l</span> = input.size<span style="color: #ffcc66;">()</span>;
-            <span style="color: #99cc99;">for</span> <span style="color: #ffcc66;">(</span><span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">i</span> = <span style="color: #99cc99;">(</span>l - 1<span style="color: #99cc99;">)</span>/2; i &gt; 0; i --<span style="color: #ffcc66;">)</span> <span style="color: #ffcc66;">{</span>
-                max_heapify<span style="color: #99cc99;">(</span><span style="color: #6699cc;">input</span>, i, l-1<span style="color: #99cc99;">)</span>;
-            <span style="color: #ffcc66;">}</span>
-            <span style="color: #99cc99;">for</span> <span style="color: #ffcc66;">(</span><span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">i</span> = l - 1; i &gt; 0; i --<span style="color: #ffcc66;">)</span> <span style="color: #ffcc66;">{</span>
-                swap<span style="color: #99cc99;">(</span><span style="color: #6699cc;">input</span><span style="color: #6699cc;">[</span>i<span style="color: #6699cc;">]</span>, <span style="color: #6699cc;">input</span><span style="color: #6699cc;">[</span>0<span style="color: #6699cc;">]</span><span style="color: #99cc99;">)</span>;
-                max_heapify<span style="color: #99cc99;">(</span><span style="color: #6699cc;">input</span>, 0, i-1<span style="color: #99cc99;">)</span>;
-            <span style="color: #ffcc66;">}</span>
-        <span style="color: #66cccc;">}</span>
-    <span style="color: #cccccc;">}</span>;
+    <span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">heap_sort</span><span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">vector</span><span style="color: #2d9574;">&lt;</span><span style="color: #ce537a; font-weight: bold;">int</span><span style="color: #2d9574;">&gt;</span> &amp;<span style="color: #7590db;">input</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+        <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">l</span> = input.size<span style="color: #2d9574;">()</span>;
+        <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #2d9574;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span> = <span style="color: #67b11d;">(</span>l - 1<span style="color: #67b11d;">)</span>/2; i &gt; 0; i --<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+            max_heapify<span style="color: #67b11d;">(</span><span style="color: #ce537a; font-weight: bold;">input</span>, i, l-1<span style="color: #67b11d;">)</span>;
+        <span style="color: #2d9574;">}</span>
+        <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #2d9574;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span> = l - 1; i &gt; 0; i --<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+            swap<span style="color: #67b11d;">(</span><span style="color: #ce537a; font-weight: bold;">input</span><span style="color: #b1951d;">[</span>i<span style="color: #b1951d;">]</span>, <span style="color: #ce537a; font-weight: bold;">input</span><span style="color: #b1951d;">[</span>0<span style="color: #b1951d;">]</span><span style="color: #67b11d;">)</span>;
+            max_heapify<span style="color: #67b11d;">(</span><span style="color: #ce537a; font-weight: bold;">input</span>, 0, i-1<span style="color: #67b11d;">)</span>;
+        <span style="color: #2d9574;">}</span>
+    <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>;
 </code></pre>
 </div>
 </div>
@@ -384,29 +384,33 @@ for the JavaScript code in this tag.
 </p>
 <ol class="org-ol">
 <li>将 n 个元素划为 &lfloor; n/5&rfloor; 组，每组 5 个，至多只有一组由 n\bmod5 个元素组成。</li>
+</ol>
+<ol class="org-ol">
 <li>寻找这 &lceil; n/5&rceil; 个组中每一个组的中位数，这个过程可以用插入排序。</li>
 <li>对步骤 2 中的 &lceil; n/5&rceil; 个中位数，重复步骤 1 和步骤 2，递归下去，直到剩下一个数字。</li>
 <li>最终剩下的数字即为 pivot，把大于它的数全放左边，小于等于它的数全放右边。</li>
-<li>判断 pivot 的位置与 k 的大小，有选择的对左边或右边递归。</li>
-</ol>
+<li><p>
+判断 pivot 的位置与 k 的大小，有选择的对左边或右边递归。
+</p>
 
 <div class="container">
-<pre><code class="C++"><span style="color: #6699cc;">int</span> <span style="color: #f99157;">BFPRT</span><span style="color: #cccccc;">(</span><span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">a</span><span style="color: #66cccc;">[]</span>, <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">l</span>, <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">r</span>, <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">k</span><span style="color: #cccccc;">)</span>
-<span style="color: #cccccc;">{</span>
-    <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">p</span> = FindMid<span style="color: #66cccc;">(</span>a, l, r<span style="color: #66cccc;">)</span>;    <span style="color: #999999; font-style: italic;">//</span><span style="color: #999999; font-style: italic;">&#23547;&#25214;&#20013;&#20301;&#25968;&#30340;&#20013;&#20301;&#25968;</span>
-    <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">i</span> = Partion<span style="color: #66cccc;">(</span>a, l, r, p<span style="color: #66cccc;">)</span>;
+<pre><code class="C++">    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #bc6ec5; font-weight: bold;">BFPRT</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">a</span><span style="color: #bc6ec5;">[]</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">l</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">r</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">k</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">{</span>
+    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">p</span> = FindMid<span style="color: #bc6ec5;">(</span>a, l, r<span style="color: #bc6ec5;">)</span>;    <span style="color: #2aa1ae; background-color: #292e34;">//</span><span style="color: #2aa1ae; background-color: #292e34;">&#23547;&#25214;&#20013;&#20301;&#25968;&#30340;&#20013;&#20301;&#25968;</span>
+    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span> = Partion<span style="color: #bc6ec5;">(</span>a, l, r, p<span style="color: #bc6ec5;">)</span>;
 
-    <span style="color: #6699cc;">int</span> <span style="color: #ffcc66;">m</span> = i - l + 1;
-    <span style="color: #99cc99;">if</span><span style="color: #66cccc;">(</span>m == k<span style="color: #66cccc;">)</span> <span style="color: #99cc99;">return</span> a<span style="color: #66cccc;">[</span>i<span style="color: #66cccc;">]</span>;
-    <span style="color: #99cc99;">if</span><span style="color: #66cccc;">(</span>m &gt; k<span style="color: #66cccc;">)</span>  <span style="color: #99cc99;">return</span> BFPRT<span style="color: #66cccc;">(</span>a, l, i - 1, k<span style="color: #66cccc;">)</span>;
-    <span style="color: #99cc99;">return</span> BFPRT<span style="color: #66cccc;">(</span>a, i + 1, r, k - m<span style="color: #66cccc;">)</span>;
-<span style="color: #cccccc;">}</span>
+    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">m</span> = i - l + 1;
+    <span style="color: #4f97d7; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>m == k<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">return</span> a<span style="color: #bc6ec5;">[</span>i<span style="color: #bc6ec5;">]</span>;
+    <span style="color: #4f97d7; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>m &gt; k<span style="color: #bc6ec5;">)</span>  <span style="color: #4f97d7; font-weight: bold;">return</span> BFPRT<span style="color: #bc6ec5;">(</span>a, l, i - 1, k<span style="color: #bc6ec5;">)</span>;
+    <span style="color: #4f97d7; font-weight: bold;">return</span> BFPRT<span style="color: #bc6ec5;">(</span>a, i + 1, r, k - m<span style="color: #bc6ec5;">)</span>;
+<span style="color: #4f97d7;">}</span>
 </code></pre>
 </div>
 
 <p>
 这个算法的最坏时间复杂度为 O(n)。
-</p>
+</p></li>
+</ol>
 </div>
 </div>
 </div>
@@ -441,15 +445,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -473,7 +477,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -481,7 +485,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

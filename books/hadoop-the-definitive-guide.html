@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:33 -->
+<!-- 2019-01-01 Tue 15:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hadoop, the Definitive Guide</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -275,7 +275,7 @@ for the JavaScript code in this tag.
 <li><a href="#orga9f80c8">联邦 HDFS</a></li>
 <li><a href="#orgf71b631">命令行接口</a></li>
 <li><a href="#orgc41d98f">Java 接口</a></li>
-<li><a href="#org9275256">数据流</a></li>
+<li><a href="#org3547f12">数据流</a></li>
 <li><a href="#org9fa4491">一致模型</a></li>
 <li><a href="#orgf4bdb78">通过 distcp 并行复制</a></li>
 <li><a href="#org4286af4">Hadoop 存档 （这部分第 4 版没了）</a></li>
@@ -429,7 +429,7 @@ reduce 接收到 (年，[温度列表])， 然后找到最大温度。
 </p>
 </div></li>
 
-<li><a id="org1985dee"></a>数据流<br /><div class="outline-text-4" id="text-org1985dee">
+<li><a id="orgf263f32"></a>数据流<br /><div class="outline-text-4" id="text-orgf263f32">
 <p>
 MapReduce 作业是客户端需要执行的一个工作单元：它包括输入数据、MapReduce 程序和配置信息。Hadoop 将作业分成若干个小任务来执行：map 任务和 reduce 任务。
 </p>
@@ -466,17 +466,17 @@ combiner 的输出作为 reduce 函数的输入。combiner 属于一种优化方
 第一个 map：
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-rainbow-delimiters-depth-1">(</span>1950, 0<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>1950, 20<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>1950, 10<span class="org-rainbow-delimiters-depth-1">)</span>
+<pre><code class="python"><span style="color: #4f97d7;">(</span>1950, 0<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>1950, 20<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>1950, 10<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 <p>
 第二个 map:
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-rainbow-delimiters-depth-1">(</span>1950, 25<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>1950, 15<span class="org-rainbow-delimiters-depth-1">)</span>
+<pre><code class="python"><span style="color: #4f97d7;">(</span>1950, 25<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>1950, 15<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -484,10 +484,10 @@ combiner 的输出作为 reduce 函数的输入。combiner 属于一种优化方
 reduce 函数调用时输入:
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-rainbow-delimiters-depth-1">(</span>1950, <span class="org-rainbow-delimiters-depth-2">[</span>0, 20, 10, 25, 15<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre><code class="python"><span style="color: #4f97d7;">(</span>1950, <span style="color: #bc6ec5;">[</span>0, 20, 10, 25, 15<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">&#36755;&#20986;</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>1950, 25<span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#36755;&#20986;</span>
+<span style="color: #4f97d7;">(</span>1950, 25<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -495,7 +495,7 @@ reduce 函数调用时输入:
 但是我们如果用了 combiner 以后，我们就可以提前找到每个 map 任务的输出结果的最高气温。现在 reduce 的输入变成了。
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-rainbow-delimiters-depth-1">(</span>1950, <span class="org-rainbow-delimiters-depth-2">[</span>20, 25<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre><code class="python"><span style="color: #4f97d7;">(</span>1950, <span style="color: #bc6ec5;">[</span>20, 25<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 </div></li>
@@ -529,6 +529,8 @@ HDFS 流式数据访问模式来存储超大文件。
 </p>
 <ul class="org-ul">
 <li>超大文件</li>
+</ul>
+<ul class="org-ul">
 <li><p>
 流式数据访问。
 </p>
@@ -602,6 +604,8 @@ datanode 是系统的工作节点，它根据需要存储并检索数据块，�
 </p>
 <ul class="org-ul">
 <li>备份元数据持久状态的文件</li>
+</ul>
+<ul class="org-ul">
 <li>运行一个辅助的 namenode, 但它不能被用作 namenode。</li>
 </ul>
 </div>
@@ -663,13 +667,13 @@ hadoop fs -copyToLocal ...
 从 Hadoop URL 读取数据
 </p>
 <div class="container">
-<pre><code class="java"><span class="org-type">InputStream</span> <span class="org-variable-name">in</span> = <span class="org-constant">null</span>;
-<span class="org-keyword">try</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    in = <span class="org-keyword">new</span> <span class="org-type">URL</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"hdfs://host/path"</span><span class="org-rainbow-delimiters-depth-2">)</span>.openStream<span class="org-rainbow-delimiters-depth-2">()</span>;
-    <span class="org-comment-delimiter">// </span><span class="org-comment">process in</span>
-<span class="org-rainbow-delimiters-depth-1">}</span> <span class="org-keyword">finally</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    IOUtils.closeStream<span class="org-rainbow-delimiters-depth-2">(</span>in<span class="org-rainbow-delimiters-depth-2">)</span>;
-<span class="org-rainbow-delimiters-depth-1">}</span>
+<pre><code class="java">    <span style="color: #ce537a; font-weight: bold;">InputStream</span> <span style="color: #7590db;">in</span> = <span style="color: #a45bad;">null</span>;
+    <span style="color: #4f97d7; font-weight: bold;">try</span> <span style="color: #4f97d7;">{</span>
+    in = <span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">URL</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"hdfs://host/path"</span><span style="color: #bc6ec5;">)</span>.openStream<span style="color: #bc6ec5;">()</span>;
+            <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">process in</span>
+<span style="color: #4f97d7;">}</span> <span style="color: #4f97d7; font-weight: bold;">finally</span> <span style="color: #4f97d7;">{</span>
+    IOUtils.closeStream<span style="color: #bc6ec5;">(</span>in<span style="color: #bc6ec5;">)</span>;
+<span style="color: #4f97d7;">}</span>
 </code></pre>
 </div>
 
@@ -678,20 +682,20 @@ hadoop fs -copyToLocal ...
 </p>
 
 <div class="container">
-<pre><code class="java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">URLCat</span><span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">static</span> <span class="org-rainbow-delimiters-depth-2">{</span>
-        URL.setURLStreamHandlerFactory<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">new</span> <span class="org-type">FsUrlStreamHandlerFactory</span><span class="org-rainbow-delimiters-depth-4">()</span><span class="org-rainbow-delimiters-depth-3">)</span>;
-    <span class="org-rainbow-delimiters-depth-2">}</span>
-    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">main</span><span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">String</span><span class="org-rainbow-delimiters-depth-3">[]</span> <span class="org-variable-name">args</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-keyword">throws</span> <span class="org-type">Exception</span> <span class="org-rainbow-delimiters-depth-2">{</span>
-        <span class="org-type">InputStream</span> <span class="org-variable-name">in</span> = <span class="org-constant">null</span>;
-        <span class="org-keyword">try</span> <span class="org-rainbow-delimiters-depth-3">{</span>
-            in = <span class="org-keyword">new</span> <span class="org-type">URL</span><span class="org-rainbow-delimiters-depth-4">(</span>args<span class="org-rainbow-delimiters-depth-5">[</span>0<span class="org-rainbow-delimiters-depth-5">]</span>.openStream<span class="org-rainbow-delimiters-depth-5">()</span><span class="org-rainbow-delimiters-depth-4">)</span>;
-            IOUtils.copyBytes<span class="org-rainbow-delimiters-depth-4">(</span>in, System.out, 4096, <span class="org-constant">false</span><span class="org-rainbow-delimiters-depth-4">)</span>;
-        <span class="org-rainbow-delimiters-depth-3">}</span> <span class="org-keyword">finally</span> <span class="org-rainbow-delimiters-depth-3">{</span>
-            IOUtils.closeStream<span class="org-rainbow-delimiters-depth-4">(</span>in<span class="org-rainbow-delimiters-depth-4">)</span>;
-        <span class="org-rainbow-delimiters-depth-3">}</span>
-    <span class="org-rainbow-delimiters-depth-2">}</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
+<pre><code class="java">    <span style="color: #4f97d7; font-weight: bold;">public</span> <span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">URLCat</span><span style="color: #4f97d7;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">static</span> <span style="color: #bc6ec5;">{</span>
+            URL.setURLStreamHandlerFactory<span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">FsUrlStreamHandlerFactory</span><span style="color: #67b11d;">()</span><span style="color: #2d9574;">)</span>;
+    <span style="color: #bc6ec5;">}</span>
+            <span style="color: #4f97d7; font-weight: bold;">public</span> <span style="color: #4f97d7; font-weight: bold;">static</span> <span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">main</span><span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">String</span><span style="color: #2d9574;">[]</span> <span style="color: #7590db;">args</span><span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">throws</span> <span style="color: #ce537a; font-weight: bold;">Exception</span> <span style="color: #bc6ec5;">{</span>
+            <span style="color: #ce537a; font-weight: bold;">InputStream</span> <span style="color: #7590db;">in</span> = <span style="color: #a45bad;">null</span>;
+                    <span style="color: #4f97d7; font-weight: bold;">try</span> <span style="color: #2d9574;">{</span>
+            in = <span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">URL</span><span style="color: #67b11d;">(</span>args<span style="color: #b1951d;">[</span>0<span style="color: #b1951d;">]</span>.openStream<span style="color: #b1951d;">()</span><span style="color: #67b11d;">)</span>;
+                            IOUtils.copyBytes<span style="color: #67b11d;">(</span>in, System.out, 4096, <span style="color: #a45bad;">false</span><span style="color: #67b11d;">)</span>;
+        <span style="color: #2d9574;">}</span> <span style="color: #4f97d7; font-weight: bold;">finally</span> <span style="color: #2d9574;">{</span>
+            IOUtils.closeStream<span style="color: #67b11d;">(</span>in<span style="color: #67b11d;">)</span>;
+        <span style="color: #2d9574;">}</span>
+    <span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">}</span>
 </code></pre>
 </div>
 
@@ -704,9 +708,9 @@ hadoop fs -copyToLocal ...
 </div>
 </div>
 </div>
-<div id="outline-container-org9275256" class="outline-3">
-<h3 id="org9275256">数据流</h3>
-<div class="outline-text-3" id="text-org9275256">
+<div id="outline-container-org3547f12" class="outline-3">
+<h3 id="org3547f12">数据流</h3>
+<div class="outline-text-3" id="text-org3547f12">
 <p>
 下面先看文件的读取。
 为了了解客户端以及与之交互的 HDFS、namenode 和 datanode
@@ -774,11 +778,11 @@ DitributedFileSytem 向客户端返回一个 FSDataOutputStream 对象，客户�
 在 HDFS 中关闭文件其实还隐含执行 sync() 方法。
 </p>
 <div class="container">
-<pre><code class="java"><span class="org-type">Path</span> <span class="org-variable-name">p</span> = <span class="org-keyword">new</span> <span class="org-type">Path</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"p"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-OutputStream out = fs.create<span class="org-rainbow-delimiters-depth-1">(</span>p<span class="org-rainbow-delimiters-depth-1">)</span>;
-out.write<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"content"</span>.getBytes<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"UTF-8"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>;
-out.close<span class="org-rainbow-delimiters-depth-1">()</span>;
-assertThat<span class="org-rainbow-delimiters-depth-1">(</span>fs.getFileStatus<span class="org-rainbow-delimiters-depth-2">(</span>p<span class="org-rainbow-delimiters-depth-2">)</span>.getLen<span class="org-rainbow-delimiters-depth-2">()</span>, is<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span><span class="org-type">long</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-string">"content"</span>.length<span class="org-rainbow-delimiters-depth-4">()</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="java"><span style="color: #ce537a; font-weight: bold;">Path</span> <span style="color: #7590db;">p</span> = <span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">Path</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"p"</span><span style="color: #4f97d7;">)</span>
+OutputStream out = fs.create<span style="color: #4f97d7;">(</span>p<span style="color: #4f97d7;">)</span>;
+out.write<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"content"</span>.getBytes<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"UTF-8"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+out.close<span style="color: #4f97d7;">()</span>;
+assertThat<span style="color: #4f97d7;">(</span>fs.getFileStatus<span style="color: #bc6ec5;">(</span>p<span style="color: #bc6ec5;">)</span>.getLen<span style="color: #bc6ec5;">()</span>, is<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span><span style="color: #ce537a; font-weight: bold;">long</span><span style="color: #67b11d;">)</span> <span style="color: #2d9574;">"content"</span>.length<span style="color: #67b11d;">()</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div>
 </div>
@@ -813,7 +817,7 @@ distcp 是作为一个 MapReduce 作业来实现的，这里没有 reducer, 只�
 </p>
 <div class="container">
 <pre><code class="shell">hadoop distcp file1 file2
-<span class="org-comment-delimiter"># </span><span class="org-comment">&#26367;&#25442;</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#26367;&#25442;</span>
 hadoop fs -cp
 </code></pre>
 </div>
@@ -823,9 +827,9 @@ hadoop fs -cp
 </p>
 <div class="container">
 <pre><code class="shell">hadoop distcp dir1 dir2
-<span class="org-comment-delimiter"># </span><span class="org-comment">if dir2 does not exist, it will be created.</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">else it will be dir2/dir2</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">if you dont want it, you can use -overwrite option</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">if dir2 does not exist, it will be created.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">else it will be dir2/dir2</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">if you dont want it, you can use -overwrite option</span>
 </code></pre>
 </div>
 
@@ -901,15 +905,19 @@ YARN 主要通过两个长期运行的服务：一个资源管理器（每个集
 <div class="outline-text-3" id="text-org4a2876a">
 <ul class="org-ul">
 <li>FIFO</li>
-<li>Capacity Scheduler</li>
-<li>Fair Scheduler</li>
 </ul>
+<ul class="org-ul">
+<li>Capacity Scheduler</li>
+<li><p>
+Fair Scheduler
+</p>
 
 
 <div class="figure">
 <p><img src="./imgs/20170924_000156_77207aeP.png" alt="20170924_000156_77207aeP.png" width="50%" />
 </p>
-</div>
+</div></li>
+</ul>
 </div>
 </div>
 </div>
@@ -924,6 +932,8 @@ YARN 主要通过两个长期运行的服务：一个资源管理器（每个集
 </p>
 <ul class="org-ul">
 <li>map 函数</li>
+</ul>
+<ul class="org-ul">
 <li>reduce 函数</li>
 <li>单元测试</li>
 <li>驱动程序测试</li>
@@ -940,11 +950,11 @@ YARN 主要通过两个长期运行的服务：一个资源管理器（每个集
 </p>
 
 <div class="container">
-<pre><code class="java"><span class="org-type">Configuration</span> <span class="org-variable-name">conf</span> = <span class="org-keyword">new</span> <span class="org-type">Configuration</span><span class="org-rainbow-delimiters-depth-1">()</span>;
-conf.addResource<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"configuration-1.xml"</span><span class="org-rainbow-delimiters-depth-1">)</span>;
-assertThat<span class="org-rainbow-delimiters-depth-1">(</span>conf.get<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"color"</span><span class="org-rainbow-delimiters-depth-2">)</span>, is<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"yellow"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>;
-assertThat<span class="org-rainbow-delimiters-depth-1">(</span>conf.getInt<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"size"</span>, 0<span class="org-rainbow-delimiters-depth-2">)</span>, is<span class="org-rainbow-delimiters-depth-2">(</span>10<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>;
-assertThat<span class="org-rainbow-delimiters-depth-1">(</span>conf.get<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"breadth"</span>, <span class="org-string">"wide"</span><span class="org-rainbow-delimiters-depth-2">)</span>, is<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"wide"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="java"><span style="color: #ce537a; font-weight: bold;">Configuration</span> <span style="color: #7590db;">conf</span> = <span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">Configuration</span><span style="color: #4f97d7;">()</span>;
+conf.addResource<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"configuration-1.xml"</span><span style="color: #4f97d7;">)</span>;
+assertThat<span style="color: #4f97d7;">(</span>conf.get<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"color"</span><span style="color: #bc6ec5;">)</span>, is<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"yellow"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+assertThat<span style="color: #4f97d7;">(</span>conf.getInt<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"size"</span>, 0<span style="color: #bc6ec5;">)</span>, is<span style="color: #bc6ec5;">(</span>10<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
+assertThat<span style="color: #4f97d7;">(</span>conf.get<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"breadth"</span>, <span style="color: #2d9574;">"wide"</span><span style="color: #bc6ec5;">)</span>, is<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"wide"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div>
 
@@ -991,9 +1001,9 @@ Hive 安装没搞定，用的 Docker 来搞的。。。
 我们也可以这样, 不用末尾分号
 </p>
 <div class="container">
-<pre><code class="sql">hive -e "<span class="org-keyword">select</span> * <span class="org-keyword">from</span> store_sales"
+<pre><code class="sql">hive -e "<span style="color: #4f97d7; font-weight: bold;">select</span> * <span style="color: #4f97d7; font-weight: bold;">from</span> store_sales"
 
-<span class="org-comment">-- &#19979;&#38754;&#20250;&#25490;&#38500;&#26597;&#35810;&#32467;&#26524;&#20043;&#22806;&#30340;&#20449;&#24687;</span>
+<span style="color: #2aa1ae; background-color: #292e34;">-- &#19979;&#38754;&#20250;&#25490;&#38500;&#26597;&#35810;&#32467;&#26524;&#20043;&#22806;&#30340;&#20449;&#24687;</span>
 hive -S -e ""
 </code></pre>
 </div>
@@ -1002,8 +1012,8 @@ hive -S -e ""
 下面，我们举一个具体的例子，就是前面我们的天气的数据。
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">create</span> <span class="org-keyword">table</span> <span class="org-function-name">records</span> <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">year</span> string, temperature <span class="org-type">int</span>, quality <span class="org-type">int</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-type">row</span> format delimited fields terminated <span class="org-keyword">by</span> <span class="org-string">'\t'</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">create</span> <span style="color: #4f97d7; font-weight: bold;">table</span> <span style="color: #bc6ec5; font-weight: bold;">records</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">year</span> string, temperature <span style="color: #ce537a; font-weight: bold;">int</span>, quality <span style="color: #ce537a; font-weight: bold;">int</span><span style="color: #4f97d7;">)</span>
+<span style="color: #ce537a; font-weight: bold;">row</span> format delimited fields terminated <span style="color: #4f97d7; font-weight: bold;">by</span> <span style="color: #2d9574;">'\t'</span>;
 </code></pre>
 </div>
 <p>
@@ -1015,7 +1025,7 @@ hive -S -e ""
 </p>
 
 <div class="container">
-<pre><code class="shell">load data local inpath <span class="org-string">'sample.txt'</span> overwrite into table records;
+<pre><code class="shell">load data local inpath <span style="color: #2d9574;">'sample.txt'</span> overwrite into table records;
 </code></pre>
 </div>
 
@@ -1023,9 +1033,9 @@ hive -S -e ""
 我们查看一下 records 表的内容就可以看到数据了。
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">select</span> * <span class="org-keyword">from</span> records;
-<span class="org-comment">-- &#25214;&#21040;&#27599;&#24180;&#30340;&#26368;&#39640;&#28201;&#24230;</span>
-<span class="org-keyword">select</span> <span class="org-keyword">year</span>, <span class="org-builtin">max</span><span class="org-rainbow-delimiters-depth-1">(</span>temperature<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-keyword">from</span> records <span class="org-keyword">group</span> <span class="org-keyword">by</span> <span class="org-keyword">year</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">select</span> * <span style="color: #4f97d7; font-weight: bold;">from</span> records;
+<span style="color: #2aa1ae; background-color: #292e34;">-- &#25214;&#21040;&#27599;&#24180;&#30340;&#26368;&#39640;&#28201;&#24230;</span>
+<span style="color: #4f97d7; font-weight: bold;">select</span> <span style="color: #4f97d7; font-weight: bold;">year</span>, <span style="color: #4f97d7;">max</span><span style="color: #4f97d7;">(</span>temperature<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">from</span> records <span style="color: #4f97d7; font-weight: bold;">group</span> <span style="color: #4f97d7; font-weight: bold;">by</span> <span style="color: #4f97d7; font-weight: bold;">year</span>;
 </code></pre>
 </div>
 
@@ -1147,12 +1157,12 @@ Hive 同时支持很多的数据类型，比较特殊的是它还支持数组类
 对于复杂类型，我们举个例子就很好理解了：
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">create</span> <span class="org-keyword">table</span> <span class="org-function-name">complex</span> <span class="org-rainbow-delimiters-depth-1">(</span>
-    c1 <span class="org-type">array</span>&lt;<span class="org-type">int</span>&gt;,
-    c2 <span class="org-keyword">map</span>&lt;string, <span class="org-type">int</span>&gt;,
-    c3 struct&lt;a:string, b:<span class="org-type">int</span>, c:<span class="org-type">double</span>&gt;,
-    c4 uniontype&lt;string, <span class="org-type">int</span>&gt;
-<span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="sql">    <span style="color: #4f97d7; font-weight: bold;">create</span> <span style="color: #4f97d7; font-weight: bold;">table</span> <span style="color: #bc6ec5; font-weight: bold;">complex</span> <span style="color: #4f97d7;">(</span>
+    c1 <span style="color: #ce537a; font-weight: bold;">array</span>&lt;<span style="color: #ce537a; font-weight: bold;">int</span>&gt;,
+            c2 <span style="color: #4f97d7; font-weight: bold;">map</span>&lt;string, <span style="color: #ce537a; font-weight: bold;">int</span>&gt;,
+            c3 struct&lt;a:string, b:<span style="color: #ce537a; font-weight: bold;">int</span>, c:<span style="color: #ce537a; font-weight: bold;">double</span>&gt;,
+            c4 uniontype&lt;string, <span style="color: #ce537a; font-weight: bold;">int</span>&gt;
+<span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div>
 
@@ -1160,7 +1170,7 @@ Hive 同时支持很多的数据类型，比较特殊的是它还支持数组类
 然后后我们可以
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">select</span> c1<span class="org-rainbow-delimiters-depth-1">[</span>0<span class="org-rainbow-delimiters-depth-1">]</span>, c2<span class="org-rainbow-delimiters-depth-1">[</span><span class="org-string">'b'</span><span class="org-rainbow-delimiters-depth-1">]</span>, c3.c, c4 <span class="org-keyword">from</span> complex;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">select</span> c1<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span>, c2<span style="color: #4f97d7;">[</span><span style="color: #2d9574;">'b'</span><span style="color: #4f97d7;">]</span>, c3.c, c4 <span style="color: #4f97d7; font-weight: bold;">from</span> complex;
 </code></pre>
 </div>
 </div>
@@ -1174,7 +1184,7 @@ Hive 同时支持很多的数据类型，比较特殊的是它还支持数组类
 </p>
 <div class="container">
 <pre><code class="sql">show functions;
-<span class="org-keyword">describe</span> <span class="org-keyword">function</span> &lt;func-<span class="org-keyword">name</span>&gt;;
+<span style="color: #4f97d7; font-weight: bold;">describe</span> <span style="color: #4f97d7; font-weight: bold;">function</span> &lt;func-<span style="color: #4f97d7; font-weight: bold;">name</span>&gt;;
 </code></pre>
 </div>
 <p>
@@ -1205,8 +1215,8 @@ Hive 表中内容一般存在 HDFS 中，或者本地文件系统或 s3 这样�
 外部表的数据有自己来控制。
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">CREATE</span> <span class="org-keyword">EXTERNAL</span> <span class="org-keyword">TABLE</span> <span class="org-function-name">external_table</span> <span class="org-rainbow-delimiters-depth-1">(</span>dummy STRING<span class="org-rainbow-delimiters-depth-1">)</span> LOCATION <span class="org-string">'/user/tom/external_table'</span>;
-LOAD <span class="org-keyword">DATA</span> INPATH <span class="org-string">'/user/tom/data.txt'</span> <span class="org-keyword">INTO</span> <span class="org-keyword">TABLE</span> external_table;
+<pre><code class="sql">    <span style="color: #4f97d7; font-weight: bold;">CREATE</span> <span style="color: #4f97d7; font-weight: bold;">EXTERNAL</span> <span style="color: #4f97d7; font-weight: bold;">TABLE</span> <span style="color: #bc6ec5; font-weight: bold;">external_table</span> <span style="color: #4f97d7;">(</span>dummy STRING<span style="color: #4f97d7;">)</span> LOCATION <span style="color: #2d9574;">'/user/tom/external_table'</span>;
+LOAD <span style="color: #4f97d7; font-weight: bold;">DATA</span> INPATH <span style="color: #2d9574;">'/user/tom/data.txt'</span> <span style="color: #4f97d7; font-weight: bold;">INTO</span> <span style="color: #4f97d7; font-weight: bold;">TABLE</span> external_table;
 </code></pre>
 </div>
 </div>
@@ -1235,8 +1245,8 @@ Hive 把表组织成“分区”。这是一种根据分区列（partition colum
 分区是通过 PARTITIONED BY 来定义的，下面是假想的日志记录
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">CREATE</span> <span class="org-keyword">TABLE</span> <span class="org-function-name">logs</span> <span class="org-rainbow-delimiters-depth-1">(</span>ts BIGINT, line STRING<span class="org-rainbow-delimiters-depth-1">)</span>
-PARTITIONED <span class="org-keyword">BY</span> <span class="org-rainbow-delimiters-depth-1">(</span>dt STRING, country STRING<span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">CREATE</span> <span style="color: #4f97d7; font-weight: bold;">TABLE</span> <span style="color: #bc6ec5; font-weight: bold;">logs</span> <span style="color: #4f97d7;">(</span>ts BIGINT, line STRING<span style="color: #4f97d7;">)</span>
+PARTITIONED <span style="color: #4f97d7; font-weight: bold;">BY</span> <span style="color: #4f97d7;">(</span>dt STRING, country STRING<span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div>
 
@@ -1244,9 +1254,9 @@ PARTITIONED <span class="org-keyword">BY</span> <span class="org-rainbow-delimit
 我们把数据加载到数据表中，要显式指定加载的分区值:
 </p>
 <div class="container">
-<pre><code class="sql">LOAD <span class="org-keyword">DATA</span> <span class="org-keyword">LOCAL</span> INPATH <span class="org-string">'input/hive/partitions/file1'</span>
-<span class="org-keyword">INTO</span> <span class="org-keyword">TABLE</span> logs
-PARTITION <span class="org-rainbow-delimiters-depth-1">(</span>dt=<span class="org-string">'2001-01-01'</span>, country=<span class="org-string">'GB'</span><span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="sql">        LOAD <span style="color: #4f97d7; font-weight: bold;">DATA</span> <span style="color: #4f97d7; font-weight: bold;">LOCAL</span> INPATH <span style="color: #2d9574;">'input/hive/partitions/file1'</span>
+<span style="color: #4f97d7; font-weight: bold;">INTO</span> <span style="color: #4f97d7; font-weight: bold;">TABLE</span> logs
+    PARTITION <span style="color: #4f97d7;">(</span>dt=<span style="color: #2d9574;">'2001-01-01'</span>, country=<span style="color: #2d9574;">'GB'</span><span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div>
 
@@ -1264,7 +1274,7 @@ PARTITION <span class="org-rainbow-delimiters-depth-1">(</span>dt=<span class="o
 </p>
 <div class="container">
 <pre><code class="sql">SHOW PARTITIONS logs;
-<span class="org-comment">-- &#32467;&#26524;</span>
+<span style="color: #2aa1ae; background-color: #292e34;">-- &#32467;&#26524;</span>
 dt=2001-01-01/country=GB
 dt=2001-01-01/country=US
 dt=2001-01-02/country=GB
@@ -1276,12 +1286,13 @@ dt=2001-01-02/country=US
 在 select 中我们可以直接使用
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">SELECT</span> ts, dt, line
-<span class="org-keyword">FROM</span> logs
-<span class="org-keyword">WHERE</span> country=<span class="org-string">'GB'</span>;
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">SELECT</span> ts, dt, line
+<span style="color: #4f97d7; font-weight: bold;">FROM</span> logs
+<span style="color: #4f97d7; font-weight: bold;">WHERE</span> country=<span style="color: #2d9574;">'GB'</span>;
 </code></pre>
 </div></li>
-
+</ol>
+<ol class="org-ol">
 <li><p>
 桶
 </p>
@@ -1294,8 +1305,8 @@ dt=2001-01-02/country=US
 我们使用 CLUSTERED BY 来划分桶使用的列和要划分的桶的个数。
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">CREATE</span> <span class="org-keyword">TABLE</span> <span class="org-function-name">bucketed_users</span> <span class="org-rainbow-delimiters-depth-1">(</span>id <span class="org-type">INT</span>, <span class="org-keyword">name</span> STRING<span class="org-rainbow-delimiters-depth-1">)</span>
-CLUSTERED <span class="org-keyword">BY</span> <span class="org-rainbow-delimiters-depth-1">(</span>id<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-keyword">INTO</span> 4 BUCKETS;
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">CREATE</span> <span style="color: #4f97d7; font-weight: bold;">TABLE</span> <span style="color: #bc6ec5; font-weight: bold;">bucketed_users</span> <span style="color: #4f97d7;">(</span>id <span style="color: #ce537a; font-weight: bold;">INT</span>, <span style="color: #4f97d7; font-weight: bold;">name</span> STRING<span style="color: #4f97d7;">)</span>
+CLUSTERED <span style="color: #4f97d7; font-weight: bold;">BY</span> <span style="color: #4f97d7;">(</span>id<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">INTO</span> 4 BUCKETS;
 </code></pre>
 </div>
 
@@ -1304,8 +1315,8 @@ Hive 会根据 Id 来 hash，然后根据桶的个数取余。
 我们还可以对桶根据某个列排序
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">CREATE</span> <span class="org-keyword">TABLE</span> <span class="org-function-name">bucketed_users</span> <span class="org-rainbow-delimiters-depth-1">(</span>id <span class="org-type">INT</span>, <span class="org-keyword">name</span> STRING<span class="org-rainbow-delimiters-depth-1">)</span>
-CLUSTERED <span class="org-keyword">BY</span> <span class="org-rainbow-delimiters-depth-1">(</span>id<span class="org-rainbow-delimiters-depth-1">)</span> SORTED <span class="org-keyword">BY</span> <span class="org-rainbow-delimiters-depth-1">(</span>id <span class="org-keyword">ASC</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-keyword">INTO</span> 4 BUCKETS;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">CREATE</span> <span style="color: #4f97d7; font-weight: bold;">TABLE</span> <span style="color: #bc6ec5; font-weight: bold;">bucketed_users</span> <span style="color: #4f97d7;">(</span>id <span style="color: #ce537a; font-weight: bold;">INT</span>, <span style="color: #4f97d7; font-weight: bold;">name</span> STRING<span style="color: #4f97d7;">)</span>
+CLUSTERED <span style="color: #4f97d7; font-weight: bold;">BY</span> <span style="color: #4f97d7;">(</span>id<span style="color: #4f97d7;">)</span> SORTED <span style="color: #4f97d7; font-weight: bold;">BY</span> <span style="color: #4f97d7;">(</span>id <span style="color: #4f97d7; font-weight: bold;">ASC</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">INTO</span> 4 BUCKETS;
 </code></pre>
 </div>
 
@@ -1317,9 +1328,9 @@ CLUSTERED <span class="org-keyword">BY</span> <span class="org-rainbow-delimiter
 将没有分桶的数据插入到分桶的表中：
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-comment">-- need set hive.enforce.bucketing=true</span>
-<span class="org-keyword">INSERT</span> OVERWRITE <span class="org-keyword">TABLE</span> bucketed_users
-<span class="org-keyword">SELECT</span> * <span class="org-keyword">FROM</span> users;
+<pre><code class="sql">    <span style="color: #2aa1ae; background-color: #292e34;">-- need set hive.enforce.bucketing=true</span>
+    <span style="color: #4f97d7; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #4f97d7; font-weight: bold;">TABLE</span> bucketed_users
+<span style="color: #4f97d7; font-weight: bold;">SELECT</span> * <span style="color: #4f97d7; font-weight: bold;">FROM</span> users;
 </code></pre>
 </div>
 
@@ -1327,8 +1338,8 @@ CLUSTERED <span class="org-keyword">BY</span> <span class="org-rainbow-delimiter
 这里有一个用法
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">SELECT</span> * <span class="org-keyword">FROM</span> bucketed_users
-TABLESAMPLE<span class="org-rainbow-delimiters-depth-1">(</span>BUCKET 1 <span class="org-keyword">OUT</span> <span class="org-keyword">OF</span> 2 <span class="org-keyword">ON</span> id<span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">SELECT</span> * <span style="color: #4f97d7; font-weight: bold;">FROM</span> bucketed_users
+TABLESAMPLE<span style="color: #4f97d7;">(</span>BUCKET 1 <span style="color: #4f97d7; font-weight: bold;">OUT</span> <span style="color: #4f97d7; font-weight: bold;">OF</span> 2 <span style="color: #4f97d7; font-weight: bold;">ON</span> id<span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div>
 
@@ -1371,9 +1382,9 @@ insert
 </p>
 
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">INSERT</span> OVERWRITE <span class="org-keyword">TABLE</span> target
-<span class="org-keyword">SELECT</span> col1, col2
-<span class="org-keyword">FROM</span> <span class="org-keyword">source</span>;
+<pre><code class="sql">    <span style="color: #4f97d7; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #4f97d7; font-weight: bold;">TABLE</span> target
+<span style="color: #4f97d7; font-weight: bold;">SELECT</span> col1, col2
+        <span style="color: #4f97d7; font-weight: bold;">FROM</span> <span style="color: #4f97d7; font-weight: bold;">source</span>;
 </code></pre>
 </div>
 
@@ -1381,10 +1392,10 @@ insert
 或者
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">INSERT</span> OVERWRITE <span class="org-keyword">TABLE</span> target
-PARTITION <span class="org-rainbow-delimiters-depth-1">(</span>dt=<span class="org-string">'2001-01-01'</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-keyword">SELECT</span> col1, col2
-<span class="org-keyword">FROM</span> <span class="org-keyword">source</span>;
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #4f97d7; font-weight: bold;">TABLE</span> target
+    PARTITION <span style="color: #4f97d7;">(</span>dt=<span style="color: #2d9574;">'2001-01-01'</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">SELECT</span> col1, col2
+<span style="color: #4f97d7; font-weight: bold;">FROM</span> <span style="color: #4f97d7; font-weight: bold;">source</span>;
 </code></pre>
 </div>
 
@@ -1397,34 +1408,35 @@ insert into table。
 我们还可以使用动态分区来插入表：
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">INSERT</span> OVERWRITE <span class="org-keyword">TABLE</span> target
-PARTITION <span class="org-rainbow-delimiters-depth-1">(</span>dt<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-keyword">SELECT</span> col1, col2, dt
-<span class="org-keyword">FROM</span> <span class="org-keyword">source</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #4f97d7; font-weight: bold;">TABLE</span> target
+PARTITION <span style="color: #4f97d7;">(</span>dt<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">SELECT</span> col1, col2, dt
+<span style="color: #4f97d7; font-weight: bold;">FROM</span> <span style="color: #4f97d7; font-weight: bold;">source</span>;
 </code></pre>
 </div></li>
-
+</ol>
+<ol class="org-ol">
 <li><p>
 多表插入我们可以把 FROΜ 放到前面
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">FROM</span> <span class="org-keyword">source</span>
-<span class="org-keyword">INSERT</span> OVERWRITE <span class="org-keyword">TABLE</span> target
-<span class="org-keyword">SELECT</span> col1, col2;
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">FROM</span> <span style="color: #4f97d7; font-weight: bold;">source</span>
+<span style="color: #4f97d7; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #4f97d7; font-weight: bold;">TABLE</span> target
+<span style="color: #4f97d7; font-weight: bold;">SELECT</span> col1, col2;
 </code></pre>
 </div>
 
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">FROM</span> records2
-<span class="org-keyword">INSERT</span> OVERWRITE <span class="org-keyword">TABLE</span> stations_by_year
-  <span class="org-keyword">SELECT</span> <span class="org-keyword">year</span>, <span class="org-builtin">COUNT</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">DISTINCT</span> station<span class="org-rainbow-delimiters-depth-1">)</span>
-  <span class="org-keyword">GROUP</span> <span class="org-keyword">BY</span> <span class="org-keyword">year</span>
-<span class="org-keyword">INSERT</span> OVERWRITE <span class="org-keyword">TABLE</span> records_by_year
-  <span class="org-keyword">SELECT</span> <span class="org-keyword">year</span>, <span class="org-builtin">COUNT</span><span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span>
-  <span class="org-keyword">GROUP</span> <span class="org-keyword">BY</span> <span class="org-keyword">year</span>
-<span class="org-keyword">INSERT</span> OVERWRITE <span class="org-keyword">TABLE</span> good_records_by_year
-  <span class="org-keyword">SELECT</span> <span class="org-keyword">year</span>, <span class="org-builtin">COUNT</span><span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span>
-  <span class="org-keyword">WHERE</span> temperature != 9999 <span class="org-keyword">AND</span> quality <span class="org-keyword">IN</span> <span class="org-rainbow-delimiters-depth-1">(</span>0, 1, 4, 5, 9<span class="org-rainbow-delimiters-depth-1">)</span>
-  <span class="org-keyword">GROUP</span> <span class="org-keyword">BY</span> <span class="org-keyword">year</span>;
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">FROM</span> records2
+<span style="color: #4f97d7; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #4f97d7; font-weight: bold;">TABLE</span> stations_by_year
+      <span style="color: #4f97d7; font-weight: bold;">SELECT</span> <span style="color: #4f97d7; font-weight: bold;">year</span>, <span style="color: #4f97d7;">COUNT</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">DISTINCT</span> station<span style="color: #4f97d7;">)</span>
+  <span style="color: #4f97d7; font-weight: bold;">GROUP</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> <span style="color: #4f97d7; font-weight: bold;">year</span>
+<span style="color: #4f97d7; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #4f97d7; font-weight: bold;">TABLE</span> records_by_year
+      <span style="color: #4f97d7; font-weight: bold;">SELECT</span> <span style="color: #4f97d7; font-weight: bold;">year</span>, <span style="color: #4f97d7;">COUNT</span><span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span>
+  <span style="color: #4f97d7; font-weight: bold;">GROUP</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> <span style="color: #4f97d7; font-weight: bold;">year</span>
+    <span style="color: #4f97d7; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #4f97d7; font-weight: bold;">TABLE</span> good_records_by_year
+  <span style="color: #4f97d7; font-weight: bold;">SELECT</span> <span style="color: #4f97d7; font-weight: bold;">year</span>, <span style="color: #4f97d7;">COUNT</span><span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span>
+  <span style="color: #4f97d7; font-weight: bold;">WHERE</span> temperature != 9999 <span style="color: #4f97d7; font-weight: bold;">AND</span> quality <span style="color: #4f97d7; font-weight: bold;">IN</span> <span style="color: #4f97d7;">(</span>0, 1, 4, 5, 9<span style="color: #4f97d7;">)</span>
+      <span style="color: #4f97d7; font-weight: bold;">GROUP</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> <span style="color: #4f97d7; font-weight: bold;">year</span>;
 </code></pre>
 </div></li>
 
@@ -1432,10 +1444,10 @@ PARTITION <span class="org-rainbow-delimiters-depth-1">(</span>dt<span class="or
 ℂΤΑ𝕊 操作
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">create</span> <span class="org-keyword">table</span> <span class="org-function-name">target</span>
-<span class="org-keyword">as</span>
-<span class="org-keyword">select</span> col1, col2
-<span class="org-keyword">from</span> <span class="org-keyword">source</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">create</span> <span style="color: #4f97d7; font-weight: bold;">table</span> <span style="color: #bc6ec5; font-weight: bold;">target</span>
+<span style="color: #4f97d7; font-weight: bold;">as</span>
+<span style="color: #4f97d7; font-weight: bold;">select</span> col1, col2
+<span style="color: #4f97d7; font-weight: bold;">from</span> <span style="color: #4f97d7; font-weight: bold;">source</span>;
 </code></pre>
 </div>
 
@@ -1447,10 +1459,10 @@ PARTITION <span class="org-rainbow-delimiters-depth-1">(</span>dt<span class="or
 表的修改
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-comment">-- alter table name</span>
-<span class="org-keyword">alter</span> <span class="org-keyword">table</span> <span class="org-keyword">source</span> rename <span class="org-keyword">to</span> target;
-<span class="org-comment">-- add new column</span>
-<span class="org-keyword">alter</span> <span class="org-keyword">table</span> <span class="org-function-name">target</span> <span class="org-keyword">add</span> columns <span class="org-rainbow-delimiters-depth-1">(</span>col3 string<span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="sql"><span style="color: #2aa1ae; background-color: #292e34;">-- alter table name</span>
+<span style="color: #4f97d7; font-weight: bold;">alter</span> <span style="color: #4f97d7; font-weight: bold;">table</span> <span style="color: #4f97d7; font-weight: bold;">source</span> rename <span style="color: #4f97d7; font-weight: bold;">to</span> target;
+<span style="color: #2aa1ae; background-color: #292e34;">-- add new column</span>
+<span style="color: #4f97d7; font-weight: bold;">alter</span> <span style="color: #4f97d7; font-weight: bold;">table</span> <span style="color: #bc6ec5; font-weight: bold;">target</span> <span style="color: #4f97d7; font-weight: bold;">add</span> columns <span style="color: #4f97d7;">(</span>col3 string<span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div></li>
 
@@ -1470,10 +1482,10 @@ drop table
 </p>
 
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">from</span> records2
-<span class="org-keyword">select</span> <span class="org-keyword">year</span>, temperature
-distribute <span class="org-keyword">by</span> <span class="org-keyword">year</span>
-sort <span class="org-keyword">by</span> <span class="org-keyword">year</span> <span class="org-keyword">asc</span>, temperature <span class="org-keyword">desc</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">from</span> records2
+<span style="color: #4f97d7; font-weight: bold;">select</span> <span style="color: #4f97d7; font-weight: bold;">year</span>, temperature
+distribute <span style="color: #4f97d7; font-weight: bold;">by</span> <span style="color: #4f97d7; font-weight: bold;">year</span>
+sort <span style="color: #4f97d7; font-weight: bold;">by</span> <span style="color: #4f97d7; font-weight: bold;">year</span> <span style="color: #4f97d7; font-weight: bold;">asc</span>, temperature <span style="color: #4f97d7; font-weight: bold;">desc</span>;
 </code></pre>
 </div>
 </div>
@@ -1486,13 +1498,13 @@ sort <span class="org-keyword">by</span> <span class="org-keyword">year</span> <
 在 Hive 中我们可以调用外部的脚本
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-comment-delimiter">#</span><span class="org-comment">!/usr/bin/env python</span>
-<span class="org-keyword">import</span> re
-<span class="org-keyword">import</span> sys
-<span class="org-keyword">for</span> line <span class="org-keyword">in</span> sys.stdin:
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-rainbow-delimiters-depth-1">(</span>year, temp, q<span class="org-rainbow-delimiters-depth-1">)</span> = line.strip<span class="org-rainbow-delimiters-depth-1">()</span>.split<span class="org-rainbow-delimiters-depth-1">()</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">(</span>temp != <span class="org-string">"9999"</span> <span class="org-keyword">and</span> re.match<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-string">"[01459]"</span>, q<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>:
-<span class="org-highlight-indentation"> </span>       <span class="org-keyword">print</span> <span class="org-string">"%s\t%s"</span> % <span class="org-rainbow-delimiters-depth-1">(</span>year, temp<span class="org-rainbow-delimiters-depth-1">)</span>
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">!/usr/bin/env python</span>
+<span style="color: #4f97d7; font-weight: bold;">import</span> re
+<span style="color: #4f97d7; font-weight: bold;">import</span> sys
+<span style="color: #4f97d7; font-weight: bold;">for</span> line <span style="color: #4f97d7; font-weight: bold;">in</span> sys.stdin:
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">(</span>year, temp, q<span style="color: #4f97d7;">)</span> = line.strip<span style="color: #4f97d7;">()</span>.split<span style="color: #4f97d7;">()</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">(</span>temp != <span style="color: #2d9574;">"9999"</span> <span style="color: #4f97d7; font-weight: bold;">and</span> re.match<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"[01459]"</span>, q<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span> <span style="color: #2d9574;">"%s\t%s"</span> % <span style="color: #4f97d7;">(</span>year, temp<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -1500,17 +1512,19 @@ sort <span class="org-keyword">by</span> <span class="org-keyword">year</span> <
 然后在 Hive 中，
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">ADD</span> FILE /Users/tom/book-workspace/hadoop-book/ch17-hive/ src/main/python/is_good_quality.py;
+<pre><code class="sql">    <span style="color: #4f97d7; font-weight: bold;">ADD</span> FILE /Users/tom/book-workspace/hadoop-book/ch17-hive/ src/main/python/is_good_quality.py;
 
-<span class="org-keyword">from</span> records2
-<span class="org-keyword">select</span> <span class="org-keyword">transform</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">year</span>, temperature, quality<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-keyword">using</span> <span class="org-string">'is_good_quality.py'</span>
-<span class="org-keyword">as</span> <span class="org-keyword">year</span>, temperature;
+<span style="color: #4f97d7; font-weight: bold;">from</span> records2
+    <span style="color: #4f97d7; font-weight: bold;">select</span> <span style="color: #4f97d7; font-weight: bold;">transform</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">year</span>, temperature, quality<span style="color: #4f97d7;">)</span>
+    <span style="color: #4f97d7; font-weight: bold;">using</span> <span style="color: #2d9574;">'is_good_quality.py'</span>
+    <span style="color: #4f97d7; font-weight: bold;">as</span> <span style="color: #4f97d7; font-weight: bold;">year</span>, temperature;
 </code></pre>
 </div>
 
 <ol class="org-ol">
 <li>首先要添加脚本</li>
+</ol>
+<ol class="org-ol">
 <li>然后将 year temperature quality 传递给 python 脚本</li>
 <li>然后 python 脚本将输出给 year temperature</li>
 </ol>
@@ -1526,8 +1540,8 @@ sort <span class="org-keyword">by</span> <span class="org-keyword">year</span> <
 </p>
 
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">select</span> * <span class="org-keyword">from</span> sales;
-Joe 2
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">select</span> * <span style="color: #4f97d7; font-weight: bold;">from</span> sales;
+        Joe 2
 Hank 4
 Ali 0
 Eve 3
@@ -1539,9 +1553,9 @@ Hank 2
 以及表 things
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">SELECT</span> * <span class="org-keyword">FROM</span> things;
-2 Tie
-4 Coat
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">SELECT</span> * <span style="color: #4f97d7; font-weight: bold;">FROM</span> things;
+        2 Tie
+        4 Coat
 3 Hat
 1 Scarf
 </code></pre>
@@ -1551,10 +1565,10 @@ Hank 2
 下面我们使用内连接
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">SELECT</span> sales.*, things.*
-<span class="org-keyword">from</span> sales <span class="org-keyword">join</span> things <span class="org-keyword">on</span> <span class="org-rainbow-delimiters-depth-1">(</span>sales.id=things.id<span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">SELECT</span> sales.*, things.*
+        <span style="color: #4f97d7; font-weight: bold;">from</span> sales <span style="color: #4f97d7; font-weight: bold;">join</span> things <span style="color: #4f97d7; font-weight: bold;">on</span> <span style="color: #4f97d7;">(</span>sales.id=things.id<span style="color: #4f97d7;">)</span>;
 
-Joe    2    2    Tie
+        Joe    2    2    Tie
 Hank   4    4    Coat
 Eve    3    3    Hat
 Hank   2    2    Tie
@@ -1565,8 +1579,8 @@ Hank   2    2    Tie
 外连接首先看看左外连接
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">SELECT</span> sales.*, things.*
-<span class="org-keyword">FROM</span> sales <span class="org-keyword">LEFT</span> <span class="org-keyword">OUTER</span> <span class="org-keyword">JOIN</span> things <span class="org-keyword">ON</span> <span class="org-rainbow-delimiters-depth-1">(</span>sales.id = things.id<span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">SELECT</span> sales.*, things.*
+<span style="color: #4f97d7; font-weight: bold;">FROM</span> sales <span style="color: #4f97d7; font-weight: bold;">LEFT</span> <span style="color: #4f97d7; font-weight: bold;">OUTER</span> <span style="color: #4f97d7; font-weight: bold;">JOIN</span> things <span style="color: #4f97d7; font-weight: bold;">ON</span> <span style="color: #4f97d7;">(</span>sales.id = things.id<span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div>
 <p>
@@ -1577,10 +1591,10 @@ Hank   2    2    Tie
 例如下面是输出的结果：
 </p>
 <div class="container">
-<pre><code class="python">Joe    2    2    Tie
-Hank   4    4    Coat
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   Joe    2    2    Tie
+<span style="background-color: #292e34;"> </span>   Hank   4    4    Coat
 Ali    0    NULL NULL
-Eve    3    3    Hat
+<span style="background-color: #292e34;"> </span>   Eve    3    3    Hat
 Hank   2    2    Tie
 </code></pre>
 </div>
@@ -1589,37 +1603,38 @@ Hank   2    2    Tie
 同理，还有右外连接，以及全连接
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">SELECT</span> sales.*, things.*
-<span class="org-keyword">from</span> sales.* <span class="org-keyword">right</span> <span class="org-keyword">outer</span> <span class="org-keyword">join</span> things <span class="org-keyword">on</span> <span class="org-rainbow-delimiters-depth-1">(</span>sales.id = things.id<span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">SELECT</span> sales.*, things.*
+<span style="color: #4f97d7; font-weight: bold;">from</span> sales.* <span style="color: #4f97d7; font-weight: bold;">right</span> <span style="color: #4f97d7; font-weight: bold;">outer</span> <span style="color: #4f97d7; font-weight: bold;">join</span> things <span style="color: #4f97d7; font-weight: bold;">on</span> <span style="color: #4f97d7;">(</span>sales.id = things.id<span style="color: #4f97d7;">)</span>;
 
-<span class="org-keyword">select</span> * <span class="org-keyword">from</span> sales.*, things.*
-<span class="org-keyword">from</span> sales <span class="org-keyword">full</span> <span class="org-keyword">outer</span> <span class="org-keyword">join</span> things <span class="org-keyword">on</span> <span class="org-rainbow-delimiters-depth-1">(</span>sales.id = things.id<span class="org-rainbow-delimiters-depth-1">)</span>;
+<span style="color: #4f97d7; font-weight: bold;">select</span> * <span style="color: #4f97d7; font-weight: bold;">from</span> sales.*, things.*
+<span style="color: #4f97d7; font-weight: bold;">from</span> sales <span style="color: #4f97d7; font-weight: bold;">full</span> <span style="color: #4f97d7; font-weight: bold;">outer</span> <span style="color: #4f97d7; font-weight: bold;">join</span> things <span style="color: #4f97d7; font-weight: bold;">on</span> <span style="color: #4f97d7;">(</span>sales.id = things.id<span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div>
 
 <div class="container">
-<pre><code class="python">Joe    2    2    Tie
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   Joe    2    2    Tie
 Hank   2    2    Tie
-Hank   4    4    Coat
+<span style="background-color: #292e34;"> </span>   Hank   4    4    Coat
 Eve    3    3    Hat
-NULL   NULL 1    Scarf
+<span style="background-color: #292e34;"> </span>   NULL   NULL 1    Scarf
 
-<span class="org-comment-delimiter">#</span><span class="org-comment">----full outer join-----</span>
-Ali    0    NULL NULL
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">----full outer join-----</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   Ali    0    NULL NULL
 NULL   NULL 1    Scarf
-Hank   2    2    Tie
+<span style="background-color: #292e34;"> </span>   Hank   2    2    Tie
 Joe    2    2    Tie
-Eve    3    3    Hat
+<span style="background-color: #292e34;"> </span>   Eve    3    3    Hat
 Hank   4    4    Coat
 </code></pre>
 </div></li>
-
+</ol>
+<ol class="org-ol">
 <li><p>
 半连接
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">select</span> * <span class="org-keyword">from</span> things
-<span class="org-keyword">where</span> things.id <span class="org-keyword">in</span> <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">select</span> id <span class="org-keyword">from</span> sales<span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">select</span> * <span style="color: #4f97d7; font-weight: bold;">from</span> things
+<span style="color: #4f97d7; font-weight: bold;">where</span> things.id <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">select</span> id <span style="color: #4f97d7; font-weight: bold;">from</span> sales<span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div></li>
 
@@ -1636,14 +1651,14 @@ Hive 对子查询的支持非常的有限。它只支持将子查询放入到 Fr
 </p>
 
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">SELECT</span> station, <span class="org-keyword">year</span>, <span class="org-builtin">AVG</span><span class="org-rainbow-delimiters-depth-1">(</span>max_temperature<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-keyword">FROM</span> <span class="org-rainbow-delimiters-depth-1">(</span>
-  <span class="org-keyword">SELECT</span> station, <span class="org-keyword">year</span>, <span class="org-builtin">MAX</span><span class="org-rainbow-delimiters-depth-2">(</span>temperature<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-keyword">AS</span> max_temperature
-  <span class="org-keyword">FROM</span> records2
-  <span class="org-keyword">WHERE</span> temperature != 9999 <span class="org-keyword">AND</span> quality <span class="org-keyword">IN</span> <span class="org-rainbow-delimiters-depth-2">(</span>0, 1, 4, 5, 9<span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-keyword">GROUP</span> <span class="org-keyword">BY</span> station, <span class="org-keyword">year</span>
-<span class="org-rainbow-delimiters-depth-1">)</span> mt
-<span class="org-keyword">GROUP</span> <span class="org-keyword">BY</span> station, <span class="org-keyword">year</span>;
+<pre><code class="sql">    <span style="color: #4f97d7; font-weight: bold;">SELECT</span> station, <span style="color: #4f97d7; font-weight: bold;">year</span>, <span style="color: #4f97d7;">AVG</span><span style="color: #4f97d7;">(</span>max_temperature<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">FROM</span> <span style="color: #4f97d7;">(</span>
+  <span style="color: #4f97d7; font-weight: bold;">SELECT</span> station, <span style="color: #4f97d7; font-weight: bold;">year</span>, <span style="color: #4f97d7;">MAX</span><span style="color: #bc6ec5;">(</span>temperature<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">AS</span> max_temperature
+  <span style="color: #4f97d7; font-weight: bold;">FROM</span> records2
+  <span style="color: #4f97d7; font-weight: bold;">WHERE</span> temperature != 9999 <span style="color: #4f97d7; font-weight: bold;">AND</span> quality <span style="color: #4f97d7; font-weight: bold;">IN</span> <span style="color: #bc6ec5;">(</span>0, 1, 4, 5, 9<span style="color: #bc6ec5;">)</span>
+  <span style="color: #4f97d7; font-weight: bold;">GROUP</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> station, <span style="color: #4f97d7; font-weight: bold;">year</span>
+<span style="color: #4f97d7;">)</span> mt
+<span style="color: #4f97d7; font-weight: bold;">GROUP</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> station, <span style="color: #4f97d7; font-weight: bold;">year</span>;
 </code></pre>
 </div>
 <p>
@@ -1657,9 +1672,9 @@ Hive 对子查询的支持非常的有限。它只支持将子查询放入到 Fr
 <h3 id="orgb8f41d9">视图</h3>
 <div class="outline-text-3" id="text-orgb8f41d9">
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">create</span> <span class="org-keyword">view</span> <span class="org-function-name">valid_records</span> <span class="org-keyword">as</span>
-<span class="org-keyword">select</span> * <span class="org-keyword">from</span> records2
-<span class="org-keyword">where</span> temperature != 9999 <span class="org-keyword">and</span> quality <span class="org-keyword">in</span> <span class="org-rainbow-delimiters-depth-1">(</span>0, 1, 4, 5, 9<span class="org-rainbow-delimiters-depth-1">)</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">create</span> <span style="color: #4f97d7; font-weight: bold;">view</span> <span style="color: #bc6ec5; font-weight: bold;">valid_records</span> <span style="color: #4f97d7; font-weight: bold;">as</span>
+<span style="color: #4f97d7; font-weight: bold;">select</span> * <span style="color: #4f97d7; font-weight: bold;">from</span> records2
+<span style="color: #4f97d7; font-weight: bold;">where</span> temperature != 9999 <span style="color: #4f97d7; font-weight: bold;">and</span> quality <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">(</span>0, 1, 4, 5, 9<span style="color: #4f97d7;">)</span>;
 </code></pre>
 </div>
 
@@ -1667,11 +1682,11 @@ Hive 对子查询的支持非常的有限。它只支持将子查询放入到 Fr
 现在我们查询视图和表其实是一样的
 </p>
 <div class="container">
-<pre><code class="sql"><span class="org-keyword">create</span> <span class="org-keyword">view</span> <span class="org-function-name">max_temperature</span> <span class="org-rainbow-delimiters-depth-1">(</span>station, <span class="org-keyword">year</span>, max_temperature<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-keyword">as</span>
-<span class="org-keyword">select</span> station, <span class="org-keyword">year</span>, <span class="org-builtin">max</span><span class="org-rainbow-delimiters-depth-1">(</span>temperature<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-keyword">from</span> valid_records
-<span class="org-keyword">group</span> <span class="org-keyword">by</span> station, <span class="org-keyword">year</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">create</span> <span style="color: #4f97d7; font-weight: bold;">view</span> <span style="color: #bc6ec5; font-weight: bold;">max_temperature</span> <span style="color: #4f97d7;">(</span>station, <span style="color: #4f97d7; font-weight: bold;">year</span>, max_temperature<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">as</span>
+<span style="color: #4f97d7; font-weight: bold;">select</span> station, <span style="color: #4f97d7; font-weight: bold;">year</span>, <span style="color: #4f97d7;">max</span><span style="color: #4f97d7;">(</span>temperature<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">from</span> valid_records
+<span style="color: #4f97d7; font-weight: bold;">group</span> <span style="color: #4f97d7; font-weight: bold;">by</span> station, <span style="color: #4f97d7; font-weight: bold;">year</span>;
 </code></pre>
 </div>
 </div>
@@ -1723,15 +1738,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -1755,7 +1770,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -1763,7 +1778,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-20 Tue 16:43 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LR 与 Sigmoid</title>
@@ -247,7 +247,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -276,6 +276,8 @@ LR 也就是 Logistic Regression，但是在学习的过程中，有些不解的
 </p>
 <ol class="org-ol">
 <li>为什么有了 Linear Regression, 又会出现一个 Logistic Regression?</li>
+</ol>
+<ol class="org-ol">
 <li>Logistic Regression 明明是一个回归模型，为什么会用于分类？</li>
 <li>Logistic Regression 叫法的由来是什么？</li>
 <li>关于 LR 中使用为什么使用 Sigmoid 函数，而不是其他的？</li>
@@ -338,8 +340,8 @@ Function 应该也明白了，它的输出 <i>Y</i> 是一个概率。只是碰�
 其实这个问题本身就是不对的，前面解释了正是因为 Sigmoid 才有了 LR，
 而不是 LR 选择了 Sigmoid。所以这里的本质问题是：为什么使用线性模型进行回归学习要使用 基于 Sigmoid 的 LR，而不是其他的 Regression。如果我们能够找到一个函数 <i>F</i> ，也能达到下面的功能的话，是不是也可以用 <i>F</i> Regression 呢？
 \[\begin{equation}
-	H(x)={\begin{cases}0,&x<0\\{\frac{1}{2}},&x=0\\1,&x>0\end{cases}}\tag {1}
-	\end{equation}\]
+        H(x)={\begin{cases}0,&x<0\\{\frac{1}{2}},&x=0\\1,&x>0\end{cases}}\tag {1}
+        \end{equation}\]
 </p>
 
 <p>
@@ -358,16 +360,16 @@ Function 应该也明白了，它的输出 <i>Y</i> 是一个概率。只是碰�
 </p>
 <ol class="org-ol">
 <li>sigmoid 函数连续，单调递增</li>
-<li>对 sigmoid 函数求导非常的方便
-\[S(t)={\frac {1}{1+e^{-t}}}.\]
-\[{\displaystyle S'(t)=S(t)(1-S(t)).}\]</li>
 </ol>
-<p>
+<ol class="org-ol">
+<li>对 sigmoid 函数求导非常的方便
+        \[S(t)={\frac {1}{1+e^{-t}}}.\]
+        \[{\displaystyle S'(t)=S(t)(1-S(t)).}\]
 缺点：
 这里主要看应用场景了，如果在深度学习中，它相比于 ReLU 确实是不好的。
-</p>
 <ol class="org-ol">
 <li>sigmoid 函数反向传播时，很容易就会出现梯度消失的情况</li>
+</ol></li>
 <li>sigmoid 作为激活函数计算量大（指数运算）</li>
 </ol>
 </div>
@@ -378,6 +380,8 @@ Function 应该也明白了，它的输出 <i>Y</i> 是一个概率。只是碰�
 <div class="outline-text-2" id="text-org955aa0b">
 <ol class="org-ol">
 <li><a href="https://stats.stackexchange.com/questions/111035/what-does-the-name-logistic-regression-mean">https://stats.stackexchange.com/questions/111035/what-does-the-name-logistic-regression-mean</a></li>
+</ol>
+<ol class="org-ol">
 <li><a href="https://en.wikipedia.org/wiki/Logistic_distribution">Logistic Distribution</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Logistic_regression">Logistic Regression</a></li>
 <li><a href="http://thomaslau.xyz/2017/08/04/2017-08-04-derivative-of-logistic-sigmoid-function/">http://thomaslau.xyz/2017/08/04/2017-08-04-derivative-of-logistic-sigmoid-function/</a></li>
@@ -420,15 +424,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -452,7 +456,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -460,7 +464,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:50 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>一个静态评论系统的实现</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -330,6 +330,8 @@ for the JavaScript code in this tag.
 </p>
 <ul class="org-ul">
 <li>打开一个文章，显示对应的评论。</li>
+</ul>
+<ul class="org-ul">
 <li>如果想评论，点击 <code>button</code>, 进行 github 授权。</li>
 <li>如果还没有对应的 issue, 我就创建一个。</li>
 <li>将评论添加到 issue 下。</li>
@@ -347,18 +349,18 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="javascript"><span class="org-keyword">function</span> <span class="org-function-name">test</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-  jQuery.ajax<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">{</span>
-      type: <span class="org-string">'GET'</span>,
-      async: <span class="org-constant">false</span>,
-      dataType:<span class="org-string">'json'</span>,
+<pre><code class="javascript">    <span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">test</span><span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
+  jQuery.ajax<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>
+      type: <span style="color: #2d9574;">'GET'</span>,
+      async: <span style="color: #a45bad;">false</span>,
+      dataType:<span style="color: #2d9574;">'json'</span>,
       url: search_issues,
-      <span class="org-function-name">success</span>:<span class="org-keyword">function</span><span class="org-rainbow-delimiters-depth-4">(</span><span class="org-variable-name">data</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-rainbow-delimiters-depth-4">{</span>
+      <span style="color: #bc6ec5; font-weight: bold;">success</span>:<span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #67b11d;">(</span><span style="color: #7590db;">data</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
          result = data;
-      <span class="org-rainbow-delimiters-depth-4">}</span>
-  <span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">)</span>;
-  <span class="org-keyword">return</span> result;
-<span class="org-rainbow-delimiters-depth-1">}</span>
+      <span style="color: #67b11d;">}</span>
+  <span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;
+  <span style="color: #4f97d7; font-weight: bold;">return</span> result;
+<span style="color: #4f97d7;">}</span>
 </code></pre>
 </div>
 
@@ -367,29 +369,29 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="javascript"><span class="org-keyword">function</span> <span class="org-function-name">create</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-variable-name">title</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-     <span class="org-keyword">var</span> <span class="org-variable-name">creare</span> = base_url + <span class="org-string">'/repos/'</span> + owner + <span class="org-string">'/'</span> + repo + <span class="org-string">'/issues'</span>;
-     <span class="org-keyword">var</span> <span class="org-variable-name">payload</span> = <span class="org-rainbow-delimiters-depth-2">{</span>
-          <span class="org-string">'title'</span>: title,
-          <span class="org-string">'body'</span>: <span class="org-string">'You can write comments in this issues.'</span>,
-          <span class="org-string">'labels'</span>: <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">'blog'</span><span class="org-rainbow-delimiters-depth-3">]</span>,
-      <span class="org-rainbow-delimiters-depth-2">}</span>
-      $.ajax<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">{</span>
-        type: <span class="org-string">'POST'</span>,
-        url: create,
-        crossDomain: <span class="org-constant">true</span>,
-              data: JSON.stringify<span class="org-rainbow-delimiters-depth-4">(</span>payload<span class="org-rainbow-delimiters-depth-4">)</span>,
-        headers: <span class="org-rainbow-delimiters-depth-4">{</span>
-          <span class="org-string">'Authorization'</span>: <span class="org-string">'Basic xxxxxxxxxxxxx'</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">auth2.0</span>
-          <span class="org-string">'Access-Control-Allow-Origin'</span> : <span class="org-string">'*'</span>
-        <span class="org-rainbow-delimiters-depth-4">}</span>,
-        contentType: <span class="org-string">'application/json; charset=utf-8'</span>,
-        dataType: <span class="org-string">'json'</span>,
-        <span class="org-function-name">success</span>: <span class="org-keyword">function</span><span class="org-rainbow-delimiters-depth-4">(</span><span class="org-variable-name">data</span><span class="org-rainbow-delimiters-depth-4">){</span>alert<span class="org-rainbow-delimiters-depth-5">(</span><span class="org-string">'create issue success'</span><span class="org-rainbow-delimiters-depth-5">)</span>;<span class="org-rainbow-delimiters-depth-4">}</span>,
-        <span class="org-function-name">failure</span>: <span class="org-keyword">function</span><span class="org-rainbow-delimiters-depth-4">(</span><span class="org-variable-name">errMsg</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-rainbow-delimiters-depth-4">{</span>
-            alert<span class="org-rainbow-delimiters-depth-5">(</span>errMsg<span class="org-rainbow-delimiters-depth-5">)</span>;
-        <span class="org-rainbow-delimiters-depth-4">}</span>
-    <span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">)</span>;<span class="org-rainbow-delimiters-depth-1">}</span>
+<pre><code class="javascript"><span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">create</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">title</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+     <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">creare</span> = base_url + <span style="color: #2d9574;">'/repos/'</span> + owner + <span style="color: #2d9574;">'/'</span> + repo + <span style="color: #2d9574;">'/issues'</span>;
+ <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">payload</span> = <span style="color: #bc6ec5;">{</span>
+      <span style="color: #2d9574;">'title'</span>: title,
+      <span style="color: #2d9574;">'body'</span>: <span style="color: #2d9574;">'You can write comments in this issues.'</span>,
+      <span style="color: #2d9574;">'labels'</span>: <span style="color: #2d9574;">[</span><span style="color: #2d9574;">'blog'</span><span style="color: #2d9574;">]</span>,
+  <span style="color: #bc6ec5;">}</span>
+  $.ajax<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>
+    type: <span style="color: #2d9574;">'POST'</span>,
+    url: create,
+    crossDomain: <span style="color: #a45bad;">true</span>,
+          data: JSON.stringify<span style="color: #67b11d;">(</span>payload<span style="color: #67b11d;">)</span>,
+    headers: <span style="color: #67b11d;">{</span>
+      <span style="color: #2d9574;">'Authorization'</span>: <span style="color: #2d9574;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">auth2.0</span>
+      <span style="color: #2d9574;">'Access-Control-Allow-Origin'</span> : <span style="color: #2d9574;">'*'</span>
+    <span style="color: #67b11d;">}</span>,
+    contentType: <span style="color: #2d9574;">'application/json; charset=utf-8'</span>,
+    dataType: <span style="color: #2d9574;">'json'</span>,
+    <span style="color: #bc6ec5; font-weight: bold;">success</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #67b11d;">(</span><span style="color: #7590db;">data</span><span style="color: #67b11d;">){</span>alert<span style="color: #b1951d;">(</span><span style="color: #2d9574;">'create issue success'</span><span style="color: #b1951d;">)</span>;<span style="color: #67b11d;">}</span>,
+    <span style="color: #bc6ec5; font-weight: bold;">failure</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #67b11d;">(</span><span style="color: #7590db;">errMsg</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
+        alert<span style="color: #b1951d;">(</span>errMsg<span style="color: #b1951d;">)</span>;
+    <span style="color: #67b11d;">}</span>
+<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;<span style="color: #4f97d7;">}</span>
 
 </code></pre>
 </div>
@@ -414,7 +416,7 @@ for the JavaScript code in this tag.
 <div class="outline-text-3" id="text-org612cdd9">
 <p>
 如果打开一个 blog 没有对应的 issue, 我会发送一个 ajax 请求去创建一个。在本地测试没有问题，但是在生产环境就出现了 <code>405（method not
-	allowed）</code> 的错误。后来发现是 github pages 好像不支持 CORS。这其实就打断了这种 pipeline 了，所有的操作不能连接起来。
+        allowed）</code> 的错误。后来发现是 github pages 好像不支持 CORS。这其实就打断了这种 pipeline 了，所有的操作不能连接起来。
 </p>
 
 <p>
@@ -428,7 +430,7 @@ for the JavaScript code in this tag.
 <h3 id="org3a955b8">UI 上的问题</h3>
 <div class="outline-text-3" id="text-org3a955b8">
 <p>
-	现在评论只能是进到 github 中去写评论。将来看能否直接集成到 blog 中来。这个要涉及到前端的东西，对我来说还是很费劲的。
+        现在评论只能是进到 github 中去写评论。将来看能否直接集成到 blog 中来。这个要涉及到前端的东西，对我来说还是很费劲的。
 类似于 <a href="https://utteranc.es">这个</a>。
 </p>
 </div>
@@ -449,13 +451,13 @@ for the JavaScript code in this tag.
 
 <div class="container">
 <pre><code class="python">&#36825;&#20010;&#29992;&#26469;&#27169;&#31946;&#26597;&#35810; issue&#65306;
-<span class="org-rainbow-delimiters-depth-1">{</span><span class="org-rainbow-delimiters-depth-2">{</span>base_api<span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>/search/issues?<span class="org-variable-name">q</span>=A Continuous Integration System+user:yydai+labels:blog
+<span style="color: #4f97d7;">{</span><span style="color: #bc6ec5;">{</span>base_api<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">}</span>/search/issues?<span style="color: #7590db;">q</span>=A Continuous Integration System+user:yydai+labels:blog
 
 &#36825;&#20010;&#29992;&#26469;&#33719;&#21462;&#35813; issue &#19979;&#30340; comments
-<span class="org-rainbow-delimiters-depth-1">{</span><span class="org-rainbow-delimiters-depth-2">{</span>base_api<span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>/repos/yydai/yydai.github.io/issues/1/comments
+<span style="color: #4f97d7;">{</span><span style="color: #bc6ec5;">{</span>base_api<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">}</span>/repos/yydai/yydai.github.io/issues/1/comments
 
 &#36825;&#20010;&#29992;&#26469;&#21019;&#24314; issue
-<span class="org-rainbow-delimiters-depth-1">{</span><span class="org-rainbow-delimiters-depth-2">{</span>base_api<span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>/repos/yydai/yydai.github.io/issues
+<span style="color: #4f97d7;">{</span><span style="color: #bc6ec5;">{</span>base_api<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">}</span>/repos/yydai/yydai.github.io/issues
 </code></pre>
 </div>
 </div>
@@ -525,15 +527,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -557,7 +559,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -565,7 +567,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

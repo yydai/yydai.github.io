@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-31 Sat 13:03 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Pandas 和 Numpy 中的 axis</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -261,10 +261,10 @@ for the JavaScript code in this tag.
 比如下面的操作：
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #99cc99;">import</span> numpy <span style="color: #99cc99;">as</span> np
-<span style="color: #ffcc66;">a</span> = np.array<span style="color: #cccccc;">(</span><span style="color: #66cccc;">[</span>1, 2<span style="color: #66cccc;">]</span>, <span style="color: #66cccc;">[</span>3, 4<span style="color: #66cccc;">]</span><span style="color: #cccccc;">)</span>
-<span style="color: #ffcc66;">s0</span> = np.<span style="color: #cc99cc;">sum</span><span style="color: #cccccc;">(</span>a, axis=0<span style="color: #cccccc;">)</span>
-<span style="color: #ffcc66;">s1</span> = np.<span style="color: #cc99cc;">sum</span><span style="color: #cccccc;">(</span>a, axis=1<span style="color: #cccccc;">)</span>
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #7590db;">a</span> = np.array<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>1, 2<span style="color: #bc6ec5;">]</span>, <span style="color: #bc6ec5;">[</span>3, 4<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">s0</span> = np.<span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>a, axis=0<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">s1</span> = np.<span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>a, axis=1<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -305,9 +305,9 @@ axis=0 代表的是和行有关，axis=1 是和列有关，所以我理解的是
 但是有一种情况我们需要注意，就是在使用 drop 的时候，
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #99cc99;">import</span> pandas <span style="color: #99cc99;">as</span> pd
-<span style="color: #ffcc66;">df</span> = pd.DataFrame<span style="color: #cccccc;">(</span>a, columns=<span style="color: #66cccc;">[</span><span style="color: #66cccc;">'col1'</span>, <span style="color: #66cccc;">'col2'</span><span style="color: #66cccc;">]</span>, index=<span style="color: #66cccc;">[</span><span style="color: #66cccc;">'row1'</span>, <span style="color: #66cccc;">'row2'</span><span style="color: #66cccc;">]</span><span style="color: #cccccc;">)</span>
-df.drop<span style="color: #cccccc;">(</span><span style="color: #66cccc;">'col1'</span>, axis=1<span style="color: #cccccc;">)</span>
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> pandas <span style="color: #4f97d7; font-weight: bold;">as</span> pd
+<span style="color: #7590db;">df</span> = pd.DataFrame<span style="color: #4f97d7;">(</span>a, columns=<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'col1'</span>, <span style="color: #2d9574;">'col2'</span><span style="color: #bc6ec5;">]</span>, index=<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'row1'</span>, <span style="color: #2d9574;">'row2'</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+df.drop<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'col1'</span>, axis=1<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -315,7 +315,7 @@ df.drop<span style="color: #cccccc;">(</span><span style="color: #66cccc;">'col1
 首先我们创建一个下面结果的 dataframe object,
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span> col1  col2
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span> col1  col2
 row1     1     2
 row2     3     4
 </code></pre>
@@ -356,15 +356,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -388,7 +388,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -396,7 +396,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

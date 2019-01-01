@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:32 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>反向传播算法（Backpropagation）</title>
@@ -247,7 +247,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -277,20 +277,20 @@ for the JavaScript code in this tag.
 使用链式法则计算复合表达式
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622;&#36755;&#20837;&#20540;</span>
-<span class="org-variable-name">x</span> = -2; <span class="org-variable-name">y</span> = 5; <span class="org-variable-name">z</span> = -4
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#35774;&#32622;&#36755;&#20837;&#20540;</span>
+<span style="color: #7590db;">x</span> = -2; <span style="color: #7590db;">y</span> = 5; <span style="color: #7590db;">z</span> = -4
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">&#36827;&#34892;&#21069;&#21521;&#20256;&#25773;</span>
-<span class="org-variable-name">q</span> = x + y <span class="org-comment-delimiter"># </span><span class="org-comment">q becomes 3</span>
-<span class="org-variable-name">f</span> = q * z <span class="org-comment-delimiter"># </span><span class="org-comment">f becomes -12</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#36827;&#34892;&#21069;&#21521;&#20256;&#25773;</span>
+<span style="color: #7590db;">q</span> = x + y <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">q becomes 3</span>
+<span style="color: #7590db;">f</span> = q * z <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">f becomes -12</span>
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">&#36827;&#34892;&#21453;&#21521;&#20256;&#25773;:</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">&#39318;&#20808;&#22238;&#20256;&#21040; f = q * z</span>
-<span class="org-variable-name">dfdz</span> = q <span class="org-comment-delimiter"># </span><span class="org-comment">df/dz = q, &#25152;&#20197;&#20851;&#20110; z &#30340;&#26799;&#24230;&#26159; 3</span>
-<span class="org-variable-name">dfdq</span> = z <span class="org-comment-delimiter"># </span><span class="org-comment">df/dq = z, &#25152;&#20197;&#20851;&#20110; q &#30340;&#26799;&#24230;&#26159;-4</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">&#29616;&#22312;&#22238;&#20256;&#21040; q = x + y</span>
-<span class="org-variable-name">dfdx</span> = 1.0 * dfdq <span class="org-comment-delimiter"># </span><span class="org-comment">dq/dx = 1. &#36825;&#37324;&#30340;&#20056;&#27861;&#26159;&#22240;&#20026;&#38142;&#24335;&#27861;&#21017;</span>
-<span class="org-variable-name">dfdy</span> = 1.0 * dfdq <span class="org-comment-delimiter"># </span><span class="org-comment">dq/dy = 1</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#36827;&#34892;&#21453;&#21521;&#20256;&#25773;:</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#39318;&#20808;&#22238;&#20256;&#21040; f = q * z</span>
+<span style="color: #7590db;">dfdz</span> = q <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">df/dz = q, &#25152;&#20197;&#20851;&#20110; z &#30340;&#26799;&#24230;&#26159; 3</span>
+<span style="color: #7590db;">dfdq</span> = z <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">df/dq = z, &#25152;&#20197;&#20851;&#20110; q &#30340;&#26799;&#24230;&#26159;-4</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#29616;&#22312;&#22238;&#20256;&#21040; q = x + y</span>
+<span style="color: #7590db;">dfdx</span> = 1.0 * dfdq <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">dq/dx = 1. &#36825;&#37324;&#30340;&#20056;&#27861;&#26159;&#22240;&#20026;&#38142;&#24335;&#27861;&#21017;</span>
+<span style="color: #7590db;">dfdy</span> = 1.0 * dfdq <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">dq/dy = 1</span>
 </code></pre>
 </div>
 
@@ -321,8 +321,8 @@ f(w,x) = \frac{1}{1+e^{-(w_0x_0 + w_1x_1 + w_2)}}
 <p>
 这个函数是由多个门组成的。除了上文介绍的加法门，乘法门，取最大值门，还有下面这 4 种：
 </p>
-\begin{align}
-f(x) = \frac{1}{x}
+    \begin{align}
+    f(x) = \frac{1}{x}
 \hspace{1in} &\rightarrow \hspace{1in}
 \frac{df}{dx} = -1/x^2
 \\\\
@@ -337,7 +337,7 @@ f(x) = e^x
 f_a(x) = ax
 \hspace{1in} &\rightarrow \hspace{1in}
 \frac{df}{dx} = a
-\end{align}
+    \end{align}
 
 <p>
 下面是整个的计算
@@ -367,11 +367,11 @@ f_a(x) = ax
 <p>
 但是我们可以简化一下计算的流程
 </p>
-	\begin{align}
-	\sigma(x) = \frac{1}{1+e^{-x}} \\\\
+        \begin{align}
+        \sigma(x) = \frac{1}{1+e^{-x}} \\\\
 \rightarrow \hspace{0.3in} \frac{d\sigma(x)}{dx} = \frac{e^{-x}}{(1+e^{-x})^2} = \left( \frac{1 + e^{-x} - 1}{1 + e^{-x}} \right) \left( \frac{1}{1+e^{-x}} \right)
 = \left( 1 - \sigma(x) \right) \sigma(x)
-	\end{align}
+        \end{align}
 
 
 
@@ -384,18 +384,18 @@ f_a(x) = ax
 相应的 Python 代码可以这样实现
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-variable-name">w</span> = <span class="org-rainbow-delimiters-depth-1">[</span>2,-3,-3<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#20551;&#35774;&#19968;&#20123;&#38543;&#26426;&#25968;&#25454;&#21644;&#26435;&#37325;</span>
-<span class="org-variable-name">x</span> = <span class="org-rainbow-delimiters-depth-1">[</span>-1, -2<span class="org-rainbow-delimiters-depth-1">]</span>
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">w</span> = <span style="color: #4f97d7;">[</span>2,-3,-3<span style="color: #4f97d7;">]</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#20551;&#35774;&#19968;&#20123;&#38543;&#26426;&#25968;&#25454;&#21644;&#26435;&#37325;</span>
+<span style="color: #7590db;">x</span> = <span style="color: #4f97d7;">[</span>-1, -2<span style="color: #4f97d7;">]</span>
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">&#21069;&#21521;&#20256;&#25773;</span>
-<span class="org-variable-name">dot</span> = w<span class="org-rainbow-delimiters-depth-1">[</span>0<span class="org-rainbow-delimiters-depth-1">]</span>*x<span class="org-rainbow-delimiters-depth-1">[</span>0<span class="org-rainbow-delimiters-depth-1">]</span> + w<span class="org-rainbow-delimiters-depth-1">[</span>1<span class="org-rainbow-delimiters-depth-1">]</span>*x<span class="org-rainbow-delimiters-depth-1">[</span>1<span class="org-rainbow-delimiters-depth-1">]</span> + w<span class="org-rainbow-delimiters-depth-1">[</span>2<span class="org-rainbow-delimiters-depth-1">]</span>
-<span class="org-variable-name">f</span> = 1.0 / <span class="org-rainbow-delimiters-depth-1">(</span>1 + math.exp<span class="org-rainbow-delimiters-depth-2">(</span>-dot<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">sigmoid &#20989;&#25968;</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#21069;&#21521;&#20256;&#25773;</span>
+<span style="color: #7590db;">dot</span> = w<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span>*x<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span> + w<span style="color: #4f97d7;">[</span>1<span style="color: #4f97d7;">]</span>*x<span style="color: #4f97d7;">[</span>1<span style="color: #4f97d7;">]</span> + w<span style="color: #4f97d7;">[</span>2<span style="color: #4f97d7;">]</span>
+<span style="color: #7590db;">f</span> = 1.0 / <span style="color: #4f97d7;">(</span>1 + math.exp<span style="color: #bc6ec5;">(</span>-dot<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">sigmoid &#20989;&#25968;</span>
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">&#23545;&#31070;&#32463;&#20803;&#21453;&#21521;&#20256;&#25773;</span>
-<span class="org-variable-name">ddot</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1 - f<span class="org-rainbow-delimiters-depth-1">)</span> * f <span class="org-comment-delimiter"># </span><span class="org-comment">&#28857;&#31215;&#21464;&#37327;&#30340;&#26799;&#24230;, &#20351;&#29992; sigmoid &#20989;&#25968;&#27714;&#23548;</span>
-<span class="org-variable-name">dx</span> = <span class="org-rainbow-delimiters-depth-1">[</span>w<span class="org-rainbow-delimiters-depth-2">[</span>0<span class="org-rainbow-delimiters-depth-2">]</span> * ddot, w<span class="org-rainbow-delimiters-depth-2">[</span>1<span class="org-rainbow-delimiters-depth-2">]</span> * ddot<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#22238;&#20256;&#21040; x</span>
-<span class="org-variable-name">dw</span> = <span class="org-rainbow-delimiters-depth-1">[</span>x<span class="org-rainbow-delimiters-depth-2">[</span>0<span class="org-rainbow-delimiters-depth-2">]</span> * ddot, x<span class="org-rainbow-delimiters-depth-2">[</span>1<span class="org-rainbow-delimiters-depth-2">]</span> * ddot, 1.0 * ddot<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#22238;&#20256;&#21040; w</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">&#23436;&#25104;&#65281;&#24471;&#21040;&#36755;&#20837;&#30340;&#26799;&#24230;</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#23545;&#31070;&#32463;&#20803;&#21453;&#21521;&#20256;&#25773;</span>
+<span style="color: #7590db;">ddot</span> = <span style="color: #4f97d7;">(</span>1 - f<span style="color: #4f97d7;">)</span> * f <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#28857;&#31215;&#21464;&#37327;&#30340;&#26799;&#24230;, &#20351;&#29992; sigmoid &#20989;&#25968;&#27714;&#23548;</span>
+<span style="color: #7590db;">dx</span> = <span style="color: #4f97d7;">[</span>w<span style="color: #bc6ec5;">[</span>0<span style="color: #bc6ec5;">]</span> * ddot, w<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span> * ddot<span style="color: #4f97d7;">]</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#22238;&#20256;&#21040; x</span>
+<span style="color: #7590db;">dw</span> = <span style="color: #4f97d7;">[</span>x<span style="color: #bc6ec5;">[</span>0<span style="color: #bc6ec5;">]</span> * ddot, x<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span> * ddot, 1.0 * ddot<span style="color: #4f97d7;">]</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#22238;&#20256;&#21040; w</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#23436;&#25104;&#65281;&#24471;&#21040;&#36755;&#20837;&#30340;&#26799;&#24230;</span>
 </code></pre>
 </div>
 </div>
@@ -417,18 +417,18 @@ f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}
 下面是构建前向传播的代码模式：
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-variable-name">x</span> = 3 <span class="org-comment-delimiter"># </span><span class="org-comment">example values</span>
-<span class="org-variable-name">y</span> = -4
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">x</span> = 3 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">example values</span>
+<span style="color: #7590db;">y</span> = -4
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">forward pass</span>
-<span class="org-variable-name">sigy</span> = 1.0 / <span class="org-rainbow-delimiters-depth-1">(</span>1 + math.exp<span class="org-rainbow-delimiters-depth-2">(</span>-y<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">sigmoid in numerator   #(1)</span>
-<span class="org-variable-name">num</span> = x + sigy <span class="org-comment-delimiter"># </span><span class="org-comment">numerator                               #(2)</span>
-<span class="org-variable-name">sigx</span> = 1.0 / <span class="org-rainbow-delimiters-depth-1">(</span>1 + math.exp<span class="org-rainbow-delimiters-depth-2">(</span>-x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">sigmoid in denominator #(3)</span>
-<span class="org-variable-name">xpy</span> = x + y                                              <span class="org-comment-delimiter">#</span><span class="org-comment">(4)</span>
-<span class="org-variable-name">xpysqr</span> = xpy**2                                          <span class="org-comment-delimiter">#</span><span class="org-comment">(5)</span>
-<span class="org-variable-name">den</span> = sigx + xpysqr <span class="org-comment-delimiter"># </span><span class="org-comment">denominator                        #(6)</span>
-<span class="org-variable-name">invden</span> = 1.0 / den                                       <span class="org-comment-delimiter">#</span><span class="org-comment">(7)</span>
-<span class="org-variable-name">f</span> = num * invden <span class="org-comment-delimiter"># </span><span class="org-comment">done!                                 #(8)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">forward pass</span>
+<span style="color: #7590db;">sigy</span> = 1.0 / <span style="color: #4f97d7;">(</span>1 + math.exp<span style="color: #bc6ec5;">(</span>-y<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">sigmoid in numerator   #(1)</span>
+<span style="color: #7590db;">num</span> = x + sigy <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">numerator                               #(2)</span>
+<span style="color: #7590db;">sigx</span> = 1.0 / <span style="color: #4f97d7;">(</span>1 + math.exp<span style="color: #bc6ec5;">(</span>-x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">sigmoid in denominator #(3)</span>
+<span style="color: #7590db;">xpy</span> = x + y                                              <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(4)</span>
+<span style="color: #7590db;">xpysqr</span> = xpy**2                                          <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(5)</span>
+<span style="color: #7590db;">den</span> = sigx + xpysqr <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">denominator                        #(6)</span>
+<span style="color: #7590db;">invden</span> = 1.0 / den                                       <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(7)</span>
+<span style="color: #7590db;">f</span> = num * invden <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">done!                                 #(8)</span>
 </code></pre>
 </div>
 
@@ -438,27 +438,27 @@ f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}
 </p>
 
 <div class="container">
-<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">backprop f = num * invden</span>
-<span class="org-variable-name">dnum</span> = invden <span class="org-comment-delimiter"># </span><span class="org-comment">gradient on numerator                             #(8)</span>
-<span class="org-variable-name">dinvden</span> = num                                                     <span class="org-comment-delimiter">#</span><span class="org-comment">(8)</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">backprop invden = 1.0 / den</span>
-<span class="org-variable-name">dden</span> = <span class="org-rainbow-delimiters-depth-1">(</span>-1.0 / <span class="org-rainbow-delimiters-depth-2">(</span>den**2<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> * dinvden                                <span class="org-comment-delimiter">#</span><span class="org-comment">(7)</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">backprop den = sigx + xpysqr</span>
-<span class="org-variable-name">dsigx</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dden                                                <span class="org-comment-delimiter">#</span><span class="org-comment">(6)</span>
-<span class="org-variable-name">dxpysqr</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dden                                              <span class="org-comment-delimiter">#</span><span class="org-comment">(6)</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">backprop xpysqr = xpy**2</span>
-<span class="org-variable-name">dxpy</span> = <span class="org-rainbow-delimiters-depth-1">(</span>2 * xpy<span class="org-rainbow-delimiters-depth-1">)</span> * dxpysqr                                        <span class="org-comment-delimiter">#</span><span class="org-comment">(5)</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">backprop xpy = x + y</span>
-<span class="org-variable-name">dx</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dxpy                                                   <span class="org-comment-delimiter">#</span><span class="org-comment">(4)</span>
-<span class="org-variable-name">dy</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dxpy                                                   <span class="org-comment-delimiter">#</span><span class="org-comment">(4)</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">backprop sigx = 1.0 / (1 + math.exp(-x))</span>
-<span class="org-variable-name">dx</span> += <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>1 - sigx<span class="org-rainbow-delimiters-depth-2">)</span> * sigx<span class="org-rainbow-delimiters-depth-1">)</span> * dsigx <span class="org-comment-delimiter"># </span><span class="org-comment">Notice += !! See notes below  #(3)</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">backprop num = x + sigy</span>
-<span class="org-variable-name">dx</span> += <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dnum                                                  <span class="org-comment-delimiter">#</span><span class="org-comment">(2)</span>
-<span class="org-variable-name">dsigy</span> = <span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span> * dnum                                                <span class="org-comment-delimiter">#</span><span class="org-comment">(2)</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">backprop sigy = 1.0 / (1 + math.exp(-y))</span>
-<span class="org-variable-name">dy</span> += <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">(</span>1 - sigy<span class="org-rainbow-delimiters-depth-2">)</span> * sigy<span class="org-rainbow-delimiters-depth-1">)</span> * dsigy                                 <span class="org-comment-delimiter">#</span><span class="org-comment">(1)</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">done! phew</span>
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">backprop f = num * invden</span>
+<span style="color: #7590db;">dnum</span> = invden <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">gradient on numerator                             #(8)</span>
+<span style="color: #7590db;">dinvden</span> = num                                                     <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(8)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">backprop invden = 1.0 / den</span>
+<span style="color: #7590db;">dden</span> = <span style="color: #4f97d7;">(</span>-1.0 / <span style="color: #bc6ec5;">(</span>den**2<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> * dinvden                                <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(7)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">backprop den = sigx + xpysqr</span>
+<span style="color: #7590db;">dsigx</span> = <span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span> * dden                                                <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(6)</span>
+<span style="color: #7590db;">dxpysqr</span> = <span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span> * dden                                              <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(6)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">backprop xpysqr = xpy**2</span>
+<span style="color: #7590db;">dxpy</span> = <span style="color: #4f97d7;">(</span>2 * xpy<span style="color: #4f97d7;">)</span> * dxpysqr                                        <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(5)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">backprop xpy = x + y</span>
+<span style="color: #7590db;">dx</span> = <span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span> * dxpy                                                   <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(4)</span>
+<span style="color: #7590db;">dy</span> = <span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span> * dxpy                                                   <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(4)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">backprop sigx = 1.0 / (1 + math.exp(-x))</span>
+<span style="color: #7590db;">dx</span> += <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span>1 - sigx<span style="color: #bc6ec5;">)</span> * sigx<span style="color: #4f97d7;">)</span> * dsigx <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Notice += !! See notes below  #(3)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">backprop num = x + sigy</span>
+<span style="color: #7590db;">dx</span> += <span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span> * dnum                                                  <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(2)</span>
+<span style="color: #7590db;">dsigy</span> = <span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span> * dnum                                                <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(2)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">backprop sigy = 1.0 / (1 + math.exp(-y))</span>
+<span style="color: #7590db;">dy</span> += <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span>1 - sigy<span style="color: #bc6ec5;">)</span> * sigy<span style="color: #4f97d7;">)</span> * dsigy                                 <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">(1)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">done! phew</span>
 </code></pre>
 </div>
 
@@ -473,7 +473,8 @@ f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}
 <p>
 在计算反向传播时，前向传播过程中得到的一些中间变量非常有用。在实际操作中，最好代码实现对于这些中间变量的缓存，这样在反向传播的时候也能用上它们。
 </p></li>
-
+</ol>
+<ol class="org-ol">
 <li><p>
 在不同分支的梯度要相加。
 </p>
@@ -493,15 +494,15 @@ f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}
 </p>
 
 <div class="container">
-<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">&#21069;&#21521;&#20256;&#25773;</span>
-<span class="org-variable-name">W</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>5, 10<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">X</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>10, 3<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">D</span> = W.dot<span class="org-rainbow-delimiters-depth-1">(</span>X<span class="org-rainbow-delimiters-depth-1">)</span>
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#21069;&#21521;&#20256;&#25773;</span>
+<span style="color: #7590db;">W</span> = np.random.randn<span style="color: #4f97d7;">(</span>5, 10<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">X</span> = np.random.randn<span style="color: #4f97d7;">(</span>10, 3<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">D</span> = W.dot<span style="color: #4f97d7;">(</span>X<span style="color: #4f97d7;">)</span>
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">&#20551;&#35774;&#25105;&#20204;&#24471;&#21040;&#20102; D &#30340;&#26799;&#24230;</span>
-<span class="org-variable-name">dD</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>*D.shape<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#21644; D &#19968;&#26679;&#30340;&#23610;&#23544;</span>
-<span class="org-variable-name">dW</span> = dD.dot<span class="org-rainbow-delimiters-depth-1">(</span>X.T<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">#</span><span class="org-comment">.T &#23601;&#26159;&#23545;&#30697;&#38453;&#36827;&#34892;&#36716;&#32622;</span>
-<span class="org-variable-name">dX</span> = W.T.dot<span class="org-rainbow-delimiters-depth-1">(</span>dD<span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#20551;&#35774;&#25105;&#20204;&#24471;&#21040;&#20102; D &#30340;&#26799;&#24230;</span>
+<span style="color: #7590db;">dD</span> = np.random.randn<span style="color: #4f97d7;">(</span>*D.shape<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#21644; D &#19968;&#26679;&#30340;&#23610;&#23544;</span>
+<span style="color: #7590db;">dW</span> = dD.dot<span style="color: #4f97d7;">(</span>X.T<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">.T &#23601;&#26159;&#23545;&#30697;&#38453;&#36827;&#34892;&#36716;&#32622;</span>
+<span style="color: #7590db;">dX</span> = W.T.dot<span style="color: #4f97d7;">(</span>dD<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -562,15 +563,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -594,7 +595,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -602,7 +603,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

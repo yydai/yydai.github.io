@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-01-14 Sun 00:16 -->
+<!-- 2019-01-01 Tue 15:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git 的内部原理</title>
@@ -247,7 +247,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -299,7 +299,7 @@ Git 是一套内容寻址文件系统。很不错。不过这是什么意思呢�
 <pre><code class="sh">$ mkdir test
 $ cd test
 $ git init
-Initialized empty Git repository<span class="org-keyword"> in</span> /tmp/test/.git/
+Initialized empty Git repository<span style="color: #4f97d7; font-weight: bold;"> in</span> /tmp/test/.git/
 $ find .git/objects
 .git/objects
 .git/objects/info
@@ -313,7 +313,7 @@ $
 Git 初始化了 objects 目录，同时在该目录下创建了 pack 和 info 子目录，但是该目录下没有其他常规文件。我们往这个 Git 数据库里存储一些文本：
 </p>
 <div class="container">
-<pre><code class="sh">$ echo <span class="org-string">'test content'</span> | git hash-object -w --stdin
+<pre><code class="sh">$ echo <span style="color: #2d9574;">'test content'</span> | git hash-object -w --stdin
 d670460b4b4aece5915caf5c68d12f560a9fe3e4
 </code></pre>
 </div>
@@ -347,7 +347,7 @@ test content
 </p>
 
 <div class="container">
-<pre><code class="shell">$ echo <span class="org-string">'version 1'</span> &gt; test.txt
+<pre><code class="shell">$ echo <span style="color: #2d9574;">'version 1'</span> &gt; test.txt
 $ git hash-object -w test.txt
 83baae61804e65cc73a7201a7252750c76066a30
 </code></pre>
@@ -358,7 +358,7 @@ $ git hash-object -w test.txt
 </p>
 
 <div class="container">
-<pre><code class="shell">$ echo <span class="org-string">'version 2'</span> &gt; test.txt
+<pre><code class="shell">$ echo <span style="color: #2d9574;">'version 2'</span> &gt; test.txt
 $ git hash-object -w test.txt
 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a
 </code></pre>
@@ -413,7 +413,7 @@ blob
 </p>
 
 <div class="container">
-<pre><code class="shell">$ git cat-file -p master^<span class="org-rainbow-delimiters-depth-1">{</span>tree<span class="org-rainbow-delimiters-depth-1">}</span>
+<pre><code class="shell">    $ git cat-file -p master^<span style="color: #4f97d7;">{</span>tree<span style="color: #4f97d7;">}</span>
 100644 blob a906cb2a4a904a152e80877d4088654daad0c859      README
 100644 blob 8f94139338f9404f26296befa88755fc2598c289      Rakefile
 040000 tree 99f1a6d12cb4b6f19c8655fca46c3ecf317074e0      lib
@@ -444,7 +444,7 @@ master<sup>tree</sup> 表示 master 分支上最新提交指向的 tree 对象�
 你可以自己创建 tree。通常 Git 根据你的暂存区域或 index 来创建并写入一个 tree。因此要创建一个 tree 对象的话首先要通过将一些文件暂存从而创建一个 index。可以使用 plumbing 命令 update-index 为一个单独文件 ── test.txt 文件的第一个版本 ──　创建一个 index　。通过该命令人为的将 test.txt 文件的首个版本加入到了一个新的暂存区域中。由于该文件原先并不在暂存区域中 (甚至就连暂存区域也还没被创建出来呢) ，必须传入 &#x2013;add 参数;由于要添加的文件并不在当前目录下而是在数据库中，必须传入 &#x2013;cacheinfo 参数。同时指定了文件模式，SHA-1 值和文件名：
 </p>
 <div class="container">
-<pre><code class="shell">$ git update-index --add --cacheinfo 100644 <span class="org-sh-escaped-newline">\</span>
+<pre><code class="shell">$ git update-index --add --cacheinfo 100644 <span style="color: #2d9574;">\</span>
   83baae61804e65cc73a7201a7252750c76066a30 test.txt
 </code></pre>
 </div>
@@ -480,7 +480,7 @@ tree
 </p>
 
 <div class="container">
-<pre><code class="shell">$ echo <span class="org-string">'new file'</span> &gt; new.txt
+<pre><code class="shell">$ echo <span style="color: #2d9574;">'new file'</span> &gt; new.txt
 $ git update-index test.txt
 $ git update-index --add new.txt
 </code></pre>
@@ -538,7 +538,7 @@ $ git cat-file -p 3c4e9cd789d88d8d89c1073707c3585e41b0e614
 </p>
 
 <div class="container">
-<pre><code class="shell">$ echo <span class="org-string">'first commit'</span> | git commit-tree d8329f
+<pre><code class="shell">$ echo <span style="color: #2d9574;">'first commit'</span> | git commit-tree d8329f
 fdf4fc3344e67ab068f836878b6c4951e3b15f3d
 </code></pre>
 </div>
@@ -565,9 +565,9 @@ commit 对象有格式很简单：指明了该时间点项目快照的顶层树�
 </p>
 
 <div class="container">
-<pre><code class="shell">$ echo <span class="org-string">'second commit'</span> | git commit-tree 0155eb -p fdf4fc3
+<pre><code class="shell">$ echo <span style="color: #2d9574;">'second commit'</span> | git commit-tree 0155eb -p fdf4fc3
 cac0cab538b970a37ea1e769cbbde608743bc96d
-$ echo <span class="org-string">'third commit'</span>  | git commit-tree 3c4e9c -p cac0cab
+$ echo <span style="color: #2d9574;">'third commit'</span>  | git commit-tree 3c4e9c -p cac0cab
 1a410efbd13591db07496601ebc7a059dd55cfe9
 </code></pre>
 </div>
@@ -585,7 +585,7 @@ Date:   Fri May 22 18:15:24 2009 -0700
     third commit
 
  bak/test.txt |    1 +
- 1 files changed, 1 insertions<span class="org-rainbow-delimiters-depth-1">(</span>+<span class="org-rainbow-delimiters-depth-1">)</span>, 0 deletions<span class="org-rainbow-delimiters-depth-1">(</span>-<span class="org-rainbow-delimiters-depth-1">)</span>
+ 1 files changed, 1 insertions<span style="color: #4f97d7;">(</span>+<span style="color: #4f97d7;">)</span>, 0 deletions<span style="color: #4f97d7;">(</span>-<span style="color: #4f97d7;">)</span>
 
 commit cac0cab538b970a37ea1e769cbbde608743bc96d
 Author: Scott Chacon <a href="mailto:schacon%40gmail.com">&lt;schacon@gmail.com&gt;</a>
@@ -595,7 +595,7 @@ Date:   Fri May 22 18:14:29 2009 -0700
 
  new.txt  |    1 +
  test.txt |    2 +-
- 2 files changed, 2 insertions<span class="org-rainbow-delimiters-depth-1">(</span>+<span class="org-rainbow-delimiters-depth-1">)</span>, 1 deletions<span class="org-rainbow-delimiters-depth-1">(</span>-<span class="org-rainbow-delimiters-depth-1">)</span>
+ 2 files changed, 2 insertions<span style="color: #4f97d7;">(</span>+<span style="color: #4f97d7;">)</span>, 1 deletions<span style="color: #4f97d7;">(</span>-<span style="color: #4f97d7;">)</span>
 
 commit fdf4fc3344e67ab068f836878b6c4951e3b15f3d
 Author: Scott Chacon <a href="mailto:schacon%40gmail.com">&lt;schacon@gmail.com&gt;</a>
@@ -604,7 +604,7 @@ Date:   Fri May 22 18:09:34 2009 -0700
     first commit
 
  test.txt |    1 +
- 1 files changed, 1 insertions<span class="org-rainbow-delimiters-depth-1">(</span>+<span class="org-rainbow-delimiters-depth-1">)</span>, 0 deletions<span class="org-rainbow-delimiters-depth-1">(</span>-<span class="org-rainbow-delimiters-depth-1">)</span>
+ 1 files changed, 1 insertions<span style="color: #4f97d7;">(</span>+<span style="color: #4f97d7;">)</span>, 0 deletions<span style="color: #4f97d7;">(</span>-<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -614,16 +614,16 @@ Date:   Fri May 22 18:09:34 2009 -0700
 
 <div class="container">
 <pre><code class="shell">$ find .git/objects -type f
-.git/objects/01/55eb4229851634a0f03eb265b69f5a2d56f341 <span class="org-comment-delimiter"># </span><span class="org-comment">tree 2</span>
-.git/objects/1a/410efbd13591db07496601ebc7a059dd55cfe9 <span class="org-comment-delimiter"># </span><span class="org-comment">commit 3</span>
-.git/objects/1f/7a7a472abf3dd9643fd615f6da379c4acb3e3a <span class="org-comment-delimiter"># </span><span class="org-comment">test.txt v2</span>
-.git/objects/3c/4e9cd789d88d8d89c1073707c3585e41b0e614 <span class="org-comment-delimiter"># </span><span class="org-comment">tree 3</span>
-.git/objects/83/baae61804e65cc73a7201a7252750c76066a30 <span class="org-comment-delimiter"># </span><span class="org-comment">test.txt v1</span>
-.git/objects/ca/c0cab538b970a37ea1e769cbbde608743bc96d <span class="org-comment-delimiter"># </span><span class="org-comment">commit 2</span>
-.git/objects/d6/70460b4b4aece5915caf5c68d12f560a9fe3e4 <span class="org-comment-delimiter"># </span><span class="org-comment">'test content'</span>
-.git/objects/d8/329fc1cc938780ffdd9f94e0d364e0ea74f579 <span class="org-comment-delimiter"># </span><span class="org-comment">tree 1</span>
-.git/objects/fa/49b077972391ad58037050f2a75f74e3671e92 <span class="org-comment-delimiter"># </span><span class="org-comment">new.txt</span>
-.git/objects/fd/f4fc3344e67ab068f836878b6c4951e3b15f3d <span class="org-comment-delimiter"># </span><span class="org-comment">commit 1</span>
+.git/objects/01/55eb4229851634a0f03eb265b69f5a2d56f341 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">tree 2</span>
+.git/objects/1a/410efbd13591db07496601ebc7a059dd55cfe9 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">commit 3</span>
+.git/objects/1f/7a7a472abf3dd9643fd615f6da379c4acb3e3a <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">test.txt v2</span>
+.git/objects/3c/4e9cd789d88d8d89c1073707c3585e41b0e614 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">tree 3</span>
+.git/objects/83/baae61804e65cc73a7201a7252750c76066a30 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">test.txt v1</span>
+.git/objects/ca/c0cab538b970a37ea1e769cbbde608743bc96d <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">commit 2</span>
+.git/objects/d6/70460b4b4aece5915caf5c68d12f560a9fe3e4 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">'test content'</span>
+.git/objects/d8/329fc1cc938780ffdd9f94e0d364e0ea74f579 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">tree 1</span>
+.git/objects/fa/49b077972391ad58037050f2a75f74e3671e92 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">new.txt</span>
+.git/objects/fd/f4fc3344e67ab068f836878b6c4951e3b15f3d <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">commit 1</span>
 </code></pre>
 </div>
 
@@ -685,8 +685,8 @@ committer Ying Dai <a href="mailto:yingdai123%40gmail.com">&lt;yingdai123@gmail.
 </p>
 <div class="container">
 <pre><code class="shell">$ irb
-&gt;&gt; <span class="org-variable-name">content</span> = <span class="org-string">"what is up, doc?\n"</span>
-=&gt; <span class="org-string">"what is up, doc?</span>
+&gt;&gt; <span style="color: #7590db;">content</span> = <span style="color: #2d9574;">"what is up, doc?\n"</span>
+=&gt; <span style="color: #2d9574;">"what is up, doc?</span>
 </code></pre>
 </div>
 <p>
@@ -698,8 +698,8 @@ Git 以对象类型为起始内容构造一个文件头，本例中是一个 blo
 </p>
 
 <div class="container">
-<pre><code class="shell">&gt;&gt; <span class="org-variable-name">header</span> = <span class="org-string">"blob #{content.length}\0"</span>
-=&gt; <span class="org-string">"blob 16\000"</span>
+<pre><code class="shell">&gt;&gt; <span style="color: #7590db;">header</span> = <span style="color: #2d9574;">"blob #{content.length}\0"</span>
+=&gt; <span style="color: #2d9574;">"blob 16\000"</span>
 </code></pre>
 </div>
 
@@ -707,12 +707,12 @@ Git 以对象类型为起始内容构造一个文件头，本例中是一个 blo
 Git 将文件头与原始数据内容拼接起来，并计算拼接后的新内容的 SHA-1 校验和。可以在 Ruby 中使用 require 语句导入 SHA1 digest 库，然后调用 Digest::SHA1.hexdigest() 方法计算字符串的 SHA-1 值：
 </p>
 <div class="container">
-<pre><code class="shell">&gt;&gt; <span class="org-variable-name">store</span> = header + content
-=&gt; <span class="org-string">"blob 16\000what is up, doc?"</span>
-&gt;&gt; require <span class="org-string">'digest/sha1'</span>
+<pre><code class="shell">&gt;&gt; <span style="color: #7590db;">store</span> = header + content
+=&gt; <span style="color: #2d9574;">"blob 16\000what is up, doc?"</span>
+&gt;&gt; require <span style="color: #2d9574;">'digest/sha1'</span>
 =&gt; true
-&gt;&gt; <span class="org-variable-name">sha1</span> = Digest::SHA1.hexdigest<span class="org-rainbow-delimiters-depth-1">(</span>store<span class="org-rainbow-delimiters-depth-1">)</span>
-=&gt; <span class="org-string">"bd9dbf5aae1a3862dd1526723246b20206e5fc37"</span>
+&gt;&gt; <span style="color: #7590db;">sha1</span> = Digest::SHA1.hexdigest<span style="color: #4f97d7;">(</span>store<span style="color: #4f97d7;">)</span>
+=&gt; <span style="color: #2d9574;">"bd9dbf5aae1a3862dd1526723246b20206e5fc37"</span>
 </code></pre>
 </div>
 
@@ -721,10 +721,10 @@ Git 用 zlib 对数据内容进行压缩，在 Ruby 中可以用 zlib 库来实�
 </p>
 
 <div class="container">
-<pre><code class="shell">&gt;&gt; require <span class="org-string">'zlib'</span>
+<pre><code class="shell">&gt;&gt; require <span style="color: #2d9574;">'zlib'</span>
 =&gt; true
-&gt;&gt; <span class="org-variable-name">zlib_content</span> = Zlib::Deflate.deflate<span class="org-rainbow-delimiters-depth-1">(</span>store<span class="org-rainbow-delimiters-depth-1">)</span>
-=&gt; <span class="org-string">"x\234K\312\311OR04c(\317H,Q\310,V(-\320QH\311O\266\a\000_\034\a\235"</span>
+&gt;&gt; <span style="color: #7590db;">zlib_content</span> = Zlib::Deflate.deflate<span style="color: #4f97d7;">(</span>store<span style="color: #4f97d7;">)</span>
+=&gt; <span style="color: #2d9574;">"x\234K\312\311OR04c(\317H,Q\310,V(-\320QH\311O\266\a\000_\034\a\235"</span>
 </code></pre>
 </div>
 
@@ -733,13 +733,13 @@ Git 用 zlib 对数据内容进行压缩，在 Ruby 中可以用 zlib 库来实�
 </p>
 
 <div class="container">
-<pre><code class="shell">&gt;&gt; <span class="org-variable-name">path</span> = <span class="org-string">'.git/objects/'</span> + sha1<span class="org-rainbow-delimiters-depth-1">[</span>0,2<span class="org-rainbow-delimiters-depth-1">]</span> + <span class="org-string">'/'</span> + sha1<span class="org-rainbow-delimiters-depth-1">[</span>2,38<span class="org-rainbow-delimiters-depth-1">]</span>
-=&gt; <span class="org-string">".git/objects/bd/9dbf5aae1a3862dd1526723246b20206e5fc37"</span>
-&gt;&gt; require <span class="org-string">'fileutils'</span>
+<pre><code class="shell">&gt;&gt; <span style="color: #7590db;">path</span> = <span style="color: #2d9574;">'.git/objects/'</span> + sha1<span style="color: #4f97d7;">[</span>0,2<span style="color: #4f97d7;">]</span> + <span style="color: #2d9574;">'/'</span> + sha1<span style="color: #4f97d7;">[</span>2,38<span style="color: #4f97d7;">]</span>
+=&gt; <span style="color: #2d9574;">".git/objects/bd/9dbf5aae1a3862dd1526723246b20206e5fc37"</span>
+&gt;&gt; require <span style="color: #2d9574;">'fileutils'</span>
 =&gt; true
-&gt;&gt; FileUtils.mkdir_p<span class="org-rainbow-delimiters-depth-1">(</span>File.dirname<span class="org-rainbow-delimiters-depth-2">(</span>path<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-=&gt; <span class="org-string">".git/objects/bd"</span>
-&gt;&gt; File.open<span class="org-rainbow-delimiters-depth-1">(</span>path, <span class="org-string">'w'</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-rainbow-delimiters-depth-1">{</span> |f| f.write zlib_content <span class="org-rainbow-delimiters-depth-1">}</span>
+&gt;&gt; FileUtils.mkdir_p<span style="color: #4f97d7;">(</span>File.dirname<span style="color: #bc6ec5;">(</span>path<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+=&gt; <span style="color: #2d9574;">".git/objects/bd"</span>
+&gt;&gt; File.open<span style="color: #4f97d7;">(</span>path, <span style="color: #2d9574;">'w'</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span> |f| f.write zlib_content <span style="color: #4f97d7;">}</span>
 =&gt; 32
 </code></pre>
 </div>
@@ -811,15 +811,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -843,7 +843,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -851,7 +851,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:33 -->
+<!-- 2019-01-01 Tue 15:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>吉他乐理笔记</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -271,18 +271,22 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
- 小调之所以被称为小调是因为在小调中，主调音（第一个音）和中音
+小调之所以被称为小调是因为在小调中，主调音（第一个音）和中音
+</p></li>
+</ol>
+<p>
 （第三个音）的音程是 <b>小三度</b> 。通常用以表达负面的情感，常用来表达悲伤、阴沉、恐怖的情感，在动画或电影当中的背景音乐，则使用在悬疑或血腥等剧情上的使用，游戏当中则是战斗曲或是遭遇敌人魔王等。
 例如，C 小调是一个于 C 音开始的音乐的小调，组成的音有 C、D、降 E、
 F、G、降 A、降 B 及 C（和声小调）。
-</p></li>
+</p>
 
+<ol class="org-ol">
 <li><p>
 小三度
 </p>
 
 <p>
- 一个小三度是一个横跨三个半音的音程。在五线谱中，小三度横跨三个五线谱位置。例如，从 A 到 C 的音程是一个小三度，因为 C 在 A 的三个半音之上。
+         一个小三度是一个横跨三个半音的音程。在五线谱中，小三度横跨三个五线谱位置。例如，从 A 到 C 的音程是一个小三度，因为 C 在 A 的三个半音之上。
 </p></li>
 
 <li><p>
@@ -299,7 +303,7 @@ F、G、降 A、降 B 及 C（和声小调）。
 </p>
 
 <p>
- 纯八度（Perfect Eighth，亦称为 Octave）是音程的一种，它的组成是由 2 个相同音名但来自不同音域所组成。两音的距离为 12 个半音，而频率的比例是 2:1，换而言之，较高音的频率为较低音的两倍。
+         纯八度（Perfect Eighth，亦称为 Octave）是音程的一种，它的组成是由 2 个相同音名但来自不同音域所组成。两音的距离为 12 个半音，而频率的比例是 2:1，换而言之，较高音的频率为较低音的两倍。
 </p></li>
 
 <li><p>
@@ -307,7 +311,7 @@ F、G、降 A、降 B 及 C（和声小调）。
 </p>
 
 <p>
- 音名就是音高的名称，即 C、D、E、F、G、A、B。音名和音高的关系是绝对的；与音名相对的唱名则不同，唱名和音高的关系是相对的。每高或低八度的音高的音名是一样。
+         音名就是音高的名称，即 C、D、E、F、G、A、B。音名和音高的关系是绝对的；与音名相对的唱名则不同，唱名和音高的关系是相对的。每高或低八度的音高的音名是一样。
 </p></li>
 
 <li><p>
@@ -315,7 +319,7 @@ F、G、降 A、降 B 及 C（和声小调）。
 </p>
 
 <p>
- 在演唱旋律时为方便唱谱而采用的名称称唱名。我们采用的将自然大调式中的七个基本音级分别唱作 do、re、mi、fa、sol、la、si。唱名有首调唱名法与固定唱名法两种。
+         在演唱旋律时为方便唱谱而采用的名称称唱名。我们采用的将自然大调式中的七个基本音级分别唱作 do、re、mi、fa、sol、la、si。唱名有首调唱名法与固定唱名法两种。
 </p>
 <ul class="org-ul">
 <li>首调唱名法：将当前调的主音唱成 do。</li>
@@ -363,15 +367,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -395,7 +399,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -403,7 +407,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

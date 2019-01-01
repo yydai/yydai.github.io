@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:32 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>神经网络</title>
@@ -247,7 +247,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -297,13 +297,13 @@ for the JavaScript code in this tag.
 一个神经元前向传播的实例代码如下
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-keyword">class</span> <span class="org-type">Neuron</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">object</span><span class="org-rainbow-delimiters-depth-1">)</span>:
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">...</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">def</span> <span class="org-function-name">forward</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">self</span>, inputs<span class="org-rainbow-delimiters-depth-1">)</span>:
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-doc">""" assume inputs and weights are 1-D numpy arrays and bias is a number """</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-variable-name">cell_body_sum</span> = np.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">(</span>inputs * <span class="org-keyword">self</span>.weights<span class="org-rainbow-delimiters-depth-1">)</span> + <span class="org-keyword">self</span>.bias
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span> <span class="org-variable-name">firing_rate</span> = 1.0 / <span class="org-rainbow-delimiters-depth-1">(</span>1.0 + math.exp<span class="org-rainbow-delimiters-depth-2">(</span>-cell_body_sum<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">sigmoid activation function</span>
-<span class="org-highlight-indentation"> </span>   <span class="org-highlight-indentation"> </span> <span class="org-keyword">return</span> firing_rate
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Neuron</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">object</span><span style="color: #4f97d7;">)</span>:
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">...</span>
+<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">forward</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, inputs<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span> <span style="color: #9f8766;">""" assume inputs and weights are 1-D numpy arrays and bias is a number """</span>
+<span style="background-color: #292e34;"> </span> <span style="color: #7590db;">cell_body_sum</span> = np.<span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>inputs * <span style="color: #4f97d7; font-weight: bold;">self</span>.weights<span style="color: #4f97d7;">)</span> + <span style="color: #4f97d7; font-weight: bold;">self</span>.bias
+<span style="background-color: #292e34;"> </span> <span style="color: #7590db;">firing_rate</span> = 1.0 / <span style="color: #4f97d7;">(</span>1.0 + math.exp<span style="color: #bc6ec5;">(</span>-cell_body_sum<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">sigmoid activation function</span>
+<span style="background-color: #292e34;"> </span> <span style="color: #4f97d7; font-weight: bold;">return</span> firing_rate
 </code></pre>
 </div>
 
@@ -343,10 +343,15 @@ Sigmoid 函数饱和使梯度消失。
 </p>
 
 <p>
-  sigmoid 神经元有一个不好的特性，就是当神经元的激活在接近 0 或 1 处时会饱和：在这些区域，梯度几乎为 0。回忆一下，在反向传播的时候，
-这个（局部）梯度将会与整个损失函数关于该门单元输出的梯度相乘。因此，如果局部梯度非常小，那么相乘的结果也会接近零，这会有效地“杀死”梯度，几乎就有没有信号通过神经元传到权重再到数据了。
+sigmoid 神经元有一个不好的特性，就是当神经元的激活在接近 0 或 1 处
 </p></li>
+</ul>
+<p>
+时会饱和：在这些区域，梯度几乎为 0。回忆一下，在反向传播的时候，
+这个（局部）梯度将会与整个损失函数关于该门单元输出的梯度相乘。因此，如果局部梯度非常小，那么相乘的结果也会接近零，这会有效地“杀死”梯度，几乎就有没有信号通过神经元传到权重再到数据了。
+</p>
 
+<ul class="org-ul">
 <li>Sigmoid 函数的输出不是零中心的。</li>
 </ul>
 </div>
@@ -373,8 +378,11 @@ The Tectified Linear Unit(ReLU) 在最近几年变得非常的流行。
 </p>
 <ul class="org-ul">
 <li>相较于 sigmoid 和 tanh 函数，ReLU 对于随机梯度下降的收敛有巨大的加速作用</li>
-<li>sigmoid 和 tanh 神经元含有指数运算等耗费计算资源的操作，而 ReLU 可以简单地通过对一个矩阵进行阈值计算得到。</li>
 </ul>
+<ul class="org-ul">
+<li><p>
+sigmoid 和 tanh 神经元含有指数运算等耗费计算资源的操作，而 ReLU 可以简单地通过对一个矩阵进行阈值计算得到。
+</p>
 
 <p>
 缺点来说：
@@ -387,6 +395,7 @@ The Tectified Linear Unit(ReLU) 在最近几年变得非常的流行。
 <p>
 举例来说，当一个很大的梯度流过 ReLU 的神经元的时候，可能会导致梯度更新到一种特别的状态，在这种状态下神经元将无法被其他任何数据点再次激活。如果这种情况发生，那么从此所以流过这个神经元的梯度将都变成 0。
 </p></li>
+</ul></li>
 </ul>
 </div>
 </div>
@@ -432,32 +441,32 @@ Leaky ReLUs are one attempt to fix the “dying ReLU” problem. Instead of the 
 首先是 Sigmoid 的实现
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
-<span class="org-keyword">from</span> numpy.random <span class="org-keyword">import</span> randn
-<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">from</span> numpy.random <span style="color: #4f97d7; font-weight: bold;">import</span> randn
+<span style="color: #4f97d7; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #4f97d7; font-weight: bold;">as</span> plt
 
-<span class="org-variable-name">N</span>, <span class="org-variable-name">D_in</span>, <span class="org-variable-name">H</span>, <span class="org-variable-name">D_out</span> = 64, 1000, 100, 10
-<span class="org-variable-name">x</span>, <span class="org-variable-name">y</span> = randn<span class="org-rainbow-delimiters-depth-1">(</span>N, D_in<span class="org-rainbow-delimiters-depth-1">)</span>, randn<span class="org-rainbow-delimiters-depth-1">(</span>N, D_out<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">w1</span>, <span class="org-variable-name">w2</span> = randn<span class="org-rainbow-delimiters-depth-1">(</span>D_in, H<span class="org-rainbow-delimiters-depth-1">)</span>, randn<span class="org-rainbow-delimiters-depth-1">(</span>H, D_out<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">loss_col</span> = <span class="org-rainbow-delimiters-depth-1">[]</span>
+<span style="color: #7590db;">N</span>, <span style="color: #7590db;">D_in</span>, <span style="color: #7590db;">H</span>, <span style="color: #7590db;">D_out</span> = 64, 1000, 100, 10
+<span style="color: #7590db;">x</span>, <span style="color: #7590db;">y</span> = randn<span style="color: #4f97d7;">(</span>N, D_in<span style="color: #4f97d7;">)</span>, randn<span style="color: #4f97d7;">(</span>N, D_out<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">w1</span>, <span style="color: #7590db;">w2</span> = randn<span style="color: #4f97d7;">(</span>D_in, H<span style="color: #4f97d7;">)</span>, randn<span style="color: #4f97d7;">(</span>H, D_out<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">loss_col</span> = <span style="color: #4f97d7;">[]</span>
 
-<span class="org-keyword">for</span> t <span class="org-keyword">in</span> <span class="org-builtin">range</span><span class="org-rainbow-delimiters-depth-1">(</span>2000<span class="org-rainbow-delimiters-depth-1">)</span>:
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">h</span> = 1 / <span class="org-rainbow-delimiters-depth-1">(</span>1 + np.exp<span class="org-rainbow-delimiters-depth-2">(</span>-x.dot<span class="org-rainbow-delimiters-depth-3">(</span>w1<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">y_pred</span> = h.dot<span class="org-rainbow-delimiters-depth-1">(</span>w2<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">loss</span> = np.square<span class="org-rainbow-delimiters-depth-1">(</span>y_pred - y<span class="org-rainbow-delimiters-depth-1">)</span>.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">()</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   loss_col.append<span class="org-rainbow-delimiters-depth-1">(</span>loss<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>t, loss, y_pred<span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="color: #4f97d7; font-weight: bold;">for</span> t <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>2000<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">h</span> = 1 / <span style="color: #4f97d7;">(</span>1 + np.exp<span style="color: #bc6ec5;">(</span>-x.dot<span style="color: #2d9574;">(</span>w1<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">y_pred</span> = h.dot<span style="color: #4f97d7;">(</span>w2<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">loss</span> = np.square<span style="color: #4f97d7;">(</span>y_pred - y<span style="color: #4f97d7;">)</span>.<span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">()</span>
+<span style="background-color: #292e34;"> </span>   loss_col.append<span style="color: #4f97d7;">(</span>loss<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>t, loss, y_pred<span style="color: #4f97d7;">)</span>
 
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_y_pred</span> = 2.0 * <span class="org-rainbow-delimiters-depth-1">(</span>y_pred - y<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_w2</span> = h.T.dot<span class="org-rainbow-delimiters-depth-1">(</span>grad_y_pred<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_h</span> = grad_y_pred.dot<span class="org-rainbow-delimiters-depth-1">(</span>w2.T<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_w1</span> = x.T.dot<span class="org-rainbow-delimiters-depth-1">(</span>grad_h * h * <span class="org-rainbow-delimiters-depth-2">(</span>1 - h<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad_y_pred</span> = 2.0 * <span style="color: #4f97d7;">(</span>y_pred - y<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad_w2</span> = h.T.dot<span style="color: #4f97d7;">(</span>grad_y_pred<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad_h</span> = grad_y_pred.dot<span style="color: #4f97d7;">(</span>w2.T<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad_w1</span> = x.T.dot<span style="color: #4f97d7;">(</span>grad_h * h * <span style="color: #bc6ec5;">(</span>1 - h<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">w1</span> -= 1e-4 * grad_w1
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">w2</span> -= 1e-4 * grad_w2
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">w1</span> -= 1e-4 * grad_w1
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">w2</span> -= 1e-4 * grad_w2
 
-plt.plot<span class="org-rainbow-delimiters-depth-1">(</span>loss_col<span class="org-rainbow-delimiters-depth-1">)</span>
-plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
+plt.plot<span style="color: #4f97d7;">(</span>loss_col<span style="color: #4f97d7;">)</span>
+plt.show<span style="color: #4f97d7;">()</span>
 </code></pre>
 </div>
 
@@ -466,48 +475,48 @@ plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
 下面的激活函数式用的 ReLu:
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
-<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #4f97d7; font-weight: bold;">as</span> plt
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">N is batch size(sample size); D_in is input dimension;</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">H is hidden dimension; D_out is output dimension.</span>
-<span class="org-variable-name">N</span>, <span class="org-variable-name">D_in</span>, <span class="org-variable-name">H</span>, <span class="org-variable-name">D_out</span> = 4, 2, 30, 1
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">N is batch size(sample size); D_in is input dimension;</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">H is hidden dimension; D_out is output dimension.</span>
+<span style="color: #7590db;">N</span>, <span style="color: #7590db;">D_in</span>, <span style="color: #7590db;">H</span>, <span style="color: #7590db;">D_out</span> = 4, 2, 30, 1
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Create random input and output data</span>
-<span class="org-variable-name">x</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>0, 0<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>0, 1<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>1, 0<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>1, 1<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">y</span> = np.array<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>0<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>1<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>1<span class="org-rainbow-delimiters-depth-3">]</span>, <span class="org-rainbow-delimiters-depth-3">[</span>0<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Create random input and output data</span>
+<span style="color: #7590db;">x</span> = np.array<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>0, 0<span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span>0, 1<span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span>1, 0<span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span>1, 1<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">y</span> = np.array<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>0<span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span>1<span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span>1<span style="color: #2d9574;">]</span>, <span style="color: #2d9574;">[</span>0<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Randomly initialize weights</span>
-<span class="org-variable-name">w1</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>D_in, H<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">w2</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>H, D_out<span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Randomly initialize weights</span>
+<span style="color: #7590db;">w1</span> = np.random.randn<span style="color: #4f97d7;">(</span>D_in, H<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">w2</span> = np.random.randn<span style="color: #4f97d7;">(</span>H, D_out<span style="color: #4f97d7;">)</span>
 
-<span class="org-variable-name">learning_rate</span> = 0.002
-<span class="org-variable-name">loss_col</span> = <span class="org-rainbow-delimiters-depth-1">[]</span>
-<span class="org-keyword">for</span> t <span class="org-keyword">in</span> <span class="org-builtin">range</span><span class="org-rainbow-delimiters-depth-1">(</span>200<span class="org-rainbow-delimiters-depth-1">)</span>:
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Forward pass: compute predicted y</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">h</span> = x.dot<span class="org-rainbow-delimiters-depth-1">(</span>w1<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">h_relu</span> = np.maximum<span class="org-rainbow-delimiters-depth-1">(</span>h, 0<span class="org-rainbow-delimiters-depth-1">)</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">using ReLU as activate function</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">y_pred</span> = h_relu.dot<span class="org-rainbow-delimiters-depth-1">(</span>w2<span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="color: #7590db;">learning_rate</span> = 0.002
+<span style="color: #7590db;">loss_col</span> = <span style="color: #4f97d7;">[]</span>
+<span style="color: #4f97d7; font-weight: bold;">for</span> t <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>200<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Forward pass: compute predicted y</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">h</span> = x.dot<span style="color: #4f97d7;">(</span>w1<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">h_relu</span> = np.maximum<span style="color: #4f97d7;">(</span>h, 0<span style="color: #4f97d7;">)</span>  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">using ReLU as activate function</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">y_pred</span> = h_relu.dot<span style="color: #4f97d7;">(</span>w2<span style="color: #4f97d7;">)</span>
 
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Compute and print loss</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">loss</span> = np.square<span class="org-rainbow-delimiters-depth-1">(</span>y_pred - y<span class="org-rainbow-delimiters-depth-1">)</span>.<span class="org-builtin">sum</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-comment-delimiter"># </span><span class="org-comment">loss function</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   loss_col.append<span class="org-rainbow-delimiters-depth-1">(</span>loss<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-keyword">print</span><span class="org-rainbow-delimiters-depth-1">(</span>t, loss, y_pred<span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Compute and print loss</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">loss</span> = np.square<span style="color: #4f97d7;">(</span>y_pred - y<span style="color: #4f97d7;">)</span>.<span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">()</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">loss function</span>
+<span style="background-color: #292e34;"> </span>   loss_col.append<span style="color: #4f97d7;">(</span>loss<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>t, loss, y_pred<span style="color: #4f97d7;">)</span>
 
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Backprop to compute gradients of w1 and w2 with respect to loss</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_y_pred</span> = 2.0 * <span class="org-rainbow-delimiters-depth-1">(</span>y_pred - y<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">the last layer's error</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_w2</span> = h_relu.T.dot<span class="org-rainbow-delimiters-depth-1">(</span>grad_y_pred<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_h_relu</span> = grad_y_pred.dot<span class="org-rainbow-delimiters-depth-1">(</span>w2.T<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">the second laye's error</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_h</span> = grad_h_relu.copy<span class="org-rainbow-delimiters-depth-1">()</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_h</span><span class="org-rainbow-delimiters-depth-1">[</span>h &lt; 0<span class="org-rainbow-delimiters-depth-1">]</span> = 0  <span class="org-comment-delimiter"># </span><span class="org-comment">the derivate of ReLU</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">grad_w1</span> = x.T.dot<span class="org-rainbow-delimiters-depth-1">(</span>grad_h<span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Backprop to compute gradients of w1 and w2 with respect to loss</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad_y_pred</span> = 2.0 * <span style="color: #4f97d7;">(</span>y_pred - y<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">the last layer's error</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad_w2</span> = h_relu.T.dot<span style="color: #4f97d7;">(</span>grad_y_pred<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad_h_relu</span> = grad_y_pred.dot<span style="color: #4f97d7;">(</span>w2.T<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">the second laye's error</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad_h</span> = grad_h_relu.copy<span style="color: #4f97d7;">()</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad_h</span><span style="color: #4f97d7;">[</span>h &lt; 0<span style="color: #4f97d7;">]</span> = 0  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">the derivate of ReLU</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad_w1</span> = x.T.dot<span style="color: #4f97d7;">(</span>grad_h<span style="color: #4f97d7;">)</span>
 
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-comment-delimiter"># </span><span class="org-comment">Update weights</span>
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">w1</span> -= learning_rate * grad_w1
-<span class="org-highlight-indentation"><span class="org-highlight-indentation"> </span></span>   <span class="org-variable-name">w2</span> -= learning_rate * grad_w2
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Update weights</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">w1</span> -= learning_rate * grad_w1
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">w2</span> -= learning_rate * grad_w2
 
-plt.plot<span class="org-rainbow-delimiters-depth-1">(</span>loss_col<span class="org-rainbow-delimiters-depth-1">)</span>
-plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
+plt.plot<span style="color: #4f97d7;">(</span>loss_col<span style="color: #4f97d7;">)</span>
+plt.show<span style="color: #4f97d7;">()</span>
 </code></pre>
 </div>
 
@@ -532,12 +541,12 @@ plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
 </div>
 
 <div class="container">
-<pre><code class="python"><span class="org-comment-delimiter"># </span><span class="org-comment">forward pass of 3-layer neural network</span>
-<span class="org-variable-name">f</span> = <span class="org-keyword">lambda</span> x: 1.0 / <span class="org-rainbow-delimiters-depth-1">(</span>1.0 + np.exp<span class="org-rainbow-delimiters-depth-2">(</span>-x<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">activation function</span>
-<span class="org-variable-name">x</span> = np.random.randn<span class="org-rainbow-delimiters-depth-1">(</span>3, 1<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-variable-name">h1</span> = f<span class="org-rainbow-delimiters-depth-1">(</span>np.dot<span class="org-rainbow-delimiters-depth-2">(</span>W1, x<span class="org-rainbow-delimiters-depth-2">)</span> + b1<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">calculate first hidden layer activation</span>
-<span class="org-variable-name">h2</span> = f<span class="org-rainbow-delimiters-depth-1">(</span>np.dot<span class="org-rainbow-delimiters-depth-2">(</span>W2, h1<span class="org-rainbow-delimiters-depth-2">)</span> + b2<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">calculate second hidden layer activation</span>
-<span class="org-variable-name">out</span> = np.dot<span class="org-rainbow-delimiters-depth-1">(</span>W3, h2<span class="org-rainbow-delimiters-depth-1">)</span> + b3 <span class="org-comment-delimiter"># </span><span class="org-comment">output neuron</span>
+<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">forward pass of 3-layer neural network</span>
+<span style="color: #7590db;">f</span> = <span style="color: #4f97d7; font-weight: bold;">lambda</span> x: 1.0 / <span style="color: #4f97d7;">(</span>1.0 + np.exp<span style="color: #bc6ec5;">(</span>-x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">activation function</span>
+<span style="color: #7590db;">x</span> = np.random.randn<span style="color: #4f97d7;">(</span>3, 1<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">h1</span> = f<span style="color: #4f97d7;">(</span>np.dot<span style="color: #bc6ec5;">(</span>W1, x<span style="color: #bc6ec5;">)</span> + b1<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">calculate first hidden layer activation</span>
+<span style="color: #7590db;">h2</span> = f<span style="color: #4f97d7;">(</span>np.dot<span style="color: #bc6ec5;">(</span>W2, h1<span style="color: #bc6ec5;">)</span> + b2<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">calculate second hidden layer activation</span>
+<span style="color: #7590db;">out</span> = np.dot<span style="color: #4f97d7;">(</span>W3, h2<span style="color: #4f97d7;">)</span> + b3 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">output neuron</span>
 </code></pre>
 </div>
 </div>
@@ -548,6 +557,8 @@ plt.show<span class="org-rainbow-delimiters-depth-1">()</span>
 <div class="outline-text-2" id="text-orge7a6add">
 <ul class="org-ul">
 <li><a href="http://www.deeplearningbook.org/">Deep Learning</a> book in press by Bengio, Goodfellow, Courville, in particular <a href="http://www.deeplearningbook.org/contents/mlp.html">Chapter 6.4</a></li>
+</ul>
+<ul class="org-ul">
 <li><a href="http://arxiv.org/abs/1312.6184">Do Deep Nets Really Need to be Deep?</a></li>
 <li><a href="http://arxiv.org/abs/1412.6550">FitNets: Hints for Thin Deep Nets</a></li>
 <li><a href="https://neurophysics.ucsd.edu/courses/physics_171/annurev.neuro.28.061604.135703.pdf">https://neurophysics.ucsd.edu/courses/physics_171/annurev.neuro.28.061604.135703.pdf</a></li>
@@ -595,15 +606,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -627,7 +638,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -635,7 +646,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

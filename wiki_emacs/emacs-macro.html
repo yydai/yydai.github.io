@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:33 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的键盘宏</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -285,7 +285,7 @@ for the JavaScript code in this tag.
 例如，我有个需求是处理下面的几个文本：
 </p>
 <div class="container">
-<pre><code class="python">aa bb cc dd ==&gt; <span class="org-string">"aa"</span>, <span class="org-string">"b"</span>, <span class="org-string">"cc"</span>, <span class="org-string">"dd"</span>
+<pre><code class="python">aa bb cc dd ==&gt; <span style="color: #2d9574;">"aa"</span>, <span style="color: #2d9574;">"b"</span>, <span style="color: #2d9574;">"cc"</span>, <span style="color: #2d9574;">"dd"</span>
 </code></pre>
 </div>
 
@@ -310,15 +310,15 @@ for the JavaScript code in this tag.
 我写了一个函数，能够根据键盘宏来生成上面的序列：
 </p>
 <div class="container">
-<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">auto-sequence</span> <span class="org-rainbow-delimiters-depth-2">(</span>format start end<span class="org-rainbow-delimiters-depth-2">)</span>
-    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"sSequence format: </span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">nEnter start number: </span><span class="org-string"><span class="org-hes-escape-backslash">\</span></span><span class="org-string"><span class="org-hes-escape-backslash"><span class="org-hes-escape-sequence">n</span></span></span><span class="org-string">nEnter end number: "</span><span class="org-rainbow-delimiters-depth-2">)</span>
-    <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">progn</span>
-      <span class="org-rainbow-delimiters-depth-3">(</span>kmacro-set-format format<span class="org-rainbow-delimiters-depth-3">)</span>
-      <span class="org-rainbow-delimiters-depth-3">(</span>kmacro-set-counter start<span class="org-rainbow-delimiters-depth-3">)</span>
-      <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-4">(</span>&lt; start <span class="org-rainbow-delimiters-depth-5">(</span>+ 1 end<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-        <span class="org-rainbow-delimiters-depth-4">(</span>execute-kbd-macro <span class="org-rainbow-delimiters-depth-5">(</span>read-kbd-macro <span class="org-string">"&lt;f3&gt; RET"</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-        <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">setq</span> start <span class="org-rainbow-delimiters-depth-5">(</span>+ 1 start<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-      <span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">auto-sequence</span> <span style="color: #bc6ec5;">(</span>format start end<span style="color: #bc6ec5;">)</span>
+    <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span> <span style="color: #2d9574;">"sSequence format: </span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">n</span><span style="color: #2d9574;">nEnter start number: </span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">n</span><span style="color: #2d9574;">nEnter end number: "</span><span style="color: #bc6ec5;">)</span>
+    <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">progn</span>
+      <span style="color: #2d9574;">(</span>kmacro-set-format format<span style="color: #2d9574;">)</span>
+      <span style="color: #2d9574;">(</span>kmacro-set-counter start<span style="color: #2d9574;">)</span>
+      <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #67b11d;">(</span>&lt; start <span style="color: #b1951d;">(</span>+ 1 end<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+        <span style="color: #67b11d;">(</span>execute-kbd-macro <span style="color: #b1951d;">(</span>read-kbd-macro <span style="color: #2d9574;">"&lt;f3&gt; RET"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+        <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> start <span style="color: #b1951d;">(</span>+ 1 start<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+      <span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -355,7 +355,7 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-cm"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-highlight-quoted-quote">'</span><span class="org-highlight-quoted-symbol">test-marco</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre><code class="emacs-lisp"><span style="color: #4f97d7;">(</span>global-set-key <span style="color: #bc6ec5;">(</span>kbd <span style="color: #2d9574;">"C-cm"</span><span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">test-marco</span><span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -406,15 +406,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -438,7 +438,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -446,7 +446,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

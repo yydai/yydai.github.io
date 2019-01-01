@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:33 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MAC 好用软件</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -400,9 +400,9 @@ window 选项卡下，我们可以设置 terminal 的背景。
 我经常要更新我的 emacs 配置，但是如果我手动的去输入很多的命令就比较麻烦:
 </p>
 <div class="container">
-<pre><code class="shell"><span class="org-builtin">cd</span> ~/.emacs.d
+<pre><code class="shell"><span style="color: #4f97d7;">cd</span> ~/.emacs.d
 git add .
-git commit -m <span class="org-string">"messages.."</span>
+git commit -m <span style="color: #2d9574;">"messages.."</span>
 git push origin master
 </code></pre>
 </div>
@@ -424,11 +424,11 @@ git push origin master
 </p>
 <div class="container">
 <pre><code class="shell">git add .
-<span class="org-builtin">read</span> -p <span class="org-string">"Commit description, default is 'Auto commit': "</span> desc
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -z <span class="org-string">"$desc"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-    <span class="org-variable-name">desc</span>=<span class="org-string">"Auto commit"</span>
-<span class="org-keyword">fi</span>
-git commit -m <span class="org-string">"$desc"</span>
+<span style="color: #4f97d7;">read</span> -p <span style="color: #2d9574;">"Commit description, default is 'Auto commit': "</span> desc
+<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">[</span> -z <span style="color: #2d9574;">"$desc"</span> <span style="color: #4f97d7;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
+    <span style="color: #7590db;">desc</span>=<span style="color: #2d9574;">"Auto commit"</span>
+<span style="color: #4f97d7; font-weight: bold;">fi</span>
+git commit -m <span style="color: #2d9574;">"$desc"</span>
 git push origin master
 </code></pre>
 </div>
@@ -742,20 +742,20 @@ cmd + -  缩小字体
 </p>
 
 <div class="container">
-<pre><code class="shell"><span class="org-function-name">movtogif</span><span class="org-rainbow-delimiters-depth-1">()</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$1"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-builtin">echo</span> <span class="org-string">"usage: mov-gif &lt;src&gt; [desc]"</span>
-        <span class="org-keyword">return</span> 1
-    <span class="org-keyword">fi</span>
+<pre><code class="shell"><span style="color: #bc6ec5; font-weight: bold;">movtogif</span><span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">[</span> -z <span style="color: #2d9574;">"$1"</span> <span style="color: #bc6ec5;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
+        <span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"usage: mov-gif &lt;src&gt; [desc]"</span>
+        <span style="color: #4f97d7; font-weight: bold;">return</span> 1
+    <span style="color: #4f97d7; font-weight: bold;">fi</span>
 
-    <span class="org-builtin">local</span> <span class="org-variable-name">filename</span>=$<span class="org-variable-name">2</span>
-    <span class="org-comment-delimiter"># </span><span class="org-comment">generate random filename</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span> -z <span class="org-string">"$2"</span> <span class="org-rainbow-delimiters-depth-2">]</span>; <span class="org-keyword">then</span>
-        <span class="org-variable-name">filename</span>=<span class="org-sh-quoted-exec">`hexdump -e '/1 "%02x"' -n16 &lt; /dev/urandom`</span>
-    <span class="org-keyword">fi</span>
-    ffmpeg -i $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">1</span><span class="org-rainbow-delimiters-depth-2">}</span>.mov -vf <span class="org-variable-name">scale</span>=800:-1 -r 10 -f image2pipe -vcodec ppm - | <span class="org-sh-escaped-newline">\</span>
-    convert -delay 5 -fuzz 2% -layers Optimize -loop 0 - $<span class="org-rainbow-delimiters-depth-2">{</span><span class="org-variable-name">2</span><span class="org-rainbow-delimiters-depth-2">}</span>.gif
-<span class="org-rainbow-delimiters-depth-1">}</span>
+    <span style="color: #4f97d7;">local</span> <span style="color: #7590db;">filename</span>=$<span style="color: #7590db;">2</span>
+    <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">generate random filename</span>
+    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">[</span> -z <span style="color: #2d9574;">"$2"</span> <span style="color: #bc6ec5;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
+        <span style="color: #7590db;">filename</span>=<span style="color: #fa8072;">`hexdump -e '/1 "%02x"' -n16 &lt; /dev/urandom`</span>
+    <span style="color: #4f97d7; font-weight: bold;">fi</span>
+    ffmpeg -i $<span style="color: #bc6ec5;">{</span><span style="color: #7590db;">1</span><span style="color: #bc6ec5;">}</span>.mov -vf <span style="color: #7590db;">scale</span>=800:-1 -r 10 -f image2pipe -vcodec ppm - | <span style="color: #2d9574;">\</span>
+    convert -delay 5 -fuzz 2% -layers Optimize -loop 0 - $<span style="color: #bc6ec5;">{</span><span style="color: #7590db;">2</span><span style="color: #bc6ec5;">}</span>.gif
+<span style="color: #4f97d7;">}</span>
 
 </code></pre>
 </div>
@@ -764,7 +764,7 @@ cmd + -  缩小字体
 我们就可以直接这样了。
 </p>
 <div class="container">
-<pre><code class="shell">movtogif<span class="org-keyword"> in</span>
+<pre><code class="shell">movtogif<span style="color: #4f97d7; font-weight: bold;"> in</span>
 </code></pre>
 </div>
 
@@ -981,15 +981,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -1013,7 +1013,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -1021,7 +1021,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

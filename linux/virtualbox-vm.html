@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-12-23 Sat 13:33 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Virtual Box 虚拟机网络</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -271,10 +271,13 @@ for the JavaScript code in this tag.
 </p>
 <ul class="org-ul">
 <li>VM 和 host 能互相访问</li>
+</ul>
+<ul class="org-ul">
 <li>VM 可以上网</li>
 <li>VM 和 host 处于同一个网段中</li>
-<li>VM 之间也可以互访</li>
-</ul>
+<li><p>
+VM 之间也可以互访
+</p>
 
 <p>
 virtualbox 如下选择 Bridged Adapter:
@@ -290,7 +293,7 @@ virtualbox 如下选择 Bridged Adapter:
 </p>
 <div class="container">
 <pre><code class="shell">ifconfig
-<span class="org-comment-delimiter"># </span><span class="org-comment">eth0 &#22914;&#26524;&#27809;&#26377;&#21551;&#21160;</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">eth0 &#22914;&#26524;&#27809;&#26377;&#21551;&#21160;</span>
 vi /etc/sysconfig/network-scripts/ifcfg-eth0
 </code></pre>
 </div>
@@ -299,13 +302,13 @@ vi /etc/sysconfig/network-scripts/ifcfg-eth0
 修改为
 </p>
 <div class="container">
-<pre><code class="python"><span class="org-variable-name">DEVICE</span>=eth0
-<span class="org-variable-name">HWADDR</span>=08:00:27:A8:7A:0C
-<span class="org-variable-name">TYPE</span>=Ethernet
-<span class="org-variable-name">UUID</span>=6aaba853-c9d6-474f-a34d-4aece7d1b750
-<span class="org-variable-name">ONBOOT</span>=yes <span class="org-comment-delimiter"># </span><span class="org-comment">&#25913;&#20026; yes</span>
-<span class="org-variable-name">NM_CONTROLLED</span>=yes
-<span class="org-variable-name">BOOTPROTO</span>=dhcp   <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#20026; dhcp</span>
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">DEVICE</span>=eth0
+<span style="color: #7590db;">HWADDR</span>=08:00:27:A8:7A:0C
+<span style="color: #7590db;">TYPE</span>=Ethernet
+<span style="color: #7590db;">UUID</span>=6aaba853-c9d6-474f-a34d-4aece7d1b750
+<span style="color: #7590db;">ONBOOT</span>=yes <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#25913;&#20026; yes</span>
+<span style="color: #7590db;">NM_CONTROLLED</span>=yes
+<span style="color: #7590db;">BOOTPROTO</span>=dhcp   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#35774;&#20026; dhcp</span>
 </code></pre>
 </div>
 
@@ -327,7 +330,8 @@ vi /etc/sysconfig/network-scripts/ifcfg-eth0
 
 <p>
 可以看到添加的路由信息。
-</p>
+</p></li>
+</ul>
 </div>
 </div>
 
@@ -372,15 +376,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -404,7 +408,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -412,7 +416,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

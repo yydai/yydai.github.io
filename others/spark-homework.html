@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-20 Tue 13:26 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Spark bike 数据分析</title>
@@ -246,7 +246,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -288,6 +288,8 @@ for the JavaScript code in this tag.
 </p>
 <ul class="org-ul">
 <li>tripduration</li>
+</ul>
+<ul class="org-ul">
 <li>startdatetime</li>
 <li>stopdatetime</li>
 <li>startstationname</li>
@@ -299,8 +301,9 @@ for the JavaScript code in this tag.
 <li>bikeid</li>
 <li>usertype(Customer, Subscriber)</li>
 <li>gender(unknown, male, female)</li>
-<li>birthyear</li>
-</ul>
+<li><p>
+birthyear
+</p>
 
 <p>
 本次实验的主要目的就是通过 Kafka 接收用户的 Trip 数据，然后通过 Spark 的 Streaming
@@ -313,6 +316,7 @@ Scala 和 Python, 这里我选择了 Python。
 </p>
 <ol class="org-ol">
 <li>统计男女比例</li>
+</ol></li>
 <li>统计 24 小时内，每个小时的的骑行人数</li>
 <li>周末和非周末的骑行人数比较</li>
 <li>统计车站热度排名</li>
@@ -321,7 +325,7 @@ Scala 和 Python, 这里我选择了 Python。
 <li>自行车数量</li>
 <li>会员用户占比</li>
 <li>各个年龄段的人数</li>
-</ol>
+</ul>
 </div>
 </div>
 
@@ -340,26 +344,26 @@ Scala 和 Python, 这里我选择了 Python。
 </p>
 
 <ol class="org-ol">
-<li><p>
-安装 pyspark 和 jupyter
-</p>
+<li>安装 pyspark 和 jupyter</li>
+</ol>
 
 <div class="container">
 <pre><code class="shell">brew install apache-spark
 pip install jupyter
 </code></pre>
-</div></li>
+</div>
 
+<ol class="org-ol">
 <li><p>
 设置环境变量
 </p>
 
 <div class="container">
-<pre><code class="shell"><span style="color: #cc99cc;">export</span> <span style="color: #ffcc66;">SPARK_HOME</span>=<span style="color: #66cccc;">'/User/yingdai/workspace/spark2.1'</span>
-<span style="color: #cc99cc;">export</span> <span style="color: #ffcc66;">PATH</span>=$<span style="color: #ffcc66;">PATH</span>:$<span style="color: #ffcc66;">SPARK_HOME</span>/bin
-<span style="color: #cc99cc;">export</span> <span style="color: #ffcc66;">PYSPARK_DRIVER_PYTHON</span>=jupyter
-<span style="color: #cc99cc;">export</span> <span style="color: #ffcc66;">PYSPARK_DRIVER_PYTHON_OPTS</span>=<span style="color: #66cccc;">'notebook'</span>
-<span style="color: #cc99cc;">export</span> <span style="color: #ffcc66;">PYSPARK_PYTHON</span>=python3.6
+<pre><code class="shell"><span style="color: #4f97d7;">export</span> <span style="color: #7590db;">SPARK_HOME</span>=<span style="color: #2d9574;">'/User/yingdai/workspace/spark2.1'</span>
+<span style="color: #4f97d7;">export</span> <span style="color: #7590db;">PATH</span>=$<span style="color: #7590db;">PATH</span>:$<span style="color: #7590db;">SPARK_HOME</span>/bin
+<span style="color: #4f97d7;">export</span> <span style="color: #7590db;">PYSPARK_DRIVER_PYTHON</span>=jupyter
+<span style="color: #4f97d7;">export</span> <span style="color: #7590db;">PYSPARK_DRIVER_PYTHON_OPTS</span>=<span style="color: #2d9574;">'notebook'</span>
+<span style="color: #4f97d7;">export</span> <span style="color: #7590db;">PYSPARK_PYTHON</span>=python3.6
 </code></pre>
 </div></li>
 
@@ -397,14 +401,14 @@ Kafka 设置如下，
 </p>
 
 <ol class="org-ol">
-<li><p>
-首先启动 zookpeeker。
-</p>
+<li>首先启动 zookpeeker。</li>
+</ol>
 <div class="container">
-<pre><code class="shell"><span style="color: #999999; font-style: italic;"># </span><span style="color: #999999; font-style: italic;">start zookeeper</span>
+<pre><code class="shell"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">start zookeeper</span>
 bin/zookeeper-server-start.sh config/zookeeper.properties
 </code></pre>
-</div></li>
+</div>
+<ol class="org-ol">
 <li><p>
 启动 kafka 服务
 </p>
@@ -430,48 +434,48 @@ bin/zookeeper-server-start.sh config/zookeeper.properties
 使用 python 脚本定期向 Producer 发送数据。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #99cc99;">import</span> logging
-<span style="color: #99cc99;">import</span> time
-<span style="color: #99cc99;">from</span> kafka <span style="color: #99cc99;">import</span> KafkaProducer
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">import</span> logging
+<span style="color: #4f97d7; font-weight: bold;">import</span> time
+<span style="color: #4f97d7; font-weight: bold;">from</span> kafka <span style="color: #4f97d7; font-weight: bold;">import</span> KafkaProducer
 
-<span style="color: #99cc99;">def</span> <span style="color: #f99157;">read_csv</span><span style="color: #cccccc;">(</span>filename, linenum, batch_line<span style="color: #cccccc;">)</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">count</span> = 0
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">with</span> <span style="color: #cc99cc;">open</span><span style="color: #cccccc;">(</span>filename, <span style="color: #66cccc;">'rb'</span><span style="color: #cccccc;">)</span> <span style="color: #99cc99;">as</span> f:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">for</span> i, line <span style="color: #99cc99;">in</span> <span style="color: #cc99cc;">enumerate</span><span style="color: #cccccc;">(</span>f<span style="color: #cccccc;">)</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">if</span> i &lt; linenum:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">continue</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">else</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   Producer.send<span style="color: #cccccc;">(</span>line<span style="color: #cccccc;">)</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">count</span> += 1
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">if</span> count &gt; batch_line:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   Producer.stop<span style="color: #cccccc;">()</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">return</span> i
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   f.close<span style="color: #cccccc;">()</span>
-
-
-<span style="color: #99cc99;">class</span> <span style="color: #6699cc;">Producer</span><span style="color: #cccccc;">()</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #6699cc;">@classmethod</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">def</span> <span style="color: #f99157;">send</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">self</span>, data<span style="color: #cccccc;">)</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">self</span>.producer = KafkaProducer<span style="color: #cccccc;">(</span>bootstrap_servers=<span style="color: #66cccc;">'localhost:9092'</span><span style="color: #cccccc;">)</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">self</span>.producer.send<span style="color: #cccccc;">(</span><span style="color: #66cccc;">'bike'</span>, data<span style="color: #cccccc;">)</span>
-
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #6699cc;">@classmethod</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">def</span> <span style="color: #f99157;">stop</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">self</span><span style="color: #cccccc;">)</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">self</span>.producer.close<span style="color: #cccccc;">()</span>
+<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">read_csv</span><span style="color: #4f97d7;">(</span>filename, linenum, batch_line<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">count</span> = 0
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">with</span> <span style="color: #4f97d7;">open</span><span style="color: #4f97d7;">(</span>filename, <span style="color: #2d9574;">'rb'</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">as</span> f:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> i, line <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">enumerate</span><span style="color: #4f97d7;">(</span>f<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> i &lt; linenum:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">continue</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">else</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   Producer.send<span style="color: #4f97d7;">(</span>line<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">count</span> += 1
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> count &gt; batch_line:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   Producer.stop<span style="color: #4f97d7;">()</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> i
+<span style="background-color: #292e34;"> </span>   f.close<span style="color: #4f97d7;">()</span>
 
 
-<span style="color: #99cc99;">if</span> <span style="color: #cc99cc;">__name__</span> == <span style="color: #66cccc;">"__main__"</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   logging.basicConfig<span style="color: #cccccc;">(</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">format</span>=<span style="color: #66cccc;">'%(asctime)s.%(msecs)s:%(name)s:%(thread)d:%(levelname)s:%(process)d:%(message)s'</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   level=logging.INFO
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cccccc;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Producer</span><span style="color: #4f97d7;">()</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #ce537a; font-weight: bold;">@classmethod</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">send</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, data<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">self</span>.producer = KafkaProducer<span style="color: #4f97d7;">(</span>bootstrap_servers=<span style="color: #2d9574;">'localhost:9092'</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">self</span>.producer.send<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'bike'</span>, data<span style="color: #4f97d7;">)</span>
 
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">current_line</span> = 1
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">sleep_time</span> = 10  <span style="color: #999999; font-style: italic;"># </span><span style="color: #999999; font-style: italic;">seconds</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">while</span><span style="color: #cccccc;">(</span>1<span style="color: #cccccc;">)</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">print</span><span style="color: #cccccc;">(</span><span style="color: #66cccc;">"====current_line is: {}======\n"</span>.<span style="color: #cc99cc;">format</span><span style="color: #66cccc;">(</span>current_line<span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">current_line</span> = read_csv<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"2014-07.csv"</span>, current_line, 1<span style="color: #cccccc;">)</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   time.sleep<span style="color: #cccccc;">(</span>5<span style="color: #cccccc;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #ce537a; font-weight: bold;">@classmethod</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">stop</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span><span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">self</span>.producer.close<span style="color: #4f97d7;">()</span>
+
+
+<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">__name__</span> == <span style="color: #2d9574;">"__main__"</span>:
+<span style="background-color: #292e34;"> </span>   logging.basicConfig<span style="color: #4f97d7;">(</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">format</span>=<span style="color: #2d9574;">'%(asctime)s.%(msecs)s:%(name)s:%(thread)d:%(levelname)s:%(process)d:%(message)s'</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   level=logging.INFO
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">)</span>
+
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">current_line</span> = 1
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">sleep_time</span> = 10  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">seconds</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">while</span><span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span>:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"====current_line is: {}======\n"</span>.<span style="color: #4f97d7;">format</span><span style="color: #bc6ec5;">(</span>current_line<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">current_line</span> = read_csv<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"2014-07.csv"</span>, current_line, 1<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   time.sleep<span style="color: #4f97d7;">(</span>5<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div></li>
 </ol>
@@ -485,16 +489,16 @@ bin/zookeeper-server-start.sh config/zookeeper.properties
 到这里我们 kafka 已经接收到数据了，下面就是通过 spark 接收 kafka 的数据：
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #99cc99;">from</span> notebooks_py.kafka.load_data <span style="color: #99cc99;">import</span> process
-<span style="color: #99cc99;">from</span> notebooks_py.kafka.load_data <span style="color: #99cc99;">import</span> load_csv
+<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">from</span> notebooks_py.kafka.load_data <span style="color: #4f97d7; font-weight: bold;">import</span> process
+<span style="color: #4f97d7; font-weight: bold;">from</span> notebooks_py.kafka.load_data <span style="color: #4f97d7; font-weight: bold;">import</span> load_csv
 
-SparkConf<span style="color: #cccccc;">()</span>.<span style="color: #cc99cc;">set</span><span style="color: #cccccc;">(</span><span style="color: #66cccc;">"spark.streaming.kafka.maxRatePerPartition"</span>,<span style="color: #66cccc;">"1"</span><span style="color: #cccccc;">)</span>
-<span style="color: #ffcc66;">ssc</span> = StreamingContext<span style="color: #cccccc;">(</span>sc, 5<span style="color: #cccccc;">)</span>
-<span style="color: #ffcc66;">kf</span> = KafkaUtils.createDirectStream<span style="color: #cccccc;">(</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   ssc, <span style="color: #66cccc;">[</span><span style="color: #66cccc;">"bike"</span><span style="color: #66cccc;">]</span>, <span style="color: #66cccc;">{</span><span style="color: #66cccc;">"bootstrap.servers"</span>: <span style="color: #66cccc;">"127.0.0.1:9092"</span><span style="color: #66cccc;">}</span><span style="color: #cccccc;">)</span>
-<span style="color: #ffcc66;">lines</span> = kf.<span style="color: #cc99cc;">map</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">lambda</span> x: x<span style="color: #66cccc;">[</span>1<span style="color: #66cccc;">]</span><span style="color: #cccccc;">)</span>
-<span style="color: #ffcc66;">lines</span> = lines.<span style="color: #cc99cc;">map</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">lambda</span> line: line.split<span style="color: #66cccc;">(</span><span style="color: #66cccc;">","</span><span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>
-lines.foreachRDD<span style="color: #cccccc;">(</span>process<span style="color: #cccccc;">)</span>
+SparkConf<span style="color: #4f97d7;">()</span>.<span style="color: #4f97d7;">set</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"spark.streaming.kafka.maxRatePerPartition"</span>,<span style="color: #2d9574;">"1"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">ssc</span> = StreamingContext<span style="color: #4f97d7;">(</span>sc, 5<span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">kf</span> = KafkaUtils.createDirectStream<span style="color: #4f97d7;">(</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   ssc, <span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"bike"</span><span style="color: #bc6ec5;">]</span>, <span style="color: #bc6ec5;">{</span><span style="color: #2d9574;">"bootstrap.servers"</span>: <span style="color: #2d9574;">"127.0.0.1:9092"</span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">lines</span> = kf.<span style="color: #4f97d7;">map</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> x: x<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #7590db;">lines</span> = lines.<span style="color: #4f97d7;">map</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> line: line.split<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">","</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+lines.foreachRDD<span style="color: #4f97d7;">(</span>process<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -506,45 +510,45 @@ lines.foreachRDD<span style="color: #cccccc;">(</span>process<span style="color:
 其中 process 部分代码如下：
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #99cc99;">def</span> <span style="color: #f99157;">process</span><span style="color: #cccccc;">(</span>time, rdd<span style="color: #cccccc;">)</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">print</span><span style="color: #cccccc;">(</span><span style="color: #66cccc;">"========= %s ========="</span> % <span style="color: #cc99cc;">str</span><span style="color: #66cccc;">(</span>time<span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">process</span><span style="color: #4f97d7;">(</span>time, rdd<span style="color: #4f97d7;">)</span>:
+<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"========= %s ========="</span> % <span style="color: #4f97d7;">str</span><span style="color: #bc6ec5;">(</span>time<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">try</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; font-style: italic;"># </span><span style="color: #999999; font-style: italic;">Get the singleton instance of SparkSession</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">spark</span> = getSparkSessionInstance<span style="color: #cccccc;">(</span>rdd.context.getConf<span style="color: #66cccc;">()</span><span style="color: #cccccc;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">try</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Get the singleton instance of SparkSession</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">spark</span> = getSparkSessionInstance<span style="color: #4f97d7;">(</span>rdd.context.getConf<span style="color: #bc6ec5;">()</span><span style="color: #4f97d7;">)</span>
 
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; font-style: italic;"># </span><span style="color: #999999; font-style: italic;">Convert RDD[String] to RDD[Row] to DataFrame</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">rowRdd</span> = rdd.<span style="color: #cc99cc;">map</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">lambda</span> p:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>Row<span style="color: #66cccc;">(</span>tripduration=<span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>0<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  starttime=csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>1<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  starttime_hour = csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>1<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>.hour,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  stoptime=csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>2<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  stoptime_hour = csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>2<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>.hour,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  start_station_id=<span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>3<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  start_station_name=p<span style="color: #ffcc66;">[</span>4<span style="color: #ffcc66;">]</span>.strip<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  start_station_latitude=<span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>5<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  start_station_longitude=<span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>6<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  end_station_id=<span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>7<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  end_station_name=p<span style="color: #ffcc66;">[</span>8<span style="color: #ffcc66;">]</span>.strip<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  end_station_latitude=<span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>9<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  end_station_longitude=<span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>10<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  bikeid=<span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>11<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  usertype=p<span style="color: #ffcc66;">[</span>12<span style="color: #ffcc66;">]</span>.strip<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  birth_year=<span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>13<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span> <span style="color: #99cc99;">if</span> <span style="color: #99cc99;">not</span> p<span style="color: #99cc99;">[</span>13<span style="color: #99cc99;">]</span> == <span style="color: #66cccc;">'""'</span> <span style="color: #99cc99;">else</span> <span style="color: #66cccc;">'0'</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>  gender=<span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>14<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span><span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">BikeDataFrame</span> = spark.createDataFrame<span style="color: #cccccc;">(</span>rowRdd<span style="color: #cccccc;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Convert RDD[String] to RDD[Row] to DataFrame</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">rowRdd</span> = rdd.<span style="color: #4f97d7;">map</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> p:
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>Row<span style="color: #bc6ec5;">(</span>tripduration=<span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>0<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  starttime=csd<span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>1<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  starttime_hour = csd<span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>1<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>.hour,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  stoptime=csd<span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>2<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  stoptime_hour = csd<span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>2<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>.hour,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  start_station_id=<span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>3<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  start_station_name=p<span style="color: #2d9574;">[</span>4<span style="color: #2d9574;">]</span>.strip<span style="color: #2d9574;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  start_station_latitude=<span style="color: #4f97d7;">float</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>5<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  start_station_longitude=<span style="color: #4f97d7;">float</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>6<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  end_station_id=<span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>7<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  end_station_name=p<span style="color: #2d9574;">[</span>8<span style="color: #2d9574;">]</span>.strip<span style="color: #2d9574;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  end_station_latitude=<span style="color: #4f97d7;">float</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>9<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  end_station_longitude=<span style="color: #4f97d7;">float</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>10<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  bikeid=<span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>11<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  usertype=p<span style="color: #2d9574;">[</span>12<span style="color: #2d9574;">]</span>.strip<span style="color: #2d9574;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  birth_year=<span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>13<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span> <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7; font-weight: bold;">not</span> p<span style="color: #67b11d;">[</span>13<span style="color: #67b11d;">]</span> == <span style="color: #2d9574;">'""'</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #2d9574;">'0'</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>  gender=<span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>14<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">BikeDataFrame</span> = spark.createDataFrame<span style="color: #4f97d7;">(</span>rowRdd<span style="color: #4f97d7;">)</span>
 
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; font-style: italic;"># </span><span style="color: #999999; font-style: italic;">Creates a temporary view using the DataFrame.</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   BikeDataFrame.createOrReplaceTempView<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"bike"</span><span style="color: #cccccc;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Creates a temporary view using the DataFrame.</span>
+<span style="background-color: #292e34;"> </span>   BikeDataFrame.createOrReplaceTempView<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"bike"</span><span style="color: #4f97d7;">)</span>
 
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; font-style: italic;"># </span><span style="color: #999999; font-style: italic;">Query SQL</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">sql_01</span> = <span style="color: #66cccc;">"select starttime_hour, count(bikeid) from words group by starttime_hour order by starttime_hour"</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Query SQL</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">sql_01</span> = <span style="color: #2d9574;">"select starttime_hour, count(bikeid) from words group by starttime_hour order by starttime_hour"</span>
 
 
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">BikeCountsDataFrame</span> = spark.sql<span style="color: #cccccc;">(</span>sql_01<span style="color: #cccccc;">)</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   BikeCountsDataFrame.show<span style="color: #cccccc;">()</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">except</span> <span style="color: #6699cc;">Exception</span> <span style="color: #99cc99;">as</span> e:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">print</span><span style="color: #cccccc;">(</span><span style="color: #66cccc;">'Error message: '</span>+ <span style="color: #cc99cc;">str</span><span style="color: #66cccc;">(</span>e<span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">BikeCountsDataFrame</span> = spark.sql<span style="color: #4f97d7;">(</span>sql_01<span style="color: #4f97d7;">)</span>
+<span style="background-color: #292e34;"> </span>   BikeCountsDataFrame.show<span style="color: #4f97d7;">()</span>
+<span style="color: #4f97d7; font-weight: bold;">except</span> <span style="color: #ce537a; font-weight: bold;">Exception</span> <span style="color: #4f97d7; font-weight: bold;">as</span> e:
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'Error message: '</span>+ <span style="color: #4f97d7;">str</span><span style="color: #bc6ec5;">(</span>e<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -561,68 +565,68 @@ lines.foreachRDD<span style="color: #cccccc;">(</span>process<span style="color:
 上面是基本的操作流程，在实践过程中，我发现在本地 Spark 执行 sql 的速度非常的慢，而慢的地方主要还是 IO 操作。下一步我就是将数据存储到 mysql 数据库中。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #99cc99;">def</span> <span style="color: #f99157;">load_csv</span><span style="color: #cccccc;">(</span>conf<span style="color: #cccccc;">)</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">spark</span> = getSparkSessionInstance<span style="color: #cccccc;">(</span>conf<span style="color: #cccccc;">)</span>
+<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">load_csv</span><span style="color: #4f97d7;">(</span>conf<span style="color: #4f97d7;">)</span>:
+<span style="color: #7590db;">spark</span> = getSparkSessionInstance<span style="color: #4f97d7;">(</span>conf<span style="color: #4f97d7;">)</span>
 
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">schema</span> = StructType<span style="color: #cccccc;">(</span><span style="color: #66cccc;">[</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"tripduration"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"starttime"</span>, TimestampType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"starttime_hour"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"stoptime"</span>, TimestampType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"stoptime_hour"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"start_station_id"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"start_station_name"</span>, StringType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"start_station_latitude"</span>, FloatType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"start_station_longitude"</span>, FloatType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"end_station_id"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"end_station_name"</span>, StringType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"end_station_latitude"</span>, FloatType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"end_station_longitude"</span>, FloatType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"bikeid"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"usertype"</span>, StringType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"age"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"gender"</span>, IntegerType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   StructField<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">"distance"</span>, FloatType<span style="color: #99cc99;">()</span>, <span style="color: #6699cc;">True</span><span style="color: #ffcc66;">)</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #66cccc;">]</span><span style="color: #cccccc;">)</span>
+<span style="color: #7590db;">schema</span> = StructType<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"tripduration"</span>, IntegerType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"starttime"</span>, TimestampType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"starttime_hour"</span>, IntegerType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"stoptime"</span>, TimestampType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"stoptime_hour"</span>, IntegerType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"start_station_id"</span>, IntegerType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"start_station_name"</span>, StringType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"start_station_latitude"</span>, FloatType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"start_station_longitude"</span>, FloatType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"end_station_id"</span>, IntegerType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"end_station_name"</span>, StringType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"end_station_latitude"</span>, FloatType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"end_station_longitude"</span>, FloatType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"bikeid"</span>, IntegerType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"usertype"</span>, StringType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"age"</span>, IntegerType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"gender"</span>, IntegerType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   StructField<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"distance"</span>, FloatType<span style="color: #67b11d;">()</span>, <span style="color: #a45bad;">True</span><span style="color: #2d9574;">)</span>
+<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
 
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; font-style: italic;"># </span><span style="color: #999999; font-style: italic;">for path in file_paths:</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">df</span> = spark.read.<span style="color: #cc99cc;">format</span><span style="color: #cccccc;">(</span><span style="color: #66cccc;">"csv"</span><span style="color: #cccccc;">)</span>.option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"header"</span>, <span style="color: #66cccc;">"true"</span><span style="color: #cccccc;">)</span>.load<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"citibike/201409-citibike-tripdata.csv"</span><span style="color: #cccccc;">)</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">try</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">df</span> = df.rdd.<span style="color: #cc99cc;">map</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">lambda</span> p: Row<span style="color: #66cccc;">(</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>0<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>1<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>1<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>.hour,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>2<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   csd<span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>2<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>.hour,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>3<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   p<span style="color: #ffcc66;">[</span>4<span style="color: #ffcc66;">]</span>.strip<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>5<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>6<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>7<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   p<span style="color: #ffcc66;">[</span>8<span style="color: #ffcc66;">]</span>.strip<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>9<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">float</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>10<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>11<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   p<span style="color: #ffcc66;">[</span>12<span style="color: #ffcc66;">]</span>.strip<span style="color: #ffcc66;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   2018 - <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>13<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span> <span style="color: #99cc99;">if</span> p<span style="color: #99cc99;">[</span>13<span style="color: #99cc99;">]</span> <span style="color: #99cc99;">not</span> <span style="color: #99cc99;">in</span> <span style="color: #99cc99;">(</span><span style="color: #66cccc;">'""'</span>, <span style="color: #66cccc;">'\\N'</span>, <span style="color: #6699cc;">None</span><span style="color: #99cc99;">)</span>  <span style="color: #99cc99;">else</span> <span style="color: #66cccc;">'0'</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #cc99cc;">int</span><span style="color: #ffcc66;">(</span>p<span style="color: #99cc99;">[</span>14<span style="color: #99cc99;">]</span>.strip<span style="color: #99cc99;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>,
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   dis<span style="color: #ffcc66;">(</span><span style="color: #cc99cc;">float</span><span style="color: #99cc99;">(</span>p<span style="color: #6699cc;">[</span>5<span style="color: #6699cc;">]</span>.strip<span style="color: #6699cc;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #6699cc;">)</span><span style="color: #99cc99;">)</span>, <span style="color: #cc99cc;">float</span><span style="color: #99cc99;">(</span>p<span style="color: #6699cc;">[</span>6<span style="color: #6699cc;">]</span>.strip<span style="color: #6699cc;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #6699cc;">)</span><span style="color: #99cc99;">)</span>, <span style="color: #cc99cc;">float</span><span style="color: #99cc99;">(</span>p<span style="color: #6699cc;">[</span>9<span style="color: #6699cc;">]</span>.strip<span style="color: #6699cc;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #6699cc;">)</span><span style="color: #99cc99;">)</span>, <span style="color: #cc99cc;">float</span><span style="color: #99cc99;">(</span>p<span style="color: #6699cc;">[</span>10<span style="color: #6699cc;">]</span>.strip<span style="color: #6699cc;">(</span><span style="color: #66cccc;">'"'</span><span style="color: #6699cc;">)</span><span style="color: #99cc99;">)</span><span style="color: #ffcc66;">)</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #66cccc;">)</span><span style="color: #cccccc;">)</span>
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">except</span>:
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #99cc99;">pass</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for path in file_paths:</span>
+<span style="color: #7590db;">df</span> = spark.read.<span style="color: #4f97d7;">format</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"csv"</span><span style="color: #4f97d7;">)</span>.option<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"header"</span>, <span style="color: #2d9574;">"true"</span><span style="color: #4f97d7;">)</span>.load<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"citibike/201409-citibike-tripdata.csv"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">try</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">df</span> = df.rdd.<span style="color: #4f97d7;">map</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> p: Row<span style="color: #bc6ec5;">(</span>
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>0<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   csd<span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>1<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   csd<span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>1<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>.hour,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   csd<span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>2<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   csd<span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>2<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>.hour,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>3<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   p<span style="color: #2d9574;">[</span>4<span style="color: #2d9574;">]</span>.strip<span style="color: #2d9574;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">float</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>5<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">float</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>6<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>7<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   p<span style="color: #2d9574;">[</span>8<span style="color: #2d9574;">]</span>.strip<span style="color: #2d9574;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">float</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>9<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">float</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>10<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>11<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   p<span style="color: #2d9574;">[</span>12<span style="color: #2d9574;">]</span>.strip<span style="color: #2d9574;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   2018 - <span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>13<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span> <span style="color: #4f97d7; font-weight: bold;">if</span> p<span style="color: #67b11d;">[</span>13<span style="color: #67b11d;">]</span> <span style="color: #4f97d7; font-weight: bold;">not</span> <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #67b11d;">(</span><span style="color: #2d9574;">'""'</span>, <span style="color: #2d9574;">'\\N'</span>, <span style="color: #a45bad;">None</span><span style="color: #67b11d;">)</span>  <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #2d9574;">'0'</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>p<span style="color: #67b11d;">[</span>14<span style="color: #67b11d;">]</span>.strip<span style="color: #67b11d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
+<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   dis<span style="color: #2d9574;">(</span><span style="color: #4f97d7;">float</span><span style="color: #67b11d;">(</span>p<span style="color: #b1951d;">[</span>5<span style="color: #b1951d;">]</span>.strip<span style="color: #b1951d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>, <span style="color: #4f97d7;">float</span><span style="color: #67b11d;">(</span>p<span style="color: #b1951d;">[</span>6<span style="color: #b1951d;">]</span>.strip<span style="color: #b1951d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>, <span style="color: #4f97d7;">float</span><span style="color: #67b11d;">(</span>p<span style="color: #b1951d;">[</span>9<span style="color: #b1951d;">]</span>.strip<span style="color: #b1951d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>, <span style="color: #4f97d7;">float</span><span style="color: #67b11d;">(</span>p<span style="color: #b1951d;">[</span>10<span style="color: #b1951d;">]</span>.strip<span style="color: #b1951d;">(</span><span style="color: #2d9574;">'"'</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+<span style="background-color: #292e34;"> </span>   <span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">except</span>:
+<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">pass</span>
 
 
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   <span style="color: #ffcc66;">schemadf</span> = spark.createDataFrame<span style="color: #cccccc;">(</span>df, schema<span style="color: #cccccc;">)</span>
+<span style="color: #7590db;">schemadf</span> = spark.createDataFrame<span style="color: #4f97d7;">(</span>df, schema<span style="color: #4f97d7;">)</span>
 
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   schemadf.write \
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   .<span style="color: #cc99cc;">format</span><span style="color: #cccccc;">(</span><span style="color: #66cccc;">"jdbc"</span><span style="color: #cccccc;">)</span> \
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   .option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"driver"</span>, <span style="color: #66cccc;">"com.mysql.jdbc.Driver"</span><span style="color: #cccccc;">)</span> \
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   .option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"url"</span>, <span style="color: #66cccc;">"jdbc:mysql://localhost/citibike"</span><span style="color: #cccccc;">)</span> \
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   .option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"dbtable"</span>, <span style="color: #66cccc;">"trip"</span><span style="color: #cccccc;">)</span> \
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   .option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"user"</span>, <span style="color: #66cccc;">"root"</span><span style="color: #cccccc;">)</span> \
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   .option<span style="color: #cccccc;">(</span><span style="color: #66cccc;">"password"</span>, <span style="color: #66cccc;">"root"</span><span style="color: #cccccc;">)</span> \
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   .mode<span style="color: #cccccc;">(</span><span style="color: #66cccc;">'append'</span><span style="color: #cccccc;">)</span> \
-<span style="color: #999999; background-color: #2d2d2d;"> </span>   .save<span style="color: #cccccc;">()</span>
+schemadf.write \
+.<span style="color: #4f97d7;">format</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"jdbc"</span><span style="color: #4f97d7;">)</span> \
+.option<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"driver"</span>, <span style="color: #2d9574;">"com.mysql.jdbc.Driver"</span><span style="color: #4f97d7;">)</span> \
+.option<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"url"</span>, <span style="color: #2d9574;">"jdbc:mysql://localhost/citibike"</span><span style="color: #4f97d7;">)</span> \
+.option<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dbtable"</span>, <span style="color: #2d9574;">"trip"</span><span style="color: #4f97d7;">)</span> \
+.option<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"user"</span>, <span style="color: #2d9574;">"root"</span><span style="color: #4f97d7;">)</span> \
+.option<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"password"</span>, <span style="color: #2d9574;">"root"</span><span style="color: #4f97d7;">)</span> \
+.mode<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'append'</span><span style="color: #4f97d7;">)</span> \
+.save<span style="color: #4f97d7;">()</span>
 </code></pre>
 </div>
 </div>
@@ -639,38 +643,38 @@ lines.foreachRDD<span style="color: #cccccc;">(</span>process<span style="color:
 创建表
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">create</span> database citibike;
+<pre><code class="sql">    <span style="color: #4f97d7; font-weight: bold;">create</span> database citibike;
 
 use citibike;
 
-<span style="color: #99cc99;">create</span> <span style="color: #99cc99;">table</span> <span style="color: #f99157;">trip</span> <span style="color: #cccccc;">(</span>
-        id <span style="color: #6699cc;">int</span> <span style="color: #99cc99;">primary</span> <span style="color: #99cc99;">key</span> auto_increment,
-        tripduration <span style="color: #6699cc;">int</span> ,
+<span style="color: #4f97d7; font-weight: bold;">create</span> <span style="color: #4f97d7; font-weight: bold;">table</span> <span style="color: #bc6ec5; font-weight: bold;">trip</span> <span style="color: #4f97d7;">(</span>
+        id <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #4f97d7; font-weight: bold;">primary</span> <span style="color: #4f97d7; font-weight: bold;">key</span> auto_increment,
+        tripduration <span style="color: #ce537a; font-weight: bold;">int</span> ,
         starttime datetime,
-        starttime_hour <span style="color: #6699cc;">int</span>,
+        starttime_hour <span style="color: #ce537a; font-weight: bold;">int</span>,
         stoptime datetime,
-        stoptime_hour <span style="color: #6699cc;">int</span>,
-        start_station_id <span style="color: #6699cc;">int</span>,
-        start_station_name <span style="color: #6699cc;">varchar</span><span style="color: #66cccc;">(</span>40<span style="color: #66cccc;">)</span>,
-        start_station_latitude <span style="color: #6699cc;">float</span>,
-        start_station_longitude <span style="color: #6699cc;">float</span>,
-        end_station_id <span style="color: #6699cc;">int</span>,
-        end_station_name <span style="color: #6699cc;">varchar</span><span style="color: #66cccc;">(</span>40<span style="color: #66cccc;">)</span>,
-        end_station_latitude <span style="color: #6699cc;">float</span>,
-        end_station_longitude <span style="color: #6699cc;">float</span>,
-        bikeid <span style="color: #6699cc;">int</span>,
-        usertype <span style="color: #6699cc;">varchar</span><span style="color: #66cccc;">(</span>10<span style="color: #66cccc;">)</span>,
-        age <span style="color: #6699cc;">int</span>,
-        gender <span style="color: #6699cc;">int</span><span style="color: #66cccc;">(</span>1<span style="color: #66cccc;">)</span>,
-        distance <span style="color: #6699cc;">float</span>,
-        duration <span style="color: #6699cc;">float</span>
-<span style="color: #cccccc;">)</span>;
+        stoptime_hour <span style="color: #ce537a; font-weight: bold;">int</span>,
+        start_station_id <span style="color: #ce537a; font-weight: bold;">int</span>,
+        start_station_name <span style="color: #ce537a; font-weight: bold;">varchar</span><span style="color: #bc6ec5;">(</span>40<span style="color: #bc6ec5;">)</span>,
+        start_station_latitude <span style="color: #ce537a; font-weight: bold;">float</span>,
+        start_station_longitude <span style="color: #ce537a; font-weight: bold;">float</span>,
+        end_station_id <span style="color: #ce537a; font-weight: bold;">int</span>,
+        end_station_name <span style="color: #ce537a; font-weight: bold;">varchar</span><span style="color: #bc6ec5;">(</span>40<span style="color: #bc6ec5;">)</span>,
+        end_station_latitude <span style="color: #ce537a; font-weight: bold;">float</span>,
+        end_station_longitude <span style="color: #ce537a; font-weight: bold;">float</span>,
+        bikeid <span style="color: #ce537a; font-weight: bold;">int</span>,
+        usertype <span style="color: #ce537a; font-weight: bold;">varchar</span><span style="color: #bc6ec5;">(</span>10<span style="color: #bc6ec5;">)</span>,
+        age <span style="color: #ce537a; font-weight: bold;">int</span>,
+        gender <span style="color: #ce537a; font-weight: bold;">int</span><span style="color: #bc6ec5;">(</span>1<span style="color: #bc6ec5;">)</span>,
+        distance <span style="color: #ce537a; font-weight: bold;">float</span>,
+        duration <span style="color: #ce537a; font-weight: bold;">float</span>
+<span style="color: #4f97d7;">)</span>;
 
-<span style="color: #99cc99;">create</span> <span style="color: #99cc99;">table</span> <span style="color: #f99157;">gender_age_speed</span>  <span style="color: #cccccc;">(</span>
-    age <span style="color: #6699cc;">int</span>,
-    gender <span style="color: #6699cc;">int</span>,
-    speed <span style="color: #6699cc;">float</span>
-<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">select</span> age, gender, distance/tripduration*3.6 <span style="color: #99cc99;">as</span> speed <span style="color: #99cc99;">from</span> trip;
+    <span style="color: #4f97d7; font-weight: bold;">create</span> <span style="color: #4f97d7; font-weight: bold;">table</span> <span style="color: #bc6ec5; font-weight: bold;">gender_age_speed</span>  <span style="color: #4f97d7;">(</span>
+    age <span style="color: #ce537a; font-weight: bold;">int</span>,
+    gender <span style="color: #ce537a; font-weight: bold;">int</span>,
+    speed <span style="color: #ce537a; font-weight: bold;">float</span>
+<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">select</span> age, gender, distance/tripduration*3.6 <span style="color: #4f97d7; font-weight: bold;">as</span> speed <span style="color: #4f97d7; font-weight: bold;">from</span> trip;
 </code></pre>
 </div>
 
@@ -679,15 +683,16 @@ use citibike;
 用户类型
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">select</span> usertype, <span style="color: #cc99cc;">count</span><span style="color: #cccccc;">(</span>*<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">from</span> trip <span style="color: #99cc99;">group</span> <span style="color: #99cc99;">by</span> usertype;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">select</span> usertype, <span style="color: #4f97d7;">count</span><span style="color: #4f97d7;">(</span>*<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">from</span> trip <span style="color: #4f97d7; font-weight: bold;">group</span> <span style="color: #4f97d7; font-weight: bold;">by</span> usertype;
 </code></pre>
 </div></li>
-
+</ol>
+<ol class="org-ol">
 <li><p>
 年龄和平均骑行速度关系
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">select</span> age, <span style="color: #cc99cc;">avg</span><span style="color: #cccccc;">(</span>speed<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">as</span> avg_speed <span style="color: #99cc99;">from</span> gender_age_speed <span style="color: #99cc99;">where</span> speed &gt; 0 <span style="color: #99cc99;">group</span> <span style="color: #99cc99;">by</span> age  <span style="color: #99cc99;">order</span> <span style="color: #99cc99;">by</span> avg_speed <span style="color: #99cc99;">desc</span>;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">select</span> age, <span style="color: #4f97d7;">avg</span><span style="color: #4f97d7;">(</span>speed<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">as</span> avg_speed <span style="color: #4f97d7; font-weight: bold;">from</span> gender_age_speed <span style="color: #4f97d7; font-weight: bold;">where</span> speed &gt; 0 <span style="color: #4f97d7; font-weight: bold;">group</span> <span style="color: #4f97d7; font-weight: bold;">by</span> age  <span style="color: #4f97d7; font-weight: bold;">order</span> <span style="color: #4f97d7; font-weight: bold;">by</span> avg_speed <span style="color: #4f97d7; font-weight: bold;">desc</span>;
 </code></pre>
 </div></li>
 
@@ -695,7 +700,7 @@ use citibike;
 性别和平均骑行速度关系
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">select</span> gender, <span style="color: #cc99cc;">avg</span><span style="color: #cccccc;">(</span>tripduration<span style="color: #cccccc;">)</span>/60.0 <span style="color: #99cc99;">as</span> duration <span style="color: #99cc99;">from</span> trip <span style="color: #99cc99;">where</span> distance &gt; 0 <span style="color: #99cc99;">group</span> <span style="color: #99cc99;">by</span> gender;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">select</span> gender, <span style="color: #4f97d7;">avg</span><span style="color: #4f97d7;">(</span>tripduration<span style="color: #4f97d7;">)</span>/60.0 <span style="color: #4f97d7; font-weight: bold;">as</span> duration <span style="color: #4f97d7; font-weight: bold;">from</span> trip <span style="color: #4f97d7; font-weight: bold;">where</span> distance &gt; 0 <span style="color: #4f97d7; font-weight: bold;">group</span> <span style="color: #4f97d7; font-weight: bold;">by</span> gender;
 </code></pre>
 </div></li>
 
@@ -703,7 +708,7 @@ use citibike;
 查询使用过的自行车数量
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">select</span> <span style="color: #cc99cc;">count</span><span style="color: #cccccc;">(</span><span style="color: #99cc99;">distinct</span> bikeid<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">from</span> trip;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">select</span> <span style="color: #4f97d7;">count</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">distinct</span> bikeid<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">from</span> trip;
 </code></pre>
 </div></li>
 
@@ -711,18 +716,18 @@ use citibike;
 查询出站站名和对应的经纬度，以及热度
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">SELECT</span>
-     <span style="color: #99cc99;">distinct</span><span style="color: #cccccc;">(</span>start_station_name<span style="color: #cccccc;">)</span>, start_station_latitude, start_station_longitude, a.<span style="color: #cc99cc;">sum</span>
-<span style="color: #99cc99;">FROM</span>
-    <span style="color: #cccccc;">(</span><span style="color: #99cc99;">SELECT</span>
-        start_station_id, <span style="color: #cc99cc;">COUNT</span><span style="color: #66cccc;">(</span>*<span style="color: #66cccc;">)</span> <span style="color: #99cc99;">AS</span> <span style="color: #cc99cc;">sum</span>
-    <span style="color: #99cc99;">FROM</span>
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">SELECT</span>
+     <span style="color: #4f97d7; font-weight: bold;">distinct</span><span style="color: #4f97d7;">(</span>start_station_name<span style="color: #4f97d7;">)</span>, start_station_latitude, start_station_longitude, a.<span style="color: #4f97d7;">sum</span>
+<span style="color: #4f97d7; font-weight: bold;">FROM</span>
+    <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">SELECT</span>
+        start_station_id, <span style="color: #4f97d7;">COUNT</span><span style="color: #bc6ec5;">(</span>*<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">AS</span> <span style="color: #4f97d7;">sum</span>
+    <span style="color: #4f97d7; font-weight: bold;">FROM</span>
         trip
-    <span style="color: #99cc99;">GROUP</span> <span style="color: #99cc99;">BY</span> start_station_id
-    <span style="color: #99cc99;">ORDER</span> <span style="color: #99cc99;">BY</span> <span style="color: #cc99cc;">sum</span> <span style="color: #99cc99;">DESC</span> <span style="color: #99cc99;">limit</span> 10<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">AS</span> a,
+    <span style="color: #4f97d7; font-weight: bold;">GROUP</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> start_station_id
+    <span style="color: #4f97d7; font-weight: bold;">ORDER</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> <span style="color: #4f97d7;">sum</span> <span style="color: #4f97d7; font-weight: bold;">DESC</span> <span style="color: #4f97d7; font-weight: bold;">limit</span> 10<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">AS</span> a,
     trip
-<span style="color: #99cc99;">WHERE</span>
-    trip.start_station_id = a.start_station_id <span style="color: #99cc99;">order</span> <span style="color: #99cc99;">by</span> a.<span style="color: #cc99cc;">sum</span> <span style="color: #99cc99;">desc</span>;
+<span style="color: #4f97d7; font-weight: bold;">WHERE</span>
+    trip.start_station_id = a.start_station_id <span style="color: #4f97d7; font-weight: bold;">order</span> <span style="color: #4f97d7; font-weight: bold;">by</span> a.<span style="color: #4f97d7;">sum</span> <span style="color: #4f97d7; font-weight: bold;">desc</span>;
 </code></pre>
 </div></li>
 
@@ -730,18 +735,18 @@ use citibike;
 查询入站站名，经纬度，热度
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">SELECT</span>
-     <span style="color: #99cc99;">distinct</span><span style="color: #cccccc;">(</span>end_station_name<span style="color: #cccccc;">)</span>, end_station_latitude, end_station_longitude, a.<span style="color: #cc99cc;">sum</span>
-<span style="color: #99cc99;">FROM</span>
-    <span style="color: #cccccc;">(</span><span style="color: #99cc99;">SELECT</span>
-        end_station_id, <span style="color: #cc99cc;">COUNT</span><span style="color: #66cccc;">(</span>*<span style="color: #66cccc;">)</span> <span style="color: #99cc99;">AS</span> <span style="color: #cc99cc;">sum</span>
-    <span style="color: #99cc99;">FROM</span>
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">SELECT</span>
+     <span style="color: #4f97d7; font-weight: bold;">distinct</span><span style="color: #4f97d7;">(</span>end_station_name<span style="color: #4f97d7;">)</span>, end_station_latitude, end_station_longitude, a.<span style="color: #4f97d7;">sum</span>
+<span style="color: #4f97d7; font-weight: bold;">FROM</span>
+    <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">SELECT</span>
+        end_station_id, <span style="color: #4f97d7;">COUNT</span><span style="color: #bc6ec5;">(</span>*<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">AS</span> <span style="color: #4f97d7;">sum</span>
+    <span style="color: #4f97d7; font-weight: bold;">FROM</span>
         trip
-    <span style="color: #99cc99;">GROUP</span> <span style="color: #99cc99;">BY</span> end_station_id
-    <span style="color: #99cc99;">ORDER</span> <span style="color: #99cc99;">BY</span> <span style="color: #cc99cc;">sum</span> <span style="color: #99cc99;">DESC</span> <span style="color: #99cc99;">limit</span> 10<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">AS</span> a,
+    <span style="color: #4f97d7; font-weight: bold;">GROUP</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> end_station_id
+    <span style="color: #4f97d7; font-weight: bold;">ORDER</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> <span style="color: #4f97d7;">sum</span> <span style="color: #4f97d7; font-weight: bold;">DESC</span> <span style="color: #4f97d7; font-weight: bold;">limit</span> 10<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">AS</span> a,
     trip
-<span style="color: #99cc99;">WHERE</span>
-    trip.end_station_id = a.end_station_id <span style="color: #99cc99;">order</span> <span style="color: #99cc99;">by</span> a.<span style="color: #cc99cc;">sum</span> <span style="color: #99cc99;">desc</span>;
+<span style="color: #4f97d7; font-weight: bold;">WHERE</span>
+    trip.end_station_id = a.end_station_id <span style="color: #4f97d7; font-weight: bold;">order</span> <span style="color: #4f97d7; font-weight: bold;">by</span> a.<span style="color: #4f97d7;">sum</span> <span style="color: #4f97d7; font-weight: bold;">desc</span>;
 </code></pre>
 </div></li>
 
@@ -749,11 +754,11 @@ use citibike;
 性别比例统计
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">SELECT</span>
-    gender, <span style="color: #cc99cc;">COUNT</span><span style="color: #cccccc;">(</span>*<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">AS</span> <span style="color: #cc99cc;">sum</span>
-<span style="color: #99cc99;">FROM</span>
+<pre><code class="sql">    <span style="color: #4f97d7; font-weight: bold;">SELECT</span>
+    gender, <span style="color: #4f97d7;">COUNT</span><span style="color: #4f97d7;">(</span>*<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">AS</span> <span style="color: #4f97d7;">sum</span>
+<span style="color: #4f97d7; font-weight: bold;">FROM</span>
     trip
-<span style="color: #99cc99;">GROUP</span> <span style="color: #99cc99;">BY</span> gender;
+<span style="color: #4f97d7; font-weight: bold;">GROUP</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> gender;
 </code></pre>
 </div></li>
 
@@ -761,12 +766,12 @@ use citibike;
 24 小时骑行分布统计
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">SELECT</span>
-    starttime_hour, <span style="color: #cc99cc;">COUNT</span><span style="color: #cccccc;">(</span>*<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">AS</span> <span style="color: #cc99cc;">sum</span>
-<span style="color: #99cc99;">FROM</span>
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">SELECT</span>
+    starttime_hour, <span style="color: #4f97d7;">COUNT</span><span style="color: #4f97d7;">(</span>*<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">AS</span> <span style="color: #4f97d7;">sum</span>
+<span style="color: #4f97d7; font-weight: bold;">FROM</span>
     trip
-<span style="color: #99cc99;">GROUP</span> <span style="color: #99cc99;">BY</span> starttime_hour
-<span style="color: #99cc99;">ORDER</span> <span style="color: #99cc99;">BY</span> starttime_hour;
+<span style="color: #4f97d7; font-weight: bold;">GROUP</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> starttime_hour
+<span style="color: #4f97d7; font-weight: bold;">ORDER</span> <span style="color: #4f97d7; font-weight: bold;">BY</span> starttime_hour;
 </code></pre>
 </div></li>
 
@@ -774,7 +779,7 @@ use citibike;
 9 月 3 日，24 小时骑行分布
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">select</span> starttime_hour, <span style="color: #cc99cc;">count</span><span style="color: #cccccc;">(</span>*<span style="color: #cccccc;">)</span> <span style="color: #99cc99;">as</span> <span style="color: #cc99cc;">sum</span> <span style="color: #99cc99;">from</span> trip <span style="color: #99cc99;">where</span> DATE_FORMAT<span style="color: #cccccc;">(</span>starttime, <span style="color: #66cccc;">'%Y-%m-%d'</span><span style="color: #cccccc;">)</span> = DATE_FORMAT<span style="color: #cccccc;">(</span><span style="color: #66cccc;">'2014-9-3'</span>, <span style="color: #66cccc;">'%Y-%m-%d'</span><span style="color: #cccccc;">)</span> <span style="color: #99cc99;">group</span> <span style="color: #99cc99;">by</span> starttime_hour <span style="color: #99cc99;">order</span> <span style="color: #99cc99;">by</span> starttime_hour;
+<pre><code class="sql"><span style="color: #4f97d7; font-weight: bold;">select</span> starttime_hour, <span style="color: #4f97d7;">count</span><span style="color: #4f97d7;">(</span>*<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">as</span> <span style="color: #4f97d7;">sum</span> <span style="color: #4f97d7; font-weight: bold;">from</span> trip <span style="color: #4f97d7; font-weight: bold;">where</span> DATE_FORMAT<span style="color: #4f97d7;">(</span>starttime, <span style="color: #2d9574;">'%Y-%m-%d'</span><span style="color: #4f97d7;">)</span> = DATE_FORMAT<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'2014-9-3'</span>, <span style="color: #2d9574;">'%Y-%m-%d'</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">group</span> <span style="color: #4f97d7; font-weight: bold;">by</span> starttime_hour <span style="color: #4f97d7; font-weight: bold;">order</span> <span style="color: #4f97d7; font-weight: bold;">by</span> starttime_hour;
 </code></pre>
 </div></li>
 
@@ -782,10 +787,10 @@ use citibike;
 计算各个年龄段的用户数
 </p>
 <div class="container">
-<pre><code class="sql"><span style="color: #99cc99;">select</span> age div 10, <span style="color: #cc99cc;">count</span><span style="color: #cccccc;">(</span>*<span style="color: #cccccc;">)</span>
-<span style="color: #99cc99;">from</span> gender_age_speed
-<span style="color: #99cc99;">where</span> age &lt; 100
-<span style="color: #99cc99;">group</span> <span style="color: #99cc99;">by</span> age div 10;
+<pre><code class="sql">        <span style="color: #4f97d7; font-weight: bold;">select</span> age div 10, <span style="color: #4f97d7;">count</span><span style="color: #4f97d7;">(</span>*<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">from</span> gender_age_speed
+<span style="color: #4f97d7; font-weight: bold;">where</span> age &lt; 100
+<span style="color: #4f97d7; font-weight: bold;">group</span> <span style="color: #4f97d7; font-weight: bold;">by</span> age div 10;
 </code></pre>
 </div></li>
 </ol>
@@ -1026,15 +1031,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -1058,7 +1063,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -1066,7 +1071,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

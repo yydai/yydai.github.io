@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-03-21 Wed 19:03 -->
+<!-- 2019-01-01 Tue 15:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>深入理解 L1 L2 正则</title>
@@ -247,7 +247,7 @@ for the JavaScript code in this tag.
 
 <div class='nav'>
 <div class='blog' style='text-align:right'>
-<a href='/index.html'> Home </a> | <a href='/contact.html'> About </a>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
 </div>
 </div>
 </div>
@@ -287,13 +287,16 @@ for the JavaScript code in this tag.
 
 <ul class="org-ul">
 <li>L0 范数表示的就是向量中非零元素的个数</li>
+</ul>
+<ul class="org-ul">
 <li>L1 范数就是绝对值范数，
 \[\left\|x\right\|=\left|x\right|\]</li>
 <li>L2 范数就是欧几里得距离
 \[{\displaystyle \left\|{\boldsymbol {X}}\right\|_{2}:={\sqrt {x_{1}^{2}+\cdots +x_{n}^{2}}}.}\]</li>
-<li>Lp 范数就是下面的定义， 其中 \(p ≥ 1\)
-\[\left\|\mathbf {x} \right\|_{p}:={\bigg (}\sum _{i=1}^{n}\left|x_{i}\right|^{p}{\bigg )}^{1/p}.\]</li>
-</ul>
+<li><p>
+Lp 范数就是下面的定义， 其中 \(p ≥ 1\)
+\[\left\|\mathbf {x} \right\|_{p}:={\bigg (}\sum _{i=1}^{n}\left|x_{i}\right|^{p}{\bigg )}^{1/p}.\]
+</p>
 
 <p>
 图形上看下可能更加的直观，但是对于高维图像表示起来很困难尤其是到了三维以上，为了简单的理解我们以 2 维为例。
@@ -304,7 +307,8 @@ for the JavaScript code in this tag.
 <div class="figure">
 <p><img src="./imgs/20180321_124931_20779CpL.png" alt="20180321_124931_20779CpL.png" width="60%" />
 </p>
-</div>
+</div></li>
+</ul>
 </div>
 </div>
 
@@ -373,6 +377,8 @@ for the JavaScript code in this tag.
 <div class="outline-text-2" id="text-org59ac382">
 <ol class="org-ol">
 <li>L1 正则可产生比较稀疏的解, L2 会产生更多的小的，分布比较均匀的小解来。</li>
+</ol>
+<ol class="org-ol">
 <li>L1 对 outlier 数据没有 L2 敏感，L2 对大数的惩罚比较大</li>
 <li>L1 加入后，有些点是不可导的点，需要做一些特殊处理</li>
 </ol>
@@ -393,6 +399,8 @@ for the JavaScript code in this tag.
 <div class="outline-text-2" id="text-org12180e5">
 <ol class="org-ol">
 <li><a href="https://www.zhihu.com/question/21868680/answer/136376374">https://www.zhihu.com/question/21868680/answer/136376374</a></li>
+</ol>
+<ol class="org-ol">
 <li><a href="https://morvanzhou.github.io/tutorials/machine-learning/ML-intro/3-09-l1l2regularization/">https://morvanzhou.github.io/tutorials/machine-learning/ML-intro/3-09-l1l2regularization/</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Norm_(mathematics)">https://en.wikipedia.org/wiki/Norm_(mathematics)</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/29360425">https://zhuanlan.zhihu.com/p/29360425</a></li>
@@ -431,15 +439,15 @@ if(jQuery.isEmptyObject(items)) {
     create(title);
 } else {
     html_url = items.html_url;
-	document.body.innerHTML +=
+        document.body.innerHTML +=
 '<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
 }
 
 
 function create(title) {
-	var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
 
-	jQuery.ajax({
+        jQuery.ajax({
       type: 'GET',
       async: false,
       dataType:'json',
@@ -463,7 +471,7 @@ if(result.total_count == 1) {
 }
 
 function loadComments(data) {
-	repo = 'github.com'
+        repo = 'github.com'
     for (var i=0; i<data.length; i++) {
       var cuser = data[i].user.login;
       var cuserlink = 'https://' + repo + '/' + data[i].user.login;
@@ -471,7 +479,7 @@ function loadComments(data) {
       var cavatarlink = data[i].user.avatar_url;
       var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
 
-	  var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
 
       var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
 

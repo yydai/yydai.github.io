@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-01-02 Wed 22:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>远程主机登录</title>
@@ -256,12 +256,13 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org53fa64a">最普通的方法</a></li>
-<li><a href="#org71c0e53">使用 SSH key 来登录</a></li>
-<li><a href="#orgc9a6658">配置 ssh config</a></li>
-<li><a href="#org61f250d">还可以更简化？</a></li>
-<li><a href="#orgfb46712">换种思路</a></li>
-<li><a href="#orgb367817">尾声</a></li>
+<li><a href="#org2635273">1. 最普通的方法</a></li>
+<li><a href="#orgd42435b">2. 使用 SSH key 来登录</a></li>
+<li><a href="#orgb28b103">3. 配置 ssh config</a></li>
+<li><a href="#org7e5d01d">4. 还可以更简化？</a></li>
+<li><a href="#org805fb43">5. 换种思路</a></li>
+<li><a href="#org9e556e4">6. 一个非常有用的配置[update]</a></li>
+<li><a href="#org6d0721f">7. 其他相关的</a></li>
 </ul>
 </div>
 </div>
@@ -271,9 +272,9 @@ for the JavaScript code in this tag.
 这里记录一下，如何登录远程主机，以及如何更方便登录。
 </p>
 
-<div id="outline-container-org53fa64a" class="outline-2">
-<h2 id="org53fa64a">最普通的方法</h2>
-<div class="outline-text-2" id="text-org53fa64a">
+<div id="outline-container-org2635273" class="outline-2">
+<h2 id="org2635273">1. 最普通的方法</h2>
+<div class="outline-text-2" id="text-org2635273">
 <p>
 例如我们有一个远程的主机，IP 地址为 <b>52.10.199.62</b> ，username 为 ubuntu。
 </p>
@@ -294,9 +295,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org71c0e53" class="outline-2">
-<h2 id="org71c0e53">使用 SSH key 来登录</h2>
-<div class="outline-text-2" id="text-org71c0e53">
+<div id="outline-container-orgd42435b" class="outline-2">
+<h2 id="orgd42435b">2. 使用 SSH key 来登录</h2>
+<div class="outline-text-2" id="text-orgd42435b">
 <p>
 首先生成一个 ssh key，如果你想用 ~/.ssh 目录下的 key 也可以。
 </p>
@@ -351,9 +352,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgc9a6658" class="outline-2">
-<h2 id="orgc9a6658">配置 ssh config</h2>
-<div class="outline-text-2" id="text-orgc9a6658">
+<div id="outline-container-orgb28b103" class="outline-2">
+<h2 id="orgb28b103">3. 配置 ssh config</h2>
+<div class="outline-text-2" id="text-orgb28b103">
 <p>
 在上面的例子中，我们需要记住很多的东西。尤其是 ssh private key 还有 ip 地址这种东西。
 如果你听说过 ssh 的 config，应该就知道如何做了。
@@ -386,9 +387,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org61f250d" class="outline-2">
-<h2 id="org61f250d">还可以更简化？</h2>
-<div class="outline-text-2" id="text-org61f250d">
+<div id="outline-container-org7e5d01d" class="outline-2">
+<h2 id="org7e5d01d">4. 还可以更简化？</h2>
+<div class="outline-text-2" id="text-org7e5d01d">
 <p>
 到上面其实已经足够简单了，但是我还是太懒了，一个单词都不想多输。
 </p>
@@ -408,9 +409,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgfb46712" class="outline-2">
-<h2 id="orgfb46712">换种思路</h2>
-<div class="outline-text-2" id="text-orgfb46712">
+<div id="outline-container-org805fb43" class="outline-2">
+<h2 id="org805fb43">5. 换种思路</h2>
+<div class="outline-text-2" id="text-org805fb43">
 <p>
 如果说我们可以点点就能实现这种功能不知道你信吗？前提是你要使用 iTerm2，可以看<a href="http://0x100.club/mac/software.html#org800a2b7">这里</a>了解 iTerm2。
 我们首先在在 iTerm2 中添加一个新的 profile，如下选择 Command，输入命令。
@@ -429,15 +430,37 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb367817" class="outline-2">
-<h2 id="orgb367817">尾声</h2>
-<div class="outline-text-2" id="text-orgb367817">
+<div id="outline-container-org9e556e4" class="outline-2">
+<h2 id="org9e556e4">6. 一个非常有用的配置[update]</h2>
+<div class="outline-text-2" id="text-org9e556e4">
 <p>
-很早之前，因为有很多台机器需要登录，而且 ip 更换很频繁，而且我们根据不同的区使用了几种不同的 ssh key。这导致很混乱，于是我简单的写了写 <a href="https://github.com/dai92817/linux_settings/blob/master/bashrc">shell</a> 脚本，这对于当时的使用场景是够用了。现在这个用处不大，仅仅当个参考吧。
+假如我的使用场景是这样的：在公司里，我需要使用 RSATOKEN + PASSCODE
+来登陆公司的服务器，因为 token 每隔几秒就刷新一次，上面的方法就不太好用了。如果我要开 10 个 ssh 连接窗口，难道我要输入 10 次？ 这里我知道一个简单的方法，在 windows 下有个工具可以做类似 copy session 的操作，在 mac 下用 iterm 我还没有找到好的方法, 但是可以通过配置一下 ssh
+config 实现。
 </p>
 
 <p>
-最后，我们可以使用 <a href="https://github.com/mobile-shell/mosh">mosh</a> 来代替 ssh。
+做法很简单，在~/.ssh/config 下加入如下的配置：
+</p>
+<div class="container">
+<pre><code class="python">Host *
+<span style="background-color: #292e34;"> </span> ControlMaster auto
+<span style="background-color: #292e34;"> </span> ControlPath /tmp/ssh_mux_%h_%p_%r
+<span style="background-color: #292e34;"> </span> ControlPersist 600
+</code></pre>
+</div>
+
+<p>
+更多的细节可以看下这个文章： <a href="https://www.cyberciti.biz/faq/linux-unix-reuse-openssh-connection/">How To Reuse SSH Connection To Speed Up Remote Login Process Using Multiplexing</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6d0721f" class="outline-2">
+<h2 id="org6d0721f">7. 其他相关的</h2>
+<div class="outline-text-2" id="text-org6d0721f">
+<p>
+我们可以使用 <a href="https://github.com/mobile-shell/mosh">mosh</a> 来代替 ssh，但是我没用过。
 </p>
 
 <p>

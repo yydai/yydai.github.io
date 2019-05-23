@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-05-23 Thu 09:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>代码高亮</title>
+<title>使用 highlight.js 高亮 Org mode</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -251,15 +251,36 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">代码高亮</h1>
+<h1 class="title">使用 highlight.js 高亮 Org mode</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org12228bc">背景</a></li>
+<li><a href="#orgfd9a8b6">方案</a></li>
+<li><a href="#org68ecf21">问题</a></li>
+</ul>
+</div>
+</div>
 <hr />
 
+<div id="outline-container-org12228bc" class="outline-2">
+<h2 id="org12228bc">背景</h2>
+<div class="outline-text-2" id="text-org12228bc">
 <p>
-通过 highlight.js 来高亮通过 org mode 导出的 HTML 代码片段。
+  Org mode 代码的默认导出使用的是 htmlize 效果不是很好看，而 highlight.js
+却有各种各样的配色，但是 Org mode 却不支持。下面解决的问题就是如何通过
+highlight.js 来高亮 org mode 导出的 HTML 代码片段。
 </p>
+</div>
+</div>
 
+<div id="outline-container-orgfd9a8b6" class="outline-2">
+<h2 id="orgfd9a8b6">方案</h2>
+<div class="outline-text-2" id="text-orgfd9a8b6">
 <p>
-由于 org mode 在 export 代码的时候不支持 highlight.js，而使用 htmlize 来高亮又不是很好看。所以看了下 ox-html.el 的代码改了部分的内容，使得导出的 html 中代码能够通过 highlight.js 来高亮。
+由于 org mode 在 export 代码的时候不支持 highlight.js，而使用 htmlize
+来高亮又不是很好看。所以看了下 ox-html.el 的代码改了部分的内容，使得导出的 html 中代码能够通过 highlight.js 来高亮。
 </p>
 
 <ol class="org-ol">
@@ -285,11 +306,65 @@ for the JavaScript code in this tag.
 </code></pre>
 </div></li>
 </ol>
+</div>
+</div>
 
+<div id="outline-container-org68ecf21" class="outline-2">
+<h2 id="org68ecf21">问题</h2>
+<div class="outline-text-2" id="text-org68ecf21">
+<p>
+上面的方法基本能够解决问题，但是处理方式却很不好。首先，它对 org library 做了 hack，如果下次更新又需要手动再改动。
+另外，难于发现问题。一个推荐的处理方式是不改变原来库的行为模式，改用 advice 来处理：
+</p>
+<div class="container">
+<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">org-html-src-block2</span> <span style="color: #bc6ec5;">(</span>src-block _contents info<span style="color: #bc6ec5;">)</span>
+  <span style="color: #9f8766;">"Transcode a SRC-BLOCK element from Org to HTML.</span>
+<span style="color: #9f8766;">CONTENTS holds the contents of the item.  INFO is a plist holding</span>
+<span style="color: #9f8766;">contextual information."</span>
+  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>org-export-read-attribute <span style="color: #4f97d7;">:attr_html</span> src-block <span style="color: #4f97d7;">:textarea</span><span style="color: #2d9574;">)</span>
+      <span style="color: #2d9574;">(</span>org-html--textarea-block src-block<span style="color: #2d9574;">)</span>
+    <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span>lang <span style="color: #4f97d7;">(</span>org-element-property <span style="color: #4f97d7;">:language</span> src-block<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span>
+          <span style="color: #b1951d;">(</span>code <span style="color: #4f97d7;">(</span>org-html-format-code src-block info<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span>
+          <span style="color: #b1951d;">(</span>label <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>lbl <span style="color: #9cb6ad;">(</span><span style="color: #4f97d7; font-weight: bold;">and</span> <span style="color: #4f97d7;">(</span>org-element-property <span style="color: #4f97d7;">:name</span> src-block<span style="color: #4f97d7;">)</span>
+                                 <span style="color: #4f97d7;">(</span>org-export-get-reference src-block info<span style="color: #4f97d7;">)</span><span style="color: #9cb6ad;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
+                   <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> lbl <span style="color: #2d9574;">(</span>format <span style="color: #2d9574;">" id=</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">%s</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">"</span> lbl<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">""</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+      <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #b1951d;">(</span>not lang<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"&lt;pre&gt;&lt;code class=</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">example</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">%s&gt;</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">n</span><span style="color: #2d9574;">%s&lt;/code&gt;&lt;/pre&gt;"</span> label code<span style="color: #b1951d;">)</span>
+        <span style="color: #b1951d;">(</span>format <span style="color: #2d9574;">"&lt;div class=</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">container</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">&gt;</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">n</span><span style="color: #2d9574;">%s%s</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">n</span><span style="color: #2d9574;">&lt;/div&gt;"</span>
+                <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">Build caption.</span>
+                <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>caption <span style="color: #9cb6ad;">(</span>org-export-get-caption src-block<span style="color: #9cb6ad;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
+                  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>not caption<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">""</span>
+                    <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #9cb6ad;">(</span><span style="color: #4f97d7;">(</span>listing-number
+                           <span style="color: #bc6ec5;">(</span>format
+                            <span style="color: #2d9574;">"&lt;span class=</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">listing-number</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">&gt;%s &lt;/span&gt;"</span>
+                            <span style="color: #2d9574;">(</span>format
+                             <span style="color: #67b11d;">(</span>org-html--translate <span style="color: #2d9574;">"Listing %d:"</span> info<span style="color: #67b11d;">)</span>
+                             <span style="color: #67b11d;">(</span>org-export-get-ordinal
+                              src-block info nil <span style="color: #4f97d7; font-weight: bold;">#'</span><span style="color: #a45bad;">org-html--has-caption-p</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #9cb6ad;">)</span>
+                      <span style="color: #9cb6ad;">(</span>format <span style="color: #2d9574;">"&lt;label class=</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">org-src-name</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">&gt;%s%s&lt;/label&gt;"</span>
+                              listing-number
+                              <span style="color: #4f97d7;">(</span>org-trim <span style="color: #bc6ec5;">(</span>org-export-data caption info<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #9cb6ad;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">Contents.</span>
+                <span style="color: #4f97d7;">(</span>format <span style="color: #2d9574;">"&lt;pre&gt;&lt;code class=</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">%s</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">"</span><span style="color: #2d9574;">%s&gt;%s&lt;/code&gt;&lt;/pre&gt;"</span>
+                        lang label code<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7;">(</span>advice-add <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">org-html-src-block</span> <span style="color: #4f97d7;">:override</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">org-html-src-block2</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
 
 <p>
-通过这种方式基本上可以用上 highlight.js 来高亮代码了。但是还有些问题，代码的识别上经常会出错，这个以后慢慢解决。
+简单解释，就是写一个函数 org-html-src-block2 来覆盖原来的函数。我们 C-h f 看下原来的函数：
 </p>
+
+<div class="figure">
+<p><img src="./imgs/20190523_092445_15212Pkv.png" alt="20190523_092445_15212Pkv.png" width="100%" />
+</p>
+</div>
+
+<p>
+可以看到它已经被 advice 处理过了。
+</p>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -300,7 +375,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

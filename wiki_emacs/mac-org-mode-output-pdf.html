@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-22 Wed 21:02 -->
+<!-- 2019-05-23 Thu 09:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Exporting to PDF in org mode</title>
@@ -259,6 +259,7 @@ for the JavaScript code in this tag.
 <li><a href="#org91c2400">简介</a></li>
 <li><a href="#org2baa867">使用的环境</a></li>
 <li><a href="#orgb9be3ae">如何配置</a></li>
+<li><a href="#org65568ea">其他问题</a></li>
 <li><a href="#org1f8ab59">参考：</a></li>
 </ul>
 </div>
@@ -338,6 +339,33 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
+<div id="outline-container-org65568ea" class="outline-2">
+<h2 id="org65568ea">其他问题</h2>
+<div class="outline-text-2" id="text-org65568ea">
+<p>
+在导出 pdf 的时候，在目录中会出现烦人的红框，类似这样：
+</p>
+
+
+<div class="figure">
+<p><img src="./imgs/20190523_085919_15212Cap.png" alt="20190523_085919_15212Cap.png" width="100%" />
+</p>
+</div>
+
+<p>
+解决方法很简单，在 org 文件开头加：
+</p>
+<div class="container">
+<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+latex_header: \hypersetup{colorlinks=true,linkcolor=blue}</span>
+</code></pre>
+</div>
+
+<p>
+linkcolor 设置成自己喜欢的颜色即可。
+</p>
+</div>
+</div>
+
 
 <div id="outline-container-org1f8ab59" class="outline-2">
 <h2 id="org1f8ab59">参考：</h2>
@@ -345,6 +373,9 @@ for the JavaScript code in this tag.
 <ol class="org-ol">
 <li><a href="http://blog.csdn.net/cheneywh/article/details/35568027">http://blog.csdn.net/cheneywh/article/details/35568027</a></li>
 </ol>
+<p>
+2.<a href="https://emacs.stackexchange.com/questions/29640/how-do-i-get-rid-of-the-red-boxes-around-the-links-in-the-toc"> How do I get rid of the red boxes around the links in the TOC?</a>
+</p>
 </div>
 </div>
 <div id="footnotes">

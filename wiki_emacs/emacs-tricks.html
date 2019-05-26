@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-05-25 Sat 10:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的一些技巧</title>
@@ -289,6 +289,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgbdeb207">31. MULTIPLE CHOICES IN YASNIPPETS</a></li>
 <li><a href="#org62570da">32. org-indent-mode</a></li>
 <li><a href="#org6a526dc">33. zencoding mode</a></li>
+<li><a href="#orga04b100">34. expand &amp; mark</a></li>
 </ul>
 </div>
 </div>
@@ -990,7 +991,7 @@ See this: <a href="http://pragmaticemacs.com/emacs/multiple-choices-in-yasnippet
 这个 mode 非常的有意思，具体的可以看 <a href="https://github.com/rooney/zencoding">https://github.com/rooney/zencoding</a>
 </p>
 <div class="container">
-<pre><code class="html">    a                        &lt;<span style="color: #bc6ec5; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #bc6ec5; font-weight: bold;">a</span>&gt;
+<pre><code class="html">a                        &lt;<span style="color: #bc6ec5; font-weight: bold;">a</span>&gt;&lt;/<span style="color: #bc6ec5; font-weight: bold;">a</span>&gt;
 a.x                      &lt;<span style="color: #bc6ec5; font-weight: bold;">a</span> <span style="color: #7590db;">class</span>=<span style="color: #2d9574;">"x"</span>&gt;&lt;/<span style="color: #bc6ec5; font-weight: bold;">a</span>&gt;
 a#q.x                    &lt;<span style="color: #bc6ec5; font-weight: bold;">a</span> <span style="color: #7590db;">id</span>=<span style="color: #2d9574;">"q"</span> <span style="color: #7590db;">class</span>=<span style="color: #2d9574;">"x"</span>&gt;&lt;/<span style="color: #bc6ec5; font-weight: bold;">a</span>&gt;
 a#q.x.y.z                &lt;<span style="color: #bc6ec5; font-weight: bold;">a</span> <span style="color: #7590db;">id</span>=<span style="color: #2d9574;">"q"</span> <span style="color: #7590db;">class</span>=<span style="color: #2d9574;">"x y z"</span>&gt;&lt;/<span style="color: #bc6ec5; font-weight: bold;">a</span>&gt;
@@ -1009,6 +1010,50 @@ a#q.x.y.z                &lt;<span style="color: #bc6ec5; font-weight: bold;">a<
 </p>
 </div>
 </div>
+<div id="outline-container-orga04b100" class="outline-2">
+<h2 id="orga04b100">34. expand &amp; mark</h2>
+<div class="outline-text-2" id="text-orga04b100">
+<p>
+一个非常有用的 package，<a href="https://github.com/magnars/expand-region.el">expand-region</a>。
+</p>
+<div class="container">
+<pre><code class="elisp"><span style="color: #4f97d7;">(</span>require-package <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">expand-region</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>global-set-key <span style="color: #bc6ec5;">(</span>kbd <span style="color: #2d9574;">"C-="</span><span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">er/expand-region</span><span style="color: #4f97d7;">)</span>
+</code></pre>
+</div>
+
+<p>
+自动的获取当前光标处字符串，按多次会对区域扩展。
+如果扩展的太多，可以使用  <b>C&#x2013; C-=</b> rollback。
+</p>
+
+<p>
+er-basic-expansions.el 这个 package 同样非常有用。通过它可以 mark 很多东西，比如：
+</p>
+<div class="container">
+<pre><code class="python">er/mark-word
+er/mark-symbol
+er/mark-symbol-<span style="color: #4f97d7; font-weight: bold;">with</span>-prefix
+er/mark-<span style="color: #4f97d7;">next</span>-accessor
+er/mark-method-call
+er/mark-inside-quotes
+er/mark-outside-quotes
+er/mark-inside-pairs
+er/mark-outside-pairs
+er/mark-comment
+er/mark-url
+er/mark-email
+er/mark-defun
+er/mark-html-attribute
+er/mark-inner-tag
+er/mark-outer-tag
+</code></pre>
+</div>
+<p>
+为了防止按键冲突，推荐使用 hydra 来进行设置。
+</p>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -1019,7 +1064,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

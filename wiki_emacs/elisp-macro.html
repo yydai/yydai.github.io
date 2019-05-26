@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-05-26 Sun 10:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中的宏</title>
@@ -354,7 +354,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">inc</span> <span style="color: #bc6ec5;">(</span>var<span style="color: #bc6ec5;">)</span>
 <span style="color: #bc6ec5;">(</span>list <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">setq</span> var <span style="color: #2d9574;">(</span>list <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">1+</span> var<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
-<span style="color: #4f97d7;">(</span>inc <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">x</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">inc</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">x</span><span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 
@@ -377,7 +377,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 
 <div class="container">
 <pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> x 1<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>eval <span style="color: #bc6ec5;">(</span>inc <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">x</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  &#8658; &#32467;&#26524;&#20026; 2
+<span style="color: #4f97d7;">(</span>eval <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">inc</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">x</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  &#8658; &#32467;&#26524;&#20026; 2
 </code></pre>
 </div>
 
@@ -396,7 +396,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 
 <div class="container">
 <pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> x 1<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>inc x<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">inc</span> x<span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
 </div>
@@ -417,8 +417,8 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">test2</span> <span style="color: #bc6ec5;">(</span>var<span style="color: #bc6ec5;">)</span>
         <span style="color: #bc6ec5;">(</span>list <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">message</span> <span style="color: #2d9574;">"%d %d"</span> var var<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> x 1<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>test1 <span style="color: #bc6ec5;">(</span>inc x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">&#32467;&#26524;&#20026; "2 2"</span>
-<span style="color: #4f97d7;">(</span>test2 <span style="color: #bc6ec5;">(</span>inc x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">&#32467;&#26524;&#20026; "2 3"</span>
+<span style="color: #4f97d7;">(</span>test1 <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">inc</span> x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">&#32467;&#26524;&#20026; "2 2"</span>
+<span style="color: #4f97d7;">(</span>test2 <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">inc</span> x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">&#32467;&#26524;&#20026; "2 3"</span>
 </code></pre>
 </div>
 <p>
@@ -455,6 +455,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 </div>
 </div>
 </div>
+
 
 <div id="outline-container-orgc15c668" class="outline-2">
 <h2 id="orgc15c668">生成宏的宏</h2>
@@ -520,8 +521,42 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">prelude-install-search-engine</span> <span style="color: #2d9574;">"github"</span>     <span style="color: #2d9574;">"https://github.com/search?q="</span>                 <span style="color: #2d9574;">"Search GitHub: "</span><span style="color: #4f97d7;">)</span>
 </code></pre>
 </div>
+
+<p>
+基于上面的代码，我们写一个简单点的：
+</p>
+<div class="container">
+<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">school</span> <span style="color: #bc6ec5;">(</span>name score<span style="color: #bc6ec5;">)</span>
+  <span style="color: #4f97d7; font-weight: bold;">`</span><span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> ,<span style="color: #2d9574;">(</span>intern <span style="color: #67b11d;">(</span>format <span style="color: #2d9574;">"name_%s"</span> name<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">()</span>
+     <span style="color: #2d9574;">(</span>message <span style="color: #67b11d;">(</span>format <span style="color: #2d9574;">"%s"</span> ,score<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+     <span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7;">(</span>macroexpand-1 <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #bc6ec5;">(</span>school <span style="color: #2d9574;">"xm"</span> 30<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">school</span> <span style="color: #2d9574;">"&#23567;&#26126;"</span> 78<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">create new function =&gt; name_&#23567;&#26126;</span>
+<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">school</span> <span style="color: #2d9574;">"&#23567;&#36213;"</span> 89<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">create  new function =&gt; name_&#23567;&#36213;</span>
+
+<span style="color: #4f97d7;">(</span>name_&#23567;&#26126;<span style="color: #4f97d7;">)</span>  ==&gt; <span style="color: #2d9574;">"78"</span>
+<span style="color: #4f97d7;">(</span>name_&#23567;&#36213;<span style="color: #4f97d7;">)</span>  ==&gt; <span style="color: #2d9574;">"89"</span>
+</code></pre>
+</div>
+
+<p>
+我们定义了一个 school 的宏，通过它可以生成，例子中的 name<sub>小明</sub> ，name<sub>小赵这样的函数</sub>。
+</p>
+
+<p>
+对 defmacro 部分需要做些解释，首先：
+</p>
+<ol class="org-ol">
+<li>“`”的用法前面已有介绍，,(&#x2026;)中的内容会在宏展开的时候执行，通过这一步可以生成函数名。</li>
+<li>要理解和认识到代码中，那部分是需要在宏展开的时候执行</li>
+<li>macroexpand-1 可以对宏展开看下生成的函数是否正确。</li>
+<li>(school "小明" 78) 的用法，看起来就像是一个新的语法。宏的强大在于它确实可以自定义语法，但是也不要滥用，否则别人无法读懂你的代码。</li>
+</ol>
 </div>
 </div>
+
 <div id="outline-container-org046584e" class="outline-2">
 <h2 id="org046584e">参考</h2>
 <div class="outline-text-2" id="text-org046584e">
@@ -542,7 +577,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

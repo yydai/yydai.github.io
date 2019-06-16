@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-06-13 Thu 08:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Python QA</title>
+<title>Programming in Pythonic</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -251,21 +251,79 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">Python QA</h1>
+<h1 class="title">Programming in Pythonic</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgfb9b6fe">!r 在 str() and repr()?的作用 link</a></li>
+<li><a href="#orgd920783">展开(flatten) list 中的 list</a></li>
+<li><a href="#orgcdaf7f8">Ref</a></li>
+</ul>
+</div>
+</div>
 <hr />
 
+<div id="outline-container-orgfb9b6fe" class="outline-2">
+<h2 id="orgfb9b6fe">!r 在 str() and repr()?的作用 <a href="https://stackoverflow.com/questions/38418070/what-does-r-do-in-str-and-repr">link</a></h2>
+<div class="outline-text-2" id="text-orgfb9b6fe">
+<div class="org-src-container">
+<pre class="src src-python">&gt;&gt;&gt; <span style="color: #3e999f;">'foo {}'</span>.<span style="color: #8959a8;">format</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'bar'</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8959a8;">'foo bar'</span>
+&gt;&gt;&gt; <span style="color: #3e999f;">'foo {!r}'</span>.<span style="color: #8959a8;">format</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'bar'</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #3e999f;">"foo 'bar'"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd920783" class="outline-2">
+<h2 id="orgd920783">展开(flatten) list 中的 list</h2>
+<div class="outline-text-2" id="text-orgd920783">
 <ol class="org-ol">
 <li><p>
-What does !r do in str() and repr()? <a href="https://stackoverflow.com/questions/38418070/what-does-r-do-in-str-and-repr">link</a>
+循环方式
 </p>
-<div class="container">
-<pre><code class="python"><span style="background-color: #292e34;"> </span>   &gt;&gt;&gt; <span style="color: #2d9574;">'foo {}'</span>.<span style="color: #4f97d7;">format</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'bar'</span><span style="color: #4f97d7;">)</span>
-<span style="color: #2d9574;">'foo bar'</span>
-&gt;&gt;&gt; <span style="color: #2d9574;">'foo {!r}'</span>.<span style="color: #4f97d7;">format</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'bar'</span><span style="color: #4f97d7;">)</span>
-<span style="color: #2d9574;">"foo 'bar'"</span>
-</code></pre>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">The list of lists</span>
+<span style="color: #eab700;">list_of_lists</span> = <span style="color: #4d4d4c;">[</span><span style="color: #8959a8;">range</span><span style="color: #3e999f;">(</span>4<span style="color: #3e999f;">)</span>, <span style="color: #8959a8;">range</span><span style="color: #3e999f;">(</span>7<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">]</span>
+<span style="color: #eab700;">flattened_list</span> = <span style="color: #4d4d4c;">[]</span>
+
+<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">flatten the lis</span>
+<span style="color: #718c00;">for</span> x <span style="color: #718c00;">in</span> list_of_lists:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> y <span style="color: #718c00;">in</span> x:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   flattened_list.append<span style="color: #4d4d4c;">(</span>y<span style="color: #4d4d4c;">)</span>
+</pre>
+</div></li>
+<li><p>
+列表表达式
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #eab700;">list_of_lists</span> = <span style="color: #4d4d4c;">[</span><span style="color: #8959a8;">range</span><span style="color: #3e999f;">(</span>4<span style="color: #3e999f;">)</span>, <span style="color: #8959a8;">range</span><span style="color: #3e999f;">(</span>7<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">]</span>
+<span style="color: #eab700;">flattened_list</span> = <span style="color: #4d4d4c;">[</span>y <span style="color: #718c00;">for</span> x <span style="color: #718c00;">in</span> list_of_lists <span style="color: #718c00;">for</span> y <span style="color: #718c00;">in</span> x<span style="color: #4d4d4c;">]</span>
+</pre>
+</div></li>
+<li><p>
+itertools
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #718c00;">import</span> itertools
+<span style="color: #eab700;">flattened_list</span>  = <span style="color: #8959a8;">list</span><span style="color: #4d4d4c;">(</span>itertools.chain<span style="color: #3e999f;">(</span>*list_of_lists<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+</pre>
 </div></li>
 </ol>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgcdaf7f8" class="outline-2">
+<h2 id="orgcdaf7f8">Ref</h2>
+<div class="outline-text-2" id="text-orgcdaf7f8">
+<ul class="org-ul">
+<li><a href="https://www.cs.cmu.edu/~srini/15-441/F11/lectures/r04-python.pdf">https://www.cs.cmu.edu/~srini/15-441/F11/lectures/r04-python.pdf</a></li>
+</ul>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -276,7 +334,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

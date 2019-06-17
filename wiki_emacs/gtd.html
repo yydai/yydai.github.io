@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-06-18 Tue 02:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GTD 实践方法</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="ying dai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-111585106-1');
+</script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class='nav'>
+<div class='blog' style='text-align:right'>
+<a href='/index.html'> Home </a> | <a href='/gallery_books/index.html'> Books </a> | <a href='/gallery_movies/index.html'> Movies </a> | <a href='/contact.html'> About </a>
+</div>
+</div>
+</div>
+<div id="content">
+<h1 class="title">GTD 实践方法</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org8f2be11">GTD 理论</a></li>
+<li><a href="#org54e69a4">工作流</a></li>
+<li><a href="#orgca28e7a">基本的配置</a></li>
+<li><a href="#org2ea39c1">进阶</a></li>
+<li><a href="#org6dcd866">常用快捷键</a></li>
+<li><a href="#orgeb2815a">Tag 和属性过滤视图</a></li>
+<li><a href="#org0a11b17">Ref</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8f2be11" class="outline-2">
+<h2 id="org8f2be11">GTD 理论</h2>
+<div class="outline-text-2" id="text-org8f2be11">
+<p>
+关于 GTD 的理论网上有很多介绍，这里不过多解释，下面列一些参考文献和资料。
+</p>
+
+<p>
+它的理论和愿景看起来是很美好，但是真正实践起来却有非常困难。使用它的目的无非是为了高效的利用时间，同时把事情很好的完成。也就是说把大脑中的想法，通过这样一个理论的东西帮助记录和安排，从而把我们的大脑从这些细节中解放出来。就像是有一个私人秘书，帮我们安排好了各种计划，我们只需要依次执行就可以了。
+</p>
+
+<p>
+它的真正实施，需要我们能够及时的 review，包括每天、每周、每月。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org54e69a4" class="outline-2">
+<h2 id="org54e69a4">工作流</h2>
+<div class="outline-text-2" id="text-org54e69a4">
+<p>
+下面对工作流程做一个基本介绍，不要太关注细节如何做的，先了解如何去用。
+如果某个快捷键不能使用是因为要事先定义。
+</p>
+
+<ol class="org-ol">
+<li>通常在使用中，我们要添加（capture）一个任务或者理解为一个事件。这一步，通常按快捷键 <code>C-c c</code> ,然后会让你选择一个 capture 模版。添加事件标题，并且如果需要设置一个 schedule(按 <code>C-c C-s</code> ，deadline 可以按 <code>C-c C-d</code> ), 同时在 title 上按 <code>S-&lt;up&gt;</code> （Shift+下箭头）或者
+<code>S-&lt;down&gt;</code> 可以添加优先级。默认一个 keyword，例如可以设置为 <code>TODO</code> 或者 <code>Meeting</code> 等等。最后使用 <code>C-c C-w</code> 添加事件到配置的文件中。</li>
+
+<li><p>
+查看经过了第一步的操作，如果我们想看下不同状态的任务都有哪些。可以按 <code>C-c a t</code> ，这是列出的所有 <code>TODO</code> 事件的列表。如果想看其他的，可以输入当前页面的状态对应的数字 + r。例如下图，列出所有 <code>DONE</code> 按 <code>5
+     r</code> 即可。
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20190618_014255_631735KX.png" alt="20190618_014255_631735KX.png" width="80%" />
+</p>
+</div></li>
+
+<li><p>
+agenda view。按 <code>C-c a a</code> 进入到 agenda view 中，它可以按照日、星期、
+月、年列出 capture 的事件（添加过 schedule 或者 deadline 的才会显示）。通过按 <code>d</code> 或 <code>w</code> 来切换当前日和星期视图，month 可以直接执行命令 <code>org-agenda-month-view=来查看。同时在该 agenda 界面下,如果在一
+     个事件上按 =I</code> , 自动开始一个事件（也就是 clock in， 并自动进入 DOING
+状态），同样如果按 <code>O</code> 会进入 <code>DONE</code> 状态（同时也会 clock out）。这时我们就可以通过 clock report 来查看 day/week/month 的项目用时了。如下所示：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20190618_020054_63173GVd.png" alt="20190618_020054_63173GVd.png" width="80%" />
+</p>
+</div>
+
+<p>
+为了显示该试图，需要执行 <code>org-agenda-clockreport-mode</code> 。
+</p></li>
+
+<li>添加 tag。进入到事件的 refile 文件，例如我的是 index.org，在当前标题上执行 <code>C-c C-c</code> 然后按 tag 的快捷键(或者再按下 C-c, 手动选择)。
+添加 tag 后，可以通过 <code>C-c a s</code> 来搜索。</li>
+
+<li><p>
+使用 org-agenda-custom-commands 自定义显示。例如如下视图：
+</p>
+
+<div class="figure">
+<p><img src="./imgs/20190618_022620_63173Tfj.png" alt="20190618_022620_63173Tfj.png" width="80%" />
+</p>
+</div>
+
+<p>
+首先显示优先级为 A 且没有完成的项目，然后是 day-agenda, 最后是所有的 TODO 项目。
+</p></li>
+
+<li>inline archive
+如果一个项目下的子项目完成了可以设置其为 inline archive, 按 <code>C-c C-x a</code></li>
+</ol>
+
+<hr />
+<p>
+后面的部分，以后再写上
+</p>
+</div>
+</div>
+<div id="outline-container-orgca28e7a" class="outline-2">
+<h2 id="orgca28e7a">基本的配置</h2>
+</div>
+
+<div id="outline-container-org2ea39c1" class="outline-2">
+<h2 id="org2ea39c1">进阶</h2>
+<div class="outline-text-2" id="text-org2ea39c1">
+<ol class="org-ol">
+<li>中国农历</li>
+<li>节假日提醒、生日提醒</li>
+<li>事件提醒（弹出提醒框）</li>
+<li>番茄时间</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org6dcd866" class="outline-2">
+<h2 id="org6dcd866">常用快捷键</h2>
+<div class="outline-text-2" id="text-org6dcd866">
+<p>
+org-mode:
+</p>
+
+<p>
+C-c C-s 设置任务开始时间
+</p>
+
+<p>
+C-c C-d 设置任务截止时间
+</p>
+
+<p>
+C-c C-t 改变任务状态
+</p>
+
+<p>
+S-Up/Down 设置任务优先级 [#A], [#B], [#C]
+</p>
+
+<p>
+C-c C-x C-i 开始任务计时
+</p>
+
+<p>
+C-c C-x C-o 终止任务计时
+</p>
+
+<p>
+C-c [ 将当前文件加入 Org-Agenda
+</p>
+
+<p>
+C-c ] 将当前文件从 Org-Agenda 移除
+</p>
+
+<p>
+C-c .
+</p>
+
+<p>
+org-agenda:
+</p>
+
+<p>
+C-c a 打开 Org-Agenda 视图选择页面
+</p>
+
+<p>
+C-c a a 打开 Org-Agenda 视图， 任务根据日期列出
+</p>
+
+<p>
+C-v 在 Org-Agenda 视图中， 选择其他显示方式
+</p>
+
+<p>
+I 在 Org-Agenda 的任务条目上， 开始计时
+</p>
+
+<p>
+O 在 Org-Agenda 的任务条目上， 终止计时
+</p>
+
+<p>
+t 在 Org-Agenda 的任务条目上， 修改任务状态
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgeb2815a" class="outline-2">
+<h2 id="orgeb2815a">Tag 和属性过滤视图</h2>
+<div class="outline-text-2" id="text-orgeb2815a">
+<p>
+‘work’：  选择 tag ‘:work:’.
+</p>
+
+<p>
+‘work&amp;boss’： 选择 tag ‘:work:’ 和 ‘:boss:’.
+</p>
+
+<p>
+‘+work-boss’： 选择 tag ‘:work:’, 忽略 tag ‘:boss:’.
+</p>
+
+<p>
+‘work|laptop’： 选择 tag ‘:work:’ 或 ‘:laptop:’.
+</p>
+
+<p>
+‘work|laptop+night’：选择有 laptop 并且有 night 的 tag
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0a11b17" class="outline-2">
+<h2 id="org0a11b17">Ref</h2>
+<div class="outline-text-2" id="text-org0a11b17">
+<ul class="org-ul">
+<li><a href="https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html">https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html</a></li>
+<li><a href="https://www.jianshu.com/p/0d1c26abb7e6">https://www.jianshu.com/p/0d1c26abb7e6</a></li>
+<li><a href="https://rgb-24bit.github.io/blog/2017/org-gtd.html">https://rgb-24bit.github.io/blog/2017/org-gtd.html</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+
+<script>
+var base_url = 'https://api.github.com';
+var title = document.title;
+var owner = 'yydai';
+var repo = 'yydai.github.io';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
+
+console.log("search_issues = "+ search_issues);
+
+function test() {
+  jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: search_issues,
+      success:function(data) {
+         result = data;
+      }
+  });
+  return result;
+}
+var result = test();
+var items = result.items[0];
+if(jQuery.isEmptyObject(items)) {
+    create(title);
+} else {
+    html_url = items.html_url;
+        document.body.innerHTML +=
+'<div id="comments"><h2>Comments</h2><div id="header">Want to leave a comment? Visit <a href="'+ html_url + '"> this issue page on GitHub</a> (you will need a GitHub account).</div></div>'
+}
+
+
+function create(title) {
+        var create_url = 'https://blog-api-server.herokuapp.com/issues?title=' + title + '&labels=blog&body=Welcome to leave comments here.&owner=yydai&repo=yydai.github.io&auth=eXlkYWk6ZGVpc3Q5MjgxNw=='
+
+        jQuery.ajax({
+      type: 'GET',
+      async: false,
+      dataType:'json',
+      url: create_url,
+      success:function(data) {
+         result = data;
+      }
+  });
+}
+
+
+console.log("total_count = " + result.total_count);
+if(result.total_count == 1) {
+    var comments_url = result.items[0].comments_url;
+} else if (result.total_count == 0) {
+        // create a new issue
+    //create(title);
+} else {
+        // result not only
+        alert('Cannot load the comments.');
+}
+
+function loadComments(data) {
+        repo = 'github.com'
+    for (var i=0; i<data.length; i++) {
+      var cuser = data[i].user.login;
+      var cuserlink = 'https://' + repo + '/' + data[i].user.login;
+      var cbody = data[i].body_html;
+      var cavatarlink = data[i].user.avatar_url;
+      var cdate = Date.parse(data[i].created_at).toString('yyyy-MM-dd HH:mm:ss');
+
+          var html_url = items.html_url + '#issuecomment-' + data[i].url.substring(data[i].url.lastIndexOf('/')+1);
+
+      var code = '<div class="comment"><div class="commentheader"><div class="commentgravatar">' + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + '</div><a class="commentuser" href="'+ cuserlink + '">' + cuser + '</a><a class="commentdate" href="' + html_url + '">' + cdate + '</a></div><div class="commentbody">' + cbody + '</div></div>';
+
+      $('#comments').append(code);
+    }
+  }
+
+
+var comments_api = comments_url + '?per_page=100';
+console.log("comments api: " + comments_api);
+$.ajax(comments_api, {
+    headers: {Accept: 'application/vnd.github.full+json'},
+    dataType: 'json',
+    success: function(msg){
+      loadComments(msg);
+   }
+  });
+
+
+</script>
+
+<hr />
+ <div class='footer'>
+© 2017 yydai<br/>
+Email: dai92817@icloud.com
+</div>
+</div>
+</body>
+</html>

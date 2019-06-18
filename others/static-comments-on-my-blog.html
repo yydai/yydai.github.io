@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-06-18 Tue 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>一个静态评论系统的实现</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -349,18 +349,18 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="javascript">    <span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">test</span><span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
-  jQuery.ajax<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>
-      type: <span style="color: #2d9574;">'GET'</span>,
-      async: <span style="color: #a45bad;">false</span>,
-      dataType:<span style="color: #2d9574;">'json'</span>,
+<pre><code class="javascript">    <span style="color: #718c00;">function</span> <span style="color: #f5871f;">test</span><span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">{</span>
+  jQuery.ajax<span style="color: #3e999f;">(</span><span style="color: #eab700;">{</span>
+      type: <span style="color: #3e999f;">'GET'</span>,
+      async: <span style="color: #4271ae;">false</span>,
+      dataType:<span style="color: #3e999f;">'json'</span>,
       url: search_issues,
-      <span style="color: #bc6ec5; font-weight: bold;">success</span>:<span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #67b11d;">(</span><span style="color: #7590db;">data</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
+      <span style="color: #f5871f;">success</span>:<span style="color: #718c00;">function</span><span style="color: #718c00;">(</span><span style="color: #eab700;">data</span><span style="color: #718c00;">)</span> <span style="color: #718c00;">{</span>
          result = data;
-      <span style="color: #67b11d;">}</span>
-  <span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;
-  <span style="color: #4f97d7; font-weight: bold;">return</span> result;
-<span style="color: #4f97d7;">}</span>
+      <span style="color: #718c00;">}</span>
+  <span style="color: #eab700;">}</span><span style="color: #3e999f;">)</span>;
+  <span style="color: #718c00;">return</span> result;
+<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -369,30 +369,29 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="javascript"><span style="color: #4f97d7; font-weight: bold;">function</span> <span style="color: #bc6ec5; font-weight: bold;">create</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">title</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-     <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">creare</span> = base_url + <span style="color: #2d9574;">'/repos/'</span> + owner + <span style="color: #2d9574;">'/'</span> + repo + <span style="color: #2d9574;">'/issues'</span>;
- <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">payload</span> = <span style="color: #bc6ec5;">{</span>
-      <span style="color: #2d9574;">'title'</span>: title,
-      <span style="color: #2d9574;">'body'</span>: <span style="color: #2d9574;">'You can write comments in this issues.'</span>,
-      <span style="color: #2d9574;">'labels'</span>: <span style="color: #2d9574;">[</span><span style="color: #2d9574;">'blog'</span><span style="color: #2d9574;">]</span>,
-  <span style="color: #bc6ec5;">}</span>
-  $.ajax<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>
-    type: <span style="color: #2d9574;">'POST'</span>,
+<pre><code class="javascript"><span style="color: #718c00;">function</span> <span style="color: #f5871f;">create</span><span style="color: #4d4d4c;">(</span><span style="color: #eab700;">title</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+     <span style="color: #718c00;">var</span> <span style="color: #eab700;">creare</span> = base_url + <span style="color: #3e999f;">'/repos/'</span> + owner + <span style="color: #3e999f;">'/'</span> + repo + <span style="color: #3e999f;">'/issues'</span>;
+ <span style="color: #718c00;">var</span> <span style="color: #eab700;">payload</span> = <span style="color: #3e999f;">{</span>
+      <span style="color: #3e999f;">'title'</span>: title,
+      <span style="color: #3e999f;">'body'</span>: <span style="color: #3e999f;">'You can write comments in this issues.'</span>,
+      <span style="color: #3e999f;">'labels'</span>: <span style="color: #eab700;">[</span><span style="color: #3e999f;">'blog'</span><span style="color: #eab700;">]</span>,
+  <span style="color: #3e999f;">}</span>
+  $.ajax<span style="color: #3e999f;">(</span><span style="color: #eab700;">{</span>
+    type: <span style="color: #3e999f;">'POST'</span>,
     url: create,
-    crossDomain: <span style="color: #a45bad;">true</span>,
-          data: JSON.stringify<span style="color: #67b11d;">(</span>payload<span style="color: #67b11d;">)</span>,
-    headers: <span style="color: #67b11d;">{</span>
-      <span style="color: #2d9574;">'Authorization'</span>: <span style="color: #2d9574;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">auth2.0</span>
-      <span style="color: #2d9574;">'Access-Control-Allow-Origin'</span> : <span style="color: #2d9574;">'*'</span>
-    <span style="color: #67b11d;">}</span>,
-    contentType: <span style="color: #2d9574;">'application/json; charset=utf-8'</span>,
-    dataType: <span style="color: #2d9574;">'json'</span>,
-    <span style="color: #bc6ec5; font-weight: bold;">success</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #67b11d;">(</span><span style="color: #7590db;">data</span><span style="color: #67b11d;">){</span>alert<span style="color: #b1951d;">(</span><span style="color: #2d9574;">'create issue success'</span><span style="color: #b1951d;">)</span>;<span style="color: #67b11d;">}</span>,
-    <span style="color: #bc6ec5; font-weight: bold;">failure</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #67b11d;">(</span><span style="color: #7590db;">errMsg</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
-        alert<span style="color: #b1951d;">(</span>errMsg<span style="color: #b1951d;">)</span>;
-    <span style="color: #67b11d;">}</span>
-<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;<span style="color: #4f97d7;">}</span>
-
+    crossDomain: <span style="color: #4271ae;">true</span>,
+          data: JSON.stringify<span style="color: #718c00;">(</span>payload<span style="color: #718c00;">)</span>,
+    headers: <span style="color: #718c00;">{</span>
+      <span style="color: #3e999f;">'Authorization'</span>: <span style="color: #3e999f;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">auth2.0</span>
+      <span style="color: #3e999f;">'Access-Control-Allow-Origin'</span> : <span style="color: #3e999f;">'*'</span>
+    <span style="color: #718c00;">}</span>,
+    contentType: <span style="color: #3e999f;">'application/json; charset=utf-8'</span>,
+    dataType: <span style="color: #3e999f;">'json'</span>,
+    <span style="color: #f5871f;">success</span>: <span style="color: #718c00;">function</span><span style="color: #718c00;">(</span><span style="color: #eab700;">data</span><span style="color: #718c00;">){</span>alert<span style="color: #4271ae;">(</span><span style="color: #3e999f;">'create issue success'</span><span style="color: #4271ae;">)</span>;<span style="color: #718c00;">}</span>,
+    <span style="color: #f5871f;">failure</span>: <span style="color: #718c00;">function</span><span style="color: #718c00;">(</span><span style="color: #eab700;">errMsg</span><span style="color: #718c00;">)</span> <span style="color: #718c00;">{</span>
+        alert<span style="color: #4271ae;">(</span>errMsg<span style="color: #4271ae;">)</span>;
+    <span style="color: #718c00;">}</span>
+<span style="color: #eab700;">}</span><span style="color: #3e999f;">)</span>;<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 </div>
@@ -451,13 +450,13 @@ for the JavaScript code in this tag.
 
 <div class="container">
 <pre><code class="python">&#36825;&#20010;&#29992;&#26469;&#27169;&#31946;&#26597;&#35810; issue&#65306;
-<span style="color: #4f97d7;">{</span><span style="color: #bc6ec5;">{</span>base_api<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">}</span>/search/issues?<span style="color: #7590db;">q</span>=A Continuous Integration System+user:yydai+labels:blog
+<span style="color: #4d4d4c;">{</span><span style="color: #3e999f;">{</span>base_api<span style="color: #3e999f;">}</span><span style="color: #4d4d4c;">}</span>/search/issues?<span style="color: #eab700;">q</span>=A Continuous Integration System+user:yydai+labels:blog
 
 &#36825;&#20010;&#29992;&#26469;&#33719;&#21462;&#35813; issue &#19979;&#30340; comments
-<span style="color: #4f97d7;">{</span><span style="color: #bc6ec5;">{</span>base_api<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">}</span>/repos/yydai/yydai.github.io/issues/1/comments
+<span style="color: #4d4d4c;">{</span><span style="color: #3e999f;">{</span>base_api<span style="color: #3e999f;">}</span><span style="color: #4d4d4c;">}</span>/repos/yydai/yydai.github.io/issues/1/comments
 
 &#36825;&#20010;&#29992;&#26469;&#21019;&#24314; issue
-<span style="color: #4f97d7;">{</span><span style="color: #bc6ec5;">{</span>base_api<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">}</span>/repos/yydai/yydai.github.io/issues
+<span style="color: #4d4d4c;">{</span><span style="color: #3e999f;">{</span>base_api<span style="color: #3e999f;">}</span><span style="color: #4d4d4c;">}</span>/repos/yydai/yydai.github.io/issues
 </code></pre>
 </div>
 </div>
@@ -505,7 +504,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-23 Thu 09:08 -->
+<!-- 2019-06-18 Tue 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Exporting to PDF in org mode</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -298,8 +298,8 @@ for the JavaScript code in this tag.
 </ul>
 
 <div class="container">
-<pre><code class="emacs-lisp"><span style="color: #4f97d7;">(</span>setenv <span style="color: #2d9574;">"PATH"</span> <span style="color: #bc6ec5;">(</span>concat <span style="color: #2d9574;">(</span>getenv <span style="color: #2d9574;">"PATH"</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">":/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> exec-path <span style="color: #bc6ec5;">(</span>append exec-path <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="emacs-lisp"><span style="color: #4d4d4c;">(</span>setenv <span style="color: #3e999f;">"PATH"</span> <span style="color: #3e999f;">(</span>concat <span style="color: #eab700;">(</span>getenv <span style="color: #3e999f;">"PATH"</span><span style="color: #eab700;">)</span> <span style="color: #3e999f;">":/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">setq</span> exec-path <span style="color: #3e999f;">(</span>append exec-path <span style="color: #718c00;">'</span><span style="color: #eab700;">(</span><span style="color: #3e999f;">"/usr/local/texlive/2016/bin/x86_64-darwin/"</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -308,7 +308,7 @@ for the JavaScript code in this tag.
 </ul>
 
 <div class="container">
-<pre><code class="emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-latex-pdf-process <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"xelatex -interaction nonstopmode %f"</span> <span style="color: #2d9574;">"xelatex -interaction nonstopmode %f"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="emacs-lisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">setq</span> org-latex-pdf-process <span style="color: #718c00;">'</span><span style="color: #3e999f;">(</span><span style="color: #3e999f;">"xelatex -interaction nonstopmode %f"</span> <span style="color: #3e999f;">"xelatex -interaction nonstopmode %f"</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -317,7 +317,7 @@ for the JavaScript code in this tag.
 里面，同时还要将上面的代码放到：
 </p>
 <div class="container">
-<pre><code class="emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">after-load</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">org</span> <span style="color: #4f97d7;">)</span>
+<pre><code class="emacs-lisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">after-load</span> <span style="color: #718c00;">'</span><span style="color: #4271ae;">org</span> <span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 <p>
@@ -329,8 +329,8 @@ for the JavaScript code in this tag.
 </ul>
 
 <div class="container">
-<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+LATEX_HEADER: \usepackage{fontspec}</span>
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+LATEX_HEADER: \setmainfont{XXX}</span>
+<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+LATEX_HEADER: \usepackage{fontspec}</span>
+<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+LATEX_HEADER: \setmainfont{XXX}</span>
 </code></pre>
 </div>
 <p>
@@ -356,7 +356,7 @@ for the JavaScript code in this tag.
 解决方法很简单，在 org 文件开头加：
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+latex_header: \hypersetup{colorlinks=true,linkcolor=blue}</span>
+<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+latex_header: \hypersetup{colorlinks=true,linkcolor=blue}</span>
 </code></pre>
 </div>
 

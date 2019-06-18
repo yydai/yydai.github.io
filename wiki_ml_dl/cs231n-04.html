@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-06-18 Tue 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>最优化（Opetimization）</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -286,14 +286,14 @@ for the JavaScript code in this tag.
 如何优化 W，这里有个比较简单的方式。方法就是不断的随机尝试，找到一个相对好的。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">bestloss</span> = <span style="color: #4f97d7;">float</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'inf'</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">for</span> num <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">xrange</span><span style="color: #4f97d7;">(</span>1000<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">W</span> = np.random.randn<span style="color: #4f97d7;">(</span>10, 3073<span style="color: #4f97d7;">)</span> * 1.0001
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">loss</span> = L<span style="color: #4f97d7;">(</span>X_train, Y_train, W<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> loss &lt; bestloss:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">bestloss</span> = loss
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">bestW</span> = W
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">in</span> attemp %d the loss was %f, best %f<span style="color: #2d9574;">' %(num, loss, bestloss))</span>
+<pre><code class="python"><span style="color: #eab700;">bestloss</span> = <span style="color: #8959a8;">float</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'inf'</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">for</span> num <span style="color: #718c00;">in</span> <span style="color: #8959a8;">xrange</span><span style="color: #4d4d4c;">(</span>1000<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">W</span> = np.random.randn<span style="color: #4d4d4c;">(</span>10, 3073<span style="color: #4d4d4c;">)</span> * 1.0001
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">loss</span> = L<span style="color: #4d4d4c;">(</span>X_train, Y_train, W<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> loss &lt; bestloss:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">bestloss</span> = loss
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">bestW</span> = W
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">in</span> attemp %d the loss was %f, best %f<span style="color: #3e999f;">' %(num, loss, bestloss))</span>
 </code></pre>
 </div>
 
@@ -310,15 +310,15 @@ for the JavaScript code in this tag.
 策略是向不同的方向去走，如果某个方向是下山的就往这个方向走。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">W</span> = np.random.randn<span style="color: #4f97d7;">(</span>10, 3073<span style="color: #4f97d7;">)</span> * 0.001
-<span style="color: #7590db;">bestloss</span> = <span style="color: #4f97d7;">float</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'inf'</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">xrange</span><span style="color: #4f97d7;">(</span>1000<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">step_size</span> = 0.0001
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">Wtry</span> = W + np.random.randn<span style="color: #4f97d7;">(</span>10, 3073<span style="color: #4f97d7;">)</span> * step_size
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">loss</span> = L<span style="color: #4f97d7;">(</span>Xtr_cols, Ytr, Wtry<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> loss &lt; bestloss:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">bestloss</span> = loss
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">W</span> = Wtry
+<pre><code class="python"><span style="color: #eab700;">W</span> = np.random.randn<span style="color: #4d4d4c;">(</span>10, 3073<span style="color: #4d4d4c;">)</span> * 0.001
+<span style="color: #eab700;">bestloss</span> = <span style="color: #8959a8;">float</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'inf'</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">xrange</span><span style="color: #4d4d4c;">(</span>1000<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">step_size</span> = 0.0001
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">Wtry</span> = W + np.random.randn<span style="color: #4d4d4c;">(</span>10, 3073<span style="color: #4d4d4c;">)</span> * step_size
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">loss</span> = L<span style="color: #4d4d4c;">(</span>Xtr_cols, Ytr, Wtry<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> loss &lt; bestloss:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">bestloss</span> = loss
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">W</span> = Wtry
 </code></pre>
 </div>
 
@@ -346,22 +346,22 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">eval_numerical_gradient</span><span style="color: #4f97d7;">(</span>f, x<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">fx</span> = f<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad</span> = np.zeros<span style="color: #4f97d7;">(</span>x.shape<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">h</span> = 0.00001
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">it</span> = np.nditer<span style="color: #4f97d7;">(</span>x, flags=<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'multi_index'</span><span style="color: #bc6ec5;">]</span>, op_flags=<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'readwrite'</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #4f97d7; font-weight: bold;">not</span> it.finshed:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">ix</span> = it.multi_index <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">(1, 2) ... &#20301;&#32622;</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">old_value</span> = x<span style="color: #4f97d7;">[</span>ix<span style="color: #4f97d7;">]</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">x</span><span style="color: #4f97d7;">[</span>ix<span style="color: #4f97d7;">]</span> = old_value + h
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">fxh</span> = f<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">x &#20013;&#21482;&#26159; ix &#20986;&#30340; value &#21464;&#20102;</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">x</span><span style="color: #4f97d7;">[</span>ix<span style="color: #4f97d7;">]</span> = old_value
+<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">eval_numerical_gradient</span><span style="color: #4d4d4c;">(</span>f, x<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">fx</span> = f<span style="color: #4d4d4c;">(</span>x<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad</span> = np.zeros<span style="color: #4d4d4c;">(</span>x.shape<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">h</span> = 0.00001
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">it</span> = np.nditer<span style="color: #4d4d4c;">(</span>x, flags=<span style="color: #3e999f;">[</span><span style="color: #3e999f;">'multi_index'</span><span style="color: #3e999f;">]</span>, op_flags=<span style="color: #3e999f;">[</span><span style="color: #3e999f;">'readwrite'</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">while</span> <span style="color: #718c00;">not</span> it.finshed:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">ix</span> = it.multi_index <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">(1, 2) ... &#20301;&#32622;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">old_value</span> = x<span style="color: #4d4d4c;">[</span>ix<span style="color: #4d4d4c;">]</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">x</span><span style="color: #4d4d4c;">[</span>ix<span style="color: #4d4d4c;">]</span> = old_value + h
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">fxh</span> = f<span style="color: #4d4d4c;">(</span>x<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">x &#20013;&#21482;&#26159; ix &#20986;&#30340; value &#21464;&#20102;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">x</span><span style="color: #4d4d4c;">[</span>ix<span style="color: #4d4d4c;">]</span> = old_value
 
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">grad</span><span style="color: #4f97d7;">[</span>ix<span style="color: #4f97d7;">]</span> = <span style="color: #4f97d7;">(</span>fxh - fx<span style="color: #4f97d7;">)</span> / h
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   it.iternext<span style="color: #4f97d7;">()</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad</span><span style="color: #4d4d4c;">[</span>ix<span style="color: #4d4d4c;">]</span> = <span style="color: #4d4d4c;">(</span>fxh - fx<span style="color: #4d4d4c;">)</span> / h
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   it.iternext<span style="color: #4d4d4c;">()</span>
 
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> grad
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> grad
 </code></pre>
 </div>
 
@@ -371,11 +371,11 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">CIFAR10_fun</span><span style="color: #4f97d7;">(</span>W<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> L<span style="color: #4f97d7;">(</span>X_train, y_train, W<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">CIFAR10_fun</span><span style="color: #4d4d4c;">(</span>W<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> L<span style="color: #4d4d4c;">(</span>X_train, y_train, W<span style="color: #4d4d4c;">)</span>
 
-<span style="color: #7590db;">W</span> = np.random.rand<span style="color: #4f97d7;">(</span>10, 3073<span style="color: #4f97d7;">)</span> * 0.001
-<span style="color: #7590db;">df</span> = eval_numerical_gradient<span style="color: #4f97d7;">(</span>CIFAR10_fun, W<span style="color: #4f97d7;">)</span>
+<span style="color: #eab700;">W</span> = np.random.rand<span style="color: #4d4d4c;">(</span>10, 3073<span style="color: #4d4d4c;">)</span> * 0.001
+<span style="color: #eab700;">df</span> = eval_numerical_gradient<span style="color: #4d4d4c;">(</span>CIFAR10_fun, W<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -384,16 +384,15 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">loss_original</span> = CIFAR10_loss_fun<span style="color: #4f97d7;">(</span>W<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#21021;&#22987;&#25439;&#22833;&#20540;</span>
-<span style="color: #4f97d7; font-weight: bold;">print</span> <span style="color: #2d9574;">'original loss: %f'</span> % <span style="color: #4f97d7;">(</span>loss_original, <span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #eab700;">loss_original</span> = CIFAR10_loss_fun<span style="color: #4d4d4c;">(</span>W<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#21021;&#22987;&#25439;&#22833;&#20540;</span>
+<span style="color: #718c00;">print</span> <span style="color: #3e999f;">'original loss: %f'</span> % <span style="color: #4d4d4c;">(</span>loss_original, <span style="color: #4d4d4c;">)</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#26597;&#30475;&#19981;&#21516;&#27493;&#38271;&#30340;&#25928;&#26524;</span>
-<span style="color: #4f97d7; font-weight: bold;">for</span> step_size_log <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">[</span>-10, -9, -8, -7, -6, -5,-4,-3,-2,-1<span style="color: #4f97d7;">]</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">step_size</span> = 10 ** step_size_log
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">W_new</span> = W - step_size * df <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#26435;&#37325;&#31354;&#38388;&#20013;&#30340;&#26032;&#20301;&#32622;</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">loss_new</span> = CIFAR10_loss_fun<span style="color: #4f97d7;">(</span>W_new<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span> <span style="color: #2d9574;">'for step size %f new loss: %f'</span> % <span style="color: #4f97d7;">(</span>step_size, loss_new<span style="color: #4f97d7;">)</span>
-
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#26597;&#30475;&#19981;&#21516;&#27493;&#38271;&#30340;&#25928;&#26524;</span>
+<span style="color: #718c00;">for</span> step_size_log <span style="color: #718c00;">in</span> <span style="color: #4d4d4c;">[</span>-10, -9, -8, -7, -6, -5,-4,-3,-2,-1<span style="color: #4d4d4c;">]</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">step_size</span> = 10 ** step_size_log
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">W_new</span> = W - step_size * df <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#26435;&#37325;&#31354;&#38388;&#20013;&#30340;&#26032;&#20301;&#32622;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">loss_new</span> = CIFAR10_loss_fun<span style="color: #4d4d4c;">(</span>W_new<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> <span style="color: #3e999f;">'for step size %f new loss: %f'</span> % <span style="color: #4d4d4c;">(</span>step_size, loss_new<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -405,17 +404,17 @@ for the JavaScript code in this tag.
 步长的不同会有很大的影响，上面的结果。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">original loss: 2.200718</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for step size 1.000000e-10 new loss: 2.200652</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for step size 1.000000e-09 new loss: 2.200057</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for step size 1.000000e-08 new loss: 2.194116</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for step size 1.000000e-07 new loss: 2.135493</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for step size 1.000000e-06 new loss: 1.647802</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for step size 1.000000e-05 new loss: 2.844355</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for step size 1.000000e-04 new loss: 25.558142</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for step size 1.000000e-03 new loss: 254.086573</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for step size 1.000000e-02 new loss: 2539.370888</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for step size 1.000000e-01 new loss: 25392.214036</span>
+<pre><code class="python"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">original loss: 2.200718</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for step size 1.000000e-10 new loss: 2.200652</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for step size 1.000000e-09 new loss: 2.200057</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for step size 1.000000e-08 new loss: 2.194116</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for step size 1.000000e-07 new loss: 2.135493</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for step size 1.000000e-06 new loss: 1.647802</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for step size 1.000000e-05 new loss: 2.844355</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for step size 1.000000e-04 new loss: 25.558142</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for step size 1.000000e-03 new loss: 254.086573</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for step size 1.000000e-02 new loss: 2539.370888</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for step size 1.000000e-01 new loss: 25392.214036</span>
 </code></pre>
 </div>
 </div>
@@ -455,9 +454,9 @@ L_i = \sum_{j\neq y_i} \left[ \max(0, w_j^Tx_i - w_{y_i}^Tx_i + \Delta) \right]
 <h3 id="orge80dda5">梯度下降</h3>
 <div class="outline-text-3" id="text-orge80dda5">
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #a45bad;">True</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">weights_grad</span> = evaluate_gradient<span style="color: #4f97d7;">(</span>loss_fun, data, weights<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">weights</span> += - step_size * weights_grad <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#36827;&#34892;&#26799;&#24230;&#26356;&#26032;</span>
+<pre><code class="python"><span style="color: #718c00;">while</span> <span style="color: #4271ae;">True</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">weights_grad</span> = evaluate_gradient<span style="color: #4d4d4c;">(</span>loss_fun, data, weights<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">weights</span> += - step_size * weights_grad <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#36827;&#34892;&#26799;&#24230;&#26356;&#26032;</span>
 </code></pre>
 </div>
 
@@ -470,10 +469,10 @@ L_i = \sum_{j\neq y_i} \left[ \max(0, w_j^Tx_i - w_{y_i}^Tx_i + \Delta) \right]
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #a45bad;">True</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">data_batch</span> = sample_training_data<span style="color: #4f97d7;">(</span>data, 256<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">256 &#20010;&#25968;&#25454;</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">weights_grad</span> = evaluate_gradient<span style="color: #4f97d7;">(</span>loss_fun, data_batch, weights<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">weights</span> += - step_size * weights_grad <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#21442;&#25968;&#26356;&#26032;</span>
+<pre><code class="python"><span style="color: #718c00;">while</span> <span style="color: #4271ae;">True</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">data_batch</span> = sample_training_data<span style="color: #4d4d4c;">(</span>data, 256<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">256 &#20010;&#25968;&#25454;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">weights_grad</span> = evaluate_gradient<span style="color: #4d4d4c;">(</span>loss_fun, data_batch, weights<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">weights</span> += - step_size * weights_grad <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#21442;&#25968;&#26356;&#26032;</span>
 </code></pre>
 </div>
 </div>
@@ -497,7 +496,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-06-18 Tue 19:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Argparse 教程</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -300,8 +300,8 @@ drwxr-xr-x  4 wena wena 4096 Feb  8 12:04 devguide
 drwxr-xr-x 14 wena wena 4096 Feb  7 00:59 pypy
 -rw-r--r--  1 wena wena  741 Feb 18 01:01 rm-unused-function.patch
 $ ls --help
-Usage: ls <span style="color: #4f97d7;">[</span>OPTION<span style="color: #4f97d7;">]</span>... <span style="color: #4f97d7;">[</span>FILE<span style="color: #4f97d7;">]</span>...
-List information about the FILEs <span style="color: #4f97d7;">(</span>the current directory by default<span style="color: #4f97d7;">)</span>.
+Usage: ls <span style="color: #4d4d4c;">[</span>OPTION<span style="color: #4d4d4c;">]</span>... <span style="color: #4d4d4c;">[</span>FILE<span style="color: #4d4d4c;">]</span>...
+List information about the FILEs <span style="color: #4d4d4c;">(</span>the current directory by default<span style="color: #4d4d4c;">)</span>.
 Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
 ...
 </code></pre>
@@ -321,9 +321,9 @@ Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
 <h2 id="org3cc13d7">基本的认识</h2>
 <div class="outline-text-2" id="text-org3cc13d7">
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> argparse
-<span style="color: #7590db;">parser</span> = argparse.ArgumentParser<span style="color: #4f97d7;">()</span>
-parser.parse_args<span style="color: #4f97d7;">()</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> argparse
+<span style="color: #eab700;">parser</span> = argparse.ArgumentParser<span style="color: #4d4d4c;">()</span>
+parser.parse_args<span style="color: #4d4d4c;">()</span>
 </code></pre>
 </div>
 
@@ -334,15 +334,15 @@ parser.parse_args<span style="color: #4f97d7;">()</span>
 <div class="container">
 <pre><code class="shell">$ python3 prog.py
 $ python3 prog.py --help
-usage: prog.py <span style="color: #4f97d7;">[</span>-h<span style="color: #4f97d7;">]</span>
+usage: prog.py <span style="color: #4d4d4c;">[</span>-h<span style="color: #4d4d4c;">]</span>
 
 optional arguments:
   -h, --help  show this help message and exit
 $ python3 prog.py --verbose
-usage: prog.py <span style="color: #4f97d7;">[</span>-h<span style="color: #4f97d7;">]</span>
+usage: prog.py <span style="color: #4d4d4c;">[</span>-h<span style="color: #4d4d4c;">]</span>
 prog.py: error: unrecognized arguments: --verbose
 $ python3 prog.py foo
-usage: prog.py <span style="color: #4f97d7;">[</span>-h<span style="color: #4f97d7;">]</span>
+usage: prog.py <span style="color: #4d4d4c;">[</span>-h<span style="color: #4d4d4c;">]</span>
 prog.py: error: unrecognized arguments: foo
 </code></pre>
 </div>
@@ -356,11 +356,11 @@ prog.py: error: unrecognized arguments: foo
 一个例子：
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> argparse
-<span style="color: #7590db;">parser</span> = argparse.ArgumentParser<span style="color: #4f97d7;">()</span>
-parser.add_argument<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"echo"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">args</span> = parser.parse_args<span style="color: #4f97d7;">()</span>
-<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>args.echo<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> argparse
+<span style="color: #eab700;">parser</span> = argparse.ArgumentParser<span style="color: #4d4d4c;">()</span>
+parser.add_argument<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"echo"</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">args</span> = parser.parse_args<span style="color: #4d4d4c;">()</span>
+<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>args.echo<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -370,13 +370,13 @@ parser.add_argument<span style="color: #4f97d7;">(</span><span style="color: #2d
 
 <div class="container">
 <pre><code class="shell">$ python3 prog.py
-usage: prog.py <span style="color: #4f97d7;">[</span>-h<span style="color: #4f97d7;">]</span> echo
+usage: prog.py <span style="color: #4d4d4c;">[</span>-h<span style="color: #4d4d4c;">]</span> echo
 prog.py: error: the following arguments are required: echo
 $ python3 prog.py --help
-usage: prog.py <span style="color: #4f97d7;">[</span>-h<span style="color: #4f97d7;">]</span> echo
+usage: prog.py <span style="color: #4d4d4c;">[</span>-h<span style="color: #4d4d4c;">]</span> echo
 
 positional arguments:
-  <span style="color: #4f97d7;">echo</span>
+  <span style="color: #8959a8;">echo</span>
 
 optional arguments:
   -h, --help  show this help message and exit
@@ -393,11 +393,11 @@ the source code. So, let’s make it a bit more useful:
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> argparse
-<span style="color: #7590db;">parser</span> = argparse.ArgumentParser<span style="color: #4f97d7;">()</span>
-parser.add_argument<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"echo"</span>, <span style="color: #4f97d7;">help</span>=<span style="color: #2d9574;">"echo the string you use here"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">args</span> = parser.parse_args<span style="color: #4f97d7;">()</span>
-<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>args.echo<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> argparse
+<span style="color: #eab700;">parser</span> = argparse.ArgumentParser<span style="color: #4d4d4c;">()</span>
+parser.add_argument<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"echo"</span>, <span style="color: #8959a8;">help</span>=<span style="color: #3e999f;">"echo the string you use here"</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">args</span> = parser.parse_args<span style="color: #4d4d4c;">()</span>
+<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>args.echo<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -407,10 +407,10 @@ parser.add_argument<span style="color: #4f97d7;">(</span><span style="color: #2d
 
 <div class="container">
 <pre><code class="shell">$ python3 prog.py -h
-usage: prog.py <span style="color: #4f97d7;">[</span>-h<span style="color: #4f97d7;">]</span> echo
+usage: prog.py <span style="color: #4d4d4c;">[</span>-h<span style="color: #4d4d4c;">]</span> echo
 
 positional arguments:
-  <span style="color: #4f97d7;">echo</span>        echo the string you use here
+  <span style="color: #8959a8;">echo</span>        echo the string you use here
 
 optional arguments:
   -h, --help  show this help message and exit
@@ -422,11 +422,11 @@ optional arguments:
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> argparse
-<span style="color: #7590db;">parser</span> = argparse.ArgumentParser<span style="color: #4f97d7;">()</span>
-parser.add_argument<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"square"</span>, <span style="color: #4f97d7;">help</span>=<span style="color: #2d9574;">"display a square of a given number"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">args</span> = parser.parse_args<span style="color: #4f97d7;">()</span>
-<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>args.square**2<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> argparse
+<span style="color: #eab700;">parser</span> = argparse.ArgumentParser<span style="color: #4d4d4c;">()</span>
+parser.add_argument<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"square"</span>, <span style="color: #8959a8;">help</span>=<span style="color: #3e999f;">"display a square of a given number"</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">args</span> = parser.parse_args<span style="color: #4d4d4c;">()</span>
+<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>args.square**2<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -436,10 +436,10 @@ parser.add_argument<span style="color: #4f97d7;">(</span><span style="color: #2d
 
 <div class="container">
 <pre><code class="shell">$ python3 prog.py 4
-<span style="color: #bc6ec5; font-weight: bold;">Traceback</span> <span style="color: #4f97d7;">(</span>most recent call last<span style="color: #4f97d7;">)</span>:
-  File <span style="color: #2d9574;">"prog.py"</span>, line 5,<span style="color: #4f97d7; font-weight: bold;"> in</span> &lt;module&gt;
-    <span style="color: #4f97d7;">print</span><span style="color: #4f97d7;">(</span>args.square**2<span style="color: #4f97d7;">)</span>
-TypeError: unsupported operand type<span style="color: #4f97d7;">(</span>s<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">for</span> ** or pow<span style="color: #4f97d7;">()</span>: <span style="color: #2d9574;">'str'</span> and <span style="color: #2d9574;">'int'</span>
+<span style="color: #f5871f;">Traceback</span> <span style="color: #4d4d4c;">(</span>most recent call last<span style="color: #4d4d4c;">)</span>:
+  File <span style="color: #3e999f;">"prog.py"</span>, line 5,<span style="color: #718c00;"> in</span> &lt;module&gt;
+    <span style="color: #8959a8;">print</span><span style="color: #4d4d4c;">(</span>args.square**2<span style="color: #4d4d4c;">)</span>
+TypeError: unsupported operand type<span style="color: #4d4d4c;">(</span>s<span style="color: #4d4d4c;">)</span> <span style="color: #718c00;">for</span> ** or pow<span style="color: #4d4d4c;">()</span>: <span style="color: #3e999f;">'str'</span> and <span style="color: #3e999f;">'int'</span>
 </code></pre>
 </div>
 
@@ -448,12 +448,12 @@ need set type of argument
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> argparse
-<span style="color: #7590db;">parser</span> = argparse.ArgumentParser<span style="color: #4f97d7;">()</span>
-parser.add_argument<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"square"</span>, <span style="color: #4f97d7;">help</span>=<span style="color: #2d9574;">"display a square of a given number"</span>,
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7;">type</span>=<span style="color: #4f97d7;">int</span><span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">args</span> = parser.parse_args<span style="color: #4f97d7;">()</span>
-<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>args.square**2<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> argparse
+<span style="color: #eab700;">parser</span> = argparse.ArgumentParser<span style="color: #4d4d4c;">()</span>
+parser.add_argument<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"square"</span>, <span style="color: #8959a8;">help</span>=<span style="color: #3e999f;">"display a square of a given number"</span>,
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">type</span>=<span style="color: #8959a8;">int</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">args</span> = parser.parse_args<span style="color: #4d4d4c;">()</span>
+<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>args.square**2<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -464,8 +464,8 @@ parser.add_argument<span style="color: #4f97d7;">(</span><span style="color: #2d
 <pre><code class="shell">$ python3 prog.py 4
 16
 $ python3 prog.py four
-usage: prog.py <span style="color: #4f97d7;">[</span>-h<span style="color: #4f97d7;">]</span> square
-prog.py: error: argument square: invalid int value: <span style="color: #2d9574;">'four'</span>
+usage: prog.py <span style="color: #4d4d4c;">[</span>-h<span style="color: #4d4d4c;">]</span> square
+prog.py: error: argument square: invalid int value: <span style="color: #3e999f;">'four'</span>
 </code></pre>
 </div>
 
@@ -475,12 +475,12 @@ o** 可选参数我们已经学会如何添加位置参数，下面我们看下�
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> argparse
-<span style="color: #7590db;">parser</span> = argparse.ArgumentParser<span style="color: #4f97d7;">()</span>
-parser.add_argument<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"--verbosity"</span>, <span style="color: #4f97d7;">help</span>=<span style="color: #2d9574;">"increase output verbosity"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">args</span> = parser.parse_args<span style="color: #4f97d7;">()</span>
-<span style="color: #4f97d7; font-weight: bold;">if</span> args.verbosity:
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"verbosity turned on"</span><span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> argparse
+<span style="color: #eab700;">parser</span> = argparse.ArgumentParser<span style="color: #4d4d4c;">()</span>
+parser.add_argument<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"--verbosity"</span>, <span style="color: #8959a8;">help</span>=<span style="color: #3e999f;">"increase output verbosity"</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">args</span> = parser.parse_args<span style="color: #4d4d4c;">()</span>
+<span style="color: #718c00;">if</span> args.verbosity:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"verbosity turned on"</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -493,14 +493,14 @@ parser.add_argument<span style="color: #4f97d7;">(</span><span style="color: #2d
 verbosity turned on
 $ python3 prog.py
 $ python3 prog.py --help
-usage: prog.py <span style="color: #4f97d7;">[</span>-h<span style="color: #4f97d7;">]</span> <span style="color: #4f97d7;">[</span>--verbosity VERBOSITY<span style="color: #4f97d7;">]</span>
+usage: prog.py <span style="color: #4d4d4c;">[</span>-h<span style="color: #4d4d4c;">]</span> <span style="color: #4d4d4c;">[</span>--verbosity VERBOSITY<span style="color: #4d4d4c;">]</span>
 
 optional arguments:
   -h, --help            show this help message and exit
   --verbosity VERBOSITY
                         increase output verbosity
 $ python3 prog.py --verbosity
-usage: prog.py <span style="color: #4f97d7;">[</span>-h<span style="color: #4f97d7;">]</span> <span style="color: #4f97d7;">[</span>--verbosity VERBOSITY<span style="color: #4f97d7;">]</span>
+usage: prog.py <span style="color: #4d4d4c;">[</span>-h<span style="color: #4d4d4c;">]</span> <span style="color: #4d4d4c;">[</span>--verbosity VERBOSITY<span style="color: #4d4d4c;">]</span>
 prog.py: error: argument --verbosity: expected one argument
 </code></pre>
 </div>
@@ -516,7 +516,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

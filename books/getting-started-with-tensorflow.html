@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:58 -->
+<!-- 2019-06-18 Tue 19:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Getting Started with tensorflow</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -333,7 +333,7 @@ import
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> tensorflow <span style="color: #4f97d7; font-weight: bold;">as</span> tf
+<pre><code class="python"><span style="color: #718c00;">import</span> tensorflow <span style="color: #718c00;">as</span> tf
 </code></pre>
 </div></li>
 
@@ -342,8 +342,8 @@ define two vars a and b hold the data, and a b are called placeholder:
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">a</span> = tf.placeholder<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"int32"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">b</span> = tf.placeholder<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"int32"</span><span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #eab700;">a</span> = tf.placeholder<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"int32"</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">b</span> = tf.placeholder<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"int32"</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div></li>
 
@@ -352,7 +352,7 @@ placeholder allow us create our op and build our computation graph, without need
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">y</span> = tf.mul<span style="color: #4f97d7;">(</span>a, b<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #eab700;">y</span> = tf.mul<span style="color: #4d4d4c;">(</span>a, b<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div></li>
 
@@ -361,7 +361,7 @@ manage the execution flow, create a session
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">sess</span> = tf.Session<span style="color: #4f97d7;">()</span>
+<pre><code class="python"><span style="color: #eab700;">sess</span> = tf.Session<span style="color: #4d4d4c;">()</span>
 </code></pre>
 </div></li>
 
@@ -369,7 +369,7 @@ manage the execution flow, create a session
 visualize the results, run our model, feed the data into the data flow
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>sess.run<span style="color: #bc6ec5;">(</span>y, feed_dict=<span style="color: #2d9574;">{</span>a:2, b:5<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>
+<pre><code class="python"><span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>sess.run<span style="color: #3e999f;">(</span>y, feed_dict=<span style="color: #eab700;">{</span>a:2, b:5<span style="color: #eab700;">}</span><span style="color: #3e999f;">)</span>
 </code></pre>
 </div></li>
 </ol>
@@ -384,13 +384,13 @@ y = 2*x<sup>2</sup>
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> tensorflow <span style="color: #4f97d7; font-weight: bold;">as</span> tf
-<span style="color: #7590db;">x</span> = tf.placeholder<span style="color: #4f97d7;">(</span>tf.float32<span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">y</span> = 2 * x * x
-<span style="color: #7590db;">var_grad</span> = tf.gradients<span style="color: #4f97d7;">(</span>y, x<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">with</span> tf.Session<span style="color: #4f97d7;">()</span> <span style="color: #4f97d7; font-weight: bold;">as</span> sess:
-<span style="background-color: #292e34;"> </span>  <span style="color: #7590db;">grad_val</span> = sess.run<span style="color: #4f97d7;">(</span>var_grad, feed_dict=<span style="color: #bc6ec5;">{</span>x: 1<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>  <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>grad_val<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> tensorflow <span style="color: #718c00;">as</span> tf
+<span style="color: #eab700;">x</span> = tf.placeholder<span style="color: #4d4d4c;">(</span>tf.float32<span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">y</span> = 2 * x * x
+<span style="color: #eab700;">var_grad</span> = tf.gradients<span style="color: #4d4d4c;">(</span>y, x<span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">with</span> tf.Session<span style="color: #4d4d4c;">()</span> <span style="color: #718c00;">as</span> sess:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>  <span style="color: #eab700;">grad_val</span> = sess.run<span style="color: #4d4d4c;">(</span>var_grad, feed_dict=<span style="color: #3e999f;">{</span>x: 1<span style="color: #3e999f;">}</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>  <span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>grad_val<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -400,12 +400,12 @@ y = 2*x<sup>2</sup>
 <h3 id="orgfd6f68a">Uniform distribution</h3>
 <div class="outline-text-3" id="text-orgfd6f68a">
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #4f97d7; font-weight: bold;">as</span> plt
-<span style="color: #7590db;">uniform</span> = tf.random_uniform<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>100<span style="color: #bc6ec5;">]</span>, minval=0, maxval=1, dtype=tf.float32<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">with</span> tf.Session<span style="color: #4f97d7;">()</span> <span style="color: #4f97d7; font-weight: bold;">as</span> sess:
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>uniform.<span style="color: #4f97d7;">eval</span><span style="color: #bc6ec5;">()</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   plt.hist<span style="color: #4f97d7;">(</span>uniform.<span style="color: #4f97d7;">eval</span><span style="color: #bc6ec5;">()</span>, normed=<span style="color: #a45bad;">True</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   plt.show<span style="color: #4f97d7;">()</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> matplotlib.pyplot <span style="color: #718c00;">as</span> plt
+<span style="color: #eab700;">uniform</span> = tf.random_uniform<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span>100<span style="color: #3e999f;">]</span>, minval=0, maxval=1, dtype=tf.float32<span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">with</span> tf.Session<span style="color: #4d4d4c;">()</span> <span style="color: #718c00;">as</span> sess:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>uniform.<span style="color: #8959a8;">eval</span><span style="color: #3e999f;">()</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.hist<span style="color: #4d4d4c;">(</span>uniform.<span style="color: #8959a8;">eval</span><span style="color: #3e999f;">()</span>, normed=<span style="color: #4271ae;">True</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.show<span style="color: #4d4d4c;">()</span>
 </code></pre>
 </div>
 </div>
@@ -418,10 +418,10 @@ y = 2*x<sup>2</sup>
 same as uniform distribution
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">norm</span> = tf.random_normal<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>100<span style="color: #bc6ec5;">]</span>, mean=0, stddev=2<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">with</span> tf.Session<span style="color: #4f97d7;">()</span> <span style="color: #4f97d7; font-weight: bold;">as</span> sess:
-<span style="background-color: #292e34;"> </span>  plt.hist<span style="color: #4f97d7;">(</span>norm.<span style="color: #4f97d7;">eval</span><span style="color: #bc6ec5;">()</span>, normed=<span style="color: #a45bad;">True</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>  plt.show<span style="color: #4f97d7;">()</span>
+<pre><code class="python"><span style="color: #eab700;">norm</span> = tf.random_normal<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span>100<span style="color: #3e999f;">]</span>, mean=0, stddev=2<span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">with</span> tf.Session<span style="color: #4d4d4c;">()</span> <span style="color: #718c00;">as</span> sess:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>  plt.hist<span style="color: #4d4d4c;">(</span>norm.<span style="color: #8959a8;">eval</span><span style="color: #3e999f;">()</span>, normed=<span style="color: #4271ae;">True</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>  plt.show<span style="color: #4d4d4c;">()</span>
 </code></pre>
 </div>
 </div>
@@ -431,7 +431,7 @@ same as uniform distribution
 <h3 id="org7ca7519">seed</h3>
 <div class="outline-text-3" id="text-org7ca7519">
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">uniform_with_seed</span> = tf.random_uniform<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span>, seed=1<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #eab700;">uniform_with_seed</span> = tf.random_uniform<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span>1<span style="color: #3e999f;">]</span>, seed=1<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -447,10 +447,10 @@ same as uniform distribution
 <div class="outline-text-3" id="text-orgd998399">
 </div><ul class="org-ul"><li><a id="orged98b7a"></a>One dim<br /><div class="outline-text-4" id="text-orged98b7a">
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> tensorflow <span style="color: #4f97d7; font-weight: bold;">as</span> tf
-<span style="color: #7590db;">tensor_1d</span> = np.array<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>1, 2, 3<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> tensorflow <span style="color: #718c00;">as</span> tf
+<span style="color: #eab700;">tensor_1d</span> = np.array<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span>1, 2, 3<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #7590db;">tf_tensor</span> = tf.convert_to_tensor<span style="color: #4f97d7;">(</span>tensor_1d, dtype=tf.float64<span style="color: #4f97d7;">)</span>
+<span style="color: #eab700;">tf_tensor</span> = tf.convert_to_tensor<span style="color: #4d4d4c;">(</span>tensor_1d, dtype=tf.float64<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div></li></ul>
@@ -465,10 +465,10 @@ tf.sub
 tf.mul
 tf.div
 tf.mod
-tf.<span style="color: #4f97d7;">abs</span>
+tf.<span style="color: #8959a8;">abs</span>
 tf.neg
 tf.sign
-tf.inv <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">inverse</span>
+tf.inv <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">inverse</span>
 tf.square
 </code></pre>
 </div>
@@ -478,7 +478,7 @@ tf.square
 associate the input to a variable of x:
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">x</span> = tf.Variable<span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">input</span>, name=<span style="color: #2d9574;">'x'</span><span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #eab700;">x</span> = tf.Variable<span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">input</span>, name=<span style="color: #3e999f;">'x'</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -494,7 +494,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

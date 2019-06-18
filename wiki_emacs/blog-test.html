@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-06-18 Tue 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog 的搭建及其特性</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -336,19 +336,18 @@ for the JavaScript code in this tag.
 这一步会将项目自动 commit, 然后 push 到 github。 下面是 Makefile, 非常简单。
 </p>
 <div class="container">
-<pre><code class="makefile"><span style="color: #7590db;">pub_date</span>        = <span style="color: #2d9574;">`date +'%y.%m.%d %H:%M:%S'`</span>
-<span style="color: #7590db;">messages</span>        = <span style="color: #2d9574;">"Auto published by yydai at $(</span><span style="color: #7590db;">pub_data</span><span style="color: #2d9574;">)"</span>
+<pre><code class="makefile"><span style="color: #eab700;">pub_date</span>     = <span style="color: #3e999f;">`date +'%y.%m.%d %H:%M:%S'`</span>
+<span style="color: #eab700;">messages</span>     = <span style="color: #3e999f;">"Auto published by yydai at $(</span><span style="color: #eab700;">pub_data</span><span style="color: #3e999f;">)"</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">publish</span>:
-     @echo <span style="color: #2d9574;">"======================================"</span>
-     @echo <span style="color: #2d9574;">"Begin publish the site, please wait..."</span>
-     @echo <span style="color: #2d9574;">"======================================"</span>
+<span style="color: #f5871f;">publish</span>:
+     @echo <span style="color: #3e999f;">"======================================"</span>
+     @echo <span style="color: #3e999f;">"Begin publish the site, please wait..."</span>
+     @echo <span style="color: #3e999f;">"======================================"</span>
      @git add .
-     @git commit -m $<span style="color: #4f97d7;">(</span><span style="color: #7590db;">messages</span><span style="color: #4f97d7;">)</span>
+     @git commit -m $<span style="color: #4d4d4c;">(</span><span style="color: #eab700;">messages</span><span style="color: #4d4d4c;">)</span>
      @git pull
      @git push origin
-     @echo <span style="color: #2d9574;">"===============Success================"</span>
-
+     @echo <span style="color: #3e999f;">"===============Success================"</span>
 </code></pre>
 </div>
 
@@ -426,31 +425,31 @@ for the JavaScript code in this tag.
 这个博客完全是使用的 Org，其中的配置如下：
 </p>
 <div class="container">
-<pre><code class="lisp"><span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">-n &#21487;&#20197;&#26174;&#31034;&#34892;&#21495;</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">require</span> '<span style="color: #a45bad;">org-publish</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>setq org-publish-project-alist
-      '<span style="color: #bc6ec5;">(</span>
-        <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"blog-notes"</span>
-         <span style="color: #4f97d7;">:base-directory</span> <span style="color: #2d9574;">"~/org/blog/"</span>
-         <span style="color: #4f97d7;">:base-extension</span> <span style="color: #2d9574;">"org"</span>
-         <span style="color: #4f97d7;">:publishing-directory</span> <span style="color: #2d9574;">"~/org"</span>
-         <span style="color: #4f97d7;">:recursive</span> t
-         <span style="color: #4f97d7;">:publishing-function</span> org-publish-org-to-html
-         <span style="color: #4f97d7;">:headline-levels</span> 4
-         <span style="color: #4f97d7;">:section-numbers</span> nil
-         <span style="color: #4f97d7;">:auto-preamble</span> t
-         <span style="color: #4f97d7;">:style</span>    <span style="color: #2d9574;">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/&gt;"</span>
-         <span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"blog-static"</span>
-         <span style="color: #4f97d7;">:base-directory</span> <span style="color: #2d9574;">"~/org/blog/"</span>
-         <span style="color: #4f97d7;">:base-extension</span> <span style="color: #2d9574;">"css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"</span>
-         <span style="color: #4f97d7;">:publishing-directory</span> <span style="color: #2d9574;">"~/org/publish/"</span>
-         <span style="color: #4f97d7;">:recursive</span> t
-         <span style="color: #4f97d7;">:publishing-function</span> org-publish-attachment
-         <span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span><span style="color: #2d9574;">"blog"</span> <span style="color: #4f97d7;">:components</span> <span style="color: #67b11d;">(</span><span style="color: #2d9574;">"blog-notes"</span> <span style="color: #2d9574;">"blog-static"</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-        <span style="color: #2aa1ae; background-color: #292e34;">;;</span>
-        <span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="lisp"><span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">-n &#21487;&#20197;&#26174;&#31034;&#34892;&#21495;</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">require</span> '<span style="color: #4271ae;">org-publish</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span>setq org-publish-project-alist
+      '<span style="color: #3e999f;">(</span>
+        <span style="color: #eab700;">(</span><span style="color: #3e999f;">"blog-notes"</span>
+         <span style="color: #8959a8;">:base-directory</span> <span style="color: #3e999f;">"~/org/blog/"</span>
+         <span style="color: #8959a8;">:base-extension</span> <span style="color: #3e999f;">"org"</span>
+         <span style="color: #8959a8;">:publishing-directory</span> <span style="color: #3e999f;">"~/org"</span>
+         <span style="color: #8959a8;">:recursive</span> t
+         <span style="color: #8959a8;">:publishing-function</span> org-publish-org-to-html
+         <span style="color: #8959a8;">:headline-levels</span> 4
+         <span style="color: #8959a8;">:section-numbers</span> nil
+         <span style="color: #8959a8;">:auto-preamble</span> t
+         <span style="color: #8959a8;">:style</span>    <span style="color: #3e999f;">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/&gt;"</span>
+         <span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span><span style="color: #3e999f;">"blog-static"</span>
+         <span style="color: #8959a8;">:base-directory</span> <span style="color: #3e999f;">"~/org/blog/"</span>
+         <span style="color: #8959a8;">:base-extension</span> <span style="color: #3e999f;">"css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"</span>
+         <span style="color: #8959a8;">:publishing-directory</span> <span style="color: #3e999f;">"~/org/publish/"</span>
+         <span style="color: #8959a8;">:recursive</span> t
+         <span style="color: #8959a8;">:publishing-function</span> org-publish-attachment
+         <span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span><span style="color: #3e999f;">"blog"</span> <span style="color: #8959a8;">:components</span> <span style="color: #718c00;">(</span><span style="color: #3e999f;">"blog-notes"</span> <span style="color: #3e999f;">"blog-static"</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+        <span style="color: #8e908c; font-style: italic;">;;</span>
+        <span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -460,8 +459,8 @@ for the JavaScript code in this tag.
 <h2 id="orgd473605">表格</h2>
 <div class="outline-text-2" id="text-orgd473605">
 <div class="container">
-<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+CAPTION: Books</span>
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+LABEL: tbl:table1</span>
+<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+CAPTION: Books</span>
+<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+LABEL: tbl:table1</span>
 | &#20070;&#21517;   | &#31867;&#22411; |  &#20215;&#26684; |
 |--------+------+-------|
 | &#20320;&#22909;&#21834; | &#25991;&#23398; | 12.33 |
@@ -513,7 +512,7 @@ for the JavaScript code in this tag.
 <pre><code class="python">| Start Date |   End Date | Duration |
 |------------+------------+----------|
 | 2004.08.07 | 2005.07.08 |      335 |
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+TBLFM: $3=(date(&lt;$2&gt;)-date(&lt;$1&gt;))</span>
+<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+TBLFM: $3=(date(&lt;$2&gt;)-date(&lt;$1&gt;))</span>
 </code></pre>
 </div>
 
@@ -581,11 +580,11 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="background-color: #292e34;"> </span>   | First Name | Last Name | Email              |
+<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   | First Name | Last Name | Email              |
 |------------+-----------+--------------------|
 | Jone       | Doe       | Jone.Doe@emacs.edu |
 | Ying       | Dai       | Ying.Dai@emacs.edu |
-<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+TBLFM: $3='(concat $1 "." $2 "@emacs.edu")</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+TBLFM: $3='(concat $1 "." $2 "@emacs.edu")</span>
 </code></pre>
 </div>
 
@@ -679,9 +678,9 @@ This is a test for image. You can see <a href="http://orgmode.org/manual/Images-
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+CAPTION: unicorn</span>
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+NAME: fig:unicorn</span>
-<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span><span style="color: #4f97d7;">file</span>:./img/org-mode-unicorn.png<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span>
+<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+CAPTION: unicorn</span>
+<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+NAME: fig:unicorn</span>
+<span style="color: #4d4d4c;">[</span><span style="color: #3e999f;">[</span><span style="color: #8959a8;">file</span>:./img/org-mode-unicorn.png<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">]</span>
 </code></pre>
 </div>
 
@@ -724,18 +723,18 @@ Ditaa is a small command-line utility written in Java, that can convert diagrams
 在 Emacs 中可以使用 artist-mode 来画图。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+BEGIN_EXAMPLE ditaa :file ~/workspace/blog/org/img/ditaa.png</span>
+<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+BEGIN_EXAMPLE ditaa :file ~/workspace/blog/org/img/ditaa.png</span>
 
 +--------+   +-------+    +-------+
 |        | --+ ditaa +--&gt; |       |
 |  Text  |   +-------+    |diagram|
 |Document|   |!magic!|    |       |
-|     <span style="color: #4f97d7;">{</span>d<span style="color: #4f97d7;">}</span>|   |       |    |       |
+|     <span style="color: #4d4d4c;">{</span>d<span style="color: #4d4d4c;">}</span>|   |       |    |       |
 +---+----+   +-------+    +-------+
-<span style="background-color: #292e34;"> </span>   :                         ^
-<span style="background-color: #292e34;"> </span>   |       Lots of work      |
-<span style="background-color: #292e34;"> </span>   +-------------------------+
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+END_EXAMPLE</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   :                         ^
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   |       Lots of work      |
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   +-------------------------+
+<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+END_EXAMPLE</span>
 </code></pre>
 </div>
 <p>
@@ -753,14 +752,14 @@ Ditaa is a small command-line utility written in Java, that can convert diagrams
 <h3 id="org18b60b8">R</h3>
 <div class="outline-text-3" id="text-org18b60b8">
 <div class="container">
-<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+name: simpledrift(N=1000, X1=600, ngens=100)</span>
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+begin_example R :file ~/workspace/blog/org/img/orgmode-babel-R1.png :var ngens=100 X1=600 N=1000 :results graphics</span>
-<span style="background-color: #292e34;"> </span> p &lt;- numeric<span style="color: #4f97d7;">(</span>ngens<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span> p<span style="color: #4f97d7;">[</span>1<span style="color: #4f97d7;">]</span> &lt;- X1/N
-<span style="background-color: #292e34;"> </span> <span style="color: #4f97d7; font-weight: bold;">for</span><span style="color: #4f97d7;">(</span>g <span style="color: #4f97d7; font-weight: bold;">in</span> 2:ngens<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span> p<span style="color: #4f97d7;">[</span>g<span style="color: #4f97d7;">]</span> &lt;- rbinom<span style="color: #4f97d7;">(</span>1, size=N, prob=p<span style="color: #bc6ec5;">[</span>g-1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span> / N
-<span style="background-color: #292e34;"> </span> plot<span style="color: #4f97d7;">(</span>p, <span style="color: #4f97d7;">type</span>=<span style="color: #2d9574;">"l"</span>, ylim=c<span style="color: #bc6ec5;">(</span>0,1<span style="color: #bc6ec5;">)</span>, xlab=<span style="color: #2d9574;">"Generation"</span>, ylab=<span style="color: #2d9574;">"Proportion red"</span><span style="color: #4f97d7;">)</span>
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+end_example</span>
+<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+name: simpledrift(N=1000, X1=600, ngens=100)</span>
+<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+begin_example R :file ~/workspace/blog/org/img/orgmode-babel-R1.png :var ngens=100 X1=600 N=1000 :results graphics</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> p &lt;- numeric<span style="color: #4d4d4c;">(</span>ngens<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> p<span style="color: #4d4d4c;">[</span>1<span style="color: #4d4d4c;">]</span> &lt;- X1/N
+<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #718c00;">for</span><span style="color: #4d4d4c;">(</span>g <span style="color: #718c00;">in</span> 2:ngens<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span> p<span style="color: #4d4d4c;">[</span>g<span style="color: #4d4d4c;">]</span> &lt;- rbinom<span style="color: #4d4d4c;">(</span>1, size=N, prob=p<span style="color: #3e999f;">[</span>g-1<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span> / N
+<span style="color: #8e908c; background-color: #ffffff;"> </span> plot<span style="color: #4d4d4c;">(</span>p, <span style="color: #8959a8;">type</span>=<span style="color: #3e999f;">"l"</span>, ylim=c<span style="color: #3e999f;">(</span>0,1<span style="color: #3e999f;">)</span>, xlab=<span style="color: #3e999f;">"Generation"</span>, ylab=<span style="color: #3e999f;">"Proportion red"</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+end_example</span>
 </code></pre>
 </div>
 
@@ -780,10 +779,10 @@ Ditaa is a small command-line utility written in Java, that can convert diagrams
 <h3 id="org17ad89d">Shell</h3>
 <div class="outline-text-3" id="text-org17ad89d">
 <div class="container">
-<pre><code class="python"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+name: directories</span>
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+begin_example sh :results replace</span>
-<span style="background-color: #292e34;"> </span> cd ~ &amp;&amp; du -sc * |grep -v total
-<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">+end_example</span>
+<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+name: directories</span>
+<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+begin_example sh :results replace</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> cd ~ &amp;&amp; du -sc * |grep -v total
+<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+end_example</span>
 </code></pre>
 </div>
 
@@ -851,7 +850,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

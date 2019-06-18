@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-19 Sun 09:42 -->
+<!-- 2019-06-18 Tue 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>使用 Antlr 将 org 文件翻译为 html</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -284,15 +284,15 @@ for the JavaScript code in this tag.
 其中 org 文件的格式如下：
 </p>
 <div class="container">
-<pre><code class="org"><span style="color: #9f8766;">#+TITLE:</span> <span style="color: #bc6ec5; font-size: 140%; font-weight: bold; text-decoration: underline;">hello world</span>
-<span style="color: #9f8766;">#+CSS: a.css</span>
+<pre><code class="org"><span style="color: #718c00;">#+TITLE:</span> <span style="color: #f5871f; font-size: 144%; font-weight: bold;">hello world</span>
+<span style="color: #8e908c; font-style: italic;">#+CSS: a.css</span>
 
-<span style="color: #4f97d7; font-size: 130%; font-weight: bold;">* header1[id=myHeader]</span>
-<span style="color: #2d9574; font-size: 120%; font-weight: bold;">** hello world[id=myHeader]</span>
+<span style="color: #4271ae;">* header1[id=myHeader]</span>
+<span style="color: #8959a8;">** hello world[id=myHeader]</span>
    this is a test
    and this is another test
     another test
-<span style="color: #67b11d; font-size: 110%;">*** hello kitty[id=myHeader]</span>
+<span style="color: #3e999f;">*** hello kitty[id=myHeader]</span>
     what can i do for you
     and hahhaaa
 </code></pre>
@@ -331,7 +331,7 @@ Antlr 可以将 g4 文件转化为很多语言，生成 lexer, parser 文件，�
 指定语言目标
 </p>
 <div class="container">
-<pre><code class="python">antlr4 -<span style="color: #7590db;">Dlanguage</span>=Python3 MyGrammar.g4
+<pre><code class="python">antlr4 -<span style="color: #eab700;">Dlanguage</span>=Python3 MyGrammar.g4
 </code></pre>
 </div></li>
 </ol>
@@ -368,8 +368,8 @@ Antlr 可以将 g4 文件转化为很多语言，生成 lexer, parser 文件，�
 例如：
 </p>
 <div class="container">
-<pre><code class="python">FILEPATH: <span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'A'</span>..<span style="color: #2d9574;">'Z'</span>|<span style="color: #2d9574;">'a'</span>..<span style="color: #2d9574;">'z'</span>|<span style="color: #2d9574;">'0'</span>..<span style="color: #2d9574;">'9'</span>|<span style="color: #2d9574;">':'</span>|<span style="color: #2d9574;">'\\'</span>|<span style="color: #2d9574;">'/'</span>|<span style="color: #2d9574;">' '</span>|<span style="color: #2d9574;">'-'</span>|<span style="color: #2d9574;">'_'</span>|<span style="color: #2d9574;">'.'</span><span style="color: #4f97d7;">)</span>+ ;
-TITLE: <span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'A'</span>..<span style="color: #2d9574;">'Z'</span>|<span style="color: #2d9574;">'a'</span>..<span style="color: #2d9574;">'z'</span>|<span style="color: #2d9574;">' '</span><span style="color: #4f97d7;">)</span>+ ;
+<pre><code class="python">FILEPATH: <span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'A'</span>..<span style="color: #3e999f;">'Z'</span>|<span style="color: #3e999f;">'a'</span>..<span style="color: #3e999f;">'z'</span>|<span style="color: #3e999f;">'0'</span>..<span style="color: #3e999f;">'9'</span>|<span style="color: #3e999f;">':'</span>|<span style="color: #3e999f;">'\\'</span>|<span style="color: #3e999f;">'/'</span>|<span style="color: #3e999f;">' '</span>|<span style="color: #3e999f;">'-'</span>|<span style="color: #3e999f;">'_'</span>|<span style="color: #3e999f;">'.'</span><span style="color: #4d4d4c;">)</span>+ ;
+TITLE: <span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'A'</span>..<span style="color: #3e999f;">'Z'</span>|<span style="color: #3e999f;">'a'</span>..<span style="color: #3e999f;">'z'</span>|<span style="color: #3e999f;">' '</span><span style="color: #4d4d4c;">)</span>+ ;
 </code></pre>
 </div>
 
@@ -386,31 +386,31 @@ TITLE: <span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'A'</
 首先看下为实现该应用定义的 demo.g4 文件。
 </p>
 <div class="container">
-<pre><code class="antlr"><span style="color: #bc6ec5; font-weight: bold;">grammar</span> <span style="color: #ce537a; font-weight: bold;">demo</span><span style="color: #4f97d7; font-weight: bold;">;</span>
-<span style="color: #bc6ec5; font-weight: bold;">org</span><span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">line</span>+<span style="color: #4f97d7; font-weight: bold;">;</span>
-<span style="color: #bc6ec5; font-weight: bold;">line</span><span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #2d9574;">'#+TITLE:'</span> <span style="color: #ce537a; font-weight: bold;">one</span> <span style="color: #ce537a; font-weight: bold;">params</span>? <span style="color: #ce537a; font-weight: bold;">NEWLINE</span>  # <span style="color: #ce537a; font-weight: bold;">title</span>
-      <span style="color: #4f97d7; font-weight: bold;">|</span><span style="color: #2d9574;">'#+CSS: '</span> <span style="color: #ce537a; font-weight: bold;">path</span> # <span style="color: #ce537a; font-weight: bold;">css</span>
-      <span style="color: #4f97d7; font-weight: bold;">|</span> <span style="color: #ce537a; font-weight: bold;">HEADER1</span> <span style="color: #ce537a; font-weight: bold;">WS</span>? <span style="color: #ce537a; font-weight: bold;">one</span> <span style="color: #ce537a; font-weight: bold;">params</span>? <span style="color: #ce537a; font-weight: bold;">NEWLINE</span>  # <span style="color: #ce537a; font-weight: bold;">header1</span>
-      <span style="color: #4f97d7; font-weight: bold;">|</span> <span style="color: #ce537a; font-weight: bold;">HEADER2</span> <span style="color: #ce537a; font-weight: bold;">WS</span>? <span style="color: #ce537a; font-weight: bold;">one</span> <span style="color: #ce537a; font-weight: bold;">params</span>? <span style="color: #ce537a; font-weight: bold;">NEWLINE</span>  # <span style="color: #ce537a; font-weight: bold;">header2</span>
-      <span style="color: #4f97d7; font-weight: bold;">|</span> <span style="color: #ce537a; font-weight: bold;">HEADER3</span> <span style="color: #ce537a; font-weight: bold;">WS</span>? <span style="color: #ce537a; font-weight: bold;">one</span> <span style="color: #ce537a; font-weight: bold;">params</span>? <span style="color: #ce537a; font-weight: bold;">NEWLINE</span>  # <span style="color: #ce537a; font-weight: bold;">header3</span>
-      <span style="color: #4f97d7; font-weight: bold;">|</span> <span style="color: #ce537a; font-weight: bold;">content</span>+     # <span style="color: #ce537a; font-weight: bold;">con</span>
-      <span style="color: #4f97d7; font-weight: bold;">|</span> <span style="color: #ce537a; font-weight: bold;">NEWLINE</span>                 # <span style="color: #ce537a; font-weight: bold;">newline</span>
-      <span style="color: #4f97d7; font-weight: bold;">;</span>
-<span style="color: #bc6ec5; font-weight: bold;">path</span><span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7; font-weight: bold;">(</span><span style="color: #ce537a; font-weight: bold;">ID</span> <span style="color: #4f97d7; font-weight: bold;">|</span> <span style="color: #2d9574;">'/'</span> <span style="color: #4f97d7; font-weight: bold;">|</span> <span style="color: #2d9574;">'.'</span><span style="color: #4f97d7; font-weight: bold;">)+</span> # <span style="color: #ce537a; font-weight: bold;">p</span> <span style="color: #4f97d7; font-weight: bold;">;</span>
-<span style="color: #bc6ec5; font-weight: bold;">content</span><span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7; font-weight: bold;">(</span><span style="color: #ce537a; font-weight: bold;">WS</span>* <span style="color: #ce537a; font-weight: bold;">ID</span><span style="color: #4f97d7; font-weight: bold;">)+</span> <span style="color: #ce537a; font-weight: bold;">NEWLINE</span>       # <span style="color: #ce537a; font-weight: bold;">con2</span><span style="color: #4f97d7; font-weight: bold;">;</span>
+<pre><code class="antlr"><span style="color: #0000ff; font-weight: bold;">grammar</span> <span style="color: #00008b;">demo</span><span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">org</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #00008b;">line</span>+<span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">line</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #3e999f;">'#+TITLE:'</span> <span style="color: #00008b;">one</span> <span style="color: #00008b;">params</span>? <span style="color: #8b5a00;">NEWLINE</span>  # <span style="color: #00008b;">title</span>
+      <span style="color: #000000; font-weight: bold;">|</span><span style="color: #3e999f;">'#+CSS: '</span> <span style="color: #00008b;">path</span> # <span style="color: #00008b;">css</span>
+      <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #8b5a00;">HEADER1</span> <span style="color: #8b5a00;">WS</span>? <span style="color: #00008b;">one</span> <span style="color: #00008b;">params</span>? <span style="color: #8b5a00;">NEWLINE</span>  # <span style="color: #00008b;">header1</span>
+      <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #8b5a00;">HEADER2</span> <span style="color: #8b5a00;">WS</span>? <span style="color: #00008b;">one</span> <span style="color: #00008b;">params</span>? <span style="color: #8b5a00;">NEWLINE</span>  # <span style="color: #00008b;">header2</span>
+      <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #8b5a00;">HEADER3</span> <span style="color: #8b5a00;">WS</span>? <span style="color: #00008b;">one</span> <span style="color: #00008b;">params</span>? <span style="color: #8b5a00;">NEWLINE</span>  # <span style="color: #00008b;">header3</span>
+      <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #00008b;">content</span>+     # <span style="color: #00008b;">con</span>
+      <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #8b5a00;">NEWLINE</span>                 # <span style="color: #00008b;">newline</span>
+      <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">path</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #8b5a00;">ID</span> <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #3e999f;">'/'</span> <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #3e999f;">'.'</span><span style="color: #000000; font-weight: bold;">)+</span> # <span style="color: #00008b;">p</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">content</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #8b5a00;">WS</span>* <span style="color: #8b5a00;">ID</span><span style="color: #000000; font-weight: bold;">)+</span> <span style="color: #8b5a00;">NEWLINE</span>       # <span style="color: #00008b;">con2</span><span style="color: #000000; font-weight: bold;">;</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">params</span> <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #2d9574;">'['</span> <span style="color: #ce537a; font-weight: bold;">exprlist</span> <span style="color: #2d9574;">']'</span> # <span style="color: #ce537a; font-weight: bold;">Para</span><span style="color: #4f97d7; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">params</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #3e999f;">'['</span> <span style="color: #00008b;">exprlist</span> <span style="color: #3e999f;">']'</span> # <span style="color: #8b5a00;">Para</span><span style="color: #000000; font-weight: bold;">;</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">exprlist</span><span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">ID</span> <span style="color: #2d9574;">'='</span> <span style="color: #ce537a; font-weight: bold;">ID</span> # <span style="color: #ce537a; font-weight: bold;">expr</span> <span style="color: #4f97d7; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">exprlist</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #8b5a00;">ID</span> <span style="color: #3e999f;">'='</span> <span style="color: #8b5a00;">ID</span> # <span style="color: #00008b;">expr</span> <span style="color: #000000; font-weight: bold;">;</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">one</span><span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7; font-weight: bold;">(</span><span style="color: #ce537a; font-weight: bold;">WS</span>* <span style="color: #ce537a; font-weight: bold;">ID</span><span style="color: #4f97d7; font-weight: bold;">)+;</span>
+<span style="color: #0000ff; font-weight: bold;">one</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #8b5a00;">WS</span>* <span style="color: #8b5a00;">ID</span><span style="color: #000000; font-weight: bold;">)+;</span>
 
-<span style="color: #bc6ec5; font-weight: bold;">NEWLINE</span> <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #2d9574;">'\r'</span>? <span style="color: #2d9574;">'\n'</span> <span style="color: #4f97d7; font-weight: bold;">;</span>
-<span style="color: #bc6ec5; font-weight: bold;">HEADER1</span><span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #2d9574;">'*'</span> <span style="color: #4f97d7; font-weight: bold;">;</span>
-<span style="color: #bc6ec5; font-weight: bold;">HEADER2</span><span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #2d9574;">'**'</span> <span style="color: #4f97d7; font-weight: bold;">;</span>
-<span style="color: #bc6ec5; font-weight: bold;">HEADER3</span><span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #2d9574;">'***'</span> <span style="color: #4f97d7; font-weight: bold;">;</span>
-<span style="color: #bc6ec5; font-weight: bold;">WS</span> <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">[</span> \t<span style="color: #4f97d7;">]</span>+ <span style="color: #4f97d7; font-weight: bold;">;</span>
-<span style="color: #bc6ec5; font-weight: bold;">ID</span> <span style="color: #4f97d7; font-weight: bold;">:</span> <span style="color: #4f97d7;">[</span>0-9a-zA-Z<span style="color: #4f97d7;">]</span>+<span style="color: #4f97d7; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">NEWLINE</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #3e999f;">'\r'</span>? <span style="color: #3e999f;">'\n'</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">HEADER1</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #3e999f;">'*'</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">HEADER2</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #3e999f;">'**'</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">HEADER3</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #3e999f;">'***'</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">WS</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #4d4d4c;">[</span> \t<span style="color: #4d4d4c;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">ID</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #4d4d4c;">[</span>0-9a-zA-Z<span style="color: #4d4d4c;">]</span>+<span style="color: #000000; font-weight: bold;">;</span>
 </code></pre>
 </div>
 
@@ -451,36 +451,36 @@ TITLE: <span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'A'</
 同时定义处理文件，文件内容如下：
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">from</span> demoVisitor <span style="color: #4f97d7; font-weight: bold;">import</span> demoVisitor
-<span style="color: #7590db;">HEAD_CSS</span> = <span style="color: #2d9574;">'''</span>
-<span style="color: #2d9574;">&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"{}\"&gt;</span>
-<span style="color: #2d9574;">'''</span>
-<span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Org2Html</span><span style="color: #4f97d7;">(</span>demoVisitor<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">__init__</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span><span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">self</span>.html = <span style="color: #2d9574;">'&lt;html&gt;'</span>
+<pre><code class="python"><span style="color: #718c00;">from</span> demoVisitor <span style="color: #718c00;">import</span> demoVisitor
+<span style="color: #eab700;">HEAD_CSS</span> = <span style="color: #3e999f;">'''</span>
+<span style="color: #3e999f;">&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"{}\"&gt;</span>
+<span style="color: #3e999f;">'''</span>
+<span style="color: #718c00;">class</span> <span style="color: #4271ae;">Org2Html</span><span style="color: #4d4d4c;">(</span>demoVisitor<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">__init__</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span><span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.html = <span style="color: #3e999f;">'&lt;html&gt;'</span>
 
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">visitCss</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, ctx<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">path</span> = ctx.path<span style="color: #4f97d7;">()</span>.getText<span style="color: #4f97d7;">()</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">self</span>.html = <span style="color: #4f97d7; font-weight: bold;">self</span>.html + <span style="color: #2d9574;">"&lt;head&gt;"</span> + HEAD_CSS.<span style="color: #4f97d7;">format</span><span style="color: #4f97d7;">(</span>path<span style="color: #4f97d7;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">visitCss</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, ctx<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">path</span> = ctx.path<span style="color: #4d4d4c;">()</span>.getText<span style="color: #4d4d4c;">()</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.html = <span style="color: #718c00;">self</span>.html + <span style="color: #3e999f;">"&lt;head&gt;"</span> + HEAD_CSS.<span style="color: #8959a8;">format</span><span style="color: #4d4d4c;">(</span>path<span style="color: #4d4d4c;">)</span>
 
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">visitTitle</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, ctx<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">title</span> = ctx.one<span style="color: #4f97d7;">()</span>.getText<span style="color: #4f97d7;">()</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> ctx.params<span style="color: #4f97d7;">()</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">a</span>, <span style="color: #7590db;">b</span> = <span style="color: #4f97d7; font-weight: bold;">self</span>.visit<span style="color: #4f97d7;">(</span>ctx.params<span style="color: #bc6ec5;">()</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">else</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">a</span> = <span style="color: #2d9574;">'id'</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">b</span> = <span style="color: #2d9574;">'xxx'</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">title</span> = <span style="color: #2d9574;">"&lt;title {}=\"{}\"&gt;{}&lt;/title&gt;&lt;/head&gt;"</span>.<span style="color: #4f97d7;">format</span><span style="color: #4f97d7;">(</span>a, b, title<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">self</span>.html = <span style="color: #4f97d7; font-weight: bold;">self</span>.html + title + <span style="color: #2d9574;">'\n'</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>.html<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">visitPara</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, ctx<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">need return by all level</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7; font-weight: bold;">self</span>.visit<span style="color: #4f97d7;">(</span>ctx.exprlist<span style="color: #bc6ec5;">()</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">visitExpr</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, ctx<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">a</span> = ctx.ID<span style="color: #4f97d7;">(</span>0<span style="color: #4f97d7;">)</span>.getText<span style="color: #4f97d7;">()</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">b</span> = ctx.ID<span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span>.getText<span style="color: #4f97d7;">()</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>a, b<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> a, b
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">visitTitle</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, ctx<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">title</span> = ctx.one<span style="color: #4d4d4c;">()</span>.getText<span style="color: #4d4d4c;">()</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> ctx.params<span style="color: #4d4d4c;">()</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">a</span>, <span style="color: #eab700;">b</span> = <span style="color: #718c00;">self</span>.visit<span style="color: #4d4d4c;">(</span>ctx.params<span style="color: #3e999f;">()</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">else</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">a</span> = <span style="color: #3e999f;">'id'</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">b</span> = <span style="color: #3e999f;">'xxx'</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">title</span> = <span style="color: #3e999f;">"&lt;title {}=\"{}\"&gt;{}&lt;/title&gt;&lt;/head&gt;"</span>.<span style="color: #8959a8;">format</span><span style="color: #4d4d4c;">(</span>a, b, title<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.html = <span style="color: #718c00;">self</span>.html + title + <span style="color: #3e999f;">'\n'</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>.html<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">visitPara</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, ctx<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">need return by all level</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> <span style="color: #718c00;">self</span>.visit<span style="color: #4d4d4c;">(</span>ctx.exprlist<span style="color: #3e999f;">()</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">visitExpr</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, ctx<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">a</span> = ctx.ID<span style="color: #4d4d4c;">(</span>0<span style="color: #4d4d4c;">)</span>.getText<span style="color: #4d4d4c;">()</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">b</span> = ctx.ID<span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span>.getText<span style="color: #4d4d4c;">()</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>a, b<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> a, b
 </code></pre>
 </div>
 
@@ -516,7 +516,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

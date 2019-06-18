@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:57 -->
+<!-- 2019-06-18 Tue 19:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git 常见问题总结</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -323,12 +323,12 @@ git rebase -i HEAD~X
 <h2 id="orgb557579">3. 恢复到 commit 之前，add 之后的状态? <a href="https://stackoverflow.com/questions/927358/how-do-i-undo-the-last-commits-in-git?rq=1">here</a></h2>
 <div class="outline-text-2" id="text-orgb557579">
 <div class="container">
-<pre><code class="shell">$ git commit -m <span style="color: #2d9574;">"Something terribly misguided"</span>              <span style="color: #4f97d7;">(</span>1<span style="color: #4f97d7;">)</span>
-$ git reset HEAD~                                           <span style="color: #4f97d7;">(</span>2<span style="color: #4f97d7;">)</span>
-&lt;&lt; edit files as necessary &gt;&gt;                               <span style="color: #4f97d7;">(</span>3<span style="color: #4f97d7;">)</span>
-<span style="color: #ffff00; font-weight: bold;">$ git add ...                                               (4)</span>
-<span style="color: #ffff00; font-weight: bold;"># &#25552;&#20132; commit&#65292;&#20351;&#29992;&#21407;&#26469;&#30340; commit message</span>
-<span style="color: #ffff00; font-weight: bold;">$ git commit -c ORIG_HEAD                                   (5)</span>
+<pre><code class="shell">$ git commit -m <span style="color: #3e999f;">"Something terribly misguided"</span>              <span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span>
+$ git reset HEAD~                                           <span style="color: #4d4d4c;">(</span>2<span style="color: #4d4d4c;">)</span>
+&lt;&lt; edit files as necessary &gt;&gt;                               <span style="color: #4d4d4c;">(</span>3<span style="color: #4d4d4c;">)</span>
+<span style="color: #3e999f;">$ git add ...                                               (4)</span>
+<span style="color: #3e999f;"># &#25552;&#20132; commit&#65292;&#20351;&#29992;&#21407;&#26469;&#30340; commit message</span>
+<span style="color: #3e999f;">$ git commit -c ORIG_HEAD                                   (5)</span>
 </code></pre>
 </div>
 
@@ -349,13 +349,13 @@ $ git reset HEAD~                                           <span style="color: 
 </p>
 
 <div class="container">
-<pre><code class="shell"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#22238;&#21040; git add &#21518;&#65292;commit &#21069;</span>
+<pre><code class="shell"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#22238;&#21040; git add &#21518;&#65292;commit &#21069;</span>
 git reset --soft HEAD~1
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#22238;&#21040; git add &#20043;&#21069;</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#22238;&#21040; git add &#20043;&#21069;</span>
 git reset HEAD~1
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#36825;&#31181;&#26041;&#24335;&#27604;&#36739;&#21361;&#38505;&#12290;&#20250;&#25243;&#24323;&#25152;&#26377;&#30340;&#26356;&#25913;</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#36825;&#31181;&#26041;&#24335;&#27604;&#36739;&#21361;&#38505;&#12290;&#20250;&#25243;&#24323;&#25152;&#26377;&#30340;&#26356;&#25913;</span>
 git reset --hard HEAD~1
 </code></pre>
 </div>
@@ -370,8 +370,8 @@ git reset --hard HEAD~1
 </p>
 <div class="container">
 <pre><code class="shell">git reflog
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#25214;&#21040;&#35201;&#24674;&#22797;&#20301;&#32622;&#30340; commit sha</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">-b &#19981;&#24102;&#65292;&#40664;&#35748;&#24403;&#21069; branch</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#25214;&#21040;&#35201;&#24674;&#22797;&#20301;&#32622;&#30340; commit sha</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">-b &#19981;&#24102;&#65292;&#40664;&#35748;&#24403;&#21069; branch</span>
 git checkout -b newBranch &lt;sha&gt;
 </code></pre>
 </div>
@@ -395,7 +395,7 @@ git checkout -b newBranch &lt;sha&gt;
 <div class="container">
 <pre><code class="shell">git branch -m &lt;old branch name&gt; &lt;new&gt;
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">current branch</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">current branch</span>
 git branch -m &lt;new&gt;
 </code></pre>
 </div>
@@ -404,10 +404,10 @@ git branch -m &lt;new&gt;
 删除本地或远程分支
 </p>
 <div class="container">
-<pre><code class="shell"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">delete origin</span>
+<pre><code class="shell"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">delete origin</span>
 git push -d origin &lt;branch_name&gt;
 git push origin :&lt;branch_name or tag_name&gt;
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">delete local</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">delete local</span>
 git branch -d &lt;branch_name&gt;
 </code></pre>
 </div>
@@ -436,8 +436,8 @@ git branch -d &lt;branch_name&gt;
 <div class="container">
 <pre><code class="python">Present-tense summary under 50 characters
 
-* More information about commit <span style="color: #4f97d7;">(</span>under 72 characters<span style="color: #4f97d7;">)</span>.
-* More information about commit <span style="color: #4f97d7;">(</span>under 72 characters<span style="color: #4f97d7;">)</span>.
+* More information about commit <span style="color: #4d4d4c;">(</span>under 72 characters<span style="color: #4d4d4c;">)</span>.
+* More information about commit <span style="color: #4d4d4c;">(</span>under 72 characters<span style="color: #4d4d4c;">)</span>.
 
 http://project.management-system.com/ticket/123
 </code></pre>
@@ -456,7 +456,7 @@ http://project.management-system.com/ticket/123
 如果我们的 commit 历史
 </p>
 <div class="container">
-<pre><code class="python">* b1b8189 - <span style="color: #4f97d7;">(</span>HEAD -&gt; master<span style="color: #4f97d7;">)</span> Commit-3
+<pre><code class="python">* b1b8189 - <span style="color: #4d4d4c;">(</span>HEAD -&gt; master<span style="color: #4d4d4c;">)</span> Commit-3
 * 5756e15 - Commit-2
 * e7ba81d - Commit-1
 * 5d39ff2 - Commit-0
@@ -501,7 +501,7 @@ s b1b8189 Commit-3
 <div class="container">
 <pre><code class="shell">1. git reset HEAD~3
 2. git add .
-3. git commit -m <span style="color: #2d9574;">""</span>
+3. git commit -m <span style="color: #3e999f;">""</span>
 4. git push --force
 </code></pre>
 </div>
@@ -554,7 +554,7 @@ s b1b8189 Commit-3
 </p>
 
 <div class="container">
-<pre><code class="shell">git stash apply stash@<span style="color: #4f97d7;">{</span>1<span style="color: #4f97d7;">}</span>
+<pre><code class="shell">git stash apply stash@<span style="color: #4d4d4c;">{</span>1<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -562,7 +562,7 @@ s b1b8189 Commit-3
 使用 git stash pop 要好些，否则你还得需要手动 drop。
 </p>
 <div class="container">
-<pre><code class="python">git stash drop stash@<span style="color: #4f97d7;">{</span>1<span style="color: #4f97d7;">}</span>
+<pre><code class="python">git stash drop stash@<span style="color: #4d4d4c;">{</span>1<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -584,7 +584,7 @@ s b1b8189 Commit-3
 </p>
 
 <div class="container">
-<pre><code class="shell"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#22312; HEAD &#25351;&#21521;&#30340;&#25552;&#20132;&#37324;&#28155;&#21152;&#21517;&#20026; apple &#30340;&#26631;&#31614;</span>
+<pre><code class="shell"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#22312; HEAD &#25351;&#21521;&#30340;&#25552;&#20132;&#37324;&#28155;&#21152;&#21517;&#20026; apple &#30340;&#26631;&#31614;</span>
 git tag &lt;tag-name&gt;
 </code></pre>
 </div>
@@ -595,10 +595,10 @@ git tag &lt;tag-name&gt;
 <div class="container">
 <pre><code class="shell">git tag -a &lt;tagname&gt;
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#22312; HEAD &#25351;&#21521;&#30340;&#25552;&#20132;&#37324;&#28155;&#21152;&#21517;&#20026; banana &#30340;&#26631;&#31614;</span>
-git tag -am <span style="color: #2d9574;">"&#36830;&#29492;&#23376;&#37117;&#25026;&#30340; Git"</span> banana
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#22312; HEAD &#25351;&#21521;&#30340;&#25552;&#20132;&#37324;&#28155;&#21152;&#21517;&#20026; banana &#30340;&#26631;&#31614;</span>
+git tag -am <span style="color: #3e999f;">"&#36830;&#29492;&#23376;&#37117;&#25026;&#30340; Git"</span> banana
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">list tags</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">list tags</span>
 git tag -n
 </code></pre>
 </div>
@@ -739,7 +739,7 @@ git merge --squash issue1
 </ul>
 
 <div class="container">
-<pre><code class="shell"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">instead checkout a branch, we can also checkout a commit</span>
+<pre><code class="shell"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">instead checkout a branch, we can also checkout a commit</span>
 git checkout 56a4e5c08
 </code></pre>
 </div>
@@ -770,7 +770,7 @@ git checkout 56a4e5c08
 如果提示 Could not open a connection to your authentication agent, 先执行
 </p>
 <div class="container">
-<pre><code class="shell"><span style="color: #4f97d7;">eval</span> <span style="color: #fa8072;">`ssh-agent`</span>
+<pre><code class="shell"><span style="color: #8959a8;">eval</span> <span style="color: #8959a8;">`ssh-agent`</span>
 </code></pre>
 </div>
 
@@ -794,7 +794,7 @@ git checkout 56a4e5c08
 如果在 mac 上遇到类似下面的问题：
 </p>
 <div class="container">
-<pre><code class="shell">xcode-select: error: tool <span style="color: #2d9574;">'opendiff'</span> requires Xcode, but active developer directory <span style="color: #2d9574;">'/Library/Developer/CommandLineTools'</span> is a command line tools instance
+<pre><code class="shell">xcode-select: error: tool <span style="color: #3e999f;">'opendiff'</span> requires Xcode, but active developer directory <span style="color: #3e999f;">'/Library/Developer/CommandLineTools'</span> is a command line tools instance
 </code></pre>
 </div>
 
@@ -817,7 +817,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

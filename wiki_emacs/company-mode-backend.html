@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-26 Sun 23:42 -->
+<!-- 2019-06-18 Tue 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>实现最简单的 company-mode 后端</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -263,6 +263,10 @@ for the JavaScript code in this tag.
 </div>
 <hr />
 <p>
+<a href="http://sixty-north.com/blog/writing-the-simplest-emacs-company-mode-backend">http://sixty-north.com/blog/writing-the-simplest-emacs-company-mode-backend</a>
+</p>
+
+<p>
 在 Emacs 中，company-mode 是一个在缓冲区中执行完成的框架。 [1]它是流行的自动完成模式的替代品。company-mode 支持通过后端进行扩展，后端为框架提供了各种上下文中可能的完成列表。因此，例如，
 有一个后端（为 Emacs lisp 提供完成支持，并为 Python 提供相同的功能。后端可以使用非常不同的技术，只要它们符合模式指定的后端接口即可。
 </p>
@@ -300,8 +304,8 @@ company-mode doesn't care about the nature of these strings. It just takes them 
 在这种情况下，我们仅仅需要定义如下：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defconst</span> <span style="color: #7590db;">sample-completions</span>
-  <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"alan"</span> <span style="color: #2d9574;">"john"</span> <span style="color: #2d9574;">"ada"</span> <span style="color: #2d9574;">"don"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defconst</span> <span style="color: #eab700;">sample-completions</span>
+  <span style="color: #718c00;">'</span><span style="color: #3e999f;">(</span><span style="color: #3e999f;">"alan"</span> <span style="color: #3e999f;">"john"</span> <span style="color: #3e999f;">"ada"</span> <span style="color: #3e999f;">"don"</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -314,20 +318,20 @@ company-mode doesn't care about the nature of these strings. It just takes them 
 在讨论细节前，我们先看一个基本的后端实现：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">require</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">cl-lib</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">require</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">company</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">require</span> <span style="color: #718c00;">'</span><span style="color: #4271ae;">cl-lib</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">require</span> <span style="color: #718c00;">'</span><span style="color: #4271ae;">company</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">company-sample-backend</span> <span style="color: #bc6ec5;">(</span>command <span style="color: #ce537a; font-weight: bold;">&amp;optional</span> arg <span style="color: #ce537a; font-weight: bold;">&amp;rest</span> ignored<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span> <span style="color: #2d9574;">(</span>list <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">interactive</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defun</span> <span style="color: #f5871f;">company-sample-backend</span> <span style="color: #3e999f;">(</span>command <span style="color: #4271ae;">&amp;optional</span> arg <span style="color: #4271ae;">&amp;rest</span> ignored<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span><span style="color: #718c00;">interactive</span> <span style="color: #eab700;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">interactive</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
 
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">cl-case</span> command
-    <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span> <span style="color: #67b11d;">(</span>company-begin-backend <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">company-sample-backend</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span>prefix <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">and</span> <span style="color: #b1951d;">(</span>eq major-mode <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">fundamental-mode</span><span style="color: #b1951d;">)</span>
-                <span style="color: #b1951d;">(</span>company-grab-symbol<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span>candidates
-    <span style="color: #67b11d;">(</span>cl-remove-if-not
-      <span style="color: #b1951d;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #4f97d7;">(</span>c<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>string-prefix-p arg c<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span>
-      sample-completions<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+  <span style="color: #3e999f;">(</span><span style="color: #718c00;">cl-case</span> command
+    <span style="color: #eab700;">(</span><span style="color: #718c00;">interactive</span> <span style="color: #718c00;">(</span>company-begin-backend <span style="color: #718c00;">'</span><span style="color: #4271ae;">company-sample-backend</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+    <span style="color: #eab700;">(</span>prefix <span style="color: #718c00;">(</span><span style="color: #718c00;">and</span> <span style="color: #4271ae;">(</span>eq major-mode <span style="color: #718c00;">'</span><span style="color: #4271ae;">fundamental-mode</span><span style="color: #4271ae;">)</span>
+                <span style="color: #4271ae;">(</span>company-grab-symbol<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+    <span style="color: #eab700;">(</span>candidates
+    <span style="color: #718c00;">(</span>cl-remove-if-not
+      <span style="color: #4271ae;">(</span><span style="color: #718c00;">lambda</span> <span style="color: #4d4d4c;">(</span>c<span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">(</span>string-prefix-p arg c<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span>
+      sample-completions<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>

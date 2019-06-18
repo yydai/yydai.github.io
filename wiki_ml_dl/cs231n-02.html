@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-06-18 Tue 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>图像分类之 KNN</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -334,26 +334,26 @@ d_1 (I_1, I_2) = \sum_{p} \left| I^p_1 - I^p_2 \right|
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#36825;&#20010;&#21644;&#25968;&#25454;&#20013;&#30340;&#26631;&#31614;&#21517;&#23545;&#24212;</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">classes</span> = <span style="color: #4f97d7;">[</span><span style="color: #2d9574;">'plane'</span>, <span style="color: #2d9574;">'car'</span>, <span style="color: #2d9574;">'bird'</span>, <span style="color: #2d9574;">'cat'</span>, <span style="color: #2d9574;">'deer'</span>, <span style="color: #2d9574;">'dog'</span>, <span style="color: #2d9574;">'frog'</span>, <span style="color: #2d9574;">'horse'</span>, <span style="color: #2d9574;">'ship'</span>, <span style="color: #2d9574;">'truck'</span><span style="color: #4f97d7;">]</span>
-<span style="color: #7590db;">num_classes</span> = <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>classes<span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">samples_per_class</span> = 7
-<span style="color: #4f97d7; font-weight: bold;">for</span> y, cls <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">enumerate</span><span style="color: #4f97d7;">(</span>classes<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">idxs</span> = np.flatnonzero<span style="color: #4f97d7;">(</span>y_train == y<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#27599;&#20010;&#20998;&#31867;&#38543;&#26426;&#36873;&#20986; 7 &#20010;&#22270;&#29255;</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">idxs</span> = np.random.choice<span style="color: #4f97d7;">(</span>idxs, samples_per_class, replace=<span style="color: #a45bad;">False</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> i, idx <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">enumerate</span><span style="color: #4f97d7;">(</span>idxs<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">plt_idx</span> = i * num_classes + y + 1
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#35774;&#32622;&#22270;&#29255;&#20301;&#32622;</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   plt.subplot<span style="color: #4f97d7;">(</span>samples_per_class, num_classes, plt_idx<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   plt.imshow<span style="color: #4f97d7;">(</span>X_train<span style="color: #bc6ec5;">[</span>idx<span style="color: #bc6ec5;">]</span>.astype<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">'uint8'</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">plt.imshow(np.uint8(X_train[idx])) &#20063;&#21487;&#20197;</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#30446;&#30340;&#37117;&#26159;&#19968;&#26679;&#30340;&#22914;&#26524;&#19981;&#25226;&#25968;&#25454;&#36716;&#21270;&#20026; uint8&#65292;&#26174;&#31034;&#26102;&#21487;&#33021;&#20250;&#26377;&#22855;&#24618;&#30340;&#32467;&#26524;&#12290;</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   plt.axis<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'off'</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> i == 0:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#35774;&#32622;&#27599;&#19968;&#20010;&#20998;&#31867;&#30340; title</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   plt.title<span style="color: #4f97d7;">(</span>cls<span style="color: #4f97d7;">)</span>
-plt.show<span style="color: #4f97d7;">()</span>
+<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#36825;&#20010;&#21644;&#25968;&#25454;&#20013;&#30340;&#26631;&#31614;&#21517;&#23545;&#24212;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">classes</span> = <span style="color: #4d4d4c;">[</span><span style="color: #3e999f;">'plane'</span>, <span style="color: #3e999f;">'car'</span>, <span style="color: #3e999f;">'bird'</span>, <span style="color: #3e999f;">'cat'</span>, <span style="color: #3e999f;">'deer'</span>, <span style="color: #3e999f;">'dog'</span>, <span style="color: #3e999f;">'frog'</span>, <span style="color: #3e999f;">'horse'</span>, <span style="color: #3e999f;">'ship'</span>, <span style="color: #3e999f;">'truck'</span><span style="color: #4d4d4c;">]</span>
+<span style="color: #eab700;">num_classes</span> = <span style="color: #8959a8;">len</span><span style="color: #4d4d4c;">(</span>classes<span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">samples_per_class</span> = 7
+<span style="color: #718c00;">for</span> y, cls <span style="color: #718c00;">in</span> <span style="color: #8959a8;">enumerate</span><span style="color: #4d4d4c;">(</span>classes<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">idxs</span> = np.flatnonzero<span style="color: #4d4d4c;">(</span>y_train == y<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#27599;&#20010;&#20998;&#31867;&#38543;&#26426;&#36873;&#20986; 7 &#20010;&#22270;&#29255;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">idxs</span> = np.random.choice<span style="color: #4d4d4c;">(</span>idxs, samples_per_class, replace=<span style="color: #4271ae;">False</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> i, idx <span style="color: #718c00;">in</span> <span style="color: #8959a8;">enumerate</span><span style="color: #4d4d4c;">(</span>idxs<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">plt_idx</span> = i * num_classes + y + 1
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#35774;&#32622;&#22270;&#29255;&#20301;&#32622;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.subplot<span style="color: #4d4d4c;">(</span>samples_per_class, num_classes, plt_idx<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.imshow<span style="color: #4d4d4c;">(</span>X_train<span style="color: #3e999f;">[</span>idx<span style="color: #3e999f;">]</span>.astype<span style="color: #3e999f;">(</span><span style="color: #3e999f;">'uint8'</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">plt.imshow(np.uint8(X_train[idx])) &#20063;&#21487;&#20197;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#30446;&#30340;&#37117;&#26159;&#19968;&#26679;&#30340;&#22914;&#26524;&#19981;&#25226;&#25968;&#25454;&#36716;&#21270;&#20026; uint8&#65292;&#26174;&#31034;&#26102;&#21487;&#33021;&#20250;&#26377;&#22855;&#24618;&#30340;&#32467;&#26524;&#12290;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.axis<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'off'</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> i == 0:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#35774;&#32622;&#27599;&#19968;&#20010;&#20998;&#31867;&#30340; title</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.title<span style="color: #4d4d4c;">(</span>cls<span style="color: #4d4d4c;">)</span>
+plt.show<span style="color: #4d4d4c;">()</span>
 </code></pre>
 </div>
 
@@ -370,17 +370,17 @@ plt.show<span style="color: #4f97d7;">()</span>
 为了加快训练，做些简化。只选取 5000 个训练集，以及 500 个测试集。
 </p>
 <div class="container">
-<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Subsample the data for more efficient code execution in this exercise</span>
-<span style="color: #7590db;">num_training</span> = 5000
-<span style="color: #7590db;">mask</span> = <span style="color: #4f97d7;">list</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">range</span><span style="color: #bc6ec5;">(</span>num_training<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>mask<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">X_train</span> = X_train<span style="color: #4f97d7;">[</span>mask<span style="color: #4f97d7;">]</span>
-<span style="color: #7590db;">y_train</span> = y_train<span style="color: #4f97d7;">[</span>mask<span style="color: #4f97d7;">]</span>
+<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Subsample the data for more efficient code execution in this exercise</span>
+<span style="color: #eab700;">num_training</span> = 5000
+<span style="color: #eab700;">mask</span> = <span style="color: #8959a8;">list</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">range</span><span style="color: #3e999f;">(</span>num_training<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>mask<span style="color: #3e999f;">[</span>1<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">X_train</span> = X_train<span style="color: #4d4d4c;">[</span>mask<span style="color: #4d4d4c;">]</span>
+<span style="color: #eab700;">y_train</span> = y_train<span style="color: #4d4d4c;">[</span>mask<span style="color: #4d4d4c;">]</span>
 
-<span style="color: #7590db;">num_test</span> = 500
-<span style="color: #7590db;">mask</span> = <span style="color: #4f97d7;">list</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">range</span><span style="color: #bc6ec5;">(</span>num_test<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">X_test</span> = X_test<span style="color: #4f97d7;">[</span>mask<span style="color: #4f97d7;">]</span>
-<span style="color: #7590db;">y_test</span> = y_test<span style="color: #4f97d7;">[</span>mask<span style="color: #4f97d7;">]</span>
+<span style="color: #eab700;">num_test</span> = 500
+<span style="color: #eab700;">mask</span> = <span style="color: #8959a8;">list</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">range</span><span style="color: #3e999f;">(</span>num_test<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">X_test</span> = X_test<span style="color: #4d4d4c;">[</span>mask<span style="color: #4d4d4c;">]</span>
+<span style="color: #eab700;">y_test</span> = y_test<span style="color: #4d4d4c;">[</span>mask<span style="color: #4d4d4c;">]</span>
 </code></pre>
 </div>
 
@@ -388,10 +388,10 @@ plt.show<span style="color: #4f97d7;">()</span>
 为了计算上面公式定义的距离，我们先把数据转化为 2 维的。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">X_train</span> = np.reshape<span style="color: #4f97d7;">(</span>X_train, <span style="color: #bc6ec5;">(</span>X_train.shape<span style="color: #2d9574;">[</span>0<span style="color: #2d9574;">]</span>, -1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">X_test</span> = np.reshape<span style="color: #4f97d7;">(</span>X_test, <span style="color: #bc6ec5;">(</span>X_test.shape<span style="color: #2d9574;">[</span>0<span style="color: #2d9574;">]</span>, -1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span>X_train.shape, X_test.shape<span style="color: #4f97d7;">)</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#32467;&#26524;&#65306;(5000, 3072) (500, 3072)</span>
+<pre><code class="python"><span style="color: #eab700;">X_train</span> = np.reshape<span style="color: #4d4d4c;">(</span>X_train, <span style="color: #3e999f;">(</span>X_train.shape<span style="color: #eab700;">[</span>0<span style="color: #eab700;">]</span>, -1<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">X_test</span> = np.reshape<span style="color: #4d4d4c;">(</span>X_test, <span style="color: #3e999f;">(</span>X_test.shape<span style="color: #eab700;">[</span>0<span style="color: #eab700;">]</span>, -1<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>X_train.shape, X_test.shape<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#32467;&#26524;&#65306;(5000, 3072) (500, 3072)</span>
 </code></pre>
 </div>
 
@@ -417,18 +417,18 @@ KNN 叫做 K Nearest Neighbor。
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">from</span> cs231n.classifiers <span style="color: #4f97d7; font-weight: bold;">import</span> KNearestNeighbor
+<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">from</span> cs231n.classifiers <span style="color: #718c00;">import</span> KNearestNeighbor
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Create a kNN classifier instance.</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Remember that training a kNN classifier is a noop:</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">the Classifier simply remembers the data and does no further processing</span>
-<span style="color: #7590db;">classifier</span> = KNearestNeighbor<span style="color: #4f97d7;">()</span>
-classifier.train<span style="color: #4f97d7;">(</span>X_train, y_train<span style="color: #4f97d7;">)</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Create a kNN classifier instance.</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Remember that training a kNN classifier is a noop:</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">the Classifier simply remembers the data and does no further processing</span>
+<span style="color: #eab700;">classifier</span> = KNearestNeighbor<span style="color: #4d4d4c;">()</span>
+classifier.train<span style="color: #4d4d4c;">(</span>X_train, y_train<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">dists</span> = classifier.compute_distances_two_loops<span style="color: #4f97d7;">(</span>X_test<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #eab700;">dists</span> = classifier.compute_distances_two_loops<span style="color: #4d4d4c;">(</span>X_test<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -450,8 +450,8 @@ d_2 (I_1, I_2) = \sqrt{\sum_{p} \left( I^p_1 - I^p_2 \right)^2}
 \end{align}
 
 <div class="container">
-<pre><code class="python">dists<span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">][</span>j<span style="color: #4f97d7;">]</span> = np.sqrt<span style="color: #4f97d7;">(</span>
-<span style="background-color: #292e34;"> </span>   np.<span style="color: #4f97d7;">sum</span><span style="color: #bc6ec5;">(</span>np.square<span style="color: #2d9574;">(</span>X<span style="color: #67b11d;">[</span>i, :<span style="color: #67b11d;">]</span> - <span style="color: #4f97d7; font-weight: bold;">self</span>.X_train<span style="color: #67b11d;">[</span>j, :<span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="python">dists<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">][</span>j<span style="color: #4d4d4c;">]</span> = np.sqrt<span style="color: #4d4d4c;">(</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   np.<span style="color: #8959a8;">sum</span><span style="color: #3e999f;">(</span>np.square<span style="color: #eab700;">(</span>X<span style="color: #718c00;">[</span>i, :<span style="color: #718c00;">]</span> - <span style="color: #718c00;">self</span>.X_train<span style="color: #718c00;">[</span>j, :<span style="color: #718c00;">]</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -459,8 +459,8 @@ d_2 (I_1, I_2) = \sqrt{\sum_{p} \left( I^p_1 - I^p_2 \right)^2}
 我们可以把这个距离用图像表示出来。
 </p>
 <div class="container">
-<pre><code class="python">plt.imshow<span style="color: #4f97d7;">(</span>dists, interpolation=<span style="color: #2d9574;">'none'</span><span style="color: #4f97d7;">)</span>
-plt.show<span style="color: #4f97d7;">()</span>
+<pre><code class="python">plt.imshow<span style="color: #4d4d4c;">(</span>dists, interpolation=<span style="color: #3e999f;">'none'</span><span style="color: #4d4d4c;">)</span>
+plt.show<span style="color: #4d4d4c;">()</span>
 </code></pre>
 </div>
 
@@ -493,28 +493,28 @@ plt.show<span style="color: #4f97d7;">()</span>
 相应的代码如下。
 </p>
 <div class="container">
-<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">k</span> = 5
-<span style="color: #7590db;">y_test_pred</span>, <span style="color: #7590db;">pred_k</span> = classifier.predict_labels<span style="color: #4f97d7;">(</span>dists, k=5<span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">classes</span> = <span style="color: #4f97d7;">[</span><span style="color: #2d9574;">'plane'</span>, <span style="color: #2d9574;">'car'</span>, <span style="color: #2d9574;">'bird'</span>, <span style="color: #2d9574;">'cat'</span>, <span style="color: #2d9574;">'deer'</span>, <span style="color: #2d9574;">'dog'</span>, <span style="color: #2d9574;">'frog'</span>, <span style="color: #2d9574;">'horse'</span>, <span style="color: #2d9574;">'ship'</span>, <span style="color: #2d9574;">'truck'</span><span style="color: #4f97d7;">]</span>
-<span style="color: #7590db;">samples</span> = pred_k<span style="color: #4f97d7;">[</span>:k<span style="color: #4f97d7;">]</span>
+<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">k</span> = 5
+<span style="color: #eab700;">y_test_pred</span>, <span style="color: #eab700;">pred_k</span> = classifier.predict_labels<span style="color: #4d4d4c;">(</span>dists, k=5<span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">classes</span> = <span style="color: #4d4d4c;">[</span><span style="color: #3e999f;">'plane'</span>, <span style="color: #3e999f;">'car'</span>, <span style="color: #3e999f;">'bird'</span>, <span style="color: #3e999f;">'cat'</span>, <span style="color: #3e999f;">'deer'</span>, <span style="color: #3e999f;">'dog'</span>, <span style="color: #3e999f;">'frog'</span>, <span style="color: #3e999f;">'horse'</span>, <span style="color: #3e999f;">'ship'</span>, <span style="color: #3e999f;">'truck'</span><span style="color: #4d4d4c;">]</span>
+<span style="color: #eab700;">samples</span> = pred_k<span style="color: #4d4d4c;">[</span>:k<span style="color: #4d4d4c;">]</span>
 
-<span style="color: #4f97d7; font-weight: bold;">for</span> i, x <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">enumerate</span><span style="color: #4f97d7;">(</span>samples<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> i &gt;= k:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">break</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">plt_idx</span> = i * k + i + 1
-<span style="background-color: #292e34;"> </span>   plt.subplot<span style="color: #4f97d7;">(</span>k, k+1, plt_idi<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   plt.imshow<span style="color: #4f97d7;">(</span>X_test<span style="color: #bc6ec5;">[</span>i<span style="color: #bc6ec5;">]</span>.astype<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">'uint8'</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   plt.axis<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'off'</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   plt.title<span style="color: #4f97d7;">(</span>classes<span style="color: #bc6ec5;">[</span>y_test<span style="color: #2d9574;">[</span>i<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #718c00;">for</span> i, x <span style="color: #718c00;">in</span> <span style="color: #8959a8;">enumerate</span><span style="color: #4d4d4c;">(</span>samples<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> i &gt;= k:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">break</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">plt_idx</span> = i * k + i + 1
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.subplot<span style="color: #4d4d4c;">(</span>k, k+1, plt_idi<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.imshow<span style="color: #4d4d4c;">(</span>X_test<span style="color: #3e999f;">[</span>i<span style="color: #3e999f;">]</span>.astype<span style="color: #3e999f;">(</span><span style="color: #3e999f;">'uint8'</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.axis<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'off'</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.title<span style="color: #4d4d4c;">(</span>classes<span style="color: #3e999f;">[</span>y_test<span style="color: #eab700;">[</span>i<span style="color: #eab700;">]</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
 
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> j, y <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">enumerate</span><span style="color: #4f97d7;">(</span>samples<span style="color: #bc6ec5;">[</span>i<span style="color: #bc6ec5;">]</span>, start=1<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">plt_idj</span> = plt_idx + j
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   plt.subplot<span style="color: #4f97d7;">(</span>5, k+1, plt_idj<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   plt.imshow<span style="color: #4f97d7;">(</span>X_train<span style="color: #bc6ec5;">[</span><span style="color: #4f97d7;">int</span><span style="color: #2d9574;">(</span>y<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">]</span>.astype<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">'uint8'</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   plt.axis<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'off'</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   plt.title<span style="color: #4f97d7;">(</span>classes<span style="color: #bc6ec5;">[</span>y_train<span style="color: #2d9574;">[</span>y<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> j, y <span style="color: #718c00;">in</span> <span style="color: #8959a8;">enumerate</span><span style="color: #4d4d4c;">(</span>samples<span style="color: #3e999f;">[</span>i<span style="color: #3e999f;">]</span>, start=1<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">plt_idj</span> = plt_idx + j
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.subplot<span style="color: #4d4d4c;">(</span>5, k+1, plt_idj<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.imshow<span style="color: #4d4d4c;">(</span>X_train<span style="color: #3e999f;">[</span><span style="color: #8959a8;">int</span><span style="color: #eab700;">(</span>y<span style="color: #eab700;">)</span><span style="color: #3e999f;">]</span>.astype<span style="color: #3e999f;">(</span><span style="color: #3e999f;">'uint8'</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.axis<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'off'</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   plt.title<span style="color: #4d4d4c;">(</span>classes<span style="color: #3e999f;">[</span>y_train<span style="color: #eab700;">[</span>y<span style="color: #eab700;">]</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
 
-plt.show<span style="color: #4f97d7;">()</span>
+plt.show<span style="color: #4d4d4c;">()</span>
 </code></pre>
 </div>
 </div>
@@ -527,16 +527,16 @@ plt.show<span style="color: #4f97d7;">()</span>
 我们找到最近的 k 个样例的 label，然后取个数最多的一个。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">xrange</span><span style="color: #4f97d7;">(</span>num_test<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">A list of length k storing the labels of the k nearest neighbors to</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">the ith test point.</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">closest_y</span> = <span style="color: #4f97d7;">[]</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#25490;&#24207;</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">idx</span> = np.argsort<span style="color: #4f97d7;">(</span>dists<span style="color: #bc6ec5;">[</span>i, :<span style="color: #bc6ec5;">]</span>, axis=0<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#21462;&#21069; k &#20010;&#26368;&#23567;&#30340;&#25968;&#25454;</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">closest_y</span> = <span style="color: #4f97d7; font-weight: bold;">self</span>.y_train<span style="color: #4f97d7;">[</span>idx<span style="color: #bc6ec5;">[</span>:k<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#25214;&#21040;&#20010;&#25968;&#20986;&#29616;&#26368;&#22810;&#30340;&#26631;&#31614;</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">y_pred</span><span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">]</span> = np.argmax<span style="color: #4f97d7;">(</span>np.bincount<span style="color: #bc6ec5;">(</span>closest_y<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">xrange</span><span style="color: #4d4d4c;">(</span>num_test<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">A list of length k storing the labels of the k nearest neighbors to</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">the ith test point.</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">closest_y</span> = <span style="color: #4d4d4c;">[]</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#25490;&#24207;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">idx</span> = np.argsort<span style="color: #4d4d4c;">(</span>dists<span style="color: #3e999f;">[</span>i, :<span style="color: #3e999f;">]</span>, axis=0<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#21462;&#21069; k &#20010;&#26368;&#23567;&#30340;&#25968;&#25454;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">closest_y</span> = <span style="color: #718c00;">self</span>.y_train<span style="color: #4d4d4c;">[</span>idx<span style="color: #3e999f;">[</span>:k<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">]</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#25214;&#21040;&#20010;&#25968;&#20986;&#29616;&#26368;&#22810;&#30340;&#26631;&#31614;</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">y_pred</span><span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span> = np.argmax<span style="color: #4d4d4c;">(</span>np.bincount<span style="color: #3e999f;">(</span>closest_y<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -544,11 +544,11 @@ plt.show<span style="color: #4f97d7;">()</span>
 最后我们可以得到预测的成功率，不同的 k 值影响还是很大的。k=10 是一个比较好的数值。
 </p>
 <div class="container">
-<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">y_test_pred</span> = classifier.predict_labels<span style="color: #4f97d7;">(</span>dists, k=10<span style="color: #4f97d7;">)</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Compute and print the fraction of correctly predicted examples</span>
-<span style="color: #7590db;">num_correct</span> = np.<span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>y_test_pred == y_test<span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">accuracy</span> = <span style="color: #4f97d7;">float</span><span style="color: #4f97d7;">(</span>num_correct<span style="color: #4f97d7;">)</span> / num_test
-<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'Got %d / %d correct =&gt; accuracy: %f'</span> % <span style="color: #bc6ec5;">(</span>num_correct, num_test, accuracy<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">y_test_pred</span> = classifier.predict_labels<span style="color: #4d4d4c;">(</span>dists, k=10<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Compute and print the fraction of correctly predicted examples</span>
+<span style="color: #eab700;">num_correct</span> = np.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">(</span>y_test_pred == y_test<span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">accuracy</span> = <span style="color: #8959a8;">float</span><span style="color: #4d4d4c;">(</span>num_correct<span style="color: #4d4d4c;">)</span> / num_test
+<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'Got %d / %d correct =&gt; accuracy: %f'</span> % <span style="color: #3e999f;">(</span>num_correct, num_test, accuracy<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -572,10 +572,10 @@ plt.show<span style="color: #4f97d7;">()</span>
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">xrange</span><span style="color: #4f97d7;">(</span>num_test<span style="color: #4f97d7;">)</span>:
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">broadcasting</span>
-<span style="color: #7590db;">dists</span><span style="color: #4f97d7;">[</span>i, :<span style="color: #4f97d7;">]</span> = np.sqrt<span style="color: #4f97d7;">(</span>
-<span style="background-color: #292e34;"> </span>   np.<span style="color: #4f97d7;">sum</span><span style="color: #bc6ec5;">(</span>np.square<span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>.X_train - X<span style="color: #67b11d;">[</span>i, :<span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>, axis=1<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">xrange</span><span style="color: #4d4d4c;">(</span>num_test<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">broadcasting</span>
+<span style="color: #eab700;">dists</span><span style="color: #4d4d4c;">[</span>i, :<span style="color: #4d4d4c;">]</span> = np.sqrt<span style="color: #4d4d4c;">(</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   np.<span style="color: #8959a8;">sum</span><span style="color: #3e999f;">(</span>np.square<span style="color: #eab700;">(</span><span style="color: #718c00;">self</span>.X_train - X<span style="color: #718c00;">[</span>i, :<span style="color: #718c00;">]</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>, axis=1<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -589,24 +589,24 @@ plt.show<span style="color: #4f97d7;">()</span>
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">time_function</span><span style="color: #4f97d7;">(</span>f, *args<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #9f8766;">"""</span>
-<span style="color: #9f8766; background-color: #292e34;"> </span><span style="color: #9f8766;">   Call a function f with args and return the time (in seconds) that it took to execute.</span>
-<span style="color: #9f8766; background-color: #292e34;"> </span><span style="color: #9f8766;">   """</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">import</span> time
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">tic</span> = time.time<span style="color: #4f97d7;">()</span>
-<span style="background-color: #292e34;"> </span>   f<span style="color: #4f97d7;">(</span>*args<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">toc</span> = time.time<span style="color: #4f97d7;">()</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> toc - tic
+<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">time_function</span><span style="color: #4d4d4c;">(</span>f, *args<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">"""</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   Call a function f with args and return the time (in seconds) that it took to execute.</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   """</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">import</span> time
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">tic</span> = time.time<span style="color: #4d4d4c;">()</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   f<span style="color: #4d4d4c;">(</span>*args<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">toc</span> = time.time<span style="color: #4d4d4c;">()</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> toc - tic
 
-<span style="color: #7590db;">two_loop_time</span> = time_function<span style="color: #4f97d7;">(</span>classifier.compute_distances_two_loops, X_test<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'Two loop version took %f seconds'</span> % two_loop_time<span style="color: #4f97d7;">)</span>
+<span style="color: #eab700;">two_loop_time</span> = time_function<span style="color: #4d4d4c;">(</span>classifier.compute_distances_two_loops, X_test<span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'Two loop version took %f seconds'</span> % two_loop_time<span style="color: #4d4d4c;">)</span>
 
-<span style="color: #7590db;">one_loop_time</span> = time_function<span style="color: #4f97d7;">(</span>classifier.compute_distances_one_loop, X_test<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'One loop version took %f seconds'</span> % one_loop_time<span style="color: #4f97d7;">)</span>
+<span style="color: #eab700;">one_loop_time</span> = time_function<span style="color: #4d4d4c;">(</span>classifier.compute_distances_one_loop, X_test<span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'One loop version took %f seconds'</span> % one_loop_time<span style="color: #4d4d4c;">)</span>
 
-<span style="color: #7590db;">no_loop_time</span> = time_function<span style="color: #4f97d7;">(</span>classifier.compute_distances_no_loops, X_test<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">print</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'No loop version took %f seconds'</span> % no_loop_time<span style="color: #4f97d7;">)</span>
+<span style="color: #eab700;">no_loop_time</span> = time_function<span style="color: #4d4d4c;">(</span>classifier.compute_distances_no_loops, X_test<span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'No loop version took %f seconds'</span> % no_loop_time<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 <p>
@@ -635,27 +635,27 @@ hyperparameters。
 </p>
 
 <div class="container">
-<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>assume we have Xtr_rows, Ytr, Xte_rows, Yte <span style="color: #4f97d7; font-weight: bold;">as</span> before
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">recall Xtr_rows is 50,000 x 3072 matrix</span>
-<span style="color: #7590db;">Xval_rows</span> = Xtr_rows<span style="color: #4f97d7;">[</span>:1000, :<span style="color: #4f97d7;">]</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">take first 1000 for validation</span>
-<span style="color: #7590db;">Yval</span> = Ytr<span style="color: #4f97d7;">[</span>:1000<span style="color: #4f97d7;">]</span>
-<span style="color: #7590db;">Xtr_rows</span> = Xtr_rows<span style="color: #4f97d7;">[</span>1000:, :<span style="color: #4f97d7;">]</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">keep last 49,000 for train</span>
-<span style="color: #7590db;">Ytr</span> = Ytr<span style="color: #4f97d7;">[</span>1000:<span style="color: #4f97d7;">]</span>
+<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>assume we have Xtr_rows, Ytr, Xte_rows, Yte <span style="color: #718c00;">as</span> before
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">recall Xtr_rows is 50,000 x 3072 matrix</span>
+<span style="color: #eab700;">Xval_rows</span> = Xtr_rows<span style="color: #4d4d4c;">[</span>:1000, :<span style="color: #4d4d4c;">]</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">take first 1000 for validation</span>
+<span style="color: #eab700;">Yval</span> = Ytr<span style="color: #4d4d4c;">[</span>:1000<span style="color: #4d4d4c;">]</span>
+<span style="color: #eab700;">Xtr_rows</span> = Xtr_rows<span style="color: #4d4d4c;">[</span>1000:, :<span style="color: #4d4d4c;">]</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">keep last 49,000 for train</span>
+<span style="color: #eab700;">Ytr</span> = Ytr<span style="color: #4d4d4c;">[</span>1000:<span style="color: #4d4d4c;">]</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">find hyperparameters that work best on the validation set</span>
-<span style="color: #7590db;">validation_accuracies</span> = <span style="color: #4f97d7;">[]</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#36873;&#25321;&#20960;&#20010; k &#20540;&#39564;&#35777;</span>
-<span style="color: #4f97d7; font-weight: bold;">for</span> k <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">[</span>1, 3, 5, 10, 20, 50, 100<span style="color: #4f97d7;">]</span>:
-<span style="background-color: #292e34;"> </span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">use a particular value of k and evaluation on validation data</span>
-<span style="background-color: #292e34;"> </span> <span style="color: #7590db;">nn</span> = NearestNeighbor<span style="color: #4f97d7;">()</span>
-<span style="background-color: #292e34;"> </span> nn.train<span style="color: #4f97d7;">(</span>Xtr_rows, Ytr<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">here we assume a modified NearestNeighbor class that can take a k as input</span>
-<span style="background-color: #292e34;"> </span> <span style="color: #7590db;">Yval_predict</span> = nn.predict<span style="color: #4f97d7;">(</span>Xval_rows, k = k<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span> <span style="color: #7590db;">acc</span> = np.mean<span style="color: #4f97d7;">(</span>Yval_predict == Yval<span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span> <span style="color: #4f97d7; font-weight: bold;">print</span> <span style="color: #2d9574;">'accuracy: %f'</span> % <span style="color: #4f97d7;">(</span>acc,<span style="color: #4f97d7;">)</span>
+<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">find hyperparameters that work best on the validation set</span>
+<span style="color: #eab700;">validation_accuracies</span> = <span style="color: #4d4d4c;">[]</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#36873;&#25321;&#20960;&#20010; k &#20540;&#39564;&#35777;</span>
+<span style="color: #718c00;">for</span> k <span style="color: #718c00;">in</span> <span style="color: #4d4d4c;">[</span>1, 3, 5, 10, 20, 50, 100<span style="color: #4d4d4c;">]</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">use a particular value of k and evaluation on validation data</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #eab700;">nn</span> = NearestNeighbor<span style="color: #4d4d4c;">()</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> nn.train<span style="color: #4d4d4c;">(</span>Xtr_rows, Ytr<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">here we assume a modified NearestNeighbor class that can take a k as input</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #eab700;">Yval_predict</span> = nn.predict<span style="color: #4d4d4c;">(</span>Xval_rows, k = k<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #eab700;">acc</span> = np.mean<span style="color: #4d4d4c;">(</span>Yval_predict == Yval<span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #718c00;">print</span> <span style="color: #3e999f;">'accuracy: %f'</span> % <span style="color: #4d4d4c;">(</span>acc,<span style="color: #4d4d4c;">)</span>
 
-<span style="background-color: #292e34;"> </span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">keep track of what works on the validation set</span>
-<span style="background-color: #292e34;"> </span> validation_accuracies.append<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span>k, acc<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">keep track of what works on the validation set</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span> validation_accuracies.append<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">(</span>k, acc<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -740,7 +740,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

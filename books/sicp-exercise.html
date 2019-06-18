@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:58 -->
+<!-- 2019-06-18 Tue 19:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -313,11 +313,11 @@ for the JavaScript code in this tag.
 <div class="outline-text-3" id="text-orgb5f6b8f">
 <div class="container">
 <pre><code class="scheme">10
-<span style="color: #4f97d7;">(</span>+ 5 3 4<span style="color: #4f97d7;">)</span> ===&gt; 12
-<span style="color: #4f97d7;">(</span>- 9 1<span style="color: #4f97d7;">)</span> ===&gt; 8
+<span style="color: #4d4d4c;">(</span>+ 5 3 4<span style="color: #4d4d4c;">)</span> ===&gt; 12
+<span style="color: #4d4d4c;">(</span>- 9 1<span style="color: #4d4d4c;">)</span> ===&gt; 8
 3
 6
-nothing for <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5; font-weight: bold;">a</span> 3<span style="color: #4f97d7;">)</span>
+nothing for <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #f5871f;">a</span> 3<span style="color: #4d4d4c;">)</span>
 nothing
 19
 #f for a is 3 and b is 4, so they are not equal, return false
@@ -338,8 +338,7 @@ I don't sure how to handle \(4/5\), need decimal?
 The answer will be 0, if 4 or 5 is an integer.
 </p>
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span>/ <span style="color: #bc6ec5;">(</span>+ 5 4 <span style="color: #2d9574;">(</span>- 2 <span style="color: #67b11d;">(</span>- 3 <span style="color: #b1951d;">(</span>+ 6 <span style="color: #4f97d7;">(</span>/ 4 5<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>* 3 <span style="color: #2d9574;">(</span>- 6 2<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>- 2 7<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span>/ <span style="color: #3e999f;">(</span>+ 5 4 <span style="color: #eab700;">(</span>- 2 <span style="color: #718c00;">(</span>- 3 <span style="color: #4271ae;">(</span>+ 6 <span style="color: #4d4d4c;">(</span>/ 4 5<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">(</span>* 3 <span style="color: #eab700;">(</span>- 6 2<span style="color: #eab700;">)</span> <span style="color: #eab700;">(</span>- 2 7<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -352,13 +351,12 @@ The answer will be 0, if 4 or 5 is an integer.
 Find a more simple way to do this.
 </p>
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">sum</span> a b c<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">square-two</span> a b<span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span>+ <span style="color: #67b11d;">(</span>* a a<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>* b b<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">and</span> <span style="color: #b1951d;">(</span>&lt; a b<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>&lt; a c<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>square-two b c<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">and</span> <span style="color: #b1951d;">(</span>&lt; b a<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>&lt; b c<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>square-two a c<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #67b11d;">(</span>square-two a b<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">sum</span> a b c<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">square-two</span> a b<span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span>+ <span style="color: #718c00;">(</span>* a a<span style="color: #718c00;">)</span> <span style="color: #718c00;">(</span>* b b<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span><span style="color: #718c00;">cond</span> <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span><span style="color: #718c00;">and</span> <span style="color: #4271ae;">(</span>&lt; a b<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>&lt; a c<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span> <span style="color: #718c00;">(</span>square-two b c<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+    <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span><span style="color: #718c00;">and</span> <span style="color: #4271ae;">(</span>&lt; b a<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>&lt; b c<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span> <span style="color: #718c00;">(</span>square-two a c<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span><span style="color: #718c00;">else</span> <span style="color: #718c00;">(</span>square-two a b<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -439,19 +437,19 @@ the change is a very small fraction of the guess.
 </p>
 
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">improve</span> guess x<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>average guess <span style="color: #2d9574;">(</span>/ x guess<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">improve</span> guess x<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>average guess <span style="color: #eab700;">(</span>/ x guess<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">The original version</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">good-enough?</span> guess x<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>&lt; <span style="color: #2d9574;">(</span>abs <span style="color: #67b11d;">(</span>- <span style="color: #b1951d;">(</span>square guess<span style="color: #b1951d;">)</span> x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> 0.001<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">The original version</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">good-enough?</span> guess x<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>&lt; <span style="color: #eab700;">(</span>abs <span style="color: #718c00;">(</span>- <span style="color: #4271ae;">(</span>square guess<span style="color: #4271ae;">)</span> x<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span> 0.001<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">The new version</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">good-enough?</span> guess x<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>&lt; <span style="color: #2d9574;">(</span>abs <span style="color: #67b11d;">(</span>- <span style="color: #b1951d;">(</span>improve guess x<span style="color: #b1951d;">)</span> guess<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>* 1.0e-20<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">The new version</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">good-enough?</span> guess x<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>&lt; <span style="color: #eab700;">(</span>abs <span style="color: #718c00;">(</span>- <span style="color: #4271ae;">(</span>improve guess x<span style="color: #4271ae;">)</span> guess<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span> <span style="color: #eab700;">(</span>* 1.0e-20<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
 
 
-<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">sqrt-iter</span> guess x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">sqrt-iter</span> guess x<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
 </code></pre>
 </div>
 </div>
@@ -471,20 +469,19 @@ The cube root
 </div>
 
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">improve</span> guess x<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>/ <span style="color: #2d9574;">(</span>+ <span style="color: #67b11d;">(</span>* 2 y<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>/ x <span style="color: #b1951d;">(</span>* y y<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> 3<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">improve</span> guess x<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>/ <span style="color: #eab700;">(</span>+ <span style="color: #718c00;">(</span>* 2 y<span style="color: #718c00;">)</span> <span style="color: #718c00;">(</span>/ x <span style="color: #4271ae;">(</span>* y y<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span> 3<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">cube-root</span> x<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>cube-iter guess x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">cube-root</span> x<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>cube-iter guess x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">cube-iter</span> guess x<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>good-enough? guess x<span style="color: #2d9574;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">cube-iter</span> guess x<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>good-enough? guess x<span style="color: #eab700;">)</span>
                 guess
-                <span style="color: #2d9574;">(</span>cube-iter <span style="color: #67b11d;">(</span>improve guess x<span style="color: #67b11d;">)</span> x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                <span style="color: #eab700;">(</span>cube-iter <span style="color: #718c00;">(</span>improve guess x<span style="color: #718c00;">)</span> x<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">good-enough?</span> guess x<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>&lt; <span style="color: #2d9574;">(</span>abs <span style="color: #67b11d;">(</span>- <span style="color: #b1951d;">(</span>* guess guess guess<span style="color: #b1951d;">)</span> x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> 0.01<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">good-enough?</span> guess x<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>&lt; <span style="color: #eab700;">(</span>abs <span style="color: #718c00;">(</span>- <span style="color: #4271ae;">(</span>* guess guess guess<span style="color: #4271ae;">)</span> x<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span> 0.01<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -499,9 +496,8 @@ How to the \(N_th\) root, visit <a href="https://en.wikipedia.org/wiki/Nth_root_
 <h3 id="orgbadd6fb">Exercise 1.9</h3>
 <div class="outline-text-3" id="text-orgbadd6fb">
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">+</span> a b<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>= a 0<span style="color: #2d9574;">)</span> b <span style="color: #2d9574;">(</span>inc <span style="color: #67b11d;">(</span>+ <span style="color: #b1951d;">(</span>dec a<span style="color: #b1951d;">)</span> b<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">+</span> a b<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>= a 0<span style="color: #eab700;">)</span> b <span style="color: #eab700;">(</span>inc <span style="color: #718c00;">(</span>+ <span style="color: #4271ae;">(</span>dec a<span style="color: #4271ae;">)</span> b<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -522,8 +518,8 @@ How to the \(N_th\) root, visit <a href="https://en.wikipedia.org/wiki/Nth_root_
 And this procedure:
 </p>
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">+</span> a b<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>= a 0<span style="color: #2d9574;">)</span> b <span style="color: #2d9574;">(</span>+ <span style="color: #67b11d;">(</span>dec a<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>inc b<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">+</span> a b<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>= a 0<span style="color: #eab700;">)</span> b <span style="color: #eab700;">(</span>+ <span style="color: #718c00;">(</span>dec a<span style="color: #718c00;">)</span> <span style="color: #718c00;">(</span>inc b<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -546,7 +542,7 @@ iterative.
 <h3 id="org08b5d7e">Exercise 1.10</h3>
 <div class="outline-text-3" id="text-org08b5d7e">
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span>A 1 10<span style="color: #4f97d7;">)</span> = <span style="color: #4f97d7;">(</span>A 0 <span style="color: #bc6ec5;">(</span>A 1 9<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>= 1024
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span>A 1 10<span style="color: #4d4d4c;">)</span> = <span style="color: #4d4d4c;">(</span>A 0 <span style="color: #3e999f;">(</span>A 1 9<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>= 1024
 65536
 65536
 </code></pre>
@@ -571,11 +567,11 @@ This is the definition of \(f(n)\):
 </p>
 </div>
 <div class="container">
-<pre><code class="scheme"><span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">recursive</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">f</span> n<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>&lt; n 3<span style="color: #2d9574;">)</span>
+<pre><code class="scheme"><span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">recursive</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">f</span> n<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>&lt; n 3<span style="color: #eab700;">)</span>
                 n
-                <span style="color: #2d9574;">(</span>+ <span style="color: #67b11d;">(</span>f <span style="color: #b1951d;">(</span>- n 1<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>* 2 <span style="color: #b1951d;">(</span>f <span style="color: #4f97d7;">(</span>- n 2<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>* 3 <span style="color: #b1951d;">(</span>f <span style="color: #4f97d7;">(</span>- n 3<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                <span style="color: #eab700;">(</span>+ <span style="color: #718c00;">(</span>f <span style="color: #4271ae;">(</span>- n 1<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span> <span style="color: #718c00;">(</span>* 2 <span style="color: #4271ae;">(</span>f <span style="color: #4d4d4c;">(</span>- n 2<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span> <span style="color: #718c00;">(</span>* 3 <span style="color: #4271ae;">(</span>f <span style="color: #4d4d4c;">(</span>- n 3<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -594,19 +590,19 @@ b & \rightarrow c
 \end{align}
 
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">f</span> n<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>f-iter 2 1 0 n n<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">f</span> n<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>f-iter 2 1 0 n n<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">f-iter</span> a b c count n<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>= count 0<span style="color: #2d9574;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">f-iter</span> a b c count n<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>= count 0<span style="color: #eab700;">)</span>
                 c
-                <span style="color: #2d9574;">(</span>f-iter <span style="color: #67b11d;">(</span>+ <span style="color: #b1951d;">(</span>* 2 b<span style="color: #b1951d;">)</span>
+                <span style="color: #eab700;">(</span>f-iter <span style="color: #718c00;">(</span>+ <span style="color: #4271ae;">(</span>* 2 b<span style="color: #4271ae;">)</span>
                                    a
-                                   <span style="color: #b1951d;">(</span>* 3 c<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+                                   <span style="color: #4271ae;">(</span>* 3 c<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
                                 a
                                 b
-                                <span style="color: #67b11d;">(</span>- count 1<span style="color: #67b11d;">)</span>
-                                n<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                                <span style="color: #718c00;">(</span>- count 1<span style="color: #718c00;">)</span>
+                                n<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -630,25 +626,24 @@ I can't understand this problem.
 </div>
 
 <div class="container">
-<pre><code class="scheme">    <span style="color: #2aa1ae; background-color: #292e34;">;                           </span><span style="color: #2aa1ae; background-color: #292e34;">rows</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;                 </span><span style="color: #2aa1ae; background-color: #292e34;">1 | 1</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;                 </span><span style="color: #2aa1ae; background-color: #292e34;">2 | 1   1</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;                 </span><span style="color: #2aa1ae; background-color: #292e34;">3 | 1   2   1</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;                 </span><span style="color: #2aa1ae; background-color: #292e34;">4 | 1   3   3   1</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;                 </span><span style="color: #2aa1ae; background-color: #292e34;">5 | 1   4   6   4   1</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;                   </span><span style="color: #2aa1ae; background-color: #292e34;">--------------------</span>
-<span style="color: #2aa1ae; background-color: #292e34;">;               </span><span style="color: #2aa1ae; background-color: #292e34;">cols  1   2   3   4   5</span>
+<pre><code class="scheme">    <span style="color: #8e908c; font-style: italic;">;                           </span><span style="color: #8e908c; font-style: italic;">rows</span>
+<span style="color: #8e908c; font-style: italic;">;                 </span><span style="color: #8e908c; font-style: italic;">1 | 1</span>
+<span style="color: #8e908c; font-style: italic;">;                 </span><span style="color: #8e908c; font-style: italic;">2 | 1   1</span>
+<span style="color: #8e908c; font-style: italic;">;                 </span><span style="color: #8e908c; font-style: italic;">3 | 1   2   1</span>
+<span style="color: #8e908c; font-style: italic;">;                 </span><span style="color: #8e908c; font-style: italic;">4 | 1   3   3   1</span>
+<span style="color: #8e908c; font-style: italic;">;                 </span><span style="color: #8e908c; font-style: italic;">5 | 1   4   6   4   1</span>
+<span style="color: #8e908c; font-style: italic;">;                   </span><span style="color: #8e908c; font-style: italic;">--------------------</span>
+<span style="color: #8e908c; font-style: italic;">;               </span><span style="color: #8e908c; font-style: italic;">cols  1   2   3   4   5</span>
 
 
-    <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">so , we can define the pascal's triangle with:</span>
+    <span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">so , we can define the pascal's triangle with:</span>
 
 
-    <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">pascal</span> row col<span style="color: #bc6ec5;">)</span>
-            <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">or</span> <span style="color: #67b11d;">(</span>= 1 col<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>= row col<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+    <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">pascal</span> row col<span style="color: #3e999f;">)</span>
+            <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span><span style="color: #718c00;">or</span> <span style="color: #718c00;">(</span>= 1 col<span style="color: #718c00;">)</span> <span style="color: #718c00;">(</span>= row col<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
                     1
-                    <span style="color: #2d9574;">(</span>+ <span style="color: #67b11d;">(</span>pascal <span style="color: #b1951d;">(</span>- row 1<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>- col 1<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-                       <span style="color: #67b11d;">(</span>pascal <span style="color: #b1951d;">(</span>- row 1<span style="color: #b1951d;">)</span> col<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-
+                    <span style="color: #eab700;">(</span>+ <span style="color: #718c00;">(</span>pascal <span style="color: #4271ae;">(</span>- row 1<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>- col 1<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+                       <span style="color: #718c00;">(</span>pascal <span style="color: #4271ae;">(</span>- row 1<span style="color: #4271ae;">)</span> col<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -691,13 +686,13 @@ look up  the page of 51 and 56.
 </div>
 
 <div class="container">
-<pre><code class="scheme">    <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">cube</span> x<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>* x x x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">p</span> x<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>- <span style="color: #2d9574;">(</span>* 3 x<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>* 4 <span style="color: #67b11d;">(</span>cube x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">sine</span> angle<span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>not <span style="color: #67b11d;">(</span>&gt; <span style="color: #b1951d;">(</span>abs angle<span style="color: #b1951d;">)</span> 0.1<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> angle
-<span style="color: #2d9574;">(</span>p <span style="color: #67b11d;">(</span>sine <span style="color: #b1951d;">(</span>/ angle 3.0<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5; font-weight: bold;">pi</span> 3.1415926<span style="color: #4f97d7;">)</span>
+<pre><code class="scheme">    <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">cube</span> x<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">(</span>* x x x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">p</span> x<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">(</span>- <span style="color: #eab700;">(</span>* 3 x<span style="color: #eab700;">)</span> <span style="color: #eab700;">(</span>* 4 <span style="color: #718c00;">(</span>cube x<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">sine</span> angle<span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>not <span style="color: #718c00;">(</span>&gt; <span style="color: #4271ae;">(</span>abs angle<span style="color: #4271ae;">)</span> 0.1<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span> angle
+<span style="color: #eab700;">(</span>p <span style="color: #718c00;">(</span>sine <span style="color: #4271ae;">(</span>/ angle 3.0<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #f5871f;">pi</span> 3.1415926<span style="color: #4d4d4c;">)</span>
 
-    <span style="color: #4f97d7;">(</span>sine <span style="color: #bc6ec5;">(</span>/ pi 2<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #4d4d4c;">(</span>sine <span style="color: #3e999f;">(</span>/ pi 2<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -724,16 +719,16 @@ The order is O(log a).</li>
 <h3 id="orgda40c8d">Exercise 1.16 &check;</h3>
 <div class="outline-text-3" id="text-orgda40c8d">
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">fast-expt2</span> b n<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>fast-expt-iter 1 b n<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">fast-expt2</span> b n<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>fast-expt-iter 1 b n<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">fast-expt-iter</span> a b n<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>= n 0<span style="color: #67b11d;">)</span> a<span style="color: #2d9574;">)</span>
-                  <span style="color: #2d9574;">(</span>even? n<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>fast-expt-iter a <span style="color: #67b11d;">(</span>square b<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>/ n 2<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-                  <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #67b11d;">(</span>fast-expt-iter <span style="color: #b1951d;">(</span>* a b<span style="color: #b1951d;">)</span> b <span style="color: #b1951d;">(</span>- n 1<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">fast-expt-iter</span> a b n<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">cond</span> <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>= n 0<span style="color: #718c00;">)</span> a<span style="color: #eab700;">)</span>
+                  <span style="color: #eab700;">(</span>even? n<span style="color: #eab700;">)</span> <span style="color: #eab700;">(</span>fast-expt-iter a <span style="color: #718c00;">(</span>square b<span style="color: #718c00;">)</span> <span style="color: #718c00;">(</span>/ n 2<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+                  <span style="color: #eab700;">(</span><span style="color: #718c00;">else</span> <span style="color: #718c00;">(</span>fast-expt-iter <span style="color: #4271ae;">(</span>* a b<span style="color: #4271ae;">)</span> b <span style="color: #4271ae;">(</span>- n 1<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">square</span> x<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>* x x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">square</span> x<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>* x x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -751,14 +746,14 @@ space: O(1), time: O(log n)
 </p>
 </div>
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">mult</span> a b<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">double</span> x<span style="color: #2d9574;">)</span>
-                <span style="color: #2d9574;">(</span>+ x x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">halve</span> x<span style="color: #2d9574;">)</span>
-                <span style="color: #2d9574;">(</span>/ x 2<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>= b 0<span style="color: #67b11d;">)</span> a<span style="color: #2d9574;">)</span>
-                  <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>even? b<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">(</span>mult <span style="color: #b1951d;">(</span>double a<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>halve b<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-                  <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #67b11d;">(</span>+ a <span style="color: #b1951d;">(</span>mult a <span style="color: #4f97d7;">(</span>- b 1<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">mult</span> a b<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">double</span> x<span style="color: #eab700;">)</span>
+                <span style="color: #eab700;">(</span>+ x x<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">halve</span> x<span style="color: #eab700;">)</span>
+                <span style="color: #eab700;">(</span>/ x 2<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">cond</span> <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>= b 0<span style="color: #718c00;">)</span> a<span style="color: #eab700;">)</span>
+                  <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>even? b<span style="color: #718c00;">)</span> <span style="color: #718c00;">(</span>mult <span style="color: #4271ae;">(</span>double a<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>halve b<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+                  <span style="color: #eab700;">(</span><span style="color: #718c00;">else</span> <span style="color: #718c00;">(</span>+ a <span style="color: #4271ae;">(</span>mult a <span style="color: #4d4d4c;">(</span>- b 1<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -767,19 +762,19 @@ space: O(1), time: O(log n)
 <h3 id="org896ff35">Exercise 1.18</h3>
 <div class="outline-text-3" id="text-org896ff35">
 <div class="container">
-<pre><code class="scheme">    <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">fast-mult</span> a b<span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">double</span> x<span style="color: #2d9574;">)</span>
-  <span style="color: #2d9574;">(</span>+ x x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">halve</span> x<span style="color: #2d9574;">)</span>
-  <span style="color: #2d9574;">(</span>/ x 2<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">mult-iter</span> a counter sum<span style="color: #2d9574;">)</span>
-  <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span> <span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span>= counter 0<span style="color: #b1951d;">)</span>
-         sum<span style="color: #67b11d;">)</span>
-        <span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span>even? counter<span style="color: #b1951d;">)</span>
-         <span style="color: #b1951d;">(</span>mult-iter <span style="color: #4f97d7;">(</span>double a<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>halve counter<span style="color: #4f97d7;">)</span> sum<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-        <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">else</span>
-         <span style="color: #b1951d;">(</span>mult-iter a <span style="color: #4f97d7;">(</span>- counter 1<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>+ sum a<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span>mult-iter a b 0<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="scheme">    <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">fast-mult</span> a b<span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">double</span> x<span style="color: #eab700;">)</span>
+  <span style="color: #eab700;">(</span>+ x x<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">halve</span> x<span style="color: #eab700;">)</span>
+  <span style="color: #eab700;">(</span>/ x 2<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">mult-iter</span> a counter sum<span style="color: #eab700;">)</span>
+  <span style="color: #eab700;">(</span><span style="color: #718c00;">cond</span> <span style="color: #718c00;">(</span><span style="color: #4271ae;">(</span>= counter 0<span style="color: #4271ae;">)</span>
+         sum<span style="color: #718c00;">)</span>
+        <span style="color: #718c00;">(</span><span style="color: #4271ae;">(</span>even? counter<span style="color: #4271ae;">)</span>
+         <span style="color: #4271ae;">(</span>mult-iter <span style="color: #4d4d4c;">(</span>double a<span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">(</span>halve counter<span style="color: #4d4d4c;">)</span> sum<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+        <span style="color: #718c00;">(</span><span style="color: #718c00;">else</span>
+         <span style="color: #4271ae;">(</span>mult-iter a <span style="color: #4d4d4c;">(</span>- counter 1<span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">(</span>+ sum a<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span>mult-iter a b 0<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -788,21 +783,21 @@ space: O(1), time: O(log n)
 <h3 id="orga3d0889">Exercise 1.19 <b>?</b></h3>
 <div class="outline-text-3" id="text-orga3d0889">
 <div class="container">
-<pre><code class="scheme">    <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">fib</span> n<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>fit-iter 1 0 0 1 n<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">fib-iter</span> a b p q count<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>conf <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>= count 0<span style="color: #67b11d;">)</span> b<span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>even? count<span style="color: #67b11d;">)</span>
-         <span style="color: #67b11d;">(</span>fib-iter a
+<pre><code class="scheme">    <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">fib</span> n<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>fit-iter 1 0 0 1 n<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">fib-iter</span> a b p q count<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>conf <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>= count 0<span style="color: #718c00;">)</span> b<span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>even? count<span style="color: #718c00;">)</span>
+         <span style="color: #718c00;">(</span>fib-iter a
                    b
-                   <span style="color: #b1951d;">(</span>+ <span style="color: #4f97d7;">(</span>square p<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>square q<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span>
-                   <span style="color: #b1951d;">(</span>+ <span style="color: #4f97d7;">(</span>* 2 p q<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>square q<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span>
-                   <span style="color: #b1951d;">(</span>/ count 2<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #67b11d;">(</span>fib-iter <span style="color: #b1951d;">(</span>+ <span style="color: #4f97d7;">(</span>* b q<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>* a q<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>*a p<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span>
-                        <span style="color: #b1951d;">(</span>+ <span style="color: #4f97d7;">(</span>* b p<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>* a q<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span>
+                   <span style="color: #4271ae;">(</span>+ <span style="color: #4d4d4c;">(</span>square p<span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">(</span>square q<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span>
+                   <span style="color: #4271ae;">(</span>+ <span style="color: #4d4d4c;">(</span>* 2 p q<span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">(</span>square q<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span>
+                   <span style="color: #4271ae;">(</span>/ count 2<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span><span style="color: #718c00;">else</span> <span style="color: #718c00;">(</span>fib-iter <span style="color: #4271ae;">(</span>+ <span style="color: #4d4d4c;">(</span>* b q<span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">(</span>* a q<span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">(</span>*a p<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span>
+                        <span style="color: #4271ae;">(</span>+ <span style="color: #4d4d4c;">(</span>* b p<span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">(</span>* a q<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span>
                         p
                         q
-                        <span style="color: #b1951d;">(</span>- count 1<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                        <span style="color: #4271ae;">(</span>- count 1<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -824,14 +819,14 @@ Want get more detail, visit <a href="https://github.com/sarabander/p2pu-sicp/blo
 <h3 id="orga9991bc">Exercise 1.21</h3>
 <div class="outline-text-3" id="text-orga9991bc">
 <div class="container">
-<pre><code class="scheme">    <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">smallest-divisor</span> n<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>find-divisor n 2<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">find-divisor</span> n test-divisor<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>&gt; <span style="color: #b1951d;">(</span>square test-divisor<span style="color: #b1951d;">)</span> n<span style="color: #67b11d;">)</span> n<span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>divides? test-divisor n<span style="color: #67b11d;">)</span> test-divisor<span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #67b11d;">(</span>find-divisor n <span style="color: #b1951d;">(</span>+ test-divisor 1<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">divides?</span> a b<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>= <span style="color: #2d9574;">(</span>remainder b a<span style="color: #2d9574;">)</span> 0<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="scheme">    <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">smallest-divisor</span> n<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>find-divisor n 2<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">find-divisor</span> n test-divisor<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span><span style="color: #718c00;">cond</span> <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>&gt; <span style="color: #4271ae;">(</span>square test-divisor<span style="color: #4271ae;">)</span> n<span style="color: #718c00;">)</span> n<span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>divides? test-divisor n<span style="color: #718c00;">)</span> test-divisor<span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span><span style="color: #718c00;">else</span> <span style="color: #718c00;">(</span>find-divisor n <span style="color: #4271ae;">(</span>+ test-divisor 1<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">divides?</span> a b<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>= <span style="color: #eab700;">(</span>remainder b a<span style="color: #eab700;">)</span> 0<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -850,15 +845,15 @@ Instead of using (+ test-divisor 1), we change it to
 </p>
 
 <div class="container">
-<pre><code class="scheme">    <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">find-divisor</span> n test-divisor<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>&gt; <span style="color: #b1951d;">(</span>square test-divisor<span style="color: #b1951d;">)</span> n<span style="color: #67b11d;">)</span> n<span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>divides? test-divisor n<span style="color: #67b11d;">)</span> test-divisor<span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #67b11d;">(</span>find-divisor n <span style="color: #b1951d;">(</span>next test-divisor<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="scheme">    <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">find-divisor</span> n test-divisor<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span><span style="color: #718c00;">cond</span> <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>&gt; <span style="color: #4271ae;">(</span>square test-divisor<span style="color: #4271ae;">)</span> n<span style="color: #718c00;">)</span> n<span style="color: #eab700;">)</span>
+    <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>divides? test-divisor n<span style="color: #718c00;">)</span> test-divisor<span style="color: #eab700;">)</span>
+    <span style="color: #eab700;">(</span><span style="color: #718c00;">else</span> <span style="color: #718c00;">(</span>find-divisor n <span style="color: #4271ae;">(</span>next test-divisor<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">next</span> input<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>= input 2<span style="color: #2d9574;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">next</span> input<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>= input 2<span style="color: #eab700;">)</span>
       3
-      <span style="color: #2d9574;">(</span>+ 2 input<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+      <span style="color: #eab700;">(</span>+ 2 input<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -893,28 +888,28 @@ The multiplication expression evaluates expmod twice, resulting in binary proces
 <h3 id="orgf016f6f">Exercise 1.29 &check;</h3>
 <div class="outline-text-3" id="text-orgf016f6f">
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">square</span> x<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>* x x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">square</span> x<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>* x x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">cube</span> x<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>* x x x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">cube</span> x<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>* x x x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">sum</span> term a next b<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>&gt; a b<span style="color: #2d9574;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">sum</span> term a next b<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>&gt; a b<span style="color: #eab700;">)</span>
                 0
-                <span style="color: #2d9574;">(</span>+ <span style="color: #67b11d;">(</span>term a<span style="color: #67b11d;">)</span>
-                   <span style="color: #67b11d;">(</span>sum term <span style="color: #b1951d;">(</span>next a<span style="color: #b1951d;">)</span> next b<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                <span style="color: #eab700;">(</span>+ <span style="color: #718c00;">(</span>term a<span style="color: #718c00;">)</span>
+                   <span style="color: #718c00;">(</span>sum term <span style="color: #4271ae;">(</span>next a<span style="color: #4271ae;">)</span> next b<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">simpson-integral</span> f a b n<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">add-h</span> x<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>+ x h<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5; font-weight: bold;">h</span> <span style="color: #2d9574;">(</span>/ <span style="color: #67b11d;">(</span>- b a<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">summand</span> x<span style="color: #2d9574;">)</span>
-                <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5; font-weight: bold;">multiplier</span>
-                        <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span> <span style="color: #b1951d;">(</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">or</span> <span style="color: #bc6ec5;">(</span>= x a<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>= x b<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> 1<span style="color: #b1951d;">)</span>
-                                  <span style="color: #b1951d;">(</span><span style="color: #4f97d7;">(</span>odd? <span style="color: #bc6ec5;">(</span>round <span style="color: #2d9574;">(</span>/ <span style="color: #9cb6ad;">(</span>- x a<span style="color: #9cb6ad;">)</span> h<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span>
-                                  <span style="color: #b1951d;">(</span><span style="color: #4f97d7; font-weight: bold;">else</span> 2<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-                <span style="color: #2d9574;">(</span>* multiplier <span style="color: #67b11d;">(</span>f x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>* <span style="color: #2d9574;">(</span>/ h 3<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>sum summand a add-h b<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">simpson-integral</span> f a b n<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">add-h</span> x<span style="color: #eab700;">)</span> <span style="color: #eab700;">(</span>+ x h<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #f5871f;">h</span> <span style="color: #eab700;">(</span>/ <span style="color: #718c00;">(</span>- b a<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">summand</span> x<span style="color: #eab700;">)</span>
+                <span style="color: #eab700;">(</span><span style="color: #718c00;">define</span> <span style="color: #f5871f;">multiplier</span>
+                        <span style="color: #718c00;">(</span><span style="color: #718c00;">cond</span> <span style="color: #4271ae;">(</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">or</span> <span style="color: #3e999f;">(</span>= x a<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">(</span>= x b<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> 1<span style="color: #4271ae;">)</span>
+                                  <span style="color: #4271ae;">(</span><span style="color: #4d4d4c;">(</span>odd? <span style="color: #3e999f;">(</span>round <span style="color: #eab700;">(</span>/ <span style="color: #718c00;">(</span>- x a<span style="color: #718c00;">)</span> h<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span>
+                                  <span style="color: #4271ae;">(</span><span style="color: #718c00;">else</span> 2<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+                <span style="color: #eab700;">(</span>* multiplier <span style="color: #718c00;">(</span>f x<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>* <span style="color: #eab700;">(</span>/ h 3<span style="color: #eab700;">)</span> <span style="color: #eab700;">(</span>sum summand a add-h b<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -925,19 +920,18 @@ The multiplication expression evaluates expmod twice, resulting in binary proces
 <h3 id="org08651dd">Exercise 1.30 &check;</h3>
 <div class="outline-text-3" id="text-org08651dd">
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">sum</span> term a next b<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">iter</span> a result<span style="color: #2d9574;">)</span>
-                <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>&gt; a b<span style="color: #67b11d;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">sum</span> term a next b<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">iter</span> a result<span style="color: #eab700;">)</span>
+                <span style="color: #eab700;">(</span><span style="color: #718c00;">if</span> <span style="color: #718c00;">(</span>&gt; a b<span style="color: #718c00;">)</span>
                         result
-                        <span style="color: #67b11d;">(</span>iter <span style="color: #b1951d;">(</span>next a<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>+ <span style="color: #4f97d7;">(</span>term a<span style="color: #4f97d7;">)</span> result<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>iter a 0<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                        <span style="color: #718c00;">(</span>iter <span style="color: #4271ae;">(</span>next a<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>+ <span style="color: #4d4d4c;">(</span>term a<span style="color: #4d4d4c;">)</span> result<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>iter a 0<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">identity</span> x<span style="color: #bc6ec5;">)</span> x<span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">identity</span> x<span style="color: #3e999f;">)</span> x<span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">inc</span> x<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>+ 1 x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">inc</span> x<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">(</span>+ 1 x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span>sum identity 1 inc 10<span style="color: #4f97d7;">)</span>
-
+<span style="color: #4d4d4c;">(</span>sum identity 1 inc 10<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -947,39 +941,39 @@ The multiplication expression evaluates expmod twice, resulting in binary proces
 <h3 id="org7c04eef">Exercise 1.31</h3>
 <div class="outline-text-3" id="text-org7c04eef">
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">product</span> term a next b<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>&gt; a b<span style="color: #2d9574;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">product</span> term a next b<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>&gt; a b<span style="color: #eab700;">)</span>
                 1
-                <span style="color: #2d9574;">(</span>* <span style="color: #67b11d;">(</span>term a<span style="color: #67b11d;">)</span>
-                   <span style="color: #67b11d;">(</span>product term <span style="color: #b1951d;">(</span>next a<span style="color: #b1951d;">)</span> next b<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                <span style="color: #eab700;">(</span>* <span style="color: #718c00;">(</span>term a<span style="color: #718c00;">)</span>
+                   <span style="color: #718c00;">(</span>product term <span style="color: #4271ae;">(</span>next a<span style="color: #4271ae;">)</span> next b<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">iterative product</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">product</span> term a next b<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">iter</span> a result<span style="color: #2d9574;">)</span>
-                <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>&gt; a b<span style="color: #67b11d;">)</span>
+<span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">iterative product</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">product</span> term a next b<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">iter</span> a result<span style="color: #eab700;">)</span>
+                <span style="color: #eab700;">(</span><span style="color: #718c00;">if</span> <span style="color: #718c00;">(</span>&gt; a b<span style="color: #718c00;">)</span>
                         result
-                        <span style="color: #67b11d;">(</span>iter <span style="color: #b1951d;">(</span>next a<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>* <span style="color: #4f97d7;">(</span>term a<span style="color: #4f97d7;">)</span> result<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>iter a 1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                        <span style="color: #718c00;">(</span>iter <span style="color: #4271ae;">(</span>next a<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>* <span style="color: #4d4d4c;">(</span>term a<span style="color: #4d4d4c;">)</span> result<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>iter a 1<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">factorial</span> n<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>= n 0<span style="color: #2d9574;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">factorial</span> n<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>= n 0<span style="color: #eab700;">)</span>
                 1
-                <span style="color: #2d9574;">(</span>* n <span style="color: #67b11d;">(</span>factorial <span style="color: #b1951d;">(</span>- n 1<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                <span style="color: #eab700;">(</span>* n <span style="color: #718c00;">(</span>factorial <span style="color: #4271ae;">(</span>- n 1<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">factorial</span> n<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>product identify 1 inc n<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">factorial</span> n<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>product identify 1 inc n<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
 
-<span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">pi/4</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5; font-weight: bold;">quarter-pi</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #2d9574;">(</span>max-factor<span style="color: #2d9574;">)</span>
-                        <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5; font-weight: bold;">add2</span> <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #b1951d;">(</span>x<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>+ x 2<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-                        <span style="color: #2d9574;">(</span>/ <span style="color: #67b11d;">(</span>* 2 <span style="color: #b1951d;">(</span>product square 4 add2 <span style="color: #4f97d7;">(</span>- max-factor 2<span style="color: #4f97d7;">)</span> max-factor<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-                           <span style="color: #67b11d;">(</span>product square 3 add2 <span style="color: #b1951d;">(</span>- max-factor 1<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">pi/4</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #f5871f;">quarter-pi</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">lambda</span> <span style="color: #eab700;">(</span>max-factor<span style="color: #eab700;">)</span>
+                        <span style="color: #eab700;">(</span><span style="color: #718c00;">define</span> <span style="color: #f5871f;">add2</span> <span style="color: #718c00;">(</span><span style="color: #718c00;">lambda</span> <span style="color: #4271ae;">(</span>x<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>+ x 2<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+                        <span style="color: #eab700;">(</span>/ <span style="color: #718c00;">(</span>* 2 <span style="color: #4271ae;">(</span>product square 4 add2 <span style="color: #4d4d4c;">(</span>- max-factor 2<span style="color: #4d4d4c;">)</span> max-factor<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+                           <span style="color: #718c00;">(</span>product square 3 add2 <span style="color: #4271ae;">(</span>- max-factor 1<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5; font-weight: bold;">pi-approx</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #2d9574;">(</span>max-factor<span style="color: #2d9574;">)</span>
-                <span style="color: #2d9574;">(</span>* 4.0 <span style="color: #67b11d;">(</span>quarter-pi max-factor<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #f5871f;">pi-approx</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">lambda</span> <span style="color: #eab700;">(</span>max-factor<span style="color: #eab700;">)</span>
+                <span style="color: #eab700;">(</span>* 4.0 <span style="color: #718c00;">(</span>quarter-pi max-factor<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -991,26 +985,25 @@ The multiplication expression evaluates expmod twice, resulting in binary proces
 <h3 id="org98edc68">Exercise 1.32</h3>
 <div class="outline-text-3" id="text-org98edc68">
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">accumulate</span> combiner null-value term a next b<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>&gt; a b<span style="color: #2d9574;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">accumulate</span> combiner null-value term a next b<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>&gt; a b<span style="color: #eab700;">)</span>
                 null-value
-                <span style="color: #2d9574;">(</span>combiner <span style="color: #67b11d;">(</span>term a<span style="color: #67b11d;">)</span>
-                  <span style="color: #67b11d;">(</span>accumulate combiner null-value term <span style="color: #b1951d;">(</span>next a<span style="color: #b1951d;">)</span> next b<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+                <span style="color: #eab700;">(</span>combiner <span style="color: #718c00;">(</span>term a<span style="color: #718c00;">)</span>
+                  <span style="color: #718c00;">(</span>accumulate combiner null-value term <span style="color: #4271ae;">(</span>next a<span style="color: #4271ae;">)</span> next b<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">accumulate</span> combiner null-value term a next b<span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">iter</span> a result<span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>&gt; a b<span style="color: #67b11d;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">accumulate</span> combiner null-value term a next b<span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">iter</span> a result<span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span><span style="color: #718c00;">if</span> <span style="color: #718c00;">(</span>&gt; a b<span style="color: #718c00;">)</span>
         result
-        <span style="color: #67b11d;">(</span>iter <span style="color: #b1951d;">(</span>next a<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>combiner <span style="color: #4f97d7;">(</span>iterm a<span style="color: #4f97d7;">)</span> result<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>iter a null-value<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+        <span style="color: #718c00;">(</span>iter <span style="color: #4271ae;">(</span>next a<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>combiner <span style="color: #4d4d4c;">(</span>iterm a<span style="color: #4d4d4c;">)</span> result<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>iter a null-value<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">sum</span> term a next b<span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span>accumulate + 0 term a next b<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">sum</span> term a next b<span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span>accumulate + 0 term a next b<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">product</span> term a next b<span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span>accumulate * 1 term a next b<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">product</span> term a next b<span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span>accumulate * 1 term a next b<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -1020,25 +1013,25 @@ The multiplication expression evaluates expmod twice, resulting in binary proces
 <h3 id="org63a4004">Exercise 1.33</h3>
 <div class="outline-text-3" id="text-org63a4004">
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">filtered-accumulate</span> filter
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">filtered-accumulate</span> filter
                  combiner
                  null-value
                  term
                  a
                  next
-                 b<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">iter</span> a result<span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>&gt; a b<span style="color: #67b11d;">)</span>
+                 b<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">iter</span> a result<span style="color: #eab700;">)</span>
+    <span style="color: #eab700;">(</span><span style="color: #718c00;">if</span> <span style="color: #718c00;">(</span>&gt; a b<span style="color: #718c00;">)</span>
     result
-    <span style="color: #67b11d;">(</span>iter <span style="color: #b1951d;">(</span>next a<span style="color: #b1951d;">)</span>
-          <span style="color: #b1951d;">(</span>combiner <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>filter a<span style="color: #bc6ec5;">)</span>
-                <span style="color: #bc6ec5;">(</span>term a<span style="color: #bc6ec5;">)</span>
-                null-value<span style="color: #4f97d7;">)</span>
-            result<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>iter a null-value<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #718c00;">(</span>iter <span style="color: #4271ae;">(</span>next a<span style="color: #4271ae;">)</span>
+          <span style="color: #4271ae;">(</span>combiner <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span>filter a<span style="color: #3e999f;">)</span>
+                <span style="color: #3e999f;">(</span>term a<span style="color: #3e999f;">)</span>
+                null-value<span style="color: #4d4d4c;">)</span>
+            result<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>iter a null-value<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-    <span style="color: #4f97d7;">(</span>+ <span style="color: #bc6ec5;">(</span>filtered-accumulate odd? + 0 identity 1 inc 10<span style="color: #bc6ec5;">)</span>
-   <span style="color: #bc6ec5;">(</span>filtered-accumulate even? + 0 identity 1 inc 10<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">; </span><span style="color: #2aa1ae; background-color: #292e34;">55</span>
+    <span style="color: #4d4d4c;">(</span>+ <span style="color: #3e999f;">(</span>filtered-accumulate odd? + 0 identity 1 inc 10<span style="color: #3e999f;">)</span>
+   <span style="color: #3e999f;">(</span>filtered-accumulate even? + 0 identity 1 inc 10<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;">; </span><span style="color: #8e908c; font-style: italic;">55</span>
 </code></pre>
 </div>
 </div>
@@ -1066,19 +1059,19 @@ Look at <a href="https://github.com/sarabander/p2pu-sicp/blob/master/1.3/Ex1.35.
 </p>
 
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5; font-weight: bold;">tolerance</span> 0.00001<span style="color: #4f97d7;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #f5871f;">tolerance</span> 0.00001<span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">fixed-point</span> f first-guess<span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">close-enough?</span> v1 v2<span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span>&lt; <span style="color: #67b11d;">(</span>abs <span style="color: #b1951d;">(</span>- v1 v2<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span> tolerance<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #2d9574;">(</span><span style="color: #bc6ec5; font-weight: bold;">try</span> guess<span style="color: #2d9574;">)</span>
-        <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #67b11d;">(</span><span style="color: #b1951d;">(</span>next <span style="color: #4f97d7;">(</span>f guess<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-        <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #b1951d;">(</span>close-enough? guess next<span style="color: #b1951d;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">fixed-point</span> f first-guess<span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">close-enough?</span> v1 v2<span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span>&lt; <span style="color: #718c00;">(</span>abs <span style="color: #4271ae;">(</span>- v1 v2<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span> tolerance<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span><span style="color: #718c00;">define</span> <span style="color: #eab700;">(</span><span style="color: #f5871f;">try</span> guess<span style="color: #eab700;">)</span>
+        <span style="color: #eab700;">(</span><span style="color: #718c00;">let</span> <span style="color: #718c00;">(</span><span style="color: #4271ae;">(</span>next <span style="color: #4d4d4c;">(</span>f guess<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+        <span style="color: #718c00;">(</span><span style="color: #718c00;">if</span> <span style="color: #4271ae;">(</span>close-enough? guess next<span style="color: #4271ae;">)</span>
                 next
-            <span style="color: #b1951d;">(</span>try next<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span>try first-guess<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+            <span style="color: #4271ae;">(</span>try next<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span>try first-guess<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span>fixed-point <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">lambda</span> <span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>+ 1 <span style="color: #67b11d;">(</span>/ 1 x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span>fixed-point <span style="color: #3e999f;">(</span><span style="color: #718c00;">lambda</span> <span style="color: #eab700;">(</span>x<span style="color: #eab700;">)</span> <span style="color: #eab700;">(</span>+ 1 <span style="color: #718c00;">(</span>/ 1 x<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -1092,30 +1085,30 @@ Look at <a href="https://github.com/sarabander/p2pu-sicp/blob/master/1.3/Ex1.35.
 <h3 id="orgf4ea60f">Exercise 2.1</h3>
 <div class="outline-text-3" id="text-orgf4ea60f">
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">gcd</span> a b<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>= b 0<span style="color: #2d9574;">)</span>
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">gcd</span> a b<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>= b 0<span style="color: #eab700;">)</span>
       a
-      <span style="color: #2d9574;">(</span>gcd b <span style="color: #67b11d;">(</span>remainder a b<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+      <span style="color: #eab700;">(</span>gcd b <span style="color: #718c00;">(</span>remainder a b<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">print-rat</span> x<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>display <span style="color: #2d9574;">(</span>numer x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>display <span style="color: #2d9574;">"/"</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>display <span style="color: #2d9574;">(</span>denom x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>newline<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">print-rat</span> x<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>display <span style="color: #eab700;">(</span>numer x<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>display <span style="color: #3e999f;">"/"</span><span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>display <span style="color: #eab700;">(</span>denom x<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>newline<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">numer</span> x<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>car x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">denom</span> x<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>cdr x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">numer</span> x<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">(</span>car x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">denom</span> x<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">(</span>cdr x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">make-rat</span> n d<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>g <span style="color: #b1951d;">(</span>abs <span style="color: #4f97d7;">(</span>gcd n d<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>&lt; d 0<span style="color: #67b11d;">)</span>
-        <span style="color: #67b11d;">(</span>cons <span style="color: #b1951d;">(</span>/ <span style="color: #4f97d7;">(</span>- n<span style="color: #4f97d7;">)</span> g<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>/ <span style="color: #4f97d7;">(</span>- d<span style="color: #4f97d7;">)</span> g<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-        <span style="color: #67b11d;">(</span>cons <span style="color: #b1951d;">(</span>/ n g<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">(</span>/ d g<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">make-rat</span> n d<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span><span style="color: #718c00;">let</span> <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>g <span style="color: #4271ae;">(</span>abs <span style="color: #4d4d4c;">(</span>gcd n d<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+    <span style="color: #eab700;">(</span><span style="color: #718c00;">if</span> <span style="color: #718c00;">(</span>&lt; d 0<span style="color: #718c00;">)</span>
+        <span style="color: #718c00;">(</span>cons <span style="color: #4271ae;">(</span>/ <span style="color: #4d4d4c;">(</span>- n<span style="color: #4d4d4c;">)</span> g<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>/ <span style="color: #4d4d4c;">(</span>- d<span style="color: #4d4d4c;">)</span> g<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+        <span style="color: #718c00;">(</span>cons <span style="color: #4271ae;">(</span>/ n g<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>/ d g<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span>print-rat <span style="color: #bc6ec5;">(</span>make-rat 12 -15<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>print-rat <span style="color: #bc6ec5;">(</span>make-rat -4 -18<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>print-rat <span style="color: #bc6ec5;">(</span>make-rat -18 15<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>print-rat <span style="color: #bc6ec5;">(</span>make-rat 3 5<span style="color: #bc6ec5;">)</span>
+<span style="color: #4d4d4c;">(</span>print-rat <span style="color: #3e999f;">(</span>make-rat 12 -15<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span>print-rat <span style="color: #3e999f;">(</span>make-rat -4 -18<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span>print-rat <span style="color: #3e999f;">(</span>make-rat -18 15<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span>print-rat <span style="color: #3e999f;">(</span>make-rat 3 5<span style="color: #3e999f;">)</span>
 </code></pre>
 </div>
 </div>
@@ -1125,16 +1118,15 @@ Look at <a href="https://github.com/sarabander/p2pu-sicp/blob/master/1.3/Ex1.35.
 <h3 id="org4109c4f">Exercise 2.2</h3>
 <div class="outline-text-3" id="text-org4109c4f">
 <div class="container">
-<pre><code class="scheme"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">define</span> <span style="color: #bc6ec5;">(</span><span style="color: #bc6ec5; font-weight: bold;">midpoint-segment</span> s<span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let*</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>start <span style="color: #b1951d;">(</span>start-segment s<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-   <span style="color: #67b11d;">(</span>end   <span style="color: #b1951d;">(</span>end-segment s<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-   <span style="color: #67b11d;">(</span>x1 <span style="color: #b1951d;">(</span>x-point start<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-   <span style="color: #67b11d;">(</span>y1 <span style="color: #b1951d;">(</span>y-point start<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-   <span style="color: #67b11d;">(</span>x2 <span style="color: #b1951d;">(</span>x-point end<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-   <span style="color: #67b11d;">(</span>y2 <span style="color: #b1951d;">(</span>y-point end<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-  <span style="color: #2d9574;">(</span>make-point <span style="color: #67b11d;">(</span>average x1 x2<span style="color: #67b11d;">)</span>
-      <span style="color: #67b11d;">(</span>average y1 y2<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-
+<pre><code class="scheme"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">define</span> <span style="color: #3e999f;">(</span><span style="color: #f5871f;">midpoint-segment</span> s<span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span><span style="color: #718c00;">let*</span> <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>start <span style="color: #4271ae;">(</span>start-segment s<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+   <span style="color: #718c00;">(</span>end   <span style="color: #4271ae;">(</span>end-segment s<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+   <span style="color: #718c00;">(</span>x1 <span style="color: #4271ae;">(</span>x-point start<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+   <span style="color: #718c00;">(</span>y1 <span style="color: #4271ae;">(</span>y-point start<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+   <span style="color: #718c00;">(</span>x2 <span style="color: #4271ae;">(</span>x-point end<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+   <span style="color: #718c00;">(</span>y2 <span style="color: #4271ae;">(</span>y-point end<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+  <span style="color: #eab700;">(</span>make-point <span style="color: #718c00;">(</span>average x1 x2<span style="color: #718c00;">)</span>
+      <span style="color: #718c00;">(</span>average y1 y2<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -1154,7 +1146,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

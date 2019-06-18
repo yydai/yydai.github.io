@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-06-18 Tue 19:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MAC 好用软件</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -400,9 +400,9 @@ window 选项卡下，我们可以设置 terminal 的背景。
 我经常要更新我的 emacs 配置，但是如果我手动的去输入很多的命令就比较麻烦:
 </p>
 <div class="container">
-<pre><code class="shell"><span style="color: #4f97d7;">cd</span> ~/.emacs.d
+<pre><code class="shell"><span style="color: #8959a8;">cd</span> ~/.emacs.d
 git add .
-git commit -m <span style="color: #2d9574;">"messages.."</span>
+git commit -m <span style="color: #3e999f;">"messages.."</span>
 git push origin master
 </code></pre>
 </div>
@@ -424,11 +424,11 @@ git push origin master
 </p>
 <div class="container">
 <pre><code class="shell">git add .
-<span style="color: #4f97d7;">read</span> -p <span style="color: #2d9574;">"Commit description, default is 'Auto commit': "</span> desc
-<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">[</span> -z <span style="color: #2d9574;">"$desc"</span> <span style="color: #4f97d7;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
-    <span style="color: #7590db;">desc</span>=<span style="color: #2d9574;">"Auto commit"</span>
-<span style="color: #4f97d7; font-weight: bold;">fi</span>
-git commit -m <span style="color: #2d9574;">"$desc"</span>
+<span style="color: #8959a8;">read</span> -p <span style="color: #3e999f;">"Commit description, default is 'Auto commit': "</span> desc
+<span style="color: #718c00;">if</span> <span style="color: #4d4d4c;">[</span> -z <span style="color: #3e999f;">"$desc"</span> <span style="color: #4d4d4c;">]</span>; <span style="color: #718c00;">then</span>
+    <span style="color: #eab700;">desc</span>=<span style="color: #3e999f;">"Auto commit"</span>
+<span style="color: #718c00;">fi</span>
+git commit -m <span style="color: #3e999f;">"$desc"</span>
 git push origin master
 </code></pre>
 </div>
@@ -742,21 +742,20 @@ cmd + -  缩小字体
 </p>
 
 <div class="container">
-<pre><code class="shell"><span style="color: #bc6ec5; font-weight: bold;">movtogif</span><span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">[</span> -z <span style="color: #2d9574;">"$1"</span> <span style="color: #bc6ec5;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
-        <span style="color: #4f97d7;">echo</span> <span style="color: #2d9574;">"usage: mov-gif &lt;src&gt; [desc]"</span>
-        <span style="color: #4f97d7; font-weight: bold;">return</span> 1
-    <span style="color: #4f97d7; font-weight: bold;">fi</span>
+<pre><code class="shell"><span style="color: #f5871f;">movtogif</span><span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">[</span> -z <span style="color: #3e999f;">"$1"</span> <span style="color: #3e999f;">]</span>; <span style="color: #718c00;">then</span>
+        <span style="color: #8959a8;">echo</span> <span style="color: #3e999f;">"usage: mov-gif &lt;src&gt; [desc]"</span>
+        <span style="color: #718c00;">return</span> 1
+    <span style="color: #718c00;">fi</span>
 
-    <span style="color: #4f97d7;">local</span> <span style="color: #7590db;">filename</span>=$<span style="color: #7590db;">2</span>
-    <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">generate random filename</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">[</span> -z <span style="color: #2d9574;">"$2"</span> <span style="color: #bc6ec5;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
-        <span style="color: #7590db;">filename</span>=<span style="color: #fa8072;">`hexdump -e '/1 "%02x"' -n16 &lt; /dev/urandom`</span>
-    <span style="color: #4f97d7; font-weight: bold;">fi</span>
-    ffmpeg -i $<span style="color: #bc6ec5;">{</span><span style="color: #7590db;">1</span><span style="color: #bc6ec5;">}</span>.mov -vf <span style="color: #7590db;">scale</span>=800:-1 -r 10 -f image2pipe -vcodec ppm - | <span style="color: #2d9574;">\</span>
-    convert -delay 5 -fuzz 2% -layers Optimize -loop 0 - $<span style="color: #bc6ec5;">{</span><span style="color: #7590db;">2</span><span style="color: #bc6ec5;">}</span>.gif
-<span style="color: #4f97d7;">}</span>
-
+    <span style="color: #8959a8;">local</span> <span style="color: #eab700;">filename</span>=$<span style="color: #eab700;">2</span>
+    <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">generate random filename</span>
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">[</span> -z <span style="color: #3e999f;">"$2"</span> <span style="color: #3e999f;">]</span>; <span style="color: #718c00;">then</span>
+        <span style="color: #eab700;">filename</span>=<span style="color: #8959a8;">`hexdump -e '/1 "%02x"' -n16 &lt; /dev/urandom`</span>
+    <span style="color: #718c00;">fi</span>
+    ffmpeg -i $<span style="color: #3e999f;">{</span><span style="color: #eab700;">1</span><span style="color: #3e999f;">}</span>.mov -vf <span style="color: #eab700;">scale</span>=800:-1 -r 10 -f image2pipe -vcodec ppm - | <span style="color: #3e999f;">\</span>
+    convert -delay 5 -fuzz 2% -layers Optimize -loop 0 - $<span style="color: #3e999f;">{</span><span style="color: #eab700;">2</span><span style="color: #3e999f;">}</span>.gif
+<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -764,7 +763,7 @@ cmd + -  缩小字体
 我们就可以直接这样了。
 </p>
 <div class="container">
-<pre><code class="shell">movtogif<span style="color: #4f97d7; font-weight: bold;"> in</span>
+<pre><code class="shell">movtogif<span style="color: #718c00;"> in</span>
 </code></pre>
 </div>
 
@@ -959,7 +958,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

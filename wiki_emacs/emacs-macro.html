@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-06-18 Tue 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 的键盘宏</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -285,7 +285,7 @@ for the JavaScript code in this tag.
 例如，我有个需求是处理下面的几个文本：
 </p>
 <div class="container">
-<pre><code class="python">aa bb cc dd ==&gt; <span style="color: #2d9574;">"aa"</span>, <span style="color: #2d9574;">"b"</span>, <span style="color: #2d9574;">"cc"</span>, <span style="color: #2d9574;">"dd"</span>
+<pre><code class="python">aa bb cc dd ==&gt; <span style="color: #3e999f;">"aa"</span>, <span style="color: #3e999f;">"b"</span>, <span style="color: #3e999f;">"cc"</span>, <span style="color: #3e999f;">"dd"</span>
 </code></pre>
 </div>
 
@@ -310,15 +310,15 @@ for the JavaScript code in this tag.
 我写了一个函数，能够根据键盘宏来生成上面的序列：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">auto-sequence</span> <span style="color: #bc6ec5;">(</span>format start end<span style="color: #bc6ec5;">)</span>
-    <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span> <span style="color: #2d9574;">"sSequence format: </span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">n</span><span style="color: #2d9574;">nEnter start number: </span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">n</span><span style="color: #2d9574;">nEnter end number: "</span><span style="color: #bc6ec5;">)</span>
-    <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">progn</span>
-      <span style="color: #2d9574;">(</span>kmacro-set-format format<span style="color: #2d9574;">)</span>
-      <span style="color: #2d9574;">(</span>kmacro-set-counter start<span style="color: #2d9574;">)</span>
-      <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #67b11d;">(</span>&lt; start <span style="color: #b1951d;">(</span>+ 1 end<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-        <span style="color: #67b11d;">(</span>execute-kbd-macro <span style="color: #b1951d;">(</span>read-kbd-macro <span style="color: #2d9574;">"&lt;f3&gt; RET"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-        <span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> start <span style="color: #b1951d;">(</span>+ 1 start<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-      <span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defun</span> <span style="color: #f5871f;">auto-sequence</span> <span style="color: #3e999f;">(</span>format start end<span style="color: #3e999f;">)</span>
+    <span style="color: #3e999f;">(</span><span style="color: #718c00;">interactive</span> <span style="color: #3e999f;">"sSequence format: </span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">nEnter start number: </span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">nEnter end number: "</span><span style="color: #3e999f;">)</span>
+    <span style="color: #3e999f;">(</span><span style="color: #718c00;">progn</span>
+      <span style="color: #eab700;">(</span>kmacro-set-format format<span style="color: #eab700;">)</span>
+      <span style="color: #eab700;">(</span>kmacro-set-counter start<span style="color: #eab700;">)</span>
+      <span style="color: #eab700;">(</span><span style="color: #718c00;">while</span> <span style="color: #718c00;">(</span>&lt; start <span style="color: #4271ae;">(</span>+ 1 end<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+        <span style="color: #718c00;">(</span>execute-kbd-macro <span style="color: #4271ae;">(</span>read-kbd-macro <span style="color: #3e999f;">"&lt;f3&gt; RET"</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
+        <span style="color: #718c00;">(</span><span style="color: #718c00;">setq</span> start <span style="color: #4271ae;">(</span>+ 1 start<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+      <span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -355,7 +355,7 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="emacs-lisp"><span style="color: #4f97d7;">(</span>global-set-key <span style="color: #bc6ec5;">(</span>kbd <span style="color: #2d9574;">"C-cm"</span><span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">test-marco</span><span style="color: #4f97d7;">)</span>
+<pre><code class="emacs-lisp"><span style="color: #4d4d4c;">(</span>global-set-key <span style="color: #3e999f;">(</span>kbd <span style="color: #3e999f;">"C-cm"</span><span style="color: #3e999f;">)</span> <span style="color: #718c00;">'</span><span style="color: #4271ae;">test-marco</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -384,7 +384,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

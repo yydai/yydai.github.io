@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-06-18 Tue 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Pandas 和 Numpy 中的 axis</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -261,10 +261,10 @@ for the JavaScript code in this tag.
 比如下面的操作：
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
-<span style="color: #7590db;">a</span> = np.array<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">[</span>1, 2<span style="color: #bc6ec5;">]</span>, <span style="color: #bc6ec5;">[</span>3, 4<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">s0</span> = np.<span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>a, axis=0<span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">s1</span> = np.<span style="color: #4f97d7;">sum</span><span style="color: #4f97d7;">(</span>a, axis=1<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> numpy <span style="color: #718c00;">as</span> np
+<span style="color: #eab700;">a</span> = np.array<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span>1, 2<span style="color: #3e999f;">]</span>, <span style="color: #3e999f;">[</span>3, 4<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">s0</span> = np.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">(</span>a, axis=0<span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">s1</span> = np.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">(</span>a, axis=1<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -305,9 +305,9 @@ axis=0 代表的是和行有关，axis=1 是和列有关，所以我理解的是
 但是有一种情况我们需要注意，就是在使用 drop 的时候，
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">import</span> pandas <span style="color: #4f97d7; font-weight: bold;">as</span> pd
-<span style="color: #7590db;">df</span> = pd.DataFrame<span style="color: #4f97d7;">(</span>a, columns=<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'col1'</span>, <span style="color: #2d9574;">'col2'</span><span style="color: #bc6ec5;">]</span>, index=<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">'row1'</span>, <span style="color: #2d9574;">'row2'</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-df.drop<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'col1'</span>, axis=1<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">import</span> pandas <span style="color: #718c00;">as</span> pd
+<span style="color: #eab700;">df</span> = pd.DataFrame<span style="color: #4d4d4c;">(</span>a, columns=<span style="color: #3e999f;">[</span><span style="color: #3e999f;">'col1'</span>, <span style="color: #3e999f;">'col2'</span><span style="color: #3e999f;">]</span>, index=<span style="color: #3e999f;">[</span><span style="color: #3e999f;">'row1'</span>, <span style="color: #3e999f;">'row2'</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+df.drop<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'col1'</span>, axis=1<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -315,7 +315,7 @@ df.drop<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'col1
 首先我们创建一个下面结果的 dataframe object,
 </p>
 <div class="container">
-<pre><code class="python"><span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span> col1  col2
+<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span> col1  col2
 row1     1     2
 row2     3     4
 </code></pre>
@@ -334,7 +334,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

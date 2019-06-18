@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:58 -->
+<!-- 2019-06-18 Tue 19:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Trie 与补全、纠错</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -358,46 +358,45 @@ trie 做词频统计可以节省很多空间。如果对空间没要求，hash �
 定义 Trie 结构：
 </p>
 <div class="container">
-<pre><code class="C++"><span style="color: #bc6ec5;">    #include</span> <span style="color: #4f97d7;">&lt;</span><span style="color: #2d9574;">iostream</span><span style="color: #4f97d7;">&gt;</span>
-<span style="color: #bc6ec5;">#define</span> <span style="color: #7590db;">MAX</span> 26
-<span style="color: #4f97d7; font-weight: bold;">using</span> <span style="color: #4f97d7; font-weight: bold;">namespace</span> <span style="color: #a45bad;">std</span>;
+<pre><code class="c++"><span style="color: #8959a8;">#include</span> <span style="color: #4d4d4c;">&lt;</span><span style="color: #3e999f;">iostream</span><span style="color: #4d4d4c;">&gt;</span>
+<span style="color: #8959a8;">#define</span> <span style="color: #eab700;">MAX</span> 26
+<span style="color: #718c00;">using</span> <span style="color: #718c00;">namespace</span> <span style="color: #4271ae;">std</span>;
 
-<span style="color: #4f97d7; font-weight: bold;">typedef</span> <span style="color: #4f97d7; font-weight: bold;">struct</span> <span style="color: #ce537a; font-weight: bold;">TrieNode</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #ce537a; font-weight: bold;">bool</span> <span style="color: #7590db;">isStr</span>; <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">&#23383;&#31526;&#20018;&#26159;&#21542;&#32467;&#26463;</span>
-    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">prefixCount</span>; <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">&#20197;&#35813;&#23383;&#31526;&#32467;&#26463;&#30340;&#21069;&#32512;&#26377;&#22810;&#23569;&#20010;</span>
-    <span style="color: #4f97d7; font-weight: bold;">struct</span> <span style="color: #ce537a; font-weight: bold;">TrieNode</span> *<span style="color: #7590db;">next</span><span style="color: #bc6ec5;">[</span>MAX<span style="color: #bc6ec5;">]</span>;
-<span style="color: #4f97d7;">}</span> <span style="color: #ce537a; font-weight: bold;">Trie</span>;
+<span style="color: #718c00;">typedef</span> <span style="color: #718c00;">struct</span> <span style="color: #4271ae;">TrieNode</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #4271ae;">bool</span> <span style="color: #eab700;">isStr</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">&#23383;&#31526;&#20018;&#26159;&#21542;&#32467;&#26463;</span>
+    <span style="color: #4271ae;">int</span> <span style="color: #eab700;">prefixCount</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">&#20197;&#35813;&#23383;&#31526;&#32467;&#26463;&#30340;&#21069;&#32512;&#26377;&#22810;&#23569;&#20010;</span>
+    <span style="color: #718c00;">struct</span> <span style="color: #4271ae;">TrieNode</span> *<span style="color: #eab700;">next</span><span style="color: #3e999f;">[</span>MAX<span style="color: #3e999f;">]</span>;
+<span style="color: #4d4d4c;">}</span> <span style="color: #4271ae;">Trie</span>;
 </code></pre>
 </div>
-
 <p>
 插入我们可以这样来：
 </p>
 <div class="container">
-<pre><code class="C++">    <span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">insert</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Trie</span> *<span style="color: #7590db;">root</span>, <span style="color: #4f97d7; font-weight: bold;">const</span> <span style="color: #ce537a; font-weight: bold;">char</span> *<span style="color: #7590db;">s</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">!</span>root || *s == <span style="color: #2d9574;">'</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">0</span><span style="color: #2d9574;">'</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #4f97d7; font-weight: bold;">return</span>;
-    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span>;
-    <span style="color: #ce537a; font-weight: bold;">Trie</span> *<span style="color: #7590db;">p</span> = root;
+<pre><code class="c++"><span style="color: #4271ae;">void</span> <span style="color: #f5871f;">insert</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">Trie</span> *<span style="color: #eab700;">root</span>, <span style="color: #718c00;">const</span> <span style="color: #4271ae;">char</span> *<span style="color: #eab700;">s</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span><span style="color: #4271ae;">!</span>root || *s == <span style="color: #3e999f;">'</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">0</span><span style="color: #3e999f;">'</span><span style="color: #3e999f;">)</span>
+        <span style="color: #718c00;">return</span>;
+    <span style="color: #4271ae;">int</span> <span style="color: #eab700;">i</span>;
+    <span style="color: #4271ae;">Trie</span> *<span style="color: #eab700;">p</span> = root;
 
-    <span style="color: #4f97d7; font-weight: bold;">while</span><span style="color: #bc6ec5;">(</span>*s!=<span style="color: #2d9574;">'</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">0</span><span style="color: #2d9574;">'</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-        <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span><span style="color: #a45bad;">!</span>p-&gt;next<span style="color: #67b11d;">[</span>*s-<span style="color: #2d9574;">'a'</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
-            <span style="color: #ce537a; font-weight: bold;">Trie</span> *<span style="color: #7590db;">temp</span> = <span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">Trie</span><span style="color: #67b11d;">()</span>;
-            <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #67b11d;">(</span>i = 0;i &lt; MAX; i ++<span style="color: #67b11d;">){</span>
-                temp-&gt;next<span style="color: #b1951d;">[</span>i<span style="color: #b1951d;">]</span> = <span style="color: #a45bad;">NULL</span>;
-            <span style="color: #67b11d;">}</span>
-            temp-&gt;isStr = <span style="color: #a45bad;">false</span>;
+    <span style="color: #718c00;">while</span><span style="color: #3e999f;">(</span>*s!=<span style="color: #3e999f;">'</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">0</span><span style="color: #3e999f;">'</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span><span style="color: #4271ae;">!</span>p-&gt;next<span style="color: #718c00;">[</span>*s-<span style="color: #3e999f;">'a'</span><span style="color: #718c00;">]</span><span style="color: #eab700;">)</span> <span style="color: #eab700;">{</span>
+            <span style="color: #4271ae;">Trie</span> *<span style="color: #eab700;">temp</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">Trie</span><span style="color: #718c00;">()</span>;
+            <span style="color: #718c00;">for</span> <span style="color: #718c00;">(</span>i = 0;i &lt; MAX; i ++<span style="color: #718c00;">){</span>
+                temp-&gt;next<span style="color: #4271ae;">[</span>i<span style="color: #4271ae;">]</span> = <span style="color: #4271ae;">NULL</span>;
+            <span style="color: #718c00;">}</span>
+            temp-&gt;isStr = <span style="color: #4271ae;">false</span>;
             temp-&gt;prefixCount=1;
-            p-&gt;next<span style="color: #67b11d;">[</span>*s-<span style="color: #2d9574;">'a'</span><span style="color: #67b11d;">]</span> = temp;
-            p = p-&gt;next<span style="color: #67b11d;">[</span>*s-<span style="color: #2d9574;">'a'</span><span style="color: #67b11d;">]</span>;
-        <span style="color: #2d9574;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #2d9574;">{</span>
-            p = p-&gt;next<span style="color: #67b11d;">[</span>*s - <span style="color: #2d9574;">'a'</span><span style="color: #67b11d;">]</span>;
+            p-&gt;next<span style="color: #718c00;">[</span>*s-<span style="color: #3e999f;">'a'</span><span style="color: #718c00;">]</span> = temp;
+            p = p-&gt;next<span style="color: #718c00;">[</span>*s-<span style="color: #3e999f;">'a'</span><span style="color: #718c00;">]</span>;
+        <span style="color: #eab700;">}</span> <span style="color: #718c00;">else</span> <span style="color: #eab700;">{</span>
+            p = p-&gt;next<span style="color: #718c00;">[</span>*s - <span style="color: #3e999f;">'a'</span><span style="color: #718c00;">]</span>;
             p-&gt;prefixCount += 1;
-        <span style="color: #2d9574;">}</span>
+        <span style="color: #eab700;">}</span>
         s ++;
-    <span style="color: #bc6ec5;">}</span>
-    p-&gt;isStr = <span style="color: #a45bad;">true</span>;
-<span style="color: #4f97d7;">}</span>
+    <span style="color: #3e999f;">}</span>
+    p-&gt;isStr = <span style="color: #4271ae;">true</span>;
+<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -405,16 +404,16 @@ trie 做词频统计可以节省很多空间。如果对空间没要求，hash �
 查询：
 </p>
 <div class="container">
-<pre><code class="C++">    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #bc6ec5; font-weight: bold;">search</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Trie</span> *<span style="color: #7590db;">root</span>, <span style="color: #4f97d7; font-weight: bold;">const</span> <span style="color: #ce537a; font-weight: bold;">char</span> *<span style="color: #7590db;">s</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #ce537a; font-weight: bold;">Trie</span> *<span style="color: #7590db;">p</span> = root;
-    <span style="color: #4f97d7; font-weight: bold;">while</span><span style="color: #bc6ec5;">(</span>p != <span style="color: #a45bad;">NULL</span> &amp;&amp; *s != <span style="color: #2d9574;">'</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">0</span><span style="color: #2d9574;">'</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-        <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>p-&gt;next<span style="color: #67b11d;">[</span>*s-<span style="color: #2d9574;">'a'</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
-            p = p-&gt;next<span style="color: #67b11d;">[</span>*s - <span style="color: #2d9574;">'a'</span><span style="color: #67b11d;">]</span>;
+<pre><code class="C++"><span style="color: #4271ae;">int</span> <span style="color: #f5871f;">search</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">Trie</span> *<span style="color: #eab700;">root</span>, <span style="color: #718c00;">const</span> <span style="color: #4271ae;">char</span> *<span style="color: #eab700;">s</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #4271ae;">Trie</span> *<span style="color: #eab700;">p</span> = root;
+    <span style="color: #718c00;">while</span><span style="color: #3e999f;">(</span>p != <span style="color: #4271ae;">NULL</span> &amp;&amp; *s != <span style="color: #3e999f;">'</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">0</span><span style="color: #3e999f;">'</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>p-&gt;next<span style="color: #718c00;">[</span>*s-<span style="color: #3e999f;">'a'</span><span style="color: #718c00;">]</span><span style="color: #eab700;">)</span> <span style="color: #eab700;">{</span>
+            p = p-&gt;next<span style="color: #718c00;">[</span>*s - <span style="color: #3e999f;">'a'</span><span style="color: #718c00;">]</span>;
             s ++;
-        <span style="color: #2d9574;">}</span>
-    <span style="color: #bc6ec5;">}</span>
-    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #bc6ec5;">(</span>p != <span style="color: #a45bad;">NULL</span> &amp;&amp; p-&gt;isStr == <span style="color: #a45bad;">true</span><span style="color: #bc6ec5;">)</span>;
-<span style="color: #4f97d7;">}</span>
+        <span style="color: #eab700;">}</span>
+    <span style="color: #3e999f;">}</span>
+    <span style="color: #718c00;">return</span> <span style="color: #3e999f;">(</span>p != <span style="color: #4271ae;">NULL</span> &amp;&amp; p-&gt;isStr == <span style="color: #4271ae;">true</span><span style="color: #3e999f;">)</span>;
+<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -422,23 +421,23 @@ trie 做词频统计可以节省很多空间。如果对空间没要求，hash �
 查找前缀出现次数：
 </p>
 <div class="container">
-<pre><code class="C++">    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #bc6ec5; font-weight: bold;">countPrefix</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Trie</span> *<span style="color: #7590db;">root</span>, <span style="color: #ce537a; font-weight: bold;">char</span> *<span style="color: #7590db;">s</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">!</span>root || *s == <span style="color: #2d9574;">'</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">0</span><span style="color: #2d9574;">'</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #4f97d7; font-weight: bold;">return</span> 0;
-    <span style="color: #ce537a; font-weight: bold;">Trie</span> *<span style="color: #7590db;">p</span> = root;
-    <span style="color: #4f97d7; font-weight: bold;">while</span><span style="color: #bc6ec5;">(</span>p != <span style="color: #a45bad;">NULL</span> &amp;&amp; *s != <span style="color: #2d9574;">'</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">0</span><span style="color: #2d9574;">'</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-        <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>p-&gt;next<span style="color: #67b11d;">[</span>*s - <span style="color: #2d9574;">'a'</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
-            p = p-&gt;next<span style="color: #67b11d;">[</span>*s - <span style="color: #2d9574;">'a'</span><span style="color: #67b11d;">]</span>;
+<pre><code class="C++"><span style="color: #4271ae;">int</span> <span style="color: #f5871f;">countPrefix</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">Trie</span> *<span style="color: #eab700;">root</span>, <span style="color: #4271ae;">char</span> *<span style="color: #eab700;">s</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span><span style="color: #4271ae;">!</span>root || *s == <span style="color: #3e999f;">'</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">0</span><span style="color: #3e999f;">'</span><span style="color: #3e999f;">)</span>
+        <span style="color: #718c00;">return</span> 0;
+    <span style="color: #4271ae;">Trie</span> *<span style="color: #eab700;">p</span> = root;
+    <span style="color: #718c00;">while</span><span style="color: #3e999f;">(</span>p != <span style="color: #4271ae;">NULL</span> &amp;&amp; *s != <span style="color: #3e999f;">'</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">0</span><span style="color: #3e999f;">'</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>p-&gt;next<span style="color: #718c00;">[</span>*s - <span style="color: #3e999f;">'a'</span><span style="color: #718c00;">]</span><span style="color: #eab700;">)</span> <span style="color: #eab700;">{</span>
+            p = p-&gt;next<span style="color: #718c00;">[</span>*s - <span style="color: #3e999f;">'a'</span><span style="color: #718c00;">]</span>;
             s ++;
-        <span style="color: #2d9574;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #2d9574;">{</span>
-            <span style="color: #4f97d7; font-weight: bold;">return</span> 0;
-        <span style="color: #2d9574;">}</span>
-    <span style="color: #bc6ec5;">}</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>p == <span style="color: #a45bad;">NULL</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #4f97d7; font-weight: bold;">return</span> 0;
-    <span style="color: #4f97d7; font-weight: bold;">else</span>
-        <span style="color: #4f97d7; font-weight: bold;">return</span> p-&gt;prefixCount;
-<span style="color: #4f97d7;">}</span>
+        <span style="color: #eab700;">}</span> <span style="color: #718c00;">else</span> <span style="color: #eab700;">{</span>
+            <span style="color: #718c00;">return</span> 0;
+        <span style="color: #eab700;">}</span>
+    <span style="color: #3e999f;">}</span>
+    <span style="color: #718c00;">if</span><span style="color: #3e999f;">(</span>p == <span style="color: #4271ae;">NULL</span><span style="color: #3e999f;">)</span>
+        <span style="color: #718c00;">return</span> 0;
+    <span style="color: #718c00;">else</span>
+        <span style="color: #718c00;">return</span> p-&gt;prefixCount;
+<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 </div>
@@ -452,92 +451,92 @@ trie 做词频统计可以节省很多空间。如果对空间没要求，hash �
 核心代码如下， 比较简单，不解释了。完整代码(<a href="https://gist.github.com/yydai/8baed7b2406d2c0b087f680fd39a84ff">这里</a>)。
 </p>
 <div class="container">
-<pre><code class="C++">    <span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">FindFullStr</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">TreeNode</span> *<span style="color: #7590db;">root</span>, <span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">query</span>, <span style="color: #ce537a; font-weight: bold;">vector</span><span style="color: #bc6ec5;">&lt;</span><span style="color: #ce537a; font-weight: bold;">string</span><span style="color: #bc6ec5;">&gt;</span> &amp;<span style="color: #7590db;">result</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #ce537a; font-weight: bold;">TreeNode</span> *<span style="color: #7590db;">p</span> = root;
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>root == <span style="color: #a45bad;">NULL</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #4f97d7; font-weight: bold;">return</span>;
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>root-&gt;isEnd<span style="color: #bc6ec5;">)</span>
-        result.push_back<span style="color: #bc6ec5;">(</span>query<span style="color: #bc6ec5;">)</span>;
-    <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span> = 0;i &lt; N; i ++<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-        <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>root-&gt;next<span style="color: #67b11d;">[</span>i<span style="color: #67b11d;">]</span> != <span style="color: #a45bad;">NULL</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
-            <span style="color: #ce537a; font-weight: bold;">char</span> <span style="color: #7590db;">c</span> = <span style="color: #67b11d;">(</span><span style="color: #ce537a; font-weight: bold;">char</span><span style="color: #67b11d;">)</span>i;
-            FindFullStr<span style="color: #67b11d;">(</span>root-&gt;next<span style="color: #b1951d;">[</span>i<span style="color: #b1951d;">]</span>, query+c, result<span style="color: #67b11d;">)</span>;
-        <span style="color: #2d9574;">}</span>
-    <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
+<pre><code class="C++"><span style="color: #4271ae;">void</span> <span style="color: #f5871f;">FindFullStr</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">TreeNode</span> *<span style="color: #eab700;">root</span>, <span style="color: #4271ae;">string</span> <span style="color: #eab700;">query</span>, <span style="color: #4271ae;">vector</span><span style="color: #3e999f;">&lt;</span><span style="color: #4271ae;">string</span><span style="color: #3e999f;">&gt;</span> &amp;<span style="color: #eab700;">result</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #4271ae;">TreeNode</span> *<span style="color: #eab700;">p</span> = root;
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span>root == <span style="color: #4271ae;">NULL</span><span style="color: #3e999f;">)</span>
+        <span style="color: #718c00;">return</span>;
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span>root-&gt;isEnd<span style="color: #3e999f;">)</span>
+        result.push_back<span style="color: #3e999f;">(</span>query<span style="color: #3e999f;">)</span>;
+    <span style="color: #718c00;">for</span> <span style="color: #3e999f;">(</span><span style="color: #4271ae;">int</span> <span style="color: #eab700;">i</span> = 0;i &lt; N; i ++<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>root-&gt;next<span style="color: #718c00;">[</span>i<span style="color: #718c00;">]</span> != <span style="color: #4271ae;">NULL</span><span style="color: #eab700;">)</span> <span style="color: #eab700;">{</span>
+            <span style="color: #4271ae;">char</span> <span style="color: #eab700;">c</span> = <span style="color: #718c00;">(</span><span style="color: #4271ae;">char</span><span style="color: #718c00;">)</span>i;
+            FindFullStr<span style="color: #718c00;">(</span>root-&gt;next<span style="color: #4271ae;">[</span>i<span style="color: #4271ae;">]</span>, query+c, result<span style="color: #718c00;">)</span>;
+        <span style="color: #eab700;">}</span>
+    <span style="color: #3e999f;">}</span>
+<span style="color: #4d4d4c;">}</span>
 
-<span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">FindStr</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">src</span>, <span style="color: #ce537a; font-weight: bold;">vector</span><span style="color: #bc6ec5;">&lt;</span><span style="color: #ce537a; font-weight: bold;">string</span><span style="color: #bc6ec5;">&gt;</span> &amp;<span style="color: #7590db;">result</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">cur</span> = 0;
-    <span style="color: #ce537a; font-weight: bold;">TreeNode</span> *<span style="color: #7590db;">p</span> = <span style="color: #4f97d7; font-weight: bold;">this</span>-&gt;root;
-    <span style="color: #ce537a; font-weight: bold;">unsigned</span> <span style="color: #ce537a; font-weight: bold;">char</span> <span style="color: #7590db;">index</span> = <span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">unsigned</span> <span style="color: #ce537a; font-weight: bold;">char</span><span style="color: #bc6ec5;">)</span> src<span style="color: #bc6ec5;">[</span>cur<span style="color: #bc6ec5;">]</span>;
+<span style="color: #4271ae;">void</span> <span style="color: #f5871f;">FindStr</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">string</span> <span style="color: #eab700;">src</span>, <span style="color: #4271ae;">vector</span><span style="color: #3e999f;">&lt;</span><span style="color: #4271ae;">string</span><span style="color: #3e999f;">&gt;</span> &amp;<span style="color: #eab700;">result</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #4271ae;">int</span> <span style="color: #eab700;">cur</span> = 0;
+    <span style="color: #4271ae;">TreeNode</span> *<span style="color: #eab700;">p</span> = <span style="color: #718c00;">this</span>-&gt;root;
+    <span style="color: #4271ae;">unsigned</span> <span style="color: #4271ae;">char</span> <span style="color: #eab700;">index</span> = <span style="color: #3e999f;">(</span><span style="color: #4271ae;">unsigned</span> <span style="color: #4271ae;">char</span><span style="color: #3e999f;">)</span> src<span style="color: #3e999f;">[</span>cur<span style="color: #3e999f;">]</span>;
 
-    <span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #bc6ec5;">(</span>cur &lt; src.size<span style="color: #2d9574;">()</span> &amp;&amp; p-&gt;next<span style="color: #2d9574;">[</span>index<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-        p = p-&gt;next<span style="color: #2d9574;">[</span>index<span style="color: #2d9574;">]</span>;
+    <span style="color: #718c00;">while</span> <span style="color: #3e999f;">(</span>cur &lt; src.size<span style="color: #eab700;">()</span> &amp;&amp; p-&gt;next<span style="color: #eab700;">[</span>index<span style="color: #eab700;">]</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+        p = p-&gt;next<span style="color: #eab700;">[</span>index<span style="color: #eab700;">]</span>;
         ++cur;
-        index = <span style="color: #2d9574;">(</span><span style="color: #ce537a; font-weight: bold;">unsigned</span> <span style="color: #ce537a; font-weight: bold;">char</span><span style="color: #2d9574;">)</span> src<span style="color: #2d9574;">[</span>cur<span style="color: #2d9574;">]</span>;
-    <span style="color: #bc6ec5;">}</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>cur != src.size<span style="color: #2d9574;">()</span> || p == <span style="color: #a45bad;">NULL</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-        <span style="color: #4f97d7; font-weight: bold;">return</span>;
-    <span style="color: #bc6ec5;">}</span>
-    FindFullStr<span style="color: #bc6ec5;">(</span>p, src, result<span style="color: #bc6ec5;">)</span>;
-<span style="color: #4f97d7;">}</span>
+        index = <span style="color: #eab700;">(</span><span style="color: #4271ae;">unsigned</span> <span style="color: #4271ae;">char</span><span style="color: #eab700;">)</span> src<span style="color: #eab700;">[</span>cur<span style="color: #eab700;">]</span>;
+    <span style="color: #3e999f;">}</span>
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span>cur != src.size<span style="color: #eab700;">()</span> || p == <span style="color: #4271ae;">NULL</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+        <span style="color: #718c00;">return</span>;
+    <span style="color: #3e999f;">}</span>
+    FindFullStr<span style="color: #3e999f;">(</span>p, src, result<span style="color: #3e999f;">)</span>;
+<span style="color: #4d4d4c;">}</span>
 
-    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #bc6ec5; font-weight: bold;">IsError</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">query</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #ce537a; font-weight: bold;">TreeNode</span> *<span style="color: #7590db;">p</span> = <span style="color: #4f97d7; font-weight: bold;">this</span>-&gt;root;
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>p == <span style="color: #a45bad;">NULL</span><span style="color: #bc6ec5;">)</span>
-        <span style="color: #4f97d7; font-weight: bold;">return</span> 0;
-    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">cur</span> = 0;
-    <span style="color: #ce537a; font-weight: bold;">unsigned</span> <span style="color: #ce537a; font-weight: bold;">char</span> <span style="color: #7590db;">index</span> = <span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">unsigned</span> <span style="color: #ce537a; font-weight: bold;">char</span><span style="color: #bc6ec5;">)</span> query<span style="color: #bc6ec5;">[</span>cur<span style="color: #bc6ec5;">]</span>;
-    <span style="color: #4f97d7; font-weight: bold;">while</span><span style="color: #bc6ec5;">(</span>cur &lt; query.size<span style="color: #2d9574;">()</span> &amp;&amp; p-&gt;next<span style="color: #2d9574;">[</span>index<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-        p = p-&gt;next<span style="color: #2d9574;">[</span>index<span style="color: #2d9574;">]</span>;
+    <span style="color: #4271ae;">int</span> <span style="color: #f5871f;">IsError</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">string</span> <span style="color: #eab700;">query</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #4271ae;">TreeNode</span> *<span style="color: #eab700;">p</span> = <span style="color: #718c00;">this</span>-&gt;root;
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span>p == <span style="color: #4271ae;">NULL</span><span style="color: #3e999f;">)</span>
+        <span style="color: #718c00;">return</span> 0;
+    <span style="color: #4271ae;">int</span> <span style="color: #eab700;">cur</span> = 0;
+    <span style="color: #4271ae;">unsigned</span> <span style="color: #4271ae;">char</span> <span style="color: #eab700;">index</span> = <span style="color: #3e999f;">(</span><span style="color: #4271ae;">unsigned</span> <span style="color: #4271ae;">char</span><span style="color: #3e999f;">)</span> query<span style="color: #3e999f;">[</span>cur<span style="color: #3e999f;">]</span>;
+    <span style="color: #718c00;">while</span><span style="color: #3e999f;">(</span>cur &lt; query.size<span style="color: #eab700;">()</span> &amp;&amp; p-&gt;next<span style="color: #eab700;">[</span>index<span style="color: #eab700;">]</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+        p = p-&gt;next<span style="color: #eab700;">[</span>index<span style="color: #eab700;">]</span>;
         ++ cur;
-        index = <span style="color: #2d9574;">(</span><span style="color: #ce537a; font-weight: bold;">unsigned</span> <span style="color: #ce537a; font-weight: bold;">char</span><span style="color: #2d9574;">)</span> query<span style="color: #2d9574;">[</span>cur<span style="color: #2d9574;">]</span>;
-    <span style="color: #bc6ec5;">}</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">!</span>p-&gt;isEnd<span style="color: #bc6ec5;">)</span>
-        <span style="color: #4f97d7; font-weight: bold;">return</span> cur;
+        index = <span style="color: #eab700;">(</span><span style="color: #4271ae;">unsigned</span> <span style="color: #4271ae;">char</span><span style="color: #eab700;">)</span> query<span style="color: #eab700;">[</span>cur<span style="color: #eab700;">]</span>;
+    <span style="color: #3e999f;">}</span>
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span><span style="color: #4271ae;">!</span>p-&gt;isEnd<span style="color: #3e999f;">)</span>
+        <span style="color: #718c00;">return</span> cur;
 
-    <span style="color: #4f97d7; font-weight: bold;">return</span> 0;
-<span style="color: #4f97d7;">}</span>
+    <span style="color: #718c00;">return</span> 0;
+<span style="color: #4d4d4c;">}</span>
 
-<span style="color: #ce537a; font-weight: bold;">void</span> <span style="color: #bc6ec5; font-weight: bold;">CorrectSpell</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">query</span>, <span style="color: #ce537a; font-weight: bold;">vector</span><span style="color: #bc6ec5;">&lt;</span><span style="color: #ce537a; font-weight: bold;">string</span><span style="color: #bc6ec5;">&gt;</span> &amp;<span style="color: #7590db;">res</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">index</span> = IsError<span style="color: #bc6ec5;">(</span>query<span style="color: #bc6ec5;">)</span>;
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>index<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-        <span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">sub</span> = query.substr<span style="color: #2d9574;">(</span>0, index<span style="color: #2d9574;">)</span>;
-        FindStr<span style="color: #2d9574;">(</span>sub, res<span style="color: #2d9574;">)</span>;
-    <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
+<span style="color: #4271ae;">void</span> <span style="color: #f5871f;">CorrectSpell</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">string</span> <span style="color: #eab700;">query</span>, <span style="color: #4271ae;">vector</span><span style="color: #3e999f;">&lt;</span><span style="color: #4271ae;">string</span><span style="color: #3e999f;">&gt;</span> &amp;<span style="color: #eab700;">res</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #4271ae;">int</span> <span style="color: #eab700;">index</span> = IsError<span style="color: #3e999f;">(</span>query<span style="color: #3e999f;">)</span>;
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span>index<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+        <span style="color: #4271ae;">string</span> <span style="color: #eab700;">sub</span> = query.substr<span style="color: #eab700;">(</span>0, index<span style="color: #eab700;">)</span>;
+        FindStr<span style="color: #eab700;">(</span>sub, res<span style="color: #eab700;">)</span>;
+    <span style="color: #3e999f;">}</span>
+<span style="color: #4d4d4c;">}</span>
 
 
-    <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #bc6ec5; font-weight: bold;">main</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">argc</span>, <span style="color: #ce537a; font-weight: bold;">char</span> *<span style="color: #7590db;">argv</span><span style="color: #bc6ec5;">[]</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">{</span>
-    <span style="color: #ce537a; font-weight: bold;">Trie</span> *<span style="color: #7590db;">p</span> = <span style="color: #4f97d7; font-weight: bold;">new</span> <span style="color: #ce537a; font-weight: bold;">Trie</span><span style="color: #bc6ec5;">()</span>;
-    p-&gt;InsertNode<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"hello world"</span><span style="color: #bc6ec5;">)</span>;
-    p-&gt;InsertNode<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"hello baby"</span><span style="color: #bc6ec5;">)</span>;
-    p-&gt;InsertNode<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"hello emm.."</span><span style="color: #bc6ec5;">)</span>;
-    p-&gt;InsertNode<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"hello"</span><span style="color: #bc6ec5;">)</span>;
-    p-&gt;InsertNode<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"&#20320;&#22909;&#21834;"</span><span style="color: #bc6ec5;">)</span>;
-    p-&gt;InsertNode<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"&#20320;&#30495;&#22909;"</span><span style="color: #bc6ec5;">)</span>;
-    p-&gt;InsertNode<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"&#20320;&#22909;&#22351;"</span><span style="color: #bc6ec5;">)</span>;
+    <span style="color: #4271ae;">int</span> <span style="color: #f5871f;">main</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">int</span> <span style="color: #eab700;">argc</span>, <span style="color: #4271ae;">char</span> *<span style="color: #eab700;">argv</span><span style="color: #3e999f;">[]</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">{</span>
+    <span style="color: #4271ae;">Trie</span> *<span style="color: #eab700;">p</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">Trie</span><span style="color: #3e999f;">()</span>;
+    p-&gt;InsertNode<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"hello world"</span><span style="color: #3e999f;">)</span>;
+    p-&gt;InsertNode<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"hello baby"</span><span style="color: #3e999f;">)</span>;
+    p-&gt;InsertNode<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"hello emm.."</span><span style="color: #3e999f;">)</span>;
+    p-&gt;InsertNode<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"hello"</span><span style="color: #3e999f;">)</span>;
+    p-&gt;InsertNode<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"&#20320;&#22909;&#21834;"</span><span style="color: #3e999f;">)</span>;
+    p-&gt;InsertNode<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"&#20320;&#30495;&#22909;"</span><span style="color: #3e999f;">)</span>;
+    p-&gt;InsertNode<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"&#20320;&#22909;&#22351;"</span><span style="color: #3e999f;">)</span>;
 
-    <span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">query</span>;
-    cout &lt;&lt; <span style="color: #2d9574;">"Please input query"</span> &lt;&lt; endl;
+    <span style="color: #4271ae;">string</span> <span style="color: #eab700;">query</span>;
+    cout &lt;&lt; <span style="color: #3e999f;">"Please input query"</span> &lt;&lt; endl;
     cin &gt;&gt; query;
 
-    <span style="color: #ce537a; font-weight: bold;">vector</span><span style="color: #bc6ec5;">&lt;</span><span style="color: #ce537a; font-weight: bold;">string</span><span style="color: #bc6ec5;">&gt;</span> <span style="color: #7590db;">result</span>;
-    <span style="color: #2aa1ae; background-color: #292e34;">//</span><span style="color: #2aa1ae; background-color: #292e34;">p-&gt;FindStr(query, result);</span>
+    <span style="color: #4271ae;">vector</span><span style="color: #3e999f;">&lt;</span><span style="color: #4271ae;">string</span><span style="color: #3e999f;">&gt;</span> <span style="color: #eab700;">result</span>;
+    <span style="color: #8e908c; font-style: italic;">//</span><span style="color: #8e908c; font-style: italic;">p-&gt;FindStr(query, result);</span>
 
-    p-&gt;CorrectSpell<span style="color: #bc6ec5;">(</span>query, result<span style="color: #bc6ec5;">)</span>;
+    p-&gt;CorrectSpell<span style="color: #3e999f;">(</span>query, result<span style="color: #3e999f;">)</span>;
 
-    <span style="color: #a45bad;">vector</span><span style="color: #bc6ec5;">&lt;</span><span style="color: #ce537a; font-weight: bold;">string</span><span style="color: #bc6ec5;">&gt;</span>::<span style="color: #ce537a; font-weight: bold;">iterator</span> <span style="color: #7590db;">it</span>;
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>result.size<span style="color: #2d9574;">()</span> &gt; 0<span style="color: #bc6ec5;">)</span>
-        cout &lt;&lt; <span style="color: #2d9574;">"You may want input:"</span> &lt;&lt; endl;
-    <span style="color: #4f97d7; font-weight: bold;">else</span>
-        cout &lt;&lt; <span style="color: #2d9574;">"You input is correct"</span> &lt;&lt; endl;
-    <span style="color: #4f97d7; font-weight: bold;">for</span><span style="color: #bc6ec5;">(</span>it = result.begin<span style="color: #2d9574;">()</span>; it != result.end<span style="color: #2d9574;">()</span>; ++ it<span style="color: #bc6ec5;">){</span>
+    <span style="color: #4271ae;">vector</span><span style="color: #3e999f;">&lt;</span><span style="color: #4271ae;">string</span><span style="color: #3e999f;">&gt;</span>::<span style="color: #4271ae;">iterator</span> <span style="color: #eab700;">it</span>;
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span>result.size<span style="color: #eab700;">()</span> &gt; 0<span style="color: #3e999f;">)</span>
+        cout &lt;&lt; <span style="color: #3e999f;">"You may want input:"</span> &lt;&lt; endl;
+    <span style="color: #718c00;">else</span>
+        cout &lt;&lt; <span style="color: #3e999f;">"You input is correct"</span> &lt;&lt; endl;
+    <span style="color: #718c00;">for</span><span style="color: #3e999f;">(</span>it = result.begin<span style="color: #eab700;">()</span>; it != result.end<span style="color: #eab700;">()</span>; ++ it<span style="color: #3e999f;">){</span>
         cout &lt;&lt; *it &lt;&lt; endl;
-    <span style="color: #bc6ec5;">}</span>
-    <span style="color: #4f97d7; font-weight: bold;">return</span> 0;
-<span style="color: #4f97d7;">}</span>
+    <span style="color: #3e999f;">}</span>
+    <span style="color: #718c00;">return</span> 0;
+<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -573,8 +572,6 @@ trie 做词频统计可以节省很多空间。如果对空间没要求，hash �
 <div class="outline-text-2" id="text-orgfdcca27">
 <ul class="org-ul">
 <li><a href="https://leetcode.com/articles/implement-trie-prefix-tree/">208. Implement Trie (Prefix Tree)</a></li>
-</ul>
-<ul class="org-ul">
 <li><a href="https://en.wikipedia.org/wiki/Trie">Trie</a></li>
 <li><a href="https://www.zhihu.com/question/29592463">鹅厂面试题，英语单词拼写检查算法？</a></li>
 <li><a href="https://blog.csdn.net/v_july_v/article/details/6897097">从 Trie 树（字典树）谈到后缀树（10.28 修订）</a></li>
@@ -592,7 +589,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

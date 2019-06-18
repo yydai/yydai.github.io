@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:52 -->
+<!-- 2019-06-18 Tue 19:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -393,15 +393,15 @@ mkswap /dev/sda2
 </p>
 
 <div class="container">
-<pre><code class="shell"><span style="color: #4f97d7;">export</span> <span style="color: #7590db;">LFS</span>=/mnt/lfs
+<pre><code class="shell"><span style="color: #8959a8;">export</span> <span style="color: #eab700;">LFS</span>=/mnt/lfs
 </code></pre>
 </div>
 <p>
 下一步，创建挂载点并用下面的命令挂载 LFS 文件系统：
 </p>
 <div class="container">
-<pre><code class="shell">mkdir -pv $<span style="color: #7590db;">LFS</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#24314;&#31435;&#25346;&#36733;&#28857;</span>
-mount -v -t ext4 /dev/sda1 $<span style="color: #7590db;">LFS</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">&#23558;/dev/sda1 &#25346;&#36733;&#21040; $LFS</span>
+<pre><code class="shell">mkdir -pv $<span style="color: #eab700;">LFS</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#24314;&#31435;&#25346;&#36733;&#28857;</span>
+mount -v -t ext4 /dev/sda1 $<span style="color: #eab700;">LFS</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#23558;/dev/sda1 &#25346;&#36733;&#21040; $LFS</span>
 </code></pre>
 </div>
 
@@ -431,7 +431,7 @@ mount -v -t ext4 /dev/sda1 $<span style="color: #7590db;">LFS</span> <span style
 </p>
 
 <div class="container">
-<pre><code class="shell">mkdir -v $<span style="color: #7590db;">LFS</span>/sources
+<pre><code class="shell">mkdir -v $<span style="color: #eab700;">LFS</span>/sources
 </code></pre>
 </div>
 
@@ -440,7 +440,7 @@ mount -v -t ext4 /dev/sda1 $<span style="color: #7590db;">LFS</span> <span style
 </p>
 
 <div class="container">
-<pre><code class="shell">chmod -v a+wt $<span style="color: #7590db;">LFS</span>/sources
+<pre><code class="shell">chmod -v a+wt $<span style="color: #eab700;">LFS</span>/sources
 </code></pre>
 </div>
 
@@ -456,7 +456,7 @@ mount -v -t ext4 /dev/sda1 $<span style="color: #7590db;">LFS</span> <span style
 我们可以这样下载
 </p>
 <div class="container">
-<pre><code class="shell">wget -i wget-list -P $<span style="color: #7590db;">LFS</span>/sources
+<pre><code class="shell">wget -i wget-list -P $<span style="color: #eab700;">LFS</span>/sources
 </code></pre>
 </div>
 <p>
@@ -538,7 +538,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

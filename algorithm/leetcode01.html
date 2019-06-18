@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:58 -->
+<!-- 2019-06-18 Tue 19:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Leetcode 01</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -289,7 +289,7 @@ for the JavaScript code in this tag.
 那么这个 median 就是如下的表示：
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">median</span> = L3<span style="color: #4f97d7;">[</span>L/2<span style="color: #4f97d7;">]</span> + L3<span style="color: #4f97d7;">[</span>L/2+1<span style="color: #4f97d7;">]</span> / 2.0 <span style="color: #4f97d7; font-weight: bold;">if</span> L % 2 == 0 <span style="color: #4f97d7; font-weight: bold;">else</span> L3<span style="color: #4f97d7;">[</span>L/2+1<span style="color: #4f97d7;">]</span>
+<pre><code class="python"><span style="color: #eab700;">median</span> = L3<span style="color: #4d4d4c;">[</span>L/2<span style="color: #4d4d4c;">]</span> + L3<span style="color: #4d4d4c;">[</span>L/2+1<span style="color: #4d4d4c;">]</span> / 2.0 <span style="color: #718c00;">if</span> L % 2 == 0 <span style="color: #718c00;">else</span> L3<span style="color: #4d4d4c;">[</span>L/2+1<span style="color: #4d4d4c;">]</span>
 </code></pre>
 </div>
 
@@ -321,31 +321,31 @@ for the JavaScript code in this tag.
 在后面我看到了一个聪明的解决方法：
 </p>
 <div class="container">
-<pre><code class="C++">    <span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #bc6ec5; font-weight: bold;">expandAroundCenter</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">s</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">c1</span>, <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">c2</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">l</span> = c1, <span style="color: #7590db;">r</span> = c2;
-  <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">n</span> = s.length<span style="color: #bc6ec5;">()</span>;
-  <span style="color: #4f97d7; font-weight: bold;">while</span> <span style="color: #bc6ec5;">(</span>l &gt;= 0 &amp;&amp; r &lt;= n-1 &amp;&amp; s<span style="color: #2d9574;">[</span>l<span style="color: #2d9574;">]</span> == s<span style="color: #2d9574;">[</span>r<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+<pre><code class="C++">    <span style="color: #4271ae;">string</span> <span style="color: #f5871f;">expandAroundCenter</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">string</span> <span style="color: #eab700;">s</span>, <span style="color: #4271ae;">int</span> <span style="color: #eab700;">c1</span>, <span style="color: #4271ae;">int</span> <span style="color: #eab700;">c2</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+  <span style="color: #4271ae;">int</span> <span style="color: #eab700;">l</span> = c1, <span style="color: #eab700;">r</span> = c2;
+  <span style="color: #4271ae;">int</span> <span style="color: #eab700;">n</span> = s.length<span style="color: #3e999f;">()</span>;
+  <span style="color: #718c00;">while</span> <span style="color: #3e999f;">(</span>l &gt;= 0 &amp;&amp; r &lt;= n-1 &amp;&amp; s<span style="color: #eab700;">[</span>l<span style="color: #eab700;">]</span> == s<span style="color: #eab700;">[</span>r<span style="color: #eab700;">]</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
     l--;
     r++;
-  <span style="color: #bc6ec5;">}</span>
-  <span style="color: #4f97d7; font-weight: bold;">return</span> s.substr<span style="color: #bc6ec5;">(</span>l+1, r-l-1<span style="color: #bc6ec5;">)</span>;
-<span style="color: #4f97d7;">}</span>
+  <span style="color: #3e999f;">}</span>
+  <span style="color: #718c00;">return</span> s.substr<span style="color: #3e999f;">(</span>l+1, r-l-1<span style="color: #3e999f;">)</span>;
+<span style="color: #4d4d4c;">}</span>
 
-<span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #bc6ec5; font-weight: bold;">longestPalindromeSimple</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">s</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">n</span> = s.length<span style="color: #bc6ec5;">()</span>;
-  <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>n == 0<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #2d9574;">""</span>;
-  <span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">longest</span> = s.substr<span style="color: #bc6ec5;">(</span>0, 1<span style="color: #bc6ec5;">)</span>;  <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">a single char itself is a palindrome</span>
-  <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span> = 0; i &lt; n-1; i++<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    <span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">p1</span> = expandAroundCenter<span style="color: #2d9574;">(</span>s, i, i<span style="color: #2d9574;">)</span>;
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>p1.length<span style="color: #67b11d;">()</span> &gt; longest.length<span style="color: #67b11d;">()</span><span style="color: #2d9574;">)</span>
+<span style="color: #4271ae;">string</span> <span style="color: #f5871f;">longestPalindromeSimple</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">string</span> <span style="color: #eab700;">s</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+  <span style="color: #4271ae;">int</span> <span style="color: #eab700;">n</span> = s.length<span style="color: #3e999f;">()</span>;
+  <span style="color: #718c00;">if</span> <span style="color: #3e999f;">(</span>n == 0<span style="color: #3e999f;">)</span> <span style="color: #718c00;">return</span> <span style="color: #3e999f;">""</span>;
+  <span style="color: #4271ae;">string</span> <span style="color: #eab700;">longest</span> = s.substr<span style="color: #3e999f;">(</span>0, 1<span style="color: #3e999f;">)</span>;  <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">a single char itself is a palindrome</span>
+  <span style="color: #718c00;">for</span> <span style="color: #3e999f;">(</span><span style="color: #4271ae;">int</span> <span style="color: #eab700;">i</span> = 0; i &lt; n-1; i++<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+    <span style="color: #4271ae;">string</span> <span style="color: #eab700;">p1</span> = expandAroundCenter<span style="color: #eab700;">(</span>s, i, i<span style="color: #eab700;">)</span>;
+    <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>p1.length<span style="color: #718c00;">()</span> &gt; longest.length<span style="color: #718c00;">()</span><span style="color: #eab700;">)</span>
       longest = p1;
 
-    <span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">p2</span> = expandAroundCenter<span style="color: #2d9574;">(</span>s, i, i+1<span style="color: #2d9574;">)</span>;
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>p2.length<span style="color: #67b11d;">()</span> &gt; longest.length<span style="color: #67b11d;">()</span><span style="color: #2d9574;">)</span>
+    <span style="color: #4271ae;">string</span> <span style="color: #eab700;">p2</span> = expandAroundCenter<span style="color: #eab700;">(</span>s, i, i+1<span style="color: #eab700;">)</span>;
+    <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>p2.length<span style="color: #718c00;">()</span> &gt; longest.length<span style="color: #718c00;">()</span><span style="color: #eab700;">)</span>
       longest = p2;
-  <span style="color: #bc6ec5;">}</span>
-  <span style="color: #4f97d7; font-weight: bold;">return</span> longest;
-<span style="color: #4f97d7;">}</span>
+  <span style="color: #3e999f;">}</span>
+  <span style="color: #718c00;">return</span> longest;
+<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -358,11 +358,11 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="container">
-<pre><code class="python">Define P<span style="color: #4f97d7;">[</span> i, j <span style="color: #4f97d7;">]</span> &#8592; true iff the substring Si &#8230; Sj <span style="color: #4f97d7; font-weight: bold;">is</span> a palindrome, otherwise false.
-P<span style="color: #4f97d7;">[</span> i, j <span style="color: #4f97d7;">]</span> &#8592; <span style="color: #4f97d7;">(</span> P<span style="color: #bc6ec5;">[</span> i+1, j-1 <span style="color: #bc6ec5;">]</span> <span style="color: #4f97d7; font-weight: bold;">and</span> Si = Sj <span style="color: #4f97d7;">)</span>
+<pre><code class="python">Define P<span style="color: #4d4d4c;">[</span> i, j <span style="color: #4d4d4c;">]</span> &#8592; true iff the substring Si &#8230; Sj <span style="color: #718c00;">is</span> a palindrome, otherwise false.
+P<span style="color: #4d4d4c;">[</span> i, j <span style="color: #4d4d4c;">]</span> &#8592; <span style="color: #4d4d4c;">(</span> P<span style="color: #3e999f;">[</span> i+1, j-1 <span style="color: #3e999f;">]</span> <span style="color: #718c00;">and</span> Si = Sj <span style="color: #4d4d4c;">)</span>
 
-P<span style="color: #4f97d7;">[</span> i, i <span style="color: #4f97d7;">]</span> &#8592; true
-P<span style="color: #4f97d7;">[</span> i, i+1 <span style="color: #4f97d7;">]</span> &#8592; <span style="color: #4f97d7;">(</span> Si = Si+1 <span style="color: #4f97d7;">)</span>
+P<span style="color: #4d4d4c;">[</span> i, i <span style="color: #4d4d4c;">]</span> &#8592; true
+P<span style="color: #4d4d4c;">[</span> i, i+1 <span style="color: #4d4d4c;">]</span> &#8592; <span style="color: #4d4d4c;">(</span> Si = Si+1 <span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -370,33 +370,33 @@ P<span style="color: #4f97d7;">[</span> i, i+1 <span style="color: #4f97d7;">]</
 代码的表示如下：
 </p>
 <div class="container">
-<pre><code class="C++">    <span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #bc6ec5; font-weight: bold;">longestPalindromeDP</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">string</span> <span style="color: #7590db;">s</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">n</span> = s.length<span style="color: #bc6ec5;">()</span>;
-  <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">longestBegin</span> = 0;
-  <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">maxLen</span> = 1;
-  <span style="color: #ce537a; font-weight: bold;">bool</span> <span style="color: #7590db;">table</span><span style="color: #bc6ec5;">[</span>1000<span style="color: #bc6ec5;">][</span>1000<span style="color: #bc6ec5;">]</span> = <span style="color: #bc6ec5;">{</span><span style="color: #a45bad;">false</span><span style="color: #bc6ec5;">}</span>;
-  <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span> = 0; i &lt; n; i++<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    table<span style="color: #2d9574;">[</span>i<span style="color: #2d9574;">][</span>i<span style="color: #2d9574;">]</span> = <span style="color: #a45bad;">true</span>;
-  <span style="color: #bc6ec5;">}</span>
-  <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span> = 0; i &lt; n-1; i++<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #2d9574;">(</span>s<span style="color: #67b11d;">[</span>i<span style="color: #67b11d;">]</span> == s<span style="color: #67b11d;">[</span>i+1<span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
-      table<span style="color: #67b11d;">[</span>i<span style="color: #67b11d;">][</span>i+1<span style="color: #67b11d;">]</span> = <span style="color: #a45bad;">true</span>;
+<pre><code class="C++">    <span style="color: #4271ae;">string</span> <span style="color: #f5871f;">longestPalindromeDP</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">string</span> <span style="color: #eab700;">s</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
+  <span style="color: #4271ae;">int</span> <span style="color: #eab700;">n</span> = s.length<span style="color: #3e999f;">()</span>;
+  <span style="color: #4271ae;">int</span> <span style="color: #eab700;">longestBegin</span> = 0;
+  <span style="color: #4271ae;">int</span> <span style="color: #eab700;">maxLen</span> = 1;
+  <span style="color: #4271ae;">bool</span> <span style="color: #eab700;">table</span><span style="color: #3e999f;">[</span>1000<span style="color: #3e999f;">][</span>1000<span style="color: #3e999f;">]</span> = <span style="color: #3e999f;">{</span><span style="color: #4271ae;">false</span><span style="color: #3e999f;">}</span>;
+  <span style="color: #718c00;">for</span> <span style="color: #3e999f;">(</span><span style="color: #4271ae;">int</span> <span style="color: #eab700;">i</span> = 0; i &lt; n; i++<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+    table<span style="color: #eab700;">[</span>i<span style="color: #eab700;">][</span>i<span style="color: #eab700;">]</span> = <span style="color: #4271ae;">true</span>;
+  <span style="color: #3e999f;">}</span>
+  <span style="color: #718c00;">for</span> <span style="color: #3e999f;">(</span><span style="color: #4271ae;">int</span> <span style="color: #eab700;">i</span> = 0; i &lt; n-1; i++<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+    <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>s<span style="color: #718c00;">[</span>i<span style="color: #718c00;">]</span> == s<span style="color: #718c00;">[</span>i+1<span style="color: #718c00;">]</span><span style="color: #eab700;">)</span> <span style="color: #eab700;">{</span>
+      table<span style="color: #718c00;">[</span>i<span style="color: #718c00;">][</span>i+1<span style="color: #718c00;">]</span> = <span style="color: #4271ae;">true</span>;
       longestBegin = i;
       maxLen = 2;
-    <span style="color: #2d9574;">}</span>
-  <span style="color: #bc6ec5;">}</span>
-  <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">len</span> = 3; len &lt;= n; len++<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    <span style="color: #4f97d7; font-weight: bold;">for</span> <span style="color: #2d9574;">(</span><span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">i</span> = 0; i &lt; n-len+1; i++<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
-      <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #7590db;">j</span> = i+len-1;
-      <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>s<span style="color: #b1951d;">[</span>i<span style="color: #b1951d;">]</span> == s<span style="color: #b1951d;">[</span>j<span style="color: #b1951d;">]</span> &amp;&amp; table<span style="color: #b1951d;">[</span>i+1<span style="color: #b1951d;">][</span>j-1<span style="color: #b1951d;">]</span><span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
-        table<span style="color: #b1951d;">[</span>i<span style="color: #b1951d;">][</span>j<span style="color: #b1951d;">]</span> = <span style="color: #a45bad;">true</span>;
+    <span style="color: #eab700;">}</span>
+  <span style="color: #3e999f;">}</span>
+  <span style="color: #718c00;">for</span> <span style="color: #3e999f;">(</span><span style="color: #4271ae;">int</span> <span style="color: #eab700;">len</span> = 3; len &lt;= n; len++<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
+    <span style="color: #718c00;">for</span> <span style="color: #eab700;">(</span><span style="color: #4271ae;">int</span> <span style="color: #eab700;">i</span> = 0; i &lt; n-len+1; i++<span style="color: #eab700;">)</span> <span style="color: #eab700;">{</span>
+      <span style="color: #4271ae;">int</span> <span style="color: #eab700;">j</span> = i+len-1;
+      <span style="color: #718c00;">if</span> <span style="color: #718c00;">(</span>s<span style="color: #4271ae;">[</span>i<span style="color: #4271ae;">]</span> == s<span style="color: #4271ae;">[</span>j<span style="color: #4271ae;">]</span> &amp;&amp; table<span style="color: #4271ae;">[</span>i+1<span style="color: #4271ae;">][</span>j-1<span style="color: #4271ae;">]</span><span style="color: #718c00;">)</span> <span style="color: #718c00;">{</span>
+        table<span style="color: #4271ae;">[</span>i<span style="color: #4271ae;">][</span>j<span style="color: #4271ae;">]</span> = <span style="color: #4271ae;">true</span>;
         longestBegin = i;
         maxLen = len;
-      <span style="color: #67b11d;">}</span>
-    <span style="color: #2d9574;">}</span>
-  <span style="color: #bc6ec5;">}</span>
-  <span style="color: #4f97d7; font-weight: bold;">return</span> s.substr<span style="color: #bc6ec5;">(</span>longestBegin, maxLen<span style="color: #bc6ec5;">)</span>;
-<span style="color: #4f97d7;">}</span>
+      <span style="color: #718c00;">}</span>
+    <span style="color: #eab700;">}</span>
+  <span style="color: #3e999f;">}</span>
+  <span style="color: #718c00;">return</span> s.substr<span style="color: #3e999f;">(</span>longestBegin, maxLen<span style="color: #3e999f;">)</span>;
+<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -424,29 +424,29 @@ P<span style="color: #4f97d7;">[</span> i, i+1 <span style="color: #4f97d7;">]</
 这个是我写的 python 版本，有些难看，但是很好理解。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Solution</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">object</span><span style="color: #4f97d7;">)</span>:
-<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">convert</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, s, numRows<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> numRows == 1 <span style="color: #4f97d7; font-weight: bold;">or</span> numRows &gt;= <span style="color: #4f97d7;">len</span><span style="color: #4f97d7;">(</span>s<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> s
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">m</span> = <span style="color: #4f97d7;">{}</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>numRows<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">m</span><span style="color: #4f97d7;">[</span><span style="color: #4f97d7;">str</span><span style="color: #bc6ec5;">(</span>i<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span> = <span style="color: #4f97d7;">[]</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">count</span> = 0
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">inc</span> = <span style="color: #a45bad;">True</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">len</span><span style="color: #bc6ec5;">(</span>s<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   m<span style="color: #4f97d7;">[</span><span style="color: #4f97d7;">str</span><span style="color: #bc6ec5;">(</span>count<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>.append<span style="color: #4f97d7;">(</span>s<span style="color: #bc6ec5;">[</span>i<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> count == numRows -1 :
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">inc</span> = <span style="color: #a45bad;">False</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">elif</span> count == 0:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">inc</span> = <span style="color: #a45bad;">True</span>
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> inc:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">count</span> += 1
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">else</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">count</span> -= 1
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">sr</span> = <span style="color: #2d9574;">''</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">for</span> i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span><span style="color: #4f97d7;">(</span>numRows<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">sr</span> += <span style="color: #2d9574;">''</span>.join<span style="color: #4f97d7;">(</span>m<span style="color: #bc6ec5;">[</span><span style="color: #4f97d7;">str</span><span style="color: #2d9574;">(</span>i<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> sr
+<pre><code class="python"><span style="color: #718c00;">class</span> <span style="color: #4271ae;">Solution</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">object</span><span style="color: #4d4d4c;">)</span>:
+<span style="color: #718c00;">def</span> <span style="color: #f5871f;">convert</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, s, numRows<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> numRows == 1 <span style="color: #718c00;">or</span> numRows &gt;= <span style="color: #8959a8;">len</span><span style="color: #4d4d4c;">(</span>s<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> s
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">m</span> = <span style="color: #4d4d4c;">{}</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>numRows<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">m</span><span style="color: #4d4d4c;">[</span><span style="color: #8959a8;">str</span><span style="color: #3e999f;">(</span>i<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">]</span> = <span style="color: #4d4d4c;">[]</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">count</span> = 0
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">inc</span> = <span style="color: #4271ae;">True</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">len</span><span style="color: #3e999f;">(</span>s<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   m<span style="color: #4d4d4c;">[</span><span style="color: #8959a8;">str</span><span style="color: #3e999f;">(</span>count<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">]</span>.append<span style="color: #4d4d4c;">(</span>s<span style="color: #3e999f;">[</span>i<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> count == numRows -1 :
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">inc</span> = <span style="color: #4271ae;">False</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">elif</span> count == 0:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">inc</span> = <span style="color: #4271ae;">True</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> inc:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">count</span> += 1
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">else</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">count</span> -= 1
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">sr</span> = <span style="color: #3e999f;">''</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>numRows<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">sr</span> += <span style="color: #3e999f;">''</span>.join<span style="color: #4d4d4c;">(</span>m<span style="color: #3e999f;">[</span><span style="color: #8959a8;">str</span><span style="color: #eab700;">(</span>i<span style="color: #eab700;">)</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> sr
 </code></pre>
 </div>
 </div>
@@ -458,10 +458,10 @@ P<span style="color: #4f97d7;">[</span> i, i+1 <span style="color: #4f97d7;">]</
 这个问题算是简单的。其中 python 版的竟然 3 行就可以搞定。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">reverse</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, x<span style="color: #4f97d7;">)</span>:
-<span style="color: #7590db;">s</span> = <span style="color: #4f97d7;">cmp</span><span style="color: #4f97d7;">(</span>x, 0<span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">r</span> = <span style="color: #4f97d7;">int</span><span style="color: #4f97d7;">(</span>`s*x`<span style="color: #bc6ec5;">[</span>::-1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">return</span> s*r * <span style="color: #4f97d7;">(</span>r &lt; 2**31<span style="color: #4f97d7;">)</span>
+<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">reverse</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, x<span style="color: #4d4d4c;">)</span>:
+<span style="color: #eab700;">s</span> = <span style="color: #8959a8;">cmp</span><span style="color: #4d4d4c;">(</span>x, 0<span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">r</span> = <span style="color: #8959a8;">int</span><span style="color: #4d4d4c;">(</span>`s*x`<span style="color: #3e999f;">[</span>::-1<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #718c00;">return</span> s*r * <span style="color: #4d4d4c;">(</span>r &lt; 2**31<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -473,23 +473,23 @@ P<span style="color: #4f97d7;">[</span> i, i+1 <span style="color: #4f97d7;">]</
 下面是我写的版本，非常的啰嗦，但是逻辑简单：
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">reverse</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, x<span style="color: #4f97d7;">)</span>:
-<span style="color: #7590db;">tail</span> = 0
-<span style="color: #7590db;">result</span> = 0
-<span style="color: #7590db;">flag</span> = 1
-<span style="color: #4f97d7; font-weight: bold;">if</span> x &lt; 0:
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">flag</span> = -1
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">x</span> = -x
-<span style="color: #4f97d7; font-weight: bold;">while</span> x:
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">tail</span> = x % 10
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">newResult</span> = result * 10 + tail
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> newResult &gt;= 2 ** 31:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> 0
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">else</span>:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">result</span> = newResult
-<span style="background-color: #292e34;"> </span>   <span style="color: #7590db;">x</span> = x / 10
+<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">reverse</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, x<span style="color: #4d4d4c;">)</span>:
+<span style="color: #eab700;">tail</span> = 0
+<span style="color: #eab700;">result</span> = 0
+<span style="color: #eab700;">flag</span> = 1
+<span style="color: #718c00;">if</span> x &lt; 0:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">flag</span> = -1
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">x</span> = -x
+<span style="color: #718c00;">while</span> x:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">tail</span> = x % 10
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">newResult</span> = result * 10 + tail
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> newResult &gt;= 2 ** 31:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> 0
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">else</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">result</span> = newResult
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">x</span> = x / 10
 
-<span style="color: #4f97d7; font-weight: bold;">return</span> flag*result
+<span style="color: #718c00;">return</span> flag*result
 </code></pre>
 </div>
 </div>
@@ -501,24 +501,24 @@ P<span style="color: #4f97d7;">[</span> i, i+1 <span style="color: #4f97d7;">]</
 这个题目要注意一些特殊情况，还有重要的是边界要考虑清楚。
 </p>
 <div class="container">
-<pre><code class="shell">class Solution<span style="color: #4f97d7;">(</span>object<span style="color: #4f97d7;">)</span>:
-def myAtoi<span style="color: #4f97d7;">(</span>self, str<span style="color: #4f97d7;">)</span>:
-    <span style="color: #2d9574;">"""</span>
-<span style="color: #2d9574;">    :type str: str</span>
-<span style="color: #2d9574;">    :rtype: int</span>
-<span style="color: #2d9574;">    """</span>
-    <span style="color: #4f97d7; font-weight: bold;">if</span> len<span style="color: #4f97d7;">(</span>str<span style="color: #4f97d7;">)</span> == 0:
-        <span style="color: #4f97d7; font-weight: bold;">return</span> 0
-    <span style="color: #7590db;">ls</span> = list<span style="color: #4f97d7;">(</span>str.strip<span style="color: #bc6ec5;">()</span><span style="color: #4f97d7;">)</span>
-    <span style="color: #7590db;">sign</span> = -1 if <span style="color: #7590db;">ls</span><span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span> == <span style="color: #2d9574;">'-'</span> else 1
-    <span style="color: #4f97d7; font-weight: bold;">if</span> ls<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span><span style="color: #4f97d7; font-weight: bold;"> in</span> <span style="color: #4f97d7;">[</span><span style="color: #2d9574;">'-'</span>, <span style="color: #2d9574;">'+'</span><span style="color: #4f97d7;">]</span>:
-        del ls<span style="color: #4f97d7;">[</span>0<span style="color: #4f97d7;">]</span>
+<pre><code class="shell">class Solution<span style="color: #4d4d4c;">(</span>object<span style="color: #4d4d4c;">)</span>:
+def myAtoi<span style="color: #4d4d4c;">(</span>self, str<span style="color: #4d4d4c;">)</span>:
+    <span style="color: #3e999f;">"""</span>
+<span style="color: #3e999f;">    :type str: str</span>
+<span style="color: #3e999f;">    :rtype: int</span>
+<span style="color: #3e999f;">    """</span>
+    <span style="color: #718c00;">if</span> len<span style="color: #4d4d4c;">(</span>str<span style="color: #4d4d4c;">)</span> == 0:
+        <span style="color: #718c00;">return</span> 0
+    <span style="color: #eab700;">ls</span> = list<span style="color: #4d4d4c;">(</span>str.strip<span style="color: #3e999f;">()</span><span style="color: #4d4d4c;">)</span>
+    <span style="color: #eab700;">sign</span> = -1 if <span style="color: #eab700;">ls</span><span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</span> == <span style="color: #3e999f;">'-'</span> else 1
+    <span style="color: #718c00;">if</span> ls<span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</span><span style="color: #718c00;"> in</span> <span style="color: #4d4d4c;">[</span><span style="color: #3e999f;">'-'</span>, <span style="color: #3e999f;">'+'</span><span style="color: #4d4d4c;">]</span>:
+        del ls<span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</span>
 
-    ret, <span style="color: #7590db;">i</span> = 0, 0
-    <span style="color: #4f97d7; font-weight: bold;">while</span> i &lt; len<span style="color: #4f97d7;">(</span>ls<span style="color: #4f97d7;">)</span> and ls<span style="color: #4f97d7;">[</span>i<span style="color: #4f97d7;">]</span>.isdigit<span style="color: #4f97d7;">()</span>:
-        <span style="color: #7590db;">ret</span> = ret * 10 + ord<span style="color: #4f97d7;">(</span>ls<span style="color: #bc6ec5;">[</span>i<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span> - ord<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">'0'</span><span style="color: #4f97d7;">)</span>
-        <span style="color: #7590db;">i</span> += 1
-    <span style="color: #4f97d7; font-weight: bold;">return</span> max<span style="color: #4f97d7;">(</span>-2**31, min<span style="color: #bc6ec5;">(</span>ret * sign, 2 ** 31 - 1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+    ret, <span style="color: #eab700;">i</span> = 0, 0
+    <span style="color: #718c00;">while</span> i &lt; len<span style="color: #4d4d4c;">(</span>ls<span style="color: #4d4d4c;">)</span> and ls<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span>.isdigit<span style="color: #4d4d4c;">()</span>:
+        <span style="color: #eab700;">ret</span> = ret * 10 + ord<span style="color: #4d4d4c;">(</span>ls<span style="color: #3e999f;">[</span>i<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span> - ord<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'0'</span><span style="color: #4d4d4c;">)</span>
+        <span style="color: #eab700;">i</span> += 1
+    <span style="color: #718c00;">return</span> max<span style="color: #4d4d4c;">(</span>-2**31, min<span style="color: #3e999f;">(</span>ret * sign, 2 ** 31 - 1<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -532,19 +532,19 @@ def myAtoi<span style="color: #4f97d7;">(</span>self, str<span style="color: #4f
 简单的思路就是，把数字翻转一下就可以了，然后判断一下是否相等。刚开始的做法以为正负号是不用考虑的，后来发现为负的肯定不是了。
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Solution</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">object</span><span style="color: #4f97d7;">)</span>:
-<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">isPalindrome</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">self</span>, x<span style="color: #4f97d7;">)</span>:
-<span style="background-color: #292e34;"> </span>   <span style="color: #9f8766;">"""</span>
-<span style="color: #9f8766; background-color: #292e34;"> </span><span style="color: #9f8766;">   :type x: int</span>
-<span style="color: #9f8766; background-color: #292e34;"> </span><span style="color: #9f8766;">   :rtype: bool</span>
-<span style="color: #9f8766; background-color: #292e34;"> </span><span style="color: #9f8766;">   """</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> x &lt; 0:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">False</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7; font-weight: bold;">not</span> x:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">True</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">int</span><span style="color: #4f97d7;">(</span><span style="color: #4f97d7;">str</span><span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)[</span>::-1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span> == x:
-<span style="background-color: #292e34;"> </span>   <span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">True</span>
-<span style="background-color: #292e34;"> </span>   <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #a45bad;">False</span>
+<pre><code class="python"><span style="color: #718c00;">class</span> <span style="color: #4271ae;">Solution</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">object</span><span style="color: #4d4d4c;">)</span>:
+<span style="color: #718c00;">def</span> <span style="color: #f5871f;">isPalindrome</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, x<span style="color: #4d4d4c;">)</span>:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">"""</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   :type x: int</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   :rtype: bool</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   """</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> x &lt; 0:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> <span style="color: #4271ae;">False</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> <span style="color: #718c00;">not</span> x:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> <span style="color: #4271ae;">True</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> <span style="color: #8959a8;">int</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">str</span><span style="color: #3e999f;">(</span>x<span style="color: #3e999f;">)[</span>::-1<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span> == x:
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> <span style="color: #4271ae;">True</span>
+<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> <span style="color: #4271ae;">False</span>
 </code></pre>
 </div>
 <p>
@@ -566,7 +566,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

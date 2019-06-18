@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-26 Sun 11:00 -->
+<!-- 2019-06-18 Tue 19:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中的宏</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -282,9 +282,9 @@ for the JavaScript code in this tag.
 例如，when 的实现：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">when</span> <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span> <span style="color: #ce537a; font-weight: bold;">&amp;rest</span> body<span style="color: #bc6ec5;">)</span>
-    <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">declare</span> <span style="color: #2d9574;">(</span>indent 1<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">(</span>debug t<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-    <span style="color: #bc6ec5;">(</span>list <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">if</span> cond <span style="color: #2d9574;">(</span>cons <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">progn</span> body<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">when</span> <span style="color: #3e999f;">(</span><span style="color: #718c00;">cond</span> <span style="color: #4271ae;">&amp;rest</span> body<span style="color: #3e999f;">)</span>
+    <span style="color: #3e999f;">(</span><span style="color: #718c00;">declare</span> <span style="color: #eab700;">(</span>indent 1<span style="color: #eab700;">)</span> <span style="color: #eab700;">(</span>debug t<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
+    <span style="color: #3e999f;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">if</span> cond <span style="color: #eab700;">(</span>cons <span style="color: #718c00;">'</span><span style="color: #4271ae;">progn</span> body<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -308,10 +308,10 @@ indent 的类型比较简单，它可以使用这样几种类型：
 下面我们就可以使用 when 了：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> x 1<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> y 2<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">when</span> <span style="color: #bc6ec5;">(</span>&lt; x y<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>insert <span style="color: #2d9574;">"</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">n</span><span style="color: #2d9574;">Hello world"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">setq</span> x 1<span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">setq</span> y 2<span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">when</span> <span style="color: #3e999f;">(</span>&lt; x y<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>insert <span style="color: #3e999f;">"</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">Hello world"</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -319,9 +319,9 @@ indent 的类型比较简单，它可以使用这样几种类型：
 我们可以使用 macroexpand 来展开宏：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span>macroexpand <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #bc6ec5;">(</span>when <span style="color: #2d9574;">(</span>&lt; x y<span style="color: #2d9574;">)</span>
-                <span style="color: #2d9574;">(</span>insert <span style="color: #2d9574;">"</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">n</span><span style="color: #2d9574;">hello world"</span><span style="color: #2d9574;">)</span>
-                <span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span>macroexpand <span style="color: #718c00;">'</span><span style="color: #3e999f;">(</span>when <span style="color: #eab700;">(</span>&lt; x y<span style="color: #eab700;">)</span>
+                <span style="color: #eab700;">(</span>insert <span style="color: #3e999f;">"</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">hello world"</span><span style="color: #eab700;">)</span>
+                <span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -330,10 +330,10 @@ indent 的类型比较简单，它可以使用这样几种类型：
 </p>
 
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span>
-    <span style="color: #bc6ec5;">(</span>&lt; x y<span style="color: #bc6ec5;">)</span>
-    <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">progn</span>
-      <span style="color: #2d9574;">(</span>insert <span style="color: #2d9574;">"</span><span style="color: #2d9574; font-weight: bold;">\</span><span style="color: #2d9574; font-weight: bold;">n</span><span style="color: #2d9574;">hello world"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">if</span>
+    <span style="color: #3e999f;">(</span>&lt; x y<span style="color: #3e999f;">)</span>
+    <span style="color: #3e999f;">(</span><span style="color: #718c00;">progn</span>
+      <span style="color: #eab700;">(</span>insert <span style="color: #3e999f;">"</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">hello world"</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -351,10 +351,10 @@ indent 的类型比较简单，它可以使用这样几种类型：
 例如，写一个 inc 函数，它会自动将 var 加 1：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">inc</span> <span style="color: #bc6ec5;">(</span>var<span style="color: #bc6ec5;">)</span>
-<span style="color: #bc6ec5;">(</span>list <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">setq</span> var <span style="color: #2d9574;">(</span>list <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">1+</span> var<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defun</span> <span style="color: #f5871f;">inc</span> <span style="color: #3e999f;">(</span>var<span style="color: #3e999f;">)</span>
+<span style="color: #3e999f;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">setq</span> var <span style="color: #eab700;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">1+</span> var<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">inc</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">x</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span>inc <span style="color: #718c00;">'</span><span style="color: #4271ae;">x</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -366,8 +366,8 @@ indent 的类型比较简单，它可以使用这样几种类型：
 会输出如下的结果：
 </p>
 <div class="container">
-<pre><code class="elisp">  <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> x
-<span style="color: #bc6ec5;">(</span>1+ x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp">  <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">setq</span> x
+<span style="color: #3e999f;">(</span>1+ x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -376,8 +376,8 @@ indent 的类型比较简单，它可以使用这样几种类型：
 </p>
 
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> x 1<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>eval <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">inc</span> <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">x</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  &#8658; &#32467;&#26524;&#20026; 2
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">setq</span> x 1<span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span>eval <span style="color: #3e999f;">(</span>inc <span style="color: #718c00;">'</span><span style="color: #4271ae;">x</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>  &#8658; &#32467;&#26524;&#20026; 2
 </code></pre>
 </div>
 
@@ -385,8 +385,8 @@ indent 的类型比较简单，它可以使用这样几种类型：
 如果我们使用宏来实现呢？
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">inc</span> <span style="color: #bc6ec5;">(</span>var<span style="color: #bc6ec5;">)</span>
-  <span style="color: #bc6ec5;">(</span>list <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">setq</span> var <span style="color: #2d9574;">(</span>list <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">1+</span> var<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">inc</span> <span style="color: #3e999f;">(</span>var<span style="color: #3e999f;">)</span>
+  <span style="color: #3e999f;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">setq</span> var <span style="color: #eab700;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">1+</span> var<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -395,8 +395,8 @@ indent 的类型比较简单，它可以使用这样几种类型：
 </p>
 
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> x 1<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">inc</span> x<span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">setq</span> x 1<span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span>inc x<span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -411,14 +411,14 @@ indent 的类型比较简单，它可以使用这样几种类型：
 例如下面的例子：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">test1</span> <span style="color: #bc6ec5;">(</span>var<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>message <span style="color: #2d9574;">"%d %d"</span> var var<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defun</span> <span style="color: #f5871f;">test1</span> <span style="color: #3e999f;">(</span>var<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>message <span style="color: #3e999f;">"%d %d"</span> var var<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">test2</span> <span style="color: #bc6ec5;">(</span>var<span style="color: #bc6ec5;">)</span>
-        <span style="color: #bc6ec5;">(</span>list <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #a45bad;">message</span> <span style="color: #2d9574;">"%d %d"</span> var var<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> x 1<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>test1 <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">inc</span> x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">&#32467;&#26524;&#20026; "2 2"</span>
-<span style="color: #4f97d7;">(</span>test2 <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">inc</span> x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">&#32467;&#26524;&#20026; "2 3"</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">test2</span> <span style="color: #3e999f;">(</span>var<span style="color: #3e999f;">)</span>
+        <span style="color: #3e999f;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">message</span> <span style="color: #3e999f;">"%d %d"</span> var var<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">setq</span> x 1<span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span>test1 <span style="color: #3e999f;">(</span>inc x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>  <span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">&#32467;&#26524;&#20026; "2 2"</span>
+<span style="color: #4d4d4c;">(</span>test2 <span style="color: #3e999f;">(</span>inc x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>  <span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">&#32467;&#26524;&#20026; "2 3"</span>
 </code></pre>
 </div>
 <p>
@@ -436,7 +436,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 如果使用了 ` 所有的元素都是引起（quote）的，例如：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7; font-weight: bold;">`</span><span style="color: #4f97d7;">(</span>hello world<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">&#30456;&#24403;&#20110; (list 'hello 'world)</span>
+<pre><code class="elisp"><span style="color: #718c00;">`</span><span style="color: #4d4d4c;">(</span>hello world<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">&#30456;&#24403;&#20110; (list 'hello 'world)</span>
 </code></pre>
 </div>
 
@@ -448,9 +448,9 @@ indent 的类型比较简单，它可以使用这样几种类型：
 例如上面定义的 when 就可以这样来写：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">when</span> <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">cond</span> <span style="color: #ce537a; font-weight: bold;">&amp;rest</span> body<span style="color: #bc6ec5;">)</span>
-    <span style="color: #4f97d7; font-weight: bold;">`</span><span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> ,cond
-     <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">progn</span> ,@body<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">when</span> <span style="color: #3e999f;">(</span><span style="color: #718c00;">cond</span> <span style="color: #4271ae;">&amp;rest</span> body<span style="color: #3e999f;">)</span>
+    <span style="color: #718c00;">`</span><span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> ,cond
+     <span style="color: #eab700;">(</span><span style="color: #718c00;">progn</span> ,@body<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 </div>
@@ -464,8 +464,8 @@ indent 的类型比较简单，它可以使用这样几种类型：
 如果要生成的宏为这个：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">inc</span> <span style="color: #bc6ec5;">(</span>var<span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">`</span><span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> ,var <span style="color: #2d9574;">(</span>1+ ,var<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">inc</span> <span style="color: #3e999f;">(</span>var<span style="color: #3e999f;">)</span>
+<span style="color: #718c00;">`</span><span style="color: #3e999f;">(</span><span style="color: #718c00;">setq</span> ,var <span style="color: #eab700;">(</span>1+ ,var<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -473,9 +473,9 @@ indent 的类型比较简单，它可以使用这样几种类型：
 我们可以这样写：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">create-inc</span> <span style="color: #bc6ec5;">()</span>
-    <span style="color: #4f97d7; font-weight: bold;">`</span><span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">inc</span> <span style="color: #2d9574;">(</span>var<span style="color: #2d9574;">)</span>
-    <span style="color: #4f97d7; font-weight: bold;">`</span><span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> ,var <span style="color: #67b11d;">(</span>1+ ,var<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">create-inc</span> <span style="color: #3e999f;">()</span>
+    <span style="color: #718c00;">`</span><span style="color: #3e999f;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">inc</span> <span style="color: #eab700;">(</span>var<span style="color: #eab700;">)</span>
+    <span style="color: #718c00;">`</span><span style="color: #eab700;">(</span><span style="color: #718c00;">setq</span> ,var <span style="color: #718c00;">(</span>1+ ,var<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -498,27 +498,27 @@ indent 的类型比较简单，它可以使用这样几种类型：
 </p>
 
 <div class="container">
-<pre><code class="emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">prelude-search</span> <span style="color: #bc6ec5;">(</span>query-url prompt<span style="color: #bc6ec5;">)</span>
-  <span style="color: #9f8766;">"Open the search url constructed with the QUERY-URL.</span>
-<span style="color: #9f8766;">PROMPT sets the `read-string prompt."</span>
-  <span style="color: #bc6ec5;">(</span>browse-url
-   <span style="color: #2d9574;">(</span>concat query-url
-           <span style="color: #67b11d;">(</span>url-hexify-string
-            <span style="color: #b1951d;">(</span><span style="color: #4f97d7; font-weight: bold;">if</span> mark-active
-                <span style="color: #4f97d7;">(</span>buffer-substring <span style="color: #bc6ec5;">(</span>region-beginning<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">(</span>region-end<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-              <span style="color: #4f97d7;">(</span>read-string prompt<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="emacs-lisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defun</span> <span style="color: #f5871f;">prelude-search</span> <span style="color: #3e999f;">(</span>query-url prompt<span style="color: #3e999f;">)</span>
+  <span style="color: #8959a8;">"Open the search url constructed with the QUERY-URL.</span>
+<span style="color: #8959a8;">PROMPT sets the `read-string prompt."</span>
+  <span style="color: #3e999f;">(</span>browse-url
+   <span style="color: #eab700;">(</span>concat query-url
+           <span style="color: #718c00;">(</span>url-hexify-string
+            <span style="color: #4271ae;">(</span><span style="color: #718c00;">if</span> mark-active
+                <span style="color: #4d4d4c;">(</span>buffer-substring <span style="color: #3e999f;">(</span>region-beginning<span style="color: #3e999f;">)</span> <span style="color: #3e999f;">(</span>region-end<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+              <span style="color: #4d4d4c;">(</span>read-string prompt<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">prelude-install-search-engine</span> <span style="color: #bc6ec5;">(</span>search-engine-name search-engine-url search-engine-prompt<span style="color: #bc6ec5;">)</span>
-  <span style="color: #9f8766;">"Given some information regarding a search engine, install the interactive command to search through them"</span>
-  <span style="color: #4f97d7; font-weight: bold;">`</span><span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> ,<span style="color: #2d9574;">(</span>intern <span style="color: #67b11d;">(</span>format <span style="color: #2d9574;">"prelude-%s"</span> search-engine-name<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">()</span>
-     ,<span style="color: #2d9574;">(</span>format <span style="color: #2d9574;">"Search %s with a query or region if any."</span> search-engine-name<span style="color: #2d9574;">)</span>
-     <span style="color: #2d9574;">(</span><span style="color: #4f97d7; font-weight: bold;">interactive</span><span style="color: #2d9574;">)</span>
-     <span style="color: #2d9574;">(</span>prelude-search ,search-engine-url ,search-engine-prompt<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">prelude-install-search-engine</span> <span style="color: #3e999f;">(</span>search-engine-name search-engine-url search-engine-prompt<span style="color: #3e999f;">)</span>
+  <span style="color: #8959a8;">"Given some information regarding a search engine, install the interactive command to search through them"</span>
+  <span style="color: #718c00;">`</span><span style="color: #3e999f;">(</span><span style="color: #718c00;">defun</span> ,<span style="color: #eab700;">(</span>intern <span style="color: #718c00;">(</span>format <span style="color: #3e999f;">"prelude-%s"</span> search-engine-name<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span> <span style="color: #eab700;">()</span>
+     ,<span style="color: #eab700;">(</span>format <span style="color: #3e999f;">"Search %s with a query or region if any."</span> search-engine-name<span style="color: #eab700;">)</span>
+     <span style="color: #eab700;">(</span><span style="color: #718c00;">interactive</span><span style="color: #eab700;">)</span>
+     <span style="color: #eab700;">(</span>prelude-search ,search-engine-url ,search-engine-prompt<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">prelude-install-search-engine</span> <span style="color: #2d9574;">"google"</span>     <span style="color: #2d9574;">"http://www.google.com/search?q="</span>              <span style="color: #2d9574;">"Google: "</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">prelude-install-search-engine</span> <span style="color: #2d9574;">"youtube"</span>    <span style="color: #2d9574;">"http://www.youtube.com/results?search_query="</span> <span style="color: #2d9574;">"Search YouTube: "</span><span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">prelude-install-search-engine</span> <span style="color: #2d9574;">"github"</span>     <span style="color: #2d9574;">"https://github.com/search?q="</span>                 <span style="color: #2d9574;">"Search GitHub: "</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">prelude-install-search-engine</span> <span style="color: #3e999f;">"google"</span>     <span style="color: #3e999f;">"http://www.google.com/search?q="</span>              <span style="color: #3e999f;">"Google: "</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">prelude-install-search-engine</span> <span style="color: #3e999f;">"youtube"</span>    <span style="color: #3e999f;">"http://www.youtube.com/results?search_query="</span> <span style="color: #3e999f;">"Search YouTube: "</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">prelude-install-search-engine</span> <span style="color: #3e999f;">"github"</span>     <span style="color: #3e999f;">"https://github.com/search?q="</span>                 <span style="color: #3e999f;">"Search GitHub: "</span><span style="color: #4d4d4c;">)</span>
 </code></pre>
 </div>
 
@@ -526,18 +526,18 @@ indent 的类型比较简单，它可以使用这样几种类型：
 基于上面的代码，我们写一个简单点的：
 </p>
 <div class="container">
-<pre><code class="elisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defmacro</span> <span style="color: #bc6ec5; font-weight: bold;">school</span> <span style="color: #bc6ec5;">(</span>name score<span style="color: #bc6ec5;">)</span>
-  <span style="color: #4f97d7; font-weight: bold;">`</span><span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> ,<span style="color: #2d9574;">(</span>intern <span style="color: #67b11d;">(</span>format <span style="color: #2d9574;">"name_%s"</span> name<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">()</span>
-     <span style="color: #2d9574;">(</span>message <span style="color: #67b11d;">(</span>format <span style="color: #2d9574;">"%s"</span> ,score<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-     <span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">school</span> <span style="color: #3e999f;">(</span>name score<span style="color: #3e999f;">)</span>
+  <span style="color: #718c00;">`</span><span style="color: #3e999f;">(</span><span style="color: #718c00;">defun</span> ,<span style="color: #eab700;">(</span>intern <span style="color: #718c00;">(</span>format <span style="color: #3e999f;">"name_%s"</span> name<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span> <span style="color: #eab700;">()</span>
+     <span style="color: #eab700;">(</span>message <span style="color: #718c00;">(</span>format <span style="color: #3e999f;">"%s"</span> ,score<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
+     <span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span>macroexpand-1 <span style="color: #4f97d7; font-weight: bold;">'</span><span style="color: #bc6ec5;">(</span>school <span style="color: #2d9574;">"xm"</span> 30<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4d4d4c;">(</span>macroexpand-1 <span style="color: #718c00;">'</span><span style="color: #3e999f;">(</span>school <span style="color: #3e999f;">"xm"</span> 30<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
 
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">school</span> <span style="color: #2d9574;">"&#23567;&#26126;"</span> 78<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">create new function =&gt; name_&#23567;&#26126;</span>
-<span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">school</span> <span style="color: #2d9574;">"&#23567;&#36213;"</span> 89<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">;; </span><span style="color: #2aa1ae; background-color: #292e34;">create  new function =&gt; name_&#23567;&#36213;</span>
+<span style="color: #4d4d4c;">(</span>school <span style="color: #3e999f;">"&#23567;&#26126;"</span> 78<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">create new function =&gt; name_&#23567;&#26126;</span>
+<span style="color: #4d4d4c;">(</span>school <span style="color: #3e999f;">"&#23567;&#36213;"</span> 89<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">create  new function =&gt; name_&#23567;&#36213;</span>
 
-<span style="color: #4f97d7;">(</span>name_&#23567;&#26126;<span style="color: #4f97d7;">)</span>  ==&gt; <span style="color: #2d9574;">"78"</span>
-<span style="color: #4f97d7;">(</span>name_&#23567;&#36213;<span style="color: #4f97d7;">)</span>  ==&gt; <span style="color: #2d9574;">"89"</span>
+<span style="color: #4d4d4c;">(</span>name_&#23567;&#26126;<span style="color: #4d4d4c;">)</span>  ==&gt; <span style="color: #3e999f;">"78"</span>
+<span style="color: #4d4d4c;">(</span>name_&#23567;&#36213;<span style="color: #4d4d4c;">)</span>  ==&gt; <span style="color: #3e999f;">"89"</span>
 </code></pre>
 </div>
 

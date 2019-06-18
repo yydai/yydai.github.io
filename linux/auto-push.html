@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:53 -->
+<!-- 2019-06-18 Tue 19:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>自动化 Git push</title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -271,9 +271,9 @@ for the JavaScript code in this tag.
 我在使用 Git 时，如果要提交代码到远程仓库，我经常会这样做：
 </p>
 <div class="container">
-<pre><code class="shell"><span style="color: #4f97d7;">cd</span> &lt;target directory&gt;
+<pre><code class="shell"><span style="color: #8959a8;">cd</span> &lt;target directory&gt;
 git add .
-git commit -m <span style="color: #2d9574;">"commit message"</span>
+git commit -m <span style="color: #3e999f;">"commit message"</span>
 git push
 </code></pre>
 </div>
@@ -290,10 +290,10 @@ git push
 最终的成果如下：
 </p>
 <div class="container">
-<pre><code class="shell">push                <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">default message in current directory</span>
-push <span style="color: #2d9574;">"message"</span>      <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">push with specified message in current directory</span>
-push blog                       <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">default message in the directory of blog</span>
-push blog <span style="color: #2d9574;">"message"</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">push with specified directory and message</span>
+<pre><code class="shell">push                <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">default message in current directory</span>
+push <span style="color: #3e999f;">"message"</span>      <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">push with specified message in current directory</span>
+push blog                       <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">default message in the directory of blog</span>
+push blog <span style="color: #3e999f;">"message"</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">push with specified directory and message</span>
 </code></pre>
 </div>
 
@@ -301,7 +301,7 @@ push blog <span style="color: #2d9574;">"message"</span> <span style="color: #2a
 上面的 blog 是我的配置文件中的一条配置，它其实就是一个目录：
 </p>
 <div class="container">
-<pre><code class="shell"><span style="color: #7590db;">blog_path</span>=<span style="color: #2d9574;">'~/workspace/blog/public_html'</span>
+<pre><code class="shell"><span style="color: #eab700;">blog_path</span>=<span style="color: #3e999f;">'~/workspace/blog/public_html'</span>
 </code></pre>
 </div>
 </div>
@@ -311,15 +311,15 @@ push blog <span style="color: #2d9574;">"message"</span> <span style="color: #2a
 <h2 id="orgdf25d84">实现</h2>
 <div class="outline-text-2" id="text-orgdf25d84">
 <div class="container">
-<pre><code class="shell"><span style="color: #bc6ec5; font-weight: bold;">auto_push</span><span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
+<pre><code class="shell"><span style="color: #f5871f;">auto_push</span><span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">{</span>
 git add .
-        <span style="color: #4f97d7;">local</span> <span style="color: #7590db;">desc</span>=$<span style="color: #7590db;">1</span>
-<span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">[</span> -z <span style="color: #2d9574;">"$1"</span> <span style="color: #bc6ec5;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
-    <span style="color: #7590db;">desc</span>=<span style="color: #2d9574;">"Auto commit"</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">default message</span>
-<span style="color: #4f97d7; font-weight: bold;">fi</span>
-git commit -m <span style="color: #2d9574;">"$desc"</span>
+        <span style="color: #8959a8;">local</span> <span style="color: #eab700;">desc</span>=$<span style="color: #eab700;">1</span>
+<span style="color: #718c00;">if</span> <span style="color: #3e999f;">[</span> -z <span style="color: #3e999f;">"$1"</span> <span style="color: #3e999f;">]</span>; <span style="color: #718c00;">then</span>
+    <span style="color: #eab700;">desc</span>=<span style="color: #3e999f;">"Auto commit"</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">default message</span>
+<span style="color: #718c00;">fi</span>
+git commit -m <span style="color: #3e999f;">"$desc"</span>
 git push
-<span style="color: #4f97d7;">}</span>
+<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -328,7 +328,7 @@ git push
 </p>
 <div class="container">
 <pre><code class="shell">auto_push
-auto_push <span style="color: #2d9574;">"message"</span>
+auto_push <span style="color: #3e999f;">"message"</span>
 </code></pre>
 </div>
 
@@ -349,23 +349,23 @@ auto_push <span style="color: #2d9574;">"message"</span>
 首先先看代码：
 </p>
 <div class="container">
-<pre><code class="shell">    read_config<span style="color: #4f97d7;">()</span> <span style="color: #4f97d7;">{</span>
-    <span style="color: #7590db;">CONFIG</span>=<span style="color: #2d9574;">"~/.config/zsh-command/path.config"</span>
-    <span style="color: #4f97d7;">source</span> $<span style="color: #7590db;">CONFIG</span>
+<pre><code class="shell">    read_config<span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #eab700;">CONFIG</span>=<span style="color: #3e999f;">"~/.config/zsh-command/path.config"</span>
+    <span style="color: #8959a8;">source</span> $<span style="color: #eab700;">CONFIG</span>
 
-    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #bc6ec5;">[</span> -z <span style="color: #2d9574;">"$1"</span> <span style="color: #bc6ec5;">]</span>; <span style="color: #4f97d7; font-weight: bold;">then</span>
+    <span style="color: #718c00;">if</span> <span style="color: #3e999f;">[</span> -z <span style="color: #3e999f;">"$1"</span> <span style="color: #3e999f;">]</span>; <span style="color: #718c00;">then</span>
         auto_push
-    <span style="color: #4f97d7; font-weight: bold;">elif</span> <span style="color: #a45bad;">!</span> cat $<span style="color: #7590db;">CONFIG</span> | grep <span style="color: #2d9574;">"$1"</span> &gt; /dev/null; <span style="color: #4f97d7; font-weight: bold;">then</span>
-        auto_push $<span style="color: #7590db;">1</span>
-    <span style="color: #4f97d7; font-weight: bold;">else</span>
-        <span style="color: #7590db;">temp</span>=$<span style="color: #bc6ec5;">{</span><span style="color: #7590db;">1</span><span style="color: #bc6ec5;">}</span>_path
-        <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">https://superuser.com/questions/935374/difference-between-and-in-shell-script</span>
-        <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">https://unix.stackexchange.com/questions/68035/foo-and-zsh</span>
-        <span style="color: #4f97d7;">pushd</span> $<span style="color: #bc6ec5;">{</span><span style="color: #2d9574;">(</span>P<span style="color: #2d9574;">)</span>temp<span style="color: #bc6ec5;">}</span> &gt; /dev/null <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">we use pushd instead of cd</span>
-        auto_push $<span style="color: #7590db;">2</span>
-        <span style="color: #4f97d7;">popd</span> &gt; /dev/null
-    <span style="color: #4f97d7; font-weight: bold;">fi</span>
-<span style="color: #4f97d7;">}</span>
+    <span style="color: #718c00;">elif</span> <span style="color: #4271ae;">!</span> cat $<span style="color: #eab700;">CONFIG</span> | grep <span style="color: #3e999f;">"$1"</span> &gt; /dev/null; <span style="color: #718c00;">then</span>
+        auto_push $<span style="color: #eab700;">1</span>
+    <span style="color: #718c00;">else</span>
+        <span style="color: #eab700;">temp</span>=$<span style="color: #3e999f;">{</span><span style="color: #eab700;">1</span><span style="color: #3e999f;">}</span>_path
+        <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">https://superuser.com/questions/935374/difference-between-and-in-shell-script</span>
+        <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">https://unix.stackexchange.com/questions/68035/foo-and-zsh</span>
+        <span style="color: #8959a8;">pushd</span> $<span style="color: #3e999f;">{</span><span style="color: #eab700;">(</span>P<span style="color: #eab700;">)</span>temp<span style="color: #3e999f;">}</span> &gt; /dev/null <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">we use pushd instead of cd</span>
+        auto_push $<span style="color: #eab700;">2</span>
+        <span style="color: #8959a8;">popd</span> &gt; /dev/null
+    <span style="color: #718c00;">fi</span>
+<span style="color: #4d4d4c;">}</span>
 </code></pre>
 </div>
 
@@ -373,8 +373,8 @@ auto_push <span style="color: #2d9574;">"message"</span>
 其中 CONFIG 是配置文件的目录。配置文件如下，
 </p>
 <div class="container">
-<pre><code class="shell"><span style="color: #7590db;">blog_path</span>=<span style="color: #2d9574;">'~/workspace/blog/public_html'</span>
-<span style="color: #7590db;">emacs_path</span>=<span style="color: #2d9574;">'~/.emacs.d'</span>
+<pre><code class="shell"><span style="color: #eab700;">blog_path</span>=<span style="color: #3e999f;">'~/workspace/blog/public_html'</span>
+<span style="color: #eab700;">emacs_path</span>=<span style="color: #3e999f;">'~/.emacs.d'</span>
 </code></pre>
 </div>
 
@@ -398,7 +398,7 @@ pushd 和 popd。
 最后加一句：
 </p>
 <div class="container">
-<pre><code class="shell"><span style="color: #4f97d7;">alias</span> <span style="color: #7590db;">push</span>=<span style="color: #2d9574;">"read_config"</span>
+<pre><code class="shell"><span style="color: #8959a8;">alias</span> <span style="color: #eab700;">push</span>=<span style="color: #3e999f;">"read_config"</span>
 </code></pre>
 </div>
 
@@ -426,7 +426,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

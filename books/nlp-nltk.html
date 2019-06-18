@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-01-01 Tue 15:58 -->
+<!-- 2019-06-18 Tue 19:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -180,7 +180,7 @@
   /*]]>*/-->
 </style>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/zenburn.min.css' rel='stylesheet'>
+<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
 <script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
@@ -199,7 +199,7 @@ gtag('config', 'UA-111585106-1');
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -267,16 +267,16 @@ Normalizing Text
 stemmers
 </p>
 <div class="container">
-<pre><code class="python"><span style="color: #7590db;">raw</span> = <span style="color: #2d9574;">"""</span>
-<span style="color: #2d9574;">DENNIS: Listen, strange women lying in ponds distributing swords</span>
-<span style="color: #2d9574;">is no basis for a system of government.  Supreme executive power derives from</span>
-<span style="color: #2d9574;">a mandate from the masses, not from some farcical aquatic ceremony.</span>
-<span style="color: #2d9574;">"""</span>
-<span style="color: #7590db;">tokens</span> = word_tokenize<span style="color: #4f97d7;">(</span>raw<span style="color: #4f97d7;">)</span>
-<span style="color: #7590db;">porter</span> = nltk.PorterStemmer<span style="color: #4f97d7;">()</span>
-<span style="color: #7590db;">lancaster</span> = nltk.LancasterStemmer<span style="color: #4f97d7;">()</span>
-<span style="color: #4f97d7;">[</span>porter.stem<span style="color: #bc6ec5;">(</span>t<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">for</span> t <span style="color: #4f97d7; font-weight: bold;">in</span> tokens<span style="color: #4f97d7;">]</span>
-<span style="color: #4f97d7;">[</span>lancaster.stem<span style="color: #bc6ec5;">(</span>t<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7; font-weight: bold;">for</span> t <span style="color: #4f97d7; font-weight: bold;">in</span> tokens<span style="color: #4f97d7;">]</span>
+<pre><code class="python"><span style="color: #eab700;">raw</span> = <span style="color: #3e999f;">"""</span>
+<span style="color: #3e999f;">DENNIS: Listen, strange women lying in ponds distributing swords</span>
+<span style="color: #3e999f;">is no basis for a system of government.  Supreme executive power derives from</span>
+<span style="color: #3e999f;">a mandate from the masses, not from some farcical aquatic ceremony.</span>
+<span style="color: #3e999f;">"""</span>
+<span style="color: #eab700;">tokens</span> = word_tokenize<span style="color: #4d4d4c;">(</span>raw<span style="color: #4d4d4c;">)</span>
+<span style="color: #eab700;">porter</span> = nltk.PorterStemmer<span style="color: #4d4d4c;">()</span>
+<span style="color: #eab700;">lancaster</span> = nltk.LancasterStemmer<span style="color: #4d4d4c;">()</span>
+<span style="color: #4d4d4c;">[</span>porter.stem<span style="color: #3e999f;">(</span>t<span style="color: #3e999f;">)</span> <span style="color: #718c00;">for</span> t <span style="color: #718c00;">in</span> tokens<span style="color: #4d4d4c;">]</span>
+<span style="color: #4d4d4c;">[</span>lancaster.stem<span style="color: #3e999f;">(</span>t<span style="color: #3e999f;">)</span> <span style="color: #718c00;">for</span> t <span style="color: #718c00;">in</span> tokens<span style="color: #4d4d4c;">]</span>
 </code></pre>
 </div></li>
 <li>lemmatization 词型还原</li>
@@ -291,7 +291,7 @@ var base_url = 'https://api.github.com';
 var title = document.title;
 var owner = 'yydai';
 var repo = 'yydai.github.io';
-var search_issues = base_url + '/search/issues?q=' + title + '+user:' + owner + '+label:blog'+ '+state:open';
+var search_issues = base_url + '/search/issues?q=' + title + 'in:title' + '+user:' + owner + '+label:blog'+ '+state:open';
 
 console.log("search_issues = "+ search_issues);
 

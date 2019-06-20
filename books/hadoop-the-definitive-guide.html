@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:15 -->
+<!-- 2019-06-21 Fri 01:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hadoop, the Definitive Guide</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -275,7 +274,7 @@ for the JavaScript code in this tag.
 <li><a href="#orga9f80c8">联邦 HDFS</a></li>
 <li><a href="#orgf71b631">命令行接口</a></li>
 <li><a href="#orgc41d98f">Java 接口</a></li>
-<li><a href="#org68dba6d">数据流</a></li>
+<li><a href="#org7add6ee">数据流</a></li>
 <li><a href="#org9fa4491">一致模型</a></li>
 <li><a href="#orgf4bdb78">通过 distcp 并行复制</a></li>
 <li><a href="#org4286af4">Hadoop 存档 （这部分第 4 版没了）</a></li>
@@ -429,7 +428,7 @@ reduce 接收到 (年，[温度列表])， 然后找到最大温度。
 </p>
 </div></li>
 
-<li><a id="org3547f12"></a>数据流<br /><div class="outline-text-4" id="text-org3547f12">
+<li><a id="org8be6d38"></a>数据流<br /><div class="outline-text-4" id="text-org8be6d38">
 <p>
 MapReduce 作业是客户端需要执行的一个工作单元：它包括输入数据、MapReduce 程序和配置信息。Hadoop 将作业分成若干个小任务来执行：map 任务和 reduce 任务。
 </p>
@@ -465,37 +464,37 @@ combiner 的输出作为 reduce 函数的输入。combiner 属于一种优化方
 以上面温度的例子来说明。
 第一个 map：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #4d4d4c;">(</span>1950, 0<span style="color: #4d4d4c;">)</span>
-<span style="color: #4d4d4c;">(</span>1950, 20<span style="color: #4d4d4c;">)</span>
-<span style="color: #4d4d4c;">(</span>1950, 10<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #707183;">(</span>1950, 0<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>1950, 20<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>1950, 10<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 <p>
 第二个 map:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #4d4d4c;">(</span>1950, 25<span style="color: #4d4d4c;">)</span>
-<span style="color: #4d4d4c;">(</span>1950, 15<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #707183;">(</span>1950, 25<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>1950, 15<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
 <p>
 reduce 函数调用时输入:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #4d4d4c;">(</span>1950, <span style="color: #3e999f;">[</span>0, 20, 10, 25, 15<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #707183;">(</span>1950, <span style="color: #7388d6;">[</span>0, 20, 10, 25, 15<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#36755;&#20986;</span>
-<span style="color: #4d4d4c;">(</span>1950, 25<span style="color: #4d4d4c;">)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#36755;&#20986;</span>
+<span style="color: #707183;">(</span>1950, 25<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
 <p>
 但是我们如果用了 combiner 以后，我们就可以提前找到每个 map 任务的输出结果的最高气温。现在 reduce 的输入变成了。
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #4d4d4c;">(</span>1950, <span style="color: #3e999f;">[</span>20, 25<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #707183;">(</span>1950, <span style="color: #7388d6;">[</span>20, 25<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div></li>
@@ -582,8 +581,8 @@ HDFS 的块要比磁盘默认的块大很多，如果一个小于块大小的的
 <p>
 HDFS 中的 fsck 指令可以显示块信息：
 </p>
-<div class="container">
-<pre><code class="shell">hadoop fsck / -files -blocks
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop fsck / -files -blocks
 </code></pre>
 </div>
 </div>
@@ -629,32 +628,32 @@ datanode 是系统的工作节点，它根据需要存储并检索数据块，�
 <p>
 文件系统的基本操作
 </p>
-<div class="container">
-<pre><code class="shell">hadoop fs -copyFromLocal input/docs/quangle.txt hdfs://localhost/user/quangle.txt
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop fs -copyFromLocal input/docs/quangle.txt hdfs://localhost/user/quangle.txt
 </code></pre>
 </div>
 
 <p>
 我们其实可以简化这个操作
 </p>
-<div class="container">
-<pre><code class="shell">hadoop fs -copyFromLocal input/docs/quangle.txt /user/quangle.txt
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop fs -copyFromLocal input/docs/quangle.txt /user/quangle.txt
 </code></pre>
 </div>
 
 <p>
 也可以使用相对路径, 复制到 HOMΕ 中
 </p>
-<div class="container">
-<pre><code class="shell">hadoop fs -copyFromLocal input/docs/quangle.txt quangle.txt
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop fs -copyFromLocal input/docs/quangle.txt quangle.txt
 </code></pre>
 </div>
 
 <p>
 还有
 </p>
-<div class="container">
-<pre><code class="shell">hadoop fs -mkdir ...
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop fs -mkdir ...
 hadoop fs -copyToLocal ...
 </code></pre>
 </div>
@@ -666,14 +665,14 @@ hadoop fs -copyToLocal ...
 <p>
 从 Hadoop URL 读取数据
 </p>
-<div class="container">
-<pre><code class="java">    <span style="color: #4271ae;">InputStream</span> <span style="color: #eab700;">in</span> = <span style="color: #4271ae;">null</span>;
-    <span style="color: #718c00;">try</span> <span style="color: #4d4d4c;">{</span>
-    in = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">URL</span><span style="color: #3e999f;">(</span><span style="color: #3e999f;">"hdfs://host/path"</span><span style="color: #3e999f;">)</span>.openStream<span style="color: #3e999f;">()</span>;
-            <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">process in</span>
-<span style="color: #4d4d4c;">}</span> <span style="color: #718c00;">finally</span> <span style="color: #4d4d4c;">{</span>
-    IOUtils.closeStream<span style="color: #3e999f;">(</span>in<span style="color: #3e999f;">)</span>;
-<span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-java"><code class="java">    <span style="color: #2F8B58; font-weight: bold;">InputStream</span> <span style="color: #0084C8; font-weight: bold;">in</span> = <span style="color: #F5666D;">null</span>;
+    <span style="color: #A52A2A; font-weight: bold;">try</span> <span style="color: #707183;">{</span>
+    in = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">URL</span><span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"hdfs://host/path"</span><span style="color: #7388d6;">)</span>.openStream<span style="color: #7388d6;">()</span>;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">process in</span>
+<span style="color: #707183;">}</span> <span style="color: #A52A2A; font-weight: bold;">finally</span> <span style="color: #707183;">{</span>
+    IOUtils.closeStream<span style="color: #7388d6;">(</span>in<span style="color: #7388d6;">)</span>;
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -681,36 +680,36 @@ hadoop fs -copyToLocal ...
 通过 URLStreamHandler 实例以标准输出方式显示 Hadoop 文件
 </p>
 
-<div class="container">
-<pre><code class="java">    <span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">URLCat</span><span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">static</span> <span style="color: #3e999f;">{</span>
-            URL.setURLStreamHandlerFactory<span style="color: #eab700;">(</span><span style="color: #718c00;">new</span> <span style="color: #4271ae;">FsUrlStreamHandlerFactory</span><span style="color: #718c00;">()</span><span style="color: #eab700;">)</span>;
-    <span style="color: #3e999f;">}</span>
-            <span style="color: #718c00;">public</span> <span style="color: #718c00;">static</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">main</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">String</span><span style="color: #eab700;">[]</span> <span style="color: #eab700;">args</span><span style="color: #3e999f;">)</span> <span style="color: #718c00;">throws</span> <span style="color: #4271ae;">Exception</span> <span style="color: #3e999f;">{</span>
-            <span style="color: #4271ae;">InputStream</span> <span style="color: #eab700;">in</span> = <span style="color: #4271ae;">null</span>;
-                    <span style="color: #718c00;">try</span> <span style="color: #eab700;">{</span>
-            in = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">URL</span><span style="color: #718c00;">(</span>args<span style="color: #4271ae;">[</span>0<span style="color: #4271ae;">]</span>.openStream<span style="color: #4271ae;">()</span><span style="color: #718c00;">)</span>;
-                            IOUtils.copyBytes<span style="color: #718c00;">(</span>in, System.out, 4096, <span style="color: #4271ae;">false</span><span style="color: #718c00;">)</span>;
-        <span style="color: #eab700;">}</span> <span style="color: #718c00;">finally</span> <span style="color: #eab700;">{</span>
-            IOUtils.closeStream<span style="color: #718c00;">(</span>in<span style="color: #718c00;">)</span>;
-        <span style="color: #eab700;">}</span>
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-java"><code class="java">    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">URLCat</span><span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">static</span> <span style="color: #7388d6;">{</span>
+            URL.setURLStreamHandlerFactory<span style="color: #909183;">(</span><span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">FsUrlStreamHandlerFactory</span><span style="color: #709870;">()</span><span style="color: #909183;">)</span>;
+    <span style="color: #7388d6;">}</span>
+        <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">static</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">String</span><span style="color: #909183;">[]</span> <span style="color: #0084C8; font-weight: bold;">args</span><span style="color: #7388d6;">)</span> <span style="color: #A52A2A; font-weight: bold;">throws</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span> <span style="color: #7388d6;">{</span>
+            <span style="color: #2F8B58; font-weight: bold;">InputStream</span> <span style="color: #0084C8; font-weight: bold;">in</span> = <span style="color: #F5666D;">null</span>;
+            <span style="color: #A52A2A; font-weight: bold;">try</span> <span style="color: #909183;">{</span>
+            in = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">URL</span><span style="color: #709870;">(</span>args<span style="color: #907373;">[</span>0<span style="color: #907373;">]</span>.openStream<span style="color: #907373;">()</span><span style="color: #709870;">)</span>;
+                IOUtils.copyBytes<span style="color: #709870;">(</span>in, System.out, 4096, <span style="color: #F5666D;">false</span><span style="color: #709870;">)</span>;
+        <span style="color: #909183;">}</span> <span style="color: #A52A2A; font-weight: bold;">finally</span> <span style="color: #909183;">{</span>
+            IOUtils.closeStream<span style="color: #709870;">(</span>in<span style="color: #709870;">)</span>;
+        <span style="color: #909183;">}</span>
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
 <p>
 我们可这样运行
 </p>
-<div class="container">
-<pre><code class="shell">hadoop URLCat hdfs://localhost/user/tom/quangle.txt
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop URLCat hdfs://localhost/user/tom/quangle.txt
 </code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org68dba6d" class="outline-3">
-<h3 id="org68dba6d">数据流</h3>
-<div class="outline-text-3" id="text-org68dba6d">
+<div id="outline-container-org7add6ee" class="outline-3">
+<h3 id="org7add6ee">数据流</h3>
+<div class="outline-text-3" id="text-org7add6ee">
 <p>
 下面先看文件的读取。
 为了了解客户端以及与之交互的 HDFS、namenode 和 datanode
@@ -777,12 +776,12 @@ DitributedFileSytem 向客户端返回一个 FSDataOutputStream 对象，客户�
 <p>
 在 HDFS 中关闭文件其实还隐含执行 sync() 方法。
 </p>
-<div class="container">
-<pre><code class="java"><span style="color: #4271ae;">Path</span> <span style="color: #eab700;">p</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">Path</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"p"</span><span style="color: #4d4d4c;">)</span>
-OutputStream out = fs.create<span style="color: #4d4d4c;">(</span>p<span style="color: #4d4d4c;">)</span>;
-out.write<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"content"</span>.getBytes<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"UTF-8"</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>;
-out.close<span style="color: #4d4d4c;">()</span>;
-assertThat<span style="color: #4d4d4c;">(</span>fs.getFileStatus<span style="color: #3e999f;">(</span>p<span style="color: #3e999f;">)</span>.getLen<span style="color: #3e999f;">()</span>, is<span style="color: #3e999f;">(</span><span style="color: #eab700;">(</span><span style="color: #718c00;">(</span><span style="color: #4271ae;">long</span><span style="color: #718c00;">)</span> <span style="color: #3e999f;">"content"</span>.length<span style="color: #718c00;">()</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #2F8B58; font-weight: bold;">Path</span> <span style="color: #0084C8; font-weight: bold;">p</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">Path</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"p"</span><span style="color: #707183;">)</span>
+OutputStream out = fs.create<span style="color: #707183;">(</span>p<span style="color: #707183;">)</span>;
+out.write<span style="color: #707183;">(</span><span style="color: #4E9A06;">"content"</span>.getBytes<span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"UTF-8"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>;
+out.close<span style="color: #707183;">()</span>;
+assertThat<span style="color: #707183;">(</span>fs.getFileStatus<span style="color: #7388d6;">(</span>p<span style="color: #7388d6;">)</span>.getLen<span style="color: #7388d6;">()</span>, is<span style="color: #7388d6;">(</span><span style="color: #909183;">(</span><span style="color: #709870;">(</span><span style="color: #2F8B58; font-weight: bold;">long</span><span style="color: #709870;">)</span> <span style="color: #4E9A06;">"content"</span>.length<span style="color: #709870;">()</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>;
 </code></pre>
 </div>
 </div>
@@ -798,8 +797,8 @@ distcp 是一个分布式复制程序，它可以从 Hadoop 中复制大量的�
 <p>
 例如
 </p>
-<div class="container">
-<pre><code class="shell">hadoop distcp hdfs://namenode1/foo hdfs://namenode2/bar
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop distcp hdfs://namenode1/foo hdfs://namenode2/bar
 </code></pre>
 </div>
 
@@ -815,9 +814,9 @@ distcp 是作为一个 MapReduce 作业来实现的，这里没有 reducer, 只�
 <p>
 一个有效的替换是对
 </p>
-<div class="container">
-<pre><code class="shell">hadoop distcp file1 file2
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#26367;&#25442;</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop distcp file1 file2
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#26367;&#25442;</span>
 hadoop fs -cp
 </code></pre>
 </div>
@@ -825,19 +824,19 @@ hadoop fs -cp
 <p>
 也可以对文件夹操作
 </p>
-<div class="container">
-<pre><code class="shell">hadoop distcp dir1 dir2
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">if dir2 does not exist, it will be created.</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">else it will be dir2/dir2</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">if you dont want it, you can use -overwrite option</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop distcp dir1 dir2
+<span style="color: #204A87;"># </span><span style="color: #204A87;">if dir2 does not exist, it will be created.</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">else it will be dir2/dir2</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">if you dont want it, you can use -overwrite option</span>
 </code></pre>
 </div>
 
 <p>
 我们可以使用 update 来更新那些改变的文件
 </p>
-<div class="container">
-<pre><code class="shell">hadoop distcp -update dir1 dir2
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop distcp -update dir1 dir2
 </code></pre>
 </div>
 
@@ -853,16 +852,16 @@ hadoop fs -cp
 每个块存到 namenode 的内存中，因此如果 Hadoop 来存小文件是非常不适合的。
 </p>
 
-<div class="container">
-<pre><code class="shell">hadoop archive -archiveName file.har /my/files /my
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop archive -archiveName file.har /my/files /my
 </code></pre>
 </div>
 
 <p>
 删除一个 har 文件
 </p>
-<div class="container">
-<pre><code class="shell">hadoop fs -rmr /my/files.har
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">hadoop fs -rmr /my/files.har
 </code></pre>
 </div>
 </div>
@@ -949,12 +948,12 @@ Fair Scheduler
 我们可以先定义配置文件
 </p>
 
-<div class="container">
-<pre><code class="java"><span style="color: #4271ae;">Configuration</span> <span style="color: #eab700;">conf</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">Configuration</span><span style="color: #4d4d4c;">()</span>;
-conf.addResource<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"configuration-1.xml"</span><span style="color: #4d4d4c;">)</span>;
-assertThat<span style="color: #4d4d4c;">(</span>conf.get<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"color"</span><span style="color: #3e999f;">)</span>, is<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"yellow"</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>;
-assertThat<span style="color: #4d4d4c;">(</span>conf.getInt<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"size"</span>, 0<span style="color: #3e999f;">)</span>, is<span style="color: #3e999f;">(</span>10<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>;
-assertThat<span style="color: #4d4d4c;">(</span>conf.get<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"breadth"</span>, <span style="color: #3e999f;">"wide"</span><span style="color: #3e999f;">)</span>, is<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"wide"</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #2F8B58; font-weight: bold;">Configuration</span> <span style="color: #0084C8; font-weight: bold;">conf</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">Configuration</span><span style="color: #707183;">()</span>;
+conf.addResource<span style="color: #707183;">(</span><span style="color: #4E9A06;">"configuration-1.xml"</span><span style="color: #707183;">)</span>;
+assertThat<span style="color: #707183;">(</span>conf.get<span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"color"</span><span style="color: #7388d6;">)</span>, is<span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"yellow"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>;
+assertThat<span style="color: #707183;">(</span>conf.getInt<span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"size"</span>, 0<span style="color: #7388d6;">)</span>, is<span style="color: #7388d6;">(</span>10<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>;
+assertThat<span style="color: #707183;">(</span>conf.get<span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"breadth"</span>, <span style="color: #4E9A06;">"wide"</span><span style="color: #7388d6;">)</span>, is<span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"wide"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>;
 </code></pre>
 </div>
 
@@ -980,8 +979,8 @@ Hive 安装没搞定，用的 Docker 来搞的。。。
 <div id="outline-container-orgd3b850c" class="outline-3">
 <h3 id="orgd3b850c">Hive shell</h3>
 <div class="outline-text-3" id="text-orgd3b850c">
-<div class="container">
-<pre><code class="shell">show tables;
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">show tables;
 </code></pre>
 </div>
 
@@ -992,18 +991,18 @@ Hive 安装没搞定，用的 Docker 来搞的。。。
 <p>
 我们也可以指定文件
 </p>
-<div class="container">
-<pre><code class="sql">hive -f script.q
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">hive -f script.q
 </code></pre>
 </div>
 
 <p>
 我们也可以这样, 不用末尾分号
 </p>
-<div class="container">
-<pre><code class="sql">hive -e "<span style="color: #718c00;">select</span> * <span style="color: #718c00;">from</span> store_sales"
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">hive -e "<span style="color: #A52A2A; font-weight: bold;">select</span> * <span style="color: #A52A2A; font-weight: bold;">from</span> store_sales"
 
-<span style="color: #8e908c; font-style: italic;">-- &#19979;&#38754;&#20250;&#25490;&#38500;&#26597;&#35810;&#32467;&#26524;&#20043;&#22806;&#30340;&#20449;&#24687;</span>
+<span style="color: #204A87;">-- &#19979;&#38754;&#20250;&#25490;&#38500;&#26597;&#35810;&#32467;&#26524;&#20043;&#22806;&#30340;&#20449;&#24687;</span>
 hive -S -e ""
 </code></pre>
 </div>
@@ -1011,9 +1010,9 @@ hive -S -e ""
 <p>
 下面，我们举一个具体的例子，就是前面我们的天气的数据。
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">create</span> <span style="color: #718c00;">table</span> <span style="color: #f5871f;">records</span> <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">year</span> string, temperature <span style="color: #4271ae;">int</span>, quality <span style="color: #4271ae;">int</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #4271ae;">row</span> format delimited fields terminated <span style="color: #718c00;">by</span> <span style="color: #3e999f;">'\t'</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">create</span> <span style="color: #A52A2A; font-weight: bold;">table</span> <span style="color: #00578E; font-weight: bold;">records</span> <span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">year</span> string, temperature <span style="color: #2F8B58; font-weight: bold;">int</span>, quality <span style="color: #2F8B58; font-weight: bold;">int</span><span style="color: #707183;">)</span>
+<span style="color: #2F8B58; font-weight: bold;">row</span> format delimited fields terminated <span style="color: #A52A2A; font-weight: bold;">by</span> <span style="color: #4E9A06;">'\t'</span>;
 </code></pre>
 </div>
 <p>
@@ -1024,18 +1023,18 @@ hive -S -e ""
 然后我们将 sample 数据导入到 records 表中。数据我们可以在<a href="https://github.com/tomwhite/hadoop-book/blob/master/input/ncdc/micro-tab/sample.txt">这里</a>找到。
 </p>
 
-<div class="container">
-<pre><code class="shell">load data local inpath <span style="color: #3e999f;">'sample.txt'</span> overwrite into table records;
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">load data local inpath <span style="color: #4E9A06;">'sample.txt'</span> overwrite into table records;
 </code></pre>
 </div>
 
 <p>
 我们查看一下 records 表的内容就可以看到数据了。
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">select</span> * <span style="color: #718c00;">from</span> records;
-<span style="color: #8e908c; font-style: italic;">-- &#25214;&#21040;&#27599;&#24180;&#30340;&#26368;&#39640;&#28201;&#24230;</span>
-<span style="color: #718c00;">select</span> <span style="color: #718c00;">year</span>, <span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>temperature<span style="color: #4d4d4c;">)</span> <span style="color: #718c00;">from</span> records <span style="color: #718c00;">group</span> <span style="color: #718c00;">by</span> <span style="color: #718c00;">year</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">select</span> * <span style="color: #A52A2A; font-weight: bold;">from</span> records;
+<span style="color: #204A87;">-- &#25214;&#21040;&#27599;&#24180;&#30340;&#26368;&#39640;&#28201;&#24230;</span>
+<span style="color: #A52A2A; font-weight: bold;">select</span> <span style="color: #A52A2A; font-weight: bold;">year</span>, <span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>temperature<span style="color: #707183;">)</span> <span style="color: #A52A2A; font-weight: bold;">from</span> records <span style="color: #A52A2A; font-weight: bold;">group</span> <span style="color: #A52A2A; font-weight: bold;">by</span> <span style="color: #A52A2A; font-weight: bold;">year</span>;
 </code></pre>
 </div>
 
@@ -1156,21 +1155,21 @@ Hive 同时支持很多的数据类型，比较特殊的是它还支持数组类
 <p>
 对于复杂类型，我们举个例子就很好理解了：
 </p>
-<div class="container">
-<pre><code class="sql">    <span style="color: #718c00;">create</span> <span style="color: #718c00;">table</span> <span style="color: #f5871f;">complex</span> <span style="color: #4d4d4c;">(</span>
-    c1 <span style="color: #4271ae;">array</span>&lt;<span style="color: #4271ae;">int</span>&gt;,
-            c2 <span style="color: #718c00;">map</span>&lt;string, <span style="color: #4271ae;">int</span>&gt;,
-            c3 struct&lt;a:string, b:<span style="color: #4271ae;">int</span>, c:<span style="color: #4271ae;">double</span>&gt;,
-            c4 uniontype&lt;string, <span style="color: #4271ae;">int</span>&gt;
-<span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">    <span style="color: #A52A2A; font-weight: bold;">create</span> <span style="color: #A52A2A; font-weight: bold;">table</span> <span style="color: #00578E; font-weight: bold;">complex</span> <span style="color: #707183;">(</span>
+    c1 <span style="color: #2F8B58; font-weight: bold;">array</span>&lt;<span style="color: #2F8B58; font-weight: bold;">int</span>&gt;,
+            c2 <span style="color: #A52A2A; font-weight: bold;">map</span>&lt;string, <span style="color: #2F8B58; font-weight: bold;">int</span>&gt;,
+            c3 struct&lt;a:string, b:<span style="color: #2F8B58; font-weight: bold;">int</span>, c:<span style="color: #2F8B58; font-weight: bold;">double</span>&gt;,
+            c4 uniontype&lt;string, <span style="color: #2F8B58; font-weight: bold;">int</span>&gt;
+<span style="color: #707183;">)</span>;
 </code></pre>
 </div>
 
 <p>
 然后后我们可以
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">select</span> c1<span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</span>, c2<span style="color: #4d4d4c;">[</span><span style="color: #3e999f;">'b'</span><span style="color: #4d4d4c;">]</span>, c3.c, c4 <span style="color: #718c00;">from</span> complex;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">select</span> c1<span style="color: #707183;">[</span>0<span style="color: #707183;">]</span>, c2<span style="color: #707183;">[</span><span style="color: #4E9A06;">'b'</span><span style="color: #707183;">]</span>, c3.c, c4 <span style="color: #A52A2A; font-weight: bold;">from</span> complex;
 </code></pre>
 </div>
 </div>
@@ -1182,9 +1181,9 @@ Hive 同时支持很多的数据类型，比较特殊的是它还支持数组类
 <p>
 我们在 Hive 中通过命令
 </p>
-<div class="container">
-<pre><code class="sql">show functions;
-<span style="color: #718c00;">describe</span> <span style="color: #718c00;">function</span> &lt;func-<span style="color: #718c00;">name</span>&gt;;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">show functions;
+<span style="color: #A52A2A; font-weight: bold;">describe</span> <span style="color: #A52A2A; font-weight: bold;">function</span> &lt;func-<span style="color: #A52A2A; font-weight: bold;">name</span>&gt;;
 </code></pre>
 </div>
 <p>
@@ -1214,9 +1213,9 @@ Hive 表中内容一般存在 HDFS 中，或者本地文件系统或 s3 这样�
 <p>
 外部表的数据有自己来控制。
 </p>
-<div class="container">
-<pre><code class="sql">    <span style="color: #718c00;">CREATE</span> <span style="color: #718c00;">EXTERNAL</span> <span style="color: #718c00;">TABLE</span> <span style="color: #f5871f;">external_table</span> <span style="color: #4d4d4c;">(</span>dummy STRING<span style="color: #4d4d4c;">)</span> LOCATION <span style="color: #3e999f;">'/user/tom/external_table'</span>;
-LOAD <span style="color: #718c00;">DATA</span> INPATH <span style="color: #3e999f;">'/user/tom/data.txt'</span> <span style="color: #718c00;">INTO</span> <span style="color: #718c00;">TABLE</span> external_table;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">    <span style="color: #A52A2A; font-weight: bold;">CREATE</span> <span style="color: #A52A2A; font-weight: bold;">EXTERNAL</span> <span style="color: #A52A2A; font-weight: bold;">TABLE</span> <span style="color: #00578E; font-weight: bold;">external_table</span> <span style="color: #707183;">(</span>dummy STRING<span style="color: #707183;">)</span> LOCATION <span style="color: #4E9A06;">'/user/tom/external_table'</span>;
+LOAD <span style="color: #A52A2A; font-weight: bold;">DATA</span> INPATH <span style="color: #4E9A06;">'/user/tom/data.txt'</span> <span style="color: #A52A2A; font-weight: bold;">INTO</span> <span style="color: #A52A2A; font-weight: bold;">TABLE</span> external_table;
 </code></pre>
 </div>
 </div>
@@ -1244,19 +1243,19 @@ Hive 把表组织成“分区”。这是一种根据分区列（partition colum
 <p>
 分区是通过 PARTITIONED BY 来定义的，下面是假想的日志记录
 </p>
-<div class="container">
-<pre><code class="sql">        <span style="color: #718c00;">CREATE</span> <span style="color: #718c00;">TABLE</span> <span style="color: #f5871f;">logs</span> <span style="color: #4d4d4c;">(</span>ts BIGINT, line STRING<span style="color: #4d4d4c;">)</span>
-PARTITIONED <span style="color: #718c00;">BY</span> <span style="color: #4d4d4c;">(</span>dt STRING, country STRING<span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">        <span style="color: #A52A2A; font-weight: bold;">CREATE</span> <span style="color: #A52A2A; font-weight: bold;">TABLE</span> <span style="color: #00578E; font-weight: bold;">logs</span> <span style="color: #707183;">(</span>ts BIGINT, line STRING<span style="color: #707183;">)</span>
+PARTITIONED <span style="color: #A52A2A; font-weight: bold;">BY</span> <span style="color: #707183;">(</span>dt STRING, country STRING<span style="color: #707183;">)</span>;
 </code></pre>
 </div>
 
 <p>
 我们把数据加载到数据表中，要显式指定加载的分区值:
 </p>
-<div class="container">
-<pre><code class="sql">        LOAD <span style="color: #718c00;">DATA</span> <span style="color: #718c00;">LOCAL</span> INPATH <span style="color: #3e999f;">'input/hive/partitions/file1'</span>
-<span style="color: #718c00;">INTO</span> <span style="color: #718c00;">TABLE</span> logs
-    PARTITION <span style="color: #4d4d4c;">(</span>dt=<span style="color: #3e999f;">'2001-01-01'</span>, country=<span style="color: #3e999f;">'GB'</span><span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">        LOAD <span style="color: #A52A2A; font-weight: bold;">DATA</span> <span style="color: #A52A2A; font-weight: bold;">LOCAL</span> INPATH <span style="color: #4E9A06;">'input/hive/partitions/file1'</span>
+<span style="color: #A52A2A; font-weight: bold;">INTO</span> <span style="color: #A52A2A; font-weight: bold;">TABLE</span> logs
+    PARTITION <span style="color: #707183;">(</span>dt=<span style="color: #4E9A06;">'2001-01-01'</span>, country=<span style="color: #4E9A06;">'GB'</span><span style="color: #707183;">)</span>;
 </code></pre>
 </div>
 
@@ -1272,9 +1271,9 @@ PARTITIONED <span style="color: #718c00;">BY</span> <span style="color: #4d4d4c;
 <p>
 我们可以通过命令查看分区
 </p>
-<div class="container">
-<pre><code class="sql">SHOW PARTITIONS logs;
-<span style="color: #8e908c; font-style: italic;">-- &#32467;&#26524;</span>
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">SHOW PARTITIONS logs;
+<span style="color: #204A87;">-- &#32467;&#26524;</span>
 dt=2001-01-01/country=GB
 dt=2001-01-01/country=US
 dt=2001-01-02/country=GB
@@ -1285,10 +1284,10 @@ dt=2001-01-02/country=US
 <p>
 在 select 中我们可以直接使用
 </p>
-<div class="container">
-<pre><code class="sql">        <span style="color: #718c00;">SELECT</span> ts, dt, line
-<span style="color: #718c00;">FROM</span> logs
-<span style="color: #718c00;">WHERE</span> country=<span style="color: #3e999f;">'GB'</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">        <span style="color: #A52A2A; font-weight: bold;">SELECT</span> ts, dt, line
+<span style="color: #A52A2A; font-weight: bold;">FROM</span> logs
+<span style="color: #A52A2A; font-weight: bold;">WHERE</span> country=<span style="color: #4E9A06;">'GB'</span>;
 </code></pre>
 </div></li>
 </ol>
@@ -1304,9 +1303,9 @@ dt=2001-01-02/country=US
 <p>
 我们使用 CLUSTERED BY 来划分桶使用的列和要划分的桶的个数。
 </p>
-<div class="container">
-<pre><code class="sql">        <span style="color: #718c00;">CREATE</span> <span style="color: #718c00;">TABLE</span> <span style="color: #f5871f;">bucketed_users</span> <span style="color: #4d4d4c;">(</span>id <span style="color: #4271ae;">INT</span>, <span style="color: #718c00;">name</span> STRING<span style="color: #4d4d4c;">)</span>
-CLUSTERED <span style="color: #718c00;">BY</span> <span style="color: #4d4d4c;">(</span>id<span style="color: #4d4d4c;">)</span> <span style="color: #718c00;">INTO</span> 4 BUCKETS;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">        <span style="color: #A52A2A; font-weight: bold;">CREATE</span> <span style="color: #A52A2A; font-weight: bold;">TABLE</span> <span style="color: #00578E; font-weight: bold;">bucketed_users</span> <span style="color: #707183;">(</span>id <span style="color: #2F8B58; font-weight: bold;">INT</span>, <span style="color: #A52A2A; font-weight: bold;">name</span> STRING<span style="color: #707183;">)</span>
+CLUSTERED <span style="color: #A52A2A; font-weight: bold;">BY</span> <span style="color: #707183;">(</span>id<span style="color: #707183;">)</span> <span style="color: #A52A2A; font-weight: bold;">INTO</span> 4 BUCKETS;
 </code></pre>
 </div>
 
@@ -1314,9 +1313,9 @@ CLUSTERED <span style="color: #718c00;">BY</span> <span style="color: #4d4d4c;">
 Hive 会根据 Id 来 hash，然后根据桶的个数取余。
 我们还可以对桶根据某个列排序
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">CREATE</span> <span style="color: #718c00;">TABLE</span> <span style="color: #f5871f;">bucketed_users</span> <span style="color: #4d4d4c;">(</span>id <span style="color: #4271ae;">INT</span>, <span style="color: #718c00;">name</span> STRING<span style="color: #4d4d4c;">)</span>
-CLUSTERED <span style="color: #718c00;">BY</span> <span style="color: #4d4d4c;">(</span>id<span style="color: #4d4d4c;">)</span> SORTED <span style="color: #718c00;">BY</span> <span style="color: #4d4d4c;">(</span>id <span style="color: #718c00;">ASC</span><span style="color: #4d4d4c;">)</span> <span style="color: #718c00;">INTO</span> 4 BUCKETS;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">CREATE</span> <span style="color: #A52A2A; font-weight: bold;">TABLE</span> <span style="color: #00578E; font-weight: bold;">bucketed_users</span> <span style="color: #707183;">(</span>id <span style="color: #2F8B58; font-weight: bold;">INT</span>, <span style="color: #A52A2A; font-weight: bold;">name</span> STRING<span style="color: #707183;">)</span>
+CLUSTERED <span style="color: #A52A2A; font-weight: bold;">BY</span> <span style="color: #707183;">(</span>id<span style="color: #707183;">)</span> SORTED <span style="color: #A52A2A; font-weight: bold;">BY</span> <span style="color: #707183;">(</span>id <span style="color: #A52A2A; font-weight: bold;">ASC</span><span style="color: #707183;">)</span> <span style="color: #A52A2A; font-weight: bold;">INTO</span> 4 BUCKETS;
 </code></pre>
 </div>
 
@@ -1327,19 +1326,19 @@ CLUSTERED <span style="color: #718c00;">BY</span> <span style="color: #4d4d4c;">
 <p>
 将没有分桶的数据插入到分桶的表中：
 </p>
-<div class="container">
-<pre><code class="sql">    <span style="color: #8e908c; font-style: italic;">-- need set hive.enforce.bucketing=true</span>
-    <span style="color: #718c00;">INSERT</span> OVERWRITE <span style="color: #718c00;">TABLE</span> bucketed_users
-<span style="color: #718c00;">SELECT</span> * <span style="color: #718c00;">FROM</span> users;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">    <span style="color: #204A87;">-- need set hive.enforce.bucketing=true</span>
+    <span style="color: #A52A2A; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #A52A2A; font-weight: bold;">TABLE</span> bucketed_users
+<span style="color: #A52A2A; font-weight: bold;">SELECT</span> * <span style="color: #A52A2A; font-weight: bold;">FROM</span> users;
 </code></pre>
 </div>
 
 <p>
 这里有一个用法
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">SELECT</span> * <span style="color: #718c00;">FROM</span> bucketed_users
-TABLESAMPLE<span style="color: #4d4d4c;">(</span>BUCKET 1 <span style="color: #718c00;">OUT</span> <span style="color: #718c00;">OF</span> 2 <span style="color: #718c00;">ON</span> id<span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">SELECT</span> * <span style="color: #A52A2A; font-weight: bold;">FROM</span> bucketed_users
+TABLESAMPLE<span style="color: #707183;">(</span>BUCKET 1 <span style="color: #A52A2A; font-weight: bold;">OUT</span> <span style="color: #A52A2A; font-weight: bold;">OF</span> 2 <span style="color: #A52A2A; font-weight: bold;">ON</span> id<span style="color: #707183;">)</span>;
 </code></pre>
 </div>
 
@@ -1381,21 +1380,21 @@ bucket of each group.
 insert
 </p>
 
-<div class="container">
-<pre><code class="sql">    <span style="color: #718c00;">INSERT</span> OVERWRITE <span style="color: #718c00;">TABLE</span> target
-<span style="color: #718c00;">SELECT</span> col1, col2
-        <span style="color: #718c00;">FROM</span> <span style="color: #718c00;">source</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">    <span style="color: #A52A2A; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #A52A2A; font-weight: bold;">TABLE</span> target
+<span style="color: #A52A2A; font-weight: bold;">SELECT</span> col1, col2
+        <span style="color: #A52A2A; font-weight: bold;">FROM</span> <span style="color: #A52A2A; font-weight: bold;">source</span>;
 </code></pre>
 </div>
 
 <p>
 或者
 </p>
-<div class="container">
-<pre><code class="sql">        <span style="color: #718c00;">INSERT</span> OVERWRITE <span style="color: #718c00;">TABLE</span> target
-    PARTITION <span style="color: #4d4d4c;">(</span>dt=<span style="color: #3e999f;">'2001-01-01'</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #718c00;">SELECT</span> col1, col2
-<span style="color: #718c00;">FROM</span> <span style="color: #718c00;">source</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">        <span style="color: #A52A2A; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #A52A2A; font-weight: bold;">TABLE</span> target
+    PARTITION <span style="color: #707183;">(</span>dt=<span style="color: #4E9A06;">'2001-01-01'</span><span style="color: #707183;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">SELECT</span> col1, col2
+<span style="color: #A52A2A; font-weight: bold;">FROM</span> <span style="color: #A52A2A; font-weight: bold;">source</span>;
 </code></pre>
 </div>
 
@@ -1407,10 +1406,10 @@ insert into table。
 <p>
 我们还可以使用动态分区来插入表：
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">INSERT</span> OVERWRITE <span style="color: #718c00;">TABLE</span> target
-PARTITION <span style="color: #4d4d4c;">(</span>dt<span style="color: #4d4d4c;">)</span> <span style="color: #718c00;">SELECT</span> col1, col2, dt
-<span style="color: #718c00;">FROM</span> <span style="color: #718c00;">source</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #A52A2A; font-weight: bold;">TABLE</span> target
+PARTITION <span style="color: #707183;">(</span>dt<span style="color: #707183;">)</span> <span style="color: #A52A2A; font-weight: bold;">SELECT</span> col1, col2, dt
+<span style="color: #A52A2A; font-weight: bold;">FROM</span> <span style="color: #A52A2A; font-weight: bold;">source</span>;
 </code></pre>
 </div></li>
 </ol>
@@ -1418,36 +1417,36 @@ PARTITION <span style="color: #4d4d4c;">(</span>dt<span style="color: #4d4d4c;">
 <li><p>
 多表插入我们可以把 FROΜ 放到前面
 </p>
-<div class="container">
-<pre><code class="sql">        <span style="color: #718c00;">FROM</span> <span style="color: #718c00;">source</span>
-<span style="color: #718c00;">INSERT</span> OVERWRITE <span style="color: #718c00;">TABLE</span> target
-<span style="color: #718c00;">SELECT</span> col1, col2;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">        <span style="color: #A52A2A; font-weight: bold;">FROM</span> <span style="color: #A52A2A; font-weight: bold;">source</span>
+<span style="color: #A52A2A; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #A52A2A; font-weight: bold;">TABLE</span> target
+<span style="color: #A52A2A; font-weight: bold;">SELECT</span> col1, col2;
 </code></pre>
 </div>
 
-<div class="container">
-<pre><code class="sql">        <span style="color: #718c00;">FROM</span> records2
-<span style="color: #718c00;">INSERT</span> OVERWRITE <span style="color: #718c00;">TABLE</span> stations_by_year
-      <span style="color: #718c00;">SELECT</span> <span style="color: #718c00;">year</span>, <span style="color: #8959a8;">COUNT</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">DISTINCT</span> station<span style="color: #4d4d4c;">)</span>
-  <span style="color: #718c00;">GROUP</span> <span style="color: #718c00;">BY</span> <span style="color: #718c00;">year</span>
-<span style="color: #718c00;">INSERT</span> OVERWRITE <span style="color: #718c00;">TABLE</span> records_by_year
-      <span style="color: #718c00;">SELECT</span> <span style="color: #718c00;">year</span>, <span style="color: #8959a8;">COUNT</span><span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span>
-  <span style="color: #718c00;">GROUP</span> <span style="color: #718c00;">BY</span> <span style="color: #718c00;">year</span>
-    <span style="color: #718c00;">INSERT</span> OVERWRITE <span style="color: #718c00;">TABLE</span> good_records_by_year
-  <span style="color: #718c00;">SELECT</span> <span style="color: #718c00;">year</span>, <span style="color: #8959a8;">COUNT</span><span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span>
-  <span style="color: #718c00;">WHERE</span> temperature != 9999 <span style="color: #718c00;">AND</span> quality <span style="color: #718c00;">IN</span> <span style="color: #4d4d4c;">(</span>0, 1, 4, 5, 9<span style="color: #4d4d4c;">)</span>
-      <span style="color: #718c00;">GROUP</span> <span style="color: #718c00;">BY</span> <span style="color: #718c00;">year</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">        <span style="color: #A52A2A; font-weight: bold;">FROM</span> records2
+<span style="color: #A52A2A; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #A52A2A; font-weight: bold;">TABLE</span> stations_by_year
+      <span style="color: #A52A2A; font-weight: bold;">SELECT</span> <span style="color: #A52A2A; font-weight: bold;">year</span>, <span style="color: #A020F0;">COUNT</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">DISTINCT</span> station<span style="color: #707183;">)</span>
+  <span style="color: #A52A2A; font-weight: bold;">GROUP</span> <span style="color: #A52A2A; font-weight: bold;">BY</span> <span style="color: #A52A2A; font-weight: bold;">year</span>
+<span style="color: #A52A2A; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #A52A2A; font-weight: bold;">TABLE</span> records_by_year
+      <span style="color: #A52A2A; font-weight: bold;">SELECT</span> <span style="color: #A52A2A; font-weight: bold;">year</span>, <span style="color: #A020F0;">COUNT</span><span style="color: #707183;">(</span>1<span style="color: #707183;">)</span>
+  <span style="color: #A52A2A; font-weight: bold;">GROUP</span> <span style="color: #A52A2A; font-weight: bold;">BY</span> <span style="color: #A52A2A; font-weight: bold;">year</span>
+    <span style="color: #A52A2A; font-weight: bold;">INSERT</span> OVERWRITE <span style="color: #A52A2A; font-weight: bold;">TABLE</span> good_records_by_year
+  <span style="color: #A52A2A; font-weight: bold;">SELECT</span> <span style="color: #A52A2A; font-weight: bold;">year</span>, <span style="color: #A020F0;">COUNT</span><span style="color: #707183;">(</span>1<span style="color: #707183;">)</span>
+  <span style="color: #A52A2A; font-weight: bold;">WHERE</span> temperature != 9999 <span style="color: #A52A2A; font-weight: bold;">AND</span> quality <span style="color: #A52A2A; font-weight: bold;">IN</span> <span style="color: #707183;">(</span>0, 1, 4, 5, 9<span style="color: #707183;">)</span>
+      <span style="color: #A52A2A; font-weight: bold;">GROUP</span> <span style="color: #A52A2A; font-weight: bold;">BY</span> <span style="color: #A52A2A; font-weight: bold;">year</span>;
 </code></pre>
 </div></li>
 
 <li><p>
 ℂΤΑ𝕊 操作
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">create</span> <span style="color: #718c00;">table</span> <span style="color: #f5871f;">target</span>
-<span style="color: #718c00;">as</span>
-<span style="color: #718c00;">select</span> col1, col2
-<span style="color: #718c00;">from</span> <span style="color: #718c00;">source</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">create</span> <span style="color: #A52A2A; font-weight: bold;">table</span> <span style="color: #00578E; font-weight: bold;">target</span>
+<span style="color: #A52A2A; font-weight: bold;">as</span>
+<span style="color: #A52A2A; font-weight: bold;">select</span> col1, col2
+<span style="color: #A52A2A; font-weight: bold;">from</span> <span style="color: #A52A2A; font-weight: bold;">source</span>;
 </code></pre>
 </div>
 
@@ -1458,11 +1457,11 @@ PARTITION <span style="color: #4d4d4c;">(</span>dt<span style="color: #4d4d4c;">
 <li><p>
 表的修改
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #8e908c; font-style: italic;">-- alter table name</span>
-<span style="color: #718c00;">alter</span> <span style="color: #718c00;">table</span> <span style="color: #718c00;">source</span> rename <span style="color: #718c00;">to</span> target;
-<span style="color: #8e908c; font-style: italic;">-- add new column</span>
-<span style="color: #718c00;">alter</span> <span style="color: #718c00;">table</span> <span style="color: #f5871f;">target</span> <span style="color: #718c00;">add</span> columns <span style="color: #4d4d4c;">(</span>col3 string<span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #204A87;">-- alter table name</span>
+<span style="color: #A52A2A; font-weight: bold;">alter</span> <span style="color: #A52A2A; font-weight: bold;">table</span> <span style="color: #A52A2A; font-weight: bold;">source</span> rename <span style="color: #A52A2A; font-weight: bold;">to</span> target;
+<span style="color: #204A87;">-- add new column</span>
+<span style="color: #A52A2A; font-weight: bold;">alter</span> <span style="color: #A52A2A; font-weight: bold;">table</span> <span style="color: #00578E; font-weight: bold;">target</span> <span style="color: #A52A2A; font-weight: bold;">add</span> columns <span style="color: #707183;">(</span>col3 string<span style="color: #707183;">)</span>;
 </code></pre>
 </div></li>
 
@@ -1481,11 +1480,11 @@ drop table
 我们其实大部分是不需要全局排序的，这时可以使用 sort by。
 </p>
 
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">from</span> records2
-<span style="color: #718c00;">select</span> <span style="color: #718c00;">year</span>, temperature
-distribute <span style="color: #718c00;">by</span> <span style="color: #718c00;">year</span>
-sort <span style="color: #718c00;">by</span> <span style="color: #718c00;">year</span> <span style="color: #718c00;">asc</span>, temperature <span style="color: #718c00;">desc</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">from</span> records2
+<span style="color: #A52A2A; font-weight: bold;">select</span> <span style="color: #A52A2A; font-weight: bold;">year</span>, temperature
+distribute <span style="color: #A52A2A; font-weight: bold;">by</span> <span style="color: #A52A2A; font-weight: bold;">year</span>
+sort <span style="color: #A52A2A; font-weight: bold;">by</span> <span style="color: #A52A2A; font-weight: bold;">year</span> <span style="color: #A52A2A; font-weight: bold;">asc</span>, temperature <span style="color: #A52A2A; font-weight: bold;">desc</span>;
 </code></pre>
 </div>
 </div>
@@ -1497,27 +1496,27 @@ sort <span style="color: #718c00;">by</span> <span style="color: #718c00;">year<
 <p>
 在 Hive 中我们可以调用外部的脚本
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">!/usr/bin/env python</span>
-<span style="color: #718c00;">import</span> re
-<span style="color: #718c00;">import</span> sys
-<span style="color: #718c00;">for</span> line <span style="color: #718c00;">in</span> sys.stdin:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #4d4d4c;">(</span>year, temp, q<span style="color: #4d4d4c;">)</span> = line.strip<span style="color: #4d4d4c;">()</span>.split<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> <span style="color: #4d4d4c;">(</span>temp != <span style="color: #3e999f;">"9999"</span> <span style="color: #718c00;">and</span> re.match<span style="color: #3e999f;">(</span><span style="color: #3e999f;">"[01459]"</span>, q<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> <span style="color: #3e999f;">"%s\t%s"</span> % <span style="color: #4d4d4c;">(</span>year, temp<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;">#</span><span style="color: #204A87;">!/usr/bin/env python</span>
+<span style="color: #A52A2A; font-weight: bold;">import</span> re
+<span style="color: #A52A2A; font-weight: bold;">import</span> sys
+<span style="color: #A52A2A; font-weight: bold;">for</span> line <span style="color: #A52A2A; font-weight: bold;">in</span> sys.stdin:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #707183;">(</span>year, temp, q<span style="color: #707183;">)</span> = line.strip<span style="color: #707183;">()</span>.split<span style="color: #707183;">()</span>
+        <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #707183;">(</span>temp != <span style="color: #4E9A06;">"9999"</span> <span style="color: #A52A2A; font-weight: bold;">and</span> re.match<span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"[01459]"</span>, q<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>           <span style="color: #A52A2A; font-weight: bold;">print</span> <span style="color: #4E9A06;">"%s\t%s"</span> % <span style="color: #707183;">(</span>year, temp<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
 <p>
 然后在 Hive 中，
 </p>
-<div class="container">
-<pre><code class="sql">    <span style="color: #718c00;">ADD</span> FILE /Users/tom/book-workspace/hadoop-book/ch17-hive/ src/main/python/is_good_quality.py;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">    <span style="color: #A52A2A; font-weight: bold;">ADD</span> FILE /Users/tom/book-workspace/hadoop-book/ch17-hive/ src/main/python/is_good_quality.py;
 
-<span style="color: #718c00;">from</span> records2
-    <span style="color: #718c00;">select</span> <span style="color: #718c00;">transform</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">year</span>, temperature, quality<span style="color: #4d4d4c;">)</span>
-    <span style="color: #718c00;">using</span> <span style="color: #3e999f;">'is_good_quality.py'</span>
-    <span style="color: #718c00;">as</span> <span style="color: #718c00;">year</span>, temperature;
+<span style="color: #A52A2A; font-weight: bold;">from</span> records2
+    <span style="color: #A52A2A; font-weight: bold;">select</span> <span style="color: #A52A2A; font-weight: bold;">transform</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">year</span>, temperature, quality<span style="color: #707183;">)</span>
+    <span style="color: #A52A2A; font-weight: bold;">using</span> <span style="color: #4E9A06;">'is_good_quality.py'</span>
+    <span style="color: #A52A2A; font-weight: bold;">as</span> <span style="color: #A52A2A; font-weight: bold;">year</span>, temperature;
 </code></pre>
 </div>
 
@@ -1539,8 +1538,8 @@ sort <span style="color: #718c00;">by</span> <span style="color: #718c00;">year<
 内连接
 </p>
 
-<div class="container">
-<pre><code class="sql">        <span style="color: #718c00;">select</span> * <span style="color: #718c00;">from</span> sales;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">        <span style="color: #A52A2A; font-weight: bold;">select</span> * <span style="color: #A52A2A; font-weight: bold;">from</span> sales;
         Joe 2
 Hank 4
 Ali 0
@@ -1552,8 +1551,8 @@ Hank 2
 <p>
 以及表 things
 </p>
-<div class="container">
-<pre><code class="sql">        <span style="color: #718c00;">SELECT</span> * <span style="color: #718c00;">FROM</span> things;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">        <span style="color: #A52A2A; font-weight: bold;">SELECT</span> * <span style="color: #A52A2A; font-weight: bold;">FROM</span> things;
         2 Tie
         4 Coat
 3 Hat
@@ -1564,9 +1563,9 @@ Hank 2
 <p>
 下面我们使用内连接
 </p>
-<div class="container">
-<pre><code class="sql">        <span style="color: #718c00;">SELECT</span> sales.*, things.*
-        <span style="color: #718c00;">from</span> sales <span style="color: #718c00;">join</span> things <span style="color: #718c00;">on</span> <span style="color: #4d4d4c;">(</span>sales.id=things.id<span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">        <span style="color: #A52A2A; font-weight: bold;">SELECT</span> sales.*, things.*
+        <span style="color: #A52A2A; font-weight: bold;">from</span> sales <span style="color: #A52A2A; font-weight: bold;">join</span> things <span style="color: #A52A2A; font-weight: bold;">on</span> <span style="color: #707183;">(</span>sales.id=things.id<span style="color: #707183;">)</span>;
 
         Joe    2    2    Tie
 Hank   4    4    Coat
@@ -1578,9 +1577,9 @@ Hank   2    2    Tie
 <li><p>
 外连接首先看看左外连接
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">SELECT</span> sales.*, things.*
-<span style="color: #718c00;">FROM</span> sales <span style="color: #718c00;">LEFT</span> <span style="color: #718c00;">OUTER</span> <span style="color: #718c00;">JOIN</span> things <span style="color: #718c00;">ON</span> <span style="color: #4d4d4c;">(</span>sales.id = things.id<span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">SELECT</span> sales.*, things.*
+<span style="color: #A52A2A; font-weight: bold;">FROM</span> sales <span style="color: #A52A2A; font-weight: bold;">LEFT</span> <span style="color: #A52A2A; font-weight: bold;">OUTER</span> <span style="color: #A52A2A; font-weight: bold;">JOIN</span> things <span style="color: #A52A2A; font-weight: bold;">ON</span> <span style="color: #707183;">(</span>sales.id = things.id<span style="color: #707183;">)</span>;
 </code></pre>
 </div>
 <p>
@@ -1590,11 +1589,11 @@ Hank   2    2    Tie
 <p>
 例如下面是输出的结果：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   Joe    2    2    Tie
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   Hank   4    4    Coat
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">        Joe    2    2    Tie
+<span style="background-color: #E6E6E6;"> </span>   Hank   4    4    Coat
 Ali    0    NULL NULL
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   Eve    3    3    Hat
+<span style="background-color: #E6E6E6;"> </span>   Eve    3    3    Hat
 Hank   2    2    Tie
 </code></pre>
 </div>
@@ -1602,28 +1601,28 @@ Hank   2    2    Tie
 <p>
 同理，还有右外连接，以及全连接
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">SELECT</span> sales.*, things.*
-<span style="color: #718c00;">from</span> sales.* <span style="color: #718c00;">right</span> <span style="color: #718c00;">outer</span> <span style="color: #718c00;">join</span> things <span style="color: #718c00;">on</span> <span style="color: #4d4d4c;">(</span>sales.id = things.id<span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">SELECT</span> sales.*, things.*
+<span style="color: #A52A2A; font-weight: bold;">from</span> sales.* <span style="color: #A52A2A; font-weight: bold;">right</span> <span style="color: #A52A2A; font-weight: bold;">outer</span> <span style="color: #A52A2A; font-weight: bold;">join</span> things <span style="color: #A52A2A; font-weight: bold;">on</span> <span style="color: #707183;">(</span>sales.id = things.id<span style="color: #707183;">)</span>;
 
-<span style="color: #718c00;">select</span> * <span style="color: #718c00;">from</span> sales.*, things.*
-<span style="color: #718c00;">from</span> sales <span style="color: #718c00;">full</span> <span style="color: #718c00;">outer</span> <span style="color: #718c00;">join</span> things <span style="color: #718c00;">on</span> <span style="color: #4d4d4c;">(</span>sales.id = things.id<span style="color: #4d4d4c;">)</span>;
+<span style="color: #A52A2A; font-weight: bold;">select</span> * <span style="color: #A52A2A; font-weight: bold;">from</span> sales.*, things.*
+<span style="color: #A52A2A; font-weight: bold;">from</span> sales <span style="color: #A52A2A; font-weight: bold;">full</span> <span style="color: #A52A2A; font-weight: bold;">outer</span> <span style="color: #A52A2A; font-weight: bold;">join</span> things <span style="color: #A52A2A; font-weight: bold;">on</span> <span style="color: #707183;">(</span>sales.id = things.id<span style="color: #707183;">)</span>;
 </code></pre>
 </div>
 
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   Joe    2    2    Tie
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">        Joe    2    2    Tie
 Hank   2    2    Tie
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   Hank   4    4    Coat
+<span style="background-color: #E6E6E6;"> </span>   Hank   4    4    Coat
 Eve    3    3    Hat
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   NULL   NULL 1    Scarf
+<span style="background-color: #E6E6E6;"> </span>   NULL   NULL 1    Scarf
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">----full outer join-----</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   Ali    0    NULL NULL
+        <span style="color: #204A87;">#</span><span style="color: #204A87;">----full outer join-----</span>
+        Ali    0    NULL NULL
 NULL   NULL 1    Scarf
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   Hank   2    2    Tie
+<span style="background-color: #E6E6E6;"> </span>   Hank   2    2    Tie
 Joe    2    2    Tie
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   Eve    3    3    Hat
+<span style="background-color: #E6E6E6;"> </span>   Eve    3    3    Hat
 Hank   4    4    Coat
 </code></pre>
 </div></li>
@@ -1632,9 +1631,9 @@ Hank   4    4    Coat
 <li><p>
 半连接
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">select</span> * <span style="color: #718c00;">from</span> things
-<span style="color: #718c00;">where</span> things.id <span style="color: #718c00;">in</span> <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">select</span> id <span style="color: #718c00;">from</span> sales<span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">select</span> * <span style="color: #A52A2A; font-weight: bold;">from</span> things
+<span style="color: #A52A2A; font-weight: bold;">where</span> things.id <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">select</span> id <span style="color: #A52A2A; font-weight: bold;">from</span> sales<span style="color: #707183;">)</span>;
 </code></pre>
 </div></li>
 
@@ -1650,15 +1649,15 @@ Hank   4    4    Coat
 Hive 对子查询的支持非常的有限。它只支持将子查询放入到 From 中。
 </p>
 
-<div class="container">
-<pre><code class="sql">    <span style="color: #718c00;">SELECT</span> station, <span style="color: #718c00;">year</span>, <span style="color: #8959a8;">AVG</span><span style="color: #4d4d4c;">(</span>max_temperature<span style="color: #4d4d4c;">)</span>
-<span style="color: #718c00;">FROM</span> <span style="color: #4d4d4c;">(</span>
-  <span style="color: #718c00;">SELECT</span> station, <span style="color: #718c00;">year</span>, <span style="color: #8959a8;">MAX</span><span style="color: #3e999f;">(</span>temperature<span style="color: #3e999f;">)</span> <span style="color: #718c00;">AS</span> max_temperature
-  <span style="color: #718c00;">FROM</span> records2
-  <span style="color: #718c00;">WHERE</span> temperature != 9999 <span style="color: #718c00;">AND</span> quality <span style="color: #718c00;">IN</span> <span style="color: #3e999f;">(</span>0, 1, 4, 5, 9<span style="color: #3e999f;">)</span>
-  <span style="color: #718c00;">GROUP</span> <span style="color: #718c00;">BY</span> station, <span style="color: #718c00;">year</span>
-<span style="color: #4d4d4c;">)</span> mt
-<span style="color: #718c00;">GROUP</span> <span style="color: #718c00;">BY</span> station, <span style="color: #718c00;">year</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql">    <span style="color: #A52A2A; font-weight: bold;">SELECT</span> station, <span style="color: #A52A2A; font-weight: bold;">year</span>, <span style="color: #A020F0;">AVG</span><span style="color: #707183;">(</span>max_temperature<span style="color: #707183;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">FROM</span> <span style="color: #707183;">(</span>
+  <span style="color: #A52A2A; font-weight: bold;">SELECT</span> station, <span style="color: #A52A2A; font-weight: bold;">year</span>, <span style="color: #A020F0;">MAX</span><span style="color: #7388d6;">(</span>temperature<span style="color: #7388d6;">)</span> <span style="color: #A52A2A; font-weight: bold;">AS</span> max_temperature
+  <span style="color: #A52A2A; font-weight: bold;">FROM</span> records2
+  <span style="color: #A52A2A; font-weight: bold;">WHERE</span> temperature != 9999 <span style="color: #A52A2A; font-weight: bold;">AND</span> quality <span style="color: #A52A2A; font-weight: bold;">IN</span> <span style="color: #7388d6;">(</span>0, 1, 4, 5, 9<span style="color: #7388d6;">)</span>
+  <span style="color: #A52A2A; font-weight: bold;">GROUP</span> <span style="color: #A52A2A; font-weight: bold;">BY</span> station, <span style="color: #A52A2A; font-weight: bold;">year</span>
+<span style="color: #707183;">)</span> mt
+<span style="color: #A52A2A; font-weight: bold;">GROUP</span> <span style="color: #A52A2A; font-weight: bold;">BY</span> station, <span style="color: #A52A2A; font-weight: bold;">year</span>;
 </code></pre>
 </div>
 <p>
@@ -1671,22 +1670,22 @@ Hive 对子查询的支持非常的有限。它只支持将子查询放入到 Fr
 <div id="outline-container-orgb8f41d9" class="outline-3">
 <h3 id="orgb8f41d9">视图</h3>
 <div class="outline-text-3" id="text-orgb8f41d9">
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">create</span> <span style="color: #718c00;">view</span> <span style="color: #f5871f;">valid_records</span> <span style="color: #718c00;">as</span>
-<span style="color: #718c00;">select</span> * <span style="color: #718c00;">from</span> records2
-<span style="color: #718c00;">where</span> temperature != 9999 <span style="color: #718c00;">and</span> quality <span style="color: #718c00;">in</span> <span style="color: #4d4d4c;">(</span>0, 1, 4, 5, 9<span style="color: #4d4d4c;">)</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">create</span> <span style="color: #A52A2A; font-weight: bold;">view</span> <span style="color: #00578E; font-weight: bold;">valid_records</span> <span style="color: #A52A2A; font-weight: bold;">as</span>
+<span style="color: #A52A2A; font-weight: bold;">select</span> * <span style="color: #A52A2A; font-weight: bold;">from</span> records2
+<span style="color: #A52A2A; font-weight: bold;">where</span> temperature != 9999 <span style="color: #A52A2A; font-weight: bold;">and</span> quality <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #707183;">(</span>0, 1, 4, 5, 9<span style="color: #707183;">)</span>;
 </code></pre>
 </div>
 
 <p>
 现在我们查询视图和表其实是一样的
 </p>
-<div class="container">
-<pre><code class="sql"><span style="color: #718c00;">create</span> <span style="color: #718c00;">view</span> <span style="color: #f5871f;">max_temperature</span> <span style="color: #4d4d4c;">(</span>station, <span style="color: #718c00;">year</span>, max_temperature<span style="color: #4d4d4c;">)</span>
-<span style="color: #718c00;">as</span>
-<span style="color: #718c00;">select</span> station, <span style="color: #718c00;">year</span>, <span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>temperature<span style="color: #4d4d4c;">)</span>
-<span style="color: #718c00;">from</span> valid_records
-<span style="color: #718c00;">group</span> <span style="color: #718c00;">by</span> station, <span style="color: #718c00;">year</span>;
+<div class="org-src-container">
+<pre class="src src-sql"><code class="sql"><span style="color: #A52A2A; font-weight: bold;">create</span> <span style="color: #A52A2A; font-weight: bold;">view</span> <span style="color: #00578E; font-weight: bold;">max_temperature</span> <span style="color: #707183;">(</span>station, <span style="color: #A52A2A; font-weight: bold;">year</span>, max_temperature<span style="color: #707183;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">as</span>
+<span style="color: #A52A2A; font-weight: bold;">select</span> station, <span style="color: #A52A2A; font-weight: bold;">year</span>, <span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>temperature<span style="color: #707183;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">from</span> valid_records
+<span style="color: #A52A2A; font-weight: bold;">group</span> <span style="color: #A52A2A; font-weight: bold;">by</span> station, <span style="color: #A52A2A; font-weight: bold;">year</span>;
 </code></pre>
 </div>
 </div>

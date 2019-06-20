@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:15 -->
+<!-- 2019-06-21 Fri 01:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Deeplearning with python</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -382,12 +381,16 @@ a tensor contains only one number is called a scalar.
 vectors. An 1D tensor is said to have exactly one axis.
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">import</span> numpy <span style="color: #718c00;">as</span> np
-<span style="color: #eab700;">x</span> = np.array<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span>1, 2, 3<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #718c00;">print</span> x.ndim
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">import</span> numpy <span style="color: #A52A2A; font-weight: bold;">as</span> np
+<span style="color: #0084C8; font-weight: bold;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>1, 2, 3<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">print</span> x.ndim
 </code></pre>
 </div>
+
+<pre class="example">
+1
+</pre>
 
 <p>
 the vector of x have 3 entries and so is called a 3-dimensional
@@ -400,12 +403,16 @@ has one axis, while a 3D tensor has 3 axis)
 <p>
 Matrices.
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">import</span> numpy <span style="color: #718c00;">as</span> np
-<span style="color: #eab700;">x</span> = np.array<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span><span style="color: #eab700;">[</span>1,2,3<span style="color: #eab700;">]</span>, <span style="color: #eab700;">[</span>2, 3, 4<span style="color: #eab700;">]</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #718c00;">print</span> x.ndim
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">import</span> numpy <span style="color: #A52A2A; font-weight: bold;">as</span> np
+<span style="color: #0084C8; font-weight: bold;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>1,2,3<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>2, 3, 4<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">print</span> x.ndim
 </code></pre>
 </div>
+
+<pre class="example">
+2
+</pre>
 </div></li>
 
 <li><a id="org80f710d"></a>3D tensors and higher &#x2026;<br /></li>
@@ -428,31 +435,31 @@ relu(x) ==&gt; max(x, 0)
 <p>
 x is a 2D tensor
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">naive_relu</span><span style="color: #4d4d4c;">(</span>x<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">assert</span> <span style="color: #8959a8;">len</span><span style="color: #4d4d4c;">(</span>x.shape<span style="color: #4d4d4c;">)</span> == 2
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">avoid overwriting the input tensor</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">x</span> = x.copy<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>x.shape<span style="color: #3e999f;">(</span>0<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> j <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>x.shape<span style="color: #3e999f;">[</span>1<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">x</span><span style="color: #4d4d4c;">[</span>i, j<span style="color: #4d4d4c;">]</span> = <span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>x<span style="color: #3e999f;">[</span>i, j<span style="color: #3e999f;">]</span>, 0<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> x
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">naive_relu</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">assert</span> <span style="color: #A020F0;">len</span><span style="color: #707183;">(</span>x.shape<span style="color: #707183;">)</span> == 2
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">avoid overwriting the input tensor</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">x</span> = x.copy<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> i <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span>x.shape<span style="color: #7388d6;">(</span>0<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> j <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span>x.shape<span style="color: #7388d6;">[</span>1<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">x</span><span style="color: #707183;">[</span>i, j<span style="color: #707183;">]</span> = <span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>x<span style="color: #7388d6;">[</span>i, j<span style="color: #7388d6;">]</span>, 0<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> x
 </code></pre>
 </div>
 
 <p>
 the addition op:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">naive_add</span><span style="color: #4d4d4c;">(</span>x, y<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">assert</span> <span style="color: #8959a8;">len</span><span style="color: #4d4d4c;">(</span>x.shape<span style="color: #4d4d4c;">)</span> == 2
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">assert</span> x.shape == y.shape
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">naive_add</span><span style="color: #707183;">(</span>x, y<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">assert</span> <span style="color: #A020F0;">len</span><span style="color: #707183;">(</span>x.shape<span style="color: #707183;">)</span> == 2
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">assert</span> x.shape == y.shape
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">x</span> = x.copy<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>x.shape<span style="color: #3e999f;">[</span>0<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> j <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>x.shape<span style="color: #3e999f;">[</span>1<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">x</span><span style="color: #4d4d4c;">[</span>i, j<span style="color: #4d4d4c;">]</span> += y<span style="color: #4d4d4c;">[</span>i,j<span style="color: #4d4d4c;">]</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> x
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">x</span> = x.copy<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> i <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span>x.shape<span style="color: #7388d6;">[</span>0<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> j <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span>x.shape<span style="color: #7388d6;">[</span>1<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">x</span><span style="color: #707183;">[</span>i, j<span style="color: #707183;">]</span> += y<span style="color: #707183;">[</span>i,j<span style="color: #707183;">]</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> x
 </code></pre>
 </div>
 
@@ -463,26 +470,26 @@ the addition op:
 <p>
 In numpy:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">import</span> numpy <span style="color: #718c00;">as</span> np
-<span style="color: #eab700;">z</span> = x + y
-<span style="color: #eab700;">z</span> = np.maximum<span style="color: #4d4d4c;">(</span>z, 0.<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">element-wise relu</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">import</span> numpy <span style="color: #A52A2A; font-weight: bold;">as</span> np
+<span style="color: #0084C8; font-weight: bold;">z</span> = x + y
+<span style="color: #0084C8; font-weight: bold;">z</span> = np.maximum<span style="color: #707183;">(</span>z, 0.<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">element-wise relu</span>
 </code></pre>
 </div>
 </div></li>
 
 <li><a id="orga2ec8a1"></a>Tensor reshaping<br /><div class="outline-text-4" id="text-orga2ec8a1">
-<div class="container">
-<pre><code class="python">train.reshape<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">(</span>6000, 28*28<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">train.reshape<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>6000, 28*28<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
 <p>
 TRANSPOSITION:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">import</span> numpy <span style="color: #718c00;">as</span> np
-<span style="color: #eab700;">x</span> = np.transpose<span style="color: #4d4d4c;">(</span>x<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">import</span> numpy <span style="color: #A52A2A; font-weight: bold;">as</span> np
+<span style="color: #0084C8; font-weight: bold;">x</span> = np.transpose<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div></li>
@@ -498,15 +505,15 @@ momentum algorithm==&gt; 1. convergence speed and local minima
 </p>
 </div>
 
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">past_velocity</span> = 0
-<span style="color: #eab700;">momentum</span> = 0.1
-<span style="color: #718c00;">while</span> loss &gt; 0.01:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">w</span>, <span style="color: #eab700;">loss</span>, <span style="color: #eab700;">gradient</span> = get_current_parameters<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">velocity</span> = past_velocity * momentum + learning_rate * gradient
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">w</span> = w + momentum * velocity - learning_rate * gradient
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">past_velocity</span> = velocity
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   update_parameter<span style="color: #4d4d4c;">(</span>w<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">past_velocity</span> = 0
+<span style="color: #0084C8; font-weight: bold;">momentum</span> = 0.1
+<span style="color: #A52A2A; font-weight: bold;">while</span> loss &gt; 0.01:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">w</span>, <span style="color: #0084C8; font-weight: bold;">loss</span>, <span style="color: #0084C8; font-weight: bold;">gradient</span> = get_current_parameters<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">velocity</span> = past_velocity * momentum + learning_rate * gradient
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">w</span> = w + momentum * velocity - learning_rate * gradient
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">past_velocity</span> = velocity
+<span style="background-color: #E6E6E6;"> </span>   update_parameter<span style="color: #707183;">(</span>w<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -577,9 +584,9 @@ features), often processed by recurrent layers such as an <i>LSTM</i> layer.
 Image data, stored in 4D tensors, usually processed by 2D convolution layers(Conv2D)
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">from</span> keras <span style="color: #718c00;">import</span> layers
-<span style="color: #eab700;">layer</span> = layers.Dense<span style="color: #4d4d4c;">(</span>32, input_shape=<span style="color: #3e999f;">(</span>784,<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">from</span> keras <span style="color: #A52A2A; font-weight: bold;">import</span> layers
+<span style="color: #0084C8; font-weight: bold;">layer</span> = layers.Dense<span style="color: #707183;">(</span>32, input_shape=<span style="color: #7388d6;">(</span>784,<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -589,14 +596,14 @@ as input 2D tensors where the first dimension is 784. This layer will return a t
 where the first dimensio has been transformed to be 32.
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">from</span> keras <span style="color: #718c00;">import</span> models
-<span style="color: #718c00;">from</span> keras <span style="color: #718c00;">import</span> layers
-<span style="color: #eab700;">model</span> = models.Sequential<span style="color: #4d4d4c;">()</span>
-model.add<span style="color: #4d4d4c;">(</span>layers.Dense<span style="color: #3e999f;">(</span>32, input_shape=<span style="color: #eab700;">(</span>784,<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">from</span> keras <span style="color: #A52A2A; font-weight: bold;">import</span> models
+<span style="color: #A52A2A; font-weight: bold;">from</span> keras <span style="color: #A52A2A; font-weight: bold;">import</span> layers
+<span style="color: #0084C8; font-weight: bold;">model</span> = models.Sequential<span style="color: #707183;">()</span>
+model.add<span style="color: #707183;">(</span>layers.Dense<span style="color: #7388d6;">(</span>32, input_shape=<span style="color: #909183;">(</span>784,<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">this layer not set receive input shape, it automatically do this</span>
-model.add<span style="color: #4d4d4c;">(</span>layers.Dense<span style="color: #3e999f;">(</span>32<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">this layer not set receive input shape, it automatically do this</span>
+model.add<span style="color: #707183;">(</span>layers.Dense<span style="color: #7388d6;">(</span>32<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div></li>
@@ -637,23 +644,23 @@ Keras has the following key features:
 <li>It supports arbitrary network architecutures.</li>
 </ul>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">from</span> keras <span style="color: #718c00;">import</span> models
-<span style="color: #718c00;">from</span> keras <span style="color: #718c00;">import</span> layers
-<span style="color: #eab700;">model</span> = models.Sequential<span style="color: #4d4d4c;">()</span>
-model.add<span style="color: #4d4d4c;">(</span>layers.Dense<span style="color: #3e999f;">(</span>32, activation=<span style="color: #3e999f;">'relu'</span>, input_shape=<span style="color: #eab700;">(</span>784, <span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
-model.add<span style="color: #4d4d4c;">(</span>layers.Dense<span style="color: #3e999f;">(</span>10, activation=<span style="color: #3e999f;">'softmax'</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">from</span> keras <span style="color: #A52A2A; font-weight: bold;">import</span> models
+<span style="color: #A52A2A; font-weight: bold;">from</span> keras <span style="color: #A52A2A; font-weight: bold;">import</span> layers
+<span style="color: #0084C8; font-weight: bold;">model</span> = models.Sequential<span style="color: #707183;">()</span>
+model.add<span style="color: #707183;">(</span>layers.Dense<span style="color: #7388d6;">(</span>32, activation=<span style="color: #4E9A06;">'relu'</span>, input_shape=<span style="color: #909183;">(</span>784, <span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+model.add<span style="color: #707183;">(</span>layers.Dense<span style="color: #7388d6;">(</span>10, activation=<span style="color: #4E9A06;">'softmax'</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
 <p>
 and here's the same model defined using the functional api:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">input_tensor</span> = layers.Input<span style="color: #4d4d4c;">(</span>shape=<span style="color: #3e999f;">(</span>784,<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">x</span> = layers.Dense<span style="color: #4d4d4c;">(</span>32, activation=<span style="color: #3e999f;">'relu'</span><span style="color: #4d4d4c;">)(</span>input_tensor<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">output_tensor</span> = layers.Dense<span style="color: #4d4d4c;">(</span>10, activation=<span style="color: #3e999f;">'softmax'</span><span style="color: #4d4d4c;">)(</span>x<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">model</span> = models.Model<span style="color: #4d4d4c;">(</span>inputs=input_tensor, outputs=output_tensor<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">input_tensor</span> = layers.Input<span style="color: #707183;">(</span>shape=<span style="color: #7388d6;">(</span>784,<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">x</span> = layers.Dense<span style="color: #707183;">(</span>32, activation=<span style="color: #4E9A06;">'relu'</span><span style="color: #707183;">)(</span>input_tensor<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">output_tensor</span> = layers.Dense<span style="color: #707183;">(</span>10, activation=<span style="color: #4E9A06;">'softmax'</span><span style="color: #707183;">)(</span>x<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">model</span> = models.Model<span style="color: #707183;">(</span>inputs=input_tensor, outputs=output_tensor<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -662,12 +669,12 @@ specify the optimizer and loss function that the model should use,
 as well as the metrics you want to monitor during training.
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">from</span> keras <span style="color: #718c00;">import</span> optimizers
-model.<span style="color: #8959a8;">compile</span><span style="color: #4d4d4c;">(</span>optimizer=optimizers.RMSprop<span style="color: #3e999f;">(</span>lr=0.001<span style="color: #3e999f;">)</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span> loss=<span style="color: #3e999f;">'mse'</span>, metrics=<span style="color: #3e999f;">[</span><span style="color: #3e999f;">'accuracy'</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">from</span> keras <span style="color: #A52A2A; font-weight: bold;">import</span> optimizers
+model.<span style="color: #A020F0;">compile</span><span style="color: #707183;">(</span>optimizer=optimizers.RMSprop<span style="color: #7388d6;">(</span>lr=0.001<span style="color: #7388d6;">)</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span> loss=<span style="color: #4E9A06;">'mse'</span>, metrics=<span style="color: #7388d6;">[</span><span style="color: #4E9A06;">'accuracy'</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
 
-model.fit<span style="color: #4d4d4c;">(</span>input_tensor, target_tensor, batch_size=128, epochs=10<span style="color: #4d4d4c;">)</span>
+model.fit<span style="color: #707183;">(</span>input_tensor, target_tensor, batch_size=128, epochs=10<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div></li>
@@ -689,19 +696,19 @@ GTX 1060
 </div></li></ul></li>
 
 <li><a id="org76c6968"></a>Classification movie reviews: a binary classification example<br /><div class="outline-text-4" id="text-org76c6968">
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">from</span> keras.datasets <span style="color: #718c00;">import</span> imdb
-<span style="color: #4d4d4c;">(</span>train_data, train_labels<span style="color: #4d4d4c;">)</span>, <span style="color: #4d4d4c;">(</span>test_data, test_labels<span style="color: #4d4d4c;">)</span> = imdb.load_data<span style="color: #4d4d4c;">(</span>num_words=10000<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">from</span> keras.datasets <span style="color: #A52A2A; font-weight: bold;">import</span> imdb
+<span style="color: #707183;">(</span>train_data, train_labels<span style="color: #707183;">)</span>, <span style="color: #707183;">(</span>test_data, test_labels<span style="color: #707183;">)</span> = imdb.load_data<span style="color: #707183;">(</span>num_words=10000<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
 <p>
 decode one of these reviews back to English words:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">word_index</span> = imdb.get_word_index<span style="color: #4d4d4c;">()</span>
-<span style="color: #eab700;">reverse_word_index</span> = <span style="color: #8959a8;">dict</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span><span style="color: #eab700;">(</span>value, key<span style="color: #eab700;">)</span> <span style="color: #718c00;">for</span> <span style="color: #eab700;">(</span>key, value<span style="color: #eab700;">)</span> <span style="color: #718c00;">in</span> word_index.items<span style="color: #eab700;">()</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">decoded_review</span> = <span style="color: #3e999f;">' '</span>.join<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span>reverse_word_index.get<span style="color: #eab700;">(</span>i-3, <span style="color: #3e999f;">'?'</span><span style="color: #eab700;">)</span> <span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> train_data<span style="color: #eab700;">[</span>0<span style="color: #eab700;">]</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">word_index</span> = imdb.get_word_index<span style="color: #707183;">()</span>
+<span style="color: #0084C8; font-weight: bold;">reverse_word_index</span> = <span style="color: #A020F0;">dict</span><span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">(</span>value, key<span style="color: #909183;">)</span> <span style="color: #A52A2A; font-weight: bold;">for</span> <span style="color: #909183;">(</span>key, value<span style="color: #909183;">)</span> <span style="color: #A52A2A; font-weight: bold;">in</span> word_index.items<span style="color: #909183;">()</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">decoded_review</span> = <span style="color: #4E9A06;">' '</span>.join<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>reverse_word_index.get<span style="color: #909183;">(</span>i-3, <span style="color: #4E9A06;">'?'</span><span style="color: #909183;">)</span> <span style="color: #A52A2A; font-weight: bold;">for</span> i <span style="color: #A52A2A; font-weight: bold;">in</span> train_data<span style="color: #909183;">[</span>0<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>
@@ -721,25 +728,25 @@ use the first layer handing such integer tensors(the embedding layer)</li>
 would be all 0s except for indices 3 and 5. And then we can use Dense layer.</li>
 </ul>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">import</span> numpy <span style="color: #718c00;">as</span> np
-<span style="color: #718c00;">def</span> <span style="color: #f5871f;">vectorize_sequence</span><span style="color: #4d4d4c;">(</span>sequences, dimension=10000<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">results</span> = np.zeros<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">(</span><span style="color: #8959a8;">len</span><span style="color: #eab700;">(</span>sequences<span style="color: #eab700;">)</span>, dimension<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> i, sequence <span style="color: #718c00;">in</span> <span style="color: #8959a8;">enumerate</span><span style="color: #4d4d4c;">(</span>sequences<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">results</span><span style="color: #4d4d4c;">[</span>i, sequence<span style="color: #4d4d4c;">]</span> = 1
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> results
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">import</span> numpy <span style="color: #A52A2A; font-weight: bold;">as</span> np
+<span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">vectorize_sequence</span><span style="color: #707183;">(</span>sequences, dimension=10000<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">results</span> = np.zeros<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span><span style="color: #A020F0;">len</span><span style="color: #909183;">(</span>sequences<span style="color: #909183;">)</span>, dimension<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> i, sequence <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">enumerate</span><span style="color: #707183;">(</span>sequences<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">results</span><span style="color: #707183;">[</span>i, sequence<span style="color: #707183;">]</span> = 1
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> results
 
-<span style="color: #eab700;">x_train</span> = vectorize_sequence<span style="color: #4d4d4c;">(</span>train_data<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">x_test</span> = vectorize_sequence<span style="color: #4d4d4c;">(</span>test_data<span style="color: #4d4d4c;">)</span>
+<span style="color: #0084C8; font-weight: bold;">x_train</span> = vectorize_sequence<span style="color: #707183;">(</span>train_data<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">x_test</span> = vectorize_sequence<span style="color: #707183;">(</span>test_data<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
 <p>
 Also vectorize labels:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">y_train</span> = np.asarray<span style="color: #4d4d4c;">(</span>train_labels<span style="color: #4d4d4c;">)</span>.astype<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'float32'</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">y_test</span> = np.asarray<span style="color: #4d4d4c;">(</span>test_labels<span style="color: #4d4d4c;">)</span>.astype<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'float32'</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">y_train</span> = np.asarray<span style="color: #707183;">(</span>train_labels<span style="color: #707183;">)</span>.astype<span style="color: #707183;">(</span><span style="color: #4E9A06;">'float32'</span><span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">y_test</span> = np.asarray<span style="color: #707183;">(</span>test_labels<span style="color: #707183;">)</span>.astype<span style="color: #707183;">(</span><span style="color: #4E9A06;">'float32'</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div></li>
@@ -749,8 +756,8 @@ Also vectorize labels:
 a type of network that performs well on such a problem is a
 simple stack of fully connected(Dense) layers with <i>relu</i> activations:
 </p>
-<div class="container">
-<pre><code class="python">Dense<span style="color: #4d4d4c;">(</span>16, activation=<span style="color: #3e999f;">'relu'</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">Dense<span style="color: #707183;">(</span>16, activation=<span style="color: #4E9A06;">'relu'</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -763,8 +770,8 @@ number of <i>hidden units</i> of the layer.
 relu activation implements the following chain of tensor
 operations:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">output</span> = relu<span style="color: #4d4d4c;">(</span>dot<span style="color: #3e999f;">(</span>W, <span style="color: #8959a8;">input</span><span style="color: #3e999f;">)</span> + b<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">output</span> = relu<span style="color: #707183;">(</span>dot<span style="color: #7388d6;">(</span>W, <span style="color: #A020F0;">input</span><span style="color: #7388d6;">)</span> + b<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -783,13 +790,13 @@ Three are two key architecuture decisions to be made about such a stack of Dense
 <p>
 the model definition:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">from</span> keras <span style="color: #718c00;">import</span> models
-<span style="color: #718c00;">from</span> keras <span style="color: #718c00;">import</span> layers
-<span style="color: #eab700;">model</span> = models.Sequential<span style="color: #4d4d4c;">()</span>
-model.add<span style="color: #4d4d4c;">(</span>layers.Dense<span style="color: #3e999f;">(</span>16, activation=<span style="color: #3e999f;">'relu'</span>, input_shape=<span style="color: #eab700;">(</span>10000,<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
-model.add<span style="color: #4d4d4c;">(</span>layers.Dense<span style="color: #3e999f;">(</span>16, activation=<span style="color: #3e999f;">'relu'</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
-model.add<span style="color: #4d4d4c;">(</span>layers.Dense<span style="color: #3e999f;">(</span>1, activation=<span style="color: #3e999f;">'sigmoid'</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">from</span> keras <span style="color: #A52A2A; font-weight: bold;">import</span> models
+<span style="color: #A52A2A; font-weight: bold;">from</span> keras <span style="color: #A52A2A; font-weight: bold;">import</span> layers
+<span style="color: #0084C8; font-weight: bold;">model</span> = models.Sequential<span style="color: #707183;">()</span>
+model.add<span style="color: #707183;">(</span>layers.Dense<span style="color: #7388d6;">(</span>16, activation=<span style="color: #4E9A06;">'relu'</span>, input_shape=<span style="color: #909183;">(</span>10000,<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+model.add<span style="color: #707183;">(</span>layers.Dense<span style="color: #7388d6;">(</span>16, activation=<span style="color: #4E9A06;">'relu'</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+model.add<span style="color: #707183;">(</span>layers.Dense<span style="color: #7388d6;">(</span>1, activation=<span style="color: #4E9A06;">'sigmoid'</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -802,8 +809,8 @@ What are activation functions, and why are they necessary?
 </p>
 </div>
 
-<div class="container">
-<pre><code class="python">model
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">model
 </code></pre>
 </div>
 </div></li></ul></li></ul>

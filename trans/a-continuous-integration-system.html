@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>持续集成系统</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -452,8 +451,8 @@ CI 系统在这样的分布式环境中运行，因此可以进行故障转移�
 <p>
 我们就创建一个 <code>test_repo</code> 的仓库：
 </p>
-<div class="container">
-<pre><code class="shell">$ mkdir test_repo
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">$ mkdir test_repo
 $ cd test_repo
 $ git init
 </code></pre>
@@ -472,11 +471,11 @@ $ git init
 复制这个 tests 目录到 test_repo 文件夹下，然后 commit.
 </p>
 
-<div class="container">
-<pre><code class="shell">$ cp -r /this/directory/tests /path/to/test_repo/
-$ cd /path/to/test<span style="color: #3e999f;">\_</span>repo
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">$ cp -r /this/directory/tests /path/to/test_repo/
+$ cd /path/to/test<span style="color: #4E9A06;">\_</span>repo
 $ git add tests/
-$ git commit -m <span style="color: #3e999f;">"add tests"</span>
+$ git commit -m <span style="color: #4E9A06;">"add tests"</span>
 </code></pre>
 </div>
 
@@ -485,8 +484,8 @@ $ git commit -m <span style="color: #3e999f;">"add tests"</span>
 <b>test_repo_clone_obs</b> 中。
 </p>
 
-<div class="container">
-<pre><code class="shell">$ git clone /path/to/test_repo test_repo_clone_obs
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">$ git clone /path/to/test_repo test_repo_clone_obs
 </code></pre>
 </div>
 
@@ -494,8 +493,8 @@ $ git commit -m <span style="color: #3e999f;">"add tests"</span>
 代码测试组件同样也需要一个 master 仓库的拷贝，用来 checkout 到给定的 commit id, 然后运行测试。
 </p>
 
-<div class="container">
-<pre><code class="shell">$ git clone /path/to/test_repo test_repo_clone_runner
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">$ git clone /path/to/test_repo test_repo_clone_runner
 </code></pre>
 </div>
 </div>
@@ -544,18 +543,18 @@ $ git commit -m <span style="color: #3e999f;">"add tests"</span>
 </p>
 
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">poll</span><span style="color: #4d4d4c;">()</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">parser</span> = argparse.ArgumentParser<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   parser.add_argument<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"--dispatcher-server"</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">help</span>=<span style="color: #3e999f;">"dispatcher host:port, "</span> \
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #3e999f;">"by default it uses localhost:8888"</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   default=<span style="color: #3e999f;">"localhost:8888"</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   action=<span style="color: #3e999f;">"store"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   parser.add_argument<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"repo"</span>, metavar=<span style="color: #3e999f;">"REPO"</span>, <span style="color: #8959a8;">type</span>=<span style="color: #8959a8;">str</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">help</span>=<span style="color: #3e999f;">"path to the repository this will observe"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">args</span> = parser.parse_args<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">dispatcher_host</span>, <span style="color: #eab700;">dispatcher_port</span> = args.dispatcher_server.split<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">":"</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">poll</span><span style="color: #707183;">()</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #4E9A06;">"--dispatcher-server"</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A020F0;">help</span>=<span style="color: #4E9A06;">"dispatcher host:port, "</span> \
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #4E9A06;">"by default it uses localhost:8888"</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   default=<span style="color: #4E9A06;">"localhost:8888"</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   action=<span style="color: #4E9A06;">"store"</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #4E9A06;">"repo"</span>, metavar=<span style="color: #4E9A06;">"REPO"</span>, <span style="color: #A020F0;">type</span>=<span style="color: #A020F0;">str</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A020F0;">help</span>=<span style="color: #4E9A06;">"path to the repository this will observe"</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">dispatcher_host</span>, <span style="color: #0084C8; font-weight: bold;">dispatcher_port</span> = args.dispatcher_server.split<span style="color: #707183;">(</span><span style="color: #4E9A06;">":"</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -564,16 +563,16 @@ $ git commit -m <span style="color: #3e999f;">"add tests"</span>
 update_repo.sh 这个脚本文件。
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">while</span> <span style="color: #4271ae;">True</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">try</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">call the bash script that will update the repo and check</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">for changes. If there's a change, it will drop a .commit_id file</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">with the latest commit in the current working directory</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   subprocess.check_output<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span><span style="color: #3e999f;">"./update_repo.sh"</span>, args.repo<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">except</span> subprocess.CalledProcessError <span style="color: #718c00;">as</span> e:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">raise</span> <span style="color: #4271ae;">Exception</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"Could not update and check repository. "</span> +
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #3e999f;">"Reason: %s"</span> % e.output<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">while</span> <span style="color: #F5666D;">True</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">try</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">call the bash script that will update the repo and check</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">for changes. If there's a change, it will drop a .commit_id file</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">with the latest commit in the current working directory</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   subprocess.check_output<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #4E9A06;">"./update_repo.sh"</span>, args.repo<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">except</span> subprocess.CalledProcessError <span style="color: #A52A2A; font-weight: bold;">as</span> e:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">raise</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"Could not update and check repository. "</span> +
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #4E9A06;">"Reason: %s"</span> % e.output<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -591,9 +590,9 @@ update_repo.sh 这个文件用来检查任何新的 commits，并且告诉仓库
 首先，执行下面这个。run_or_fail.sh 会被其他的脚本调用，用来执行一个命令，如果命令执行失败，会输出我们预先提供的错误信息。
 </p>
 
-<div class="container">
-<pre><code class="shell"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">!/bin/</span><span style="color: #718c00;">bash</span>
-<span style="color: #8959a8;">source</span> run_or_fail.sh
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell"><span style="color: #204A87;">#</span><span style="color: #204A87;">!/bin/</span><span style="color: #A52A2A; font-weight: bold;">bash</span>
+<span style="color: #A020F0;">source</span> run_or_fail.sh
 </code></pre>
 </div>
 
@@ -601,8 +600,8 @@ update_repo.sh 这个文件用来检查任何新的 commits，并且告诉仓库
 下一步，脚本会尝试删除 .commit_id 文件。因为之前创建的文件中保存的是一个旧的 commit id, 如果我们发现了一个新的 commit id, 我们会重新创建一个新的文件。
 </p>
 
-<div class="container">
-<pre><code class="shell">bash rm -f .commit_id
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">bash rm -f .commit_id
 </code></pre>
 </div>
 
@@ -612,9 +611,9 @@ update_repo.sh 这个文件用来检查任何新的 commits，并且告诉仓库
 </p>
 
 
-<div class="container">
-<pre><code class="shell">run_or_fail <span style="color: #3e999f;">"Repository folder not found!"</span> pushd $<span style="color: #eab700;">1</span> 1&gt; /dev/null
-run_or_fail <span style="color: #3e999f;">"Could not reset git"</span> git reset --hard HEAD
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">run_or_fail <span style="color: #4E9A06;">"Repository folder not found!"</span> pushd $<span style="color: #0084C8; font-weight: bold;">1</span> 1&gt; /dev/null
+run_or_fail <span style="color: #4E9A06;">"Could not reset git"</span> git reset --hard HEAD
 </code></pre>
 </div>
 
@@ -622,13 +621,13 @@ run_or_fail <span style="color: #3e999f;">"Could not reset git"</span> git reset
 <p>
 下一步，执行 git log, 然后得到当前仓库最新的 commit id。
 </p>
-<div class="container">
-<pre><code class="shell"><span style="color: #eab700;">COMMIT</span>=$<span style="color: #4d4d4c;">(</span>run_or_fail <span style="color: #3e999f;">"Could not call 'git log' on repository"</span> git log -n1<span style="color: #4d4d4c;">)</span>
-<span style="color: #718c00;">if</span> <span style="color: #4d4d4c;">[</span> $<span style="color: #eab700;">?</span> != 0 <span style="color: #4d4d4c;">]</span>; <span style="color: #718c00;">then</span>
-  <span style="color: #8959a8;">echo</span> <span style="color: #3e999f;">"Could not call 'git log' on repository"</span>
-  <span style="color: #718c00;">exit</span> 1
-<span style="color: #718c00;">fi</span>
-<span style="color: #eab700;">COMMIT_ID</span>=<span style="color: #8959a8;">`echo $COMMIT | awk '{ print $2 }'`</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell"><span style="color: #0084C8; font-weight: bold;">COMMIT</span>=$<span style="color: #707183;">(</span>run_or_fail <span style="color: #4E9A06;">"Could not call 'git log' on repository"</span> git log -n1<span style="color: #707183;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #707183;">[</span> $<span style="color: #0084C8; font-weight: bold;">?</span> != 0 <span style="color: #707183;">]</span>; <span style="color: #A52A2A; font-weight: bold;">then</span>
+  <span style="color: #A020F0;">echo</span> <span style="color: #4E9A06;">"Could not call 'git log' on repository"</span>
+  <span style="color: #A52A2A; font-weight: bold;">exit</span> 1
+<span style="color: #A52A2A; font-weight: bold;">fi</span>
+<span style="color: #0084C8; font-weight: bold;">COMMIT_ID</span>=<span style="color: #ff00ff;">`echo $COMMIT | awk '{ print $2 }'`</span>
 </code></pre>
 </div>
 
@@ -636,14 +635,14 @@ run_or_fail <span style="color: #3e999f;">"Could not reset git"</span> git reset
 这一步会执行 git pull 来更新代码，然后再次查询最新的 commit id。
 </p>
 
-<div class="container">
-<pre><code class="shell">run_or_fail <span style="color: #3e999f;">"Could not pull from repository"</span> git pull
-<span style="color: #eab700;">COMMIT</span>=$<span style="color: #4d4d4c;">(</span>run_or_fail <span style="color: #3e999f;">"Could not call 'git log' on repository"</span> git log -n1<span style="color: #4d4d4c;">)</span>
-<span style="color: #718c00;">if</span> <span style="color: #4d4d4c;">[</span> $<span style="color: #eab700;">?</span> != 0 <span style="color: #4d4d4c;">]</span>; <span style="color: #718c00;">then</span>
-  <span style="color: #8959a8;">echo</span> <span style="color: #3e999f;">"Could not call 'git log' on repository"</span>
-  <span style="color: #718c00;">exit</span> 1
-<span style="color: #718c00;">fi</span>
-<span style="color: #eab700;">NEW_COMMIT_ID</span>=<span style="color: #8959a8;">`echo $COMMIT | awk '{ print $2 }'`</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">run_or_fail <span style="color: #4E9A06;">"Could not pull from repository"</span> git pull
+<span style="color: #0084C8; font-weight: bold;">COMMIT</span>=$<span style="color: #707183;">(</span>run_or_fail <span style="color: #4E9A06;">"Could not call 'git log' on repository"</span> git log -n1<span style="color: #707183;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #707183;">[</span> $<span style="color: #0084C8; font-weight: bold;">?</span> != 0 <span style="color: #707183;">]</span>; <span style="color: #A52A2A; font-weight: bold;">then</span>
+  <span style="color: #A020F0;">echo</span> <span style="color: #4E9A06;">"Could not call 'git log' on repository"</span>
+  <span style="color: #A52A2A; font-weight: bold;">exit</span> 1
+<span style="color: #A52A2A; font-weight: bold;">fi</span>
+<span style="color: #0084C8; font-weight: bold;">NEW_COMMIT_ID</span>=<span style="color: #ff00ff;">`echo $COMMIT | awk '{ print $2 }'`</span>
 </code></pre>
 </div>
 
@@ -651,12 +650,12 @@ run_or_fail <span style="color: #3e999f;">"Could not reset git"</span> git reset
 最后，如果这个 commit id 和之前的不同，我们就知道有新的代码提交了，所以这个脚本就会将最新的 commit id 保存到 .commit_id 文件中。
 </p>
 
-<div class="container">
-<pre><code class="shell"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">if the id changed, then write it to a file</span>
-<span style="color: #718c00;">if</span> <span style="color: #4d4d4c;">[</span> $<span style="color: #eab700;">NEW_COMMIT_ID</span> != $<span style="color: #eab700;">COMMIT_ID</span> <span style="color: #4d4d4c;">]</span>; <span style="color: #718c00;">then</span>
-  <span style="color: #8959a8;">popd</span> 1&gt; /dev/null
-  <span style="color: #8959a8;">echo</span> $<span style="color: #eab700;">NEW_COMMIT_ID</span> &gt; .commit_id
-<span style="color: #718c00;">fi</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell"><span style="color: #204A87;"># </span><span style="color: #204A87;">if the id changed, then write it to a file</span>
+<span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #707183;">[</span> $<span style="color: #0084C8; font-weight: bold;">NEW_COMMIT_ID</span> != $<span style="color: #0084C8; font-weight: bold;">COMMIT_ID</span> <span style="color: #707183;">]</span>; <span style="color: #A52A2A; font-weight: bold;">then</span>
+  <span style="color: #A020F0;">popd</span> 1&gt; /dev/null
+  <span style="color: #A020F0;">echo</span> $<span style="color: #0084C8; font-weight: bold;">NEW_COMMIT_ID</span> &gt; .commit_id
+<span style="color: #A52A2A; font-weight: bold;">fi</span>
 </code></pre>
 </div>
 
@@ -665,14 +664,14 @@ run_or_fail <span style="color: #3e999f;">"Could not reset git"</span> git reset
 'status' 请求，用来确保调度器可以正常工作。
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">if</span> os.path.isfile<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">".commit_id"</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">try</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">response</span> = helpers.communicate<span style="color: #4d4d4c;">(</span>dispatcher_host,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>  <span style="color: #8959a8;">int</span><span style="color: #3e999f;">(</span>dispatcher_port<span style="color: #3e999f;">)</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>  <span style="color: #3e999f;">"status"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">except</span> socket.error <span style="color: #718c00;">as</span> e:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">raise</span> <span style="color: #4271ae;">Exception</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"Could not communicate with dispatcher server: %s"</span> % e<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">if</span> os.path.isfile<span style="color: #707183;">(</span><span style="color: #4E9A06;">".commit_id"</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">try</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">response</span> = helpers.communicate<span style="color: #707183;">(</span>dispatcher_host,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>  <span style="color: #A020F0;">int</span><span style="color: #7388d6;">(</span>dispatcher_port<span style="color: #7388d6;">)</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>  <span style="color: #4E9A06;">"status"</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">except</span> socket.error <span style="color: #A52A2A; font-weight: bold;">as</span> e:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">raise</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"Could not communicate with dispatcher server: %s"</span> % e<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -682,22 +681,22 @@ run_or_fail <span style="color: #3e999f;">"Could not reset git"</span> git reset
 如果有任何地方失败了，我们同样也会重复执行。
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">if</span> response == <span style="color: #3e999f;">"OK"</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">commit</span> = <span style="color: #3e999f;">""</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">with</span> <span style="color: #8959a8;">open</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">".commit_id"</span>, <span style="color: #3e999f;">"r"</span><span style="color: #4d4d4c;">)</span> <span style="color: #718c00;">as</span> f:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">commit</span> = f.readline<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">response</span> = helpers.communicate<span style="color: #4d4d4c;">(</span>dispatcher_host,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>  <span style="color: #8959a8;">int</span><span style="color: #3e999f;">(</span>dispatcher_port<span style="color: #3e999f;">)</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>  <span style="color: #3e999f;">"dispatch:%s"</span> % commit<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> response != <span style="color: #3e999f;">"OK"</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">raise</span> <span style="color: #4271ae;">Exception</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"Could not dispatch the test: %s"</span> %
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   response<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> <span style="color: #3e999f;">"dispatched!"</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">else</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">raise</span> <span style="color: #4271ae;">Exception</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"Could not dispatch the test: %s"</span> %
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   response<span style="color: #4d4d4c;">)</span>
-time.sleep<span style="color: #4d4d4c;">(</span>5<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">if</span> response == <span style="color: #4E9A06;">"OK"</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">commit</span> = <span style="color: #4E9A06;">""</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">with</span> <span style="color: #A020F0;">open</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">".commit_id"</span>, <span style="color: #4E9A06;">"r"</span><span style="color: #707183;">)</span> <span style="color: #A52A2A; font-weight: bold;">as</span> f:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">commit</span> = f.readline<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">response</span> = helpers.communicate<span style="color: #707183;">(</span>dispatcher_host,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>  <span style="color: #A020F0;">int</span><span style="color: #7388d6;">(</span>dispatcher_port<span style="color: #7388d6;">)</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>  <span style="color: #4E9A06;">"dispatch:%s"</span> % commit<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> response != <span style="color: #4E9A06;">"OK"</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">raise</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"Could not dispatch the test: %s"</span> %
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   response<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span> <span style="color: #4E9A06;">"dispatched!"</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">else</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">raise</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"Could not dispatch the test: %s"</span> %
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   response<span style="color: #707183;">)</span>
+time.sleep<span style="color: #707183;">(</span>5<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -719,18 +718,18 @@ time.sleep<span style="color: #4d4d4c;">(</span>5<span style="color: #4d4d4c;">)
 <p>
 当 dispatch.py 开始执行时，会先执行 serve 函数。首先，它允许你指定调度器的主机地址和端口：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">serve</span><span style="color: #4d4d4c;">()</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">parser</span> = argparse.ArgumentParser<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   parser.add_argument<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"--host"</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">help</span>=<span style="color: #3e999f;">"dispatcher's host, by default it uses localhost"</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   default=<span style="color: #3e999f;">"localhost"</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   action=<span style="color: #3e999f;">"store"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   parser.add_argument<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"--port"</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">help</span>=<span style="color: #3e999f;">"dispatcher's port, by default it uses 8888"</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   default=8888,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   action=<span style="color: #3e999f;">"store"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">args</span> = parser.parse_args<span style="color: #4d4d4c;">()</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">serve</span><span style="color: #707183;">()</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">parser</span> = argparse.ArgumentParser<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #4E9A06;">"--host"</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A020F0;">help</span>=<span style="color: #4E9A06;">"dispatcher's host, by default it uses localhost"</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   default=<span style="color: #4E9A06;">"localhost"</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   action=<span style="color: #4E9A06;">"store"</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   parser.add_argument<span style="color: #707183;">(</span><span style="color: #4E9A06;">"--port"</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A020F0;">help</span>=<span style="color: #4E9A06;">"dispatcher's port, by default it uses 8888"</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   default=8888,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   action=<span style="color: #4E9A06;">"store"</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">args</span> = parser.parse_args<span style="color: #707183;">()</span>
 </code></pre>
 </div>
 
@@ -740,25 +739,25 @@ redistribute 函数。
 </p>
 
 
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">server</span> = ThreadingTCPServer<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">(</span>args.host, <span style="color: #8959a8;">int</span><span style="color: #eab700;">(</span>args.port<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>, DispatcherHandler<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> `serving on %s:%s` % <span style="color: #4d4d4c;">(</span>args.host, <span style="color: #8959a8;">int</span><span style="color: #3e999f;">(</span>args.port<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">server</span> = ThreadingTCPServer<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>args.host, <span style="color: #A020F0;">int</span><span style="color: #909183;">(</span>args.port<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>, DispatcherHandler<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span> `serving on %s:%s` % <span style="color: #707183;">(</span>args.host, <span style="color: #A020F0;">int</span><span style="color: #7388d6;">(</span>args.port<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   ...
+<span style="background-color: #E6E6E6;"> </span>   ...
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">runner_heartbeat</span> = threading.Thread<span style="color: #4d4d4c;">(</span>target=runner_checker, args=<span style="color: #3e999f;">(</span>server,<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">redistributor</span> = threading.Thread<span style="color: #4d4d4c;">(</span>target=redistribute, args=<span style="color: #3e999f;">(</span>server,<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">try</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   runner_heartbeat.start<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   redistributor.start<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Activate the server; this will keep running until you</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">interrupt the program with Ctrl+C or Cmd+C</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   server.serve_forever<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">except</span> <span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">KeyboardInterrupt</span>, <span style="color: #4271ae;">Exception</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">if any exception occurs, kill the thread</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">server.dead</span> = <span style="color: #4271ae;">True</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   runner_heartbeat.join<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   redistributor.join<span style="color: #4d4d4c;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">runner_heartbeat</span> = threading.Thread<span style="color: #707183;">(</span>target=runner_checker, args=<span style="color: #7388d6;">(</span>server,<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">redistributor</span> = threading.Thread<span style="color: #707183;">(</span>target=redistribute, args=<span style="color: #7388d6;">(</span>server,<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">try</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   runner_heartbeat.start<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   redistributor.start<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">Activate the server; this will keep running until you</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">interrupt the program with Ctrl+C or Cmd+C</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   server.serve_forever<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">except</span> <span style="color: #707183;">(</span><span style="color: #2F8B58; font-weight: bold;">KeyboardInterrupt</span>, <span style="color: #2F8B58; font-weight: bold;">Exception</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">if any exception occurs, kill the thread</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">server.dead</span> = <span style="color: #F5666D;">True</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   runner_heartbeat.join<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   redistributor.join<span style="color: #707183;">()</span>
 </code></pre>
 </div>
 
@@ -767,106 +766,106 @@ redistribute 函数。
 这个函数会将 commit id 保存到 pending_commits 中。
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">runner_checker</span><span style="color: #4d4d4c;">(</span>server<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">manage_commit_lists</span><span style="color: #4d4d4c;">(</span>runner<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> commit, assigned_runner <span style="color: #718c00;">in</span> server.dispatched_commits.iteritems<span style="color: #4d4d4c;">()</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> assigned_runner == runner:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">del</span> server.dispatched_commits<span style="color: #4d4d4c;">[</span>commit<span style="color: #4d4d4c;">]</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   server.pending_commits.append<span style="color: #4d4d4c;">(</span>commit<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">break</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   server.runners.remove<span style="color: #4d4d4c;">(</span>runner<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">while</span> <span style="color: #718c00;">not</span> server.dead:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   time.sleep<span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> runner <span style="color: #718c00;">in</span> server.runners:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">s</span> = socket.socket<span style="color: #4d4d4c;">(</span>socket.AF_INET, socket.SOCK_STREAM<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">try</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">response</span> = helpers.communicate<span style="color: #4d4d4c;">(</span>runner<span style="color: #3e999f;">[</span><span style="color: #3e999f;">"host"</span><span style="color: #3e999f;">]</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>  <span style="color: #8959a8;">int</span><span style="color: #3e999f;">(</span>runner<span style="color: #eab700;">[</span><span style="color: #3e999f;">"port"</span><span style="color: #eab700;">]</span><span style="color: #3e999f;">)</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>  <span style="color: #3e999f;">"ping"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> response != <span style="color: #3e999f;">"pong"</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> <span style="color: #3e999f;">"removing runner %s"</span> % runner
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   manage_commit_lists<span style="color: #4d4d4c;">(</span>runner<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">except</span> socket.error <span style="color: #718c00;">as</span> e:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   manage_commit_lists<span style="color: #4d4d4c;">(</span>runner<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">runner_checker</span><span style="color: #707183;">(</span>server<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">manage_commit_lists</span><span style="color: #707183;">(</span>runner<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> commit, assigned_runner <span style="color: #A52A2A; font-weight: bold;">in</span> server.dispatched_commits.iteritems<span style="color: #707183;">()</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> assigned_runner == runner:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">del</span> server.dispatched_commits<span style="color: #707183;">[</span>commit<span style="color: #707183;">]</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   server.pending_commits.append<span style="color: #707183;">(</span>commit<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">break</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   server.runners.remove<span style="color: #707183;">(</span>runner<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">while</span> <span style="color: #A52A2A; font-weight: bold;">not</span> server.dead:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   time.sleep<span style="color: #707183;">(</span>1<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> runner <span style="color: #A52A2A; font-weight: bold;">in</span> server.runners:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">s</span> = socket.socket<span style="color: #707183;">(</span>socket.AF_INET, socket.SOCK_STREAM<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">try</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">response</span> = helpers.communicate<span style="color: #707183;">(</span>runner<span style="color: #7388d6;">[</span><span style="color: #4E9A06;">"host"</span><span style="color: #7388d6;">]</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>  <span style="color: #A020F0;">int</span><span style="color: #7388d6;">(</span>runner<span style="color: #909183;">[</span><span style="color: #4E9A06;">"port"</span><span style="color: #909183;">]</span><span style="color: #7388d6;">)</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>  <span style="color: #4E9A06;">"ping"</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> response != <span style="color: #4E9A06;">"pong"</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span> <span style="color: #4E9A06;">"removing runner %s"</span> % runner
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   manage_commit_lists<span style="color: #707183;">(</span>runner<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">except</span> socket.error <span style="color: #A52A2A; font-weight: bold;">as</span> e:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   manage_commit_lists<span style="color: #707183;">(</span>runner<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">redistribute</span><span style="color: #4d4d4c;">(</span>server<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">while</span> <span style="color: #718c00;">not</span> server.dead:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> commit <span style="color: #718c00;">in</span> server.pending_commits:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> <span style="color: #3e999f;">"running redistribute"</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> server.pending_commits
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   dispatch_tests<span style="color: #4d4d4c;">(</span>server, commit<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   time.sleep<span style="color: #4d4d4c;">(</span>5<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">redistribute</span><span style="color: #707183;">(</span>server<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">while</span> <span style="color: #A52A2A; font-weight: bold;">not</span> server.dead:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> commit <span style="color: #A52A2A; font-weight: bold;">in</span> server.pending_commits:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span> <span style="color: #4E9A06;">"running redistribute"</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span> server.pending_commits
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   dispatch_tests<span style="color: #707183;">(</span>server, commit<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   time.sleep<span style="color: #707183;">(</span>5<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">dispatch_tests</span><span style="color: #4d4d4c;">(</span>server, commit_id<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">NOTE: usually we don't run this forever</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">while</span> <span style="color: #4271ae;">True</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> <span style="color: #3e999f;">"trying to dispatch to runners"</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> runner <span style="color: #718c00;">in</span> server.runners:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">response</span> = helpers.communicate<span style="color: #4d4d4c;">(</span>runner<span style="color: #3e999f;">[</span><span style="color: #3e999f;">"host"</span><span style="color: #3e999f;">]</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>  <span style="color: #8959a8;">int</span><span style="color: #3e999f;">(</span>runner<span style="color: #eab700;">[</span><span style="color: #3e999f;">"port"</span><span style="color: #eab700;">]</span><span style="color: #3e999f;">)</span>,
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>  <span style="color: #3e999f;">"runtest:%s"</span> % commit_id<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> response == <span style="color: #3e999f;">"OK"</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> <span style="color: #3e999f;">"adding id %s"</span> % commit_id
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">server.dispatched_commits</span><span style="color: #4d4d4c;">[</span>commit_id<span style="color: #4d4d4c;">]</span> = runner
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> commit_id <span style="color: #718c00;">in</span> server.pending_commits:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   server.pending_commits.remove<span style="color: #4d4d4c;">(</span>commit_id<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   time.sleep<span style="color: #4d4d4c;">(</span>2<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">dispatch_tests</span><span style="color: #707183;">(</span>server, commit_id<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">NOTE: usually we don't run this forever</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">while</span> <span style="color: #F5666D;">True</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span> <span style="color: #4E9A06;">"trying to dispatch to runners"</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> runner <span style="color: #A52A2A; font-weight: bold;">in</span> server.runners:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">response</span> = helpers.communicate<span style="color: #707183;">(</span>runner<span style="color: #7388d6;">[</span><span style="color: #4E9A06;">"host"</span><span style="color: #7388d6;">]</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>  <span style="color: #A020F0;">int</span><span style="color: #7388d6;">(</span>runner<span style="color: #909183;">[</span><span style="color: #4E9A06;">"port"</span><span style="color: #909183;">]</span><span style="color: #7388d6;">)</span>,
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>  <span style="color: #4E9A06;">"runtest:%s"</span> % commit_id<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> response == <span style="color: #4E9A06;">"OK"</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span> <span style="color: #4E9A06;">"adding id %s"</span> % commit_id
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">server.dispatched_commits</span><span style="color: #707183;">[</span>commit_id<span style="color: #707183;">]</span> = runner
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> commit_id <span style="color: #A52A2A; font-weight: bold;">in</span> server.pending_commits:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   server.pending_commits.remove<span style="color: #707183;">(</span>commit_id<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   time.sleep<span style="color: #707183;">(</span>2<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">class</span> <span style="color: #4271ae;">ThreadingTCPServer</span><span style="color: #4d4d4c;">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">runners</span> = <span style="color: #4d4d4c;">[]</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Keeps track of test runner pool</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">dead</span> = <span style="color: #4271ae;">False</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Indicate to other threads that we are no longer running</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">dispatched_commits</span> = <span style="color: #4d4d4c;">{}</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Keeps track of commits we dispatched</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">pending_commits</span> = <span style="color: #4d4d4c;">[]</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Keeps track of commits we have yet to dispatch</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">ThreadingTCPServer</span><span style="color: #707183;">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">runners</span> = <span style="color: #707183;">[]</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">Keeps track of test runner pool</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">dead</span> = <span style="color: #F5666D;">False</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">Indicate to other threads that we are no longer running</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">dispatched_commits</span> = <span style="color: #707183;">{}</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">Keeps track of commits we dispatched</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">pending_commits</span> = <span style="color: #707183;">[]</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">Keeps track of commits we have yet to dispatch</span>
 </code></pre>
 </div>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">class</span> <span style="color: #4271ae;">DispatcherHandler</span><span style="color: #4d4d4c;">(</span>SocketServer.BaseRequestHandler<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">"""</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   The RequestHandler class for our dispatcher.</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   This will dispatch test runners against the incoming commit</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   and handle their requests and test results</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   """</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">command_re</span> = re.<span style="color: #8959a8;">compile</span><span style="color: #4d4d4c;">(</span>r<span style="color: #3e999f;">"(\w+)(:.+)*"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">BUF_SIZE</span> = 1024
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">handle</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.data = <span style="color: #718c00;">self</span>.request.recv<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>.BUF_SIZE<span style="color: #4d4d4c;">)</span>.strip<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">command_groups</span> = <span style="color: #718c00;">self</span>.command_re.match<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>.data<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> <span style="color: #718c00;">not</span> command_groups:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.request.sendall<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"Invalid command"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">command</span> = command_groups.group<span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">DispatcherHandler</span><span style="color: #707183;">(</span>SocketServer.BaseRequestHandler<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #4E9A06;">"""</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   The RequestHandler class for our dispatcher.</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   This will dispatch test runners against the incoming commit</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   and handle their requests and test results</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   """</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">command_re</span> = re.<span style="color: #A020F0;">compile</span><span style="color: #707183;">(</span>r<span style="color: #4E9A06;">"(\w+)(:.+)*"</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">BUF_SIZE</span> = 1024
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">handle</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>.data = <span style="color: #A52A2A; font-weight: bold;">self</span>.request.recv<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>.BUF_SIZE<span style="color: #707183;">)</span>.strip<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">command_groups</span> = <span style="color: #A52A2A; font-weight: bold;">self</span>.command_re.match<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>.data<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #A52A2A; font-weight: bold;">not</span> command_groups:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>.request.sendall<span style="color: #707183;">(</span><span style="color: #4E9A06;">"Invalid command"</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">command</span> = command_groups.group<span style="color: #707183;">(</span>1<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">if</span> command == <span style="color: #3e999f;">"status"</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> <span style="color: #3e999f;">"in status"</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.request.sendall<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"OK"</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">if</span> command == <span style="color: #4E9A06;">"status"</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span> <span style="color: #4E9A06;">"in status"</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>.request.sendall<span style="color: #707183;">(</span><span style="color: #4E9A06;">"OK"</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">elif</span> command == <span style="color: #3e999f;">"register"</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Add this test runner to our pool</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span> <span style="color: #3e999f;">"register"</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">address</span> = command_groups.group<span style="color: #4d4d4c;">(</span>2<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">host</span>, <span style="color: #eab700;">port</span> = re.findall<span style="color: #4d4d4c;">(</span>r<span style="color: #3e999f;">":(\w*)"</span>, address<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">runner</span> = <span style="color: #4d4d4c;">{</span><span style="color: #3e999f;">"host"</span>: host, <span style="color: #3e999f;">"port"</span>:port<span style="color: #4d4d4c;">}</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.server.runners.append<span style="color: #4d4d4c;">(</span>runner<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.request.sendall<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"OK"</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">elif</span> command == <span style="color: #4E9A06;">"register"</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">Add this test runner to our pool</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span> <span style="color: #4E9A06;">"register"</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">address</span> = command_groups.group<span style="color: #707183;">(</span>2<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">host</span>, <span style="color: #0084C8; font-weight: bold;">port</span> = re.findall<span style="color: #707183;">(</span>r<span style="color: #4E9A06;">":(\w*)"</span>, address<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">runner</span> = <span style="color: #707183;">{</span><span style="color: #4E9A06;">"host"</span>: host, <span style="color: #4E9A06;">"port"</span>:port<span style="color: #707183;">}</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>.server.runners.append<span style="color: #707183;">(</span>runner<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>.request.sendall<span style="color: #707183;">(</span><span style="color: #4E9A06;">"OK"</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>
@@ -875,12 +874,12 @@ redistribute 函数。
 <div id="outline-container-org61b3dc5" class="outline-3">
 <h3 id="org61b3dc5">测试组件( <code>test_runner.py</code>)</h3>
 <div class="outline-text-3" id="text-org61b3dc5">
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">class</span> <span style="color: #4271ae;">ThreadingTCPServer</span><span style="color: #4d4d4c;">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">dispatcher_server</span> = <span style="color: #4271ae;">None</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Holds the dispatcher server host/port information</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">last_communication</span> = <span style="color: #4271ae;">None</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Keeps track of last communication from dispatcher</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">busy</span> = <span style="color: #4271ae;">False</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Status flag</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">dead</span> = <span style="color: #4271ae;">False</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Status flag</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">ThreadingTCPServer</span><span style="color: #707183;">(</span>SocketServer.ThreadingMixIn, SocketServer.TCPServer<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">dispatcher_server</span> = <span style="color: #F5666D;">None</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">Holds the dispatcher server host/port information</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">last_communication</span> = <span style="color: #F5666D;">None</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">Keeps track of last communication from dispatcher</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">busy</span> = <span style="color: #F5666D;">False</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">Status flag</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">dead</span> = <span style="color: #F5666D;">False</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">Status flag</span>
 </code></pre>
 </div>
 </div>
@@ -905,16 +904,16 @@ redistribute 函数。
 <div id="outline-container-orgbc204ac" class="outline-3">
 <h3 id="orgbc204ac">运行代码</h3>
 <div class="outline-text-3" id="text-orgbc204ac">
-<div class="container">
-<pre><code class="sh">$ python dispatcher.py
+<div class="org-src-container">
+<pre class="src src-sh"><code class="sh">$ python dispatcher.py
 </code></pre>
 </div>
 
-<div class="container">
-<pre><code class="sh">$ cd /path/to/test_repo
+<div class="org-src-container">
+<pre class="src src-sh"><code class="sh">$ cd /path/to/test_repo
 $ touch new_file
 $ git add new_file
-$ git commit -m<span style="color: #3e999f;">"new file"</span> new_file
+$ git commit -m<span style="color: #4E9A06;">"new file"</span> new_file
 </code></pre>
 </div>
 </div>

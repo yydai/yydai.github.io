@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>远程主机登录</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -283,8 +282,8 @@ for the JavaScript code in this tag.
 我们就可以通过 ssh：
 </p>
 
-<div class="container">
-<pre><code class="shell">ssh ubuntu@52.10.199.62
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">ssh ubuntu@52.10.199.62
 </code></pre>
 </div>
 
@@ -302,8 +301,8 @@ for the JavaScript code in this tag.
 首先生成一个 ssh key，如果你想用 ~/.ssh 目录下的 key 也可以。
 </p>
 
-<div class="container">
-<pre><code class="shell">ssh-keygen -t rsa
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">ssh-keygen -t rsa
 </code></pre>
 </div>
 
@@ -316,8 +315,8 @@ for the JavaScript code in this tag.
 然后把生成的 public key 注册到服务器上。
 </p>
 
-<div class="container">
-<pre><code class="shell">ssh-copy-id -i ~/.ssh/id_rsa.pub ubuntu@52.10.199.62
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">ssh-copy-id -i ~/.ssh/id_rsa.pub ubuntu@52.10.199.62
 </code></pre>
 </div>
 
@@ -325,8 +324,8 @@ for the JavaScript code in this tag.
 这一步完成了，我们就可以直接使用这个来登录
 </p>
 
-<div class="container">
-<pre><code class="shell">ssh ubuntu@52.10.199.62
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">ssh ubuntu@52.10.199.62
 </code></pre>
 </div>
 
@@ -340,8 +339,8 @@ for the JavaScript code in this tag.
 这时你要这样来登录
 </p>
 
-<div class="container">
-<pre><code class="shell">ssh -i ~/.ssh/test.key ubuntu@52.10.199.62
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">ssh -i ~/.ssh/test.key ubuntu@52.10.199.62
 </code></pre>
 </div>
 
@@ -363,8 +362,8 @@ for the JavaScript code in this tag.
 <p>
 在 ~/.ssh/config 中，我们添加如下配置
 </p>
-<div class="container">
-<pre><code class="shell">Host test
+<div class="org-src-container">
+<pre class="src src-config"><code class="config">Host test
         HostName 106.75.57.80
         IdentityFile ~/.ssh/test.key
         User ubuntu
@@ -375,8 +374,8 @@ for the JavaScript code in this tag.
 下面我们就可以这样登录了
 </p>
 
-<div class="container">
-<pre><code class="shell">ssh test
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">ssh test
 </code></pre>
 </div>
 
@@ -398,8 +397,8 @@ for the JavaScript code in this tag.
 于是，我打开了 .zshrc (因为我使用的是 zsh，如果你使用的是 bash，应该是 .bashrc 文件），添加了下面一句
 </p>
 
-<div class="container">
-<pre><code class="shell"><span style="color: #8959a8;">alias</span> <span style="color: #eab700;">lg</span>=<span style="color: #3e999f;">'ssh test'</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell"><span style="color: #A020F0;">alias</span> <span style="color: #0084C8; font-weight: bold;">lg</span>=<span style="color: #4E9A06;">'ssh test'</span>
 </code></pre>
 </div>
 
@@ -442,11 +441,11 @@ config 实现。
 <p>
 做法很简单，在~/.ssh/config 下加入如下的配置：
 </p>
-<div class="container">
-<pre><code class="python">Host *
-<span style="color: #8e908c; background-color: #ffffff;"> </span> ControlMaster auto
-<span style="color: #8e908c; background-color: #ffffff;"> </span> ControlPath /tmp/ssh_mux_%h_%p_%r
-<span style="color: #8e908c; background-color: #ffffff;"> </span> ControlPersist 600
+<div class="org-src-container">
+<pre class="src src-config"><code class="config">Host *
+  ControlMaster auto
+  ControlPath /tmp/ssh_mux_%h_%p_%r
+  ControlPersist 600
 </code></pre>
 </div>
 

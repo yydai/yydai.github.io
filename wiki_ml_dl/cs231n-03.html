@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>线性分类</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -424,13 +423,13 @@ L_i = \sum_{j\neq y_i} \max(0, s_j - s_{y_i} + 1)
 它的值达到了 12.9，说明对它的打分 -3.1 偏差非常的大。
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">L_i_vectorized</span><span style="color: #4d4d4c;">(</span>x, y, W<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">scores</span> = W.dot<span style="color: #4d4d4c;">(</span>x<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">margins</span> = np.maximum<span style="color: #4d4d4c;">(</span>0, scores - scores<span style="color: #3e999f;">[</span>y<span style="color: #3e999f;">]</span> + 1<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">margins</span><span style="color: #4d4d4c;">[</span>y<span style="color: #4d4d4c;">]</span> = 0
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">loss_i</span> = np.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">(</span>margins<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> loss_i
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">L_i_vectorized</span><span style="color: #707183;">(</span>x, y, W<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">scores</span> = W.dot<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">margins</span> = np.maximum<span style="color: #707183;">(</span>0, scores - scores<span style="color: #7388d6;">[</span>y<span style="color: #7388d6;">]</span> + 1<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">margins</span><span style="color: #707183;">[</span>y<span style="color: #707183;">]</span> = 0
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">loss_i</span> = np.<span style="color: #A020F0;">sum</span><span style="color: #707183;">(</span>margins<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> loss_i
 </code></pre>
 </div>
 
@@ -513,49 +512,49 @@ R(W) = \sum_k\sum_l \beta W_{k,l}^2 + |W_{k,l}|
 <p>
 Python 代码
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#27809;&#26377;&#21152;&#27491;&#21017;&#21270;&#30340;&#24773;&#20917;</span>
-<span style="color: #718c00;">def</span> <span style="color: #f5871f;">L_i</span><span style="color: #4d4d4c;">(</span>x, y, W<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">"""</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   unvectorized version. Compute the multiclass svm loss for a single example (x,y)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   - x is a column vector representing an image (e.g. 3073 x 1 in CIFAR-10)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   </span><span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;"> with an appended bias dimension in the 3073-rd position (i.e. bias trick)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   - y is an integer giving index of correct class (e.g. between 0 and 9 in CIFAR-10)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   - W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   """</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">delta</span> = 1.0 <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">see notes about delta later in this section</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">scores</span> = W.dot<span style="color: #4d4d4c;">(</span>x<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">scores becomes of size 10 x 1, the scores for each class</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">correct_class_score</span> = scores<span style="color: #4d4d4c;">[</span>y<span style="color: #4d4d4c;">]</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">D</span> = W.shape<span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">number of classes, e.g. 10</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">loss_i</span> = 0.0
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> j <span style="color: #718c00;">in</span> <span style="color: #8959a8;">xrange</span><span style="color: #4d4d4c;">(</span>D<span style="color: #4d4d4c;">)</span>: <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">iterate over all wrong classes</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #718c00;">if</span> j == y:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">skip for the true class to only loop over incorrect classes</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">continue</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">accumulate loss for the i-th example</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #eab700;">loss_i</span> += <span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>0, scores<span style="color: #3e999f;">[</span>j<span style="color: #3e999f;">]</span> - correct_class_score + delta<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> loss_i
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #204A87;"># </span><span style="color: #204A87;">&#27809;&#26377;&#21152;&#27491;&#21017;&#21270;&#30340;&#24773;&#20917;</span>
+<span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">L_i</span><span style="color: #707183;">(</span>x, y, W<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #4E9A06;">"""</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   unvectorized version. Compute the multiclass svm loss for a single example (x,y)</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   - x is a column vector representing an image (e.g. 3073 x 1 in CIFAR-10)</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   </span><span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;"> with an appended bias dimension in the 3073-rd position (i.e. bias trick)</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   - y is an integer giving index of correct class (e.g. between 0 and 9 in CIFAR-10)</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   - W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   """</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">delta</span> = 1.0 <span style="color: #204A87;"># </span><span style="color: #204A87;">see notes about delta later in this section</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">scores</span> = W.dot<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">scores becomes of size 10 x 1, the scores for each class</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">correct_class_score</span> = scores<span style="color: #707183;">[</span>y<span style="color: #707183;">]</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">D</span> = W.shape<span style="color: #707183;">[</span>0<span style="color: #707183;">]</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">number of classes, e.g. 10</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">loss_i</span> = 0.0
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> j <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">xrange</span><span style="color: #707183;">(</span>D<span style="color: #707183;">)</span>: <span style="color: #204A87;"># </span><span style="color: #204A87;">iterate over all wrong classes</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span> <span style="color: #A52A2A; font-weight: bold;">if</span> j == y:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">skip for the true class to only loop over incorrect classes</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">continue</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span> <span style="color: #204A87;"># </span><span style="color: #204A87;">accumulate loss for the i-th example</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span> <span style="color: #0084C8; font-weight: bold;">loss_i</span> += <span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>0, scores<span style="color: #7388d6;">[</span>j<span style="color: #7388d6;">]</span> - correct_class_score + delta<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> loss_i
 </code></pre>
 </div>
 
 <p>
 下面是添加了使用向量表示的代码，这种方式更加高效：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">L_i_vectorized</span><span style="color: #4d4d4c;">(</span>x, y, W<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">'''</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   A faster half-vectorized implementation. half-vectorized</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   refers to the fact that for a single example the implementation</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   contains no for loops, but there is still one loop over the</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   examples(outside this function)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span><span style="color: #8959a8;">   '''</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">L_i_vectorized</span><span style="color: #707183;">(</span>x, y, W<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #4E9A06;">'''</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   A faster half-vectorized implementation. half-vectorized</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   refers to the fact that for a single example the implementation</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   contains no for loops, but there is still one loop over the</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   examples(outside this function)</span>
+<span style="color: #4E9A06; background-color: #E6E6E6;"> </span><span style="color: #4E9A06;">   '''</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">delta</span> = 1.0
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">scores</span> = W.dot<span style="color: #4d4d4c;">(</span>x<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">margins</span> = np.maximum<span style="color: #4d4d4c;">(</span>0, scores - scores<span style="color: #3e999f;">[</span>y<span style="color: #3e999f;">]</span> + delta<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">margins</span><span style="color: #4d4d4c;">[</span>y<span style="color: #4d4d4c;">]</span> = 0
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">loss_i</span> = np.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">(</span>margins<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> loss_i
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">delta</span> = 1.0
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">scores</span> = W.dot<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">margins</span> = np.maximum<span style="color: #707183;">(</span>0, scores - scores<span style="color: #7388d6;">[</span>y<span style="color: #7388d6;">]</span> + delta<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">margins</span><span style="color: #707183;">[</span>y<span style="color: #707183;">]</span> = 0
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">loss_i</span> = np.<span style="color: #A020F0;">sum</span><span style="color: #707183;">(</span>margins<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> loss_i
 </code></pre>
 </div>
 </div>
@@ -618,14 +617,14 @@ f_j(z) = \frac{e^{z_j}}{\sum_k e^{z_k}}
 <p>
 下面是代码：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">f</span> = np.array<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span>123, 456, 789<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">p</span> = np.exp<span style="color: #4d4d4c;">(</span>f<span style="color: #4d4d4c;">)</span> / np.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">(</span>np.exp<span style="color: #3e999f;">(</span>f<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">f</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>123, 456, 789<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">p</span> = np.exp<span style="color: #707183;">(</span>f<span style="color: #707183;">)</span> / np.<span style="color: #A020F0;">sum</span><span style="color: #707183;">(</span>np.exp<span style="color: #7388d6;">(</span>f<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#21464;&#25442;&#21518;</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#20854;&#23454;&#23601;&#26159;&#23558; f &#25968;&#20540;&#24179;&#31227;&#65292;&#23558;&#26368;&#22823;&#20540;&#21464;&#20026; 0</span>
-<span style="color: #eab700;">f</span> -= np.<span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>f<span style="color: #4d4d4c;">)</span>  <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">f &#21464;&#25104;&#20102; [-666, -333, 0]</span>
-<span style="color: #eab700;">p</span> = np.exp<span style="color: #4d4d4c;">(</span>f<span style="color: #4d4d4c;">)</span> / np.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">(</span>np.exp<span style="color: #3e999f;">(</span>f<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#21464;&#25442;&#21518;</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#20854;&#23454;&#23601;&#26159;&#23558; f &#25968;&#20540;&#24179;&#31227;&#65292;&#23558;&#26368;&#22823;&#20540;&#21464;&#20026; 0</span>
+<span style="color: #0084C8; font-weight: bold;">f</span> -= np.<span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>f<span style="color: #707183;">)</span>  <span style="color: #204A87;"># </span><span style="color: #204A87;">f &#21464;&#25104;&#20102; [-666, -333, 0]</span>
+<span style="color: #0084C8; font-weight: bold;">p</span> = np.exp<span style="color: #707183;">(</span>f<span style="color: #707183;">)</span> / np.<span style="color: #A020F0;">sum</span><span style="color: #707183;">(</span>np.exp<span style="color: #7388d6;">(</span>f<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -639,14 +638,14 @@ f_j(z) = \frac{e^{z_j}}{\sum_k e^{z_k}}
 </p>
 </div>
 
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">import</span> numpy <span style="color: #718c00;">as</span> np
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">import</span> numpy <span style="color: #A52A2A; font-weight: bold;">as</span> np
 
-<span style="color: #eab700;">f</span> = <span style="color: #4d4d4c;">[</span>3.2, 5.1, -1.7<span style="color: #4d4d4c;">]</span>
-<span style="color: #eab700;">f</span> -= np.<span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>f<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">p</span> = np.exp<span style="color: #4d4d4c;">(</span>f<span style="color: #4d4d4c;">)</span> / np.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">(</span>np.exp<span style="color: #3e999f;">(</span>f<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #0084C8; font-weight: bold;">f</span> = <span style="color: #707183;">[</span>3.2, 5.1, -1.7<span style="color: #707183;">]</span>
+<span style="color: #0084C8; font-weight: bold;">f</span> -= np.<span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>f<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">p</span> = np.exp<span style="color: #707183;">(</span>f<span style="color: #707183;">)</span> / np.<span style="color: #A020F0;">sum</span><span style="color: #707183;">(</span>np.exp<span style="color: #7388d6;">(</span>f<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>p<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">[ 0.12998254  0.86904954  0.00096793]</span>
+<span style="color: #A52A2A; font-weight: bold;">print</span><span style="color: #707183;">(</span>p<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">[ 0.12998254  0.86904954  0.00096793]</span>
 </code></pre>
 </div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:10 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>谈谈字符编码</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -439,11 +438,11 @@ ASCII 字符还是 Unicode 的一部分。
 <p>
 你可以自己去实验一下，例如在 python 下：
 </p>
-<div class="container">
-<pre><code class="python">u<span style="color: #8959a8;">"&#20013;"</span> &#8658; u<span style="color: #8959a8;">'\u4e2d'</span>
-<span style="color: #8959a8;">"{0:b}"</span>.<span style="color: #8959a8;">format</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">int</span><span style="color: #3e999f;">(</span><span style="color: #8959a8;">'4e2d'</span>, 16<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> &#8658; <span style="color: #8959a8;">'100111000101101'</span>
-u<span style="color: #3e999f;">"&#20013;"</span>.encode<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'utf-8'</span><span style="color: #4d4d4c;">)</span> &#8658; <span style="color: #3e999f;">'\xe4\xb8\xad'</span>
-<span style="color: #3e999f;">"{0:b}"</span>.<span style="color: #8959a8;">format</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">int</span><span style="color: #3e999f;">(</span><span style="color: #3e999f;">'e4b8ad'</span>, 16<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> &#8658; <span style="color: #3e999f;">'111001001011100010101101'</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">u<span style="color: #4E9A06;">"&#20013;"</span> &#8658; u<span style="color: #4E9A06;">'\u4e2d'</span>
+<span style="color: #4E9A06;">"{0:b}"</span>.<span style="color: #A020F0;">format</span><span style="color: #707183;">(</span><span style="color: #A020F0;">int</span><span style="color: #7388d6;">(</span><span style="color: #4E9A06;">'4e2d'</span>, 16<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> &#8658; <span style="color: #4E9A06;">'100111000101101'</span>
+u<span style="color: #4E9A06;">"&#20013;"</span>.encode<span style="color: #707183;">(</span><span style="color: #4E9A06;">'utf-8'</span><span style="color: #707183;">)</span> &#8658; <span style="color: #4E9A06;">'\xe4\xb8\xad'</span>
+<span style="color: #4E9A06;">"{0:b}"</span>.<span style="color: #A020F0;">format</span><span style="color: #707183;">(</span><span style="color: #A020F0;">int</span><span style="color: #7388d6;">(</span><span style="color: #4E9A06;">'e4b8ad'</span>, 16<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> &#8658; <span style="color: #4E9A06;">'111001001011100010101101'</span>
 </code></pre>
 </div>
 
@@ -486,18 +485,18 @@ u<span style="color: #3e999f;">"&#20013;"</span>.encode<span style="color: #4d4d
 <p>
 下面是一段 Python 的例子。
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">if</span> <span style="color: #8959a8;">__name__</span> == <span style="color: #3e999f;">'__main__'</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Translating from the outside world of bytes to Unicode characters.</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">input_bytes</span> = b<span style="color: #3e999f;">'\xff\xfe4\x001\x003\x00 \x00i\x00s\x00 \x00i\x00n\x00.\x00'</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">input_characters</span> = input_bytes.decode<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'utf-16'</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">repr</span><span style="color: #3e999f;">(</span>input_characters<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #A020F0;">__name__</span> == <span style="color: #4E9A06;">'__main__'</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">Translating from the outside world of bytes to Unicode characters.</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">input_bytes</span> = b<span style="color: #4E9A06;">'\xff\xfe4\x001\x003\x00 \x00i\x00s\x00 \x00i\x00n\x00.\x00'</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">input_characters</span> = input_bytes.decode<span style="color: #707183;">(</span><span style="color: #4E9A06;">'utf-16'</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span><span style="color: #707183;">(</span><span style="color: #A020F0;">repr</span><span style="color: #7388d6;">(</span>input_characters<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Translating characters back into bytes before sending them.</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">output_characters</span> = <span style="color: #3e999f;">'We copy you down, Eagle.\n'</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">output_bytes</span> = output_characters.encode<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'utf-8'</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">with</span> <span style="color: #8959a8;">open</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'eagle.txt'</span>, <span style="color: #3e999f;">'wb'</span><span style="color: #4d4d4c;">)</span> <span style="color: #718c00;">as</span> f:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   f.write<span style="color: #4d4d4c;">(</span>output_bytes<span style="color: #4d4d4c;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">Translating characters back into bytes before sending them.</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">output_characters</span> = <span style="color: #4E9A06;">'We copy you down, Eagle.\n'</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">output_bytes</span> = output_characters.encode<span style="color: #707183;">(</span><span style="color: #4E9A06;">'utf-8'</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">with</span> <span style="color: #A020F0;">open</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">'eagle.txt'</span>, <span style="color: #4E9A06;">'wb'</span><span style="color: #707183;">)</span> <span style="color: #A52A2A; font-weight: bold;">as</span> f:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   f.write<span style="color: #707183;">(</span>output_bytes<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>
@@ -515,10 +514,10 @@ u<span style="color: #3e999f;">"&#20013;"</span>.encode<span style="color: #4d4d
 UTF-8 去编码，而你却用 UTF-16 去解码，肯定是有问题的。
 </p>
 
-<div class="container">
-<pre><code class="python">u<span style="color: #8959a8;">"&#20013;"</span>.encode<span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">'utf-8'</span><span style="color: #4d4d4c;">)</span>  &#8658; <span style="color: #8959a8;">'\xe4\xb8\xad'</span>
-<span style="color: #8959a8;">'\xe4\xb8\xad'</span>.decode<span style="color: #4d4d4c;">()</span>  &#8658; <span style="color: #4271ae;">UnicodeDecodeError</span>: <span style="color: #8959a8;">'ascii'</span> codec can<span style="color: #8959a8;">'t decode byte 0xe4 in position 0</span>
-<span style="color: #8959a8;">'</span>\xe4\xb8\xad<span style="color: #8959a8;">'.decode('</span>utf-8<span style="color: #8959a8;">') &#8658; u'</span>\u4e2d<span style="color: #8959a8;">'</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">u<span style="color: #4E9A06;">"&#20013;"</span>.encode<span style="color: #707183;">(</span><span style="color: #4E9A06;">'utf-8'</span><span style="color: #707183;">)</span>  &#8658; <span style="color: #4E9A06;">'\xe4\xb8\xad'</span>
+<span style="color: #4E9A06;">'\xe4\xb8\xad'</span>.decode<span style="color: #707183;">()</span>  &#8658; <span style="color: #2F8B58; font-weight: bold;">UnicodeDecodeError</span>: <span style="color: #4E9A06;">'ascii'</span> codec can<span style="color: #4E9A06;">'t decode byte 0xe4 in position 0</span>
+<span style="color: #4E9A06;">'</span>\xe4\xb8\xad<span style="color: #4E9A06;">'.decode('</span>utf-8<span style="color: #4E9A06;">') &#8658; u'</span>\u4e2d<span style="color: #4E9A06;">'</span>
 </code></pre>
 </div>
 </div>
@@ -530,9 +529,9 @@ UTF-8 去编码，而你却用 UTF-16 去解码，肯定是有问题的。
 <p>
 在 Python 2 中，你如果执行
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8959a8;">"&#20320;&#22909;"</span>.encode<span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">"utf8"</span><span style="color: #4d4d4c;">)</span> &#8658;
-<span style="color: #4271ae;">UnicodeDecodeError</span>: <span style="color: #3e999f;">'ascii'</span> codec can<span style="color: #3e999f;">'t decode byte 0xe4 in position 0: ordinal not in range(128)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #4E9A06;">"&#20320;&#22909;"</span>.encode<span style="color: #707183;">(</span><span style="color: #4E9A06;">"utf8"</span><span style="color: #707183;">)</span> &#8658;
+<span style="color: #2F8B58; font-weight: bold;">UnicodeDecodeError</span>: <span style="color: #4E9A06;">'ascii'</span> codec can<span style="color: #4E9A06;">'t decode byte 0xe4 in position 0: ordinal not in range(128)</span>
 </code></pre>
 </div>
 
@@ -540,8 +539,8 @@ UTF-8 去编码，而你却用 UTF-16 去解码，肯定是有问题的。
 这是为什么呢？
 这里我们首先要看看 "你好" 是什么类型的，事实它是 str 类型。所以它等价于：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8959a8;">"&#20320;&#22909;"</span>.decode<span style="color: #4d4d4c;">()</span>.encode<span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">'utf-8'</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #4E9A06;">"&#20320;&#22909;"</span>.decode<span style="color: #707183;">()</span>.encode<span style="color: #707183;">(</span><span style="color: #4E9A06;">'utf-8'</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -549,8 +548,8 @@ UTF-8 去编码，而你却用 UTF-16 去解码，肯定是有问题的。
 首先将 "你好" decode 成 Unicode，然后在按照 UTF-8 编码。因为"你好"
 不是有效的 ASCII，所以错误出现在 decode 这步。我们只需要改成：
 </p>
-<div class="container">
-<pre><code class="python">u<span style="color: #8959a8;">"&#20320;&#22909;"</span>.encode<span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">"utf8"</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">u<span style="color: #4E9A06;">"&#20320;&#22909;"</span>.encode<span style="color: #707183;">(</span><span style="color: #4E9A06;">"utf8"</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>

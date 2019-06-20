@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>反向传播算法（Backpropagation）</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -276,21 +275,21 @@ for the JavaScript code in this tag.
 <p>
 使用链式法则计算复合表达式
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#35774;&#32622;&#36755;&#20837;&#20540;</span>
-<span style="color: #eab700;">x</span> = -2; <span style="color: #eab700;">y</span> = 5; <span style="color: #eab700;">z</span> = -4
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">&#35774;&#32622;&#36755;&#20837;&#20540;</span>
+<span style="color: #0084C8; font-weight: bold;">x</span> = -2; <span style="color: #0084C8; font-weight: bold;">y</span> = 5; <span style="color: #0084C8; font-weight: bold;">z</span> = -4
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#36827;&#34892;&#21069;&#21521;&#20256;&#25773;</span>
-<span style="color: #eab700;">q</span> = x + y <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">q becomes 3</span>
-<span style="color: #eab700;">f</span> = q * z <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">f becomes -12</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#36827;&#34892;&#21069;&#21521;&#20256;&#25773;</span>
+<span style="color: #0084C8; font-weight: bold;">q</span> = x + y <span style="color: #204A87;"># </span><span style="color: #204A87;">q becomes 3</span>
+<span style="color: #0084C8; font-weight: bold;">f</span> = q * z <span style="color: #204A87;"># </span><span style="color: #204A87;">f becomes -12</span>
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#36827;&#34892;&#21453;&#21521;&#20256;&#25773;:</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#39318;&#20808;&#22238;&#20256;&#21040; f = q * z</span>
-<span style="color: #eab700;">dfdz</span> = q <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">df/dz = q, &#25152;&#20197;&#20851;&#20110; z &#30340;&#26799;&#24230;&#26159; 3</span>
-<span style="color: #eab700;">dfdq</span> = z <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">df/dq = z, &#25152;&#20197;&#20851;&#20110; q &#30340;&#26799;&#24230;&#26159;-4</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#29616;&#22312;&#22238;&#20256;&#21040; q = x + y</span>
-<span style="color: #eab700;">dfdx</span> = 1.0 * dfdq <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">dq/dx = 1. &#36825;&#37324;&#30340;&#20056;&#27861;&#26159;&#22240;&#20026;&#38142;&#24335;&#27861;&#21017;</span>
-<span style="color: #eab700;">dfdy</span> = 1.0 * dfdq <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">dq/dy = 1</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#36827;&#34892;&#21453;&#21521;&#20256;&#25773;:</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#39318;&#20808;&#22238;&#20256;&#21040; f = q * z</span>
+<span style="color: #0084C8; font-weight: bold;">dfdz</span> = q <span style="color: #204A87;"># </span><span style="color: #204A87;">df/dz = q, &#25152;&#20197;&#20851;&#20110; z &#30340;&#26799;&#24230;&#26159; 3</span>
+<span style="color: #0084C8; font-weight: bold;">dfdq</span> = z <span style="color: #204A87;"># </span><span style="color: #204A87;">df/dq = z, &#25152;&#20197;&#20851;&#20110; q &#30340;&#26799;&#24230;&#26159;-4</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#29616;&#22312;&#22238;&#20256;&#21040; q = x + y</span>
+<span style="color: #0084C8; font-weight: bold;">dfdx</span> = 1.0 * dfdq <span style="color: #204A87;"># </span><span style="color: #204A87;">dq/dx = 1. &#36825;&#37324;&#30340;&#20056;&#27861;&#26159;&#22240;&#20026;&#38142;&#24335;&#27861;&#21017;</span>
+<span style="color: #0084C8; font-weight: bold;">dfdy</span> = 1.0 * dfdq <span style="color: #204A87;"># </span><span style="color: #204A87;">dq/dy = 1</span>
 </code></pre>
 </div>
 
@@ -383,19 +382,19 @@ f_a(x) = ax
 <p>
 相应的 Python 代码可以这样实现
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">w</span> = <span style="color: #4d4d4c;">[</span>2,-3,-3<span style="color: #4d4d4c;">]</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#20551;&#35774;&#19968;&#20123;&#38543;&#26426;&#25968;&#25454;&#21644;&#26435;&#37325;</span>
-<span style="color: #eab700;">x</span> = <span style="color: #4d4d4c;">[</span>-1, -2<span style="color: #4d4d4c;">]</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">w</span> = <span style="color: #707183;">[</span>2,-3,-3<span style="color: #707183;">]</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">&#20551;&#35774;&#19968;&#20123;&#38543;&#26426;&#25968;&#25454;&#21644;&#26435;&#37325;</span>
+<span style="color: #0084C8; font-weight: bold;">x</span> = <span style="color: #707183;">[</span>-1, -2<span style="color: #707183;">]</span>
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#21069;&#21521;&#20256;&#25773;</span>
-<span style="color: #eab700;">dot</span> = w<span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</span>*x<span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</span> + w<span style="color: #4d4d4c;">[</span>1<span style="color: #4d4d4c;">]</span>*x<span style="color: #4d4d4c;">[</span>1<span style="color: #4d4d4c;">]</span> + w<span style="color: #4d4d4c;">[</span>2<span style="color: #4d4d4c;">]</span>
-<span style="color: #eab700;">f</span> = 1.0 / <span style="color: #4d4d4c;">(</span>1 + math.exp<span style="color: #3e999f;">(</span>-dot<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">sigmoid &#20989;&#25968;</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#21069;&#21521;&#20256;&#25773;</span>
+<span style="color: #0084C8; font-weight: bold;">dot</span> = w<span style="color: #707183;">[</span>0<span style="color: #707183;">]</span>*x<span style="color: #707183;">[</span>0<span style="color: #707183;">]</span> + w<span style="color: #707183;">[</span>1<span style="color: #707183;">]</span>*x<span style="color: #707183;">[</span>1<span style="color: #707183;">]</span> + w<span style="color: #707183;">[</span>2<span style="color: #707183;">]</span>
+<span style="color: #0084C8; font-weight: bold;">f</span> = 1.0 / <span style="color: #707183;">(</span>1 + math.exp<span style="color: #7388d6;">(</span>-dot<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">sigmoid &#20989;&#25968;</span>
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#23545;&#31070;&#32463;&#20803;&#21453;&#21521;&#20256;&#25773;</span>
-<span style="color: #eab700;">ddot</span> = <span style="color: #4d4d4c;">(</span>1 - f<span style="color: #4d4d4c;">)</span> * f <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#28857;&#31215;&#21464;&#37327;&#30340;&#26799;&#24230;, &#20351;&#29992; sigmoid &#20989;&#25968;&#27714;&#23548;</span>
-<span style="color: #eab700;">dx</span> = <span style="color: #4d4d4c;">[</span>w<span style="color: #3e999f;">[</span>0<span style="color: #3e999f;">]</span> * ddot, w<span style="color: #3e999f;">[</span>1<span style="color: #3e999f;">]</span> * ddot<span style="color: #4d4d4c;">]</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#22238;&#20256;&#21040; x</span>
-<span style="color: #eab700;">dw</span> = <span style="color: #4d4d4c;">[</span>x<span style="color: #3e999f;">[</span>0<span style="color: #3e999f;">]</span> * ddot, x<span style="color: #3e999f;">[</span>1<span style="color: #3e999f;">]</span> * ddot, 1.0 * ddot<span style="color: #4d4d4c;">]</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#22238;&#20256;&#21040; w</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#23436;&#25104;&#65281;&#24471;&#21040;&#36755;&#20837;&#30340;&#26799;&#24230;</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#23545;&#31070;&#32463;&#20803;&#21453;&#21521;&#20256;&#25773;</span>
+<span style="color: #0084C8; font-weight: bold;">ddot</span> = <span style="color: #707183;">(</span>1 - f<span style="color: #707183;">)</span> * f <span style="color: #204A87;"># </span><span style="color: #204A87;">&#28857;&#31215;&#21464;&#37327;&#30340;&#26799;&#24230;, &#20351;&#29992; sigmoid &#20989;&#25968;&#27714;&#23548;</span>
+<span style="color: #0084C8; font-weight: bold;">dx</span> = <span style="color: #707183;">[</span>w<span style="color: #7388d6;">[</span>0<span style="color: #7388d6;">]</span> * ddot, w<span style="color: #7388d6;">[</span>1<span style="color: #7388d6;">]</span> * ddot<span style="color: #707183;">]</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">&#22238;&#20256;&#21040; x</span>
+<span style="color: #0084C8; font-weight: bold;">dw</span> = <span style="color: #707183;">[</span>x<span style="color: #7388d6;">[</span>0<span style="color: #7388d6;">]</span> * ddot, x<span style="color: #7388d6;">[</span>1<span style="color: #7388d6;">]</span> * ddot, 1.0 * ddot<span style="color: #707183;">]</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">&#22238;&#20256;&#21040; w</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#23436;&#25104;&#65281;&#24471;&#21040;&#36755;&#20837;&#30340;&#26799;&#24230;</span>
 </code></pre>
 </div>
 </div>
@@ -416,19 +415,19 @@ f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}
 <p>
 下面是构建前向传播的代码模式：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">x</span> = 3 <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">example values</span>
-<span style="color: #eab700;">y</span> = -4
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">x</span> = 3 <span style="color: #204A87;"># </span><span style="color: #204A87;">example values</span>
+<span style="color: #0084C8; font-weight: bold;">y</span> = -4
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">forward pass</span>
-<span style="color: #eab700;">sigy</span> = 1.0 / <span style="color: #4d4d4c;">(</span>1 + math.exp<span style="color: #3e999f;">(</span>-y<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">sigmoid in numerator   #(1)</span>
-<span style="color: #eab700;">num</span> = x + sigy <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">numerator                               #(2)</span>
-<span style="color: #eab700;">sigx</span> = 1.0 / <span style="color: #4d4d4c;">(</span>1 + math.exp<span style="color: #3e999f;">(</span>-x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">sigmoid in denominator #(3)</span>
-<span style="color: #eab700;">xpy</span> = x + y                                              <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(4)</span>
-<span style="color: #eab700;">xpysqr</span> = xpy**2                                          <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(5)</span>
-<span style="color: #eab700;">den</span> = sigx + xpysqr <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">denominator                        #(6)</span>
-<span style="color: #eab700;">invden</span> = 1.0 / den                                       <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(7)</span>
-<span style="color: #eab700;">f</span> = num * invden <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">done!                                 #(8)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">forward pass</span>
+<span style="color: #0084C8; font-weight: bold;">sigy</span> = 1.0 / <span style="color: #707183;">(</span>1 + math.exp<span style="color: #7388d6;">(</span>-y<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">sigmoid in numerator   #(1)</span>
+<span style="color: #0084C8; font-weight: bold;">num</span> = x + sigy <span style="color: #204A87;"># </span><span style="color: #204A87;">numerator                               #(2)</span>
+<span style="color: #0084C8; font-weight: bold;">sigx</span> = 1.0 / <span style="color: #707183;">(</span>1 + math.exp<span style="color: #7388d6;">(</span>-x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">sigmoid in denominator #(3)</span>
+<span style="color: #0084C8; font-weight: bold;">xpy</span> = x + y                                              <span style="color: #204A87;">#</span><span style="color: #204A87;">(4)</span>
+<span style="color: #0084C8; font-weight: bold;">xpysqr</span> = xpy**2                                          <span style="color: #204A87;">#</span><span style="color: #204A87;">(5)</span>
+<span style="color: #0084C8; font-weight: bold;">den</span> = sigx + xpysqr <span style="color: #204A87;"># </span><span style="color: #204A87;">denominator                        #(6)</span>
+<span style="color: #0084C8; font-weight: bold;">invden</span> = 1.0 / den                                       <span style="color: #204A87;">#</span><span style="color: #204A87;">(7)</span>
+<span style="color: #0084C8; font-weight: bold;">f</span> = num * invden <span style="color: #204A87;"># </span><span style="color: #204A87;">done!                                 #(8)</span>
 </code></pre>
 </div>
 
@@ -437,28 +436,28 @@ f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}
 注意在反向传播的每一小块中都将包含了表达式的局部梯度，然后根据使用链式法则乘以上游梯度。
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">backprop f = num * invden</span>
-<span style="color: #eab700;">dnum</span> = invden <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">gradient on numerator                             #(8)</span>
-<span style="color: #eab700;">dinvden</span> = num                                                     <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(8)</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">backprop invden = 1.0 / den</span>
-<span style="color: #eab700;">dden</span> = <span style="color: #4d4d4c;">(</span>-1.0 / <span style="color: #3e999f;">(</span>den**2<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> * dinvden                                <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(7)</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">backprop den = sigx + xpysqr</span>
-<span style="color: #eab700;">dsigx</span> = <span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span> * dden                                                <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(6)</span>
-<span style="color: #eab700;">dxpysqr</span> = <span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span> * dden                                              <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(6)</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">backprop xpysqr = xpy**2</span>
-<span style="color: #eab700;">dxpy</span> = <span style="color: #4d4d4c;">(</span>2 * xpy<span style="color: #4d4d4c;">)</span> * dxpysqr                                        <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(5)</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">backprop xpy = x + y</span>
-<span style="color: #eab700;">dx</span> = <span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span> * dxpy                                                   <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(4)</span>
-<span style="color: #eab700;">dy</span> = <span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span> * dxpy                                                   <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(4)</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">backprop sigx = 1.0 / (1 + math.exp(-x))</span>
-<span style="color: #eab700;">dx</span> += <span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">(</span>1 - sigx<span style="color: #3e999f;">)</span> * sigx<span style="color: #4d4d4c;">)</span> * dsigx <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Notice += !! See notes below  #(3)</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">backprop num = x + sigy</span>
-<span style="color: #eab700;">dx</span> += <span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span> * dnum                                                  <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(2)</span>
-<span style="color: #eab700;">dsigy</span> = <span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span> * dnum                                                <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(2)</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">backprop sigy = 1.0 / (1 + math.exp(-y))</span>
-<span style="color: #eab700;">dy</span> += <span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">(</span>1 - sigy<span style="color: #3e999f;">)</span> * sigy<span style="color: #4d4d4c;">)</span> * dsigy                                 <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">(1)</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">done! phew</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">backprop f = num * invden</span>
+<span style="color: #0084C8; font-weight: bold;">dnum</span> = invden <span style="color: #204A87;"># </span><span style="color: #204A87;">gradient on numerator                             #(8)</span>
+<span style="color: #0084C8; font-weight: bold;">dinvden</span> = num                                                     <span style="color: #204A87;">#</span><span style="color: #204A87;">(8)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">backprop invden = 1.0 / den</span>
+<span style="color: #0084C8; font-weight: bold;">dden</span> = <span style="color: #707183;">(</span>-1.0 / <span style="color: #7388d6;">(</span>den**2<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> * dinvden                                <span style="color: #204A87;">#</span><span style="color: #204A87;">(7)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">backprop den = sigx + xpysqr</span>
+<span style="color: #0084C8; font-weight: bold;">dsigx</span> = <span style="color: #707183;">(</span>1<span style="color: #707183;">)</span> * dden                                                <span style="color: #204A87;">#</span><span style="color: #204A87;">(6)</span>
+<span style="color: #0084C8; font-weight: bold;">dxpysqr</span> = <span style="color: #707183;">(</span>1<span style="color: #707183;">)</span> * dden                                              <span style="color: #204A87;">#</span><span style="color: #204A87;">(6)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">backprop xpysqr = xpy**2</span>
+<span style="color: #0084C8; font-weight: bold;">dxpy</span> = <span style="color: #707183;">(</span>2 * xpy<span style="color: #707183;">)</span> * dxpysqr                                        <span style="color: #204A87;">#</span><span style="color: #204A87;">(5)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">backprop xpy = x + y</span>
+<span style="color: #0084C8; font-weight: bold;">dx</span> = <span style="color: #707183;">(</span>1<span style="color: #707183;">)</span> * dxpy                                                   <span style="color: #204A87;">#</span><span style="color: #204A87;">(4)</span>
+<span style="color: #0084C8; font-weight: bold;">dy</span> = <span style="color: #707183;">(</span>1<span style="color: #707183;">)</span> * dxpy                                                   <span style="color: #204A87;">#</span><span style="color: #204A87;">(4)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">backprop sigx = 1.0 / (1 + math.exp(-x))</span>
+<span style="color: #0084C8; font-weight: bold;">dx</span> += <span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>1 - sigx<span style="color: #7388d6;">)</span> * sigx<span style="color: #707183;">)</span> * dsigx <span style="color: #204A87;"># </span><span style="color: #204A87;">Notice += !! See notes below  #(3)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">backprop num = x + sigy</span>
+<span style="color: #0084C8; font-weight: bold;">dx</span> += <span style="color: #707183;">(</span>1<span style="color: #707183;">)</span> * dnum                                                  <span style="color: #204A87;">#</span><span style="color: #204A87;">(2)</span>
+<span style="color: #0084C8; font-weight: bold;">dsigy</span> = <span style="color: #707183;">(</span>1<span style="color: #707183;">)</span> * dnum                                                <span style="color: #204A87;">#</span><span style="color: #204A87;">(2)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">backprop sigy = 1.0 / (1 + math.exp(-y))</span>
+<span style="color: #0084C8; font-weight: bold;">dy</span> += <span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>1 - sigy<span style="color: #7388d6;">)</span> * sigy<span style="color: #707183;">)</span> * dsigy                                 <span style="color: #204A87;">#</span><span style="color: #204A87;">(1)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">done! phew</span>
 </code></pre>
 </div>
 
@@ -493,16 +492,16 @@ f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}
 矩阵相乘的梯度：可能最有技巧的操作是矩阵相乘（也适用于矩阵和向量，向量和向量相乘）的乘法操作：
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#21069;&#21521;&#20256;&#25773;</span>
-<span style="color: #eab700;">W</span> = np.random.randn<span style="color: #4d4d4c;">(</span>5, 10<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">X</span> = np.random.randn<span style="color: #4d4d4c;">(</span>10, 3<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">D</span> = W.dot<span style="color: #4d4d4c;">(</span>X<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">&#21069;&#21521;&#20256;&#25773;</span>
+<span style="color: #0084C8; font-weight: bold;">W</span> = np.random.randn<span style="color: #707183;">(</span>5, 10<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">X</span> = np.random.randn<span style="color: #707183;">(</span>10, 3<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">D</span> = W.dot<span style="color: #707183;">(</span>X<span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#20551;&#35774;&#25105;&#20204;&#24471;&#21040;&#20102; D &#30340;&#26799;&#24230;</span>
-<span style="color: #eab700;">dD</span> = np.random.randn<span style="color: #4d4d4c;">(</span>*D.shape<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#21644; D &#19968;&#26679;&#30340;&#23610;&#23544;</span>
-<span style="color: #eab700;">dW</span> = dD.dot<span style="color: #4d4d4c;">(</span>X.T<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">.T &#23601;&#26159;&#23545;&#30697;&#38453;&#36827;&#34892;&#36716;&#32622;</span>
-<span style="color: #eab700;">dX</span> = W.T.dot<span style="color: #4d4d4c;">(</span>dD<span style="color: #4d4d4c;">)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#20551;&#35774;&#25105;&#20204;&#24471;&#21040;&#20102; D &#30340;&#26799;&#24230;</span>
+<span style="color: #0084C8; font-weight: bold;">dD</span> = np.random.randn<span style="color: #707183;">(</span>*D.shape<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">&#21644; D &#19968;&#26679;&#30340;&#23610;&#23544;</span>
+<span style="color: #0084C8; font-weight: bold;">dW</span> = dD.dot<span style="color: #707183;">(</span>X.T<span style="color: #707183;">)</span> <span style="color: #204A87;">#</span><span style="color: #204A87;">.T &#23601;&#26159;&#23545;&#30697;&#38453;&#36827;&#34892;&#36716;&#32622;</span>
+<span style="color: #0084C8; font-weight: bold;">dX</span> = W.T.dot<span style="color: #707183;">(</span>dD<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 

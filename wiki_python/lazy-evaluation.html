@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:08 -->
+<!-- 2019-06-21 Fri 01:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Lazy evaluation</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -280,13 +279,13 @@ for the JavaScript code in this tag.
 <p>
 One example is:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">class</span> <span style="color: #4271ae;">Person</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">__init__</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, name<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.name = name
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.relatives = <span style="color: #718c00;">self</span>._get_all_relatives<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">_get_all_relatives</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">this is a more expensive op</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">Person</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">__init__</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>, name<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>.name = name
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>.relatives = <span style="color: #A52A2A; font-weight: bold;">self</span>._get_all_relatives<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">_get_all_relatives</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">this is a more expensive op</span>
 </code></pre>
 </div>
 
@@ -297,42 +296,42 @@ So It may take long time , when initialization the class.
 <p>
 Better approach is:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">class</span> <span style="color: #4271ae;">Person</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">__init__</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, name<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.name = name
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>._relatives = <span style="color: #4d4d4c;">[]</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">Person</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">__init__</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>, name<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>.name = name
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>._relatives = <span style="color: #707183;">[]</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #4271ae;">@property</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">relatives</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> <span style="color: #718c00;">not</span> <span style="color: #718c00;">self</span>._relatives:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>._relatives = _get_all_..<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> <span style="color: #718c00;">self</span>._relatives
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #2F8B58; font-weight: bold;">@property</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">relatives</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #A52A2A; font-weight: bold;">not</span> <span style="color: #A52A2A; font-weight: bold;">self</span>._relatives:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>._relatives = _get_all_..<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #A52A2A; font-weight: bold;">self</span>._relatives
 </code></pre>
 </div>
 
 <p>
 And more Pythonic approach(using decorator):
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">lazy_property</span><span style="color: #4d4d4c;">(</span>fn<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">attr_name</span> = <span style="color: #3e999f;">'_lazy_'</span> + fn.<span style="color: #8959a8;">__name__</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #4271ae;">@property</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">_lazy_property</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> <span style="color: #718c00;">not</span> <span style="color: #8959a8;">hasattr</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, attr_name<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8959a8;">setattr</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, attr_name, fn<span style="color: #3e999f;">(</span><span style="color: #718c00;">self</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> <span style="color: #8959a8;">getattr</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, attr_name<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> _lazy_property
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">lazy_property</span><span style="color: #707183;">(</span>fn<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">attr_name</span> = <span style="color: #4E9A06;">'_lazy_'</span> + fn.<span style="color: #A020F0;">__name__</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #2F8B58; font-weight: bold;">@property</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">_lazy_property</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #A52A2A; font-weight: bold;">not</span> <span style="color: #A020F0;">hasattr</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>, attr_name<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A020F0;">setattr</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>, attr_name, fn<span style="color: #7388d6;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #A020F0;">getattr</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>, attr_name<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> _lazy_property
 
-<span style="color: #718c00;">class</span> <span style="color: #4271ae;">Person</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">__init__</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, name<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.name = name
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>._relatives = <span style="color: #4d4d4c;">[]</span>
+<span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">Person</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">__init__</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>, name<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>.name = name
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>._relatives = <span style="color: #707183;">[]</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #4271ae;">@lazy_property</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">relatives</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">relatives</span> = <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">getall</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> relatives
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #2F8B58; font-weight: bold;">@lazy_property</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">relatives</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">relatives</span> = <span style="color: #204A87;"># </span><span style="color: #204A87;">getall</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> relatives
 </code></pre>
 </div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:08 -->
+<!-- 2019-06-21 Fri 01:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Word2Vec 食用指南-应用篇（一）</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -277,12 +276,12 @@ for the JavaScript code in this tag.
 <p>
 使用 gensim 生成 word2vec 需要输入为一个可迭代的序列。每个句子为词组成的 list（utf-8 编码）。
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">import modules &amp; set up logging</span>
-<span style="color: #718c00;">import</span> gensim, logging
-logging.basicConfig<span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">format</span>=<span style="color: #3e999f;">'%(asctime)s: %(levelname)s : %(message)s'</span>, level=logging.INFO<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">sentences</span> = <span style="color: #4d4d4c;">[</span><span style="color: #3e999f;">[</span><span style="color: #3e999f;">'first'</span>, <span style="color: #3e999f;">'sentence'</span><span style="color: #3e999f;">]</span>, <span style="color: #3e999f;">[</span><span style="color: #3e999f;">'second'</span>, <span style="color: #3e999f;">'sentence'</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">]</span>
-<span style="color: #eab700;">model</span> = gensim.models.Word2Vec<span style="color: #4d4d4c;">(</span>sentences, min_count=1<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #204A87;"># </span><span style="color: #204A87;">import modules &amp; set up logging</span>
+<span style="color: #A52A2A; font-weight: bold;">import</span> gensim, logging
+logging.basicConfig<span style="color: #707183;">(</span><span style="color: #A020F0;">format</span>=<span style="color: #4E9A06;">'%(asctime)s: %(levelname)s : %(message)s'</span>, level=logging.INFO<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">sentences</span> = <span style="color: #707183;">[</span><span style="color: #7388d6;">[</span><span style="color: #4E9A06;">'first'</span>, <span style="color: #4E9A06;">'sentence'</span><span style="color: #7388d6;">]</span>, <span style="color: #7388d6;">[</span><span style="color: #4E9A06;">'second'</span>, <span style="color: #4E9A06;">'sentence'</span><span style="color: #7388d6;">]</span><span style="color: #707183;">]</span>
+<span style="color: #0084C8; font-weight: bold;">model</span> = gensim.models.Word2Vec<span style="color: #707183;">(</span>sentences, min_count=1<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -293,16 +292,16 @@ logging.basicConfig<span style="color: #4d4d4c;">(</span><span style="color: #89
 <p>
 例如，如果我们的输入是磁盘的多个文件（文件每一行，为一个句子），我们可以一行行的处理，而不是把所有的都加载到内存中。
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">class</span> <span style="color: #4271ae;">MySentences</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">object</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">__init__</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, dirname<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">self</span>.dirname = dirname
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">def</span> <span style="color: #f5871f;">__iter__</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> fname <span style="color: #718c00;">in</span> os.listdir<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>.dirname<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> line <span style="color: #718c00;">in</span> <span style="color: #8959a8;">open</span><span style="color: #4d4d4c;">(</span>os.path.join<span style="color: #3e999f;">(</span><span style="color: #718c00;">self</span>.dirname, fname<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">yield</span> line.split<span style="color: #4d4d4c;">()</span>
-<span style="color: #eab700;">sentences</span> = MySentences<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'/some/directory'</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">model</span> = gensim.models.Word2Vec<span style="color: #4d4d4c;">(</span>sentences<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">MySentences</span><span style="color: #707183;">(</span><span style="color: #A020F0;">object</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">__init__</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>, dirname<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">self</span>.dirname = dirname
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">__iter__</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> fname <span style="color: #A52A2A; font-weight: bold;">in</span> os.listdir<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>.dirname<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> line <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">open</span><span style="color: #707183;">(</span>os.path.join<span style="color: #7388d6;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>.dirname, fname<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">yield</span> line.split<span style="color: #707183;">()</span>
+<span style="color: #0084C8; font-weight: bold;">sentences</span> = MySentences<span style="color: #707183;">(</span><span style="color: #4E9A06;">'/some/directory'</span><span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">model</span> = gensim.models.Word2Vec<span style="color: #707183;">(</span>sentences<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -314,10 +313,10 @@ logging.basicConfig<span style="color: #4d4d4c;">(</span><span style="color: #89
 对于高级用户来说需要了解，Word2Vec(sentences, iter=1) 会执行两轮迭代
 （更加准确的说法是 iter+1 轮，默认 iter=5）。第一轮，会获取词频，然后构建内部的树字典结构。第二以及随后的迭代会训练模型。在有些情况，数据可能不能重复迭代，你可以手动的初始化第一轮的词典：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">model</span> = gensim.models.Word2Vec<span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">iter</span>=1<span style="color: #4d4d4c;">)</span>  <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">an empty model, no training yet</span>
-model.build_vocab<span style="color: #4d4d4c;">(</span>some_sentences<span style="color: #4d4d4c;">)</span>  <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">can be a non-repeatable, 1-pass generator</span>
-model.train<span style="color: #4d4d4c;">(</span>other_sentences<span style="color: #4d4d4c;">)</span>  <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">can be a non-repeatable, 1-pass generator</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">model</span> = gensim.models.Word2Vec<span style="color: #707183;">(</span><span style="color: #A020F0;">iter</span>=1<span style="color: #707183;">)</span>  <span style="color: #204A87;"># </span><span style="color: #204A87;">an empty model, no training yet</span>
+model.build_vocab<span style="color: #707183;">(</span>some_sentences<span style="color: #707183;">)</span>  <span style="color: #204A87;"># </span><span style="color: #204A87;">can be a non-repeatable, 1-pass generator</span>
+model.train<span style="color: #707183;">(</span>other_sentences<span style="color: #707183;">)</span>  <span style="color: #204A87;"># </span><span style="color: #204A87;">can be a non-repeatable, 1-pass generator</span>
 </code></pre>
 </div>
 
@@ -338,8 +337,8 @@ Word2Vec 的训练参数对训练的速度和结果的质量有非常大的影�
 其中之一是对内部词典的过滤，也就是在成千上百万的词中，仅仅出现一次二次的，很有可能是拼写错误或者没意义的词，对于它们训练没有太大的意义，最好的方式就是忽略掉这种词。
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">model</span> = Word2Vec<span style="color: #4d4d4c;">(</span>sentences, min_count=10<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">default value is 5</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">model</span> = Word2Vec<span style="color: #707183;">(</span>sentences, min_count=10<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">default value is 5</span>
 </code></pre>
 </div>
 
@@ -350,8 +349,8 @@ Word2Vec 的训练参数对训练的速度和结果的质量有非常大的影�
 <p>
 另外一个重要的参数是训练的层数，它和训练的自由度相关
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">model</span> = Word2Vec<span style="color: #4d4d4c;">(</span>sentences, size=100<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">default value is 100</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">model</span> = Word2Vec<span style="color: #707183;">(</span>sentences, size=100<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">default value is 100</span>
 </code></pre>
 </div>
 
@@ -362,8 +361,8 @@ Word2Vec 的训练参数对训练的速度和结果的质量有非常大的影�
 <p>
 最后一个非常重要的参数会影响训练的速度，也就是 worker 的个数
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">model</span> = Word2Vec<span style="color: #4d4d4c;">(</span>sentences, worker=100<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">default value is 1, worker no parallelization</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">model</span> = Word2Vec<span style="color: #707183;">(</span>sentences, worker=100<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">default value is 1, worker no parallelization</span>
 </code></pre>
 </div>
 
@@ -407,8 +406,8 @@ Google 放出了大约 20000 个的测试集，测试“A 相对于 B 类似于 
 <p>
 Gensim 支持同样的操作，
 </p>
-<div class="container">
-<pre><code class="python">model.accuracy<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'questions-words.txt'</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">model.accuracy<span style="color: #707183;">(</span><span style="color: #4E9A06;">'questions-words.txt'</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -424,9 +423,9 @@ Gensim 支持同样的操作，
 <p>
 你可以使用标准的方法来存储和加载 w2v 模型：
 </p>
-<div class="container">
-<pre><code class="python">model.save<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'/tmp/mymodel'</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">new_model</span> = gensim.models.Word2Vec.load<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'/tmp/mymodel'</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">model.save<span style="color: #707183;">(</span><span style="color: #4E9A06;">'/tmp/mymodel'</span><span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">new_model</span> = gensim.models.Word2Vec.load<span style="color: #707183;">(</span><span style="color: #4E9A06;">'/tmp/mymodel'</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 <p>
@@ -436,22 +435,22 @@ Gensim 支持同样的操作，
 <p>
 另外，你可以加载通过 C 语言工具生成的模型
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">model</span> = Word2Vec.load_word2vec_format<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'/tmp/vectors.txt'</span>, binary=<span style="color: #4271ae;">False</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">using gzipped/bz2 input works too, no need to unzip:</span>
-<span style="color: #eab700;">model</span> = Word2Vec.load_word2vec_format<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'/tmp/vectors.bin.gz'</span>, binary=<span style="color: #4271ae;">True</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">model</span> = Word2Vec.load_word2vec_format<span style="color: #707183;">(</span><span style="color: #4E9A06;">'/tmp/vectors.txt'</span>, binary=<span style="color: #F5666D;">False</span><span style="color: #707183;">)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">using gzipped/bz2 input works too, no need to unzip:</span>
+<span style="color: #0084C8; font-weight: bold;">model</span> = Word2Vec.load_word2vec_format<span style="color: #707183;">(</span><span style="color: #4E9A06;">'/tmp/vectors.bin.gz'</span>, binary=<span style="color: #F5666D;">True</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
 <p>
 或者可以这样：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">model</span> = word2vec.Word2Vec<span style="color: #4d4d4c;">(</span>sentences, min_count=1<span style="color: #4d4d4c;">)</span>
-model.wv.save_word2vec_format<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'mymodel.bin'</span>, binary=<span style="color: #4271ae;">True</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">model</span> = word2vec.Word2Vec<span style="color: #707183;">(</span>sentences, min_count=1<span style="color: #707183;">)</span>
+model.wv.save_word2vec_format<span style="color: #707183;">(</span><span style="color: #4E9A06;">'mymodel.bin'</span>, binary=<span style="color: #F5666D;">True</span><span style="color: #707183;">)</span>
 
-<span style="color: #eab700;">new_model</span> = KeyedVectors.load_word2vec_format<span style="color: #4d4d4c;">(</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #3e999f;">'mymodel.bin'</span>, binary=<span style="color: #4271ae;">True</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #0084C8; font-weight: bold;">new_model</span> = KeyedVectors.load_word2vec_format<span style="color: #707183;">(</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #4E9A06;">'mymodel.bin'</span>, binary=<span style="color: #F5666D;">True</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>
@@ -463,9 +462,9 @@ model.wv.save_word2vec_format<span style="color: #4d4d4c;">(</span><span style="
 <p>
 高级用户可以加载模型，然后通过更多语句来进一步的训练：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">model</span> = gensim.models.Word2Vec.load<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'/tmp/mymodel'</span><span style="color: #4d4d4c;">)</span>
-model.train<span style="color: #4d4d4c;">(</span>more_sentences<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">model</span> = gensim.models.Word2Vec.load<span style="color: #707183;">(</span><span style="color: #4E9A06;">'/tmp/mymodel'</span><span style="color: #707183;">)</span>
+model.train<span style="color: #707183;">(</span>more_sentences<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -485,12 +484,12 @@ model.train<span style="color: #4d4d4c;">(</span>more_sentences<span style="colo
 <p>
 Word2vec 支持多种相似度的使用方式：
 </p>
-<div class="container">
-<pre><code class="python">model.most_similar<span style="color: #4d4d4c;">(</span>positive=<span style="color: #3e999f;">[</span><span style="color: #3e999f;">'woman'</span>, <span style="color: #3e999f;">'king'</span><span style="color: #3e999f;">]</span>, negative=<span style="color: #3e999f;">[</span><span style="color: #3e999f;">'man'</span><span style="color: #3e999f;">]</span>, topn=1<span style="color: #4d4d4c;">)</span>
-<span style="color: #4d4d4c;">[</span><span style="color: #3e999f;">(</span><span style="color: #3e999f;">'queen'</span>, 0.50882536<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">]</span>
-model.doesnt_match<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"breakfast cereal dinner lunch"</span>;.split<span style="color: #3e999f;">()</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #3e999f;">'cereal'</span>
-model.similarity<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">'woman'</span>, <span style="color: #3e999f;">'man'</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">model.most_similar<span style="color: #707183;">(</span>positive=<span style="color: #7388d6;">[</span><span style="color: #4E9A06;">'woman'</span>, <span style="color: #4E9A06;">'king'</span><span style="color: #7388d6;">]</span>, negative=<span style="color: #7388d6;">[</span><span style="color: #4E9A06;">'man'</span><span style="color: #7388d6;">]</span>, topn=1<span style="color: #707183;">)</span>
+<span style="color: #707183;">[</span><span style="color: #7388d6;">(</span><span style="color: #4E9A06;">'queen'</span>, 0.50882536<span style="color: #7388d6;">)</span><span style="color: #707183;">]</span>
+model.doesnt_match<span style="color: #707183;">(</span><span style="color: #4E9A06;">"breakfast cereal dinner lunch"</span>;.split<span style="color: #7388d6;">()</span><span style="color: #707183;">)</span>
+<span style="color: #4E9A06;">'cereal'</span>
+model.similarity<span style="color: #707183;">(</span><span style="color: #4E9A06;">'woman'</span>, <span style="color: #4E9A06;">'man'</span><span style="color: #707183;">)</span>
 0.73723527
 </code></pre>
 </div>
@@ -498,9 +497,9 @@ model.similarity<span style="color: #4d4d4c;">(</span><span style="color: #3e999
 <p>
 如果想获取原生的向量输出，可以直接这样：
 </p>
-<div class="container">
-<pre><code class="python">model<span style="color: #4d4d4c;">[</span><span style="color: #3e999f;">'computer'</span><span style="color: #4d4d4c;">]</span>  <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">raw NumPy vector of a word</span>
-array<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span>-0.00449447, -0.00310097,  0.02421786, ...<span style="color: #3e999f;">]</span>, dtype=float32<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">model<span style="color: #707183;">[</span><span style="color: #4E9A06;">'computer'</span><span style="color: #707183;">]</span>  <span style="color: #204A87;"># </span><span style="color: #204A87;">raw NumPy vector of a word</span>
+array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span>-0.00449447, -0.00310097,  0.02421786, ...<span style="color: #7388d6;">]</span>, dtype=float32<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>

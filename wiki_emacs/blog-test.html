@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog 的搭建及其特性</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -335,19 +334,19 @@ for the JavaScript code in this tag.
 需要编译生成 html 文件时，运行如下的命令 M-x org-publish-all 如果要发布到 GitHub, 运行 M-x compile,会调用 public_html 下的 Makefile 文件，
 这一步会将项目自动 commit, 然后 push 到 github。 下面是 Makefile, 非常简单。
 </p>
-<div class="container">
-<pre><code class="makefile"><span style="color: #eab700;">pub_date</span>     = <span style="color: #3e999f;">`date +'%y.%m.%d %H:%M:%S'`</span>
-<span style="color: #eab700;">messages</span>     = <span style="color: #3e999f;">"Auto published by yydai at $(</span><span style="color: #eab700;">pub_data</span><span style="color: #3e999f;">)"</span>
+<div class="org-src-container">
+<pre class="src src-makefile"><code class="makefile"><span style="color: #0084C8; font-weight: bold;">pub_date</span>     = <span style="color: #4E9A06;">`date +'%y.%m.%d %H:%M:%S'`</span>
+<span style="color: #0084C8; font-weight: bold;">messages</span>     = <span style="color: #4E9A06;">"Auto published by yydai at $(</span><span style="color: #0084C8; font-weight: bold;">pub_data</span><span style="color: #4E9A06;">)"</span>
 
-<span style="color: #f5871f;">publish</span>:
-     @echo <span style="color: #3e999f;">"======================================"</span>
-     @echo <span style="color: #3e999f;">"Begin publish the site, please wait..."</span>
-     @echo <span style="color: #3e999f;">"======================================"</span>
+<span style="color: #00578E; font-weight: bold;">publish</span>:
+     @echo <span style="color: #4E9A06;">"======================================"</span>
+     @echo <span style="color: #4E9A06;">"Begin publish the site, please wait..."</span>
+     @echo <span style="color: #4E9A06;">"======================================"</span>
      @git add .
-     @git commit -m $<span style="color: #4d4d4c;">(</span><span style="color: #eab700;">messages</span><span style="color: #4d4d4c;">)</span>
+     @git commit -m $<span style="color: #707183;">(</span><span style="color: #0084C8; font-weight: bold;">messages</span><span style="color: #707183;">)</span>
      @git pull
      @git push origin
-     @echo <span style="color: #3e999f;">"===============Success================"</span>
+     @echo <span style="color: #4E9A06;">"===============Success================"</span>
 </code></pre>
 </div>
 
@@ -424,32 +423,32 @@ for the JavaScript code in this tag.
 <p>
 这个博客完全是使用的 Org，其中的配置如下：
 </p>
-<div class="container">
-<pre><code class="lisp"><span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">-n &#21487;&#20197;&#26174;&#31034;&#34892;&#21495;</span>
-<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">require</span> '<span style="color: #4271ae;">org-publish</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #4d4d4c;">(</span>setq org-publish-project-alist
-      '<span style="color: #3e999f;">(</span>
-        <span style="color: #eab700;">(</span><span style="color: #3e999f;">"blog-notes"</span>
-         <span style="color: #8959a8;">:base-directory</span> <span style="color: #3e999f;">"~/org/blog/"</span>
-         <span style="color: #8959a8;">:base-extension</span> <span style="color: #3e999f;">"org"</span>
-         <span style="color: #8959a8;">:publishing-directory</span> <span style="color: #3e999f;">"~/org"</span>
-         <span style="color: #8959a8;">:recursive</span> t
-         <span style="color: #8959a8;">:publishing-function</span> org-publish-org-to-html
-         <span style="color: #8959a8;">:headline-levels</span> 4
-         <span style="color: #8959a8;">:section-numbers</span> nil
-         <span style="color: #8959a8;">:auto-preamble</span> t
-         <span style="color: #8959a8;">:style</span>    <span style="color: #3e999f;">"&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/&gt;"</span>
-         <span style="color: #eab700;">)</span>
-        <span style="color: #eab700;">(</span><span style="color: #3e999f;">"blog-static"</span>
-         <span style="color: #8959a8;">:base-directory</span> <span style="color: #3e999f;">"~/org/blog/"</span>
-         <span style="color: #8959a8;">:base-extension</span> <span style="color: #3e999f;">"css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"</span>
-         <span style="color: #8959a8;">:publishing-directory</span> <span style="color: #3e999f;">"~/org/publish/"</span>
-         <span style="color: #8959a8;">:recursive</span> t
-         <span style="color: #8959a8;">:publishing-function</span> org-publish-attachment
-         <span style="color: #eab700;">)</span>
-        <span style="color: #eab700;">(</span><span style="color: #3e999f;">"blog"</span> <span style="color: #8959a8;">:components</span> <span style="color: #718c00;">(</span><span style="color: #3e999f;">"blog-notes"</span> <span style="color: #3e999f;">"blog-static"</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
-        <span style="color: #8e908c; font-style: italic;">;;</span>
-        <span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><code class="emacs-lisp"><span style="color: #204A87;">;; </span><span style="color: #204A87;">-n &#21487;&#20197;&#26174;&#31034;&#34892;&#21495;</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">require</span> <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">org-publish</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> org-publish-project-alist
+      <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #7388d6;">(</span>
+        <span style="color: #909183;">(</span><span style="color: #4E9A06;">"blog-notes"</span>
+         <span style="color: #A020F0;">:base-directory</span> <span style="color: #4E9A06;">"~/org/blog/"</span>
+         <span style="color: #A020F0;">:base-extension</span> <span style="color: #4E9A06;">"org"</span>
+         <span style="color: #A020F0;">:publishing-directory</span> <span style="color: #4E9A06;">"~/org"</span>
+         <span style="color: #A020F0;">:recursive</span> t
+         <span style="color: #A020F0;">:publishing-function</span> org-publish-org-to-html
+         <span style="color: #A020F0;">:headline-levels</span> 4
+         <span style="color: #A020F0;">:section-numbers</span> nil
+         <span style="color: #A020F0;">:auto-preamble</span> t
+         <span style="color: #A020F0;">:style</span>    <span style="color: #4E9A06;">"&lt;link rel=</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">stylesheet</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;"> type=</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">text/css</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;"> href=</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">css/worg.css</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">/&gt;"</span>
+         <span style="color: #909183;">)</span>
+        <span style="color: #909183;">(</span><span style="color: #4E9A06;">"blog-static"</span>
+         <span style="color: #A020F0;">:base-directory</span> <span style="color: #4E9A06;">"~/org/blog/"</span>
+         <span style="color: #A020F0;">:base-extension</span> <span style="color: #4E9A06;">"css</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">|</span><span style="color: #4E9A06;">js</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">|</span><span style="color: #4E9A06;">png</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">|</span><span style="color: #4E9A06;">jpg</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">|</span><span style="color: #4E9A06;">gif</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">|</span><span style="color: #4E9A06;">pdf</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">|</span><span style="color: #4E9A06;">mp3</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">|</span><span style="color: #4E9A06;">ogg</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">|</span><span style="color: #4E9A06;">swf"</span>
+         <span style="color: #A020F0;">:publishing-directory</span> <span style="color: #4E9A06;">"~/org/publish/"</span>
+         <span style="color: #A020F0;">:recursive</span> t
+         <span style="color: #A020F0;">:publishing-function</span> org-publish-attachment
+         <span style="color: #909183;">)</span>
+        <span style="color: #909183;">(</span><span style="color: #4E9A06;">"blog"</span> <span style="color: #A020F0;">:components</span> <span style="color: #709870;">(</span><span style="color: #4E9A06;">"blog-notes"</span> <span style="color: #4E9A06;">"blog-static"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+        <span style="color: #204A87;">;;</span>
+        <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>
@@ -458,12 +457,12 @@ for the JavaScript code in this tag.
 <div id="outline-container-orgd473605" class="outline-2">
 <h2 id="orgd473605">表格</h2>
 <div class="outline-text-2" id="text-orgd473605">
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+CAPTION: Books</span>
-<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+LABEL: tbl:table1</span>
-| &#20070;&#21517;   | &#31867;&#22411; |  &#20215;&#26684; |
+<div class="org-src-container">
+<pre class="src src-example"><code class="example">#+CAPTION: Books
+#+LABEL: tbl:table1
+| 书名   | 类型 |  价格 |
 |--------+------+-------|
-| &#20320;&#22909;&#21834; | &#25991;&#23398; | 12.33 |
+| 你好啊 | 文学 | 12.33 |
 | Python | IT   |    44 |
 | Java   | IT   |    55 |
 </code></pre>
@@ -508,11 +507,11 @@ for the JavaScript code in this tag.
 </tbody>
 </table>
 
-<div class="container">
-<pre><code class="python">| Start Date |   End Date | Duration |
+<div class="org-src-container">
+<pre class="src src-example"><code class="example">| Start Date |   End Date | Duration |
 |------------+------------+----------|
 | 2004.08.07 | 2005.07.08 |      335 |
-<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+TBLFM: $3=(date(&lt;$2&gt;)-date(&lt;$1&gt;))</span>
+#+TBLFM: $3=(date(&lt;$2&gt;)-date(&lt;$1&gt;))
 </code></pre>
 </div>
 
@@ -579,12 +578,12 @@ for the JavaScript code in this tag.
 这里我们可以自动生成 Email 而不用手动输入, 按 C-c C-c 就可以执行。
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   | First Name | Last Name | Email              |
+<div class="org-src-container">
+<pre class="src src-example"><code class="example">| First Name | Last Name | Email              |
 |------------+-----------+--------------------|
 | Jone       | Doe       | Jone.Doe@emacs.edu |
 | Ying       | Dai       | Ying.Dai@emacs.edu |
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+TBLFM: $3='(concat $1 "." $2 "@emacs.edu")</span>
+#+TBLFM: $3='(concat $1 "." $2 "@emacs.edu")
 </code></pre>
 </div>
 
@@ -601,16 +600,16 @@ for the JavaScript code in this tag.
 <p>
 例如下面的，选中一个区域，然后按下 <code>C-c |</code>,
 </p>
-<div class="container">
-<pre><code class="python">some, comma, separated, values
+<div class="org-src-container">
+<pre class="src src-example"><code class="example">some, comma, separated, values
 </code></pre>
 </div>
 
 <p>
 就会变成
 </p>
-<div class="container">
-<pre><code class="python">| some | comma | separated | values |
+<div class="org-src-container">
+<pre class="src src-example"><code class="example">| some | comma | separated | values |
 </code></pre>
 </div>
 </div>
@@ -677,10 +676,10 @@ for the JavaScript code in this tag.
 This is a test for image. You can see <a href="http://orgmode.org/manual/Images-and-tables.html">this</a> to find how to cross-reference. And <a href="http://orgmode.org/manual/Internal-links.html#Internal-links">Read more</a>.
 </p>
 
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+CAPTION: unicorn</span>
-<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+NAME: fig:unicorn</span>
-<span style="color: #4d4d4c;">[</span><span style="color: #3e999f;">[</span><span style="color: #8959a8;">file</span>:./img/org-mode-unicorn.png<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">]</span>
+<div class="org-src-container">
+<pre class="src src-example"><code class="example">#+CAPTION: unicorn
+#+NAME: fig:unicorn
+[[file:./img/org-mode-unicorn.png]]
 </code></pre>
 </div>
 
@@ -722,19 +721,19 @@ Ditaa is a small command-line utility written in Java, that can convert diagrams
 <p>
 在 Emacs 中可以使用 artist-mode 来画图。
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+BEGIN_EXAMPLE ditaa :file ~/workspace/blog/org/img/ditaa.png</span>
+<div class="org-src-container">
+<pre class="src src-example"><code class="example">#+BEGIN_EXAMPLE ditaa :file ~/workspace/blog/org/img/ditaa.png
 
 +--------+   +-------+    +-------+
 |        | --+ ditaa +--&gt; |       |
 |  Text  |   +-------+    |diagram|
 |Document|   |!magic!|    |       |
-|     <span style="color: #4d4d4c;">{</span>d<span style="color: #4d4d4c;">}</span>|   |       |    |       |
+|     {d}|   |       |    |       |
 +---+----+   +-------+    +-------+
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   :                         ^
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   |       Lots of work      |
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   +-------------------------+
-<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+END_EXAMPLE</span>
+    :                         ^
+    |       Lots of work      |
+    +-------------------------+
+#+END_EXAMPLE
 </code></pre>
 </div>
 <p>
@@ -751,15 +750,15 @@ Ditaa is a small command-line utility written in Java, that can convert diagrams
 <div id="outline-container-org18b60b8" class="outline-3">
 <h3 id="org18b60b8">R</h3>
 <div class="outline-text-3" id="text-org18b60b8">
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+name: simpledrift(N=1000, X1=600, ngens=100)</span>
-<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+begin_example R :file ~/workspace/blog/org/img/orgmode-babel-R1.png :var ngens=100 X1=600 N=1000 :results graphics</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span> p &lt;- numeric<span style="color: #4d4d4c;">(</span>ngens<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span> p<span style="color: #4d4d4c;">[</span>1<span style="color: #4d4d4c;">]</span> &lt;- X1/N
-<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #718c00;">for</span><span style="color: #4d4d4c;">(</span>g <span style="color: #718c00;">in</span> 2:ngens<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span> p<span style="color: #4d4d4c;">[</span>g<span style="color: #4d4d4c;">]</span> &lt;- rbinom<span style="color: #4d4d4c;">(</span>1, size=N, prob=p<span style="color: #3e999f;">[</span>g-1<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span> / N
-<span style="color: #8e908c; background-color: #ffffff;"> </span> plot<span style="color: #4d4d4c;">(</span>p, <span style="color: #8959a8;">type</span>=<span style="color: #3e999f;">"l"</span>, ylim=c<span style="color: #3e999f;">(</span>0,1<span style="color: #3e999f;">)</span>, xlab=<span style="color: #3e999f;">"Generation"</span>, ylab=<span style="color: #3e999f;">"Proportion red"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+end_example</span>
+<div class="org-src-container">
+<pre class="src src-example"><code class="example">#+name: simpledrift(N=1000, X1=600, ngens=100)
+#+begin_example R :file ~/workspace/blog/org/img/orgmode-babel-R1.png :var ngens=100 X1=600 N=1000 :results graphics
+  p &lt;- numeric(ngens)
+  p[1] &lt;- X1/N
+  for(g in 2:ngens)
+      p[g] &lt;- rbinom(1, size=N, prob=p[g-1]) / N
+  plot(p, type="l", ylim=c(0,1), xlab="Generation", ylab="Proportion red")
+#+end_example
 </code></pre>
 </div>
 
@@ -778,11 +777,11 @@ Ditaa is a small command-line utility written in Java, that can convert diagrams
 <div id="outline-container-org17ad89d" class="outline-3">
 <h3 id="org17ad89d">Shell</h3>
 <div class="outline-text-3" id="text-org17ad89d">
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+name: directories</span>
-<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+begin_example sh :results replace</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span> cd ~ &amp;&amp; du -sc * |grep -v total
-<span style="color: #8e908c; font-style: italic;">#</span><span style="color: #8e908c; font-style: italic;">+end_example</span>
+<div class="org-src-container">
+<pre class="src src-example"><code class="example">#+name: directories
+#+begin_example sh :results replace
+  cd ~ &amp;&amp; du -sc * |grep -v total
+#+end_example
 </code></pre>
 </div>
 

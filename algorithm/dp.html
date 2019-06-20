@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:15 -->
+<!-- 2019-06-21 Fri 01:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>动态规划问题</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -291,36 +290,36 @@ dp(6) = 2(也就是 2 枚 3 元的)。反映方程上我们应该如何找到 dp
 <p>
 现在
 </p>
-<div class="container">
-<pre><code class="python">dp<span style="color: #4d4d4c;">(</span>i<span style="color: #4d4d4c;">)</span> = <span style="color: #8959a8;">min</span><span style="color: #4d4d4c;">(</span>dp<span style="color: #3e999f;">(</span>i-j<span style="color: #3e999f;">)</span> + dp<span style="color: #3e999f;">(</span>j<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>, j &#8712; <span style="color: #4d4d4c;">[</span>1, i/2<span style="color: #4d4d4c;">]</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">dp<span style="color: #707183;">(</span>i<span style="color: #707183;">)</span> = <span style="color: #A020F0;">min</span><span style="color: #707183;">(</span>dp<span style="color: #7388d6;">(</span>i-j<span style="color: #7388d6;">)</span> + dp<span style="color: #7388d6;">(</span>j<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>, j &#8712; <span style="color: #707183;">[</span>1, i/2<span style="color: #707183;">]</span>
 </code></pre>
 </div>
 <p>
 而初始状态有：
 </p>
-<div class="container">
-<pre><code class="python">dp<span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span> = 1
-dp<span style="color: #4d4d4c;">(</span>3<span style="color: #4d4d4c;">)</span> = 1
-dp<span style="color: #4d4d4c;">(</span>5<span style="color: #4d4d4c;">)</span> = 1
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">dp<span style="color: #707183;">(</span>1<span style="color: #707183;">)</span> = 1
+dp<span style="color: #707183;">(</span>3<span style="color: #707183;">)</span> = 1
+dp<span style="color: #707183;">(</span>5<span style="color: #707183;">)</span> = 1
 </code></pre>
 </div>
 
 <p>
 下面是代码的实现：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">Min</span><span style="color: #4d4d4c;">(</span>n<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">dp</span> = <span style="color: #4d4d4c;">{</span>1:1, 3:1, 5:1<span style="color: #4d4d4c;">}</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>1, n + 1<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">try</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> dp<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">continue</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">except</span> <span style="color: #4271ae;">KeyError</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">temp</span> = <span style="color: #4d4d4c;">[]</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> j <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>1, i // 2 + 1<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   temp.append<span style="color: #4d4d4c;">(</span>dp<span style="color: #3e999f;">[</span>i-j<span style="color: #3e999f;">]</span> + dp<span style="color: #3e999f;">[</span>j<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">dp</span><span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span> = <span style="color: #8959a8;">min</span><span style="color: #4d4d4c;">(</span>temp<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> dp<span style="color: #4d4d4c;">[</span>n<span style="color: #4d4d4c;">]</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">Min</span><span style="color: #707183;">(</span>n<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">dp</span> = <span style="color: #707183;">{</span>1:1, 3:1, 5:1<span style="color: #707183;">}</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> i <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span>1, n + 1<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">try</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> dp<span style="color: #707183;">[</span>i<span style="color: #707183;">]</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">continue</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">except</span> <span style="color: #2F8B58; font-weight: bold;">KeyError</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">temp</span> = <span style="color: #707183;">[]</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> j <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span>1, i // 2 + 1<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   temp.append<span style="color: #707183;">(</span>dp<span style="color: #7388d6;">[</span>i-j<span style="color: #7388d6;">]</span> + dp<span style="color: #7388d6;">[</span>j<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">dp</span><span style="color: #707183;">[</span>i<span style="color: #707183;">]</span> = <span style="color: #A020F0;">min</span><span style="color: #707183;">(</span>temp<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> dp<span style="color: #707183;">[</span>n<span style="color: #707183;">]</span>
 </code></pre>
 </div></li>
 
@@ -338,23 +337,23 @@ dp<span style="color: #4d4d4c;">(</span>5<span style="color: #4d4d4c;">)</span> 
 <p>
 简单的写下代码如下：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #eab700;">s</span> = <span style="color: #4d4d4c;">[</span>5, 3, 4, 8, 6, 7<span style="color: #4d4d4c;">]</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #0084C8; font-weight: bold;">s</span> = <span style="color: #707183;">[</span>5, 3, 4, 8, 6, 7<span style="color: #707183;">]</span>
 
-<span style="color: #eab700;">dp</span> = <span style="color: #4d4d4c;">{</span>0: 1<span style="color: #4d4d4c;">}</span>
-<span style="color: #eab700;">m</span> = 1
-<span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>1, <span style="color: #8959a8;">len</span><span style="color: #3e999f;">(</span>s<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">try</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> dp<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">continue</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">except</span> <span style="color: #4271ae;">KeyError</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> s<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span> &gt; s<span style="color: #4d4d4c;">[</span>i - 1<span style="color: #4d4d4c;">]</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">dp</span><span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span> = dp<span style="color: #4d4d4c;">[</span>i - 1<span style="color: #4d4d4c;">]</span> + 1
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">else</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">dp</span><span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span> = 1
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> dp<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span> &gt; m:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">m</span> = dp<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span>
-<span style="color: #718c00;">print</span> <span style="color: #3e999f;">"m: "</span>, m
+<span style="color: #0084C8; font-weight: bold;">dp</span> = <span style="color: #707183;">{</span>0: 1<span style="color: #707183;">}</span>
+<span style="color: #0084C8; font-weight: bold;">m</span> = 1
+<span style="color: #A52A2A; font-weight: bold;">for</span> i <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span>1, <span style="color: #A020F0;">len</span><span style="color: #7388d6;">(</span>s<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">try</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> dp<span style="color: #707183;">[</span>i<span style="color: #707183;">]</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">continue</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">except</span> <span style="color: #2F8B58; font-weight: bold;">KeyError</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> s<span style="color: #707183;">[</span>i<span style="color: #707183;">]</span> &gt; s<span style="color: #707183;">[</span>i - 1<span style="color: #707183;">]</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">dp</span><span style="color: #707183;">[</span>i<span style="color: #707183;">]</span> = dp<span style="color: #707183;">[</span>i - 1<span style="color: #707183;">]</span> + 1
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">else</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">dp</span><span style="color: #707183;">[</span>i<span style="color: #707183;">]</span> = 1
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> dp<span style="color: #707183;">[</span>i<span style="color: #707183;">]</span> &gt; m:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">m</span> = dp<span style="color: #707183;">[</span>i<span style="color: #707183;">]</span>
+<span style="color: #A52A2A; font-weight: bold;">print</span> <span style="color: #4E9A06;">"m: "</span>, m
 </code></pre>
 </div></li>
 
@@ -369,38 +368,38 @@ Zigzag 问题来源 <a href="https://community.topcoder.com/stat?c=problem_state
 z(i, 1)为第 i 个值比前面值小时的最长 zigzag 序列长度。
 有：
 </p>
-<div class="container">
-<pre><code class="python">z<span style="color: #4d4d4c;">(</span>0, 0<span style="color: #4d4d4c;">)</span> = 1
-z<span style="color: #4d4d4c;">(</span>1, 0<span style="color: #4d4d4c;">)</span> = 1
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">z<span style="color: #707183;">(</span>0, 0<span style="color: #707183;">)</span> = 1
+z<span style="color: #707183;">(</span>1, 0<span style="color: #707183;">)</span> = 1
 
-z<span style="color: #4d4d4c;">(</span>i, 0<span style="color: #4d4d4c;">)</span> = <span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>z<span style="color: #3e999f;">(</span>j, 1<span style="color: #3e999f;">)</span> + 1<span style="color: #4d4d4c;">)</span>, &#20854;&#20013; j &lt; i, A<span style="color: #4d4d4c;">[</span>j<span style="color: #4d4d4c;">]</span> &lt; A<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span>
-z<span style="color: #4d4d4c;">(</span>i, 1<span style="color: #4d4d4c;">)</span> = <span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>z<span style="color: #3e999f;">(</span>j, 0<span style="color: #3e999f;">)</span> + 1<span style="color: #4d4d4c;">)</span>, &#20854;&#20013; j &lt; i, A<span style="color: #4d4d4c;">[</span>j<span style="color: #4d4d4c;">]</span> &gt; A<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span>
+z<span style="color: #707183;">(</span>i, 0<span style="color: #707183;">)</span> = <span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>z<span style="color: #7388d6;">(</span>j, 1<span style="color: #7388d6;">)</span> + 1<span style="color: #707183;">)</span>, &#20854;&#20013; j &lt; i, A<span style="color: #707183;">[</span>j<span style="color: #707183;">]</span> &lt; A<span style="color: #707183;">[</span>i<span style="color: #707183;">]</span>
+z<span style="color: #707183;">(</span>i, 1<span style="color: #707183;">)</span> = <span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>z<span style="color: #7388d6;">(</span>j, 0<span style="color: #7388d6;">)</span> + 1<span style="color: #707183;">)</span>, &#20854;&#20013; j &lt; i, A<span style="color: #707183;">[</span>j<span style="color: #707183;">]</span> &gt; A<span style="color: #707183;">[</span>i<span style="color: #707183;">]</span>
 </code></pre>
 </div>
 
 <p>
 代码如下：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">def</span> <span style="color: #f5871f;">Zigzag</span><span style="color: #4d4d4c;">(</span>l<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">z</span> = <span style="color: #4d4d4c;">{}</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">z</span><span style="color: #4d4d4c;">[</span>0, 0<span style="color: #4d4d4c;">]</span> = 1
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">z</span><span style="color: #4d4d4c;">[</span>0, 1<span style="color: #4d4d4c;">]</span> = 1
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">m</span> = 0
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> i <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">len</span><span style="color: #3e999f;">(</span>l<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> <span style="color: #718c00;">not</span> z.get<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">(</span>i, 0<span style="color: #3e999f;">)</span>, <span style="color: #4271ae;">None</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">z</span><span style="color: #4d4d4c;">[</span>i, 0<span style="color: #4d4d4c;">]</span> = 0
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> <span style="color: #718c00;">not</span> z.get<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">(</span>i, 1<span style="color: #3e999f;">)</span>, <span style="color: #4271ae;">None</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">z</span><span style="color: #4d4d4c;">[</span>i, 1<span style="color: #4d4d4c;">]</span> = 0
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">for</span> j <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>i<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> l<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span> &gt; l<span style="color: #4d4d4c;">[</span>j<span style="color: #4d4d4c;">]</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">z</span><span style="color: #4d4d4c;">[</span>i, 0<span style="color: #4d4d4c;">]</span> = <span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>z<span style="color: #3e999f;">[</span>j, 1<span style="color: #3e999f;">]</span> + 1, z<span style="color: #3e999f;">[</span>i, 0<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">if</span> l<span style="color: #4d4d4c;">[</span>i<span style="color: #4d4d4c;">]</span> &lt; l<span style="color: #4d4d4c;">[</span>j<span style="color: #4d4d4c;">]</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">z</span><span style="color: #4d4d4c;">[</span>i, 1<span style="color: #4d4d4c;">]</span> = <span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>z<span style="color: #3e999f;">[</span>j, 0<span style="color: #3e999f;">]</span> + 1, z<span style="color: #3e999f;">[</span>i, 1<span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">Zigzag</span><span style="color: #707183;">(</span>l<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">z</span> = <span style="color: #707183;">{}</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">z</span><span style="color: #707183;">[</span>0, 0<span style="color: #707183;">]</span> = 1
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">z</span><span style="color: #707183;">[</span>0, 1<span style="color: #707183;">]</span> = 1
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">m</span> = 0
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> i <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span><span style="color: #A020F0;">len</span><span style="color: #7388d6;">(</span>l<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #A52A2A; font-weight: bold;">not</span> z.get<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>i, 0<span style="color: #7388d6;">)</span>, <span style="color: #F5666D;">None</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">z</span><span style="color: #707183;">[</span>i, 0<span style="color: #707183;">]</span> = 0
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #A52A2A; font-weight: bold;">not</span> z.get<span style="color: #707183;">(</span><span style="color: #7388d6;">(</span>i, 1<span style="color: #7388d6;">)</span>, <span style="color: #F5666D;">None</span><span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">z</span><span style="color: #707183;">[</span>i, 1<span style="color: #707183;">]</span> = 0
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">for</span> j <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span>i<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> l<span style="color: #707183;">[</span>i<span style="color: #707183;">]</span> &gt; l<span style="color: #707183;">[</span>j<span style="color: #707183;">]</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">z</span><span style="color: #707183;">[</span>i, 0<span style="color: #707183;">]</span> = <span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>z<span style="color: #7388d6;">[</span>j, 1<span style="color: #7388d6;">]</span> + 1, z<span style="color: #7388d6;">[</span>i, 0<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">if</span> l<span style="color: #707183;">[</span>i<span style="color: #707183;">]</span> &lt; l<span style="color: #707183;">[</span>j<span style="color: #707183;">]</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">z</span><span style="color: #707183;">[</span>i, 1<span style="color: #707183;">]</span> = <span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>z<span style="color: #7388d6;">[</span>j, 0<span style="color: #7388d6;">]</span> + 1, z<span style="color: #7388d6;">[</span>i, 1<span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">m</span> = <span style="color: #8959a8;">max</span><span style="color: #4d4d4c;">(</span>m, <span style="color: #8959a8;">max</span><span style="color: #3e999f;">(</span>z<span style="color: #eab700;">[</span>i, 0<span style="color: #eab700;">]</span>, z<span style="color: #eab700;">[</span>i, 1<span style="color: #eab700;">]</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">m</span> = <span style="color: #A020F0;">max</span><span style="color: #707183;">(</span>m, <span style="color: #A020F0;">max</span><span style="color: #7388d6;">(</span>z<span style="color: #909183;">[</span>i, 0<span style="color: #909183;">]</span>, z<span style="color: #909183;">[</span>i, 1<span style="color: #909183;">]</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">return</span> m
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">return</span> m
 </code></pre>
 </div></li>
 </ol>

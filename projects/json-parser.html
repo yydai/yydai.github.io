@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>JSON Parser</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -371,12 +370,12 @@ JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。
 关于如何安装只说下 OS X 系统下的，其他参考<a href="http://www.antlr.org/index.html">这里</a>。
 </p>
 
-<div class="container">
-<pre><code class="shell"><span style="color: #8959a8;">cd</span> /usr/local/lib
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell"><span style="color: #A020F0;">cd</span> /usr/local/lib
 sudo curl -O http://www.antlr.org/download/antlr-4.7-complete.jar
-<span style="color: #8959a8;">export</span> <span style="color: #eab700;">CLASSPATH</span>=<span style="color: #3e999f;">".:/usr/local/lib/antlr-4.7-complete.jar:$CLASSPATH"</span>
-<span style="color: #8959a8;">alias</span> <span style="color: #eab700;">antlr4</span>=<span style="color: #3e999f;">'java -jar /usr/local/lib/antlr-4.7-complete.jar'</span>
-<span style="color: #8959a8;">alias</span> <span style="color: #eab700;">grun</span>=<span style="color: #3e999f;">'java org.antlr.v4.gui.TestRig'</span>
+<span style="color: #A020F0;">export</span> <span style="color: #0084C8; font-weight: bold;">CLASSPATH</span>=<span style="color: #4E9A06;">".:/usr/local/lib/antlr-4.7-complete.jar:$CLASSPATH"</span>
+<span style="color: #A020F0;">alias</span> <span style="color: #0084C8; font-weight: bold;">antlr4</span>=<span style="color: #4E9A06;">'java -jar /usr/local/lib/antlr-4.7-complete.jar'</span>
+<span style="color: #A020F0;">alias</span> <span style="color: #0084C8; font-weight: bold;">grun</span>=<span style="color: #4E9A06;">'java org.antlr.v4.gui.TestRig'</span>
 </code></pre>
 </div>
 
@@ -385,8 +384,8 @@ sudo curl -O http://www.antlr.org/download/antlr-4.7-complete.jar
 下面是定义的规则 JSON.g4：
 </p>
 
-<div class="container">
-<pre><code class="antlr4">/** Taken from "The Definitive ANTLR 4 Reference" by Terence Parr */
+<div class="org-src-container">
+<pre class="src src-antlr4"><code class="antlr4">/** Taken from "The Definitive ANTLR 4 Reference" by Terence Parr */
 
 // Derived from http://json.org
 grammar JSON;
@@ -454,64 +453,64 @@ WS
 我们再写一个测试文件：
 </p>
 
-<div class="container">
-<pre><code class="java"><span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">io</span>.<span style="color: #4271ae;">File</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">util</span>.<span style="color: #4271ae;">Scanner</span>;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">io</span>.<span style="color: #2F8B58; font-weight: bold;">File</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">util</span>.<span style="color: #2F8B58; font-weight: bold;">Scanner</span>;
 
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">ANTLRInputStream</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">CommonTokenStream</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">tree</span>.<span style="color: #4271ae;">ParseTree</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #F5666D;">tree</span>.<span style="color: #2F8B58; font-weight: bold;">ParseTree</span>;
 
-<span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">JSONParserTest</span>
-<span style="color: #4d4d4c;">{</span>
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">JSONParserTest</span>
+<span style="color: #707183;">{</span>
 
-        <span style="color: #718c00;">public</span> <span style="color: #718c00;">static</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">main</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">String</span><span style="color: #eab700;">[]</span> <span style="color: #eab700;">args</span><span style="color: #3e999f;">)</span> <span style="color: #718c00;">throws</span> <span style="color: #4271ae;">Exception</span>
-        <span style="color: #3e999f;">{</span>
-            <span style="color: #4271ae;">String</span> <span style="color: #eab700;">content</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">Scanner</span><span style="color: #eab700;">(</span><span style="color: #718c00;">new</span> <span style="color: #4271ae;">File</span><span style="color: #718c00;">(</span><span style="color: #3e999f;">"jsonExample.txt"</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>.useDelimiter<span style="color: #eab700;">(</span><span style="color: #3e999f;">"</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">\</span><span style="color: #3e999f;">Z"</span><span style="color: #eab700;">)</span>.next<span style="color: #eab700;">()</span>;
-            System.out.println<span style="color: #eab700;">(</span> <span style="color: #3e999f;">"JSON File:</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">"</span> + content + <span style="color: #3e999f;">"</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">"</span><span style="color: #eab700;">)</span>;
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">static</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">String</span><span style="color: #909183;">[]</span> <span style="color: #0084C8; font-weight: bold;">args</span><span style="color: #7388d6;">)</span> <span style="color: #A52A2A; font-weight: bold;">throws</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span>
+    <span style="color: #7388d6;">{</span>
+        <span style="color: #2F8B58; font-weight: bold;">String</span> <span style="color: #0084C8; font-weight: bold;">content</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">Scanner</span><span style="color: #909183;">(</span><span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">File</span><span style="color: #709870;">(</span><span style="color: #4E9A06;">"jsonExample.txt"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>.useDelimiter<span style="color: #909183;">(</span><span style="color: #4E9A06;">"</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06;">Z"</span><span style="color: #909183;">)</span>.next<span style="color: #909183;">()</span>;
+        System.out.println<span style="color: #909183;">(</span> <span style="color: #4E9A06;">"JSON File:</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">n</span><span style="color: #4E9A06;">"</span> + content + <span style="color: #4E9A06;">"</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">n</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">n</span><span style="color: #4E9A06;">"</span><span style="color: #909183;">)</span>;
 
-                <span style="color: #4271ae;">ANTLRInputStream</span> <span style="color: #eab700;">input</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ANTLRInputStream</span><span style="color: #eab700;">(</span> content <span style="color: #eab700;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span> <span style="color: #0084C8; font-weight: bold;">input</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span><span style="color: #909183;">(</span> content <span style="color: #909183;">)</span>;
 
-                <span style="color: #4271ae;">JSONLexer</span> <span style="color: #eab700;">lexer</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">JSONLexer</span><span style="color: #eab700;">(</span>input<span style="color: #eab700;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">JSONLexer</span> <span style="color: #0084C8; font-weight: bold;">lexer</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">JSONLexer</span><span style="color: #909183;">(</span>input<span style="color: #909183;">)</span>;
 
-                <span style="color: #4271ae;">CommonTokenStream</span> <span style="color: #eab700;">tokens</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">CommonTokenStream</span><span style="color: #eab700;">(</span>lexer<span style="color: #eab700;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span> <span style="color: #0084C8; font-weight: bold;">tokens</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span><span style="color: #909183;">(</span>lexer<span style="color: #909183;">)</span>;
 
-                <span style="color: #4271ae;">JSONParser</span> <span style="color: #eab700;">parser</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">JSONParser</span><span style="color: #eab700;">(</span>tokens<span style="color: #eab700;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">JSONParser</span> <span style="color: #0084C8; font-weight: bold;">parser</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">JSONParser</span><span style="color: #909183;">(</span>tokens<span style="color: #909183;">)</span>;
 
-                <span style="color: #4271ae;">ParseTree</span> <span style="color: #eab700;">tree</span> = parser.json<span style="color: #eab700;">()</span>;
+        <span style="color: #2F8B58; font-weight: bold;">ParseTree</span> <span style="color: #0084C8; font-weight: bold;">tree</span> = parser.json<span style="color: #909183;">()</span>;
 
-                System.out.println<span style="color: #eab700;">(</span> <span style="color: #3e999f;">"ParseTree:</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">"</span> + tree.toStringTree<span style="color: #718c00;">(</span> parser <span style="color: #718c00;">)</span> + <span style="color: #3e999f;">"</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">"</span><span style="color: #eab700;">)</span>;
-        <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+        System.out.println<span style="color: #909183;">(</span> <span style="color: #4E9A06;">"ParseTree:</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">n</span><span style="color: #4E9A06;">"</span> + tree.toStringTree<span style="color: #709870;">(</span> parser <span style="color: #709870;">)</span> + <span style="color: #4E9A06;">"</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">n</span><span style="color: #4E9A06;">"</span><span style="color: #909183;">)</span>;
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
 <p>
 另外 jsonExample.txt
 </p>
-<div class="container">
-<pre><code class="json"><span style="color: #4d4d4c;">{</span>
-  <span style="color: #718c00;">"student"</span>:
-  <span style="color: #3e999f;">{</span>
-    <span style="color: #718c00;">"id"</span> : <span style="color: #3e999f;">"12345678"</span>,
-    <span style="color: #718c00;">"prename"</span> : <span style="color: #3e999f;">"John"</span>,
-    <span style="color: #718c00;">"surname"</span> : <span style="color: #3e999f;">"Doe"</span>,
-        <span style="color: #718c00;">"address"</span> :
-        <span style="color: #eab700;">{</span>
-          <span style="color: #718c00;">"street"</span> : <span style="color: #3e999f;">"Johndoestreet"</span>,
-          <span style="color: #718c00;">"postcode"</span> : <span style="color: #3e999f;">"99999"</span>
-        <span style="color: #eab700;">}</span>,
-    <span style="color: #718c00;">"email"</span>   : <span style="color: #3e999f;">"johndoe@doe.com"</span>
-  <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-json"><code class="json"><span style="color: #707183;">{</span>
+  <span style="color: #A52A2A; font-weight: bold;">"student"</span>:
+  <span style="color: #7388d6;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">"id"</span> : <span style="color: #4E9A06;">"12345678"</span>,
+    <span style="color: #A52A2A; font-weight: bold;">"prename"</span> : <span style="color: #4E9A06;">"John"</span>,
+    <span style="color: #A52A2A; font-weight: bold;">"surname"</span> : <span style="color: #4E9A06;">"Doe"</span>,
+        <span style="color: #A52A2A; font-weight: bold;">"address"</span> :
+        <span style="color: #909183;">{</span>
+          <span style="color: #A52A2A; font-weight: bold;">"street"</span> : <span style="color: #4E9A06;">"Johndoestreet"</span>,
+          <span style="color: #A52A2A; font-weight: bold;">"postcode"</span> : <span style="color: #4E9A06;">"99999"</span>
+        <span style="color: #909183;">}</span>,
+    <span style="color: #A52A2A; font-weight: bold;">"email"</span>   : <span style="color: #4E9A06;">"johndoe@doe.com"</span>
+  <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
 <p>
 首先
 </p>
-<div class="container">
-<pre><code class="shell">antlr4 JSON.g4
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">antlr4 JSON.g4
 javac JSON*.java JSONParserTest.java
 java JSONParserTest
 </code></pre>
@@ -521,8 +520,8 @@ java JSONParserTest
 就会打印出解析树：
 </p>
 
-<div class="container">
-<pre><code class="lisp"><span style="color: #4d4d4c;">(</span>json <span style="color: #3e999f;">(</span>value <span style="color: #eab700;">(</span>obj { <span style="color: #718c00;">(</span>pair <span style="color: #3e999f;">"student"</span> : <span style="color: #4271ae;">(</span>value <span style="color: #4d4d4c;">(</span>obj { <span style="color: #3e999f;">(</span>pair <span style="color: #3e999f;">"id"</span> : <span style="color: #eab700;">(</span>value <span style="color: #3e999f;">"12345678"</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span> , <span style="color: #3e999f;">(</span>pair <span style="color: #3e999f;">"prename"</span> : <span style="color: #eab700;">(</span>value <span style="color: #3e999f;">"John"</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span> , <span style="color: #3e999f;">(</span>pair <span style="color: #3e999f;">"surname"</span> : <span style="color: #eab700;">(</span>value <span style="color: #3e999f;">"Doe"</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span> , <span style="color: #3e999f;">(</span>pair <span style="color: #3e999f;">"address"</span> : <span style="color: #eab700;">(</span>value <span style="color: #718c00;">(</span>obj { <span style="color: #4d4d4c;">(</span>pair <span style="color: #3e999f;">"street"</span> : <span style="color: #3e999f;">(</span>value <span style="color: #3e999f;">"Johndoestreet"</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> , <span style="color: #4d4d4c;">(</span>pair <span style="color: #3e999f;">"postcode"</span> : <span style="color: #3e999f;">(</span>value <span style="color: #3e999f;">"99999"</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> }<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span> , <span style="color: #3e999f;">(</span>pair <span style="color: #3e999f;">"email"</span> : <span style="color: #eab700;">(</span>value <span style="color: #3e999f;">"johndoe@doe.com"</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span> }<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span> }<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-lisp"><code class="lisp"><span style="color: #707183;">(</span>json <span style="color: #7388d6;">(</span>value <span style="color: #909183;">(</span>obj { <span style="color: #709870;">(</span>pair <span style="color: #4E9A06;">"student"</span> : <span style="color: #907373;">(</span>value <span style="color: #6276ba;">(</span>obj { <span style="color: #858580;">(</span>pair <span style="color: #4E9A06;">"id"</span> : <span style="color: #80a880;">(</span>value <span style="color: #4E9A06;">"12345678"</span><span style="color: #80a880;">)</span><span style="color: #858580;">)</span> , <span style="color: #858580;">(</span>pair <span style="color: #4E9A06;">"prename"</span> : <span style="color: #80a880;">(</span>value <span style="color: #4E9A06;">"John"</span><span style="color: #80a880;">)</span><span style="color: #858580;">)</span> , <span style="color: #858580;">(</span>pair <span style="color: #4E9A06;">"surname"</span> : <span style="color: #80a880;">(</span>value <span style="color: #4E9A06;">"Doe"</span><span style="color: #80a880;">)</span><span style="color: #858580;">)</span> , <span style="color: #858580;">(</span>pair <span style="color: #4E9A06;">"address"</span> : <span style="color: #80a880;">(</span>value <span style="color: #887070;">(</span>obj { <span style="color: #707183;">(</span>pair <span style="color: #4E9A06;">"street"</span> : <span style="color: #7388d6;">(</span>value <span style="color: #4E9A06;">"Johndoestreet"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> , <span style="color: #707183;">(</span>pair <span style="color: #4E9A06;">"postcode"</span> : <span style="color: #7388d6;">(</span>value <span style="color: #4E9A06;">"99999"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> }<span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #858580;">)</span> , <span style="color: #858580;">(</span>pair <span style="color: #4E9A06;">"email"</span> : <span style="color: #80a880;">(</span>value <span style="color: #4E9A06;">"johndoe@doe.com"</span><span style="color: #80a880;">)</span><span style="color: #858580;">)</span> }<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span> }<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>

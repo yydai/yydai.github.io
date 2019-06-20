@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ANTLR 应用实例</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -275,10 +274,10 @@ for the JavaScript code in this tag.
 <p>
 例如
 </p>
-<div class="container">
-<pre><code class="java"><span style="color: #718c00;">static</span> <span style="color: #4271ae;">short</span><span style="color: #4d4d4c;">[]</span> <span style="color: #eab700;">data</span> = <span style="color: #4d4d4c;">{</span>1,2,3<span style="color: #4d4d4c;">}</span>;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #A52A2A; font-weight: bold;">static</span> <span style="color: #2F8B58; font-weight: bold;">short</span><span style="color: #707183;">[]</span> <span style="color: #0084C8; font-weight: bold;">data</span> = <span style="color: #707183;">{</span>1,2,3<span style="color: #707183;">}</span>;
 &#8658;
-<span style="color: #718c00;">static</span> String data = <span style="color: #3e999f;">"</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">u0001</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">u0002</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">u0003</span><span style="color: #3e999f;">"</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">Java char are unsigned short</span>
+<span style="color: #A52A2A; font-weight: bold;">static</span> String data = <span style="color: #4E9A06;">"</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">u0001</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">u0002</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">u0003</span><span style="color: #4E9A06;">"</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">Java char are unsigned short</span>
 </code></pre>
 </div>
 
@@ -286,33 +285,33 @@ for the JavaScript code in this tag.
 首先定义 Array.g4 文件：
 </p>
 
-<div class="container">
-<pre><code class="antlr"><span style="color: #8e908c; font-style: italic;">/** </span><span style="color: #8e908c; font-style: italic;">Grammars always start with a grammar header. This grammar is called</span>
-<span style="color: #8e908c; font-style: italic;">  *  ArrayInit and must match the filename: ArrayInit.g4</span>
-<span style="color: #8e908c; font-style: italic;">  */</span>
+<div class="org-src-container">
+<pre class="src src-antlr"><code class="antlr"><span style="color: #204A87;">/** </span><span style="color: #204A87;">Grammars always start with a grammar header. This grammar is called</span>
+<span style="color: #204A87;">  *  ArrayInit and must match the filename: ArrayInit.g4</span>
+<span style="color: #204A87;">  */</span>
 <span style="color: #0000ff; font-weight: bold;">grammar</span> <span style="color: #8b5a00;">Array</span><span style="color: #000000; font-weight: bold;">;</span>
 
-<span style="color: #8e908c; font-style: italic;">/** </span><span style="color: #8e908c; font-style: italic;">A rule called init that matches comma-separated values between {...}. */</span>
+<span style="color: #204A87;">/** </span><span style="color: #204A87;">A rule called init that matches comma-separated values between {...}. */</span>
 
-<span style="color: #0000ff; font-weight: bold;">init</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #3e999f;">'{'</span> <span style="color: #00008b;">value</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #3e999f;">','</span> <span style="color: #00008b;">value</span><span style="color: #000000; font-weight: bold;">)*</span> <span style="color: #3e999f;">'}'</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">must match at least one value</span>
+<span style="color: #0000ff; font-weight: bold;">init</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #4E9A06;">'{'</span> <span style="color: #00008b;">value</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #4E9A06;">','</span> <span style="color: #00008b;">value</span><span style="color: #000000; font-weight: bold;">)*</span> <span style="color: #4E9A06;">'}'</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">must match at least one value</span>
 
-<span style="color: #8e908c; font-style: italic;">/** </span><span style="color: #8e908c; font-style: italic;">A value can be either a nested array/struct or a simple integer (INT) */</span>
+<span style="color: #204A87;">/** </span><span style="color: #204A87;">A value can be either a nested array/struct or a simple integer (INT) */</span>
 
 <span style="color: #0000ff; font-weight: bold;">value</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #00008b;">init</span>
           <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #8b5a00;">INT</span>
       <span style="color: #000000; font-weight: bold;">;</span>
-<span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">parser rules start with lowercase letters, lexer rules with uppercase</span>
+<span style="color: #204A87;">// </span><span style="color: #204A87;">parser rules start with lowercase letters, lexer rules with uppercase</span>
 
-<span style="color: #0000ff; font-weight: bold;">INT</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #4d4d4c;">[</span>0-9<span style="color: #4d4d4c;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">Define token INT as one or more digits</span>
-<span style="color: #0000ff; font-weight: bold;">WS</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #4d4d4c;">[</span> \t\r\n<span style="color: #4d4d4c;">]</span>+ -&gt; <span style="color: #00008b;">skip</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">Define whitespace rule, toss it out</span>
+<span style="color: #0000ff; font-weight: bold;">INT</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #707183;">[</span>0-9<span style="color: #707183;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">Define token INT as one or more digits</span>
+<span style="color: #0000ff; font-weight: bold;">WS</span> <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #707183;">[</span> \t\r\n<span style="color: #707183;">]</span>+ -&gt; <span style="color: #00008b;">skip</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">Define whitespace rule, toss it out</span>
 </code></pre>
 </div>
 
 <p>
 我们执行如下的命令：
 </p>
-<div class="container">
-<pre><code class="shell">antlr4 Array.g4
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">antlr4 Array.g4
 javac *.java
 </code></pre>
 </div>
@@ -321,39 +320,39 @@ javac *.java
 将生成的 Parser 集成到 Java 程序中：
 </p>
 
-<div class="container">
-<pre><code class="java"><span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">import ANTLR's runtime libraries</span>
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.*;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">tree</span>.*;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #204A87;">// </span><span style="color: #204A87;">import ANTLR's runtime libraries</span>
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.*;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #F5666D;">tree</span>.*;
 
-<span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">Test</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">public</span> <span style="color: #718c00;">static</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">main</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">String</span><span style="color: #eab700;">[]</span> <span style="color: #eab700;">args</span><span style="color: #3e999f;">)</span> <span style="color: #718c00;">throws</span> <span style="color: #4271ae;">Exception</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">create a CharStream that reads from standard input</span>
-        <span style="color: #4271ae;">ANTLRInputStream</span> <span style="color: #eab700;">input</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ANTLRInputStream</span><span style="color: #eab700;">(</span>System.in<span style="color: #eab700;">)</span>;
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">Test</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">static</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">String</span><span style="color: #909183;">[]</span> <span style="color: #0084C8; font-weight: bold;">args</span><span style="color: #7388d6;">)</span> <span style="color: #A52A2A; font-weight: bold;">throws</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">create a CharStream that reads from standard input</span>
+        <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span> <span style="color: #0084C8; font-weight: bold;">input</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span><span style="color: #909183;">(</span>System.in<span style="color: #909183;">)</span>;
 
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">create a lexer that feeds off of input CharStream</span>
-        <span style="color: #4271ae;">ArrayInitLexer</span> <span style="color: #eab700;">lexer</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ArrayInitLexer</span><span style="color: #eab700;">(</span>input<span style="color: #eab700;">)</span>;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">create a lexer that feeds off of input CharStream</span>
+        <span style="color: #2F8B58; font-weight: bold;">ArrayInitLexer</span> <span style="color: #0084C8; font-weight: bold;">lexer</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ArrayInitLexer</span><span style="color: #909183;">(</span>input<span style="color: #909183;">)</span>;
 
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">create a buffer of tokens pulled from the lexer</span>
-        <span style="color: #4271ae;">CommonTokenStream</span> <span style="color: #eab700;">tokens</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">CommonTokenStream</span><span style="color: #eab700;">(</span>lexer<span style="color: #eab700;">)</span>;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">create a buffer of tokens pulled from the lexer</span>
+        <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span> <span style="color: #0084C8; font-weight: bold;">tokens</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span><span style="color: #909183;">(</span>lexer<span style="color: #909183;">)</span>;
 
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">create a parser that feeds off the tokens buffer</span>
-        <span style="color: #4271ae;">ArrayInitParser</span> <span style="color: #eab700;">parser</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ArrayInitParser</span><span style="color: #eab700;">(</span>tokens<span style="color: #eab700;">)</span>;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">create a parser that feeds off the tokens buffer</span>
+        <span style="color: #2F8B58; font-weight: bold;">ArrayInitParser</span> <span style="color: #0084C8; font-weight: bold;">parser</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ArrayInitParser</span><span style="color: #909183;">(</span>tokens<span style="color: #909183;">)</span>;
 
-        <span style="color: #4271ae;">ParseTree</span> <span style="color: #eab700;">tree</span> = parser.init<span style="color: #eab700;">()</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">begin parsing at init rule</span>
-        System.out.println<span style="color: #eab700;">(</span>tree.toStringTree<span style="color: #718c00;">(</span>parser<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">print LISP-style tree</span>
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+        <span style="color: #2F8B58; font-weight: bold;">ParseTree</span> <span style="color: #0084C8; font-weight: bold;">tree</span> = parser.init<span style="color: #909183;">()</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">begin parsing at init rule</span>
+        System.out.println<span style="color: #909183;">(</span>tree.toStringTree<span style="color: #709870;">(</span>parser<span style="color: #709870;">)</span><span style="color: #909183;">)</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">print LISP-style tree</span>
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
 <p>
 我们执行如下的命令：
 </p>
-<div class="container">
-<pre><code class="shell">javac ArrayInit*.java Test.java
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">javac ArrayInit*.java Test.java
 java Test
-<span style="color: #4d4d4c;">{</span>1,<span style="color: #3e999f;">{</span>2,3<span style="color: #3e999f;">}</span>,4<span style="color: #4d4d4c;">}</span>
+<span style="color: #707183;">{</span>1,<span style="color: #7388d6;">{</span>2,3<span style="color: #7388d6;">}</span>,4<span style="color: #707183;">}</span>
 EOF
 </code></pre>
 </div>
@@ -361,8 +360,8 @@ EOF
 <p>
 就会输出：
 </p>
-<div class="container">
-<pre><code class="lisp"><span style="color: #4d4d4c;">(</span>init { <span style="color: #3e999f;">(</span>value 1<span style="color: #3e999f;">)</span> , <span style="color: #3e999f;">(</span>value <span style="color: #eab700;">(</span>init { <span style="color: #718c00;">(</span>value 2<span style="color: #718c00;">)</span> , <span style="color: #718c00;">(</span>value 3<span style="color: #718c00;">)</span> }<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span> , <span style="color: #3e999f;">(</span>value 4<span style="color: #3e999f;">)</span> }<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-lisp"><code class="lisp"><span style="color: #707183;">(</span>init { <span style="color: #7388d6;">(</span>value 1<span style="color: #7388d6;">)</span> , <span style="color: #7388d6;">(</span>value <span style="color: #909183;">(</span>init { <span style="color: #709870;">(</span>value 2<span style="color: #709870;">)</span> , <span style="color: #709870;">(</span>value 3<span style="color: #709870;">)</span> }<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span> , <span style="color: #7388d6;">(</span>value 4<span style="color: #7388d6;">)</span> }<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>
@@ -389,28 +388,28 @@ EOF
 <p>
 下面实现一个 Listener 来做这件事, ShortToUnicodeString.java：
 </p>
-<div class="container">
-<pre><code class="java"><span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">ShortToUnicodeString</span> <span style="color: #718c00;">extends</span> <span style="color: #4271ae;">ArrayInitBaseListener</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #8959a8;">/** Translate { to " */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">enterInit</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">ArrayInitParser</span>.<span style="color: #4271ae;">InitContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        System.out.print<span style="color: #eab700;">(</span><span style="color: #3e999f;">'"'</span><span style="color: #eab700;">)</span>;
-    <span style="color: #3e999f;">}</span>
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">ShortToUnicodeString</span> <span style="color: #A52A2A; font-weight: bold;">extends</span> <span style="color: #2F8B58; font-weight: bold;">ArrayInitBaseListener</span> <span style="color: #707183;">{</span>
+    <span style="color: #4E9A06;">/** Translate { to " */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">enterInit</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">ArrayInitParser</span>.<span style="color: #2F8B58; font-weight: bold;">InitContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        System.out.print<span style="color: #909183;">(</span><span style="color: #4E9A06;">'"'</span><span style="color: #909183;">)</span>;
+    <span style="color: #7388d6;">}</span>
 
-    <span style="color: #8959a8;">/** Translate } to " */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">exitInit</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">ArrayInitParser</span>.<span style="color: #4271ae;">InitContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        System.out.print<span style="color: #eab700;">(</span><span style="color: #3e999f;">'"'</span><span style="color: #eab700;">)</span>;
-    <span style="color: #3e999f;">}</span>
+    <span style="color: #4E9A06;">/** Translate } to " */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">exitInit</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">ArrayInitParser</span>.<span style="color: #2F8B58; font-weight: bold;">InitContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        System.out.print<span style="color: #909183;">(</span><span style="color: #4E9A06;">'"'</span><span style="color: #909183;">)</span>;
+    <span style="color: #7388d6;">}</span>
 
-    <span style="color: #8959a8;">/** Translate integers to 4-digit hexadecimal strings prefixed with \\u */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">enterValue</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">ArrayInitParser</span>.<span style="color: #4271ae;">ValueContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">Assumes no nested array initializers</span>
-        <span style="color: #4271ae;">int</span> <span style="color: #eab700;">value</span> = Integer.valueOf<span style="color: #eab700;">(</span><span style="color: #4271ae;">ctx</span>.INT<span style="color: #718c00;">()</span>.getText<span style="color: #718c00;">()</span><span style="color: #eab700;">)</span>;
-        System.out.printf<span style="color: #eab700;">(</span><span style="color: #3e999f;">"</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">\</span><span style="color: #3e999f;">u%04x"</span>, value<span style="color: #eab700;">)</span>;
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #4E9A06;">/** Translate integers to 4-digit hexadecimal strings prefixed with \\u */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">enterValue</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">ArrayInitParser</span>.<span style="color: #2F8B58; font-weight: bold;">ValueContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">Assumes no nested array initializers</span>
+        <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">value</span> = Integer.valueOf<span style="color: #909183;">(</span><span style="color: #F5666D;">ctx</span>.INT<span style="color: #709870;">()</span>.getText<span style="color: #709870;">()</span><span style="color: #909183;">)</span>;
+        System.out.printf<span style="color: #909183;">(</span><span style="color: #4E9A06;">"</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06;">u%04x"</span>, value<span style="color: #909183;">)</span>;
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -423,40 +422,40 @@ EOF
 <p>
 下面的是 Translate.java
 </p>
-<div class="container">
-<pre><code class="java"><span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">import ANTLR's runtime libraries</span>
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.*;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">tree</span>.*;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #204A87;">// </span><span style="color: #204A87;">import ANTLR's runtime libraries</span>
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.*;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #F5666D;">tree</span>.*;
 
-<span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">Translate</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">public</span> <span style="color: #718c00;">static</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">main</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">String</span><span style="color: #eab700;">[]</span> <span style="color: #eab700;">args</span><span style="color: #3e999f;">)</span> <span style="color: #718c00;">throws</span> <span style="color: #4271ae;">Exception</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">create a CharStream that reads from standard input</span>
-        <span style="color: #4271ae;">ANTLRInputStream</span> <span style="color: #eab700;">input</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ANTLRInputStream</span><span style="color: #eab700;">(</span>System.in<span style="color: #eab700;">)</span>;
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">create a lexer that feeds off of input CharStream</span>
-        <span style="color: #4271ae;">ArrayInitLexer</span> <span style="color: #eab700;">lexer</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ArrayInitLexer</span><span style="color: #eab700;">(</span>input<span style="color: #eab700;">)</span>;
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">create a buffer of tokens pulled from the lexer</span>
-        <span style="color: #4271ae;">CommonTokenStream</span> <span style="color: #eab700;">tokens</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">CommonTokenStream</span><span style="color: #eab700;">(</span>lexer<span style="color: #eab700;">)</span>;
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">create a parser that feeds off the tokens buffer</span>
-        <span style="color: #4271ae;">ArrayInitParser</span> <span style="color: #eab700;">parser</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ArrayInitParser</span><span style="color: #eab700;">(</span>tokens<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">ParseTree</span> <span style="color: #eab700;">tree</span> = parser.init<span style="color: #eab700;">()</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">begin parsing at init rule</span>
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">Translate</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">static</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">String</span><span style="color: #909183;">[]</span> <span style="color: #0084C8; font-weight: bold;">args</span><span style="color: #7388d6;">)</span> <span style="color: #A52A2A; font-weight: bold;">throws</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">create a CharStream that reads from standard input</span>
+        <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span> <span style="color: #0084C8; font-weight: bold;">input</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span><span style="color: #909183;">(</span>System.in<span style="color: #909183;">)</span>;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">create a lexer that feeds off of input CharStream</span>
+        <span style="color: #2F8B58; font-weight: bold;">ArrayInitLexer</span> <span style="color: #0084C8; font-weight: bold;">lexer</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ArrayInitLexer</span><span style="color: #909183;">(</span>input<span style="color: #909183;">)</span>;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">create a buffer of tokens pulled from the lexer</span>
+        <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span> <span style="color: #0084C8; font-weight: bold;">tokens</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span><span style="color: #909183;">(</span>lexer<span style="color: #909183;">)</span>;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">create a parser that feeds off the tokens buffer</span>
+        <span style="color: #2F8B58; font-weight: bold;">ArrayInitParser</span> <span style="color: #0084C8; font-weight: bold;">parser</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ArrayInitParser</span><span style="color: #909183;">(</span>tokens<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">ParseTree</span> <span style="color: #0084C8; font-weight: bold;">tree</span> = parser.init<span style="color: #909183;">()</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">begin parsing at init rule</span>
 
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">Create a generic parse tree walker that can trigger callbacks</span>
-        <span style="color: #4271ae;">ParseTreeWalker</span> <span style="color: #eab700;">walker</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ParseTreeWalker</span><span style="color: #eab700;">()</span>;
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">Walk the tree created during the parse, trigger callbacks</span>
-        walker.walk<span style="color: #eab700;">(</span><span style="color: #718c00;">new</span> <span style="color: #4271ae;">ShortToUnicodeString</span><span style="color: #718c00;">()</span>, tree<span style="color: #eab700;">)</span>;
-        System.out.println<span style="color: #eab700;">()</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">print a \n after translation</span>
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">Create a generic parse tree walker that can trigger callbacks</span>
+        <span style="color: #2F8B58; font-weight: bold;">ParseTreeWalker</span> <span style="color: #0084C8; font-weight: bold;">walker</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ParseTreeWalker</span><span style="color: #909183;">()</span>;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">Walk the tree created during the parse, trigger callbacks</span>
+        walker.walk<span style="color: #909183;">(</span><span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ShortToUnicodeString</span><span style="color: #709870;">()</span>, tree<span style="color: #909183;">)</span>;
+        System.out.println<span style="color: #909183;">()</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">print a \n after translation</span>
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
 <p>
 现在我们执行：
 </p>
-<div class="container">
-<pre><code class="shell">javac Array*.java Translate.java
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">javac Array*.java Translate.java
 java Translate
-<span style="color: #4d4d4c;">{</span>99, 3, 451<span style="color: #4d4d4c;">}</span>
+<span style="color: #707183;">{</span>99, 3, 451<span style="color: #707183;">}</span>
 Ctrl-d
 </code></pre>
 </div>
@@ -464,8 +463,8 @@ Ctrl-d
 <p>
 结果：
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8959a8;">"\u0063\u0003\u01c3"</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #4E9A06;">"\u0063\u0003\u01c3"</span>
 </code></pre>
 </div>
 </div>
@@ -479,32 +478,32 @@ Ctrl-d
 定义 LabeledExpr.g4
 </p>
 
-<div class="container">
-<pre><code class="antlr"><span style="color: #0000ff; font-weight: bold;">grammar</span> <span style="color: #8b5a00;">Expr</span><span style="color: #000000; font-weight: bold;">;</span>
+<div class="org-src-container">
+<pre class="src src-antlr"><code class="antlr"><span style="color: #0000ff; font-weight: bold;">grammar</span> <span style="color: #8b5a00;">Expr</span><span style="color: #000000; font-weight: bold;">;</span>
 
-<span style="color: #8e908c; font-style: italic;">/** </span><span style="color: #8e908c; font-style: italic;">The start rule; begin parsing here. */</span>
+<span style="color: #204A87;">/** </span><span style="color: #204A87;">The start rule; begin parsing here. */</span>
 <span style="color: #0000ff; font-weight: bold;">prog</span><span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #00008b;">stat</span>+ <span style="color: #000000; font-weight: bold;">;</span>
 
 <span style="color: #0000ff; font-weight: bold;">stat</span><span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #00008b;">expr</span> <span style="color: #8b5a00;">NEWLINE</span>
-    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #8b5a00;">ID</span> <span style="color: #3e999f;">'='</span> <span style="color: #00008b;">expr</span> <span style="color: #8b5a00;">NEWLINE</span>
+    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #8b5a00;">ID</span> <span style="color: #4E9A06;">'='</span> <span style="color: #00008b;">expr</span> <span style="color: #8b5a00;">NEWLINE</span>
     <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #8b5a00;">NEWLINE</span>
     <span style="color: #000000; font-weight: bold;">;</span>
 
-<span style="color: #0000ff; font-weight: bold;">expr</span><span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #00008b;">expr</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #3e999f;">'*'</span><span style="color: #000000; font-weight: bold;">|</span><span style="color: #3e999f;">'/'</span><span style="color: #000000; font-weight: bold;">)</span> <span style="color: #00008b;">expr</span>
-    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #00008b;">expr</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #3e999f;">'+'</span><span style="color: #000000; font-weight: bold;">|</span><span style="color: #3e999f;">'-'</span><span style="color: #000000; font-weight: bold;">)</span> <span style="color: #00008b;">expr</span>
+<span style="color: #0000ff; font-weight: bold;">expr</span><span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #00008b;">expr</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #4E9A06;">'*'</span><span style="color: #000000; font-weight: bold;">|</span><span style="color: #4E9A06;">'/'</span><span style="color: #000000; font-weight: bold;">)</span> <span style="color: #00008b;">expr</span>
+    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #00008b;">expr</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #4E9A06;">'+'</span><span style="color: #000000; font-weight: bold;">|</span><span style="color: #4E9A06;">'-'</span><span style="color: #000000; font-weight: bold;">)</span> <span style="color: #00008b;">expr</span>
     <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #8b5a00;">INT</span>
     <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #8b5a00;">ID</span>
-    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #3e999f;">'('</span> <span style="color: #00008b;">expr</span> <span style="color: #3e999f;">')'</span>
+    <span style="color: #000000; font-weight: bold;">|</span>   <span style="color: #4E9A06;">'('</span> <span style="color: #00008b;">expr</span> <span style="color: #4E9A06;">')'</span>
     <span style="color: #000000; font-weight: bold;">;</span>
 
-<span style="color: #0000ff; font-weight: bold;">MUL</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #3e999f;">'*'</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">assigns token name to '*' used above in grammar</span>
-<span style="color: #0000ff; font-weight: bold;">DIV</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #3e999f;">'/'</span> <span style="color: #000000; font-weight: bold;">;</span>
-<span style="color: #0000ff; font-weight: bold;">ADD</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #3e999f;">'+'</span> <span style="color: #000000; font-weight: bold;">;</span>
-<span style="color: #0000ff; font-weight: bold;">SUB</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #3e999f;">'-'</span> <span style="color: #000000; font-weight: bold;">;</span>
-<span style="color: #0000ff; font-weight: bold;">ID</span>  <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #4d4d4c;">[</span>a-zA-Z<span style="color: #4d4d4c;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span>      <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">match identifiers</span>
-<span style="color: #0000ff; font-weight: bold;">INT</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #4d4d4c;">[</span>0-9<span style="color: #4d4d4c;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span>         <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">match integers</span>
-<span style="color: #0000ff; font-weight: bold;">NEWLINE</span><span style="color: #000000; font-weight: bold;">:</span><span style="color: #3e999f;">'\r'</span>? <span style="color: #3e999f;">'\n'</span> <span style="color: #000000; font-weight: bold;">;</span>     <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">return newlines to parser (is end-statement signal)</span>
-<span style="color: #0000ff; font-weight: bold;">WS</span>  <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #4d4d4c;">[</span> \t<span style="color: #4d4d4c;">]</span>+ -&gt; <span style="color: #00008b;">skip</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">toss out whitespace</span>
+<span style="color: #0000ff; font-weight: bold;">MUL</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #4E9A06;">'*'</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">assigns token name to '*' used above in grammar</span>
+<span style="color: #0000ff; font-weight: bold;">DIV</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #4E9A06;">'/'</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">ADD</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #4E9A06;">'+'</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">SUB</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #4E9A06;">'-'</span> <span style="color: #000000; font-weight: bold;">;</span>
+<span style="color: #0000ff; font-weight: bold;">ID</span>  <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #707183;">[</span>a-zA-Z<span style="color: #707183;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span>      <span style="color: #204A87;">// </span><span style="color: #204A87;">match identifiers</span>
+<span style="color: #0000ff; font-weight: bold;">INT</span> <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #707183;">[</span>0-9<span style="color: #707183;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span>         <span style="color: #204A87;">// </span><span style="color: #204A87;">match integers</span>
+<span style="color: #0000ff; font-weight: bold;">NEWLINE</span><span style="color: #000000; font-weight: bold;">:</span><span style="color: #4E9A06;">'\r'</span>? <span style="color: #4E9A06;">'\n'</span> <span style="color: #000000; font-weight: bold;">;</span>     <span style="color: #204A87;">// </span><span style="color: #204A87;">return newlines to parser (is end-statement signal)</span>
+<span style="color: #0000ff; font-weight: bold;">WS</span>  <span style="color: #000000; font-weight: bold;">:</span>   <span style="color: #707183;">[</span> \t<span style="color: #707183;">]</span>+ -&gt; <span style="color: #00008b;">skip</span> <span style="color: #000000; font-weight: bold;">;</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">toss out whitespace</span>
 </code></pre>
 </div>
 
@@ -515,29 +514,29 @@ Ctrl-d
 <p>
 下面是 Calc.java:
 </p>
-<div class="container">
-<pre><code class="java"><span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.*;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">tree</span>.<span style="color: #4271ae;">ParseTree</span>;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.*;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #F5666D;">tree</span>.<span style="color: #2F8B58; font-weight: bold;">ParseTree</span>;
 
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">io</span>.<span style="color: #4271ae;">FileInputStream</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">io</span>.<span style="color: #4271ae;">InputStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">io</span>.<span style="color: #2F8B58; font-weight: bold;">FileInputStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">io</span>.<span style="color: #2F8B58; font-weight: bold;">InputStream</span>;
 
-<span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">Calc</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">public</span> <span style="color: #718c00;">static</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">main</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">String</span><span style="color: #eab700;">[]</span> <span style="color: #eab700;">args</span><span style="color: #3e999f;">)</span> <span style="color: #718c00;">throws</span> <span style="color: #4271ae;">Exception</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #4271ae;">String</span> <span style="color: #eab700;">inputFile</span> = <span style="color: #4271ae;">null</span>;
-        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span> args.length&gt;0 <span style="color: #eab700;">)</span> inputFile = args<span style="color: #eab700;">[</span>0<span style="color: #eab700;">]</span>;
-        <span style="color: #4271ae;">InputStream</span> <span style="color: #eab700;">is</span> = System.in;
-        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span> inputFile!=<span style="color: #4271ae;">null</span> <span style="color: #eab700;">)</span> is = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">FileInputStream</span><span style="color: #eab700;">(</span>inputFile<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">ANTLRInputStream</span> <span style="color: #eab700;">input</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ANTLRInputStream</span><span style="color: #eab700;">(</span>is<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">LabeledExprLexer</span> <span style="color: #eab700;">lexer</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">LabeledExprLexer</span><span style="color: #eab700;">(</span>input<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">CommonTokenStream</span> <span style="color: #eab700;">tokens</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">CommonTokenStream</span><span style="color: #eab700;">(</span>lexer<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">LabeledExprParser</span> <span style="color: #eab700;">parser</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">LabeledExprParser</span><span style="color: #eab700;">(</span>tokens<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">ParseTree</span> <span style="color: #eab700;">tree</span> = parser.prog<span style="color: #eab700;">()</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">parse</span>
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">Calc</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">static</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">String</span><span style="color: #909183;">[]</span> <span style="color: #0084C8; font-weight: bold;">args</span><span style="color: #7388d6;">)</span> <span style="color: #A52A2A; font-weight: bold;">throws</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #2F8B58; font-weight: bold;">String</span> <span style="color: #0084C8; font-weight: bold;">inputFile</span> = <span style="color: #F5666D;">null</span>;
+        <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #909183;">(</span> args.length&gt;0 <span style="color: #909183;">)</span> inputFile = args<span style="color: #909183;">[</span>0<span style="color: #909183;">]</span>;
+        <span style="color: #2F8B58; font-weight: bold;">InputStream</span> <span style="color: #0084C8; font-weight: bold;">is</span> = System.in;
+        <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #909183;">(</span> inputFile!=<span style="color: #F5666D;">null</span> <span style="color: #909183;">)</span> is = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">FileInputStream</span><span style="color: #909183;">(</span>inputFile<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span> <span style="color: #0084C8; font-weight: bold;">input</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span><span style="color: #909183;">(</span>is<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">LabeledExprLexer</span> <span style="color: #0084C8; font-weight: bold;">lexer</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">LabeledExprLexer</span><span style="color: #909183;">(</span>input<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span> <span style="color: #0084C8; font-weight: bold;">tokens</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span><span style="color: #909183;">(</span>lexer<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">LabeledExprParser</span> <span style="color: #0084C8; font-weight: bold;">parser</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">LabeledExprParser</span><span style="color: #909183;">(</span>tokens<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">ParseTree</span> <span style="color: #0084C8; font-weight: bold;">tree</span> = parser.prog<span style="color: #909183;">()</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">parse</span>
 
-        <span style="color: #4271ae;">EvalVisitor</span> <span style="color: #eab700;">eval</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">EvalVisitor</span><span style="color: #eab700;">()</span>;
-        eval.visit<span style="color: #eab700;">(</span>tree<span style="color: #eab700;">)</span>;
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+        <span style="color: #2F8B58; font-weight: bold;">EvalVisitor</span> <span style="color: #0084C8; font-weight: bold;">eval</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">EvalVisitor</span><span style="color: #909183;">()</span>;
+        eval.visit<span style="color: #909183;">(</span>tree<span style="color: #909183;">)</span>;
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -545,8 +544,8 @@ Ctrl-d
 首先输入：
 </p>
 
-<div class="container">
-<pre><code class="shell">antlr4 -no-listener -visitor LabeledExpr.g4
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">antlr4 -no-listener -visitor LabeledExpr.g4
 </code></pre>
 </div>
 
@@ -554,69 +553,69 @@ Ctrl-d
 下面我们实现 Evalvisitor.java
 </p>
 
-<div class="container">
-<pre><code class="java"><span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">util</span>.<span style="color: #4271ae;">HashMap</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">util</span>.<span style="color: #4271ae;">Map</span>;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">util</span>.<span style="color: #2F8B58; font-weight: bold;">HashMap</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">util</span>.<span style="color: #2F8B58; font-weight: bold;">Map</span>;
 
-<span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">EvalVisitor</span> <span style="color: #718c00;">extends</span> <span style="color: #4271ae;">LabeledExprBaseVisitor</span><span style="color: #4d4d4c;">&lt;</span><span style="color: #4271ae;">Integer</span><span style="color: #4d4d4c;">&gt;</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #8959a8;">/** "memory" for our calculator; variable/value pairs go here */</span>
-    <span style="color: #4271ae;">Map</span><span style="color: #3e999f;">&lt;</span><span style="color: #4271ae;">String</span>, <span style="color: #4271ae;">Integer</span><span style="color: #3e999f;">&gt;</span> <span style="color: #eab700;">memory</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">HashMap</span><span style="color: #3e999f;">&lt;</span><span style="color: #4271ae;">String</span>, <span style="color: #4271ae;">Integer</span><span style="color: #3e999f;">&gt;()</span>;
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">EvalVisitor</span> <span style="color: #A52A2A; font-weight: bold;">extends</span> <span style="color: #2F8B58; font-weight: bold;">LabeledExprBaseVisitor</span><span style="color: #707183;">&lt;</span><span style="color: #2F8B58; font-weight: bold;">Integer</span><span style="color: #707183;">&gt;</span> <span style="color: #707183;">{</span>
+    <span style="color: #4E9A06;">/** "memory" for our calculator; variable/value pairs go here */</span>
+    <span style="color: #2F8B58; font-weight: bold;">Map</span><span style="color: #7388d6;">&lt;</span><span style="color: #2F8B58; font-weight: bold;">String</span>, <span style="color: #2F8B58; font-weight: bold;">Integer</span><span style="color: #7388d6;">&gt;</span> <span style="color: #0084C8; font-weight: bold;">memory</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">HashMap</span><span style="color: #7388d6;">&lt;</span><span style="color: #2F8B58; font-weight: bold;">String</span>, <span style="color: #2F8B58; font-weight: bold;">Integer</span><span style="color: #7388d6;">&gt;()</span>;
 
-    <span style="color: #8959a8;">/** ID '=' expr NEWLINE */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">Integer</span> <span style="color: #f5871f;">visitAssign</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">LabeledExprParser</span>.<span style="color: #4271ae;">AssignContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #4271ae;">String</span> <span style="color: #eab700;">id</span> = <span style="color: #4271ae;">ctx</span>.ID<span style="color: #eab700;">()</span>.getText<span style="color: #eab700;">()</span>;  <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">id is left-hand side of '='</span>
-        <span style="color: #4271ae;">int</span> <span style="color: #eab700;">value</span> = visit<span style="color: #eab700;">(</span>ctx.expr<span style="color: #718c00;">()</span><span style="color: #eab700;">)</span>;   <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">compute value of expression on right</span>
-        memory.put<span style="color: #eab700;">(</span>id, value<span style="color: #eab700;">)</span>;           <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">store it in our memory</span>
-        <span style="color: #718c00;">return</span> value;
-    <span style="color: #3e999f;">}</span>
+    <span style="color: #4E9A06;">/** ID '=' expr NEWLINE */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">Integer</span> <span style="color: #00578E; font-weight: bold;">visitAssign</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">LabeledExprParser</span>.<span style="color: #2F8B58; font-weight: bold;">AssignContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #2F8B58; font-weight: bold;">String</span> <span style="color: #0084C8; font-weight: bold;">id</span> = <span style="color: #F5666D;">ctx</span>.ID<span style="color: #909183;">()</span>.getText<span style="color: #909183;">()</span>;  <span style="color: #204A87;">// </span><span style="color: #204A87;">id is left-hand side of '='</span>
+        <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">value</span> = visit<span style="color: #909183;">(</span>ctx.expr<span style="color: #709870;">()</span><span style="color: #909183;">)</span>;   <span style="color: #204A87;">// </span><span style="color: #204A87;">compute value of expression on right</span>
+        memory.put<span style="color: #909183;">(</span>id, value<span style="color: #909183;">)</span>;           <span style="color: #204A87;">// </span><span style="color: #204A87;">store it in our memory</span>
+        <span style="color: #A52A2A; font-weight: bold;">return</span> value;
+    <span style="color: #7388d6;">}</span>
 
-    <span style="color: #8959a8;">/** expr NEWLINE */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">Integer</span> <span style="color: #f5871f;">visitPrintExpr</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">LabeledExprParser</span>.<span style="color: #4271ae;">PrintExprContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #4271ae;">Integer</span> <span style="color: #eab700;">value</span> = visit<span style="color: #eab700;">(</span>ctx.expr<span style="color: #718c00;">()</span><span style="color: #eab700;">)</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">evaluate the expr child</span>
-        System.out.println<span style="color: #eab700;">(</span>value<span style="color: #eab700;">)</span>;         <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">print the result</span>
-        <span style="color: #718c00;">return</span> 0;                          <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">return dummy value</span>
-    <span style="color: #3e999f;">}</span>
+    <span style="color: #4E9A06;">/** expr NEWLINE */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">Integer</span> <span style="color: #00578E; font-weight: bold;">visitPrintExpr</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">LabeledExprParser</span>.<span style="color: #2F8B58; font-weight: bold;">PrintExprContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #2F8B58; font-weight: bold;">Integer</span> <span style="color: #0084C8; font-weight: bold;">value</span> = visit<span style="color: #909183;">(</span>ctx.expr<span style="color: #709870;">()</span><span style="color: #909183;">)</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">evaluate the expr child</span>
+        System.out.println<span style="color: #909183;">(</span>value<span style="color: #909183;">)</span>;         <span style="color: #204A87;">// </span><span style="color: #204A87;">print the result</span>
+        <span style="color: #A52A2A; font-weight: bold;">return</span> 0;                          <span style="color: #204A87;">// </span><span style="color: #204A87;">return dummy value</span>
+    <span style="color: #7388d6;">}</span>
 
-    <span style="color: #8959a8;">/** INT */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">Integer</span> <span style="color: #f5871f;">visitInt</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">LabeledExprParser</span>.<span style="color: #4271ae;">IntContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #718c00;">return</span> Integer.valueOf<span style="color: #eab700;">(</span><span style="color: #4271ae;">ctx</span>.INT<span style="color: #718c00;">()</span>.getText<span style="color: #718c00;">()</span><span style="color: #eab700;">)</span>;
-    <span style="color: #3e999f;">}</span>
+    <span style="color: #4E9A06;">/** INT */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">Integer</span> <span style="color: #00578E; font-weight: bold;">visitInt</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">LabeledExprParser</span>.<span style="color: #2F8B58; font-weight: bold;">IntContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #A52A2A; font-weight: bold;">return</span> Integer.valueOf<span style="color: #909183;">(</span><span style="color: #F5666D;">ctx</span>.INT<span style="color: #709870;">()</span>.getText<span style="color: #709870;">()</span><span style="color: #909183;">)</span>;
+    <span style="color: #7388d6;">}</span>
 
-    <span style="color: #8959a8;">/** ID */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">Integer</span> <span style="color: #f5871f;">visitId</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">LabeledExprParser</span>.<span style="color: #4271ae;">IdContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #4271ae;">String</span> <span style="color: #eab700;">id</span> = <span style="color: #4271ae;">ctx</span>.ID<span style="color: #eab700;">()</span>.getText<span style="color: #eab700;">()</span>;
-        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span> memory.containsKey<span style="color: #718c00;">(</span>id<span style="color: #718c00;">)</span> <span style="color: #eab700;">)</span> <span style="color: #718c00;">return</span> memory.get<span style="color: #eab700;">(</span>id<span style="color: #eab700;">)</span>;
-        <span style="color: #718c00;">return</span> 0;
-    <span style="color: #3e999f;">}</span>
+    <span style="color: #4E9A06;">/** ID */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">Integer</span> <span style="color: #00578E; font-weight: bold;">visitId</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">LabeledExprParser</span>.<span style="color: #2F8B58; font-weight: bold;">IdContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #2F8B58; font-weight: bold;">String</span> <span style="color: #0084C8; font-weight: bold;">id</span> = <span style="color: #F5666D;">ctx</span>.ID<span style="color: #909183;">()</span>.getText<span style="color: #909183;">()</span>;
+        <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #909183;">(</span> memory.containsKey<span style="color: #709870;">(</span>id<span style="color: #709870;">)</span> <span style="color: #909183;">)</span> <span style="color: #A52A2A; font-weight: bold;">return</span> memory.get<span style="color: #909183;">(</span>id<span style="color: #909183;">)</span>;
+        <span style="color: #A52A2A; font-weight: bold;">return</span> 0;
+    <span style="color: #7388d6;">}</span>
 
-    <span style="color: #8959a8;">/** expr op=('*'|'/') expr */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">Integer</span> <span style="color: #f5871f;">visitMulDiv</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">LabeledExprParser</span>.<span style="color: #4271ae;">MulDivContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #4271ae;">int</span> <span style="color: #eab700;">left</span> = visit<span style="color: #eab700;">(</span>ctx.expr<span style="color: #718c00;">(</span>0<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>;  <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">get value of left subexpression</span>
-        <span style="color: #4271ae;">int</span> <span style="color: #eab700;">right</span> = visit<span style="color: #eab700;">(</span>ctx.expr<span style="color: #718c00;">(</span>1<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">get value of right subexpression</span>
-        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span> ctx.op.getType<span style="color: #718c00;">()</span> == <span style="color: #4271ae;">LabeledExprParser</span>.MUL <span style="color: #eab700;">)</span> <span style="color: #718c00;">return</span> left * right;
-        <span style="color: #718c00;">return</span> left / right; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">must be DIV</span>
-    <span style="color: #3e999f;">}</span>
+    <span style="color: #4E9A06;">/** expr op=('*'|'/') expr */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">Integer</span> <span style="color: #00578E; font-weight: bold;">visitMulDiv</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">LabeledExprParser</span>.<span style="color: #2F8B58; font-weight: bold;">MulDivContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">left</span> = visit<span style="color: #909183;">(</span>ctx.expr<span style="color: #709870;">(</span>0<span style="color: #709870;">)</span><span style="color: #909183;">)</span>;  <span style="color: #204A87;">// </span><span style="color: #204A87;">get value of left subexpression</span>
+        <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">right</span> = visit<span style="color: #909183;">(</span>ctx.expr<span style="color: #709870;">(</span>1<span style="color: #709870;">)</span><span style="color: #909183;">)</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">get value of right subexpression</span>
+        <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #909183;">(</span> ctx.op.getType<span style="color: #709870;">()</span> == <span style="color: #F5666D;">LabeledExprParser</span>.MUL <span style="color: #909183;">)</span> <span style="color: #A52A2A; font-weight: bold;">return</span> left * right;
+        <span style="color: #A52A2A; font-weight: bold;">return</span> left / right; <span style="color: #204A87;">// </span><span style="color: #204A87;">must be DIV</span>
+    <span style="color: #7388d6;">}</span>
 
-    <span style="color: #8959a8;">/** expr op=('+'|'-') expr */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">Integer</span> <span style="color: #f5871f;">visitAddSub</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">LabeledExprParser</span>.<span style="color: #4271ae;">AddSubContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #4271ae;">int</span> <span style="color: #eab700;">left</span> = visit<span style="color: #eab700;">(</span>ctx.expr<span style="color: #718c00;">(</span>0<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>;  <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">get value of left subexpression</span>
-        <span style="color: #4271ae;">int</span> <span style="color: #eab700;">right</span> = visit<span style="color: #eab700;">(</span>ctx.expr<span style="color: #718c00;">(</span>1<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">get value of right subexpression</span>
-        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span> ctx.op.getType<span style="color: #718c00;">()</span> == <span style="color: #4271ae;">LabeledExprParser</span>.ADD <span style="color: #eab700;">)</span> <span style="color: #718c00;">return</span> left + right;
-        <span style="color: #718c00;">return</span> left - right; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">must be SUB</span>
-    <span style="color: #3e999f;">}</span>
+    <span style="color: #4E9A06;">/** expr op=('+'|'-') expr */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">Integer</span> <span style="color: #00578E; font-weight: bold;">visitAddSub</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">LabeledExprParser</span>.<span style="color: #2F8B58; font-weight: bold;">AddSubContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">left</span> = visit<span style="color: #909183;">(</span>ctx.expr<span style="color: #709870;">(</span>0<span style="color: #709870;">)</span><span style="color: #909183;">)</span>;  <span style="color: #204A87;">// </span><span style="color: #204A87;">get value of left subexpression</span>
+        <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">right</span> = visit<span style="color: #909183;">(</span>ctx.expr<span style="color: #709870;">(</span>1<span style="color: #709870;">)</span><span style="color: #909183;">)</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">get value of right subexpression</span>
+        <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #909183;">(</span> ctx.op.getType<span style="color: #709870;">()</span> == <span style="color: #F5666D;">LabeledExprParser</span>.ADD <span style="color: #909183;">)</span> <span style="color: #A52A2A; font-weight: bold;">return</span> left + right;
+        <span style="color: #A52A2A; font-weight: bold;">return</span> left - right; <span style="color: #204A87;">// </span><span style="color: #204A87;">must be SUB</span>
+    <span style="color: #7388d6;">}</span>
 
-    <span style="color: #8959a8;">/** '(' expr ')' */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">Integer</span> <span style="color: #f5871f;">visitParens</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">LabeledExprParser</span>.<span style="color: #4271ae;">ParensContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #718c00;">return</span> visit<span style="color: #eab700;">(</span>ctx.expr<span style="color: #718c00;">()</span><span style="color: #eab700;">)</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">return child expr's value</span>
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #4E9A06;">/** '(' expr ')' */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">Integer</span> <span style="color: #00578E; font-weight: bold;">visitParens</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">LabeledExprParser</span>.<span style="color: #2F8B58; font-weight: bold;">ParensContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #A52A2A; font-weight: bold;">return</span> visit<span style="color: #909183;">(</span>ctx.expr<span style="color: #709870;">()</span><span style="color: #909183;">)</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">return child expr's value</span>
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -626,17 +625,17 @@ Ctrl-d
 其中 t.expr:
 </p>
 
-<div class="container">
-<pre><code class="python">193
-<span style="color: #eab700;">a</span>=5
-<span style="color: #eab700;">b</span>=6
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">193
+<span style="color: #0084C8; font-weight: bold;">a</span>=5
+<span style="color: #0084C8; font-weight: bold;">b</span>=6
 a+b*2
-<span style="color: #4d4d4c;">(</span>1+2<span style="color: #4d4d4c;">)</span>*3
+<span style="color: #707183;">(</span>1+2<span style="color: #707183;">)</span>*3
 </code></pre>
 </div>
 
-<div class="container">
-<pre><code class="shell">javac Calc.java LabeledExpr*.java
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">javac Calc.java LabeledExpr*.java
 java Calc t.expr
 </code></pre>
 </div>
@@ -644,8 +643,8 @@ java Calc t.expr
 <p>
 结果：
 </p>
-<div class="container">
-<pre><code class="python">193
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">193
 17
 9
 </code></pre>
@@ -667,14 +666,14 @@ java Calc t.expr
 <p>
 例如我们有 Demo.java
 </p>
-<div class="container">
-<pre><code class="java"><span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">util</span>.<span style="color: #4271ae;">List</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">util</span>.<span style="color: #4271ae;">Map</span>;
-<span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">Demo</span> <span style="color: #4d4d4c;">{</span>
-        <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">f</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">int</span> <span style="color: #eab700;">x</span>, <span style="color: #4271ae;">String</span> <span style="color: #eab700;">y</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span> <span style="color: #3e999f;">}</span>
-        <span style="color: #4271ae;">int</span><span style="color: #3e999f;">[</span> <span style="color: #3e999f;">]</span> <span style="color: #f5871f;">g</span><span style="color: #3e999f;">(</span><span style="color: #8e908c; font-style: italic;">/*</span><span style="color: #8e908c; font-style: italic;">no args*/</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span> <span style="color: #718c00;">return</span> <span style="color: #4271ae;">null</span>; <span style="color: #3e999f;">}</span>
-        <span style="color: #4271ae;">List</span><span style="color: #3e999f;">&lt;</span><span style="color: #4271ae;">Map</span><span style="color: #eab700;">&lt;</span><span style="color: #4271ae;">String</span>, <span style="color: #4271ae;">Integer</span><span style="color: #eab700;">&gt;</span><span style="color: #3e999f;">&gt;[]</span> <span style="color: #f5871f;">h</span><span style="color: #3e999f;">()</span> <span style="color: #3e999f;">{</span> <span style="color: #718c00;">return</span> <span style="color: #4271ae;">null</span>; <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">util</span>.<span style="color: #2F8B58; font-weight: bold;">List</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">util</span>.<span style="color: #2F8B58; font-weight: bold;">Map</span>;
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">Demo</span> <span style="color: #707183;">{</span>
+    <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">f</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">x</span>, <span style="color: #2F8B58; font-weight: bold;">String</span> <span style="color: #0084C8; font-weight: bold;">y</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span> <span style="color: #7388d6;">}</span>
+    <span style="color: #2F8B58; font-weight: bold;">int</span><span style="color: #7388d6;">[</span> <span style="color: #7388d6;">]</span> <span style="color: #00578E; font-weight: bold;">g</span><span style="color: #7388d6;">(</span><span style="color: #204A87;">/*</span><span style="color: #204A87;">no args*/</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span> <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #F5666D;">null</span>; <span style="color: #7388d6;">}</span>
+    <span style="color: #2F8B58; font-weight: bold;">List</span><span style="color: #7388d6;">&lt;</span><span style="color: #2F8B58; font-weight: bold;">Map</span><span style="color: #909183;">&lt;</span><span style="color: #2F8B58; font-weight: bold;">String</span>, <span style="color: #2F8B58; font-weight: bold;">Integer</span><span style="color: #909183;">&gt;</span><span style="color: #7388d6;">&gt;[]</span> <span style="color: #00578E; font-weight: bold;">h</span><span style="color: #7388d6;">()</span> <span style="color: #7388d6;">{</span> <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #F5666D;">null</span>; <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -682,12 +681,12 @@ java Calc t.expr
 我们要能生成这个
 </p>
 
-<div class="container">
-<pre><code class="java"><span style="color: #718c00;">interface</span> <span style="color: #4271ae;">IDemo</span> <span style="color: #4d4d4c;">{</span>
-        <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">f</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">int</span> <span style="color: #eab700;">x</span>, <span style="color: #4271ae;">String</span> <span style="color: #eab700;">y</span><span style="color: #3e999f;">)</span>;
-        <span style="color: #4271ae;">int</span><span style="color: #3e999f;">[</span> <span style="color: #3e999f;">]</span> <span style="color: #f5871f;">g</span><span style="color: #3e999f;">(</span><span style="color: #8e908c; font-style: italic;">/*</span><span style="color: #8e908c; font-style: italic;">no args*/</span><span style="color: #3e999f;">)</span>;
-        <span style="color: #4271ae;">List</span><span style="color: #3e999f;">&lt;</span><span style="color: #4271ae;">Map</span><span style="color: #eab700;">&lt;</span><span style="color: #4271ae;">String</span>, <span style="color: #4271ae;">Integer</span><span style="color: #eab700;">&gt;</span><span style="color: #3e999f;">&gt;[]</span> <span style="color: #f5871f;">h</span><span style="color: #3e999f;">()</span>;
-<span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #A52A2A; font-weight: bold;">interface</span> <span style="color: #2F8B58; font-weight: bold;">IDemo</span> <span style="color: #707183;">{</span>
+    <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">f</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">x</span>, <span style="color: #2F8B58; font-weight: bold;">String</span> <span style="color: #0084C8; font-weight: bold;">y</span><span style="color: #7388d6;">)</span>;
+    <span style="color: #2F8B58; font-weight: bold;">int</span><span style="color: #7388d6;">[</span> <span style="color: #7388d6;">]</span> <span style="color: #00578E; font-weight: bold;">g</span><span style="color: #7388d6;">(</span><span style="color: #204A87;">/*</span><span style="color: #204A87;">no args*/</span><span style="color: #7388d6;">)</span>;
+    <span style="color: #2F8B58; font-weight: bold;">List</span><span style="color: #7388d6;">&lt;</span><span style="color: #2F8B58; font-weight: bold;">Map</span><span style="color: #909183;">&lt;</span><span style="color: #2F8B58; font-weight: bold;">String</span>, <span style="color: #2F8B58; font-weight: bold;">Integer</span><span style="color: #909183;">&gt;</span><span style="color: #7388d6;">&gt;[]</span> <span style="color: #00578E; font-weight: bold;">h</span><span style="color: #7388d6;">()</span>;
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -714,39 +713,39 @@ subtrees don’t get visited.
 基本的策略是，当我们看到类的定义后，我们首先打印出接口的头，当类定义结束的时候我们打印出 ‘{’。
 下面是具体的实现
 </p>
-<div class="container">
-<pre><code class="java"><span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">TokenStream</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">misc</span>.<span style="color: #4271ae;">Interval</span>;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">TokenStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #F5666D;">misc</span>.<span style="color: #2F8B58; font-weight: bold;">Interval</span>;
 
-<span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">ExtractInterfaceListener</span> <span style="color: #718c00;">extends</span> <span style="color: #4271ae;">JavaBaseListener</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #4271ae;">JavaParser</span> <span style="color: #eab700;">parser</span>;
-    <span style="color: #718c00;">public</span> <span style="color: #f5871f;">ExtractInterfaceListener</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">JavaParser</span> <span style="color: #eab700;">parser</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span><span style="color: #718c00;">this</span>.parser = parser;<span style="color: #3e999f;">}</span>
-    <span style="color: #8959a8;">/** Listen to matches of classDeclaration */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">enterClassDeclaration</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">JavaParser</span>.<span style="color: #4271ae;">ClassDeclarationContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">){</span>
-        System.out.println<span style="color: #eab700;">(</span><span style="color: #3e999f;">"interface I"</span>+<span style="color: #4271ae;">ctx</span>.Identifier<span style="color: #718c00;">()</span>+<span style="color: #3e999f;">" {"</span><span style="color: #eab700;">)</span>;
-    <span style="color: #3e999f;">}</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">exitClassDeclaration</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">JavaParser</span>.<span style="color: #4271ae;">ClassDeclarationContext</span> <span style="color: #eab700;">ctx</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-        System.out.println<span style="color: #eab700;">(</span><span style="color: #3e999f;">"}"</span><span style="color: #eab700;">)</span>;
-    <span style="color: #3e999f;">}</span>
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">ExtractInterfaceListener</span> <span style="color: #A52A2A; font-weight: bold;">extends</span> <span style="color: #2F8B58; font-weight: bold;">JavaBaseListener</span> <span style="color: #707183;">{</span>
+    <span style="color: #2F8B58; font-weight: bold;">JavaParser</span> <span style="color: #0084C8; font-weight: bold;">parser</span>;
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #00578E; font-weight: bold;">ExtractInterfaceListener</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">JavaParser</span> <span style="color: #0084C8; font-weight: bold;">parser</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span><span style="color: #A52A2A; font-weight: bold;">this</span>.parser = parser;<span style="color: #7388d6;">}</span>
+    <span style="color: #4E9A06;">/** Listen to matches of classDeclaration */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">enterClassDeclaration</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">JavaParser</span>.<span style="color: #2F8B58; font-weight: bold;">ClassDeclarationContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">){</span>
+        System.out.println<span style="color: #909183;">(</span><span style="color: #4E9A06;">"interface I"</span>+<span style="color: #F5666D;">ctx</span>.Identifier<span style="color: #709870;">()</span>+<span style="color: #4E9A06;">" {"</span><span style="color: #909183;">)</span>;
+    <span style="color: #7388d6;">}</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">exitClassDeclaration</span><span style="color: #7388d6;">(</span><span style="color: #F5666D;">JavaParser</span>.<span style="color: #2F8B58; font-weight: bold;">ClassDeclarationContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+        System.out.println<span style="color: #909183;">(</span><span style="color: #4E9A06;">"}"</span><span style="color: #909183;">)</span>;
+    <span style="color: #7388d6;">}</span>
 
-    <span style="color: #8959a8;">/** Listen to matches of methodDeclaration */</span>
-    <span style="color: #4271ae;">@Override</span>
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">enterMethodDeclaration</span><span style="color: #3e999f;">(</span>
-        <span style="color: #4271ae;">JavaParser</span>.<span style="color: #4271ae;">MethodDeclarationContext</span> <span style="color: #eab700;">ctx</span>
-    <span style="color: #3e999f;">)</span>
-    <span style="color: #3e999f;">{</span>
-        <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">need parser to get tokens</span>
-        <span style="color: #4271ae;">TokenStream</span> <span style="color: #eab700;">tokens</span> = parser.getTokenStream<span style="color: #eab700;">()</span>;
-        <span style="color: #4271ae;">String</span> <span style="color: #eab700;">type</span> = <span style="color: #3e999f;">"void"</span>;
-        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span> ctx.type<span style="color: #718c00;">()</span>!=<span style="color: #4271ae;">null</span> <span style="color: #eab700;">)</span> <span style="color: #eab700;">{</span>
-            type = tokens.getText<span style="color: #718c00;">(</span>ctx.type<span style="color: #4271ae;">()</span><span style="color: #718c00;">)</span>;
-        <span style="color: #eab700;">}</span>
-        <span style="color: #4271ae;">String</span> <span style="color: #eab700;">args</span> = tokens.getText<span style="color: #eab700;">(</span>ctx.formalParameters<span style="color: #718c00;">()</span><span style="color: #eab700;">)</span>;
-        System.out.println<span style="color: #eab700;">(</span><span style="color: #3e999f;">"</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">t</span><span style="color: #3e999f;">"</span>+type+<span style="color: #3e999f;">" "</span>+<span style="color: #4271ae;">ctx</span>.Identifier<span style="color: #718c00;">()</span>+args+<span style="color: #3e999f;">";"</span><span style="color: #eab700;">)</span>;
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #4E9A06;">/** Listen to matches of methodDeclaration */</span>
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">enterMethodDeclaration</span><span style="color: #7388d6;">(</span>
+        <span style="color: #F5666D;">JavaParser</span>.<span style="color: #2F8B58; font-weight: bold;">MethodDeclarationContext</span> <span style="color: #0084C8; font-weight: bold;">ctx</span>
+    <span style="color: #7388d6;">)</span>
+    <span style="color: #7388d6;">{</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">need parser to get tokens</span>
+        <span style="color: #2F8B58; font-weight: bold;">TokenStream</span> <span style="color: #0084C8; font-weight: bold;">tokens</span> = parser.getTokenStream<span style="color: #909183;">()</span>;
+        <span style="color: #2F8B58; font-weight: bold;">String</span> <span style="color: #0084C8; font-weight: bold;">type</span> = <span style="color: #4E9A06;">"void"</span>;
+        <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #909183;">(</span> ctx.type<span style="color: #709870;">()</span>!=<span style="color: #F5666D;">null</span> <span style="color: #909183;">)</span> <span style="color: #909183;">{</span>
+            type = tokens.getText<span style="color: #709870;">(</span>ctx.type<span style="color: #907373;">()</span><span style="color: #709870;">)</span>;
+        <span style="color: #909183;">}</span>
+        <span style="color: #2F8B58; font-weight: bold;">String</span> <span style="color: #0084C8; font-weight: bold;">args</span> = tokens.getText<span style="color: #909183;">(</span>ctx.formalParameters<span style="color: #709870;">()</span><span style="color: #909183;">)</span>;
+        System.out.println<span style="color: #909183;">(</span><span style="color: #4E9A06;">"</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">t</span><span style="color: #4E9A06;">"</span>+type+<span style="color: #4E9A06;">" "</span>+<span style="color: #F5666D;">ctx</span>.Identifier<span style="color: #709870;">()</span>+args+<span style="color: #4E9A06;">";"</span><span style="color: #909183;">)</span>;
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -755,36 +754,36 @@ subtrees don’t get visited.
 然后我们还需要定义 main 函数：
 </p>
 
-<div class="container">
-<pre><code class="java"><span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">ANTLRInputStream</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">CommonTokenStream</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">ParserRuleContext</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">Token</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">tree</span>.*;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">ParserRuleContext</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">Token</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #F5666D;">tree</span>.*;
 
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">io</span>.<span style="color: #4271ae;">FileInputStream</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">io</span>.<span style="color: #4271ae;">InputStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">io</span>.<span style="color: #2F8B58; font-weight: bold;">FileInputStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">io</span>.<span style="color: #2F8B58; font-weight: bold;">InputStream</span>;
 
-<span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">ExtractInterfaceTool</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">public</span> <span style="color: #718c00;">static</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">main</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">String</span><span style="color: #eab700;">[]</span> <span style="color: #eab700;">args</span><span style="color: #3e999f;">)</span> <span style="color: #718c00;">throws</span> <span style="color: #4271ae;">Exception</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #4271ae;">String</span> <span style="color: #eab700;">inputFile</span> = <span style="color: #4271ae;">null</span>;
-        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span> args.length&gt;0 <span style="color: #eab700;">)</span> inputFile = args<span style="color: #eab700;">[</span>0<span style="color: #eab700;">]</span>;
-        <span style="color: #4271ae;">InputStream</span> <span style="color: #eab700;">is</span> = System.in;
-        <span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span> inputFile!=<span style="color: #4271ae;">null</span> <span style="color: #eab700;">)</span> <span style="color: #eab700;">{</span>
-            is = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">FileInputStream</span><span style="color: #718c00;">(</span>inputFile<span style="color: #718c00;">)</span>;
-        <span style="color: #eab700;">}</span>
-        <span style="color: #4271ae;">ANTLRInputStream</span> <span style="color: #eab700;">input</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ANTLRInputStream</span><span style="color: #eab700;">(</span>is<span style="color: #eab700;">)</span>;
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">ExtractInterfaceTool</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">static</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">String</span><span style="color: #909183;">[]</span> <span style="color: #0084C8; font-weight: bold;">args</span><span style="color: #7388d6;">)</span> <span style="color: #A52A2A; font-weight: bold;">throws</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #2F8B58; font-weight: bold;">String</span> <span style="color: #0084C8; font-weight: bold;">inputFile</span> = <span style="color: #F5666D;">null</span>;
+        <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #909183;">(</span> args.length&gt;0 <span style="color: #909183;">)</span> inputFile = args<span style="color: #909183;">[</span>0<span style="color: #909183;">]</span>;
+        <span style="color: #2F8B58; font-weight: bold;">InputStream</span> <span style="color: #0084C8; font-weight: bold;">is</span> = System.in;
+        <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #909183;">(</span> inputFile!=<span style="color: #F5666D;">null</span> <span style="color: #909183;">)</span> <span style="color: #909183;">{</span>
+            is = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">FileInputStream</span><span style="color: #709870;">(</span>inputFile<span style="color: #709870;">)</span>;
+        <span style="color: #909183;">}</span>
+        <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span> <span style="color: #0084C8; font-weight: bold;">input</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span><span style="color: #909183;">(</span>is<span style="color: #909183;">)</span>;
 
-        <span style="color: #4271ae;">JavaLexer</span> <span style="color: #eab700;">lexer</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">JavaLexer</span><span style="color: #eab700;">(</span>input<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">CommonTokenStream</span> <span style="color: #eab700;">tokens</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">CommonTokenStream</span><span style="color: #eab700;">(</span>lexer<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">JavaParser</span> <span style="color: #eab700;">parser</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">JavaParser</span><span style="color: #eab700;">(</span>tokens<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">ParseTree</span> <span style="color: #eab700;">tree</span> = parser.compilationUnit<span style="color: #eab700;">()</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">parse</span>
+        <span style="color: #2F8B58; font-weight: bold;">JavaLexer</span> <span style="color: #0084C8; font-weight: bold;">lexer</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">JavaLexer</span><span style="color: #909183;">(</span>input<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span> <span style="color: #0084C8; font-weight: bold;">tokens</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span><span style="color: #909183;">(</span>lexer<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">JavaParser</span> <span style="color: #0084C8; font-weight: bold;">parser</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">JavaParser</span><span style="color: #909183;">(</span>tokens<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">ParseTree</span> <span style="color: #0084C8; font-weight: bold;">tree</span> = parser.compilationUnit<span style="color: #909183;">()</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">parse</span>
 
-        <span style="color: #4271ae;">ParseTreeWalker</span> <span style="color: #eab700;">walker</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ParseTreeWalker</span><span style="color: #eab700;">()</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">create standard walker</span>
-        <span style="color: #4271ae;">ExtractInterfaceListener</span> <span style="color: #eab700;">extractor</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ExtractInterfaceListener</span><span style="color: #eab700;">(</span>parser<span style="color: #eab700;">)</span>;
-        walker.walk<span style="color: #eab700;">(</span>extractor, tree<span style="color: #eab700;">)</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">initiate walk of tree with listener</span>
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+        <span style="color: #2F8B58; font-weight: bold;">ParseTreeWalker</span> <span style="color: #0084C8; font-weight: bold;">walker</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ParseTreeWalker</span><span style="color: #909183;">()</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">create standard walker</span>
+        <span style="color: #2F8B58; font-weight: bold;">ExtractInterfaceListener</span> <span style="color: #0084C8; font-weight: bold;">extractor</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ExtractInterfaceListener</span><span style="color: #909183;">(</span>parser<span style="color: #909183;">)</span>;
+        walker.walk<span style="color: #909183;">(</span>extractor, tree<span style="color: #909183;">)</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">initiate walk of tree with listener</span>
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -792,8 +791,8 @@ subtrees don’t get visited.
 执行下面的命令：
 </p>
 
-<div class="container">
-<pre><code class="shell">antlr4 Java.g4
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">antlr4 Java.g4
 javac Java*.java Extract*.java
 java ExtractInterfaceTool Demo.java
 </code></pre>
@@ -807,8 +806,8 @@ java ExtractInterfaceTool Demo.java
 <p>
 t.rows
 </p>
-<div class="container">
-<pre><code class="python">parrt   Terence Parr    101
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">parrt   Terence Parr    101
 tombu   Tom Burns       020
 bke     Kevin Edgar     008
 </code></pre>
@@ -818,32 +817,32 @@ bke     Kevin Edgar     008
 定义的 Rows.g4
 </p>
 
-<div class="container">
-<pre><code class="antlr"><span style="color: #0000ff; font-weight: bold;">grammar</span> <span style="color: #8b5a00;">Rows</span><span style="color: #000000; font-weight: bold;">;</span>
+<div class="org-src-container">
+<pre class="src src-antlr"><code class="antlr"><span style="color: #0000ff; font-weight: bold;">grammar</span> <span style="color: #8b5a00;">Rows</span><span style="color: #000000; font-weight: bold;">;</span>
 
-@<span style="color: #eab700;">parser</span>:<span style="color: #000000; font-weight: bold;">:</span><span style="color: #00008b;">members</span> <span style="color: #4d4d4c;">{</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">add members to generated RowsParser</span>
-    <span style="color: #4271ae;">int</span> <span style="color: #eab700;">col</span>;
-    <span style="color: #718c00;">public</span> <span style="color: #4271ae;">RowsParser</span>(<span style="color: #4271ae;">TokenStream</span> <span style="color: #eab700;">input</span>, <span style="color: #4271ae;">int</span> <span style="color: #eab700;">col</span>) <span style="color: #3e999f;">{</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">custom constructor</span>
-        <span style="color: #718c00;">this</span>(<span style="color: #4271ae;">input</span>);
-        <span style="color: #718c00;">this</span>.col = col;
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+@<span style="color: #0084C8; font-weight: bold;">parser</span>:<span style="color: #000000; font-weight: bold;">:</span><span style="color: #00008b;">members</span> <span style="color: #707183;">{</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">add members to generated RowsParser</span>
+    <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">col</span>;
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">RowsParser</span>(<span style="color: #2F8B58; font-weight: bold;">TokenStream</span> <span style="color: #0084C8; font-weight: bold;">input</span>, <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">col</span>) <span style="color: #7388d6;">{</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">custom constructor</span>
+        <span style="color: #A52A2A; font-weight: bold;">this</span>(<span style="color: #2F8B58; font-weight: bold;">input</span>);
+        <span style="color: #A52A2A; font-weight: bold;">this</span>.col = col;
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 
 <span style="color: #0000ff; font-weight: bold;">file</span><span style="color: #000000; font-weight: bold;">:</span> <span style="color: #000000; font-weight: bold;">(</span><span style="color: #00008b;">row</span> <span style="color: #8b5a00;">NL</span><span style="color: #000000; font-weight: bold;">)+</span> <span style="color: #000000; font-weight: bold;">;</span>
 
 <span style="color: #0000ff; font-weight: bold;">row</span>
-<span style="color: #0000ff; font-weight: bold;">locals</span> <span style="color: #4d4d4c;">[</span><span style="color: #4271ae;">int</span> i=0<span style="color: #4d4d4c;">]</span>
+<span style="color: #0000ff; font-weight: bold;">locals</span> <span style="color: #707183;">[</span><span style="color: #2F8B58; font-weight: bold;">int</span> i=0<span style="color: #707183;">]</span>
     <span style="color: #000000; font-weight: bold;">:</span> <span style="color: #000000; font-weight: bold;">(</span>   <span style="color: #8b5a00;">STUFF</span>
-          <span style="color: #4d4d4c;">{</span>
+          <span style="color: #707183;">{</span>
           <span style="color: #000000; font-weight: bold;">$i</span>++;
-          <span style="color: #718c00;">if</span> ( <span style="color: #000000; font-weight: bold;">$i</span> == col ) System.out.println(<span style="color: #000000; font-weight: bold;">$STUFF</span>.text);
-          <span style="color: #4d4d4c;">}</span>
+          <span style="color: #A52A2A; font-weight: bold;">if</span> ( <span style="color: #000000; font-weight: bold;">$i</span> == col ) System.out.println(<span style="color: #000000; font-weight: bold;">$STUFF</span>.text);
+          <span style="color: #707183;">}</span>
       <span style="color: #000000; font-weight: bold;">)+</span>
     <span style="color: #000000; font-weight: bold;">;</span>
 
-<span style="color: #0000ff; font-weight: bold;">TAB</span>  <span style="color: #000000; font-weight: bold;">:</span>  <span style="color: #3e999f;">'\t'</span> -&gt; <span style="color: #00008b;">skip</span> <span style="color: #000000; font-weight: bold;">;</span>   <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">match but don't pass to the parser</span>
-<span style="color: #0000ff; font-weight: bold;">NL</span>   <span style="color: #000000; font-weight: bold;">:</span>  <span style="color: #3e999f;">'\r'</span>? <span style="color: #3e999f;">'\n'</span> <span style="color: #000000; font-weight: bold;">;</span>     <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">match and pass to the parser</span>
-<span style="color: #0000ff; font-weight: bold;">STUFF</span><span style="color: #000000; font-weight: bold;">:</span>  <span style="color: #000000; font-weight: bold;">~</span><span style="color: #4d4d4c;">[</span>\t\r\n<span style="color: #4d4d4c;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span>     <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">match any chars except tab, newline</span>
+<span style="color: #0000ff; font-weight: bold;">TAB</span>  <span style="color: #000000; font-weight: bold;">:</span>  <span style="color: #4E9A06;">'\t'</span> -&gt; <span style="color: #00008b;">skip</span> <span style="color: #000000; font-weight: bold;">;</span>   <span style="color: #204A87;">// </span><span style="color: #204A87;">match but don't pass to the parser</span>
+<span style="color: #0000ff; font-weight: bold;">NL</span>   <span style="color: #000000; font-weight: bold;">:</span>  <span style="color: #4E9A06;">'\r'</span>? <span style="color: #4E9A06;">'\n'</span> <span style="color: #000000; font-weight: bold;">;</span>     <span style="color: #204A87;">// </span><span style="color: #204A87;">match and pass to the parser</span>
+<span style="color: #0000ff; font-weight: bold;">STUFF</span><span style="color: #000000; font-weight: bold;">:</span>  <span style="color: #000000; font-weight: bold;">~</span><span style="color: #707183;">[</span>\t\r\n<span style="color: #707183;">]</span>+ <span style="color: #000000; font-weight: bold;">;</span>     <span style="color: #204A87;">// </span><span style="color: #204A87;">match any chars except tab, newline</span>
 </code></pre>
 </div>
 
@@ -852,26 +851,26 @@ bke     Kevin Edgar     008
 然后 main 函数：
 </p>
 
-<div class="container">
-<pre><code class="java"><span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">ANTLRInputStream</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">CommonTokenStream</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">ParserRuleContext</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">org</span>.<span style="color: #4271ae;">antlr</span>.<span style="color: #4271ae;">v4</span>.<span style="color: #4271ae;">runtime</span>.<span style="color: #4271ae;">Token</span>;
+<div class="org-src-container">
+<pre class="src src-java"><code class="java"><span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">ParserRuleContext</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">org</span>.<span style="color: #F5666D;">antlr</span>.<span style="color: #F5666D;">v4</span>.<span style="color: #F5666D;">runtime</span>.<span style="color: #2F8B58; font-weight: bold;">Token</span>;
 
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">io</span>.<span style="color: #4271ae;">FileInputStream</span>;
-<span style="color: #718c00;">import</span> <span style="color: #4271ae;">java</span>.<span style="color: #4271ae;">io</span>.<span style="color: #4271ae;">InputStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">io</span>.<span style="color: #2F8B58; font-weight: bold;">FileInputStream</span>;
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #F5666D;">java</span>.<span style="color: #F5666D;">io</span>.<span style="color: #2F8B58; font-weight: bold;">InputStream</span>;
 
-<span style="color: #718c00;">public</span> <span style="color: #718c00;">class</span> <span style="color: #4271ae;">Col</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">public</span> <span style="color: #718c00;">static</span> <span style="color: #4271ae;">void</span> <span style="color: #f5871f;">main</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">String</span><span style="color: #eab700;">[]</span> <span style="color: #eab700;">args</span><span style="color: #3e999f;">)</span> <span style="color: #718c00;">throws</span> <span style="color: #4271ae;">Exception</span> <span style="color: #3e999f;">{</span>
-        <span style="color: #4271ae;">ANTLRInputStream</span> <span style="color: #eab700;">input</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">ANTLRInputStream</span><span style="color: #eab700;">(</span>System.in<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">RowsLexer</span> <span style="color: #eab700;">lexer</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">RowsLexer</span><span style="color: #eab700;">(</span>input<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">CommonTokenStream</span> <span style="color: #eab700;">tokens</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">CommonTokenStream</span><span style="color: #eab700;">(</span>lexer<span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">int</span> <span style="color: #eab700;">col</span> = Integer.valueOf<span style="color: #eab700;">(</span>args<span style="color: #718c00;">[</span>0<span style="color: #718c00;">]</span><span style="color: #eab700;">)</span>;
-        <span style="color: #4271ae;">RowsParser</span> <span style="color: #eab700;">parser</span> = <span style="color: #718c00;">new</span> <span style="color: #4271ae;">RowsParser</span><span style="color: #eab700;">(</span>tokens, col<span style="color: #eab700;">)</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">pass column number!</span>
-        parser.setBuildParseTree<span style="color: #eab700;">(</span><span style="color: #4271ae;">false</span><span style="color: #eab700;">)</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">don't waste time bulding a tree</span>
-        parser.file<span style="color: #eab700;">()</span>; <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">parse</span>
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">Col</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">static</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">String</span><span style="color: #909183;">[]</span> <span style="color: #0084C8; font-weight: bold;">args</span><span style="color: #7388d6;">)</span> <span style="color: #A52A2A; font-weight: bold;">throws</span> <span style="color: #2F8B58; font-weight: bold;">Exception</span> <span style="color: #7388d6;">{</span>
+        <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span> <span style="color: #0084C8; font-weight: bold;">input</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ANTLRInputStream</span><span style="color: #909183;">(</span>System.in<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">RowsLexer</span> <span style="color: #0084C8; font-weight: bold;">lexer</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">RowsLexer</span><span style="color: #909183;">(</span>input<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span> <span style="color: #0084C8; font-weight: bold;">tokens</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">CommonTokenStream</span><span style="color: #909183;">(</span>lexer<span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">col</span> = Integer.valueOf<span style="color: #909183;">(</span>args<span style="color: #709870;">[</span>0<span style="color: #709870;">]</span><span style="color: #909183;">)</span>;
+        <span style="color: #2F8B58; font-weight: bold;">RowsParser</span> <span style="color: #0084C8; font-weight: bold;">parser</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">RowsParser</span><span style="color: #909183;">(</span>tokens, col<span style="color: #909183;">)</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">pass column number!</span>
+        parser.setBuildParseTree<span style="color: #909183;">(</span><span style="color: #F5666D;">false</span><span style="color: #909183;">)</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">don't waste time bulding a tree</span>
+        parser.file<span style="color: #909183;">()</span>; <span style="color: #204A87;">// </span><span style="color: #204A87;">parse</span>
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -879,10 +878,10 @@ bke     Kevin Edgar     008
 所以执行：
 </p>
 
-<div class="container">
-<pre><code class="shell">antlr4 -no-listener Rows.g4
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">antlr4 -no-listener Rows.g4
 javac Rows*.java Col.java
-java Col 1 &lt; t.rows <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">will print first column</span>
+java Col 1 &lt; t.rows <span style="color: #204A87;"># </span><span style="color: #204A87;">will print first column</span>
 </code></pre>
 </div>
 </div>

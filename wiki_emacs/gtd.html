@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-20 Thu 09:34 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>GTD 实践方法</title>
@@ -179,7 +179,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css" />
+<link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css" /><link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>n
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -244,7 +244,12 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org8e8f465">GTD 理论</a></li>
 <li><a href="#org303c48a">工作流</a></li>
-<li><a href="#org8807889">基本的配置</a></li>
+<li><a href="#org8807889">基本的配置</a>
+<ul>
+<li><a href="#org899b0f6">配置代码</a></li>
+<li><a href="#orge06c2ef">相关说明</a></li>
+</ul>
+</li>
 <li><a href="#org882b475">进阶</a></li>
 <li><a href="#orgfa11341">移动端方案</a></li>
 <li><a href="#org895bf2b">常用快捷键</a>
@@ -345,11 +350,137 @@ agenda view。按 <code>C-c a a</code> 进入到 agenda view 中，它可以按�
 </div>
 <div id="outline-container-org8807889" class="outline-2">
 <h2 id="org8807889">基本的配置</h2>
+<div class="outline-text-2" id="text-org8807889">
+</div><div id="outline-container-org899b0f6" class="outline-3">
+<h3 id="org899b0f6">配置代码</h3>
+<div class="outline-text-3" id="text-org899b0f6">
+<div class="org-src-container">
+<pre class="src src-elisp"><code class="elisp"><span style="color: #204A87;">;; </span><span style="color: #204A87;">&#23450;&#20041; org-capture &#24555;&#25463;&#38190;&#20026; C-c c</span>
+<span style="color: #707183;">(</span>define-key global-map <span style="color: #4E9A06;">"</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">C</span><span style="color: #4E9A06;">-cc"</span> <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">org-capture</span><span style="color: #707183;">)</span>
+
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">&#23450;&#20041; agenda &#25991;&#20214;&#30340;&#20301;&#32622;</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> org-agenda-files <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"~/gtd/inbox.org"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">org-summary-todo</span> <span style="color: #7388d6;">(</span>n-done n-not-done<span style="color: #7388d6;">)</span>
+    <span style="color: #4E9A06;">"Switch entry to DONE when all subentries are done, to TODO otherwise."</span>
+    <span style="color: #7388d6;">(</span><span style="color: #A52A2A; font-weight: bold;">let</span> <span style="color: #909183;">(</span>org-log-done org-log-states<span style="color: #909183;">)</span>   <span style="color: #204A87;">; </span><span style="color: #204A87;">turn off logging</span>
+    <span style="color: #909183;">(</span>org-todo <span style="color: #709870;">(</span><span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #907373;">(</span>= n-not-done 0<span style="color: #907373;">)</span> <span style="color: #4E9A06;">"DONE"</span> <span style="color: #4E9A06;">"TODO"</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>add-hook <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">org-after-todo-statistics-hook</span> <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">org-summary-todo</span><span style="color: #707183;">)</span>
+
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">&#35774;&#32622;&#20851;&#38190;&#23383;&#30340;&#23383;&#20307;&#39068;&#33394;</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> org-todo-keyword-faces
+   <span style="color: #7388d6;">(</span><span style="color: #A52A2A; font-weight: bold;">quote</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span><span style="color: #4E9A06;">"TODO"</span> <span style="color: #A020F0;">:foreground</span> <span style="color: #4E9A06;">"red"</span> <span style="color: #A020F0;">:weight</span> bold<span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span><span style="color: #4E9A06;">"DONE"</span> <span style="color: #A020F0;">:foreground</span> <span style="color: #4E9A06;">"forest green"</span> <span style="color: #A020F0;">:weight</span> bold<span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span><span style="color: #4E9A06;">"DOING"</span> <span style="color: #A020F0;">:foreground</span> <span style="color: #4E9A06;">"yellow"</span> <span style="color: #A020F0;">:weight</span> bold<span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span><span style="color: #4E9A06;">"BLOCKED"</span> <span style="color: #A020F0;">:foreground</span> <span style="color: #4E9A06;">"red"</span> <span style="color: #A020F0;">:weight</span> bold<span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span><span style="color: #4E9A06;">"REVIEW"</span> <span style="color: #A020F0;">:foreground</span> <span style="color: #4E9A06;">"orange"</span> <span style="color: #A020F0;">:weight</span> bold<span style="color: #709870;">)</span>
+           <span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">Then each time you turn an entry from a TODO (not-done) state into any of the DONE</span>
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">states, a line &#8216;CLOSED: [timestamp]&#8217; will be inserted just after the headline.</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> org-log-done <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">time</span><span style="color: #707183;">)</span>
+
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">Change task state to STARTED when clocking in</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> org-clock-in-switch-to-state <span style="color: #4E9A06;">"DOING"</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> org-clock-out-switch-to-state <span style="color: #4E9A06;">"DONE"</span><span style="color: #707183;">)</span>
+
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">tags</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> org-tag-alist <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #7388d6;">(</span><span style="color: #909183;">(</span><span style="color: #4E9A06;">"@work"</span> . ?w<span style="color: #909183;">)</span> <span style="color: #909183;">(</span><span style="color: #4E9A06;">"@home"</span> . ?h<span style="color: #909183;">)</span>
+                   <span style="color: #909183;">(</span><span style="color: #4E9A06;">"@buy"</span> . ?b<span style="color: #909183;">)</span>
+                   <span style="color: #909183;">(</span><span style="color: #4E9A06;">"@bossurgent"</span> . ?u<span style="color: #909183;">)</span>
+                   <span style="color: #909183;">(</span><span style="color: #4E9A06;">"@study"</span> . ?s<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> org-capture-templates <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #7388d6;">(</span><span style="color: #909183;">(</span><span style="color: #4E9A06;">"t"</span> <span style="color: #4E9A06;">"Todo [inbox]"</span> entry
+                            <span style="color: #709870;">(</span>file+headline <span style="color: #4E9A06;">"~/gtd/inbox.org"</span> <span style="color: #4E9A06;">"Tasks"</span><span style="color: #709870;">)</span>
+                            <span style="color: #4E9A06;">"* TODO %i%?"</span><span style="color: #909183;">)</span>
+                           <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">&#35774;&#32622;&#29983;&#26085;</span>
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">In order to include entries from the Emacs diary into Org mode's agenda</span>
+
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> org-agenda-include-diary t
+   diary-file <span style="color: #7388d6;">(</span>locate-user-emacs-file <span style="color: #4E9A06;">"~/gtd/diary.org"</span><span style="color: #7388d6;">)</span>
+   org-agenda-diary-file <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">diary-file</span><span style="color: #707183;">)</span>
+
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">diary for chinese birthday</span>
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">https://emacs-china.org/t/topic/2119/14</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">my--diary-chinese-anniversary</span> <span style="color: #7388d6;">(</span>lunar-month lunar-day <span style="color: #2F8B58; font-weight: bold;">&amp;optional</span> year mark<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #A52A2A; font-weight: bold;">if</span> year
+      <span style="color: #909183;">(</span><span style="color: #A52A2A; font-weight: bold;">let*</span> <span style="color: #709870;">(</span><span style="color: #907373;">(</span>d-date <span style="color: #6276ba;">(</span>diary-make-date lunar-month lunar-day year<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+             <span style="color: #907373;">(</span>a-date <span style="color: #6276ba;">(</span>calendar-absolute-from-gregorian d-date<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+             <span style="color: #907373;">(</span>c-date <span style="color: #6276ba;">(</span>calendar-chinese-from-absolute a-date<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+             <span style="color: #907373;">(</span>cycle <span style="color: #6276ba;">(</span>car c-date<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+             <span style="color: #907373;">(</span>yy <span style="color: #6276ba;">(</span>cadr c-date<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+             <span style="color: #907373;">(</span>y <span style="color: #6276ba;">(</span>+ <span style="color: #858580;">(</span>* 100 cycle<span style="color: #858580;">)</span> yy<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+        <span style="color: #709870;">(</span>diary-chinese-anniversary lunar-month lunar-day y mark<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>diary-chinese-anniversary lunar-month lunar-day year mark<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">&#20013;&#22269;&#33410;&#20551;&#26085;</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">require</span> <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">cal-china-x</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> mark-holidays-in-calendar t<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> cal-china-x-important-holidays cal-china-x-chinese-holidays<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> cal-china-x-general-holidays <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #7388d6;">(</span><span style="color: #909183;">(</span>holiday-lunar 1 15 <span style="color: #4E9A06;">"&#20803;&#23477;&#33410;"</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> calendar-holidays
+   <span style="color: #7388d6;">(</span>append cal-china-x-important-holidays
+           cal-china-x-general-holidays
+           <span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">pomodoro &#36890;&#30693;&#21151;&#33021;</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">notify-osx</span> <span style="color: #7388d6;">(</span>title message<span style="color: #7388d6;">)</span>
+<span style="color: #7388d6;">(</span>call-process <span style="color: #4E9A06;">"terminal-notifier"</span>
+             nil 0 nil
+             <span style="color: #4E9A06;">"-group"</span> <span style="color: #4E9A06;">"Emacs"</span>
+             <span style="color: #4E9A06;">"-title"</span> title
+             <span style="color: #4E9A06;">"-message"</span> message
+             <span style="color: #204A87;">;;</span><span style="color: #204A87;">"-sender" "org.gnu.Emacs"</span>
+             <span style="color: #4E9A06;">"-activate"</span> <span style="color: #4E9A06;">"oeg.gnu.Emacs"</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">&#20219;&#21153;&#25552;&#37266;&#21151;&#33021;</span>
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">https://emacs-china.org/t/org-agenda/232</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">require</span> <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">appt</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> appt-time-msg-list nil<span style="color: #707183;">)</span>    <span style="color: #204A87;">;; </span><span style="color: #204A87;">clear existing appt list</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> appt-display-interval <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">10</span><span style="color: #707183;">)</span>  <span style="color: #204A87;">;; </span><span style="color: #204A87;">warn every 5 minutes from t - appt-message-warning-time</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span>
+ appt-message-warning-time <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">20</span>  <span style="color: #204A87;">;; </span><span style="color: #204A87;">send first warning 15 minutes before appointment</span>
+ appt-display-mode-line nil     <span style="color: #204A87;">;; </span><span style="color: #204A87;">don't show in the modeline</span>
+ appt-display-format <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">window</span><span style="color: #707183;">)</span>   <span style="color: #204A87;">;; </span><span style="color: #204A87;">pass warnings to the designated window function</span>
+<span style="color: #707183;">(</span>appt-activate 1<span style="color: #707183;">)</span>                <span style="color: #204A87;">;; </span><span style="color: #204A87;">activate appointment notification</span>
+<span style="color: #707183;">(</span>display-time<span style="color: #707183;">)</span>                   <span style="color: #204A87;">;; </span><span style="color: #204A87;">activate time display</span>
+
+<span style="color: #707183;">(</span>org-agenda-to-appt<span style="color: #707183;">)</span>             <span style="color: #204A87;">;; </span><span style="color: #204A87;">generate the appt list from org agenda files on emacs launch</span>
+<span style="color: #707183;">(</span>run-at-time <span style="color: #4E9A06;">"24:01"</span> 3600 <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">org-agenda-to-appt</span><span style="color: #707183;">)</span>           <span style="color: #204A87;">;; </span><span style="color: #204A87;">update appt list hourly</span>
+<span style="color: #707183;">(</span>add-hook <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">org-finalize-agenda-hook</span> <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">org-agenda-to-appt</span><span style="color: #707183;">)</span> <span style="color: #204A87;">;; </span><span style="color: #204A87;">update appt list on agenda view</span>
+
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">my-appt-display</span> <span style="color: #7388d6;">(</span>min-to-app new-time msg<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>notify-osx
+   <span style="color: #909183;">(</span>format <span style="color: #4E9A06;">"Appointment in %s minutes"</span> min-to-app<span style="color: #909183;">)</span>    <span style="color: #204A87;">;; </span><span style="color: #204A87;">passed to -title in terminal-notifier call</span>
+   <span style="color: #909183;">(</span>format <span style="color: #4E9A06;">"%s"</span> msg<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>                                <span style="color: #204A87;">;; </span><span style="color: #204A87;">passed to -message in terminal-notifier call</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> appt-disp-window-function <span style="color: #7388d6;">(</span><span style="color: #A52A2A; font-weight: bold;">function</span> my-appt-display<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge06c2ef" class="outline-3">
+<h3 id="orge06c2ef">相关说明</h3>
+<div class="outline-text-3" id="text-orge06c2ef">
+<p>
+diary 的格式类似如下，保存到 diary.org 文件中。注意结合上面的配置代码看下。
+</p>
+<pre class="example">
+* 小明的生日（假设是阴历 1999 年 10 月初一）
+%%(my--diary-chinese-anniversary 1 10 1999) 今天是我生日，我已经 %d%s 岁啦!!!
+</pre>
+</div>
+</div>
 </div>
 
 <div id="outline-container-org882b475" class="outline-2">
 <h2 id="org882b475">进阶</h2>
 <div class="outline-text-2" id="text-org882b475">
+<p>
+下面列出的功能在上面的配置中都有涉及，可以实验一下。
+</p>
 <ol class="org-ol">
 <li>中国农历
 <a href="https://github.com/xwl/cal-china-x">https://github.com/xwl/cal-china-x</a></li>
@@ -376,7 +507,7 @@ agenda view。按 <code>C-c a a</code> 进入到 agenda view 中，它可以按�
 <p><img src="./imgs/20190618_105853_63173gpp.png" alt="20190618_105853_63173gpp.png" width="40%" />
 </p>
 </div></li>
-<li>番茄时间</li>
+<li>番茄时间在 task 上执行 org-pomodoro 命令，会自动开启一个番茄时间为 25 分钟。</li>
 </ol>
 </div>
 </div>
@@ -398,6 +529,11 @@ files extentions 为 <code>inbox.org</code> (如果多个，仅仅设置一个.o
 
 <p>
 在手机端 capture 的事件也能非常及时的同步到电脑上，现在体验非常完美。
+</p>
+
+<p>
+beorg 还有一个非常好的功能是它支持可以通过写 Scheme 代码来实现一些高级设置，当然现在还不完善，支持的功能有限。简单的使用方法就是创建一个
+init.org 文件，使用代码块来包裹一下。同时将该文件和 inbox.org 放置到同一个目录里。
 </p>
 </div>
 </div>

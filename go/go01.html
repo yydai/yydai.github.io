@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:14 -->
+<!-- 2019-06-21 Fri 01:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>基本语法</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -304,8 +303,8 @@ Go 的主要类型有，var、const、type 和 func，分别对应变量、常�
 一个 Go 语言编写的程序对应一个或多个以.go 为文件后缀名的源文件中。每个源文件以包的声明语句开始，说明该源文件是属于哪个包。
 </p>
 
-<div class="container">
-<pre><code class="golang">const freezingF, boilingF = 32.0, 212.0
+<div class="org-src-container">
+<pre class="src src-golang"><code class="golang">const freezingF, boilingF = 32.0, 212.0
 </code></pre>
 </div>
 </div>
@@ -314,13 +313,13 @@ Go 的主要类型有，var、const、type 和 func，分别对应变量、常�
 <div id="outline-container-orged7b9be" class="outline-2">
 <h2 id="orged7b9be">变量</h2>
 <div class="outline-text-2" id="text-orged7b9be">
-<div class="container">
-<pre><code class="go"><span style="color: #718c00;">var</span> &#21464;&#37327;&#21517;&#23383; &#31867;&#22411; = &#34920;&#36798;&#24335;
+<div class="org-src-container">
+<pre class="src src-go"><code class="go"><span style="color: #A52A2A; font-weight: bold;">var</span> &#21464;&#37327;&#21517;&#23383; &#31867;&#22411; = &#34920;&#36798;&#24335;
 &#20854;&#20013;&#8220;&#31867;&#22411;&#8221;&#25110;&#8220;= &#34920;&#36798;&#24335;&#8221;&#20004;&#20010;&#37096;&#20998;&#21487;&#20197;&#30465;&#30053;&#20854;&#20013;&#30340;&#19968;&#20010;
 
-<span style="color: #718c00;">var</span> s string
-<span style="color: #718c00;">var</span> i, j , k, int
-<span style="color: #718c00;">var</span> b, f, s = <span style="color: #4271ae;">true</span>, 2, 3 <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">&#31867;&#22411;&#33021;&#22815;&#25512;&#21040;&#24471;&#20986;, bool, float64, string</span>
+<span style="color: #A52A2A; font-weight: bold;">var</span> s string
+<span style="color: #A52A2A; font-weight: bold;">var</span> i, j , k, int
+<span style="color: #A52A2A; font-weight: bold;">var</span> b, f, s = <span style="color: #F5666D;">true</span>, 2, 3 <span style="color: #204A87;">// </span><span style="color: #204A87;">&#31867;&#22411;&#33021;&#22815;&#25512;&#21040;&#24471;&#20986;, bool, float64, string</span>
 </code></pre>
 </div>
 </div>
@@ -337,12 +336,12 @@ Go 的主要类型有，var、const、type 和 func，分别对应变量、常�
 <p>
 var 形式的声明语句往往是用于需要显式指定变量类型地方，或者因为变量稍后会被重新赋值而初始值无关紧要的地方。
 </p>
-<div class="container">
-<pre><code class="go">i := 100
-<span style="color: #718c00;">var</span> boiling float64 = 100
-<span style="color: #718c00;">var</span> name <span style="color: #4d4d4c;">[]</span><span style="color: #4271ae;">string</span>
-<span style="color: #718c00;">var</span> err error
-<span style="color: #718c00;">var</span> p Point
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">i := 100
+<span style="color: #A52A2A; font-weight: bold;">var</span> boiling float64 = 100
+<span style="color: #A52A2A; font-weight: bold;">var</span> name <span style="color: #707183;">[]</span><span style="color: #2F8B58; font-weight: bold;">string</span>
+<span style="color: #A52A2A; font-weight: bold;">var</span> err error
+<span style="color: #A52A2A; font-weight: bold;">var</span> p Point
 
 i, j := 0, 1
 </code></pre>
@@ -352,16 +351,16 @@ i, j := 0, 1
 注意， ：= 是一个变量声明语句，而 = 是一个变量赋值语句。
 </p>
 
-<div class="container">
-<pre><code class="go">i, j = j, i
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">i, j = j, i
 </code></pre>
 </div>
 
 <p>
 简短变量声明语句也可以用函数的返回值来声明和初始化变量。
 </p>
-<div class="container">
-<pre><code class="go">f, err := os.<span style="color: #f5871f;">Open</span><span style="color: #4d4d4c;">(</span>name<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">f, err := os.<span style="color: #00578E; font-weight: bold;">Open</span><span style="color: #707183;">(</span>name<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>
@@ -370,15 +369,15 @@ i, j := 0, 1
 <div id="outline-container-orga5a0a12" class="outline-2">
 <h2 id="orga5a0a12">指针</h2>
 <div class="outline-text-2" id="text-orga5a0a12">
-<div class="container">
-<pre><code class="go"><span style="color: #718c00;">var</span> x int
-fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(</span>&amp;x<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go"><span style="color: #A52A2A; font-weight: bold;">var</span> x int
+fmt.<span style="color: #00578E; font-weight: bold;">Println</span><span style="color: #707183;">(</span>&amp;x<span style="color: #707183;">)</span>
 
 y := 1
 p := &amp;y
-fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(</span>*p<span style="color: #4d4d4c;">)</span>
+fmt.<span style="color: #00578E; font-weight: bold;">Println</span><span style="color: #707183;">(</span>*p<span style="color: #707183;">)</span>
 *p = 2
-fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(</span>y<span style="color: #4d4d4c;">)</span>
+fmt.<span style="color: #00578E; font-weight: bold;">Println</span><span style="color: #707183;">(</span>y<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -391,37 +390,37 @@ fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(<
 <p>
 下面是返回局部变量的地址
 </p>
-<div class="container">
-<pre><code class="go">    <span style="color: #718c00;">var</span> p = <span style="color: #f5871f;">f</span><span style="color: #4d4d4c;">()</span>
-    <span style="color: #718c00;">func</span> <span style="color: #f5871f;">f</span><span style="color: #4d4d4c;">()</span> *<span style="color: #4271ae;">int</span> <span style="color: #4d4d4c;">{</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    <span style="color: #A52A2A; font-weight: bold;">var</span> p = <span style="color: #00578E; font-weight: bold;">f</span><span style="color: #707183;">()</span>
+    <span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">f</span><span style="color: #707183;">()</span> *<span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #707183;">{</span>
     v := 1
-            <span style="color: #718c00;">return</span> &amp;v
-<span style="color: #4d4d4c;">}</span>
+            <span style="color: #A52A2A; font-weight: bold;">return</span> &amp;v
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
 <p>
 下面是一个通过 flag 来构建一个命令行工具的例子
 </p>
-<div class="container">
-<pre><code class="go"><span style="color: #718c00;">package</span> main
+<div class="org-src-container">
+<pre class="src src-go"><code class="go"><span style="color: #A52A2A; font-weight: bold;">package</span> main
 
-<span style="color: #718c00;">import</span> <span style="color: #4d4d4c;">(</span>
-    <span style="color: #3e999f;">"flag"</span>
-    <span style="color: #3e999f;">"fmt"</span>
-    <span style="color: #3e999f;">"strings"</span>
-<span style="color: #4d4d4c;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #707183;">(</span>
+    <span style="color: #4E9A06;">"flag"</span>
+    <span style="color: #4E9A06;">"fmt"</span>
+    <span style="color: #4E9A06;">"strings"</span>
+<span style="color: #707183;">)</span>
 
-<span style="color: #718c00;">var</span> n = flag.<span style="color: #f5871f;">Bool</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"n"</span>, <span style="color: #4271ae;">false</span>, <span style="color: #3e999f;">"omit trailing newline"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #718c00;">var</span> sep = flag.<span style="color: #f5871f;">String</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"s"</span>, <span style="color: #3e999f;">" "</span>, <span style="color: #3e999f;">"separator"</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">var</span> n = flag.<span style="color: #00578E; font-weight: bold;">Bool</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"n"</span>, <span style="color: #F5666D;">false</span>, <span style="color: #4E9A06;">"omit trailing newline"</span><span style="color: #707183;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">var</span> sep = flag.<span style="color: #00578E; font-weight: bold;">String</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"s"</span>, <span style="color: #4E9A06;">" "</span>, <span style="color: #4E9A06;">"separator"</span><span style="color: #707183;">)</span>
 
-<span style="color: #718c00;">func</span> <span style="color: #f5871f;">main</span><span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">{</span>
-    flag.<span style="color: #f5871f;">Parse</span><span style="color: #3e999f;">()</span>
-    fmt.<span style="color: #f5871f;">Print</span><span style="color: #3e999f;">(</span>strings.<span style="color: #f5871f;">Join</span><span style="color: #eab700;">(</span>flag.<span style="color: #f5871f;">Args</span><span style="color: #718c00;">()</span>, *sep<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
-    <span style="color: #718c00;">if</span> !*n <span style="color: #3e999f;">{</span>
-        fmt.<span style="color: #f5871f;">Println</span><span style="color: #eab700;">()</span>
-    <span style="color: #3e999f;">}</span>
-<span style="color: #4d4d4c;">}</span>
+<span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+    flag.<span style="color: #00578E; font-weight: bold;">Parse</span><span style="color: #7388d6;">()</span>
+    fmt.<span style="color: #00578E; font-weight: bold;">Print</span><span style="color: #7388d6;">(</span>strings.<span style="color: #00578E; font-weight: bold;">Join</span><span style="color: #909183;">(</span>flag.<span style="color: #00578E; font-weight: bold;">Args</span><span style="color: #709870;">()</span>, *sep<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span>
+    <span style="color: #A52A2A; font-weight: bold;">if</span> !*n <span style="color: #7388d6;">{</span>
+        fmt.<span style="color: #00578E; font-weight: bold;">Println</span><span style="color: #909183;">()</span>
+    <span style="color: #7388d6;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -438,15 +437,15 @@ fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(<
 new(T) 创建一个 T 类的匿名变量，初始化为 T 类型的零值，返回变量的指针，指针类型为 *T。
 </p>
 
-<div class="container">
-<pre><code class="go">    p := <span style="color: #8959a8;">new</span><span style="color: #4d4d4c;">(</span><span style="color: #4271ae;">int</span><span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">p *int &#31867;&#22411;</span>
-    fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(</span>*p<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">0</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    p := <span style="color: #A020F0;">new</span><span style="color: #707183;">(</span><span style="color: #2F8B58; font-weight: bold;">int</span><span style="color: #707183;">)</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">p *int &#31867;&#22411;</span>
+    fmt.<span style="color: #00578E; font-weight: bold;">Println</span><span style="color: #707183;">(</span>*p<span style="color: #707183;">)</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">0</span>
 
     *p = 2
 
-    <span style="color: #718c00;">func</span> <span style="color: #f5871f;">newInt</span><span style="color: #4d4d4c;">()</span> *<span style="color: #4271ae;">int</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">return</span> <span style="color: #8959a8;">new</span><span style="color: #3e999f;">(</span><span style="color: #4271ae;">int</span><span style="color: #3e999f;">)</span>
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">newInt</span><span style="color: #707183;">()</span> *<span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #A020F0;">new</span><span style="color: #7388d6;">(</span><span style="color: #2F8B58; font-weight: bold;">int</span><span style="color: #7388d6;">)</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 </div>
@@ -455,10 +454,10 @@ new(T) 创建一个 T 类的匿名变量，初始化为 T 类型的零值，返�
 <div id="outline-container-org44cc09b" class="outline-2">
 <h2 id="org44cc09b">赋值</h2>
 <div class="outline-text-2" id="text-org44cc09b">
-<div class="container">
-<pre><code class="go">medals := <span style="color: #4d4d4c;">[]</span><span style="color: #4271ae;">string</span><span style="color: #4d4d4c;">{</span><span style="color: #3e999f;">"gold"</span>, <span style="color: #3e999f;">"silver"</span>, <span style="color: #3e999f;">"bronze"</span><span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">medals := <span style="color: #707183;">[]</span><span style="color: #2F8B58; font-weight: bold;">string</span><span style="color: #707183;">{</span><span style="color: #4E9A06;">"gold"</span>, <span style="color: #4E9A06;">"silver"</span>, <span style="color: #4E9A06;">"bronze"</span><span style="color: #707183;">}</span>
 
-mdeals<span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</span> = <span style="color: #3e999f;">"gold"</span>
+mdeals<span style="color: #707183;">[</span>0<span style="color: #707183;">]</span> = <span style="color: #4E9A06;">"gold"</span>
 </code></pre>
 </div>
 </div>
@@ -470,10 +469,10 @@ mdeals<span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</sp
 <p>
 类型声明语句创建一个新的类型名称。
 </p>
-<div class="container">
-<pre><code class="go"><span style="color: #718c00;">type</span> <span style="color: #4271ae;">&#31867;&#22411;&#21517;&#23383;</span> <span style="color: #4271ae;">&#24213;&#23618;&#31867;&#22411;</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go"><span style="color: #A52A2A; font-weight: bold;">type</span> <span style="color: #2F8B58; font-weight: bold;">&#31867;&#22411;&#21517;&#23383;</span> <span style="color: #2F8B58; font-weight: bold;">&#24213;&#23618;&#31867;&#22411;</span>
 
-<span style="color: #718c00;">type</span> <span style="color: #4271ae;">Celsius</span> <span style="color: #4271ae;">float64</span>
+<span style="color: #A52A2A; font-weight: bold;">type</span> <span style="color: #2F8B58; font-weight: bold;">Celsius</span> <span style="color: #2F8B58; font-weight: bold;">float64</span>
 </code></pre>
 </div>
 </div>
@@ -495,50 +494,50 @@ mdeals<span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</sp
 如果我们有一个包，其目录结构类似 $GOPATH/src/xxx/xxx，那我们在 import 这个包的时候就写 xxxx/xxxx 部分就可以了。
 </p>
 
-<div class="container">
-<pre><code class="go">    <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">src/ch2/tempconv</span>
-    <span style="color: #718c00;">package</span> tempconv
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    <span style="color: #204A87;">// </span><span style="color: #204A87;">src/ch2/tempconv</span>
+    <span style="color: #A52A2A; font-weight: bold;">package</span> tempconv
 
-    <span style="color: #718c00;">import</span> <span style="color: #3e999f;">"fmt"</span>
+    <span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #4E9A06;">"fmt"</span>
 
-    <span style="color: #718c00;">type</span> <span style="color: #4271ae;">Celsius</span> <span style="color: #4271ae;">float64</span>
-<span style="color: #718c00;">type</span> <span style="color: #4271ae;">Fahrenheit</span> <span style="color: #4271ae;">float64</span>
+    <span style="color: #A52A2A; font-weight: bold;">type</span> <span style="color: #2F8B58; font-weight: bold;">Celsius</span> <span style="color: #2F8B58; font-weight: bold;">float64</span>
+<span style="color: #A52A2A; font-weight: bold;">type</span> <span style="color: #2F8B58; font-weight: bold;">Fahrenheit</span> <span style="color: #2F8B58; font-weight: bold;">float64</span>
 
-<span style="color: #718c00;">const</span> <span style="color: #4d4d4c;">(</span>
+<span style="color: #A52A2A; font-weight: bold;">const</span> <span style="color: #707183;">(</span>
     AbsoluteZeroC Celsius = -273.15
     FreezingC     Celsius = 0
     BoilingC      Celsius = 100
-<span style="color: #4d4d4c;">)</span>
+<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
 <p>
 另外还有一个文件
 </p>
-<div class="container">
-<pre><code class="go"><span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">src/ch2/conv.go</span>
-<span style="color: #718c00;">package</span> tempconv
-<span style="color: #718c00;">func</span> <span style="color: #f5871f;">CToF</span><span style="color: #4d4d4c;">(</span>c <span style="color: #4271ae;">Celsius</span><span style="color: #4d4d4c;">)</span> <span style="color: #4271ae;">Fahrenheit</span> <span style="color: #4d4d4c;">{</span> <span style="color: #718c00;">return</span> <span style="color: #f5871f;">Fahrenheit</span><span style="color: #3e999f;">(</span>c*9/5 + 32<span style="color: #3e999f;">)</span> <span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go"><span style="color: #204A87;">// </span><span style="color: #204A87;">src/ch2/conv.go</span>
+<span style="color: #A52A2A; font-weight: bold;">package</span> tempconv
+<span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">CToF</span><span style="color: #707183;">(</span>c <span style="color: #2F8B58; font-weight: bold;">Celsius</span><span style="color: #707183;">)</span> <span style="color: #2F8B58; font-weight: bold;">Fahrenheit</span> <span style="color: #707183;">{</span> <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #00578E; font-weight: bold;">Fahrenheit</span><span style="color: #7388d6;">(</span>c*9/5 + 32<span style="color: #7388d6;">)</span> <span style="color: #707183;">}</span>
 
-<span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">FToC converts a Fahrenheit temperature to Celsius.</span>
-<span style="color: #718c00;">func</span> <span style="color: #f5871f;">FToC</span><span style="color: #4d4d4c;">(</span>f <span style="color: #4271ae;">Fahrenheit</span><span style="color: #4d4d4c;">)</span> <span style="color: #4271ae;">Celsius</span> <span style="color: #4d4d4c;">{</span> <span style="color: #718c00;">return</span> <span style="color: #f5871f;">Celsius</span><span style="color: #3e999f;">(</span><span style="color: #eab700;">(</span>f - 32<span style="color: #eab700;">)</span> * 5 / 9<span style="color: #3e999f;">)</span> <span style="color: #4d4d4c;">}</span>
+<span style="color: #204A87;">// </span><span style="color: #204A87;">FToC converts a Fahrenheit temperature to Celsius.</span>
+<span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">FToC</span><span style="color: #707183;">(</span>f <span style="color: #2F8B58; font-weight: bold;">Fahrenheit</span><span style="color: #707183;">)</span> <span style="color: #2F8B58; font-weight: bold;">Celsius</span> <span style="color: #707183;">{</span> <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #00578E; font-weight: bold;">Celsius</span><span style="color: #7388d6;">(</span><span style="color: #909183;">(</span>f - 32<span style="color: #909183;">)</span> * 5 / 9<span style="color: #7388d6;">)</span> <span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
 <p>
 下面我们在任何地方建一个 main.go
 </p>
-<div class="container">
-<pre><code class="go">    <span style="color: #718c00;">package</span> main
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    <span style="color: #A52A2A; font-weight: bold;">package</span> main
 
-<span style="color: #718c00;">import</span> <span style="color: #4d4d4c;">(</span>
-    <span style="color: #3e999f;">"fmt"</span>
-    <span style="color: #3e999f;">"ch2/tempconv"</span>
-<span style="color: #4d4d4c;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #707183;">(</span>
+    <span style="color: #4E9A06;">"fmt"</span>
+    <span style="color: #4E9A06;">"ch2/tempconv"</span>
+<span style="color: #707183;">)</span>
 
-<span style="color: #718c00;">func</span> <span style="color: #f5871f;">main</span><span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">{</span>
-    fmt.<span style="color: #f5871f;">Printf</span><span style="color: #3e999f;">(</span><span style="color: #3e999f;">"%v\n"</span>, tempconv.AbsoluteZeroC<span style="color: #3e999f;">)</span>
-<span style="color: #4d4d4c;">}</span>
+<span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+    fmt.<span style="color: #00578E; font-weight: bold;">Printf</span><span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"%v\n"</span>, tempconv.AbsoluteZeroC<span style="color: #7388d6;">)</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -573,11 +572,11 @@ mdeals<span style="color: #4d4d4c;">[</span>0<span style="color: #4d4d4c;">]</sp
 <p>
 通常 Printf 格式化字符串包含多个%参数时将会包含对应相同数量的额外操作数，但是%之后的[1]副词告诉 Printf 函数再次使用第一个操作数。第二，%后的#副词告诉 Printf 在用%o、%x 或%X 输出时生成 0、0x 或 0X 前缀。
 </p>
-<div class="container">
-<pre><code class="go">    o := 0666
-fmt.<span style="color: #f5871f;">Printf</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"%d %[1]o %#[1]o\n"</span>, o<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">"438 666 0666"</span>
-x := <span style="color: #f5871f;">int64</span><span style="color: #4d4d4c;">(</span>0xdeadbeef<span style="color: #4d4d4c;">)</span>
-fmt.<span style="color: #f5871f;">Printf</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"%d %[1]x %#[1]x %#[1]X\n"</span>, x<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    o := 0666
+fmt.<span style="color: #00578E; font-weight: bold;">Printf</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"%d %[1]o %#[1]o\n"</span>, o<span style="color: #707183;">)</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">"438 666 0666"</span>
+x := <span style="color: #00578E; font-weight: bold;">int64</span><span style="color: #707183;">(</span>0xdeadbeef<span style="color: #707183;">)</span>
+fmt.<span style="color: #00578E; font-weight: bold;">Printf</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"%d %[1]x %#[1]x %#[1]X\n"</span>, x<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -586,13 +585,13 @@ fmt.<span style="color: #f5871f;">Printf</span><span style="color: #4d4d4c;">(</
 3735928559 deadbeef 0xdeadbeef 0XDEADBEEF
 </pre>
 
-<div class="container">
-<pre><code class="go">    ascii := <span style="color: #3e999f;">'a'</span>
-unicode := <span style="color: #3e999f;">'&#22269;'</span>
-newline := <span style="color: #3e999f;">'\n'</span>
-fmt.<span style="color: #f5871f;">Printf</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"%d %[1]c %[1]q\n"</span>, ascii<span style="color: #4d4d4c;">)</span>   <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">"97 a 'a'"</span>
-fmt.<span style="color: #f5871f;">Printf</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"%d %[1]c %[1]q\n"</span>, unicode<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">"22269 &#22269; '&#22269;'"</span>
-fmt.<span style="color: #f5871f;">Printf</span><span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">"%d %[1]q\n"</span>, newline<span style="color: #4d4d4c;">)</span>       <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">"10 '\n'"</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    ascii := <span style="color: #4E9A06;">'a'</span>
+unicode := <span style="color: #4E9A06;">'&#22269;'</span>
+newline := <span style="color: #4E9A06;">'\n'</span>
+fmt.<span style="color: #00578E; font-weight: bold;">Printf</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"%d %[1]c %[1]q\n"</span>, ascii<span style="color: #707183;">)</span>   <span style="color: #204A87;">// </span><span style="color: #204A87;">"97 a 'a'"</span>
+fmt.<span style="color: #00578E; font-weight: bold;">Printf</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"%d %[1]c %[1]q\n"</span>, unicode<span style="color: #707183;">)</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">"22269 &#22269; '&#22269;'"</span>
+fmt.<span style="color: #00578E; font-weight: bold;">Printf</span><span style="color: #707183;">(</span><span style="color: #4E9A06;">"%d %[1]q\n"</span>, newline<span style="color: #707183;">)</span>       <span style="color: #204A87;">// </span><span style="color: #204A87;">"10 '\n'"</span>
 </code></pre>
 </div>
 
@@ -617,39 +616,39 @@ fmt.<span style="color: #f5871f;">Printf</span><span style="color: #4d4d4c;">(</
 <p>
 一个原生字符串的形式是通过反引号来代替双引号，这种方式可以跨越多行。
 </p>
-<div class="container">
-<pre><code class="go"><span style="color: #718c00;">const</span> hello = <span style="color: #3e999f;">`Go is a tool for managing Go source code</span>
-<span style="color: #3e999f;">        Usage: `</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go"><span style="color: #A52A2A; font-weight: bold;">const</span> hello = <span style="color: #4E9A06;">`Go is a tool for managing Go source code</span>
+<span style="color: #4E9A06;">        Usage: `</span>
 </code></pre>
 </div>
 
 <p>
 下面是几个常见的函数
 </p>
-<div class="container">
-<pre><code class="go">    <span style="color: #718c00;">func</span> <span style="color: #f5871f;">HasPrefix</span><span style="color: #4d4d4c;">(</span>s, prefix <span style="color: #4271ae;">string</span><span style="color: #4d4d4c;">)</span> <span style="color: #4271ae;">bool</span> <span style="color: #4d4d4c;">{</span>
-            <span style="color: #718c00;">return</span> <span style="color: #8959a8;">len</span><span style="color: #3e999f;">(</span>s<span style="color: #3e999f;">)</span> &gt;= <span style="color: #8959a8;">len</span><span style="color: #3e999f;">(</span>prefix<span style="color: #3e999f;">)</span> &amp;&amp; s<span style="color: #3e999f;">[</span>:<span style="color: #8959a8;">len</span><span style="color: #eab700;">(</span>prefix<span style="color: #eab700;">)</span><span style="color: #3e999f;">]</span> == prefix
-    <span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    <span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">HasPrefix</span><span style="color: #707183;">(</span>s, prefix <span style="color: #2F8B58; font-weight: bold;">string</span><span style="color: #707183;">)</span> <span style="color: #2F8B58; font-weight: bold;">bool</span> <span style="color: #707183;">{</span>
+            <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #A020F0;">len</span><span style="color: #7388d6;">(</span>s<span style="color: #7388d6;">)</span> &gt;= <span style="color: #A020F0;">len</span><span style="color: #7388d6;">(</span>prefix<span style="color: #7388d6;">)</span> &amp;&amp; s<span style="color: #7388d6;">[</span>:<span style="color: #A020F0;">len</span><span style="color: #909183;">(</span>prefix<span style="color: #909183;">)</span><span style="color: #7388d6;">]</span> == prefix
+    <span style="color: #707183;">}</span>
 
 
-    <span style="color: #718c00;">func</span> <span style="color: #f5871f;">Contains</span><span style="color: #4d4d4c;">(</span>s, substr <span style="color: #4271ae;">string</span><span style="color: #4d4d4c;">)</span> <span style="color: #4271ae;">bool</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">for</span> i := 0; i &lt; <span style="color: #8959a8;">len</span><span style="color: #3e999f;">(</span>s<span style="color: #3e999f;">)</span>; i ++ <span style="color: #3e999f;">{</span>
-            <span style="color: #718c00;">if</span> <span style="color: #f5871f;">HasPrefix</span><span style="color: #eab700;">(</span>s<span style="color: #718c00;">[</span>i:<span style="color: #718c00;">]</span>, substr<span style="color: #eab700;">)</span> <span style="color: #eab700;">{</span>
-            <span style="color: #718c00;">return</span> <span style="color: #4271ae;">true</span>
-        <span style="color: #eab700;">}</span>
-    <span style="color: #3e999f;">}</span>
-            <span style="color: #718c00;">return</span> <span style="color: #4271ae;">false</span>
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">Contains</span><span style="color: #707183;">(</span>s, substr <span style="color: #2F8B58; font-weight: bold;">string</span><span style="color: #707183;">)</span> <span style="color: #2F8B58; font-weight: bold;">bool</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">for</span> i := 0; i &lt; <span style="color: #A020F0;">len</span><span style="color: #7388d6;">(</span>s<span style="color: #7388d6;">)</span>; i ++ <span style="color: #7388d6;">{</span>
+            <span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #00578E; font-weight: bold;">HasPrefix</span><span style="color: #909183;">(</span>s<span style="color: #709870;">[</span>i:<span style="color: #709870;">]</span>, substr<span style="color: #909183;">)</span> <span style="color: #909183;">{</span>
+            <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #F5666D;">true</span>
+        <span style="color: #909183;">}</span>
+    <span style="color: #7388d6;">}</span>
+            <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #F5666D;">false</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
 <p>
 一个字符串包含只读字节数组，但是字节 slice 是可以修改的
 </p>
-<div class="container">
-<pre><code class="go">s := <span style="color: #3e999f;">"abc"</span>
-b := <span style="color: #4d4d4c;">[]</span><span style="color: #f5871f;">bytes</span><span style="color: #4d4d4c;">(</span>s<span style="color: #4d4d4c;">)</span>
-s2 := <span style="color: #f5871f;">string</span><span style="color: #4d4d4c;">(</span>b<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">s := <span style="color: #4E9A06;">"abc"</span>
+b := <span style="color: #707183;">[]</span><span style="color: #00578E; font-weight: bold;">bytes</span><span style="color: #707183;">(</span>s<span style="color: #707183;">)</span>
+s2 := <span style="color: #00578E; font-weight: bold;">string</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
 </code></pre>
 </div>
 </div>
@@ -657,20 +656,20 @@ s2 := <span style="color: #f5871f;">string</span><span style="color: #4d4d4c;">(
 <div id="outline-container-org04089cd" class="outline-3">
 <h3 id="org04089cd">switch</h3>
 <div class="outline-text-3" id="text-org04089cd">
-<div class="container">
-<pre><code class="go">    <span style="color: #718c00;">switch</span> i <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">case</span> 1:
-            <span style="color: #718c00;">case</span> 2:
-<span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    <span style="color: #A52A2A; font-weight: bold;">switch</span> i <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">case</span> 1:
+            <span style="color: #A52A2A; font-weight: bold;">case</span> 2:
+<span style="color: #707183;">}</span>
 
-    <span style="color: #718c00;">switch</span> time.<span style="color: #f5871f;">Now</span><span style="color: #4d4d4c;">()</span>.<span style="color: #f5871f;">Weekday</span><span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">case</span> time.Saturday, time.Sunday:
-            <span style="color: #718c00;">default</span>:
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #A52A2A; font-weight: bold;">switch</span> time.<span style="color: #00578E; font-weight: bold;">Now</span><span style="color: #707183;">()</span>.<span style="color: #00578E; font-weight: bold;">Weekday</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">case</span> time.Saturday, time.Sunday:
+            <span style="color: #A52A2A; font-weight: bold;">default</span>:
+<span style="color: #707183;">}</span>
 
-    <span style="color: #718c00;">switch</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">case</span> t.<span style="color: #f5871f;">Hour</span><span style="color: #3e999f;">()</span> &lt; 12:
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #A52A2A; font-weight: bold;">switch</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">case</span> t.<span style="color: #00578E; font-weight: bold;">Hour</span><span style="color: #7388d6;">()</span> &lt; 12:
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 </div>
@@ -678,10 +677,10 @@ s2 := <span style="color: #f5871f;">string</span><span style="color: #4d4d4c;">(
 <div id="outline-container-org3811ca5" class="outline-3">
 <h3 id="org3811ca5">Arrays</h3>
 <div class="outline-text-3" id="text-org3811ca5">
-<div class="container">
-<pre><code class="go"><span style="color: #718c00;">var</span> a <span style="color: #4d4d4c;">[</span>5<span style="color: #4d4d4c;">]</span><span style="color: #4271ae;">int</span>
-b := <span style="color: #4d4d4c;">[</span>5<span style="color: #4d4d4c;">]</span><span style="color: #4271ae;">int</span><span style="color: #4d4d4c;">{</span>1, 2, 3, 4, 5<span style="color: #4d4d4c;">}</span>
-<span style="color: #718c00;">var</span> twoD <span style="color: #4d4d4c;">[</span>2<span style="color: #4d4d4c;">][</span>3<span style="color: #4d4d4c;">]</span><span style="color: #4271ae;">int</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go"><span style="color: #A52A2A; font-weight: bold;">var</span> a <span style="color: #707183;">[</span>5<span style="color: #707183;">]</span><span style="color: #2F8B58; font-weight: bold;">int</span>
+b := <span style="color: #707183;">[</span>5<span style="color: #707183;">]</span><span style="color: #2F8B58; font-weight: bold;">int</span><span style="color: #707183;">{</span>1, 2, 3, 4, 5<span style="color: #707183;">}</span>
+<span style="color: #A52A2A; font-weight: bold;">var</span> twoD <span style="color: #707183;">[</span>2<span style="color: #707183;">][</span>3<span style="color: #707183;">]</span><span style="color: #2F8B58; font-weight: bold;">int</span>
 </code></pre>
 </div>
 </div>
@@ -709,26 +708,26 @@ for k, v := range kvs {
 <div id="outline-container-org2c84c19" class="outline-3">
 <h3 id="org2c84c19">variadic function</h3>
 <div class="outline-text-3" id="text-org2c84c19">
-<div class="container">
-<pre><code class="go">    <span style="color: #718c00;">package</span> main
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    <span style="color: #A52A2A; font-weight: bold;">package</span> main
 
-<span style="color: #718c00;">import</span> <span style="color: #3e999f;">"fmt"</span>
+<span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #4E9A06;">"fmt"</span>
 
-<span style="color: #718c00;">func</span> <span style="color: #f5871f;">sum</span><span style="color: #4d4d4c;">(</span>nums ...<span style="color: #4271ae;">int</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
-    fmt.<span style="color: #f5871f;">Print</span><span style="color: #3e999f;">(</span>nums, <span style="color: #3e999f;">" "</span><span style="color: #3e999f;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">sum</span><span style="color: #707183;">(</span>nums ...<span style="color: #2F8B58; font-weight: bold;">int</span><span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
+    fmt.<span style="color: #00578E; font-weight: bold;">Print</span><span style="color: #7388d6;">(</span>nums, <span style="color: #4E9A06;">" "</span><span style="color: #7388d6;">)</span>
     total := 0
-    <span style="color: #718c00;">for</span> _, num := <span style="color: #718c00;">range</span> nums <span style="color: #3e999f;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">for</span> _, num := <span style="color: #A52A2A; font-weight: bold;">range</span> nums <span style="color: #7388d6;">{</span>
         total += num
-    <span style="color: #3e999f;">}</span>
-    fmt.<span style="color: #f5871f;">Println</span><span style="color: #3e999f;">(</span>total<span style="color: #3e999f;">)</span>
-<span style="color: #4d4d4c;">}</span>
-<span style="color: #718c00;">func</span> <span style="color: #f5871f;">main</span><span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">{</span>
+    <span style="color: #7388d6;">}</span>
+    fmt.<span style="color: #00578E; font-weight: bold;">Println</span><span style="color: #7388d6;">(</span>total<span style="color: #7388d6;">)</span>
+<span style="color: #707183;">}</span>
+<span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
 
-    <span style="color: #f5871f;">sum</span><span style="color: #3e999f;">(</span>1, 2<span style="color: #3e999f;">)</span>
-    <span style="color: #f5871f;">sum</span><span style="color: #3e999f;">(</span>1, 2, 3<span style="color: #3e999f;">)</span>
-    nums := <span style="color: #3e999f;">[]</span><span style="color: #4271ae;">int</span><span style="color: #3e999f;">{</span>1, 2, 3, 4<span style="color: #3e999f;">}</span>
-    <span style="color: #f5871f;">sum</span><span style="color: #3e999f;">(</span>nums...<span style="color: #3e999f;">)</span>
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #00578E; font-weight: bold;">sum</span><span style="color: #7388d6;">(</span>1, 2<span style="color: #7388d6;">)</span>
+    <span style="color: #00578E; font-weight: bold;">sum</span><span style="color: #7388d6;">(</span>1, 2, 3<span style="color: #7388d6;">)</span>
+    nums := <span style="color: #7388d6;">[]</span><span style="color: #2F8B58; font-weight: bold;">int</span><span style="color: #7388d6;">{</span>1, 2, 3, 4<span style="color: #7388d6;">}</span>
+    <span style="color: #00578E; font-weight: bold;">sum</span><span style="color: #7388d6;">(</span>nums...<span style="color: #7388d6;">)</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 </div>
@@ -736,11 +735,11 @@ for k, v := range kvs {
 <div id="outline-container-org3e4ece0" class="outline-3">
 <h3 id="org3e4ece0">struct</h3>
 <div class="outline-text-3" id="text-org3e4ece0">
-<div class="container">
-<pre><code class="go"><span style="color: #718c00;">type</span> <span style="color: #4271ae;">person</span> <span style="color: #718c00;">struct</span> <span style="color: #4d4d4c;">{</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go"><span style="color: #A52A2A; font-weight: bold;">type</span> <span style="color: #2F8B58; font-weight: bold;">person</span> <span style="color: #A52A2A; font-weight: bold;">struct</span> <span style="color: #707183;">{</span>
 name string
     age  int
-<span style="color: #4d4d4c;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 </div>
@@ -754,25 +753,25 @@ name string
 这个附加的参数会将函数附加到这种类型上。
 </p>
 
-<div class="container">
-<pre><code class="go">    <span style="color: #718c00;">package</span> main
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    <span style="color: #A52A2A; font-weight: bold;">package</span> main
 
-    <span style="color: #718c00;">import</span> <span style="color: #3e999f;">"math"</span>
+    <span style="color: #A52A2A; font-weight: bold;">import</span> <span style="color: #4E9A06;">"math"</span>
 
-    <span style="color: #718c00;">type</span> <span style="color: #4271ae;">Point</span> <span style="color: #718c00;">struct</span><span style="color: #4d4d4c;">{</span>x, y float64<span style="color: #4d4d4c;">}</span>
+    <span style="color: #A52A2A; font-weight: bold;">type</span> <span style="color: #2F8B58; font-weight: bold;">Point</span> <span style="color: #A52A2A; font-weight: bold;">struct</span><span style="color: #707183;">{</span>x, y float64<span style="color: #707183;">}</span>
 
-    <span style="color: #718c00;">func</span> <span style="color: #f5871f;">Distance</span><span style="color: #4d4d4c;">(</span>p, q <span style="color: #4271ae;">Point</span><span style="color: #4d4d4c;">)</span> <span style="color: #4271ae;">float64</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">return</span> math.<span style="color: #f5871f;">Hypot</span><span style="color: #3e999f;">(</span>q.x - p.x, q.y - q.y<span style="color: #3e999f;">)</span>
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">Distance</span><span style="color: #707183;">(</span>p, q <span style="color: #2F8B58; font-weight: bold;">Point</span><span style="color: #707183;">)</span> <span style="color: #2F8B58; font-weight: bold;">float64</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">return</span> math.<span style="color: #00578E; font-weight: bold;">Hypot</span><span style="color: #7388d6;">(</span>q.x - p.x, q.y - q.y<span style="color: #7388d6;">)</span>
+<span style="color: #707183;">}</span>
 
-    <span style="color: #718c00;">func</span> <span style="color: #4d4d4c;">(</span>p <span style="color: #4271ae;">Point</span><span style="color: #4d4d4c;">)</span> <span style="color: #f5871f;">Distance</span><span style="color: #4d4d4c;">(</span>q <span style="color: #4271ae;">Point</span><span style="color: #4d4d4c;">)</span> <span style="color: #4271ae;">float64</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">return</span> math.<span style="color: #f5871f;">Hypot</span><span style="color: #3e999f;">(</span>q.x - p.x, q.y - p.y<span style="color: #3e999f;">)</span>
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #707183;">(</span>p <span style="color: #2F8B58; font-weight: bold;">Point</span><span style="color: #707183;">)</span> <span style="color: #00578E; font-weight: bold;">Distance</span><span style="color: #707183;">(</span>q <span style="color: #2F8B58; font-weight: bold;">Point</span><span style="color: #707183;">)</span> <span style="color: #2F8B58; font-weight: bold;">float64</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">return</span> math.<span style="color: #00578E; font-weight: bold;">Hypot</span><span style="color: #7388d6;">(</span>q.x - p.x, q.y - p.y<span style="color: #7388d6;">)</span>
+<span style="color: #707183;">}</span>
 
-    p := <span style="color: #4271ae;">Point</span><span style="color: #4d4d4c;">{</span>1, 2<span style="color: #4d4d4c;">}</span>
-q := <span style="color: #4271ae;">Point</span><span style="color: #4d4d4c;">{</span>4, 6<span style="color: #4d4d4c;">}</span>
-fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(</span><span style="color: #f5871f;">Distance</span><span style="color: #3e999f;">(</span>p, q<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">"5", function call</span>
-    fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(</span>p.<span style="color: #f5871f;">Distance</span><span style="color: #3e999f;">(</span>q<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>  <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">"5", method call</span>
+    p := <span style="color: #2F8B58; font-weight: bold;">Point</span><span style="color: #707183;">{</span>1, 2<span style="color: #707183;">}</span>
+q := <span style="color: #2F8B58; font-weight: bold;">Point</span><span style="color: #707183;">{</span>4, 6<span style="color: #707183;">}</span>
+fmt.<span style="color: #00578E; font-weight: bold;">Println</span><span style="color: #707183;">(</span><span style="color: #00578E; font-weight: bold;">Distance</span><span style="color: #7388d6;">(</span>p, q<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> <span style="color: #204A87;">// </span><span style="color: #204A87;">"5", function call</span>
+    fmt.<span style="color: #00578E; font-weight: bold;">Println</span><span style="color: #707183;">(</span>p.<span style="color: #00578E; font-weight: bold;">Distance</span><span style="color: #7388d6;">(</span>q<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>  <span style="color: #204A87;">// </span><span style="color: #204A87;">"5", method call</span>
 </code></pre>
 </div>
 </div>
@@ -780,14 +779,14 @@ fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(<
 <div id="outline-container-org68a4ad3" class="outline-2">
 <h2 id="org68a4ad3">goroutines</h2>
 <div class="outline-text-2" id="text-org68a4ad3">
-<div class="container">
-<pre><code class="go">    <span style="color: #718c00;">func</span> <span style="color: #f5871f;">main</span><span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">go</span> <span style="color: #f5871f;">f</span><span style="color: #3e999f;">(</span><span style="color: #3e999f;">"goroutine"</span><span style="color: #3e999f;">)</span>
-            <span style="color: #718c00;">go</span> <span style="color: #718c00;">func</span><span style="color: #3e999f;">(</span>msg <span style="color: #4271ae;">string</span><span style="color: #3e999f;">)</span> <span style="color: #3e999f;">{</span>
-            <span style="color: #8e908c; font-style: italic;">//</span><span style="color: #8e908c; font-style: italic;">pass</span>
-    <span style="color: #3e999f;">}</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    <span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">main</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">go</span> <span style="color: #00578E; font-weight: bold;">f</span><span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"goroutine"</span><span style="color: #7388d6;">)</span>
+            <span style="color: #A52A2A; font-weight: bold;">go</span> <span style="color: #A52A2A; font-weight: bold;">func</span><span style="color: #7388d6;">(</span>msg <span style="color: #2F8B58; font-weight: bold;">string</span><span style="color: #7388d6;">)</span> <span style="color: #7388d6;">{</span>
+            <span style="color: #204A87;">//</span><span style="color: #204A87;">pass</span>
+    <span style="color: #7388d6;">}</span>
 
-<span style="color: #4d4d4c;">}</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 </div>
@@ -810,8 +809,8 @@ fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(<
 <p>
 测试函数必须导入 testing 包，名字必须以 Test 开头，可选的后缀名以大写字母开头
 </p>
-<div class="container">
-<pre><code class="go"><span style="color: #718c00;">func</span> <span style="color: #f5871f;">TestSin</span><span style="color: #4d4d4c;">(</span>t *<span style="color: #4271ae;">test.T</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{}</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go"><span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">TestSin</span><span style="color: #707183;">(</span>t *<span style="color: #2F8B58; font-weight: bold;">test.T</span><span style="color: #707183;">)</span> <span style="color: #707183;">{}</span>
 </code></pre>
 </div>
 </div>
@@ -822,16 +821,16 @@ fmt.<span style="color: #f5871f;">Println</span><span style="color: #4d4d4c;">(<
 <p>
 select 用法和 switch 有些类似。
 </p>
-<div class="container">
-<pre><code class="go">    timeout := <span style="color: #8959a8;">make</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">chan</span> <span style="color: #4271ae;">bool</span>, 1<span style="color: #4d4d4c;">)</span>
-    ch := <span style="color: #8959a8;">make</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">chan</span> <span style="color: #4271ae;">int</span><span style="color: #4d4d4c;">)</span>
-    <span style="color: #718c00;">select</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">case</span> &lt;- ch:
-            <span style="color: #718c00;">case</span> &lt;- timeout:
-                    fmt.<span style="color: #f5871f;">Println</span><span style="color: #3e999f;">(</span><span style="color: #3e999f;">"timeout"</span><span style="color: #3e999f;">)</span>
-            <span style="color: #718c00;">default</span>:
-                    fmt.<span style="color: #f5871f;">Println</span><span style="color: #3e999f;">(</span><span style="color: #3e999f;">"default case is running"</span><span style="color: #3e999f;">)</span>
-<span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    timeout := <span style="color: #A020F0;">make</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">chan</span> <span style="color: #2F8B58; font-weight: bold;">bool</span>, 1<span style="color: #707183;">)</span>
+    ch := <span style="color: #A020F0;">make</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">chan</span> <span style="color: #2F8B58; font-weight: bold;">int</span><span style="color: #707183;">)</span>
+    <span style="color: #A52A2A; font-weight: bold;">select</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">case</span> &lt;- ch:
+            <span style="color: #A52A2A; font-weight: bold;">case</span> &lt;- timeout:
+                    fmt.<span style="color: #00578E; font-weight: bold;">Println</span><span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"timeout"</span><span style="color: #7388d6;">)</span>
+            <span style="color: #A52A2A; font-weight: bold;">default</span>:
+                    fmt.<span style="color: #00578E; font-weight: bold;">Println</span><span style="color: #7388d6;">(</span><span style="color: #4E9A06;">"default case is running"</span><span style="color: #7388d6;">)</span>
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -847,13 +846,13 @@ select 用法和 switch 有些类似。
 defer 在 return 之前执行。
 所谓之前是在 return 之后，REΤ 之后。
 </p>
-<div class="container">
-<pre><code class="go">    <span style="color: #718c00;">func</span> <span style="color: #f5871f;">f</span><span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">(</span>result <span style="color: #4271ae;">int</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
-    <span style="color: #718c00;">defer</span> <span style="color: #718c00;">func</span><span style="color: #3e999f;">()</span> <span style="color: #3e999f;">{</span>
+<div class="org-src-container">
+<pre class="src src-go"><code class="go">    <span style="color: #A52A2A; font-weight: bold;">func</span> <span style="color: #00578E; font-weight: bold;">f</span><span style="color: #707183;">()</span> <span style="color: #707183;">(</span>result <span style="color: #2F8B58; font-weight: bold;">int</span><span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
+    <span style="color: #A52A2A; font-weight: bold;">defer</span> <span style="color: #A52A2A; font-weight: bold;">func</span><span style="color: #7388d6;">()</span> <span style="color: #7388d6;">{</span>
             result ++
-    <span style="color: #3e999f;">}()</span>
-            <span style="color: #718c00;">return</span> 0
-<span style="color: #4d4d4c;">}</span>
+    <span style="color: #7388d6;">}()</span>
+            <span style="color: #A52A2A; font-weight: bold;">return</span> 0
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 

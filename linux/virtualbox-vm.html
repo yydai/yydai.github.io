@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:10 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Virtual Box 虚拟机网络</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -291,9 +290,9 @@ virtualbox 如下选择 Bridged Adapter:
 <p>
 启动虚拟机，
 </p>
-<div class="container">
-<pre><code class="shell">ifconfig
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">eth0 &#22914;&#26524;&#27809;&#26377;&#21551;&#21160;</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">ifconfig
+<span style="color: #204A87;"># </span><span style="color: #204A87;">eth0 &#22914;&#26524;&#27809;&#26377;&#21551;&#21160;</span>
 vi /etc/sysconfig/network-scripts/ifcfg-eth0
 </code></pre>
 </div>
@@ -301,30 +300,30 @@ vi /etc/sysconfig/network-scripts/ifcfg-eth0
 <p>
 修改为
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">DEVICE</span>=eth0
-<span style="color: #eab700;">HWADDR</span>=08:00:27:A8:7A:0C
-<span style="color: #eab700;">TYPE</span>=Ethernet
-<span style="color: #eab700;">UUID</span>=6aaba853-c9d6-474f-a34d-4aece7d1b750
-<span style="color: #eab700;">ONBOOT</span>=yes <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#25913;&#20026; yes</span>
-<span style="color: #eab700;">NM_CONTROLLED</span>=yes
-<span style="color: #eab700;">BOOTPROTO</span>=dhcp   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#35774;&#20026; dhcp</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">DEVICE</span>=eth0
+<span style="color: #0084C8; font-weight: bold;">HWADDR</span>=08:00:27:A8:7A:0C
+<span style="color: #0084C8; font-weight: bold;">TYPE</span>=Ethernet
+<span style="color: #0084C8; font-weight: bold;">UUID</span>=6aaba853-c9d6-474f-a34d-4aece7d1b750
+<span style="color: #0084C8; font-weight: bold;">ONBOOT</span>=yes <span style="color: #204A87;"># </span><span style="color: #204A87;">&#25913;&#20026; yes</span>
+<span style="color: #0084C8; font-weight: bold;">NM_CONTROLLED</span>=yes
+<span style="color: #0084C8; font-weight: bold;">BOOTPROTO</span>=dhcp   <span style="color: #204A87;"># </span><span style="color: #204A87;">&#35774;&#20026; dhcp</span>
 </code></pre>
 </div>
 
 <p>
 保存后，执行
 </p>
-<div class="container">
-<pre><code class="shell">service network restart
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">service network restart
 </code></pre>
 </div>
 
 <p>
 现在应该就可以了，执行
 </p>
-<div class="container">
-<pre><code class="shell">route -n
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">route -n
 </code></pre>
 </div>
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:14 -->
+<!-- 2019-06-21 Fri 01:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git 常见问题总结</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -282,16 +281,16 @@ for the JavaScript code in this tag.
 <div id="outline-container-org0d372e7" class="outline-2">
 <h2 id="org0d372e7">1. 如果恢复到 git add 之前?</h2>
 <div class="outline-text-2" id="text-org0d372e7">
-<div class="container">
-<pre><code class="shell">git reset &lt;file&gt;
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git reset &lt;file&gt;
 </code></pre>
 </div>
 <p>
 将 file 变成 unstage 状态。
 </p>
 
-<div class="container">
-<pre><code class="shell">git reset
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git reset
 </code></pre>
 </div>
 <p>
@@ -303,16 +302,16 @@ for the JavaScript code in this tag.
 <div id="outline-container-org89febf5" class="outline-2">
 <h2 id="org89febf5">2. 如何更改还未提交的 commit? <a href="https://stackoverflow.com/questions/179123/how-to-modify-existing-unpushed-commits?rq=1">here</a></h2>
 <div class="outline-text-2" id="text-org89febf5">
-<div class="container">
-<pre><code class="shell">git commit --amend
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git commit --amend
 </code></pre>
 </div>
 
 <p>
 另一种方式是通过交互式 rebase：
 </p>
-<div class="container">
-<pre><code class="shell">// X is the number of commits to the last commit you want to be able to edit
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">// X is the number of commits to the last commit you want to be able to edit
 git rebase -i HEAD~X
 </code></pre>
 </div>
@@ -322,21 +321,21 @@ git rebase -i HEAD~X
 <div id="outline-container-orgb557579" class="outline-2">
 <h2 id="orgb557579">3. 恢复到 commit 之前，add 之后的状态? <a href="https://stackoverflow.com/questions/927358/how-do-i-undo-the-last-commits-in-git?rq=1">here</a></h2>
 <div class="outline-text-2" id="text-orgb557579">
-<div class="container">
-<pre><code class="shell">$ git commit -m <span style="color: #3e999f;">"Something terribly misguided"</span>              <span style="color: #4d4d4c;">(</span>1<span style="color: #4d4d4c;">)</span>
-$ git reset HEAD~                                           <span style="color: #4d4d4c;">(</span>2<span style="color: #4d4d4c;">)</span>
-&lt;&lt; edit files as necessary &gt;&gt;                               <span style="color: #4d4d4c;">(</span>3<span style="color: #4d4d4c;">)</span>
-<span style="color: #3e999f;">$ git add ...                                               (4)</span>
-<span style="color: #3e999f;"># &#25552;&#20132; commit&#65292;&#20351;&#29992;&#21407;&#26469;&#30340; commit message</span>
-<span style="color: #3e999f;">$ git commit -c ORIG_HEAD                                   (5)</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">$ git commit -m <span style="color: #4E9A06;">"Something terribly misguided"</span>              <span style="color: #707183;">(</span>1<span style="color: #707183;">)</span>
+$ git reset HEAD~                                           <span style="color: #707183;">(</span>2<span style="color: #707183;">)</span>
+&lt;&lt; edit files as necessary &gt;&gt;                               <span style="color: #707183;">(</span>3<span style="color: #707183;">)</span>
+<span style="color: #ffa54f;">$ git add ...                                               (4)</span>
+<span style="color: #ffa54f;"># &#25552;&#20132; commit&#65292;&#20351;&#29992;&#21407;&#26469;&#30340; commit message</span>
+<span style="color: #ffa54f;">$ git commit -c ORIG_HEAD                                   (5)</span>
 </code></pre>
 </div>
 
 <p>
 如果 commit message 写错了
 </p>
-<div class="container">
-<pre><code class="shell">git commit --amend
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git commit --amend
 </code></pre>
 </div>
 
@@ -348,14 +347,14 @@ $ git reset HEAD~                                           <span style="color: 
 另一种我认为比较好的方式
 </p>
 
-<div class="container">
-<pre><code class="shell"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#22238;&#21040; git add &#21518;&#65292;commit &#21069;</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell"><span style="color: #204A87;"># </span><span style="color: #204A87;">&#22238;&#21040; git add &#21518;&#65292;commit &#21069;</span>
 git reset --soft HEAD~1
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#22238;&#21040; git add &#20043;&#21069;</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#22238;&#21040; git add &#20043;&#21069;</span>
 git reset HEAD~1
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#36825;&#31181;&#26041;&#24335;&#27604;&#36739;&#21361;&#38505;&#12290;&#20250;&#25243;&#24323;&#25152;&#26377;&#30340;&#26356;&#25913;</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#36825;&#31181;&#26041;&#24335;&#27604;&#36739;&#21361;&#38505;&#12290;&#20250;&#25243;&#24323;&#25152;&#26377;&#30340;&#26356;&#25913;</span>
 git reset --hard HEAD~1
 </code></pre>
 </div>
@@ -368,10 +367,10 @@ git reset --hard HEAD~1
 <p>
 如果我们误删了某个 commit, 我们可以通过 git reflog 还原。
 </p>
-<div class="container">
-<pre><code class="shell">git reflog
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#25214;&#21040;&#35201;&#24674;&#22797;&#20301;&#32622;&#30340; commit sha</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">-b &#19981;&#24102;&#65292;&#40664;&#35748;&#24403;&#21069; branch</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git reflog
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#25214;&#21040;&#35201;&#24674;&#22797;&#20301;&#32622;&#30340; commit sha</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">-b &#19981;&#24102;&#65292;&#40664;&#35748;&#24403;&#21069; branch</span>
 git checkout -b newBranch &lt;sha&gt;
 </code></pre>
 </div>
@@ -384,18 +383,18 @@ git checkout -b newBranch &lt;sha&gt;
 <p>
 创建新的 branch
 </p>
-<div class="container">
-<pre><code class="shell">git checkout -b &lt;nb&gt;
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git checkout -b &lt;nb&gt;
 </code></pre>
 </div>
 
 <p>
 重新命名 branch
 </p>
-<div class="container">
-<pre><code class="shell">git branch -m &lt;old branch name&gt; &lt;new&gt;
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git branch -m &lt;old branch name&gt; &lt;new&gt;
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">current branch</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">current branch</span>
 git branch -m &lt;new&gt;
 </code></pre>
 </div>
@@ -403,11 +402,11 @@ git branch -m &lt;new&gt;
 <p>
 删除本地或远程分支
 </p>
-<div class="container">
-<pre><code class="shell"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">delete origin</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell"><span style="color: #204A87;"># </span><span style="color: #204A87;">delete origin</span>
 git push -d origin &lt;branch_name&gt;
 git push origin :&lt;branch_name or tag_name&gt;
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">delete local</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">delete local</span>
 git branch -d &lt;branch_name&gt;
 </code></pre>
 </div>
@@ -433,11 +432,11 @@ git branch -d &lt;branch_name&gt;
 <p>
 我们可以按照如下的模式去书写提交信息：
 </p>
-<div class="container">
-<pre><code class="python">Present-tense summary under 50 characters
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">Present-tense summary under 50 characters
 
-* More information about commit <span style="color: #4d4d4c;">(</span>under 72 characters<span style="color: #4d4d4c;">)</span>.
-* More information about commit <span style="color: #4d4d4c;">(</span>under 72 characters<span style="color: #4d4d4c;">)</span>.
+* More information about commit <span style="color: #707183;">(</span>under 72 characters<span style="color: #707183;">)</span>.
+* More information about commit <span style="color: #707183;">(</span>under 72 characters<span style="color: #707183;">)</span>.
 
 http://project.management-system.com/ticket/123
 </code></pre>
@@ -455,8 +454,8 @@ http://project.management-system.com/ticket/123
 <p>
 如果我们的 commit 历史
 </p>
-<div class="container">
-<pre><code class="python">* b1b8189 - <span style="color: #4d4d4c;">(</span>HEAD -&gt; master<span style="color: #4d4d4c;">)</span> Commit-3
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">* b1b8189 - <span style="color: #707183;">(</span>HEAD -&gt; master<span style="color: #707183;">)</span> Commit-3
 * 5756e15 - Commit-2
 * e7ba81d - Commit-1
 * 5d39ff2 - Commit-0
@@ -466,8 +465,8 @@ http://project.management-system.com/ticket/123
 <p>
 现在我们想合并前三个，我们可以使用如下命令：
 </p>
-<div class="container">
-<pre><code class="shell">git reabse -i 5d39ff2
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git reabse -i 5d39ff2
 
 &#25110;&#32773;
 git rebase -i HEAD~3
@@ -477,8 +476,8 @@ git rebase -i HEAD~3
 <p>
 然后进入交互界面
 </p>
-<div class="container">
-<pre><code class="python">pick e7ba81d Commit-1
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">pick e7ba81d Commit-1
 pick 5756e15 Commit-2
 pick b1b8189 Commit-3
 </code></pre>
@@ -487,8 +486,8 @@ pick b1b8189 Commit-3
 <p>
 改成如下
 </p>
-<div class="container">
-<pre><code class="python">pick e7ba81d Commit-1
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">pick e7ba81d Commit-1
 s 5756e15 Commit-2
 s b1b8189 Commit-3
 </code></pre>
@@ -498,10 +497,10 @@ s b1b8189 Commit-3
 保存退出后，会进入一个新的界面，这里我们填写合并后的 commit message。
 这里还有一种更加简单的方式：
 </p>
-<div class="container">
-<pre><code class="shell">1. git reset HEAD~3
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">1. git reset HEAD~3
 2. git add .
-3. git commit -m <span style="color: #3e999f;">""</span>
+3. git commit -m <span style="color: #4E9A06;">""</span>
 4. git push --force
 </code></pre>
 </div>
@@ -541,8 +540,8 @@ s b1b8189 Commit-3
 <p>
 这是就需要用 stash 临时保存变更，可以通过
 </p>
-<div class="container">
-<pre><code class="shell">git stash list
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git stash list
 </code></pre>
 </div>
 <p>
@@ -553,24 +552,24 @@ s b1b8189 Commit-3
 如果想返回的临时保存的内容
 </p>
 
-<div class="container">
-<pre><code class="shell">git stash apply stash@<span style="color: #4d4d4c;">{</span>1<span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git stash apply stash@<span style="color: #707183;">{</span>1<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
 <p>
 使用 git stash pop 要好些，否则你还得需要手动 drop。
 </p>
-<div class="container">
-<pre><code class="python">git stash drop stash@<span style="color: #4d4d4c;">{</span>1<span style="color: #4d4d4c;">}</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python">git stash drop stash@<span style="color: #707183;">{</span>1<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
 <p>
 这里还有个问题，当一个文件是新建的，也就是 untracked 的状态，是不能用 git stash 的，而是
 </p>
-<div class="container">
-<pre><code class="shell">git stash save -u
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git stash save -u
 </code></pre>
 </div>
 </div>
@@ -583,8 +582,8 @@ s b1b8189 Commit-3
 标签有两种，轻标签和注解标签。
 </p>
 
-<div class="container">
-<pre><code class="shell"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#22312; HEAD &#25351;&#21521;&#30340;&#25552;&#20132;&#37324;&#28155;&#21152;&#21517;&#20026; apple &#30340;&#26631;&#31614;</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell"><span style="color: #204A87;"># </span><span style="color: #204A87;">&#22312; HEAD &#25351;&#21521;&#30340;&#25552;&#20132;&#37324;&#28155;&#21152;&#21517;&#20026; apple &#30340;&#26631;&#31614;</span>
 git tag &lt;tag-name&gt;
 </code></pre>
 </div>
@@ -592,13 +591,13 @@ git tag &lt;tag-name&gt;
 <p>
 若要添加注解标签，可以在 tag 命令指定 -a 选项执行。执行后会启动编辑区，请输入注解，也可以指定-m 选项来添加注解。
 </p>
-<div class="container">
-<pre><code class="shell">git tag -a &lt;tagname&gt;
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git tag -a &lt;tagname&gt;
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">&#22312; HEAD &#25351;&#21521;&#30340;&#25552;&#20132;&#37324;&#28155;&#21152;&#21517;&#20026; banana &#30340;&#26631;&#31614;</span>
-git tag -am <span style="color: #3e999f;">"&#36830;&#29492;&#23376;&#37117;&#25026;&#30340; Git"</span> banana
+<span style="color: #204A87;"># </span><span style="color: #204A87;">&#22312; HEAD &#25351;&#21521;&#30340;&#25552;&#20132;&#37324;&#28155;&#21152;&#21517;&#20026; banana &#30340;&#26631;&#31614;</span>
+git tag -am <span style="color: #4E9A06;">"&#36830;&#29492;&#23376;&#37117;&#25026;&#30340; Git"</span> banana
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">list tags</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">list tags</span>
 git tag -n
 </code></pre>
 </div>
@@ -606,8 +605,8 @@ git tag -n
 <p>
 删除标签
 </p>
-<div class="container">
-<pre><code class="shell">git tag -d &lt;tagname&gt;
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git tag -d &lt;tagname&gt;
 </code></pre>
 </div>
 
@@ -619,8 +618,8 @@ origin [tagname] 即可。
 <p>
 如果要一次推送所有本地新增的标签上去，可以使用 &#x2013;tags 选项。
 </p>
-<div class="container">
-<pre><code class="shell">git push origin --tags
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git push origin --tags
 </code></pre>
 </div>
 </div>
@@ -647,8 +646,8 @@ origin [tagname] 即可。
 <p>
 切换到 master 分支后，指定 &#x2013;squash 选项执行 merge。
 </p>
-<div class="container">
-<pre><code class="shell">git checkout master
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git checkout master
 git merge --squash issue1
 </code></pre>
 </div>
@@ -673,8 +672,8 @@ git merge --squash issue1
 <p>
 我们可以把其他分支的 commit 移到当前分支
 </p>
-<div class="container">
-<pre><code class="shell">git cherry-pick 5414a3f
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git cherry-pick 5414a3f
 </code></pre>
 </div>
 </div>
@@ -699,16 +698,16 @@ git merge --squash issue1
 <p>
 直接
 </p>
-<div class="container">
-<pre><code class="shell">git stash apply 766307b21bc775b37f2d56a836dffaf8f7da90aa
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git stash apply 766307b21bc775b37f2d56a836dffaf8f7da90aa
 </code></pre>
 </div>
 
 <p>
 如果不知道了 sha，也可以找到比较麻烦些
 </p>
-<div class="container">
-<pre><code class="shell">git fsck --unreachable
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git fsck --unreachable
 </code></pre>
 </div>
 
@@ -716,8 +715,8 @@ git merge --squash issue1
 这样会列出一些 unreachable 的 node。
 我们通过
 </p>
-<div class="container">
-<pre><code class="shell">git show &lt;sha&gt;
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git show &lt;sha&gt;
 </code></pre>
 </div>
 
@@ -738,8 +737,8 @@ git merge --squash issue1
 <li><a href="https://www.git-tower.com/learn/git/faq/detached-head-when-checkout-commit">What's a "detached HEAD" in Git?</a></li>
 </ul>
 
-<div class="container">
-<pre><code class="shell"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">instead checkout a branch, we can also checkout a commit</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell"><span style="color: #204A87;"># </span><span style="color: #204A87;">instead checkout a branch, we can also checkout a commit</span>
 git checkout 56a4e5c08
 </code></pre>
 </div>
@@ -749,8 +748,8 @@ git checkout 56a4e5c08
 如果不行丢失这些东西，可以建一个 branch
 </p>
 
-<div class="container">
-<pre><code class="shell">git checkout -b &lt;new-branch-name&gt;
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git checkout -b &lt;new-branch-name&gt;
 </code></pre>
 </div>
 </div>
@@ -762,23 +761,23 @@ git checkout 56a4e5c08
 <p>
 执行如下的命令
 </p>
-<div class="container">
-<pre><code class="shell">ssh-add &lt;id_rsa&gt;
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">ssh-add &lt;id_rsa&gt;
 </code></pre>
 </div>
 <p>
 如果提示 Could not open a connection to your authentication agent, 先执行
 </p>
-<div class="container">
-<pre><code class="shell"><span style="color: #8959a8;">eval</span> <span style="color: #8959a8;">`ssh-agent`</span>
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell"><span style="color: #A020F0;">eval</span> <span style="color: #ff00ff;">`ssh-agent`</span>
 </code></pre>
 </div>
 
 <p>
 然后重新执行上面的命令，可以通过下面的命令看是否添加上
 </p>
-<div class="container">
-<pre><code class="shell">ssh-add -l
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">ssh-add -l
 </code></pre>
 </div>
 </div>
@@ -786,23 +785,23 @@ git checkout 56a4e5c08
 <div id="outline-container-orgcbf2503" class="outline-2">
 <h2 id="orgcbf2503">18. 比较两个文件的不同(<a href="http://blog.firsthand.ca/2011/05/compare-git-branches-compare-two-files.html">compare</a>)</h2>
 <div class="outline-text-2" id="text-orgcbf2503">
-<div class="container">
-<pre><code class="shell">git difftool branch1:config/environment.rb branch2:config/environment.rb
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">git difftool branch1:config/environment.rb branch2:config/environment.rb
 </code></pre>
 </div>
 <p>
 如果在 mac 上遇到类似下面的问题：
 </p>
-<div class="container">
-<pre><code class="shell">xcode-select: error: tool <span style="color: #3e999f;">'opendiff'</span> requires Xcode, but active developer directory <span style="color: #3e999f;">'/Library/Developer/CommandLineTools'</span> is a command line tools instance
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">xcode-select: error: tool <span style="color: #4E9A06;">'opendiff'</span> requires Xcode, but active developer directory <span style="color: #4E9A06;">'/Library/Developer/CommandLineTools'</span> is a command line tools instance
 </code></pre>
 </div>
 
 <p>
 执行下面的命令：
 </p>
-<div class="container">
-<pre><code class="shell">sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+<div class="org-src-container">
+<pre class="src src-shell"><code class="shell">sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 </code></pre>
 </div>
 </div>

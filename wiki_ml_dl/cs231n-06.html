@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>神经网络</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -296,14 +295,14 @@ for the JavaScript code in this tag.
 <p>
 一个神经元前向传播的实例代码如下
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">class</span> <span style="color: #4271ae;">Neuron</span><span style="color: #4d4d4c;">(</span><span style="color: #8959a8;">object</span><span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">...</span>
-<span style="color: #718c00;">def</span> <span style="color: #f5871f;">forward</span><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">self</span>, inputs<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #8959a8;">""" assume inputs and weights are 1-D numpy arrays and bias is a number """</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #eab700;">cell_body_sum</span> = np.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">(</span>inputs * <span style="color: #718c00;">self</span>.weights<span style="color: #4d4d4c;">)</span> + <span style="color: #718c00;">self</span>.bias
-<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #eab700;">firing_rate</span> = 1.0 / <span style="color: #4d4d4c;">(</span>1.0 + math.exp<span style="color: #3e999f;">(</span>-cell_body_sum<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">sigmoid activation function</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span> <span style="color: #718c00;">return</span> firing_rate
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">Neuron</span><span style="color: #707183;">(</span><span style="color: #A020F0;">object</span><span style="color: #707183;">)</span>:
+<span style="color: #204A87;"># </span><span style="color: #204A87;">...</span>
+<span style="color: #A52A2A; font-weight: bold;">def</span> <span style="color: #00578E; font-weight: bold;">forward</span><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">self</span>, inputs<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span> <span style="color: #4E9A06;">""" assume inputs and weights are 1-D numpy arrays and bias is a number """</span>
+<span style="background-color: #E6E6E6;"> </span> <span style="color: #0084C8; font-weight: bold;">cell_body_sum</span> = np.<span style="color: #A020F0;">sum</span><span style="color: #707183;">(</span>inputs * <span style="color: #A52A2A; font-weight: bold;">self</span>.weights<span style="color: #707183;">)</span> + <span style="color: #A52A2A; font-weight: bold;">self</span>.bias
+<span style="background-color: #E6E6E6;"> </span> <span style="color: #0084C8; font-weight: bold;">firing_rate</span> = 1.0 / <span style="color: #707183;">(</span>1.0 + math.exp<span style="color: #7388d6;">(</span>-cell_body_sum<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">sigmoid activation function</span>
+<span style="background-color: #E6E6E6;"> </span> <span style="color: #A52A2A; font-weight: bold;">return</span> firing_rate
 </code></pre>
 </div>
 
@@ -440,33 +439,33 @@ Leaky ReLUs are one attempt to fix the “dying ReLU” problem. Instead of the 
 <p>
 首先是 Sigmoid 的实现
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #718c00;">import</span> numpy <span style="color: #718c00;">as</span> np
-<span style="color: #718c00;">from</span> numpy.random <span style="color: #718c00;">import</span> randn
-<span style="color: #718c00;">import</span> matplotlib.pyplot <span style="color: #718c00;">as</span> plt
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #A52A2A; font-weight: bold;">import</span> numpy <span style="color: #A52A2A; font-weight: bold;">as</span> np
+<span style="color: #A52A2A; font-weight: bold;">from</span> numpy.random <span style="color: #A52A2A; font-weight: bold;">import</span> randn
+<span style="color: #A52A2A; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #A52A2A; font-weight: bold;">as</span> plt
 
-<span style="color: #eab700;">N</span>, <span style="color: #eab700;">D_in</span>, <span style="color: #eab700;">H</span>, <span style="color: #eab700;">D_out</span> = 64, 1000, 100, 10
-<span style="color: #eab700;">x</span>, <span style="color: #eab700;">y</span> = randn<span style="color: #4d4d4c;">(</span>N, D_in<span style="color: #4d4d4c;">)</span>, randn<span style="color: #4d4d4c;">(</span>N, D_out<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">w1</span>, <span style="color: #eab700;">w2</span> = randn<span style="color: #4d4d4c;">(</span>D_in, H<span style="color: #4d4d4c;">)</span>, randn<span style="color: #4d4d4c;">(</span>H, D_out<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">loss_col</span> = <span style="color: #4d4d4c;">[]</span>
+<span style="color: #0084C8; font-weight: bold;">N</span>, <span style="color: #0084C8; font-weight: bold;">D_in</span>, <span style="color: #0084C8; font-weight: bold;">H</span>, <span style="color: #0084C8; font-weight: bold;">D_out</span> = 64, 1000, 100, 10
+<span style="color: #0084C8; font-weight: bold;">x</span>, <span style="color: #0084C8; font-weight: bold;">y</span> = randn<span style="color: #707183;">(</span>N, D_in<span style="color: #707183;">)</span>, randn<span style="color: #707183;">(</span>N, D_out<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">w1</span>, <span style="color: #0084C8; font-weight: bold;">w2</span> = randn<span style="color: #707183;">(</span>D_in, H<span style="color: #707183;">)</span>, randn<span style="color: #707183;">(</span>H, D_out<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">loss_col</span> = <span style="color: #707183;">[]</span>
 
-<span style="color: #718c00;">for</span> t <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>2000<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">h</span> = 1 / <span style="color: #4d4d4c;">(</span>1 + np.exp<span style="color: #3e999f;">(</span>-x.dot<span style="color: #eab700;">(</span>w1<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">y_pred</span> = h.dot<span style="color: #4d4d4c;">(</span>w2<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">loss</span> = np.square<span style="color: #4d4d4c;">(</span>y_pred - y<span style="color: #4d4d4c;">)</span>.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   loss_col.append<span style="color: #4d4d4c;">(</span>loss<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>t, loss, y_pred<span style="color: #4d4d4c;">)</span>
+<span style="color: #A52A2A; font-weight: bold;">for</span> t <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span>2000<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">h</span> = 1 / <span style="color: #707183;">(</span>1 + np.exp<span style="color: #7388d6;">(</span>-x.dot<span style="color: #909183;">(</span>w1<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">y_pred</span> = h.dot<span style="color: #707183;">(</span>w2<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">loss</span> = np.square<span style="color: #707183;">(</span>y_pred - y<span style="color: #707183;">)</span>.<span style="color: #A020F0;">sum</span><span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   loss_col.append<span style="color: #707183;">(</span>loss<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span><span style="color: #707183;">(</span>t, loss, y_pred<span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad_y_pred</span> = 2.0 * <span style="color: #4d4d4c;">(</span>y_pred - y<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad_w2</span> = h.T.dot<span style="color: #4d4d4c;">(</span>grad_y_pred<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad_h</span> = grad_y_pred.dot<span style="color: #4d4d4c;">(</span>w2.T<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad_w1</span> = x.T.dot<span style="color: #4d4d4c;">(</span>grad_h * h * <span style="color: #3e999f;">(</span>1 - h<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">grad_y_pred</span> = 2.0 * <span style="color: #707183;">(</span>y_pred - y<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">grad_w2</span> = h.T.dot<span style="color: #707183;">(</span>grad_y_pred<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">grad_h</span> = grad_y_pred.dot<span style="color: #707183;">(</span>w2.T<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">grad_w1</span> = x.T.dot<span style="color: #707183;">(</span>grad_h * h * <span style="color: #7388d6;">(</span>1 - h<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">w1</span> -= 1e-4 * grad_w1
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">w2</span> -= 1e-4 * grad_w2
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">w1</span> -= 1e-4 * grad_w1
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">w2</span> -= 1e-4 * grad_w2
 
-plt.plot<span style="color: #4d4d4c;">(</span>loss_col<span style="color: #4d4d4c;">)</span>
-plt.show<span style="color: #4d4d4c;">()</span>
+plt.plot<span style="color: #707183;">(</span>loss_col<span style="color: #707183;">)</span>
+plt.show<span style="color: #707183;">()</span>
 </code></pre>
 </div>
 
@@ -474,49 +473,49 @@ plt.show<span style="color: #4d4d4c;">()</span>
 <p>
 下面的激活函数式用的 ReLu:
 </p>
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">import</span> numpy <span style="color: #718c00;">as</span> np
-<span style="color: #718c00;">import</span> matplotlib.pyplot <span style="color: #718c00;">as</span> plt
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">import</span> numpy <span style="color: #A52A2A; font-weight: bold;">as</span> np
+<span style="color: #A52A2A; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #A52A2A; font-weight: bold;">as</span> plt
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">N is batch size(sample size); D_in is input dimension;</span>
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">H is hidden dimension; D_out is output dimension.</span>
-<span style="color: #eab700;">N</span>, <span style="color: #eab700;">D_in</span>, <span style="color: #eab700;">H</span>, <span style="color: #eab700;">D_out</span> = 4, 2, 30, 1
+<span style="color: #204A87;"># </span><span style="color: #204A87;">N is batch size(sample size); D_in is input dimension;</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">H is hidden dimension; D_out is output dimension.</span>
+<span style="color: #0084C8; font-weight: bold;">N</span>, <span style="color: #0084C8; font-weight: bold;">D_in</span>, <span style="color: #0084C8; font-weight: bold;">H</span>, <span style="color: #0084C8; font-weight: bold;">D_out</span> = 4, 2, 30, 1
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Create random input and output data</span>
-<span style="color: #eab700;">x</span> = np.array<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span><span style="color: #eab700;">[</span>0, 0<span style="color: #eab700;">]</span>, <span style="color: #eab700;">[</span>0, 1<span style="color: #eab700;">]</span>, <span style="color: #eab700;">[</span>1, 0<span style="color: #eab700;">]</span>, <span style="color: #eab700;">[</span>1, 1<span style="color: #eab700;">]</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">y</span> = np.array<span style="color: #4d4d4c;">(</span><span style="color: #3e999f;">[</span><span style="color: #eab700;">[</span>0<span style="color: #eab700;">]</span>, <span style="color: #eab700;">[</span>1<span style="color: #eab700;">]</span>, <span style="color: #eab700;">[</span>1<span style="color: #eab700;">]</span>, <span style="color: #eab700;">[</span>0<span style="color: #eab700;">]</span><span style="color: #3e999f;">]</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">Create random input and output data</span>
+<span style="color: #0084C8; font-weight: bold;">x</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>0, 0<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>0, 1<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>1, 0<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>1, 1<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">y</span> = np.array<span style="color: #707183;">(</span><span style="color: #7388d6;">[</span><span style="color: #909183;">[</span>0<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>1<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>1<span style="color: #909183;">]</span>, <span style="color: #909183;">[</span>0<span style="color: #909183;">]</span><span style="color: #7388d6;">]</span><span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Randomly initialize weights</span>
-<span style="color: #eab700;">w1</span> = np.random.randn<span style="color: #4d4d4c;">(</span>D_in, H<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">w2</span> = np.random.randn<span style="color: #4d4d4c;">(</span>H, D_out<span style="color: #4d4d4c;">)</span>
+<span style="color: #204A87;"># </span><span style="color: #204A87;">Randomly initialize weights</span>
+<span style="color: #0084C8; font-weight: bold;">w1</span> = np.random.randn<span style="color: #707183;">(</span>D_in, H<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">w2</span> = np.random.randn<span style="color: #707183;">(</span>H, D_out<span style="color: #707183;">)</span>
 
-<span style="color: #eab700;">learning_rate</span> = 0.002
-<span style="color: #eab700;">loss_col</span> = <span style="color: #4d4d4c;">[]</span>
-<span style="color: #718c00;">for</span> t <span style="color: #718c00;">in</span> <span style="color: #8959a8;">range</span><span style="color: #4d4d4c;">(</span>200<span style="color: #4d4d4c;">)</span>:
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Forward pass: compute predicted y</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">h</span> = x.dot<span style="color: #4d4d4c;">(</span>w1<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">h_relu</span> = np.maximum<span style="color: #4d4d4c;">(</span>h, 0<span style="color: #4d4d4c;">)</span>  <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">using ReLU as activate function</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">y_pred</span> = h_relu.dot<span style="color: #4d4d4c;">(</span>w2<span style="color: #4d4d4c;">)</span>
+<span style="color: #0084C8; font-weight: bold;">learning_rate</span> = 0.002
+<span style="color: #0084C8; font-weight: bold;">loss_col</span> = <span style="color: #707183;">[]</span>
+<span style="color: #A52A2A; font-weight: bold;">for</span> t <span style="color: #A52A2A; font-weight: bold;">in</span> <span style="color: #A020F0;">range</span><span style="color: #707183;">(</span>200<span style="color: #707183;">)</span>:
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">Forward pass: compute predicted y</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">h</span> = x.dot<span style="color: #707183;">(</span>w1<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">h_relu</span> = np.maximum<span style="color: #707183;">(</span>h, 0<span style="color: #707183;">)</span>  <span style="color: #204A87;"># </span><span style="color: #204A87;">using ReLU as activate function</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">y_pred</span> = h_relu.dot<span style="color: #707183;">(</span>w2<span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Compute and print loss</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">loss</span> = np.square<span style="color: #4d4d4c;">(</span>y_pred - y<span style="color: #4d4d4c;">)</span>.<span style="color: #8959a8;">sum</span><span style="color: #4d4d4c;">()</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">loss function</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   loss_col.append<span style="color: #4d4d4c;">(</span>loss<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #718c00;">print</span><span style="color: #4d4d4c;">(</span>t, loss, y_pred<span style="color: #4d4d4c;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">Compute and print loss</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">loss</span> = np.square<span style="color: #707183;">(</span>y_pred - y<span style="color: #707183;">)</span>.<span style="color: #A020F0;">sum</span><span style="color: #707183;">()</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">loss function</span>
+<span style="background-color: #E6E6E6;"> </span>   loss_col.append<span style="color: #707183;">(</span>loss<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #A52A2A; font-weight: bold;">print</span><span style="color: #707183;">(</span>t, loss, y_pred<span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Backprop to compute gradients of w1 and w2 with respect to loss</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad_y_pred</span> = 2.0 * <span style="color: #4d4d4c;">(</span>y_pred - y<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">the last layer's error</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad_w2</span> = h_relu.T.dot<span style="color: #4d4d4c;">(</span>grad_y_pred<span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad_h_relu</span> = grad_y_pred.dot<span style="color: #4d4d4c;">(</span>w2.T<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">the second laye's error</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad_h</span> = grad_h_relu.copy<span style="color: #4d4d4c;">()</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad_h</span><span style="color: #4d4d4c;">[</span>h &lt; 0<span style="color: #4d4d4c;">]</span> = 0  <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">the derivate of ReLU</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">grad_w1</span> = x.T.dot<span style="color: #4d4d4c;">(</span>grad_h<span style="color: #4d4d4c;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">Backprop to compute gradients of w1 and w2 with respect to loss</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">grad_y_pred</span> = 2.0 * <span style="color: #707183;">(</span>y_pred - y<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">the last layer's error</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">grad_w2</span> = h_relu.T.dot<span style="color: #707183;">(</span>grad_y_pred<span style="color: #707183;">)</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">grad_h_relu</span> = grad_y_pred.dot<span style="color: #707183;">(</span>w2.T<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">the second laye's error</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">grad_h</span> = grad_h_relu.copy<span style="color: #707183;">()</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">grad_h</span><span style="color: #707183;">[</span>h &lt; 0<span style="color: #707183;">]</span> = 0  <span style="color: #204A87;"># </span><span style="color: #204A87;">the derivate of ReLU</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">grad_w1</span> = x.T.dot<span style="color: #707183;">(</span>grad_h<span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">Update weights</span>
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">w1</span> -= learning_rate * grad_w1
-<span style="color: #8e908c; background-color: #ffffff;"> </span>   <span style="color: #eab700;">w2</span> -= learning_rate * grad_w2
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #204A87;"># </span><span style="color: #204A87;">Update weights</span>
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">w1</span> -= learning_rate * grad_w1
+<span style="background-color: #E6E6E6;"> </span>   <span style="color: #0084C8; font-weight: bold;">w2</span> -= learning_rate * grad_w2
 
-plt.plot<span style="color: #4d4d4c;">(</span>loss_col<span style="color: #4d4d4c;">)</span>
-plt.show<span style="color: #4d4d4c;">()</span>
+plt.plot<span style="color: #707183;">(</span>loss_col<span style="color: #707183;">)</span>
+plt.show<span style="color: #707183;">()</span>
 </code></pre>
 </div>
 
@@ -540,13 +539,13 @@ plt.show<span style="color: #4d4d4c;">()</span>
 </p>
 </div>
 
-<div class="container">
-<pre><code class="python"><span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">forward pass of 3-layer neural network</span>
-<span style="color: #eab700;">f</span> = <span style="color: #718c00;">lambda</span> x: 1.0 / <span style="color: #4d4d4c;">(</span>1.0 + np.exp<span style="color: #3e999f;">(</span>-x<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">activation function</span>
-<span style="color: #eab700;">x</span> = np.random.randn<span style="color: #4d4d4c;">(</span>3, 1<span style="color: #4d4d4c;">)</span>
-<span style="color: #eab700;">h1</span> = f<span style="color: #4d4d4c;">(</span>np.dot<span style="color: #3e999f;">(</span>W1, x<span style="color: #3e999f;">)</span> + b1<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">calculate first hidden layer activation</span>
-<span style="color: #eab700;">h2</span> = f<span style="color: #4d4d4c;">(</span>np.dot<span style="color: #3e999f;">(</span>W2, h1<span style="color: #3e999f;">)</span> + b2<span style="color: #4d4d4c;">)</span> <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">calculate second hidden layer activation</span>
-<span style="color: #eab700;">out</span> = np.dot<span style="color: #4d4d4c;">(</span>W3, h2<span style="color: #4d4d4c;">)</span> + b3 <span style="color: #8e908c; font-style: italic;"># </span><span style="color: #8e908c; font-style: italic;">output neuron</span>
+<div class="org-src-container">
+<pre class="src src-python"><code class="python"><span style="color: #204A87;"># </span><span style="color: #204A87;">forward pass of 3-layer neural network</span>
+<span style="color: #0084C8; font-weight: bold;">f</span> = <span style="color: #A52A2A; font-weight: bold;">lambda</span> x: 1.0 / <span style="color: #707183;">(</span>1.0 + np.exp<span style="color: #7388d6;">(</span>-x<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">activation function</span>
+<span style="color: #0084C8; font-weight: bold;">x</span> = np.random.randn<span style="color: #707183;">(</span>3, 1<span style="color: #707183;">)</span>
+<span style="color: #0084C8; font-weight: bold;">h1</span> = f<span style="color: #707183;">(</span>np.dot<span style="color: #7388d6;">(</span>W1, x<span style="color: #7388d6;">)</span> + b1<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">calculate first hidden layer activation</span>
+<span style="color: #0084C8; font-weight: bold;">h2</span> = f<span style="color: #707183;">(</span>np.dot<span style="color: #7388d6;">(</span>W2, h1<span style="color: #7388d6;">)</span> + b2<span style="color: #707183;">)</span> <span style="color: #204A87;"># </span><span style="color: #204A87;">calculate second hidden layer activation</span>
+<span style="color: #0084C8; font-weight: bold;">out</span> = np.dot<span style="color: #707183;">(</span>W3, h2<span style="color: #707183;">)</span> + b3 <span style="color: #204A87;"># </span><span style="color: #204A87;">output neuron</span>
 </code></pre>
 </div>
 </div>

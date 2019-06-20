@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>使用 highlight.js 高亮 Org mode</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -290,19 +289,19 @@ highlight.js 来高亮 org mode 导出的 HTML 代码片段。
 <li><p>
 在 ox-html.el 下找到 'org-html-src-block' 并且修改最后一行为
 </p>
-<div class="container">
-<pre><code class="lisp"><span style="color: #4d4d4c;">(</span>format <span style="color: #3e999f;">"&lt;pre&gt;&lt;code class=\"%s\"%s&gt;%s&lt;/code&gt;&lt;/pre&gt;"</span>
-                    lang label code<span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-lisp"><code class="lisp"><span style="color: #707183;">(</span>format <span style="color: #4E9A06;">"&lt;pre&gt;&lt;code class=\"%s\"%s&gt;%s&lt;/code&gt;&lt;/pre&gt;"</span>
+                    lang label code<span style="color: #707183;">)</span>
 </code></pre>
 </div></li>
 <li><p>
 将下面的代码放到你的配置文件中，我的是放到了 org-html-head-extra 中。
 </p>
 
-<div class="container">
-<pre><code class="html">&lt;<span style="color: #f5871f;">link</span> <span style="color: #eab700;">href</span>=<span style="color: #3e999f;">"http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css"</span> <span style="color: #eab700;">rel</span>=<span style="color: #3e999f;">"stylesheet"</span>&gt;
-&lt;<span style="color: #f5871f;">script</span> <span style="color: #eab700;">src</span>=<span style="color: #3e999f;">"http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js"</span>&gt;&lt;/<span style="color: #f5871f;">script</span>&gt;
-&lt;<span style="color: #f5871f;">script</span>&gt;hljs.initHighlightingOnLoad();&lt;/<span style="color: #f5871f;">script</span>&gt;
+<div class="org-src-container">
+<pre class="src src-html"><code class="html">&lt;<span style="color: #00578E; font-weight: bold;">link</span> <span style="color: #0084C8; font-weight: bold;">href</span>=<span style="color: #4E9A06;">"http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css"</span> <span style="color: #0084C8; font-weight: bold;">rel</span>=<span style="color: #4E9A06;">"stylesheet"</span>&gt;
+&lt;<span style="color: #00578E; font-weight: bold;">script</span> <span style="color: #0084C8; font-weight: bold;">src</span>=<span style="color: #4E9A06;">"http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js"</span>&gt;&lt;/<span style="color: #00578E; font-weight: bold;">script</span>&gt;
+&lt;<span style="color: #00578E; font-weight: bold;">script</span>&gt;hljs.initHighlightingOnLoad();&lt;/<span style="color: #00578E; font-weight: bold;">script</span>&gt;
 </code></pre>
 </div></li>
 </ol>
@@ -316,38 +315,38 @@ highlight.js 来高亮 org mode 导出的 HTML 代码片段。
 上面的方法基本能够解决问题，但是处理方式却很不好。首先，它对 org library 做了 hack，如果下次更新又需要手动再改动。
 另外，难于发现问题。一个推荐的处理方式是不改变原来库的行为模式，改用 advice 来处理：
 </p>
-<div class="container">
-<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defun</span> <span style="color: #f5871f;">org-html-src-block2</span> <span style="color: #3e999f;">(</span>src-block _contents info<span style="color: #3e999f;">)</span>
-  <span style="color: #8959a8;">"Transcode a SRC-BLOCK element from Org to HTML.</span>
-<span style="color: #8959a8;">CONTENTS holds the contents of the item.  INFO is a plist holding</span>
-<span style="color: #8959a8;">contextual information."</span>
-  <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>org-export-read-attribute <span style="color: #8959a8;">:attr_html</span> src-block <span style="color: #8959a8;">:textarea</span><span style="color: #eab700;">)</span>
-      <span style="color: #eab700;">(</span>org-html--textarea-block src-block<span style="color: #eab700;">)</span>
-    <span style="color: #eab700;">(</span><span style="color: #718c00;">let</span> <span style="color: #718c00;">(</span><span style="color: #4271ae;">(</span>lang <span style="color: #4d4d4c;">(</span>org-element-property <span style="color: #8959a8;">:language</span> src-block<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span>
-          <span style="color: #4271ae;">(</span>code <span style="color: #4d4d4c;">(</span>org-html-format-code src-block info<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span>
-          <span style="color: #4271ae;">(</span>label <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">let</span> <span style="color: #3e999f;">(</span><span style="color: #eab700;">(</span>lbl <span style="color: #718c00;">(</span><span style="color: #718c00;">and</span> <span style="color: #4d4d4c;">(</span>org-element-property <span style="color: #8959a8;">:name</span> src-block<span style="color: #4d4d4c;">)</span>
-                                 <span style="color: #4d4d4c;">(</span>org-export-get-reference src-block info<span style="color: #4d4d4c;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
-                   <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> lbl <span style="color: #eab700;">(</span>format <span style="color: #3e999f;">" id=</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">%s</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">"</span> lbl<span style="color: #eab700;">)</span> <span style="color: #3e999f;">""</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span>
-      <span style="color: #718c00;">(</span><span style="color: #718c00;">if</span> <span style="color: #4271ae;">(</span>not lang<span style="color: #4271ae;">)</span> <span style="color: #4271ae;">(</span>format <span style="color: #3e999f;">"&lt;pre&gt;&lt;code class=</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">example</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">%s&gt;</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">%s&lt;/code&gt;&lt;/pre&gt;"</span> label code<span style="color: #4271ae;">)</span>
-        <span style="color: #4271ae;">(</span>format <span style="color: #3e999f;">"&lt;div class=</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">container</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">&gt;</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">%s%s</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">n</span><span style="color: #3e999f;">&lt;/div&gt;"</span>
-                <span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">Build caption.</span>
-                <span style="color: #4d4d4c;">(</span><span style="color: #718c00;">let</span> <span style="color: #3e999f;">(</span><span style="color: #eab700;">(</span>caption <span style="color: #718c00;">(</span>org-export-get-caption src-block<span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span>
-                  <span style="color: #3e999f;">(</span><span style="color: #718c00;">if</span> <span style="color: #eab700;">(</span>not caption<span style="color: #eab700;">)</span> <span style="color: #3e999f;">""</span>
-                    <span style="color: #eab700;">(</span><span style="color: #718c00;">let</span> <span style="color: #718c00;">(</span><span style="color: #4d4d4c;">(</span>listing-number
-                           <span style="color: #3e999f;">(</span>format
-                            <span style="color: #3e999f;">"&lt;span class=</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">listing-number</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">&gt;%s &lt;/span&gt;"</span>
-                            <span style="color: #eab700;">(</span>format
-                             <span style="color: #718c00;">(</span>org-html--translate <span style="color: #3e999f;">"Listing %d:"</span> info<span style="color: #718c00;">)</span>
-                             <span style="color: #718c00;">(</span>org-export-get-ordinal
-                              src-block info nil <span style="color: #718c00;">#'</span><span style="color: #4271ae;">org-html--has-caption-p</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span><span style="color: #718c00;">)</span>
-                      <span style="color: #718c00;">(</span>format <span style="color: #3e999f;">"&lt;label class=</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">org-src-name</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">&gt;%s%s&lt;/label&gt;"</span>
+<div class="org-src-container">
+<pre class="src src-elisp"><code class="elisp"><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">org-html-src-block2</span> <span style="color: #7388d6;">(</span>src-block _contents info<span style="color: #7388d6;">)</span>
+  <span style="color: #4E9A06;">"Transcode a SRC-BLOCK element from Org to HTML.</span>
+<span style="color: #4E9A06;">CONTENTS holds the contents of the item.  INFO is a plist holding</span>
+<span style="color: #4E9A06;">contextual information."</span>
+  <span style="color: #7388d6;">(</span><span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #909183;">(</span>org-export-read-attribute <span style="color: #A020F0;">:attr_html</span> src-block <span style="color: #A020F0;">:textarea</span><span style="color: #909183;">)</span>
+      <span style="color: #909183;">(</span>org-html--textarea-block src-block<span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span><span style="color: #A52A2A; font-weight: bold;">let</span> <span style="color: #709870;">(</span><span style="color: #907373;">(</span>lang <span style="color: #6276ba;">(</span>org-element-property <span style="color: #A020F0;">:language</span> src-block<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+          <span style="color: #907373;">(</span>code <span style="color: #6276ba;">(</span>org-html-format-code src-block info<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span>
+          <span style="color: #907373;">(</span>label <span style="color: #6276ba;">(</span><span style="color: #A52A2A; font-weight: bold;">let</span> <span style="color: #858580;">(</span><span style="color: #80a880;">(</span>lbl <span style="color: #887070;">(</span><span style="color: #A52A2A; font-weight: bold;">and</span> <span style="color: #707183;">(</span>org-element-property <span style="color: #A020F0;">:name</span> src-block<span style="color: #707183;">)</span>
+                                 <span style="color: #707183;">(</span>org-export-get-reference src-block info<span style="color: #707183;">)</span><span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #858580;">)</span>
+                   <span style="color: #858580;">(</span><span style="color: #A52A2A; font-weight: bold;">if</span> lbl <span style="color: #80a880;">(</span>format <span style="color: #4E9A06;">" id=</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">%s</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">"</span> lbl<span style="color: #80a880;">)</span> <span style="color: #4E9A06;">""</span><span style="color: #858580;">)</span><span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span><span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #907373;">(</span>not lang<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>format <span style="color: #4E9A06;">"&lt;pre&gt;&lt;code class=</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">example</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">%s&gt;</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">n</span><span style="color: #4E9A06;">%s&lt;/code&gt;&lt;/pre&gt;"</span> label code<span style="color: #907373;">)</span>
+        <span style="color: #907373;">(</span>format <span style="color: #4E9A06;">"&lt;div class=</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">container</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">&gt;</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">n</span><span style="color: #4E9A06;">%s%s</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">n</span><span style="color: #4E9A06;">&lt;/div&gt;"</span>
+                <span style="color: #204A87;">;; </span><span style="color: #204A87;">Build caption.</span>
+                <span style="color: #6276ba;">(</span><span style="color: #A52A2A; font-weight: bold;">let</span> <span style="color: #858580;">(</span><span style="color: #80a880;">(</span>caption <span style="color: #887070;">(</span>org-export-get-caption src-block<span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #858580;">)</span>
+                  <span style="color: #858580;">(</span><span style="color: #A52A2A; font-weight: bold;">if</span> <span style="color: #80a880;">(</span>not caption<span style="color: #80a880;">)</span> <span style="color: #4E9A06;">""</span>
+                    <span style="color: #80a880;">(</span><span style="color: #A52A2A; font-weight: bold;">let</span> <span style="color: #887070;">(</span><span style="color: #707183;">(</span>listing-number
+                           <span style="color: #7388d6;">(</span>format
+                            <span style="color: #4E9A06;">"&lt;span class=</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">listing-number</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">&gt;%s &lt;/span&gt;"</span>
+                            <span style="color: #909183;">(</span>format
+                             <span style="color: #709870;">(</span>org-html--translate <span style="color: #4E9A06;">"Listing %d:"</span> info<span style="color: #709870;">)</span>
+                             <span style="color: #709870;">(</span>org-export-get-ordinal
+                              src-block info nil <span style="color: #A52A2A; font-weight: bold;">#'</span><span style="color: #F5666D;">org-html--has-caption-p</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span><span style="color: #887070;">)</span>
+                      <span style="color: #887070;">(</span>format <span style="color: #4E9A06;">"&lt;label class=</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">org-src-name</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">&gt;%s%s&lt;/label&gt;"</span>
                               listing-number
-                              <span style="color: #4d4d4c;">(</span>org-trim <span style="color: #3e999f;">(</span>org-export-data caption info<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
-                <span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">Contents.</span>
-                <span style="color: #4d4d4c;">(</span>format <span style="color: #3e999f;">"&lt;pre&gt;&lt;code class=</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">%s</span><span style="color: #eab700;">\</span><span style="color: #8959a8;">"</span><span style="color: #3e999f;">%s&gt;%s&lt;/code&gt;&lt;/pre&gt;"</span>
-                        lang label code<span style="color: #4d4d4c;">)</span><span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+                              <span style="color: #707183;">(</span>org-trim <span style="color: #7388d6;">(</span>org-export-data caption info<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span><span style="color: #887070;">)</span><span style="color: #80a880;">)</span><span style="color: #858580;">)</span><span style="color: #6276ba;">)</span>
+                <span style="color: #204A87;">;; </span><span style="color: #204A87;">Contents.</span>
+                <span style="color: #6276ba;">(</span>format <span style="color: #4E9A06;">"&lt;pre&gt;&lt;code class=</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">%s</span><span style="color: #4E9A06; font-weight: bold;">\</span><span style="color: #4E9A06; font-weight: bold;">"</span><span style="color: #4E9A06;">%s&gt;%s&lt;/code&gt;&lt;/pre&gt;"</span>
+                        lang label code<span style="color: #6276ba;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #4d4d4c;">(</span>advice-add <span style="color: #718c00;">'</span><span style="color: #4271ae;">org-html-src-block</span> <span style="color: #8959a8;">:override</span> <span style="color: #718c00;">'</span><span style="color: #4271ae;">org-html-src-block2</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #707183;">(</span>advice-add <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">org-html-src-block</span> <span style="color: #A020F0;">:override</span> <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">org-html-src-block2</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 

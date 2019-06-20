@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>一个静态评论系统的实现</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -348,19 +347,19 @@ for the JavaScript code in this tag.
 比如说用 ajax 发送 GET 请求：
 </p>
 
-<div class="container">
-<pre><code class="javascript">    <span style="color: #718c00;">function</span> <span style="color: #f5871f;">test</span><span style="color: #4d4d4c;">()</span> <span style="color: #4d4d4c;">{</span>
-  jQuery.ajax<span style="color: #3e999f;">(</span><span style="color: #eab700;">{</span>
-      type: <span style="color: #3e999f;">'GET'</span>,
-      async: <span style="color: #4271ae;">false</span>,
-      dataType:<span style="color: #3e999f;">'json'</span>,
+<div class="org-src-container">
+<pre class="src src-javascript"><code class="javascript">    <span style="color: #A52A2A; font-weight: bold;">function</span> <span style="color: #00578E; font-weight: bold;">test</span><span style="color: #707183;">()</span> <span style="color: #707183;">{</span>
+  jQuery.ajax<span style="color: #7388d6;">(</span><span style="color: #909183;">{</span>
+      type: <span style="color: #4E9A06;">'GET'</span>,
+      async: <span style="color: #F5666D;">false</span>,
+      dataType:<span style="color: #4E9A06;">'json'</span>,
       url: search_issues,
-      <span style="color: #f5871f;">success</span>:<span style="color: #718c00;">function</span><span style="color: #718c00;">(</span><span style="color: #eab700;">data</span><span style="color: #718c00;">)</span> <span style="color: #718c00;">{</span>
+      <span style="color: #00578E; font-weight: bold;">success</span>:<span style="color: #A52A2A; font-weight: bold;">function</span><span style="color: #709870;">(</span><span style="color: #0084C8; font-weight: bold;">data</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
          result = data;
-      <span style="color: #718c00;">}</span>
-  <span style="color: #eab700;">}</span><span style="color: #3e999f;">)</span>;
-  <span style="color: #718c00;">return</span> result;
-<span style="color: #4d4d4c;">}</span>
+      <span style="color: #709870;">}</span>
+  <span style="color: #909183;">}</span><span style="color: #7388d6;">)</span>;
+  <span style="color: #A52A2A; font-weight: bold;">return</span> result;
+<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -368,30 +367,30 @@ for the JavaScript code in this tag.
 以及发送 POST 请求：
 </p>
 
-<div class="container">
-<pre><code class="javascript"><span style="color: #718c00;">function</span> <span style="color: #f5871f;">create</span><span style="color: #4d4d4c;">(</span><span style="color: #eab700;">title</span><span style="color: #4d4d4c;">)</span> <span style="color: #4d4d4c;">{</span>
-     <span style="color: #718c00;">var</span> <span style="color: #eab700;">creare</span> = base_url + <span style="color: #3e999f;">'/repos/'</span> + owner + <span style="color: #3e999f;">'/'</span> + repo + <span style="color: #3e999f;">'/issues'</span>;
- <span style="color: #718c00;">var</span> <span style="color: #eab700;">payload</span> = <span style="color: #3e999f;">{</span>
-      <span style="color: #3e999f;">'title'</span>: title,
-      <span style="color: #3e999f;">'body'</span>: <span style="color: #3e999f;">'You can write comments in this issues.'</span>,
-      <span style="color: #3e999f;">'labels'</span>: <span style="color: #eab700;">[</span><span style="color: #3e999f;">'blog'</span><span style="color: #eab700;">]</span>,
-  <span style="color: #3e999f;">}</span>
-  $.ajax<span style="color: #3e999f;">(</span><span style="color: #eab700;">{</span>
-    type: <span style="color: #3e999f;">'POST'</span>,
+<div class="org-src-container">
+<pre class="src src-javascript"><code class="javascript"><span style="color: #A52A2A; font-weight: bold;">function</span> <span style="color: #00578E; font-weight: bold;">create</span><span style="color: #707183;">(</span><span style="color: #0084C8; font-weight: bold;">title</span><span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
+     <span style="color: #A52A2A; font-weight: bold;">var</span> <span style="color: #0084C8; font-weight: bold;">creare</span> = base_url + <span style="color: #4E9A06;">'/repos/'</span> + owner + <span style="color: #4E9A06;">'/'</span> + repo + <span style="color: #4E9A06;">'/issues'</span>;
+ <span style="color: #A52A2A; font-weight: bold;">var</span> <span style="color: #0084C8; font-weight: bold;">payload</span> = <span style="color: #7388d6;">{</span>
+      <span style="color: #4E9A06;">'title'</span>: title,
+      <span style="color: #4E9A06;">'body'</span>: <span style="color: #4E9A06;">'You can write comments in this issues.'</span>,
+      <span style="color: #4E9A06;">'labels'</span>: <span style="color: #909183;">[</span><span style="color: #4E9A06;">'blog'</span><span style="color: #909183;">]</span>,
+  <span style="color: #7388d6;">}</span>
+  $.ajax<span style="color: #7388d6;">(</span><span style="color: #909183;">{</span>
+    type: <span style="color: #4E9A06;">'POST'</span>,
     url: create,
-    crossDomain: <span style="color: #4271ae;">true</span>,
-          data: JSON.stringify<span style="color: #718c00;">(</span>payload<span style="color: #718c00;">)</span>,
-    headers: <span style="color: #718c00;">{</span>
-      <span style="color: #3e999f;">'Authorization'</span>: <span style="color: #3e999f;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #8e908c; font-style: italic;">// </span><span style="color: #8e908c; font-style: italic;">auth2.0</span>
-      <span style="color: #3e999f;">'Access-Control-Allow-Origin'</span> : <span style="color: #3e999f;">'*'</span>
-    <span style="color: #718c00;">}</span>,
-    contentType: <span style="color: #3e999f;">'application/json; charset=utf-8'</span>,
-    dataType: <span style="color: #3e999f;">'json'</span>,
-    <span style="color: #f5871f;">success</span>: <span style="color: #718c00;">function</span><span style="color: #718c00;">(</span><span style="color: #eab700;">data</span><span style="color: #718c00;">){</span>alert<span style="color: #4271ae;">(</span><span style="color: #3e999f;">'create issue success'</span><span style="color: #4271ae;">)</span>;<span style="color: #718c00;">}</span>,
-    <span style="color: #f5871f;">failure</span>: <span style="color: #718c00;">function</span><span style="color: #718c00;">(</span><span style="color: #eab700;">errMsg</span><span style="color: #718c00;">)</span> <span style="color: #718c00;">{</span>
-        alert<span style="color: #4271ae;">(</span>errMsg<span style="color: #4271ae;">)</span>;
-    <span style="color: #718c00;">}</span>
-<span style="color: #eab700;">}</span><span style="color: #3e999f;">)</span>;<span style="color: #4d4d4c;">}</span>
+    crossDomain: <span style="color: #F5666D;">true</span>,
+          data: JSON.stringify<span style="color: #709870;">(</span>payload<span style="color: #709870;">)</span>,
+    headers: <span style="color: #709870;">{</span>
+      <span style="color: #4E9A06;">'Authorization'</span>: <span style="color: #4E9A06;">'Basic xxxxxxxxxxxxx'</span>, <span style="color: #204A87;">// </span><span style="color: #204A87;">auth2.0</span>
+      <span style="color: #4E9A06;">'Access-Control-Allow-Origin'</span> : <span style="color: #4E9A06;">'*'</span>
+    <span style="color: #709870;">}</span>,
+    contentType: <span style="color: #4E9A06;">'application/json; charset=utf-8'</span>,
+    dataType: <span style="color: #4E9A06;">'json'</span>,
+    <span style="color: #00578E; font-weight: bold;">success</span>: <span style="color: #A52A2A; font-weight: bold;">function</span><span style="color: #709870;">(</span><span style="color: #0084C8; font-weight: bold;">data</span><span style="color: #709870;">){</span>alert<span style="color: #907373;">(</span><span style="color: #4E9A06;">'create issue success'</span><span style="color: #907373;">)</span>;<span style="color: #709870;">}</span>,
+    <span style="color: #00578E; font-weight: bold;">failure</span>: <span style="color: #A52A2A; font-weight: bold;">function</span><span style="color: #709870;">(</span><span style="color: #0084C8; font-weight: bold;">errMsg</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
+        alert<span style="color: #907373;">(</span>errMsg<span style="color: #907373;">)</span>;
+    <span style="color: #709870;">}</span>
+<span style="color: #909183;">}</span><span style="color: #7388d6;">)</span>;<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 </div>
@@ -448,15 +447,15 @@ for the JavaScript code in this tag.
 这里会用到 3 个 github 的 API（<a href="https://developer.github.com/v3/search/#search-issues">Github api</a>） 分别如下:
 </p>
 
-<div class="container">
-<pre><code class="python">&#36825;&#20010;&#29992;&#26469;&#27169;&#31946;&#26597;&#35810; issue&#65306;
-<span style="color: #4d4d4c;">{</span><span style="color: #3e999f;">{</span>base_api<span style="color: #3e999f;">}</span><span style="color: #4d4d4c;">}</span>/search/issues?<span style="color: #eab700;">q</span>=A Continuous Integration System+user:yydai+labels:blog
+<div class="org-src-container">
+<pre class="src src-example"><code class="example">这个用来模糊查询 issue：
+{{base_api}}/search/issues?q=A Continuous Integration System+user:yydai+labels:blog
 
-&#36825;&#20010;&#29992;&#26469;&#33719;&#21462;&#35813; issue &#19979;&#30340; comments
-<span style="color: #4d4d4c;">{</span><span style="color: #3e999f;">{</span>base_api<span style="color: #3e999f;">}</span><span style="color: #4d4d4c;">}</span>/repos/yydai/yydai.github.io/issues/1/comments
+这个用来获取该 issue 下的 comments
+{{base_api}}/repos/yydai/yydai.github.io/issues/1/comments
 
-&#36825;&#20010;&#29992;&#26469;&#21019;&#24314; issue
-<span style="color: #4d4d4c;">{</span><span style="color: #3e999f;">{</span>base_api<span style="color: #3e999f;">}</span><span style="color: #4d4d4c;">}</span>/repos/yydai/yydai.github.io/issues
+这个用来创建 issue
+{{base_api}}/repos/yydai/yydai.github.io/issues
 </code></pre>
 </div>
 </div>

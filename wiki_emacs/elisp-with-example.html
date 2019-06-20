@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-18 Tue 19:09 -->
+<!-- 2019-06-21 Fri 01:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp with examples</title>
@@ -179,11 +179,11 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+
+<link rel=
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link href='http://apps.bdimg.com/libs/highlight.js/9.1.0/styles/default.min.css' rel='stylesheet'>
-<script src='http://apps.bdimg.com/libs/highlight.js/9.1.0/highlight.min.js'></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<link rel='stylesheet' href='../css/worg2.css' typbe='text/css'/>
+<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
+<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
 <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
@@ -191,7 +191,6 @@
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-
 gtag('config', 'UA-111585106-1');
 </script>
 <script type="text/javascript">
@@ -256,16 +255,16 @@ for the JavaScript code in this tag.
 <li>advice
 advice :around 和 python 的 decorator 很像。</li>
 </ol>
-<div class="container">
-<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defun</span> <span style="color: #f5871f;">foo</span> <span style="color: #3e999f;">(</span>num<span style="color: #3e999f;">)</span>
-  <span style="color: #3e999f;">(</span>message <span style="color: #3e999f;">"the number is %d"</span> num<span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-elisp"><code class="elisp"><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">foo</span> <span style="color: #7388d6;">(</span>num<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>message <span style="color: #4E9A06;">"the number is %d"</span> num<span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defun</span> <span style="color: #f5871f;">testadvice</span> <span style="color: #3e999f;">(</span>fn num<span style="color: #3e999f;">)</span>
-  <span style="color: #3e999f;">(</span><span style="color: #718c00;">let</span> <span style="color: #eab700;">(</span><span style="color: #718c00;">(</span>num <span style="color: #4271ae;">(</span>+ num 1<span style="color: #4271ae;">)</span><span style="color: #718c00;">)</span><span style="color: #eab700;">)</span>
-    <span style="color: #eab700;">(</span>funcall fn num<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">testadvice</span> <span style="color: #7388d6;">(</span>fn num<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span><span style="color: #A52A2A; font-weight: bold;">let</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>num <span style="color: #907373;">(</span>+ num 1<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+    <span style="color: #909183;">(</span>funcall fn num<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #4d4d4c;">(</span>advice-add <span style="color: #718c00;">'</span><span style="color: #4271ae;">foo</span> <span style="color: #8959a8;">:around</span> <span style="color: #718c00;">'</span><span style="color: #4271ae;">testadvice</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #4d4d4c;">(</span>advice-remove <span style="color: #718c00;">'</span><span style="color: #4271ae;">foo</span> <span style="color: #718c00;">'</span><span style="color: #4271ae;">testadvice</span><span style="color: #4d4d4c;">)</span>
+<span style="color: #707183;">(</span>advice-add <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">foo</span> <span style="color: #A020F0;">:around</span> <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">testadvice</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>advice-remove <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">foo</span> <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">testadvice</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 <p>
@@ -275,16 +274,16 @@ advice :around 和 python 的 decorator 很像。</li>
 <ol class="org-ol">
 <li>macro</li>
 </ol>
-<div class="container">
-<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">setq</span> x 1<span style="color: #4d4d4c;">)</span>
-<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">inc</span> <span style="color: #3e999f;">(</span>var<span style="color: #3e999f;">)</span>
-        <span style="color: #3e999f;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">setq</span> var <span style="color: #eab700;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">1+</span> var<span style="color: #eab700;">)</span><span style="color: #3e999f;">)</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-elisp"><code class="elisp"><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">setq</span> x 1<span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defmacro</span> <span style="color: #00578E; font-weight: bold;">inc</span> <span style="color: #7388d6;">(</span>var<span style="color: #7388d6;">)</span>
+        <span style="color: #7388d6;">(</span>list <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">setq</span> var <span style="color: #909183;">(</span>list <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">1+</span> var<span style="color: #909183;">)</span><span style="color: #7388d6;">)</span><span style="color: #707183;">)</span>
 
-<span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defmacro</span> <span style="color: #f5871f;">++</span> <span style="color: #3e999f;">(</span>var<span style="color: #3e999f;">)</span>
-  <span style="color: #3e999f;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">setq</span> var <span style="color: #eab700;">(</span>list <span style="color: #718c00;">'</span><span style="color: #4271ae;">1+</span> inc x<span style="color: #eab700;">)</span>
+<span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defmacro</span> <span style="color: #00578E; font-weight: bold;">++</span> <span style="color: #7388d6;">(</span>var<span style="color: #7388d6;">)</span>
+  <span style="color: #7388d6;">(</span>list <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">setq</span> var <span style="color: #909183;">(</span>list <span style="color: #A52A2A; font-weight: bold;">'</span><span style="color: #F5666D;">1+</span> inc x<span style="color: #909183;">)</span>
 
-<span style="color: #eab700;">(</span>inc x<span style="color: #eab700;">)</span>
-<span style="color: #eab700;">(</span>++ x<span style="color: #eab700;">)</span>
+<span style="color: #909183;">(</span>inc x<span style="color: #909183;">)</span>
+<span style="color: #909183;">(</span>++ x<span style="color: #909183;">)</span>
 </code></pre>
 </div>
 
@@ -294,20 +293,20 @@ advice :around 和 python 的 decorator 很像。</li>
 <p>
 &amp;optional 后的参数都为可选参数
 </p>
-<div class="container">
-<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defun</span> <span style="color: #f5871f;">myfun</span> <span style="color: #3e999f;">(</span>aa bb <span style="color: #4271ae;">&amp;optional</span> cc dd<span style="color: #3e999f;">)</span>
-  <span style="color: #8959a8;">"test optional arguments"</span>
-  <span style="color: #3e999f;">(</span>insert aa bb cc dd<span style="color: #3e999f;">)</span>
-  <span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">call it</span>
-<span style="color: #4d4d4c;">(</span>myfun <span style="color: #3e999f;">"1"</span> <span style="color: #3e999f;">"2"</span> <span style="color: #3e999f;">"3"</span> <span style="color: #3e999f;">"4"</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-elisp"><code class="elisp"><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">myfun</span> <span style="color: #7388d6;">(</span>aa bb <span style="color: #2F8B58; font-weight: bold;">&amp;optional</span> cc dd<span style="color: #7388d6;">)</span>
+  <span style="color: #4E9A06;">"test optional arguments"</span>
+  <span style="color: #7388d6;">(</span>insert aa bb cc dd<span style="color: #7388d6;">)</span>
+  <span style="color: #707183;">)</span>
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">call it</span>
+<span style="color: #707183;">(</span>myfun <span style="color: #4E9A06;">"1"</span> <span style="color: #4E9A06;">"2"</span> <span style="color: #4E9A06;">"3"</span> <span style="color: #4E9A06;">"4"</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 <p>
 如果想跨过某个参数，可以设置为 nil。
 </p>
-<div class="container">
-<pre><code class="elisp"><span style="color: #4d4d4c;">(</span>myfun <span style="color: #3e999f;">"myaa"</span> <span style="color: #3e999f;">"mybb"</span> nil <span style="color: #3e999f;">"mydd"</span><span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-elisp"><code class="elisp"><span style="color: #707183;">(</span>myfun <span style="color: #4E9A06;">"myaa"</span> <span style="color: #4E9A06;">"mybb"</span> nil <span style="color: #4E9A06;">"mydd"</span><span style="color: #707183;">)</span>
 </code></pre>
 </div>
 
@@ -319,15 +318,15 @@ advice :around 和 python 的 decorator 很像。</li>
 类似于 python 中的*args。
 </p>
 
-<div class="container">
-<pre><code class="elisp"><span style="color: #4d4d4c;">(</span><span style="color: #718c00;">defun</span> <span style="color: #f5871f;">ff</span> <span style="color: #3e999f;">(</span>aa bb <span style="color: #4271ae;">&amp;rest</span> cc<span style="color: #3e999f;">)</span>
-  <span style="color: #8959a8;">"test rest arguments"</span>
-  <span style="color: #3e999f;">(</span>message <span style="color: #3e999f;">"%s"</span> cc<span style="color: #3e999f;">)</span> <span style="color: #8e908c; font-style: italic;">; </span><span style="color: #8e908c; font-style: italic;">cc is a list</span>
-  <span style="color: #4d4d4c;">)</span>
+<div class="org-src-container">
+<pre class="src src-elisp"><code class="elisp"><span style="color: #707183;">(</span><span style="color: #A52A2A; font-weight: bold;">defun</span> <span style="color: #00578E; font-weight: bold;">ff</span> <span style="color: #7388d6;">(</span>aa bb <span style="color: #2F8B58; font-weight: bold;">&amp;rest</span> cc<span style="color: #7388d6;">)</span>
+  <span style="color: #4E9A06;">"test rest arguments"</span>
+  <span style="color: #7388d6;">(</span>message <span style="color: #4E9A06;">"%s"</span> cc<span style="color: #7388d6;">)</span> <span style="color: #204A87;">; </span><span style="color: #204A87;">cc is a list</span>
+  <span style="color: #707183;">)</span>
 
-<span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">test</span>
-<span style="color: #4d4d4c;">(</span>ff <span style="color: #3e999f;">"1"</span> <span style="color: #3e999f;">"2"</span> <span style="color: #3e999f;">"3"</span> <span style="color: #3e999f;">"4"</span><span style="color: #4d4d4c;">)</span>
-<span style="color: #8e908c; font-style: italic;">;; </span><span style="color: #8e908c; font-style: italic;">("3" "4")</span>
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">test</span>
+<span style="color: #707183;">(</span>ff <span style="color: #4E9A06;">"1"</span> <span style="color: #4E9A06;">"2"</span> <span style="color: #4E9A06;">"3"</span> <span style="color: #4E9A06;">"4"</span><span style="color: #707183;">)</span>
+<span style="color: #204A87;">;; </span><span style="color: #204A87;">("3" "4")</span>
 </code></pre>
 </div>
 

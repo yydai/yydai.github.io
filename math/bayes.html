@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-21 Fri 12:19 -->
+<!-- 2019-06-21 Fri 18:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>org mode 下使用 tikz 画图</title>
+<title>如何理解贝叶斯定理</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="ying dai" />
 <style type="text/css">
@@ -180,18 +180,6 @@
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css" />
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<link rel='stylesheet' type='text/css' href='https://gongzhitaao.org/orgcss/org.css' />
-<link rel='stylesheet' href='../css/custom.css' typbe='text/css'/>
-<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico'>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src='https://www.googletagmanager.com/gtag/js?id=UA-111585106-1'></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'UA-111585106-1');
-</script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -238,6 +226,7 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -249,125 +238,174 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="content">
-<h1 class="title">org mode 下使用 tikz 画图</h1>
+<h1 class="title">如何理解贝叶斯定理</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgea991ce">环境</a></li>
-<li><a href="#orged1988b">如何配置</a></li>
-<li><a href="#org3f97a03">使用方法</a>
+<li><a href="#org857b277">先验概率、后验概率、条件概率、全概率、独立事件</a>
 <ul>
-<li><a href="#orgfa1338e">方法一</a></li>
-<li><a href="#org7ad2767">方法二</a></li>
+<li><a href="#org37a4d2c">先验概率</a></li>
+<li><a href="#orgc539e8f">后验概率</a></li>
+<li><a href="#orgc33e91c">条件概率</a></li>
+<li><a href="#org92b54d6">全概率</a></li>
 </ul>
 </li>
-<li><a href="#orgde04b97">例子</a></li>
-<li><a href="#org781702b">Ref</a></li>
+<li><a href="#orgdf44c55">贝叶斯定理</a></li>
+<li><a href="#orgba882e6">Ref</a></li>
 </ul>
 </div>
 </div>
 <p>
-&#x2014;
+贝叶斯的思想非常简单：通过一些额外信息，增加一个事件的先验概率，最后得到一个后验概率。我们看下面的解释理解这句话。
 </p>
 
-<div id="outline-container-orgea991ce" class="outline-2">
-<h2 id="orgea991ce">环境</h2>
-<div class="outline-text-2" id="text-orgea991ce">
+<div id="outline-container-org857b277" class="outline-2">
+<h2 id="org857b277">先验概率、后验概率、条件概率、全概率、独立事件</h2>
+<div class="outline-text-2" id="text-org857b277">
 <p>
-本次环境使用的是 MacOS 10.14, imagemagick 7.0.8-25(低版本可能有
-bug), Org-mode version 9.09。在开始前要安装配置好 latex 环境。可以参考下<a href="./mac-org-mode-output-pdf.html">Exporting to PDF in org mode</a>。
+在开始前，让我们先理清一些基本概念。
 </p>
 </div>
-</div>
-
-<div id="outline-container-orged1988b" class="outline-2">
-<h2 id="orged1988b">如何配置</h2>
-<div class="outline-text-2" id="text-orged1988b">
+<div id="outline-container-org37a4d2c" class="outline-3">
+<h3 id="org37a4d2c">先验概率</h3>
+<div class="outline-text-3" id="text-org37a4d2c">
 <p>
-首先需要在 org 文件开头添加一些 option 选项：
-</p>
-<div class="org-src-container">
-<pre class="src src-example"><code class="example">#+LATEX_HEADER: \usepackage{tikz}
-#+STARTUP: inlineimages
-#+PROPERTY: header-args:latex :headers '("\\usepackage{tikz}") :fit yes :imagemagick yes :iminoptions -density 300 :imoutoptions
-#+OPTIONS: tex:imagemagick
-#+END_src example
-
-同时在配置文件中添加：
-#+BEGIN_src elisp
-(setq org-latex-create-formula-image-program 'imagemagick)
-</code></pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org3f97a03" class="outline-2">
-<h2 id="org3f97a03">使用方法</h2>
-<div class="outline-text-2" id="text-org3f97a03">
-</div><div id="outline-container-orgfa1338e" class="outline-3">
-<h3 id="orgfa1338e">方法一</h3>
-<div class="outline-text-3" id="text-orgfa1338e">
-<p>
-使用代码块的方式，如下。
-</p>
-<div class="org-src-container">
-<pre class="src src-example"><code class="example">#+BEGIN_SRC latex :file test.png
-\begin{tikzpicture}
-\draw (0,0) -- (1,0) -- (1, 1) -- (0,0)
-\end{tikzpicture}
-</code></pre>
-</div>
-<p>
-#+END<sub>src</sub>
+所谓的先验概率是没有额外信息，一般可以通过先前的数据统计得到或者根据已有的知识获得。比如，投掷硬币（定义为事件 \(A\) ）, 则事件 \(A\) 的先验概率 \(P(A) =
+   0.5\) 。再比如，一个桶中有黑白球，同时分别知道它们的个数，随机拿一个球，问是黑球的概率。这样的一个概率也是先验的。
 </p>
 
 <p>
-使用 C-C C-C 执行一下就可以生成 test.png 图片了。
+简单来时就是，在未经事件发生的时候，我们已经可以知道它的概率了。
 </p>
 </div>
 </div>
-
-<div id="outline-container-org7ad2767" class="outline-3">
-<h3 id="org7ad2767">方法二</h3>
-<div class="outline-text-3" id="text-org7ad2767">
+<div id="outline-container-orgc539e8f" class="outline-3">
+<h3 id="orgc539e8f">后验概率</h3>
+<div class="outline-text-3" id="text-orgc539e8f">
 <p>
-直接使用 latex 代码块：如下
+后验概率表示在有其他信息影响的情况下非独立事件发生的概率。通常是如下的表现形式： \(P(A|B)\) 。其实在本质上，它是一种条件概率，但是在解释上可能有所不同。
 </p>
-<div class="org-src-container">
-<pre class="src src-example"><code class="example">\begin{tikzpicture}
- \draw [blue,fill] (0,0) rectangle (5,3);
- \draw [red,fill] (0,0) rectangle (3,2);
-\end{tikzpicture}
-</code></pre>
 </div>
+</div>
+
+<div id="outline-container-orgc33e91c" class="outline-3">
+<h3 id="orgc33e91c">条件概率</h3>
+<div class="outline-text-3" id="text-orgc33e91c">
+<p>
+是事件 A 在事件 B 发生的条件下发生的概率。条件概率表示为 \(P（A|B）\) 。
+</p>
+
+\begin{equation}
+P(A|B)={\frac  {P(A\cap B)}{P(B)}}
+\end{equation}
 
 <p>
-使用 C-c C-x C-l 可以直接显示内容，我认为这种方式是最方便的。图片名称会自动命名，同时图片会保存到 ltximg 文件见中。
+其中，当 \(A\) 与 \(B\) 独立的时候才有： \(P(A\cap B)=P(A)P(B)\) 。
 </p>
+</div>
+</div>
+
+<div id="outline-container-org92b54d6" class="outline-3">
+<h3 id="org92b54d6">全概率</h3>
+<div class="outline-text-3" id="text-org92b54d6">
+<p>
+假设{ Bn : n = 1, 2, 3, &#x2026; } 是一个概率空间的有限或者可数无限的分割（既 Bn 为一完备事件组），且每个集合 Bn 是一个可测集合，则对任意事件 A 有全概率公式：
+</p>
+\begin{equation}
+{\displaystyle \Pr(A)=\sum _{n}\Pr(A\cap B_{n})\,}
+\end{equation}
+<p>
+又因为
+</p>
+\begin{equation}
+{\displaystyle \Pr(A\cap B_{n})=\Pr(A\mid B_{n})\Pr(B_{n}),}
+\end{equation}
+
+<p>
+此处 Pr(A | B)是 B 发生后 A 的条件概率，所以全概率公式又可写作：
+</p>
+\begin{equation}
+{\displaystyle \Pr(A)=\sum _{n}\Pr(A\mid B_{n})\Pr(B_{n}).\,}
+\end{equation}
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgde04b97" class="outline-2">
-<h2 id="orgde04b97">例子</h2>
-<div class="outline-text-2" id="text-orgde04b97">
+<div id="outline-container-orgdf44c55" class="outline-2">
+<h2 id="orgdf44c55">贝叶斯定理</h2>
+<div class="outline-text-2" id="text-orgdf44c55">
+<p>
+贝叶斯定理让我们对对逆向概率的计算有了一种可能，这是一个伟大的发现。在现实中，该定理非常有用。
+</p>
 
-<div class="figure">
-<p><img src="./imgs/20190611_113355_13673l2.png" alt="20190611_113355_13673l2.png" width="100%" />
+<p>
+比如，我们知道了一些关键信息，要推断明天下雨的概率是多少？如何做呢？
+基于统计的概率这是无法做到的，因为这件事发生在未来，我们无法根据已经发生的事去推断明天下雨这个事件。
+</p>
+
+<p>
+使用贝叶斯为什么可以做到呢？一般情况，从历史上我们能够统计出下雨的概率，但是不知道明天下雨的概率，如果能够提供一些额外的信息，就能够让这个下雨的概率近似到明天这个范围内。
+</p>
+
+<p>
+贝叶斯定理的定义如下：
+</p>
+\begin{equation}
+P(A|B) = P(A) \frac{P(B|A)} {P(B)}
+\end{equation}
+
+<p>
+它的推导过程如下：
+根据条件概率的定义。在事件 B 发生的条件下事件 A 发生的概率 P(A|B)以及 P(B|A)如下：
+</p>
+\begin{equation}
+P(A|B)={\frac {P(A\cap B)}{P(B)}}
+\end{equation}
+\begin{equation}
+P(B|A)={\frac {P(A\cap B)}{P(A)}}.
+\end{equation}
+
+<p>
+将两式子合并，
+</p>
+\begin{equation}
+P(A|B)\,P(B)=P(A\cap B)=P(B|A)\,P(A)
+\end{equation}
+
+<p>
+最终得到：
+</p>
+\begin{equation}
+P(A|B) = P(A) \frac{P(B|A)} {P(B)}
+\end{equation}
+
+<p>
+下面通过前面下雨的例子来分析下该定理的含义。
+</p>
+
+<p>
+例如，今天天气非常炎热，那么今天下雨的概率是多少？假设天气炎热为事件
+B，下雨为事件 A，那么 P(A|B) 就是要求的概率。根据贝叶斯定理，它有两部分组成： \(\boxed{P(A)}\) 以及 \(\boxed{\displaystyle \frac{P(B|A)}{P(B)}}\) (可能性函数) 。第一部分是所谓的先验概率，也就是下雨这个事件，从历史的数据中，我们很容易可以得到它的概率。 \(P(B|A)\) 是天气炎热的情况下，下雨的概率，也可以统计得到。
+</p>
+
+<p>
+可能性函数这是一个调整因子，即新信息 B 带来的调整，作用是使得先验概率更接近真实概率。可能性函数你可以理解为新信息过来后，对先验概率的一个调整。可能性函数你可以理解为新信息过来后，对先验概率的一个调整。
+</p>
+
+<p>
+如果 \(\displaystyle \frac{P(B|A)}{P(B)} > 1\) 。那么 P(A) 被增强，最终在 B 信息下，A 发生的概率会增加。反之，则会减弱。
 </p>
 </div>
 </div>
-</div>
-<div id="outline-container-org781702b" class="outline-2">
-<h2 id="org781702b">Ref</h2>
-<div class="outline-text-2" id="text-org781702b">
+
+
+<div id="outline-container-orgba882e6" class="outline-2">
+<h2 id="orgba882e6">Ref</h2>
+<div class="outline-text-2" id="text-orgba882e6">
 <ul class="org-ul">
-<li><a href="https://stackoverflow.com/questions/7467870/org-mode-html-export">https://stackoverflow.com/questions/7467870/org-mode-html-export</a></li>
-<li><a href="https://emacs-china.org/t/org-tikz/8891/18">https://emacs-china.org/t/org-tikz/8891/18</a></li>
-<li><a href="https://cremeronline.com/LaTeX/minimaltikz.pdf">https://cremeronline.com/LaTeX/minimaltikz.pdf</a></li>
-<li><a href="https://tex.stackexchange.com/questions/417133/background-color-of-tikzpicture">change tikz background color</a></li>
-<li><a href="https://www.bu.edu/math/files/2013/08/tikzpgfmanual.pdf">tikzpgfmanual</a></li>
+<li><a href="https://www.zhihu.com/question/19725590/answer/241988854">怎样用非数学语言讲解贝叶斯定理（Bayes's theorem）？ </a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%AE%9A%E7%90%86">Bayes's wikipedia</a></li>
 </ul>
 </div>
 </div>

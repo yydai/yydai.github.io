@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-21 Fri 01:24 -->
+<!-- 2019-06-21 Fri 12:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Makefile QA</title>
@@ -267,44 +267,28 @@ for the JavaScript code in this tag.
 <p>
 首先看下 Makefile 代码，这个 makefile 是我为 hadoop 写的：
 </p>
-
 <div class="org-src-container">
 <pre class="src src-makefile"><code class="makefile"><span style="color: #00578E; font-weight: bold;">build</span>:
-            <span style="color: #2F8B58; font-weight: bold;">@</span>echo <span style="color: #4E9A06;">"building..."</span>
+    @echo <span style="color: #4E9A06;">"building..."</span>
     @hadoop com.sun.tools.javac.Main $<span style="color: #707183;">(</span><span style="color: #0084C8; font-weight: bold;">src</span><span style="color: #707183;">)</span>.java
     @jar cf a.jar $<span style="color: #707183;">(</span><span style="color: #0084C8; font-weight: bold;">src</span><span style="color: #707183;">)</span>*.class
-            <span style="color: #2F8B58; font-weight: bold;">@</span>echo <span style="color: #4E9A06;">"build success"</span>
+    @echo <span style="color: #4E9A06;">"build success"</span>
 
 <span style="color: #00578E; font-weight: bold;">clean</span>:
     @-rm *.class
     @-rm *.jar
-            <span style="color: #2F8B58; font-weight: bold;">@</span>echo <span style="color: #4E9A06;">"deleted .class .jar files"</span>
+    @echo <span style="color: #4E9A06;">"deleted .class .jar files"</span>
 </code></pre>
 </div>
-
 <ol class="org-ol">
 <li><p>
-传递参数
+传递参数我们在上面的例子中可以看到 $(src) 这个用法，通过他我们就可以传递参数了：
 </p>
-
-<p>
-我们在上面的例子中可以看到 $(src) 这个用法，通过他我们就可以传递参数了：
-</p></li>
-</ol>
 <div class="org-src-container">
 <pre class="src src-shell"><code class="shell">make build <span style="color: #0084C8; font-weight: bold;">src</span>=WordCount
 </code></pre>
-</div>
-
-<ol class="org-ol">
-<li><p>
-命令失败后继续执行
-</p>
-
-<p>
-在 clean 中，我们看到了在 rm 命令之前，有一个 <code>-</code> 号，它就完成了这种功能。
-</p></li>
-
+</div></li>
+<li>命令失败后继续执行在 clean 中，我们看到了在 rm 命令之前，有一个 <code>-</code> 号，它就完成了这种功能。</li>
 <li><p>
 @command
 </p>
@@ -316,16 +300,11 @@ for the JavaScript code in this tag.
 <pre class="src src-makefile"><code class="makefile">@git push origin master
 </code></pre>
 </div>
-
 <p>
 如果不加@，makefile 执行的时候，git push origin master 这行也会显示。
 </p></li>
-
 <li><p>
 Makefile : Clock skew detected 错误（<a href="https://stackoverflow.com/questions/13745645/makefile-clock-skew-detected">link</a>）
-</p>
-
-<p>
 在 makefile 所在目录执行：
 </p>
 <div class="org-src-container">

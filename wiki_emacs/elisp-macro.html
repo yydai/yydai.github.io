@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-21 Fri 12:21 -->
+<!-- 2019-06-23 Sun 11:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elisp 中的宏</title>
@@ -358,7 +358,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 </div>
 
 <p>
-注意这里的符号 “'”，直接写 x 表示变量或者函数，加引用'x 表示符号（symbol）。如果想理解下面的部分，要对 symbol 这种类型有很好的了解。可看<a href="./elisp-symbols.html">Lisp 之 Symbol</a>
+注意这里的符号 <code>'</code> ，直接写 x 表示变量或者函数，加引用 <code>'x</code> 表示符号（symbol）。如果想理解下面的部分，要对 symbol 这种类型有很好的了解。可看<a href="./elisp-symbols.html">Lisp 之 Symbol</a>
 </p>
 
 <p>
@@ -431,7 +431,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 <h2 id="orga9e2aa9">反引用</h2>
 <div class="outline-text-2" id="text-orga9e2aa9">
 <p>
-为了简化宏的定义，我们可以使用一个特殊的宏 “`”，这个键位于 tab 的上面。
+为了简化宏的定义，我们可以使用一个特殊的宏 <code>`</code> ，这个键位于 tab 的上面。
 如果使用了 ` 所有的元素都是引起（quote）的，例如：
 </p>
 <div class="org-src-container">
@@ -440,7 +440,7 @@ indent 的类型比较简单，它可以使用这样几种类型：
 </div>
 
 <p>
-在这种用法下，如果让一个表达式不引起，需要在前面加 “,”，如果要让一个列表作为整个列表的一部分（slice），可以用 ",@"。
+在这种用法下，如果让一个表达式不引起，需要在前面加 <code>,</code> ，如果要让一个列表作为整个列表的一部分（slice），可以用 <code>,@</code> 。
 </p>
 
 <p>
@@ -548,10 +548,10 @@ indent 的类型比较简单，它可以使用这样几种类型：
 对 defmacro 部分需要做些解释，首先：
 </p>
 <ol class="org-ol">
-<li>“`”的用法前面已有介绍，,(&#x2026;)中的内容会在宏展开的时候执行，通过这一步可以生成函数名。</li>
+<li><code>`</code> 的用法前面已有介绍， <code>,(...)</code> 中的内容会在宏展开的时候执行，通过这一步可以生成函数名。</li>
 <li>要理解和认识到代码中，那部分是需要在宏展开的时候执行</li>
-<li>macroexpand-1 可以对宏展开看下生成的函数是否正确。</li>
-<li>(school "小明" 78) 的用法，看起来就像是一个新的语法。宏的强大在于它确实可以自定义语法，但是也不要滥用，否则别人无法读懂你的代码。</li>
+<li><code>macroexpand-1</code> 可以对宏展开看下生成的函数是否正确。</li>
+<li><code>(school "小明" 78)</code> 的用法，看起来就像是一个新的语法。宏的强大在于它确实可以自定义语法，但是也不要滥用，否则别人无法读懂你的代码。</li>
 </ol>
 </div>
 </div>

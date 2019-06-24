@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-21 Fri 01:25 -->
+<!-- 2019-06-22 Sat 23:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git 常见问题总结</title>
@@ -255,7 +255,7 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0d372e7">1. 如果恢复到 git add 之前?</a></li>
+<li><a href="#orgdc6e335">1. 如何恢复到 git add 之前?</a></li>
 <li><a href="#org89febf5">2. 如何更改还未提交的 commit? here</a></li>
 <li><a href="#orgb557579">3. 恢复到 commit 之前，add 之后的状态? here</a></li>
 <li><a href="#org77310a8">4. git reflog 恢复误删的 commit</a></li>
@@ -266,7 +266,7 @@ for the JavaScript code in this tag.
 <li><a href="#org9b0baa2">9. 分支的合并</a></li>
 <li><a href="#orgb402d41">10. git stash</a></li>
 <li><a href="#orge03f594">11. 标签</a></li>
-<li><a href="#orgd5cf006">12. git merge &#x2013;squash</a></li>
+<li><a href="#orgdcd1438">12. git merge --squash</a></li>
 <li><a href="#orga0601f1">13. git flow</a></li>
 <li><a href="#orgf9561a7">14. git cherry-pick</a></li>
 <li><a href="#org45cb2fd">15. 如何拯救误删的 stash</a></li>
@@ -278,9 +278,9 @@ for the JavaScript code in this tag.
 </div>
 <hr />
 
-<div id="outline-container-org0d372e7" class="outline-2">
-<h2 id="org0d372e7">1. 如果恢复到 git add 之前?</h2>
-<div class="outline-text-2" id="text-org0d372e7">
+<div id="outline-container-orgdc6e335" class="outline-2">
+<h2 id="orgdc6e335">1. 如何恢复到 git add 之前?</h2>
+<div class="outline-text-2" id="text-orgdc6e335">
 <div class="org-src-container">
 <pre class="src src-shell"><code class="shell">git reset &lt;file&gt;
 </code></pre>
@@ -433,10 +433,10 @@ git branch -d &lt;branch_name&gt;
 我们可以按照如下的模式去书写提交信息：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><code class="python">Present-tense summary under 50 characters
+<pre class="src src-example"><code class="example">Present-tense summary under 50 characters
 
-* More information about commit <span style="color: #707183;">(</span>under 72 characters<span style="color: #707183;">)</span>.
-* More information about commit <span style="color: #707183;">(</span>under 72 characters<span style="color: #707183;">)</span>.
+* More information about commit (under 72 characters).
+* More information about commit (under 72 characters).
 
 http://project.management-system.com/ticket/123
 </code></pre>
@@ -455,7 +455,7 @@ http://project.management-system.com/ticket/123
 如果我们的 commit 历史
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><code class="python">* b1b8189 - <span style="color: #707183;">(</span>HEAD -&gt; master<span style="color: #707183;">)</span> Commit-3
+<pre class="src src-example"><code class="example">* b1b8189 - (HEAD -&gt; master) Commit-3
 * 5756e15 - Commit-2
 * e7ba81d - Commit-1
 * 5d39ff2 - Commit-0
@@ -477,7 +477,7 @@ git rebase -i HEAD~3
 然后进入交互界面
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><code class="python">pick e7ba81d Commit-1
+<pre class="src src-example"><code class="example">pick e7ba81d Commit-1
 pick 5756e15 Commit-2
 pick b1b8189 Commit-3
 </code></pre>
@@ -487,7 +487,7 @@ pick b1b8189 Commit-3
 改成如下
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><code class="python">pick e7ba81d Commit-1
+<pre class="src src-example"><code class="example">pick e7ba81d Commit-1
 s 5756e15 Commit-2
 s b1b8189 Commit-3
 </code></pre>
@@ -561,7 +561,7 @@ s b1b8189 Commit-3
 使用 git stash pop 要好些，否则你还得需要手动 drop。
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><code class="python">git stash drop stash@<span style="color: #707183;">{</span>1<span style="color: #707183;">}</span>
+<pre class="src src-shell"><code class="shell">git stash drop stash@<span style="color: #707183;">{</span>1<span style="color: #707183;">}</span>
 </code></pre>
 </div>
 
@@ -616,7 +616,7 @@ origin [tagname] 即可。
 </p>
 
 <p>
-如果要一次推送所有本地新增的标签上去，可以使用 &#x2013;tags 选项。
+如果要一次推送所有本地新增的标签上去，可以使用 --tags 选项。
 </p>
 <div class="org-src-container">
 <pre class="src src-shell"><code class="shell">git push origin --tags
@@ -625,9 +625,9 @@ origin [tagname] 即可。
 </div>
 </div>
 
-<div id="outline-container-orgd5cf006" class="outline-2">
-<h2 id="orgd5cf006">12. git merge &#x2013;squash</h2>
-<div class="outline-text-2" id="text-orgd5cf006">
+<div id="outline-container-orgdcd1438" class="outline-2">
+<h2 id="orgdcd1438">12. git merge --squash</h2>
+<div class="outline-text-2" id="text-orgdcd1438">
 <p>
 汇合分支上的提交，然后一同合并到分支
 </p>
@@ -644,7 +644,7 @@ origin [tagname] 即可。
 </p>
 
 <p>
-切换到 master 分支后，指定 &#x2013;squash 选项执行 merge。
+切换到 master 分支后，指定 --squash 选项执行 merge。
 </p>
 <div class="org-src-container">
 <pre class="src src-shell"><code class="shell">git checkout master
